@@ -1,0 +1,27 @@
+<div id="wrapper">
+  <div id="sidebar-wrapper">
+    <aside id="sidebar">
+      <ul id="sidemenu" class="sidebar-nav">
+        <li>
+          <a routerLink="./" routerLinkActive="active">
+            <span class="sidebar-icon"><i class="fa fa-database"></i></span>
+            <span class="sidebar-title">Home</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="./datasets" routerLinkActive="active">
+            <span class="sidebar-icon"><i class="fa fa-database"></i></span>
+            <span class="sidebar-title">Datasets</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="./orgs" routerLinkActive="active">
+            <span class="sidebar-icon"><i class="fa fa-database"></i></span>
+            <span class="sidebar-title">Organizaciones</span>
+          </a>
+        </li>
+      </ul>
+    </aside>
+  </div>
+  <router-outlet></router-outlet>
+</div>
