@@ -13,6 +13,7 @@ var http_1 = require("@angular/http");
 var app_routing_module_1 = require("./app-routing.module");
 var animations_1 = require("@angular/platform-browser/animations");
 var primeng_1 = require("primeng/primeng");
+var material_1 = require("@angular/material");
 var app_component_1 = require("./app.component");
 var home_component_1 = require("./components/home/home.component");
 var admin_home_component_1 = require("./components/app-admin/admin_home/admin_home.component");
@@ -78,7 +79,11 @@ AppModule = __decorate([
             primeng_1.InputTextareaModule,
             primeng_1.ButtonModule,
             primeng_1.DataTableModule,
-            primeng_1.SharedModule
+            primeng_1.SharedModule,
+            material_1.MdSidenavModule,
+            primeng_1.DialogModule,
+            primeng_1.CalendarModule,
+            primeng_1.InputSwitchModule
         ],
         providers: [],
         bootstrap: [app_component_1.AppComponent]

@@ -10,10 +10,54 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var Role_1 = require("../../../../models/Role");
+var User_1 = require("../../../../models/User");
 var RolesComponent = (function () {
     function RolesComponent() {
+        this.displayUsers = false;
+        this.users = [];
+        this.roles = [];
+        this.role = new Role_1.Role("", "", null);
+        this.users = [
+            new User_1.User("username01", "Administrador total", new Date, true),
+            new User_1.User("username02", "Administrador total", new Date, false),
+            new User_1.User("username03", "Administrador de organizacion", new Date, true),
+            new User_1.User("username04", "Administrador de organización", new Date, false),
+            new User_1.User("username05", "Watcher", new Date, true),
+            new User_1.User("username06", "Watcher", new Date, false)
+        ];
+        this.roles = [
+            new Role_1.Role("Administrador total", "Puede editar todo en el portal.", this.users),
+            new Role_1.Role("Administrador de organizacion", "Puede editar sólo datos de su organización.", this.users),
+            new Role_1.Role("Watcher", "Puede visualizar datos privados, pero no editarlos", this.users)
+        ];
     }
     RolesComponent.prototype.ngOnInit = function () {
+    };
+    RolesComponent.prototype.showUsers = function (role) {
+        this.role = role;
+        console.log(this.role.assignedUsers);
+        this.displayUsers = true;
+    };
+    RolesComponent.prototype.showDialogToAdd = function () {
+        this.role = new Role_1.Role("", "", null);
+        this.displayDialog = true;
+    };
+    RolesComponent.prototype.showDialog = function (role, disabled) {
+        this.role = this.cloneRole(role);
+        this.displayDialog = true;
+        this.disabled = disabled;
+    };
+    RolesComponent.prototype.cloneRole = function (r) {
+        var role = new Role_1.Role("", "", null);
+        for (var prop in r) {
+            role[prop] = r[prop];
+        }
+        return role;
+    };
+    RolesComponent.prototype.enableEdition = function () {
+        this.disabled = !this.disabled;
+        console.log(this.disabled);
     };
     return RolesComponent;
 }());

@@ -1,67 +1,64 @@
-<div id="wrapper">
-  <div id="sidebar-wrapper">
-    <aside id="sidebar">
-      <ul id="sidemenu" class="sidebar-nav">
-        <li>
-          <a routerLink="./" routerLinkActive="active">
-            <span class="sidebar-icon"><i class="fa fa-database"></i></span>
-            <span class="sidebar-title">Home</span>
-          </a>
-        </li>
-        <li>
-          <a routerLink="./users" routerLinkActive="active">
-            <span class="sidebar-icon"><i class="fa fa-database"></i></span>
-            <span class="sidebar-title">Usuarios</span>
-          </a>
-        </li>
-        <li>
-          <a routerLink="./roles" routerLinkActive="active">
-            <span class="sidebar-icon"><i class="fa fa-database"></i></span>
-            <span class="sidebar-title">Roles</span>
-          </a>
-        </li>
-        <li>
-          <a class="accordion-toggle collapsed toggle-switch" data-toggle="collapse" href="#submenu-2">
-            <span class="sidebar-icon"><i class="fa fa-database"></i></span>
-            <span class="sidebar-title">Content</span>
-            <i class="fa fa-caret-down"></i>
-            <b class="caret"></b>
-          </a>
-          <ul id="submenu-2" class="panel-collapse collapse panel-switch" role="menu">
-            <li>
-              <a routerLink="./info" routerLinkActive="active"><i class="fa fa-caret-right"></i>
-                <span class="sidebar-title">Información</span>
-              </a>
-            </li>
-            <li>
-              <a routerLink="./apps" routerLinkActive="active"><i class="fa fa-caret-right"></i>
-                <span class="sidebar-title">Aplicaciones</span>
-              </a>
-            </li>
-            <li>
-              <a routerLink="./events" routerLinkActive="active"><i class="fa fa-caret-right"></i>
-                <span class="sidebar-title">Eventos</span>
-              </a>
-            </li>
-            <li>
-              <a routerLink="./developers" routerLinkActive="active"><i class="fa fa-caret-right"></i>
-                <span class="sidebar-title">Desarrolladores</span>
-              </a>
-            </li>
-            <li>
-              <a routerLink="./apis" routerLinkActive="active"><i class="fa fa-caret-right"></i>
-                <span class="sidebar-title">APIs</span>
-              </a>
-            </li>
-            <li>
-              <a routerLink="./sparql" routerLinkActive="active"><i class="fa fa-caret-right"></i>
-                <span class="sidebar-title">SPARQL</span>
-              </a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </aside>
-  </div>
+<md-sidenav-container class="example-sidenav-fab-container" id="wrapper">
+  <md-sidenav #sidenav mode="side" opened="true" id="sidebar-wrapper">
+    <ul id="sidemenu" class="sidebar-nav">
+      <li>
+        <a routerLink="./" routerLinkActive="active">
+          <span class="sidebar-title">Home</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="./users" routerLinkActive="active">
+          <span class="sidebar-title">Usuarios</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="./roles" routerLinkActive="active">
+          <span class="sidebar-title">Roles</span>
+        </a>
+      </li>
+      <li>
+        <a class="accordion-toggle collapsed toggle-switch" data-toggle="collapse" href="#submenu-2">
+          <span class="sidebar-title">Contenido</span>
+          <i class="fa fa-caret-down"></i>
+          <b class="caret"></b>
+        </a>
+        <ul id="submenu-2" class="panel-collapse collapse panel-switch" role="menu">
+          <li>
+            <a routerLink="./info" routerLinkActive="active"><i class="fa fa-caret-right"></i>
+              <span class="sidebar-title">Información</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="./apps" routerLinkActive="active"><i class="fa fa-caret-right"></i>
+              <span class="sidebar-title">Aplicaciones</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="./events" routerLinkActive="active"><i class="fa fa-caret-right"></i>
+              <span class="sidebar-title">Eventos</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="./developers" routerLinkActive="active"><i class="fa fa-caret-right"></i>
+              <span class="sidebar-title">Desarrolladores</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="./apis" routerLinkActive="active"><i class="fa fa-caret-right"></i>
+              <span class="sidebar-title">APIs</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="./sparql" routerLinkActive="active"><i class="fa fa-caret-right"></i>
+              <span class="sidebar-title">SPARQL</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </md-sidenav>
+  <button md-mini-fab class="example-fab" (click)="sidenav.toggle()">
+    <i class="material-icons">menu</i>
+  </button>
   <router-outlet></router-outlet>
-</div>
+</md-sidenav-container>
