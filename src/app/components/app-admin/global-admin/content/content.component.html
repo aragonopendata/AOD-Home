@@ -1,3 +1,10 @@
-<p>
-  content works!
-</p>
+<div style="margin: 2%; padding-bottom: 5%;">
+    <div *ngFor="let obj of listOfObj; let i = index" style="margin-top: 2%;">
+        <p *ngIf="!obj.edit" [innerHTML]="obj.text"></p>
+        <p-editor [(ngModel)]="obj.text" [style]="{'height':'300px'}" *ngIf="obj.edit"></p-editor>
+        <div style="margin-top: 2%;">
+            <button type="button" pButton icon="fa-check" (click)="edit(i)" [disabled]="obj.edit" label="Editar"></button>
+            <button type="button" pButton icon="fa-check" (click)="save(i, obj.text)" [disabled]="!obj.edit" label="Guardar"></button>
+        </div>
+    </div>
+</div>

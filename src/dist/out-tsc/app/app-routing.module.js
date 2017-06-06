@@ -22,12 +22,6 @@ var global_admin_home_component_1 = require("./components/app-admin/global-admin
 var users_component_1 = require("./components/app-admin/global-admin/users/users.component");
 var roles_component_1 = require("./components/app-admin/global-admin/roles/roles.component");
 var content_component_1 = require("./components/app-admin/global-admin/content/content.component");
-var info_component_1 = require("./components/app-admin/global-admin/content/info/info.component");
-var applications_component_1 = require("./components/app-admin/global-admin/content/applications/applications.component");
-var events_component_1 = require("./components/app-admin/global-admin/content/events/events.component");
-var developers_component_1 = require("./components/app-admin/global-admin/content/developers/developers.component");
-var apis_component_1 = require("./components/app-admin/global-admin/content/apis/apis.component");
-var sparql_component_1 = require("./components/app-admin/global-admin/content/sparql/sparql.component");
 var routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home', component: home_component_1.HomeComponent },
@@ -39,13 +33,12 @@ var routes = [
                     { path: 'globaladminhome', component: global_admin_home_component_1.GlobalAdminHomeComponent },
                     { path: 'users', component: users_component_1.UsersComponent },
                     { path: 'roles', component: roles_component_1.RolesComponent },
-                    { path: 'content', component: content_component_1.ContentComponent },
-                    { path: 'info', component: info_component_1.InfoComponent },
-                    { path: 'apps', component: applications_component_1.ApplicationsComponent },
-                    { path: 'events', component: events_component_1.EventsComponent },
-                    { path: 'developers', component: developers_component_1.DevelopersComponent },
-                    { path: 'apis', component: apis_component_1.ApisComponent },
-                    { path: 'sparql', component: sparql_component_1.SparqlComponent },
+                    { path: 'info', component: content_component_1.ContentComponent },
+                    { path: 'apps', component: content_component_1.ContentComponent },
+                    { path: 'events', component: content_component_1.ContentComponent },
+                    { path: 'developers', component: content_component_1.ContentComponent },
+                    { path: 'apis', component: content_component_1.ContentComponent },
+                    { path: 'sparql', component: content_component_1.ContentComponent },
                 ] },
             { path: 'datacenter', component: data_center_component_1.DataCenterComponent, children: [
                     { path: '', redirectTo: 'datacenterhome', pathMatch: 'full' },

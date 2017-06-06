@@ -66,5 +66,4 @@ export class RolesComponent implements OnInit {
     this.disabled = !this.disabled;
     console.log(this.disabled);
   }
-
 }

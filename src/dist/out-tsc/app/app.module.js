@@ -83,7 +83,8 @@ AppModule = __decorate([
             material_1.MdSidenavModule,
             primeng_1.DialogModule,
             primeng_1.CalendarModule,
-            primeng_1.InputSwitchModule
+            primeng_1.InputSwitchModule,
+            primeng_1.EditorModule
         ],
         providers: [],
         bootstrap: [app_component_1.AppComponent]

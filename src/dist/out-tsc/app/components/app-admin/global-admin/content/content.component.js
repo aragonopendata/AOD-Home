@@ -12,8 +12,34 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var ContentComponent = (function () {
     function ContentComponent() {
+        this.text = '';
+        this.editEnable = false;
     }
     ContentComponent.prototype.ngOnInit = function () {
+        this.text = '<h1>Lorem ipsum</h1>' +
+            '<br/>' +
+            '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. ' +
+            'Fusce vel odio molestie, eleifend diam in, auctor mi. ' +
+            'Morbi vitae risus orci. Vestibulum quis lorem non purus feugiat lacinia at a dui. ' +
+            'Nullam iaculis hendrerit ligula sit amet consectetur. Pellentesque fermentum euismod est ac laoreet. ' +
+            'Duis eget vestibulum dolor. Etiam velit ipsum, venenatis vel hendrerit eu, pulvinar quis felis. ' +
+            'Nunc rutrum sapien a tincidunt aliquet. Cras et quam nulla. Aliquam nec erat sollicitudin, lobortis mi non, aliquet dolor. ' +
+            'Vivamus sodales leo non ornare elementum. Aliquam commodo id quam ac consectetur. ' +
+            'Pellentesque felis mauris, consequat ut bibendum a, tempor sit amet turpis. ' +
+            'Aliquam sit amet libero nec turpis fermentum vestibulum ut sed turpis. ' +
+            'Donec tincidunt nisl at dolor cursus, eget tincidunt purus fringilla.</p>';
+        this.listOfObj = [
+            { text: this.text, edit: this.editEnable },
+            { text: this.text, edit: this.editEnable },
+            { text: this.text, edit: this.editEnable }
+        ];
+    };
+    ContentComponent.prototype.save = function (index, text) {
+        this.listOfObj[index].edit = !this.listOfObj[index].edit;
+        this.listOfObj[index].text = text;
+    };
+    ContentComponent.prototype.edit = function (index) {
+        this.listOfObj[index].edit = !this.listOfObj[index].edit;
     };
     return ContentComponent;
 }());
