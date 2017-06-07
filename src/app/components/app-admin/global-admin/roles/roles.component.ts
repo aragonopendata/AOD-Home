@@ -11,7 +11,7 @@ export class RolesComponent implements OnInit {
 
   displayDialog: boolean;
   displayUsers: boolean = false;
-  disabled: boolean;
+  displayDialogEdit: boolean;
 
   users: User[] = [];
   roles: Role[] = [];
@@ -45,13 +45,16 @@ export class RolesComponent implements OnInit {
 
   showDialogToAdd() {
     this.role = new Role("", "", null);
-    this.displayDialog = true;
+    this.displayDialogEdit = true;
   }
 
-  showDialog(role, disabled) {
+  showDialog(role, edit) {
     this.role = this.cloneRole(role);
-    this.displayDialog = true;
-    this.disabled = disabled;
+    if(edit) {
+      this.displayDialogEdit = true;
+    }else {
+      this.displayDialog = true;
+    }
   }
 
   cloneRole(r: Role): Role {
@@ -63,7 +66,7 @@ export class RolesComponent implements OnInit {
   }
 
   enableEdition() {
-    this.disabled = !this.disabled;
-    console.log(this.disabled);
+    this.displayDialog = !this.displayDialog;
+    this.displayDialogEdit = !this.displayDialogEdit;
   }
 }

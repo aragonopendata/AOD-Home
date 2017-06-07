@@ -41,12 +41,16 @@ var RolesComponent = (function () {
     };
     RolesComponent.prototype.showDialogToAdd = function () {
         this.role = new Role_1.Role("", "", null);
-        this.displayDialog = true;
+        this.displayDialogEdit = true;
     };
-    RolesComponent.prototype.showDialog = function (role, disabled) {
+    RolesComponent.prototype.showDialog = function (role, edit) {
         this.role = this.cloneRole(role);
-        this.displayDialog = true;
-        this.disabled = disabled;
+        if (edit) {
+            this.displayDialogEdit = true;
+        }
+        else {
+            this.displayDialog = true;
+        }
     };
     RolesComponent.prototype.cloneRole = function (r) {
         var role = new Role_1.Role("", "", null);
@@ -56,8 +60,8 @@ var RolesComponent = (function () {
         return role;
     };
     RolesComponent.prototype.enableEdition = function () {
-        this.disabled = !this.disabled;
-        console.log(this.disabled);
+        this.displayDialog = !this.displayDialog;
+        this.displayDialogEdit = !this.displayDialogEdit;
     };
     return RolesComponent;
 }());

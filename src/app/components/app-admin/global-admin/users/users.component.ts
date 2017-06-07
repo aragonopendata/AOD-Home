@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from '../../../../models/User';
+import {Role} from '../../../../models/Role';
+import {SelectItem} from 'primeng/primeng';
 
 @Component({
   selector: 'app-users',
@@ -9,19 +11,35 @@ import {User} from '../../../../models/User';
 export class UsersComponent implements OnInit {
 
   displayDialog: boolean;
-  disabled: boolean;
+  displayDialogEdit: boolean;
 
   users: User[];
+  roles: Role[];
+  selectRoles: SelectItem[] = [];
 
   user: User;
+  selectedRole: Role;
+
+  date: Date;
 
   es: any;
 
   constructor() {
+    this.date = new Date;
     this.users = [
-      new User("username01", "Administrador total", new Date, true),
-      new User("username02", "Administrador", new Date, false)
+      new User("username01", "Administrador total", this.date, true),
+      new User("username02", "Administrador de organizaciones", this.date, false),
+      new User("username03", "Wacher", this.date, true)
     ];
+    this.roles = [
+      new Role("Administrador total", "", null),
+      new Role("Administrador de organizaciones", "", null),
+      new Role("Watcher", "", null)
+    ];
+    this.selectRoles.push({label: 'Selecciona un rol', value: null});
+    for(let i = 0; i < this.roles.length; i++) {
+      this.selectRoles.push({label: this.roles[i].roleName, value: this.roles[i].roleName});
+    }
   }
 
   ngOnInit() {
@@ -37,13 +55,17 @@ export class UsersComponent implements OnInit {
 
   showDialogToAdd() {
     this.user = new User("", "", null, false);
-    this.displayDialog = true;
+    this.displayDialogEdit = true;
   }
 
-  showDialog(user, disabled) {
-    this.user = this.cloneUser(user);
-    this.displayDialog = true;
-    this.disabled = disabled;
+  showDialog(user, edit) {
+    if(edit) {
+      this.user = this.cloneUser(user);
+      this.displayDialogEdit = true;
+    }else {
+      this.user = this.cloneUser(user);
+      this.displayDialog = true;
+    }
   }
 
   cloneUser(u: User): User {
@@ -59,11 +81,11 @@ export class UsersComponent implements OnInit {
     users.push(this.user);
     this.users = users;
     this.user = null;
-    this.displayDialog = false;
+    this.displayDialogEdit = false;
   }
 
   enableEdition() {
-    this.disabled = !this.disabled;
-    console.log(this.disabled);
+    this.displayDialogEdit = !this.displayDialogEdit;
+    this.displayDialog = !this.displayDialog;
   }
 }

@@ -6,8 +6,8 @@
     <p-column field="active" header="Activo" [sortable]="true"></p-column>
     <p-column header="Edición">
       <ng-template pTemplate="body" let-user="rowData">
-        <button pButton type="button" icon="fa-search" (click)="showDialog(user, true)"></button>
-        <button pButton type="button" icon="fa-edit" (click)="showDialog(user, false)"></button>
+        <button pButton type="button" icon="fa-search" (click)="showDialog(user, false)"></button>
+        <button pButton type="button" icon="fa-edit" (click)="showDialog(user, true)"></button>
         <button pButton type="button" icon="fa-trash"></button>
       </ng-template>
     </p-column>
@@ -19,33 +19,65 @@
   </p-dataTable>
 </div>
 
-<p-dialog appendTo="body" header="Detalles de usuario" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" modal="true">
+<p-dialog header="Detalles del usuario" appendTo="body" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" width="1000">
+  <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="user" style="font-size:16px; padding:20px;">
+    <div class="ui-grid-row" style="text-align: center; margin-bottom: 2%;">
+      <div class="ui-grid-col-12">
+        <img src="../../../../../assets/logoDGA.png" width="170px" height="40px">
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-5"><b>Nombre: </b></div>
+      <div class="ui-grid-col-7">{{user.username}}</div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-5"><b>Rol: </b></div>
+      <div class="ui-grid-col-7">{{user.role}}</div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-5"><b>Fecha de alta: </b></div>
+      <div class="ui-grid-col-7">{{user.singupDate}}</div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-5"><b>Activo: </b></div>
+      <div class="ui-grid-col-7">{{user.active}}</div>
+    </div>
+  </div>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <button type="button" pButton icon="fa-edit" (click)="enableEdition()" label="Editar"></button>
+    </div>
+  </p-footer>
+</p-dialog>
+
+<p-dialog appendTo="body" header="Detalles de usuario" [(visible)]="displayDialogEdit" [responsive]="true" showEffect="fade" modal="true">
   <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="user">
     <div class="ui-grid-row" style="padding: 5px;">
       <div class="ui-grid-col-4"><label for="username">Nombre de usuario</label></div>
-      <div class="ui-grid-col-8"><input pInputText id="username" [disabled]="disabled" [(ngModel)]="user.username" /></div>
+      <div class="ui-grid-col-8"><input pInputText id="username" [(ngModel)]="user.username" /></div>
     </div>
     <div class="ui-grid-row" style="padding: 5px;">
-      <div class="ui-grid-col-4"><label for="role">Rol</label></div>
-      <div class="ui-grid-col-8"><input pInputText id="role" [disabled]="disabled" [(ngModel)]="user.role" /></div>
+      <div class="ui-grid-col-4"><label>Rol</label></div>
+      <div class="ui-grid-col-8">
+        <p-dropdown [style]="{'width':'220px'}" appendTo="body" [options]="selectRoles" [(ngModel)]="selectedRole"></p-dropdown>
+      </div>
     </div>
     <div class="ui-grid-row" style="padding: 5px;">
       <div class="ui-grid-col-4"><label>Fecha de alta</label></div>
       <div class="ui-grid-col-8">
-        <p-calendar appendTo="body" [(ngModel)]="user.singupDate" [disabled]="disabled" [locale]="es" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030"></p-calendar>
+        <p-calendar appendTo="body" [(ngModel)]="user.singupDate" [locale]="es" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030"></p-calendar>
       </div>
     </div>
     <div class="ui-grid-row" style="padding: 5px;">
       <div class="ui-grid-col-4"><label>Activo</label></div>
       <div class="ui-grid-col-8">
-        <p-inputSwitch onLabel="Sí" offLabel="No" [disabled]="disabled" [(ngModel)]="user.active"></p-inputSwitch>
+        <p-inputSwitch onLabel="Sí" offLabel="No" [(ngModel)]="user.active"></p-inputSwitch>
       </div>
     </div>
   </div>
   <p-footer>
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
-      <button type="button" pButton icon="fa-check" [disabled]="disabled" label="Guardar"></button>
-      <button type="button" pButton icon="fa-edit" [disabled]="!disabled" (click)="enableEdition()" label="Editar"></button>
+      <button type="button" pButton icon="fa-check" label="Guardar"></button>
     </div>
   </p-footer>
 </p-dialog>

@@ -1,4 +1,4 @@
-<div style="margin: 2%; padding-bottom: 5%;">
+<div style="margin: 2%; padding-bottom: 5%;" data-spy="scroll">
     <div *ngFor="let obj of listOfObj; let i = index" style="margin-top: 2%;">
         <p *ngIf="!obj.edit" [innerHTML]="obj.text"></p>
         <p-editor [(ngModel)]="obj.text" [style]="{'height':'300px'}" *ngIf="obj.edit"></p-editor>

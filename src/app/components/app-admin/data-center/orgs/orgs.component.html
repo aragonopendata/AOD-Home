@@ -1,3 +1,119 @@
-<p>
-  orgs works!
-</p>
+<div style="padding: 2%;">
+  <div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+    <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+    <p-autoComplete [(ngModel)]="selectedOrg" [suggestions]="results" field="orgName" (completeMethod)="search($event)"></p-autoComplete>
+  </div>
+  <p-dataList [value]="results">
+    <ng-template let-org pTemplate="item">
+      <div class="ui-grid ui-grid-responsive ui-fluid" style="font-size:16px; padding:20px; border-bottom:1px solid #D5D5D5;">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-3" style="text-align:center; margin: auto;">
+            <i class="fa fa-search" (click)="selectOrg(org)" style="cursor:pointer; float:left; margin-top: 10px;"></i>
+            <img src="../../../../../assets/logoDGA.png" width="170" height="40">
+          </div>
+          <div class="ui-grid-col-9">
+            <div class="ui-grid ui-grid-responsive ui-fluid">
+              <div class="ui-grid-row">
+                <div class="ui-grid-col-5"><b>Nombre: </b></div>
+                <div class="ui-grid-col-7" id="lt">{{org.orgName}}</div>
+              </div>
+              <div class="ui-grid-row">
+                <div class="ui-grid-col-5"><b>Página web de la organización: </b></div>
+                <div class="ui-grid-col-7" id="lt">{{org.orgWeb}}</div>
+              </div>
+              <div class="ui-grid-row">
+                <div class="ui-grid-col-5"><b>Descripción: </b></div>
+                <div class="ui-grid-col-7" id="lt">{{org.orgDesc}}</div>
+              </div>
+              <div class="ui-grid-row">
+                <div class="ui-grid-col-5"><b>Dirección: </b></div>
+                <div class="ui-grid-col-7" id="lt">{{org.orgDir}}</div>
+              </div>
+              <div class="ui-grid-row">
+                <div class="ui-grid-col-5"><b>Responsable: </b></div>
+                <div class="ui-grid-col-7" id="lt">{{org.orgResponsable}}</div>
+              </div>
+              <div class="ui-grid-row">
+                <div class="ui-grid-col-5"><b>Contacto: </b></div>
+                <div class="ui-grid-col-7" id="lt">{{org.orgContact}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-dataList>
+</div>
+
+<p-dialog header="Detalles de la organización" appendTo="body" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" width="1000">
+  <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="selectedOrg" style="font-size:16px; padding:20px;">
+    <div class="ui-grid-row" style="text-align: center; margin-bottom: 2%;">
+      <div class="ui-grid-col-12">
+        <img src="../../../../../assets/logoDGA.png" width="170px" height="40px">
+      </div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-5"><b>Nombre: </b></div>
+      <div class="ui-grid-col-7">{{selectedOrg.orgName}}</div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-5"><b>Página web: </b></div>
+      <div class="ui-grid-col-7">{{selectedOrg.orgWeb}}</div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-5"><b>Descripción: </b></div>
+      <div class="ui-grid-col-7">{{selectedOrg.orgDesc}}</div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-5"><b>Dirección: </b></div>
+      <div class="ui-grid-col-7">{{selectedOrg.orgDir}}</div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-5"><b>Responsable: </b></div>
+      <div class="ui-grid-col-7">{{selectedOrg.orgResponsable}}</div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-5"><b>Contacto: </b></div>
+      <div class="ui-grid-col-7">{{selectedOrg.orgContact}}</div>
+    </div>
+  </div>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <button type="button" pButton icon="fa-edit" (click)="enableEdition()" label="Editar"></button>
+    </div>
+  </p-footer>
+</p-dialog>
+
+<p-dialog appendTo="body" header="Editar organización" [(visible)]="displayDialogEdit" width="1000" [responsive]="true" showEffect="fade" modal="true">
+  <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="selectedOrg">
+    <div class="ui-grid-row" style="padding: 5px;">
+      <div class="ui-grid-col-4"><label>Nombre de organización: </label></div>
+      <div class="ui-grid-col-8"><input pInputText [(ngModel)]="selectedOrg.orgName" /></div>
+    </div>
+    <div class="ui-grid-row" style="padding: 5px;">
+      <div class="ui-grid-col-4"><label>Página web: </label></div>
+      <div class="ui-grid-col-8"><input pInputText [(ngModel)]="selectedOrg.orgWeb" /></div>
+    </div>
+    <div class="ui-grid-row" style="padding: 5px;">
+      <div class="ui-grid-col-4"><label>Descripción: </label></div>
+      <div class="ui-grid-col-8"><textarea pInputTextarea rows="5" cols="30" [(ngModel)]="selectedOrg.orgDesc"></textarea></div>
+    </div>
+    <div class="ui-grid-row" style="padding: 5px;">
+      <div class="ui-grid-col-4"><label>Dirección: </label></div>
+      <div class="ui-grid-col-8"><input pInputText [(ngModel)]="selectedOrg.orgDir" /></div>
+    </div>
+    <div class="ui-grid-row" style="padding: 5px;">
+      <div class="ui-grid-col-4"><label>Responsable: </label></div>
+      <div class="ui-grid-col-8"><input pInputText [(ngModel)]="selectedOrg.orgResponsable" /></div>
+    </div>
+    <div class="ui-grid-row" style="padding: 5px;">
+      <div class="ui-grid-col-4"><label>Contacto: </label></div>
+      <div class="ui-grid-col-8"><input pInputText [(ngModel)]="selectedOrg.orgContact" /></div>
+    </div>
+  </div>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <button type="button" pButton icon="fa-check" label="Guardar"></button>
+    </div>
+  </p-footer>
+</p-dialog>

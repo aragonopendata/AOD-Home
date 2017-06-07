@@ -1,3 +1,12 @@
-<p>
-  data-center-home works!
-</p>
+<div class="ui-g-3">
+  <p-chart type="radar" [data]="data"></p-chart>
+  <p>Datasets por tipo</p>
+</div>
+<div class="ui-g-4">
+  <p-chart type="bar" [data]="data2"></p-chart>
+  <p>Datasets por organización</p>
+</div>
+<div class="ui-g-5">
+  <p-chart type="line" [data]="data3"></p-chart>
+  <p>Número de accesos mensual</p>
+</div>

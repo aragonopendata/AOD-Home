@@ -10,8 +10,8 @@
     </p-column>
     <p-column header="Edición">
       <ng-template pTemplate="body" let-role="rowData">
-        <button pButton type="button" icon="fa-search" (click)="showDialog(role, true)"></button>
-        <button pButton type="button" icon="fa-edit" (click)="showDialog(role, false)"></button>
+        <button pButton type="button" icon="fa-search" (click)="showDialog(role, false)"></button>
+        <button pButton type="button" icon="fa-edit" (click)="showDialog(role, true)"></button>
         <button pButton type="button" icon="fa-trash"></button>
       </ng-template>
     </p-column>
@@ -29,21 +29,39 @@
   </div>
 </p-dialog>
 
-<p-dialog appendTo="body" header="Detalles del rol" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" modal="true">
+<p-dialog appendTo="body" header="Detalles del rol" [(visible)]="displayDialogEdit" [responsive]="true" showEffect="fade" modal="true">
   <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="role">
     <div class="ui-grid-row" style="padding: 5px;">
-      <div class="ui-grid-col-4"><label for="roleName">Nombre de usuario</label></div>
-      <div class="ui-grid-col-8"><input pInputText id="roleName" [disabled]="disabled" [(ngModel)]="role.roleName" /></div>
+      <div class="ui-grid-col-4"><label for="roleName">Nombre del rol</label></div>
+      <div class="ui-grid-col-8"><input pInputText id="roleName" [(ngModel)]="role.roleName" /></div>
     </div>
     <div class="ui-grid-row" style="padding: 5px;">
-      <div class="ui-grid-col-4"><label for="description">Rol</label></div>
-      <div class="ui-grid-col-8"><input pInputText id="description" [disabled]="disabled" [(ngModel)]="role.description" /></div>
+      <div class="ui-grid-col-4"><label for="description">Descripción</label></div>
+      <div class="ui-grid-col-8"><input pInputText id="description" [(ngModel)]="role.description" /></div>
     </div>
   </div>
   <p-footer>
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
       <button type="button" pButton icon="fa-check" [disabled]="disabled" label="Guardar"></button>
       <button type="button" pButton icon="fa-edit" [disabled]="!disabled" (click)="enableEdition()" label="Editar"></button>
+    </div>
+  </p-footer>
+</p-dialog>
+
+<p-dialog header="Detalles del rol" appendTo="body" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true">
+  <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="role" style="font-size:16px; padding:20px;">
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-5"><b>Nombre del rol: </b></div>
+      <div class="ui-grid-col-7">{{role.roleName}}</div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-5"><b>Descripción: </b></div>
+      <div class="ui-grid-col-7">{{role.description}}</div>
+    </div>
+  </div>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <button type="button" pButton icon="fa-edit" (click)="enableEdition()" label="Editar"></button>
     </div>
   </p-footer>
 </p-dialog>

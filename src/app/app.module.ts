@@ -7,7 +7,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   ChartModule, PanelModule, FieldsetModule, InputTextModule, DropdownModule,
-  InputTextareaModule, ButtonModule, SharedModule, DataTableModule, DialogModule, CalendarModule, InputSwitchModule, EditorModule
+  InputTextareaModule, ButtonModule, SharedModule, DataTableModule, DialogModule, CalendarModule, InputSwitchModule, EditorModule,
+  DataListModule, TooltipModule, AutoCompleteModule
 } from 'primeng/primeng';
 import {MdSidenavModule} from '@angular/material';
 
@@ -76,7 +77,10 @@ import { GlobalAdminHomeComponent } from './components/app-admin/global-admin/gl
     DialogModule,
     CalendarModule,
     InputSwitchModule,
-    EditorModule
+    EditorModule,
+    DataListModule,
+    TooltipModule,
+    AutoCompleteModule
   ],
   providers: [],
   bootstrap: [AppComponent]

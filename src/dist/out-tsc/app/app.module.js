@@ -84,7 +84,10 @@ AppModule = __decorate([
             primeng_1.DialogModule,
             primeng_1.CalendarModule,
             primeng_1.InputSwitchModule,
-            primeng_1.EditorModule
+            primeng_1.EditorModule,
+            primeng_1.DataListModule,
+            primeng_1.TooltipModule,
+            primeng_1.AutoCompleteModule
         ],
         providers: [],
         bootstrap: [app_component_1.AppComponent]

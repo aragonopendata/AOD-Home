@@ -11,12 +11,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var User_1 = require("../../../../models/User");
+var Role_1 = require("../../../../models/Role");
 var UsersComponent = (function () {
     function UsersComponent() {
+        this.selectRoles = [];
+        this.date = new Date;
         this.users = [
-            new User_1.User("username01", "Administrador total", new Date, true),
-            new User_1.User("username02", "Administrador", new Date, false)
+            new User_1.User("username01", "Administrador total", this.date, true),
+            new User_1.User("username02", "Administrador de organizaciones", this.date, false),
+            new User_1.User("username03", "Wacher", this.date, true)
         ];
+        this.roles = [
+            new Role_1.Role("Administrador total", "", null),
+            new Role_1.Role("Administrador de organizaciones", "", null),
+            new Role_1.Role("Watcher", "", null)
+        ];
+        this.selectRoles.push({ label: 'Selecciona un rol', value: null });
+        for (var i = 0; i < this.roles.length; i++) {
+            this.selectRoles.push({ label: this.roles[i].roleName, value: this.roles[i].roleName });
+        }
     }
     UsersComponent.prototype.ngOnInit = function () {
         this.es = {
@@ -30,12 +43,17 @@ var UsersComponent = (function () {
     };
     UsersComponent.prototype.showDialogToAdd = function () {
         this.user = new User_1.User("", "", null, false);
-        this.displayDialog = true;
+        this.displayDialogEdit = true;
     };
-    UsersComponent.prototype.showDialog = function (user, disabled) {
-        this.user = this.cloneUser(user);
-        this.displayDialog = true;
-        this.disabled = disabled;
+    UsersComponent.prototype.showDialog = function (user, edit) {
+        if (edit) {
+            this.user = this.cloneUser(user);
+            this.displayDialogEdit = true;
+        }
+        else {
+            this.user = this.cloneUser(user);
+            this.displayDialog = true;
+        }
     };
     UsersComponent.prototype.cloneUser = function (u) {
         var user = new User_1.User("", "", null, false);
@@ -49,11 +67,11 @@ var UsersComponent = (function () {
         users.push(this.user);
         this.users = users;
         this.user = null;
-        this.displayDialog = false;
+        this.displayDialogEdit = false;
     };
     UsersComponent.prototype.enableEdition = function () {
-        this.disabled = !this.disabled;
-        console.log(this.disabled);
+        this.displayDialogEdit = !this.displayDialogEdit;
+        this.displayDialog = !this.displayDialog;
     };
     return UsersComponent;
 }());
