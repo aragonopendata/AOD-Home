@@ -21,12 +21,15 @@ var orgs_component_1 = require("./components/app-admin/data-center/orgs/orgs.com
 var global_admin_home_component_1 = require("./components/app-admin/global-admin/global-admin-home/global-admin-home.component");
 var users_component_1 = require("./components/app-admin/global-admin/users/users.component");
 var roles_component_1 = require("./components/app-admin/global-admin/roles/roles.component");
+var show_dataset_component_1 = require("./components/app-admin/data-center/datasets/show-dataset/show-dataset.component");
+var edit_dataset_component_1 = require("./components/app-admin/data-center/datasets/edit-dataset/edit-dataset.component");
+var list_dataset_component_1 = require("./components/app-admin/data-center/datasets/list-dataset/list-dataset.component");
 var content_component_1 = require("./components/app-admin/global-admin/content/content.component");
 var routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home', component: home_component_1.HomeComponent },
     { path: 'appadmin', component: app_admin_component_1.AppAdminComponent, children: [
-            { path: '', redirectTo: 'adminhome', pathMatch: 'full' },
+            { path: '', redirectTo: 'globaladminhome', pathMatch: 'full' },
             { path: 'adminhome', component: admin_home_component_1.AdminHomeComponent },
             { path: 'globaladmin', component: global_admin_component_1.GlobalAdminComponent, children: [
                     { path: '', redirectTo: 'globaladminhome', pathMatch: 'full' },
@@ -43,7 +46,12 @@ var routes = [
             { path: 'datacenter', component: data_center_component_1.DataCenterComponent, children: [
                     { path: '', redirectTo: 'datacenterhome', pathMatch: 'full' },
                     { path: 'datacenterhome', component: data_center_home_component_1.DataCenterHomeComponent },
-                    { path: 'datasets', component: datasets_component_1.DatasetsComponent },
+                    { path: 'datasets', component: datasets_component_1.DatasetsComponent, children: [
+                            { path: '', redirectTo: 'datasetlist', pathMatch: 'full' },
+                            { path: 'datasetlist', component: list_dataset_component_1.ListDatasetComponent },
+                            { path: 'showdataset', component: show_dataset_component_1.ShowDatasetComponent },
+                            { path: 'editdataset', component: edit_dataset_component_1.EditDatasetComponent }
+                        ] },
                     { path: 'orgs', component: orgs_component_1.OrgsComponent },
                 ] },
             { path: 'campus', component: admin_campus_component_1.CampusComponent }

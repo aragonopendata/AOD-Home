@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   ChartModule, PanelModule, FieldsetModule, InputTextModule, DropdownModule,
   InputTextareaModule, ButtonModule, SharedModule, DataTableModule, DialogModule, CalendarModule, InputSwitchModule, EditorModule,
-  DataListModule, TooltipModule, AutoCompleteModule
+  DataListModule, TooltipModule, AutoCompleteModule, ProgressBarModule, RadioButtonModule, CheckboxModule, FileUploadModule
 } from 'primeng/primeng';
 import {MdSidenavModule} from '@angular/material';
 
@@ -33,6 +33,12 @@ import { ApisComponent } from './components/app-admin/global-admin/content/apis/
 import { SparqlComponent } from './components/app-admin/global-admin/content/sparql/sparql.component';
 import { DataCenterHomeComponent } from './components/app-admin/data-center/data-center-home/data-center-home.component';
 import { GlobalAdminHomeComponent } from './components/app-admin/global-admin/global-admin-home/global-admin-home.component';
+import { ShowDatasetComponent } from './components/app-admin/data-center/datasets/show-dataset/show-dataset.component';
+import { EditDatasetComponent } from './components/app-admin/data-center/datasets/edit-dataset/edit-dataset.component';
+import { ListDatasetComponent } from './components/app-admin/data-center/datasets/list-dataset/list-dataset.component';
+import {DatasetService} from './services/dataset/dataset.service';
+import {TopicService} from './services/topic/topic.service';
+import {PublicadorService} from './services/publicador/publicador.service';
 
 @NgModule({
   declarations: [
@@ -56,7 +62,10 @@ import { GlobalAdminHomeComponent } from './components/app-admin/global-admin/gl
     ApisComponent,
     SparqlComponent,
     DataCenterHomeComponent,
-    GlobalAdminHomeComponent
+    GlobalAdminHomeComponent,
+    ShowDatasetComponent,
+    EditDatasetComponent,
+    ListDatasetComponent
   ],
   imports: [
     BrowserModule,
@@ -80,9 +89,13 @@ import { GlobalAdminHomeComponent } from './components/app-admin/global-admin/gl
     EditorModule,
     DataListModule,
     TooltipModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    ProgressBarModule,
+    RadioButtonModule,
+    CheckboxModule,
+    FileUploadModule
   ],
-  providers: [],
+  providers: [DatasetService, TopicService, PublicadorService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

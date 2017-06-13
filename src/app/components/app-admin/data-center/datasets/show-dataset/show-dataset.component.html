@@ -1,0 +1,88 @@
+<div class="ui-g-12" style="padding-bottom: 5%;">
+    <h2>{{dataset.name}}</h2>
+    <p>
+        Previsualización del conjunto de datos no disponible.
+    </p>
+    <div class="ui-g-8" style="text-align: justify;">
+        <h3>Información del conjunto de datos</h3>
+        <h5>Título</h5>
+        <p><span>{{dataset.name}}</span></p>
+
+        <h5>Descripción</h5>
+        <p><span>{{dataset.description}}</span></p>
+
+        <h5>Categoría</h5>
+        <p><span>{{dataset.topic.name}}</span></p>
+
+        <h5>Etiquetas y palabras clave</h5>
+        <span>
+            <div class="ui-g-3">
+                <button type="button" class="btn btn-default">Destino</button>
+            </div>
+            <div class="ui-g-3">
+                <button type="button" class="btn btn-default">Edad</button>
+            </div>
+            <div class="ui-g-3">
+                <button type="button" class="btn btn-default">Fecha</button>
+            </div>
+            <div class="ui-g-3">
+                <button type="button" class="btn btn-default">Localidad</button>
+            </div>
+        </span>
+        <h5>Organización responsable de la publicación</h5>
+        <p>
+            <span>{{dataset.publicador.name}}</span>
+        </p>
+
+        <h5>Territorio en el que existen datos</h5>
+        <p>
+            Este conjunto de datos contiene datos en el territorio de
+            <span>Aragón</span>
+        </p>
+
+        <h5>Frecuencia de actualización</h5>
+        <p><span>Instantánea</span></p>
+
+        <h5>Licencia</h5>
+        <p><span>Creative Commons Attribution (cc-by)</span></p>
+
+        <h5>Diccionario de datos</h5>
+        <p><span>La columna numero 1 es el número de registro correlativo que asigna directamente la aplicación.
+            La columna número 2 recoge la fecha y hora en la que se graba el dato. Las columnas 3 y 4 hacen referencia
+            a la provincia y localidad del consumidor. La columna número 5 se reserva a la reseña del sexo de aquel, y
+            la columna 6 para clasificar su edad. En la columna número 7 se establece el tipo de demanda (consulta si
+            sólo se busca información, queja si se plantea algo no regulado, reclamación si se exige algo a su favor y
+            denuncia si se comunica un ilícito). La columna 8 nos muestra el soporte o modo en el que se recibe la
+            solicitud. La columna 9 sirve para esquematizar el motivo de la atención. La columna 10 para el sector
+            sobre el que plantea la consulta o atención y la columna 11 para referirnos al destino que se le da,
+            entendiendo como tal un breve resumen de la información que transmitimos, en unos casos se le indica dónde
+            puede continuar su solicitud y en otros "información_resolución" se considera completada nuestra
+            información.</span></p>
+    </div>
+    <div class="ui-g-4" style="text-align: justify;">
+        <h3>Descargas</h3>
+        <h5>Metadato de la colección</h5>
+        <button type="button" class="btn btn-default">RDF</button>
+        <h5>Archivos con los datos</h5>
+        <p>
+            *Si la cantidad de datos es muy grande puede ayudarse de la paginación en la
+            API que proporcionamos en el enlace.
+        </p>
+        <div><span>{{dataset.name}}</span></div>
+        <div>
+            <div class="ui-g-3">
+                <button type="button" class="btn btn-default">XML</button>
+            </div>
+            <div class="ui-g-3">
+                <button type="button" class="btn btn-default">CSV</button>
+            </div>
+            <div class="ui-g-3">
+                <button type="button" class="btn btn-default">JSON</button>
+            </div>
+            <div class="ui-g-3">
+                <button type="button" class="btn btn-default">API</button>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -35,6 +35,12 @@ var apis_component_1 = require("./components/app-admin/global-admin/content/apis
 var sparql_component_1 = require("./components/app-admin/global-admin/content/sparql/sparql.component");
 var data_center_home_component_1 = require("./components/app-admin/data-center/data-center-home/data-center-home.component");
 var global_admin_home_component_1 = require("./components/app-admin/global-admin/global-admin-home/global-admin-home.component");
+var show_dataset_component_1 = require("./components/app-admin/data-center/datasets/show-dataset/show-dataset.component");
+var edit_dataset_component_1 = require("./components/app-admin/data-center/datasets/edit-dataset/edit-dataset.component");
+var list_dataset_component_1 = require("./components/app-admin/data-center/datasets/list-dataset/list-dataset.component");
+var dataset_service_1 = require("./services/dataset/dataset.service");
+var topic_service_1 = require("./services/topic/topic.service");
+var publicador_service_1 = require("./services/publicador/publicador.service");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -63,7 +69,10 @@ AppModule = __decorate([
             apis_component_1.ApisComponent,
             sparql_component_1.SparqlComponent,
             data_center_home_component_1.DataCenterHomeComponent,
-            global_admin_home_component_1.GlobalAdminHomeComponent
+            global_admin_home_component_1.GlobalAdminHomeComponent,
+            show_dataset_component_1.ShowDatasetComponent,
+            edit_dataset_component_1.EditDatasetComponent,
+            list_dataset_component_1.ListDatasetComponent
         ],
         imports: [
             platform_browser_1.BrowserModule,
@@ -87,9 +96,13 @@ AppModule = __decorate([
             primeng_1.EditorModule,
             primeng_1.DataListModule,
             primeng_1.TooltipModule,
-            primeng_1.AutoCompleteModule
+            primeng_1.AutoCompleteModule,
+            primeng_1.ProgressBarModule,
+            primeng_1.RadioButtonModule,
+            primeng_1.CheckboxModule,
+            primeng_1.FileUploadModule
         ],
-        providers: [],
+        providers: [dataset_service_1.DatasetService, topic_service_1.TopicService, publicador_service_1.PublicadorService],
         bootstrap: [app_component_1.AppComponent]
     })
 ], AppModule);

@@ -32,7 +32,7 @@ export class ContentComponent implements OnInit {
     this.listOfObj = [
       { text: this.text, edit: this.editEnable },
       { text: this.text, edit: this.editEnable },
-      { text: this.text, edit: this.editEnable }
+      { text: this.text, edit: this.editEnable }, { text: this.text, edit: this.editEnable }
     ];
   }
 

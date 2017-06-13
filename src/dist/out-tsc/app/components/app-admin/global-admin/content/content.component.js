@@ -31,7 +31,7 @@ var ContentComponent = (function () {
         this.listOfObj = [
             { text: this.text, edit: this.editEnable },
             { text: this.text, edit: this.editEnable },
-            { text: this.text, edit: this.editEnable }
+            { text: this.text, edit: this.editEnable }, { text: this.text, edit: this.editEnable }
         ];
     };
     ContentComponent.prototype.save = function (index, text) {
