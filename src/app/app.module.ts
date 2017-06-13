@@ -39,6 +39,7 @@ import { ListDatasetComponent } from './components/app-admin/data-center/dataset
 import {DatasetService} from './services/dataset/dataset.service';
 import {TopicService} from './services/topic/topic.service';
 import {PublicadorService} from './services/publicador/publicador.service';
+import { AppHomeComponent } from './components/app-home/app-home.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import {PublicadorService} from './services/publicador/publicador.service';
     GlobalAdminHomeComponent,
     ShowDatasetComponent,
     EditDatasetComponent,
-    ListDatasetComponent
+    ListDatasetComponent,
+    AppHomeComponent
   ],
   imports: [
     BrowserModule,

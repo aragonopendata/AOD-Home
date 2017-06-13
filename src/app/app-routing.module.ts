@@ -24,13 +24,13 @@ import {ShowDatasetComponent} from './components/app-admin/data-center/datasets/
 import {EditDatasetComponent} from './components/app-admin/data-center/datasets/edit-dataset/edit-dataset.component';
 import {ListDatasetComponent} from './components/app-admin/data-center/datasets/list-dataset/list-dataset.component';
 import {ContentComponent} from './components/app-admin/global-admin/content/content.component';
+import {AppHomeComponent} from './components/app-home/app-home.component';
 
 const routes: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
-    {path: 'home', component: HomeComponent},
+    {path: 'home', component: AppHomeComponent},
     {path: 'appadmin', component: AppAdminComponent, children: [
-        {path: '', redirectTo: 'globaladminhome', pathMatch: 'full'},
-        {path: 'adminhome', component: AdminHomeComponent},
+        {path: '', redirectTo: 'globaladmin', pathMatch: 'full'},
         {path: 'globaladmin', component: GlobalAdminComponent, children: [
             {path: '', redirectTo: 'globaladminhome', pathMatch: 'full'},
             {path: 'globaladminhome', component: GlobalAdminHomeComponent},

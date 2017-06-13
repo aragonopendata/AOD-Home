@@ -41,6 +41,7 @@ var list_dataset_component_1 = require("./components/app-admin/data-center/datas
 var dataset_service_1 = require("./services/dataset/dataset.service");
 var topic_service_1 = require("./services/topic/topic.service");
 var publicador_service_1 = require("./services/publicador/publicador.service");
+var app_home_component_1 = require("./components/app-home/app-home.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -72,7 +73,8 @@ AppModule = __decorate([
             global_admin_home_component_1.GlobalAdminHomeComponent,
             show_dataset_component_1.ShowDatasetComponent,
             edit_dataset_component_1.EditDatasetComponent,
-            list_dataset_component_1.ListDatasetComponent
+            list_dataset_component_1.ListDatasetComponent,
+            app_home_component_1.AppHomeComponent
         ],
         imports: [
             platform_browser_1.BrowserModule,

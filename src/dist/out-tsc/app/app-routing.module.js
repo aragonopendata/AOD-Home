@@ -8,8 +8,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
-var home_component_1 = require("./components/home/home.component");
-var admin_home_component_1 = require("./components/app-admin/admin_home/admin_home.component");
 var data_center_component_1 = require("./components/app-admin/data-center/data-center.component");
 var admin_campus_component_1 = require("./components/app-admin/campus/admin_campus.component");
 var login_component_1 = require("./components/login/login.component");
@@ -25,12 +23,12 @@ var show_dataset_component_1 = require("./components/app-admin/data-center/datas
 var edit_dataset_component_1 = require("./components/app-admin/data-center/datasets/edit-dataset/edit-dataset.component");
 var list_dataset_component_1 = require("./components/app-admin/data-center/datasets/list-dataset/list-dataset.component");
 var content_component_1 = require("./components/app-admin/global-admin/content/content.component");
+var app_home_component_1 = require("./components/app-home/app-home.component");
 var routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
-    { path: 'home', component: home_component_1.HomeComponent },
+    { path: 'home', component: app_home_component_1.AppHomeComponent },
     { path: 'appadmin', component: app_admin_component_1.AppAdminComponent, children: [
-            { path: '', redirectTo: 'globaladminhome', pathMatch: 'full' },
-            { path: 'adminhome', component: admin_home_component_1.AdminHomeComponent },
+            { path: '', redirectTo: 'globaladmin', pathMatch: 'full' },
             { path: 'globaladmin', component: global_admin_component_1.GlobalAdminComponent, children: [
                     { path: '', redirectTo: 'globaladminhome', pathMatch: 'full' },
                     { path: 'globaladminhome', component: global_admin_home_component_1.GlobalAdminHomeComponent },

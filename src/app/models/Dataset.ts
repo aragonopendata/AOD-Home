@@ -26,5 +26,6 @@ export class Dataset {
         this.topic = topic;
         this.lastUpdate = lastUpdate;
         this.publicador = publicador;
+        this.untilDate = new Date;
     }
 }

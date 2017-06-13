@@ -10,7 +10,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var Dataset_1 = require("../../../../../models/Dataset");
 var dataset_service_1 = require("../../../../../services/dataset/dataset.service");
+var Publicador_1 = require("../../../../../models/Publicador");
+var Topic_1 = require("../../../../../models/Topic");
 var ListDatasetComponent = (function () {
     function ListDatasetComponent(datasetService) {
         this.datasetService = datasetService;
@@ -21,6 +24,10 @@ var ListDatasetComponent = (function () {
     };
     ListDatasetComponent.prototype.showDataset = function (dataset) {
         this.datasetService.setDataset(dataset);
+    };
+    ListDatasetComponent.prototype.addDataset = function () {
+        this.dataset = new Dataset_1.Dataset('', '', '', new Topic_1.Topic(23, ''), new Date, new Publicador_1.Publicador(''));
+        this.datasetService.setDataset(this.dataset);
     };
     return ListDatasetComponent;
 }());

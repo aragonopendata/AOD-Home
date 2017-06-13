@@ -1,0 +1,70 @@
+<div class="relatedHeader">
+  <ul class="nav justify-content-end">
+    <li class="nav-item">
+      <a class="nav-link active" href="/">Open Data</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="http://aragonparticipa.aragon.es">Participación ciudadana</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="http://transparencia.aragon.es/">Transparencia</a>
+    </li>
+  </ul>
+</div>
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="/">
+    <img class="navbar-brand" src="../assets/AOD-Logo.png"  class="d-inline-block align-top"  alt="" height="50" width="260">
+  </a>
+  <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <button type="button" routerLink="/login" routerLinkActive="active" class="btn btn-secondary">Login</button>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div *ngIf="menuOpened">
+  <div class="options">
+    <ul>
+      <li class="datos">
+        <ul>
+          <li>Banco de datos</li>
+          <li>Temas</li>
+          <li>Publicadores</li>
+        </ul>
+      </li>
+      <li class="servicios">
+        <ul>
+          <li>Aragopedia</li>
+          <li>Presupuestos</li>
+          <li>Open Social Data</li>
+          <li>CRAs Aragón</li>
+        </ul>
+      </li>
+      <li class="info">
+        <ul>
+          <li>Información</li>
+          <li>Aplicaciones</li>
+          <li>Eventos</li>
+          <li>Colabora</li>
+        </ul>
+      </li>
+      <li class="tools">
+        <ul>
+          <li>AOD Campus</li>
+          <li>Desarrolladores</li>
+          <li>APIs</li>
+          <li>SPARQL</li>
+          <li>GITHUB</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="shearch">
+
+  </div>
+</div>
+
