@@ -18,53 +18,67 @@
   <a class="navbar-brand" href="/">
     <img class="navbar-brand" src="../assets/AOD-Logo.png"  class="d-inline-block align-top"  alt="" height="50" width="260">
   </a>
-  <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+  <div class="collapse navbar-collapse justify-content-end"  style="font-size: 20px;" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <button type="button" routerLink="/login" routerLinkActive="active" class="btn btn-secondary">Login</button>
+        <a class="nav-link active" routerLink="/login" routerLinkActive="active">Login</a>
+      </li>
+      <li class="navbar-item">
+        <a class="nav-link active" (click)="openNav()"><span class="navbar-toggler-icon"></span></a>
       </li>
     </ul>
   </div>
 </nav>
-<div *ngIf="menuOpened">
-  <div class="options">
-    <ul>
-      <li class="datos">
-        <ul>
-          <li>Banco de datos</li>
-          <li>Temas</li>
-          <li>Publicadores</li>
-        </ul>
-      </li>
-      <li class="servicios">
-        <ul>
-          <li>Aragopedia</li>
-          <li>Presupuestos</li>
-          <li>Open Social Data</li>
-          <li>CRAs Aragón</li>
-        </ul>
-      </li>
-      <li class="info">
-        <ul>
-          <li>Información</li>
-          <li>Aplicaciones</li>
-          <li>Eventos</li>
-          <li>Colabora</li>
-        </ul>
-      </li>
-      <li class="tools">
-        <ul>
-          <li>AOD Campus</li>
-          <li>Desarrolladores</li>
-          <li>APIs</li>
-          <li>SPARQL</li>
-          <li>GITHUB</li>
-        </ul>
-      </li>
-    </ul>
-  </div>
-  <div class="shearch">
-
+<div id="myNav" class="overlay">
+  <div class="overlay-content">
+    <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
+    <div id="accordionmenu">
+      <ul class="accordion">
+        <li style="font-size: 30px; border-top: 1px solid white;">
+          <p data-toggle="collapse" data-target="#datos" data-parent=".accordion" aria-expanded="true">Datos</p>
+          <ul class="collapse" id="datos">
+            <li><a href="#">Banco de datos</a></li>
+            <li><a href="#">Temas</a></li>
+            <li><a href="#">Publicadores</a></li>
+          </ul>
+        </li>
+        <li style="font-size: 30px; border-top: 1px solid white;">
+          <p data-toggle="collapse" data-target="#servicios" data-parent=".accordion" aria-expanded="false">Servicios</p>
+          <ul class="collapse" id="servicios">
+            <li><a href="#">Aragopedia</a></li>
+            <li><a href="#">Presupuestos</a></li>
+            <li><a href="#">Open Social Data</a></li>
+            <li><a href="#">CRAs Aragón</a></li>
+          </ul>
+        </li>
+        <li style="font-size: 30px; border-top: 1px solid white;">
+          <p class="collapsed" data-toggle="collapse" data-target="#info" data-parent=".accordion" aria-expanded="false">Información</p>
+          <ul class="collapse" id="info">
+            <li><a href="#">Información</a></li>
+            <li><a href="#">Aplicaciones</a></li>
+            <li><a href="#">Eventos</a></li>
+            <li><a href="#">Colabora</a></li>
+          </ul>
+        </li>
+        <li style="font-size: 30px; border-top: 1px solid white;">
+          <p class="collapsed" data-toggle="collapse" data-target="#tools" data-parent=".accordion" aria-expanded="false">Herramientas</p>
+          <ul class="collapse" id="tools">
+            <li><a href="#">AOD Campus</a></li>
+            <li><a href="#">Desarrolladores</a></li>
+            <li><a href="#">APIs</a></li>
+            <li><a href="#">SPARQL</a></li>
+            <li><a href="#">GITHUB</a></li>
+          </ul>
+        </li>
+        <li>
+            <form>
+                <input type="search" placeholder="Busca datos abiertos" class="textBox">
+                <button type="submit" class="btnSearch">
+                    <i aria-hidden="true" class="fa fa-search" style="display: table; vertical-align: middle;"></i>
+                </button>
+            </form>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
-

@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   ChartModule, PanelModule, FieldsetModule, InputTextModule, DropdownModule,
   InputTextareaModule, ButtonModule, SharedModule, DataTableModule, DialogModule, CalendarModule, InputSwitchModule, EditorModule,
-  DataListModule, TooltipModule, AutoCompleteModule, ProgressBarModule, RadioButtonModule, CheckboxModule, FileUploadModule
+  DataListModule, TooltipModule, AutoCompleteModule, ProgressBarModule, RadioButtonModule, CheckboxModule, FileUploadModule, ToolbarModule, TabViewModule
 } from 'primeng/primeng';
 import {MdSidenavModule} from '@angular/material';
 
@@ -95,7 +95,8 @@ import { AppHomeComponent } from './components/app-home/app-home.component';
     ProgressBarModule,
     RadioButtonModule,
     CheckboxModule,
-    FileUploadModule
+    FileUploadModule,
+    TabViewModule
   ],
   providers: [DatasetService, TopicService, PublicadorService],
   bootstrap: [AppComponent]
