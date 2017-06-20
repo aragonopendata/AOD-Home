@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { HomeComponent } from './components/home/home.component';
 import { AdminHomeComponent } from './components/app-admin/admin_home/admin_home.component';
 import {DataCenterComponent} from './components/app-admin/data-center/data-center.component';
 import {CampusComponent} from './components/app-admin/campus/admin_campus.component';
@@ -24,11 +23,15 @@ import {ShowDatasetComponent} from './components/app-admin/data-center/datasets/
 import {EditDatasetComponent} from './components/app-admin/data-center/datasets/edit-dataset/edit-dataset.component';
 import {ListDatasetComponent} from './components/app-admin/data-center/datasets/list-dataset/list-dataset.component';
 import {ContentComponent} from './components/app-admin/global-admin/content/content.component';
-import {AppHomeComponent} from './components/app-home/app-home.component';
+import { AppHomeComponent } from './components/app-home/app-home.component';
+import { GlobalHomeComponent } from "./components/app-home/global-home/global-home.component";
 
 const routes: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
-    {path: 'home', component: AppHomeComponent},
+    {path: 'home', component: AppHomeComponent, children: [
+        {path: '', redirectTo: 'globalhome', pathMatch: 'full'},
+        {path: 'globalhome', component: GlobalHomeComponent}
+    ]},
     {path: 'appadmin', component: AppAdminComponent, children: [
         {path: '', redirectTo: 'globaladmin', pathMatch: 'full'},
         {path: 'globaladmin', component: GlobalAdminComponent, children: [

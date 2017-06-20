@@ -13,7 +13,6 @@ import {
 import {MdSidenavModule} from '@angular/material';
 
 import { AppComponent } from './app.component';
-import { HomeComponent } from './components/home/home.component';
 import { AdminHomeComponent } from './components/app-admin/admin_home/admin_home.component';
 import { DataCenterComponent } from './components/app-admin/data-center/data-center.component';
 import {CampusComponent} from './components/app-admin/campus/admin_campus.component';
@@ -40,11 +39,11 @@ import {DatasetService} from './services/dataset/dataset.service';
 import {TopicService} from './services/topic/topic.service';
 import {PublicadorService} from './services/publicador/publicador.service';
 import { AppHomeComponent } from './components/app-home/app-home.component';
+import { GlobalHomeComponent } from './components/app-home/global-home/global-home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     AdminHomeComponent,
     DataCenterComponent,
     CampusComponent,
@@ -67,7 +66,8 @@ import { AppHomeComponent } from './components/app-home/app-home.component';
     ShowDatasetComponent,
     EditDatasetComponent,
     ListDatasetComponent,
-    AppHomeComponent
+    AppHomeComponent,
+    GlobalHomeComponent
   ],
   imports: [
     BrowserModule,

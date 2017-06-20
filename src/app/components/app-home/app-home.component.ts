@@ -24,8 +24,4 @@ export class AppHomeComponent implements OnInit {
   closeNav() {
     document.getElementById("myNav").style.height = "0%";
   }
-
-  collapse() {
-    
-  }
 }

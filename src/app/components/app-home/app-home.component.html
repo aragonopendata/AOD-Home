@@ -1,34 +1,33 @@
-<div class="relatedHeader">
-  <ul class="nav justify-content-end">
-    <li class="nav-item">
-      <a class="nav-link active" href="/">Open Data</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="http://aragonparticipa.aragon.es">Participación ciudadana</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="http://transparencia.aragon.es/">Transparencia</a>
-    </li>
-  </ul>
-</div>
-<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <a class="navbar-brand" href="/">
-    <img class="navbar-brand" src="../assets/AOD-Logo.png"  class="d-inline-block align-top"  alt="" height="50" width="260">
-  </a>
-  <div class="collapse navbar-collapse justify-content-end"  style="font-size: 20px;" id="navbarNav">
-    <ul class="navbar-nav">
+<div class="fixed-top">
+  <div class="relatedHeader">
+    <ul class="nav justify-content-end">
       <li class="nav-item">
-        <a class="nav-link active" routerLink="/login" routerLinkActive="active">Login</a>
+        <a class="nav-link active" href="/">Open Data</a>
       </li>
-      <li class="navbar-item">
-        <a class="nav-link active" (click)="openNav()"><span class="navbar-toggler-icon"></span></a>
+      <li class="nav-item">
+        <a class="nav-link" href="http://aragonparticipa.aragon.es">Participación ciudadana</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="http://transparencia.aragon.es/">Transparencia</a>
       </li>
     </ul>
   </div>
-</nav>
+  <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+    <a class="navbar-brand" href="/">
+      <img class="navbar-brand" src="../assets/AOD-Logo.png"  class="d-inline-block align-top"  alt="" height="50" width="260">
+    </a>
+    <div class="navbar-collapse justify-content-end"  style="font-size: 20px;" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" routerLink="/login" routerLinkActive="active">Login</a>
+        </li>
+        <li class="navbar-item">
+          <a class="nav-link active" (click)="openNav()"><span class="navbar-toggler-icon"></span></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
 <div id="myNav" class="overlay">
   <div class="overlay-content">
     <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
@@ -82,3 +81,4 @@
     </div>
   </div>
 </div>
+<router-outlet></router-outlet>
