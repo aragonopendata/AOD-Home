@@ -1,0 +1,39 @@
+<div class="container">
+  <h1>Banco de datos</h1>
+  <div class="ui-g-4">
+    <b>Datos sobre </b>
+    <p-dropdown [options]="temas" placeholder="Selecciona un tema"></p-dropdown>
+  </div>
+  <div class="ui-g-4">
+    <b>Del tipo </b>
+    <p-dropdown [options]="temas" placeholder="Selecciona un tipo"></p-dropdown>
+  </div>
+  <div class="ui-g-4">
+    <p-dropdown [options]="temas" placeholder="Tema y tipo"></p-dropdown>
+  </div>
+  <div class="ui-widget-header" style="padding:4px 10px; border-bottom: 0 none;">
+    <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+    <input #gb type="text" pInputText size="50" placeholder="Global Filter">
+  </div>
+  <p-dataTable [value]="datasets" [paginator]="true" rows="15" selectionMode="single" routerLink="../../appadmin/datacenter/datasets/showdataset" (onRowSelect)="onRowSelect($event)" [responsive]="true" [globalFilter]="gb" #dt>
+    <p-column field="name" header="Nombre" [sortable]="true"></p-column>
+    <p-column field="lastUpdate" header="Última actualización" [sortable]="true"></p-column>
+  </p-dataTable>
+  <div class="destacado" style="width: 100%;">
+    <h1>Datos destacados</h1>
+    <button type="button" class="btn btn-secondary goUp" (click)="moveUp()" style="float: right;">
+        <img src="../../../../assets/flechaUp.png" alt="x" width="70px" height="30px"/>
+    </button>
+  <h3>Permítenos recomendarte algunos datos abiertos</h3>
+  <div class="ui-g">
+    <div class="ui-g-4">
+      <h3>Nuevos datos</h3>
+    </div>
+    <div class="ui-g-4">
+      <h3>Más descargados</h3>
+    </div>
+    <div class="ui-g-4">
+      <h3>Estadísticas</h3>
+    </div>
+  </div>
+</div>

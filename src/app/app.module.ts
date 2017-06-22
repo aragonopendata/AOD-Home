@@ -40,6 +40,10 @@ import {TopicService} from './services/topic/topic.service';
 import {PublicadorService} from './services/publicador/publicador.service';
 import { AppHomeComponent } from './components/app-home/app-home.component';
 import { GlobalHomeComponent } from './components/app-home/global-home/global-home.component';
+import { DataComponent } from "./components/app-home/data/data.component";
+import { TopicComponent } from './components/app-home/topic/topic.component';
+import { OrganismComponent } from './components/app-home/organism/organism.component';
+import { InformationComponent } from './components/app-home/static-content/information/information.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +71,11 @@ import { GlobalHomeComponent } from './components/app-home/global-home/global-ho
     EditDatasetComponent,
     ListDatasetComponent,
     AppHomeComponent,
-    GlobalHomeComponent
+    GlobalHomeComponent,
+    DataComponent,
+    TopicComponent,
+    OrganismComponent,
+    InformationComponent
   ],
   imports: [
     BrowserModule,

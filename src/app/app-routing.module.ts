@@ -25,12 +25,20 @@ import {ListDatasetComponent} from './components/app-admin/data-center/datasets/
 import {ContentComponent} from './components/app-admin/global-admin/content/content.component';
 import { AppHomeComponent } from './components/app-home/app-home.component';
 import { GlobalHomeComponent } from "./components/app-home/global-home/global-home.component";
+import { DataComponent } from "./components/app-home/data/data.component";
+import { TopicComponent } from "./components/app-home/topic/topic.component";
+import { OrganismComponent } from "./components/app-home/organism/organism.component";
+import { InformationComponent } from "./components/app-home/static-content/information/information.component";
 
 const routes: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: 'home', component: AppHomeComponent, children: [
         {path: '', redirectTo: 'globalhome', pathMatch: 'full'},
-        {path: 'globalhome', component: GlobalHomeComponent}
+        {path: 'globalhome', component: GlobalHomeComponent},
+        {path: 'data', component: DataComponent},
+        {path: 'topic', component: TopicComponent},
+        {path: 'org', component: OrganismComponent},
+        {path: 'inf', component: InformationComponent}
     ]},
     {path: 'appadmin', component: AppAdminComponent, children: [
         {path: '', redirectTo: 'globaladmin', pathMatch: 'full'},

@@ -1,0 +1,199 @@
+h1 {
+    font-family: "Roboto",-apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif !important;
+    line-height: 1;
+    margin: 2px 0 20px;
+    letter-spacing: 0.1em;
+    color: #5ea2ba;
+    font-size: 100px;
+}
+
+p {
+    font-family: "Roboto",-apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif !important;
+    line-height: 1;
+    margin: 0 0 0.75em;
+    letter-spacing: 0.1em;
+    font-size: 22px;
+}
+
+.textBox {
+    color: #5EA2BA;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #5EA2BA;
+    height: 100px;
+    width: 90%;
+    font-size: 80px;
+    padding-right: 10%;
+}
+
+.content {
+    position: absolute;
+    width: 100%;
+    height: 78%;
+    top: 22%;
+    left: 0;
+    z-index: -1;
+}
+
+.textBox:focus {
+    outline: none;
+}
+
+.btnSearch {
+    background: transparent;
+    color: #5EA2BA;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    float: right;
+    font-size: 80px;
+    height: 100px;
+    width: 10%;
+    border-bottom: 1px solid #5EA2BA;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.search {
+    position: absolute;
+    display: table;
+    float: left;
+    width: 100%;
+    height: 88%;
+    top: 12%;
+    left: 0;
+    z-index: -1;
+}
+
+.dataCenter {
+    position: absolute;
+    background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(252,110,81, 0.5));
+    width: 100%;
+    height: 88%;
+    top: 112%;
+    left: 0;
+    z-index: -1;
+}
+
+.dataCenter h1 {
+    color: #8F1D21;
+}
+
+.services {
+    position: absolute;
+    background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(244,208,63, 0.5));
+    width: 100%;
+    height: 88%;
+    top: 212%;
+    left: 0;
+    z-index: -1;
+}
+
+.services h1 {
+    color: #E2B13C;
+}
+
+.info {
+    position: absolute;
+    background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(54,215,183, 0.5));
+    width: 100%;
+    height: 88%;
+    top: 312%;
+    left: 0;
+    z-index: -1;
+}
+
+.info h1 {
+    color: #006442;
+}
+
+.tools {
+    position: absolute;
+    background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(34,167,240, 0.5));
+    width: 100%;
+    height: 88%;
+    top: 412%;
+    left: 0;
+    z-index: -1;
+}
+
+.tools h1 {
+    color: #044F67;
+}
+
+.back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url("../../../../assets/Fondo-Home-AOD.jpg");
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    z-index: -1;
+}
+
+.cont {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 10%;
+    z-index: 0;
+}
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #5EA2BA;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #5EA2BA;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #5EA2BA;
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    #5EA2BA;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+   color:    #5EA2BA;
+}
+
+.goUp {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    border: none;
+    background: transparent;
+    top: 0;
+    z-index: 1;
+    outline: none !important;
+}
+
+.goDown {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    border: none;
+    background: transparent;
+    bottom: 0;
+    outline: none !important;
+}
+
+.goUp:hover {
+    cursor: pointer;
+}
+
+.goDown:hover {
+    cursor: pointer;
+}
+
+.contenido {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding: 5%;
+    clear: left;
+}
+
+.card {
+    color: black !important;
+}

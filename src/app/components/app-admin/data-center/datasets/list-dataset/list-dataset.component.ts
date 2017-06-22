@@ -25,7 +25,7 @@ export class ListDatasetComponent implements OnInit {
   }
 
   addDataset() {
-    this.dataset = new Dataset('','','',new Topic(23,''), new Date, new Publicador(''));
+    this.dataset = new Dataset('','','',new Topic(23,'',''), new Date, new Publicador(''));
     this.datasetService.setDataset(this.dataset);
   }
 }
