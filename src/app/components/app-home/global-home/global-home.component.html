@@ -93,7 +93,7 @@
         </div>
       </div>
       <div class="ui-g-3" style="cursor: pointer;">
-        <div class="card card-inverse" (mouseenter)="hover('#imgCRAs', '../../../../assets/cards/Card-07-CRAs-ON.jpg')" (mouseleave)="unhover('#imgCRAs', '../../../../assets/cards/cards/Card-07-CRAs-OFF.jpg')">
+        <div class="card card-inverse" (mouseenter)="hover('#imgCRAs', '../../../../assets/cards/Card-07-CRAs-ON.jpg')" (mouseleave)="unhover('#imgCRAs', '../../../../assets/cards/Card-07-CRAs-OFF.jpg')">
           <img class="card-img" id="imgCRAs" src="../../../../assets/cards/Card-07-CRAs-OFF.jpg" alt="Card image">
           <div *ngIf="hovers[6].hover" class="card-img-overlay" style="text-align: center;">
             <h2>CRAs Aragón</h2>
@@ -127,7 +127,7 @@
         </div>
       </div>
       <div class="ui-g-3" style="cursor: pointer;">
-        <div class="card card-inverse" (mouseenter)="hover('#imgApp', '../../../../assets/cards/Card-09-Aplicaciones-ON.jpg')" (mouseleave)="unhover('#imgApp', '../../../../assets/cards/Card-09-Aplicaciones-OFF.jpg')">
+        <div class="card card-inverse" routerLink="../app" (mouseenter)="hover('#imgApp', '../../../../assets/cards/Card-09-Aplicaciones-ON.jpg')" (mouseleave)="unhover('#imgApp', '../../../../assets/cards/Card-09-Aplicaciones-OFF.jpg')">
           <img class="card-img" id="imgApp" src="../../../../assets/cards/Card-09-Aplicaciones-OFF.jpg" alt="Card image">
           <div *ngIf="hovers[8].hover" class="card-img-overlay" style="text-align: center;">
             <h2>Aplicaciones</h2>

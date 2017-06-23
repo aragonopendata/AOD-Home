@@ -44,6 +44,7 @@ import { DataComponent } from "./components/app-home/data/data.component";
 import { TopicComponent } from './components/app-home/topic/topic.component';
 import { OrganismComponent } from './components/app-home/organism/organism.component';
 import { InformationComponent } from './components/app-home/static-content/information/information.component';
+import { AppsComponent } from './components/app-home/static-content/apps/apps.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { InformationComponent } from './components/app-home/static-content/infor
     DataComponent,
     TopicComponent,
     OrganismComponent,
-    InformationComponent
+    InformationComponent,
+    AppsComponent
   ],
   imports: [
     BrowserModule,

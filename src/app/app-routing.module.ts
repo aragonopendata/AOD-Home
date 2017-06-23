@@ -29,6 +29,7 @@ import { DataComponent } from "./components/app-home/data/data.component";
 import { TopicComponent } from "./components/app-home/topic/topic.component";
 import { OrganismComponent } from "./components/app-home/organism/organism.component";
 import { InformationComponent } from "./components/app-home/static-content/information/information.component";
+import { AppsComponent } from "./components/app-home/static-content/apps/apps.component";
 
 const routes: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -38,7 +39,8 @@ const routes: Routes = [
         {path: 'data', component: DataComponent},
         {path: 'topic', component: TopicComponent},
         {path: 'org', component: OrganismComponent},
-        {path: 'inf', component: InformationComponent}
+        {path: 'inf', component: InformationComponent},
+        {path: 'app', component: AppsComponent},
     ]},
     {path: 'appadmin', component: AppAdminComponent, children: [
         {path: '', redirectTo: 'globaladmin', pathMatch: 'full'},

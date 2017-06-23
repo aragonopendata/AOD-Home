@@ -1,3 +1,15 @@
 .container{
     padding-top: 8%;
 }
+
+a {
+    color: #5EA2BA;
+}
+
+a:hover {
+    color: #5EA2BA;
+}
+
+a:focus {
+    color: #5EA2BA;
+}
