@@ -30,6 +30,11 @@ import { TopicComponent } from "./components/app-home/topic/topic.component";
 import { OrganismComponent } from "./components/app-home/organism/organism.component";
 import { InformationComponent } from "./components/app-home/static-content/information/information.component";
 import { AppsComponent } from "./components/app-home/static-content/apps/apps.component";
+import { InfoEventsComponent } from "./components/app-home/static-content/info-events/info-events.component";
+import { CooperateComponent } from "./components/app-home/static-content/cooperate/cooperate.component";
+import { InfoDevelopersComponent } from "./components/app-home/static-content/info-developers/info-developers.component";
+import { InfoSparqlComponent } from "./components/app-home/static-content/info-sparql/info-sparql.component";
+import { InfoApisComponent } from "./components/app-home/static-content/info-apis/info-apis.component";
 
 const routes: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -41,6 +46,11 @@ const routes: Routes = [
         {path: 'org', component: OrganismComponent},
         {path: 'inf', component: InformationComponent},
         {path: 'app', component: AppsComponent},
+        {path: 'infoevents', component: InfoEventsComponent},
+        {path: 'cooperate', component: CooperateComponent},
+        {path: 'infodevelopers', component: InfoDevelopersComponent},
+        {path: 'infoapis', component: InfoApisComponent},
+        {path: 'infosparql', component: InfoSparqlComponent},
     ]},
     {path: 'appadmin', component: AppAdminComponent, children: [
         {path: '', redirectTo: 'globaladmin', pathMatch: 'full'},

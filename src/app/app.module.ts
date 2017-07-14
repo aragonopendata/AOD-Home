@@ -45,6 +45,11 @@ import { TopicComponent } from './components/app-home/topic/topic.component';
 import { OrganismComponent } from './components/app-home/organism/organism.component';
 import { InformationComponent } from './components/app-home/static-content/information/information.component';
 import { AppsComponent } from './components/app-home/static-content/apps/apps.component';
+import { InfoEventsComponent } from './components/app-home/static-content/info-events/info-events.component';
+import { CooperateComponent } from './components/app-home/static-content/cooperate/cooperate.component';
+import { InfoDevelopersComponent } from './components/app-home/static-content/info-developers/info-developers.component';
+import { InfoApisComponent } from './components/app-home/static-content/info-apis/info-apis.component';
+import { InfoSparqlComponent } from './components/app-home/static-content/info-sparql/info-sparql.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +82,12 @@ import { AppsComponent } from './components/app-home/static-content/apps/apps.co
     TopicComponent,
     OrganismComponent,
     InformationComponent,
-    AppsComponent
+    AppsComponent,
+    InfoEventsComponent,
+    CooperateComponent,
+    InfoDevelopersComponent,
+    InfoApisComponent,
+    InfoSparqlComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,31 @@
+.container{
+    padding-top: 8%;
+}
+
+a {
+    color: #5EA2BA;
+}
+
+a:hover {
+    color: #5EA2BA;
+}
+
+a:focus {
+    color: #5EA2BA;
+}
+
+.textbox {
+    display: table;
+    border: solid 1px;
+    width: 100%;
+    height: fit-content;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.queries {
+    font-size: 20px;
+    font-weight: bold;
+    display:table-cell;
+    vertical-align: middle;
+}

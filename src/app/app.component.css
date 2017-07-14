@@ -1,5 +1,15 @@
+@font-face {
+    font-family: 'Roboto'; /*a name to be used later*/
+    src: url('../assets/fonts/fontawesome-webfont.ttf'); /*URL to font*/
+}
+
 html, body {
     position: absolute;
+    font-family: "Roboto", "Roboto", -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif !important;
+    line-height: 1;
+    margin: 0 0 0.75em;
+    letter-spacing: 0.1em;
+    font-size: 22px;
     width: 100%;
     height: 100%;
     padding-top: 8% !important;
