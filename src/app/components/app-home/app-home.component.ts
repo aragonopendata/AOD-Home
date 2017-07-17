@@ -9,8 +9,15 @@ import * as $ from 'jquery';
 })
 export class AppHomeComponent implements OnInit {
 
-  constructor() {
+  hovers: any[] = [];
 
+  constructor() {
+    this.hovers = [
+      { id: '#login', hover: false },
+      { id: '#menu', hover: false },
+      { id: '#loginActive', hover: false },
+      { id: '#menuActive', hover: false }
+    ];
   }
 
   ngOnInit() {
@@ -18,10 +25,48 @@ export class AppHomeComponent implements OnInit {
   }
 
   openNav() {
-    document.getElementById("myNav").style.height = "100%";
+    $('#myNav').height('100%');
+    $('#nav').attr('class', 'navbar navbar-toggleable-md navbar-light bg-inverse');
+    $('#logo').attr('src', '../assets/AOD-Logo-Responsive.png');
+    $('#menu').attr('src', '../../../assets/Boton-Salir-Menu-Responsive-OFF.png');
+    $('#login').attr('src', '../../../assets/Boton-Acceso-Usuarios-gris.png');
+    $("#login").mouseenter(function(){
+        this.hover('#login', '../../../assets/Boton-Acceso-Usuarios-blanco.png');
+    });
+    $("#login").mouseleave(function(){
+        this.unhover('#login', '../../../assets/Boton-Acceso-Usuarios-gris.png');
+    });
   }
 
   closeNav() {
-    document.getElementById("myNav").style.height = "0%";
+    $('#myNav').height('0%');
+    $('#nav').attr('class', 'navbar navbar-toggleable-md navbar-light bg-faded');
+    $('#logo').attr('src', '../assets/AOD-Logo.png');
+    $('#menu').attr('src', '../../../assets/Boton-Menu-Responsive-OFF.png');
+    $('#login').attr('src', '../../../assets/Boton-Acceso-Usuarios-OFF.png');
+  }
+
+  hover (id, src) {
+      for (let hover of this.hovers){
+        if(hover.id === id) {
+          hover.hover = !hover.hover;
+        }
+      }
+      $(id).fadeOut(200, function() {
+        $(id).attr("src", src);
+        $(id).fadeIn(200);
+    });
+  }
+
+  unhover(id, src) {
+    for (let hover of this.hovers){
+        if(hover.id === id) {
+          hover.hover = !hover.hover;
+        }
+      }
+    $(id).fadeOut(200, function() {
+        $(id).attr("src", src);
+        $(id).fadeIn(200);
+    });
   }
 }

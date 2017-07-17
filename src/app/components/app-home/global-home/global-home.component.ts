@@ -43,9 +43,9 @@ export class GlobalHomeComponent implements OnInit {
           hover.hover = !hover.hover;
         }
       }
-      $(id).fadeOut(500, function() {
+      $(id).fadeOut(350, function() {
         $(id).attr("src", src);
-        $(id).fadeIn(500);
+        $(id).fadeIn(350);
     });
   }
 
@@ -55,9 +55,9 @@ export class GlobalHomeComponent implements OnInit {
           hover.hover = !hover.hover;
         }
       }
-    $(id).fadeOut(500, function() {
+    $(id).fadeOut(350, function() {
         $(id).attr("src", src);
-        $(id).fadeIn(500);
+        $(id).fadeIn(350);
     });
   }
 
