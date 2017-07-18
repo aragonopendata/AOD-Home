@@ -18,11 +18,11 @@
   </button>
   <div class="contenido">
     <h1>Datos</h1>
-    <p>
+    <p class="titleDesc">
       Lo más importante de Aragón Open Data son sus datos y los hemos ordenado para que puedas encontrarlos fácilmente.
     </p>
-    <div class="ui-g-12">
-      <div class="ui-g-4" style="cursor: pointer;">
+    <div class="ui-g">
+      <div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
         <div class="card card-inverse" routerLink="../data" routerLinkActive="active" (mouseenter)="hover('#imgBD','../../../../assets/cards/Card-01-BancoDatos-ON.jpg')" (mouseleave)="unhover('#imgBD','../../../../assets/cards/Card-01-BancoDatos-OFF.jpg')">
           <img class="card-img" id="imgBD" src="../../../../assets/cards/Card-01-BancoDatos-OFF.jpg" alt="Card image">
           <div *ngIf="hovers[0].hover" class="card-img-overlay" style="text-align: center;">
@@ -31,7 +31,7 @@
           </div>
         </div>
       </div>
-      <div class="ui-g-4" style="cursor: pointer;">
+      <div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
         <div class="card card-inverse" routerLink="../topic" routerLinkActive="active" (mouseenter)="hover('#imgTem', '../../../../assets/cards/Card-02-Temas-ON.jpg')" (mouseleave)="unhover('#imgTem', '../../../../assets/cards/Card-02-Temas-OFF.jpg')">
           <img class="card-img" id="imgTem" src="../../../../assets/cards/Card-02-Temas-OFF.jpg" alt="Card image">
           <div *ngIf="hovers[1].hover" class="card-img-overlay" style="text-align: center;">
@@ -40,7 +40,7 @@
           </div>
         </div>
       </div>
-      <div class="ui-g-4" style="cursor: pointer;">
+      <div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
         <div class="card card-inverse" routerLink="../org" routerLinkActive="active" (mouseenter)="hover('#imgPub', '../../../../assets/cards/Card-03-Publicadores-ON.jpg')" (mouseleave)="unhover('#imgPub', '../../../../assets/cards/Card-03-Publicadores-OFF.jpg')">
           <img class="card-img" id="imgPub" src="../../../../assets/cards/Card-03-Publicadores-OFF.jpg" alt="Card image">
           <div *ngIf="hovers[2].hover" class="card-img-overlay" style="text-align: center;">
@@ -61,11 +61,11 @@
   </button>
   <div class="contenido">
     <h1>Servicios</h1>
-    <p>
+    <p class="titleDesc">
       En Aragón Open Data hemos creado servicios para ofrecer los datos, reutilizarlos y acceder de forma sencilla a la información.
     </p>
-    <div class="ui-g-12">
-      <div class="ui-g-3" style="cursor: pointer;">
+    <div class="ui-g">
+      <div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
         <div class="card card-inverse" (mouseenter)="hover('#imgAragopedia','../../../../assets/cards/Card-05-Aragopedia-ON.jpg')" (mouseleave)="unhover('#imgAragopedia','../../../../assets/cards/Card-05-Aragopedia-OFF.jpg')">
           <img class="card-img" id="imgAragopedia" src="../../../../assets/cards/Card-05-Aragopedia-OFF.jpg" alt="Card image">
           <div *ngIf="hovers[3].hover" class="card-img-overlay" style="text-align: center;">
@@ -74,7 +74,7 @@
           </div>
         </div>
       </div>
-      <div class="ui-g-3" style="cursor: pointer;">
+      <div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
         <div class="card card-inverse" (mouseenter)="hover('#imgPre', '../../../../assets/cards/Card-06-Presupuestos-ON.jpg')" (mouseleave)="unhover('#imgPre', '../../../../assets/cards/Card-06-Presupuestos-OFF.jpg')">
           <img class="card-img" id="imgPre" src="../../../../assets/cards/Card-06-Presupuestos-OFF.jpg" alt="Card image">
           <div *ngIf="hovers[4].hover" class="card-img-overlay" style="text-align: center;">
@@ -83,7 +83,7 @@
           </div>
         </div>
       </div>
-      <div class="ui-g-3" style="cursor: pointer;">
+      <div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
         <div class="card card-inverse" (mouseenter)="hover('#imgOSD', '../../../../assets/cards/Card-04-OpenSocialData-ON.jpg')" (mouseleave)="unhover('#imgOSD', '../../../../assets/cards/Card-04-OpenSocialData-OFF.jpg')">
           <img class="card-img" id="imgOSD" src="../../../../assets/cards/Card-04-OpenSocialData-OFF.jpg" alt="Card image">
           <div *ngIf="hovers[5].hover" class="card-img-overlay" style="text-align: center;">
@@ -92,7 +92,7 @@
           </div>
         </div>
       </div>
-      <div class="ui-g-3" style="cursor: pointer;">
+      <div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
         <div class="card card-inverse" (mouseenter)="hover('#imgCRAs', '../../../../assets/cards/Card-07-CRAs-ON.jpg')" (mouseleave)="unhover('#imgCRAs', '../../../../assets/cards/Card-07-CRAs-OFF.jpg')">
           <img class="card-img" id="imgCRAs" src="../../../../assets/cards/Card-07-CRAs-OFF.jpg" alt="Card image">
           <div *ngIf="hovers[6].hover" class="card-img-overlay" style="text-align: center;">
@@ -112,12 +112,12 @@
       <img src="../../../../assets/flechaUp.png" alt="x" />
     </button>
   <div class="contenido">
-    <h1>Información</h1>
+    <h1 class="titleDesc">Información</h1>
     <p>
       Te explicamos qué es Aragón Open Data, qué hacemos y cómo puedes sumarte y colaborar.
     </p>
-    <div class="ui-g-12">
-      <div class="ui-g-3" style="cursor: pointer;">
+    <div class="ui-g">
+      <div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
         <div class="card card-inverse" routerLink="../inf" (mouseenter)="hover('#imgInfo','../../../../assets/cards/Card-10-Informacion-ON.jpg')" (mouseleave)="unhover('#imgInfo','../../../../assets/cards/Card-10-Informacion-OFF.jpg')">
           <img class="card-img" id="imgInfo" src="../../../../assets/cards/Card-10-Informacion-OFF.jpg" alt="Card image">
           <div *ngIf="hovers[7].hover" class="card-img-overlay" style="text-align: center;">
@@ -126,7 +126,7 @@
           </div>
         </div>
       </div>
-      <div class="ui-g-3" style="cursor: pointer;">
+      <div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
         <div class="card card-inverse" routerLink="../app" (mouseenter)="hover('#imgApp', '../../../../assets/cards/Card-09-Aplicaciones-ON.jpg')" (mouseleave)="unhover('#imgApp', '../../../../assets/cards/Card-09-Aplicaciones-OFF.jpg')">
           <img class="card-img" id="imgApp" src="../../../../assets/cards/Card-09-Aplicaciones-OFF.jpg" alt="Card image">
           <div *ngIf="hovers[8].hover" class="card-img-overlay" style="text-align: center;">
@@ -135,7 +135,7 @@
           </div>
         </div>
       </div>
-      <div class="ui-g-3" style="cursor: pointer;">
+      <div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
         <div class="card card-inverse" routerLink="../infoevents" (mouseenter)="hover('#imgEv', '../../../../assets/cards/Card-11-Eventos-ON.jpg')" (mouseleave)="unhover('#imgEv', '../../../../assets/cards/Card-11-Eventos-OFF.jpg')">
           <img class="card-img" id="imgEv" src="../../../../assets/cards/Card-11-Eventos-OFF.jpg" alt="Card image">
           <div *ngIf="hovers[9].hover" class="card-img-overlay" style="text-align: center;">
@@ -144,7 +144,7 @@
           </div>
         </div>
       </div>
-      <div class="ui-g-3" style="cursor: pointer;">
+      <div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
         <div class="card card-inverse" routerLink="../cooperate" (mouseenter)="hover('#imgCol', '../../../../assets/cards/Card-08-Colabora-ON.jpg')" (mouseleave)="unhover('#imgCol', '../../../../assets/cards/Card-08-Colabora-OFF.jpg')">
           <img class="card-img" id="imgCol" src="../../../../assets/cards/Card-08-Colabora-OFF.jpg" alt="Card image">
           <div *ngIf="hovers[10].hover" class="card-img-overlay" style="text-align: center;">
@@ -164,12 +164,12 @@
       <img src="../../../../assets/flechaUp.png" alt="x" />
   </button>
   <div class="contenido">
-    <h1>Herramientas</h1>
+    <h1 class="titleDesc">Herramientas</h1>
     <p>
       Aprende y consigue nuestros contenidos, datos y código con estas utilidades hechas para ti.
     </p>
-    <div class="ui-g-12">
-      <div class="ui-g-4" style="cursor: pointer;">
+    <div class="ui-g">
+      <div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
         <div class="card card-inverse" (mouseenter)="hover('#imgCampus','../../../../assets/cards/Card-12-Campus-ON.jpg')" (mouseleave)="unhover('#imgCampus','../../../../assets/cards/Card-12-Campus-OFF.jpg')">
           <img class="card-img" id="imgCampus" src="../../../../assets/cards/Card-12-Campus-OFF.jpg" alt="Card image">
           <div *ngIf="hovers[11].hover" class="card-img-overlay" style="text-align: center;">
@@ -178,7 +178,7 @@
           </div>
         </div>
       </div>
-      <div class="ui-g-4" style="cursor: pointer;">
+      <div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
         <div class="card card-inverse" routerLink="../infodevelopers" (mouseenter)="hover('#imgDesa', '../../../../assets/cards/Card-13-Desarrolladores-ON.jpg')" (mouseleave)="unhover('#imgDesa', '../../../../assets/cards/Card-13-Desarrolladores-OFF.jpg')">
           <img class="card-img" id="imgDesa" src="../../../../assets/cards/Card-13-Desarrolladores-OFF.jpg" alt="Card image">
           <div *ngIf="hovers[12].hover" class="card-img-overlay" style="text-align: center;">
@@ -187,7 +187,7 @@
           </div>
         </div>
       </div>
-      <div class="ui-g-4" style="cursor: pointer;">
+      <div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
         <div class="card card-inverse" routerLink="../infoapis" (mouseenter)="hover('#imgAPIs', '../../../../assets/cards/Card-14-APIs-ON.jpg')" (mouseleave)="unhover('#imgAPIs', '../../../../assets/cards/Card-14-APIs-OFF.jpg')">
           <img class="card-img" id="imgAPIs" src="../../../../assets/cards/Card-14-APIs-OFF.jpg" alt="Card image">
           <div *ngIf="hovers[13].hover" class="card-img-overlay" style="text-align: center;">
@@ -196,10 +196,7 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="ui-g-12">
-      <div class="ui-g-2"></div>
-      <div class="ui-g-4" style="cursor: pointer;">
+      <div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
         <div class="card card-inverse" routerLink="../infosparql" (mouseenter)="hover('#imgSPARQL','../../../../assets/cards/Card-15-SPARQL-ON.jpg')" (mouseleave)="unhover('#imgSPARQL','../../../../assets/cards/Card-15-SPARQL-OFF.jpg')">
           <img class="card-img" id="imgSPARQL" src="../../../../assets/cards/Card-15-SPARQL-OFF.jpg" alt="Card image">
           <div *ngIf="hovers[14].hover" class="card-img-overlay" style="text-align: center;">
@@ -208,7 +205,7 @@
           </div>
         </div>
       </div>
-      <div class="ui-g-4" style="cursor: pointer;">
+      <div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
         <div class="card card-inverse" (mouseenter)="hover('#imgGit', '../../../../assets/cards/Card-16-GITHUB-ON.jpg')" (mouseleave)="unhover('#imgGit', '../../../../assets/cards/Card-16-GITHUB-OFF.jpg')">
           <img class="card-img" id="imgGit" src="../../../../assets/cards/Card-16-GITHUB-OFF.jpg" alt="Card image">
           <div *ngIf="hovers[15].hover" class="card-img-overlay" style="text-align: center;">
@@ -217,8 +214,6 @@
           </div>
         </div>
       </div>
-      <div class="ui-g-2"></div>
     </div>
-  </div>
   <div class="btn"></div>
 </div>
