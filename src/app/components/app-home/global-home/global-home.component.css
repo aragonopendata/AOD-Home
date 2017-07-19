@@ -298,7 +298,7 @@ button {
     letter-spacing: 0.1em;
     font-size: 10px !important;
     color: grey !important;
-    height: 24px;
+    height: fit fit-content;
     padding: 20px;
     text-transform: uppercase;
 }
@@ -367,7 +367,8 @@ a:hover {
 .site-footer { 
     background: #222222 !important;
     display: inline-block;
-    height: 90vh;
+    max-width: 100%;
+    height: auto;
 }
 /* start commented backslash hack \*/
 * html .site-footer { height: 100%; }
