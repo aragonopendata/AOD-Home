@@ -1,6 +1,7 @@
 <div class="container">
   <h1>Publicadores</h1>
-  <div class="ui-g">
+  <p-dropdown [options]="views" [(ngModel)]="selectedView"></p-dropdown>
+  <div *ngIf="selectedView" class="ui-g">
     <div class="ui-sm-12 ui-md-6 ui-lg-4" *ngFor="let org of publicadores; let i = index" (mouseenter)="setHover(org.name, i)" (mouseleave)="unsetHover(org.name, i)">
       <div class="card">
         <img class="card-img-top" src="../../../../assets/logoDGA.png" alt="Card image cap" width="fit-content" height="70" style="margin: 10px;">
@@ -16,5 +17,12 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <div *ngIf="!selectedView" class="tabla">
+    <p-dataTable [value]="publicadores">
+        <p-column field="name" header="HAY {{publicadores.length}} ORGANIZACIONES"></p-column>
+        <p-column field="numDatasets" header="Nº DATASETS"></p-column>
+    </p-dataTable>
   </div>
 </div>

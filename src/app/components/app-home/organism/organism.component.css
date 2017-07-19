@@ -43,3 +43,13 @@ b {
     position: absolute;
     bottom: 0;
 }
+
+.tabla {
+    margin: 10px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    line-height: 1;
+    margin: 2px 0 20px;
+    letter-spacing: 0.1em;
+    font-weight: 300;
+}

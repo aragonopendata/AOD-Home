@@ -7,6 +7,10 @@ h1, h2, h3, h4, h5 {
     font-weight: 300;
 }
 
+body {
+    background-color: #F7F7F9 !important;
+}
+
 p {
     font-family: 'Roboto', sans-serif;
     line-height: 1;
@@ -25,11 +29,11 @@ b {
 
 .card {
     margin: 5px;
+    border-color: #5EA2BA;
 }
 
 .container {
     padding-top: 15%;
-    background-color: #F7F7F9 !important;
 }
 
 a {
@@ -38,8 +42,10 @@ a {
 
 a:hover {
     color: #5EA2BA;
+    text-decoration: none;
 }
 
 a:focus {
     color: #5EA2BA;
+    text-decoration: none;
 }
