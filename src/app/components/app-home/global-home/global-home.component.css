@@ -240,7 +240,6 @@ button {
 
 .card-img, .card, .card-inverse {
     max-width: 100%;
-    min-width: 60%;
     height: auto;
 }
 
