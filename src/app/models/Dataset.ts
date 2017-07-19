@@ -6,6 +6,7 @@ export class Dataset {
     name: string;
     url: string;
     description: string;
+    acessos: number;
     topic: Topic;
     coberturaGeo: string;
     coberturaTmp: Date;

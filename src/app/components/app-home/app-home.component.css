@@ -91,12 +91,25 @@ a:hover {
 }
 
 .relatedHeader {
-    background-color: white !important;
+    background-color:  #494949;
+}
+
+.relatedHeader a {
+    color: #e0e0e0;
+}
+
+
+.relatedHeader a:hover {
+    color: white;
 }
 
 #logo {
     max-width: 100%;
     height: auto;
+}
+
+.navbar {
+    background-color: white;
 }
 
 .navbar-collapse.collapse {

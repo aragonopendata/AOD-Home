@@ -1,24 +1,29 @@
 <div class="container">
   <h1>BANCO DE DATOS</h1>
-  <div class="ui-g-4">
-    <b>Datos sobre </b>
-    <p-dropdown [options]="temas" placeholder="Selecciona un tema"></p-dropdown>
+  <div class="ui-g">
+    <div class="ui-g-4">
+      <b>Datos sobre </b>
+      <p-dropdown [options]="temas" placeholder="Selecciona un tema"></p-dropdown>
+    </div>
+    <div class="ui-g-4">
+      <b>Del tipo </b>
+      <p-dropdown [options]="temas" placeholder="Selecciona un tipo"></p-dropdown>
+    </div>
+    <div class="ui-g-4">
+      <p-dropdown [options]="temas" placeholder="Tema y tipo"></p-dropdown>
+    </div>
   </div>
-  <div class="ui-g-4">
-    <b>Del tipo </b>
-    <p-dropdown [options]="temas" placeholder="Selecciona un tipo"></p-dropdown>
-  </div>
-  <div class="ui-g-4">
-    <p-dropdown [options]="temas" placeholder="Tema y tipo"></p-dropdown>
-  </div>
-  <div class="ui-widget-header" style="padding:4px 10px; border-bottom: 0 none;">
-    <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-    <input #gb type="text" pInputText size="50" placeholder="Global Filter">
-  </div>
-  <p-dataTable [value]="datasets" [paginator]="true" rows="15" selectionMode="single" routerLink="../../appadmin/datacenter/datasets/showdataset" (onRowSelect)="onRowSelect($event)" [responsive]="true" [globalFilter]="gb" #dt>
+  <p-dataTable [value]="datasets" [paginator]="true" rows="15" selectionMode="single" routerLink="../../appadmin/datacenter/datasets/showdataset" (onRowSelect)="onRowSelect($event)" [responsive]="true" #dt>
     <p-column field="name" header="Nombre" [sortable]="true"></p-column>
+    <p-column field="accesos" header="Nº de accesos" [sortable]="true"></p-column>
     <p-column field="lastUpdate" header="Última actualización" [sortable]="true"></p-column>
   </p-dataTable>
+  <div class="nota">
+    <p>
+      <i class="fa fa-star" id="informacion_content_3_i" style="color: #5ea2ba;"></i>
+      Se ha accedido al conjunto de datos más de 10 veces en los últimos 14 días.
+    </p>
+  </div>
   <div class="destacado" style="width: 100%;">
     <h1>Datos destacados</h1>
     <button type="button" class="btn btn-secondary goUp" (click)="moveUp()" style="float: right;">

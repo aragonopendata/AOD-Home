@@ -8,7 +8,11 @@
           <p>{{top.name}}</p>
         </div>
         <div *ngIf="hovers[i].hover" class="detail" style="background: rgba(235,241,244, 0.95); position: absolute; width: 100%; height: 100%; padding: 10px;">
-          <h5>{{top.name}}</h5>
+          <h6>{{top.name}}</h6>
+          <p class="description">Descripción</p>
+          <div class="numDatasets">
+            <b>25 conjuntos de datos publicados</b>
+          </div>
         </div>
       </div>
     </div>

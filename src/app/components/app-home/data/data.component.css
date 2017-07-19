@@ -7,6 +7,23 @@ h1, h2, h3, h4, h5 {
     font-weight: 300;
 }
 
+p {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1;
+    margin: 2px 0 20px;
+    letter-spacing: 0.1em;
+    font-weight: 300;
+}
+
 .container {
     padding-top: 15%;
+}
+
+
+b {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1;
+    margin: 2px 0 20px;
+    letter-spacing: 0.1em;
+    font-weight: 700;
 }
