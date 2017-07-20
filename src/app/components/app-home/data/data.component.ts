@@ -35,7 +35,7 @@ export class DataComponent implements OnInit {
   }
 
   addDataset() {
-    this.dataset = new Dataset('','','',new Topic(23,'',''), new Date, new Publicador(''));
+    this.dataset = new Dataset('','','',new Topic(23,'',''), new Date, new Publicador('', 0));
     this.datasetService.setDataset(this.dataset);
   }
 

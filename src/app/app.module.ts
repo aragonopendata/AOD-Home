@@ -51,6 +51,11 @@ import { InfoDevelopersComponent } from './components/app-home/static-content/in
 import { InfoApisComponent } from './components/app-home/static-content/info-apis/info-apis.component';
 import { InfoSparqlComponent } from './components/app-home/static-content/info-sparql/info-sparql.component';
 import { FooterComponent } from './components/app-home/common/footer/footer.component';
+<<<<<<< Updated upstream
+=======
+import { OrgsService } from "./services/orgs/orgs.service";
+import { OrgDetailComponent } from './components/app-home/organism/org-detail/org-detail.component';
+>>>>>>> Stashed changes
 
 @NgModule({
   declarations: [
@@ -89,7 +94,12 @@ import { FooterComponent } from './components/app-home/common/footer/footer.comp
     InfoDevelopersComponent,
     InfoApisComponent,
     InfoSparqlComponent,
+<<<<<<< Updated upstream
     FooterComponent
+=======
+    FooterComponent,
+    OrgDetailComponent
+>>>>>>> Stashed changes
   ],
   imports: [
     BrowserModule,
@@ -120,7 +130,7 @@ import { FooterComponent } from './components/app-home/common/footer/footer.comp
     FileUploadModule,
     TabViewModule
   ],
-  providers: [DatasetService, TopicService, PublicadorService],
+  providers: [DatasetService, TopicService, PublicadorService, OrgsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Org } from '../../../../models/Org'
+import { OrgsService } from "../../../../services/orgs/orgs.service";
 
 @Component({
   selector: 'app-orgs',
@@ -15,16 +16,8 @@ export class OrgsComponent implements OnInit {
   results: Org[];
 
 
-  constructor() {
-    this.orgs = [
-      new Org("Instituto de salud", "http://www.org1.es", "La Dirección General de Administración Electrónica y Sociedad de la Información es una de las tres que forman parte del Departamento de Innovación, Investigación y Universidades del Gobierno de Aragón. La Dirección General se divide en tres áreas de competencias que organizativamente encabezan tres Jefaturas de Servicio diferentes.", "Dirección 1", "Responsable 1", "Contacto 1"),
-      new Org("Organización 2", "http://www.org2.es", "Descripción 2", "Dirección 2", "Responsable 2", "Contacto 2"),
-      new Org("Instituto Educación Secundaria Pablo Serrano", "http://www.org2.es", "Descripción 2", "Dirección 2", "Responsable 2", "Contacto 2"),
-      new Org("Organización 2", "http://www.org2.es", "Descripción 2", "Dirección 2", "Responsable 2", "Contacto 2"),
-      new Org("Organización 2", "http://www.org2.es", "Descripción 2", "Dirección 2", "Responsable 2", "Contacto 2"),
-      new Org("Organización 2", "http://www.org2.es", "Descripción 2", "Dirección 2", "Responsable 2", "Contacto 2"),
-      new Org("Organización 2", "http://www.org2.es", "Descripción 2", "Dirección 2", "Responsable 2", "Contacto 2")
-    ];
+  constructor(private orgService: OrgsService) {
+    this.orgs = orgService.getOrgs();
     this.results = this.orgs;
   }
 

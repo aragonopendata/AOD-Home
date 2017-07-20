@@ -35,6 +35,7 @@ import { CooperateComponent } from "./components/app-home/static-content/coopera
 import { InfoDevelopersComponent } from "./components/app-home/static-content/info-developers/info-developers.component";
 import { InfoSparqlComponent } from "./components/app-home/static-content/info-sparql/info-sparql.component";
 import { InfoApisComponent } from "./components/app-home/static-content/info-apis/info-apis.component";
+import { OrgDetailComponent } from "./components/app-home/organism/org-detail/org-detail.component";
 
 const routes: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -44,6 +45,7 @@ const routes: Routes = [
         {path: 'data', component: DataComponent},
         {path: 'topic', component: TopicComponent},
         {path: 'org', component: OrganismComponent},
+        {path: 'org/:orgName', component: OrgDetailComponent},
         {path: 'inf', component: InformationComponent},
         {path: 'app', component: AppsComponent},
         {path: 'infoevents', component: InfoEventsComponent},

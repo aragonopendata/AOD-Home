@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { PublicadorService } from "../../../services/publicador/publicador.service";
 import { Publicador } from "../../../models/Publicador";
 import { SelectItem } from "primeng/primeng";
+import { Org } from "../../../models/Org";
+import { OrgsService } from "../../../services/orgs/orgs.service";
 
 @Component({
   selector: 'app-organism',
@@ -12,16 +14,15 @@ export class OrganismComponent implements OnInit {
 
   views: SelectItem[];
   selectedView: boolean = true;
-  numDatasets: number = 25;
 
-  publicadores: Publicador[];
+  orgs: Org[];
   hovers: any[] = [];
 
-  constructor(private publicadorService: PublicadorService) { }
+  constructor(private orgService: OrgsService) { }
 
   ngOnInit() {
-    this.publicadores = this.publicadorService.getPublicadores();
-    this.setHovers(this.publicadores);
+    this.orgs = this.orgService.getOrgs();
+    this.setHovers(this.orgs);
 
     this.views = [];
     this.views.push({label:'Selecciona una vista', value: this.selectedView});
@@ -29,9 +30,9 @@ export class OrganismComponent implements OnInit {
     this.views.push({label:'Ver como ficha', value: true});
   }
 
-  setHovers(publicadores: Publicador[]) {
-    for(let pub of publicadores) {
-      this.hovers.push({ label: pub.name, hover: false });
+  setHovers(orgs: Org[]) {
+    for(let org of orgs) {
+      this.hovers.push({ label: org.orgName, hover: false });
     }
   }
 
@@ -49,6 +50,10 @@ export class OrganismComponent implements OnInit {
         hover.hover = !hover.hover;
       }
     }
+  }
+
+  showOrg(org: Org) {
+    this.orgService.setOrg(org);
   }
 
 }
