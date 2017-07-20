@@ -1,0 +1,54 @@
+<div class="container">
+  <h1>{{org.orgName}}</h1>
+  <div class="ui-g details">
+    <div class="ui-g-6">
+      <h6><b>NOMBRE DE LA ORGANIZACIÓN:</b></h6>
+    </div>
+    <div class="ui-g-6">
+      <p>{{org.orgName}}</p>
+    </div>
+    <div class="ui-g-6">
+      <h6><b>PÁGINA WEB DE LA ORGANIZACIÓN:</b></h6>
+    </div>
+    <div class="ui-g-6">
+      <p>{{org.orgWeb}}</p>
+    </div>
+    <div class="ui-g-6">
+      <h6><b>DESCRIPCIÓN DE LA ORGANIZACIÓN:</b></h6>
+    </div>
+    <div class="ui-g-6">
+      <p>{{org.orgDesc}}</p>
+    </div>
+    <div class="ui-g-6">
+      <h6><b>DIRECCIÓN DE LA ORGANIZACIÓN:</b></h6>
+    </div>
+    <div class="ui-g-6">
+      <p>{{org.orgDir}}</p>
+    </div>
+    <div class="ui-g-6">
+      <h6><b>PERSONA RESPONSABLE DENTRO DE LA ORGANIZACIÓN:</b></h6>
+    </div>
+    <div class="ui-g-6">
+      <p>{{org.orgResponsable}}</p>
+    </div>
+    <div class="ui-g-6">
+      <h6><b>EMAIL DE CONTACTO:</b></h6>
+    </div>
+    <div class="ui-g-6">
+      <p>{{org.orgContact}}</p>
+    </div>
+  </div>
+  <div class="datasets">
+    <p-dataTable [value]="datasets" [paginator]="true" rows="15" selectionMode="single" routerLink="../../../appadmin/datacenter/datasets/showdataset" (onRowSelect)="onRowSelect($event)" [responsive]="true" #dt>
+      <p-column field="name" header="Nombre" [sortable]="true"></p-column>
+      <p-column field="accesos" header="Nº de accesos" [sortable]="true"></p-column>
+      <p-column field="lastUpdate" header="Última actualización" [sortable]="true"></p-column>
+    </p-dataTable>
+  </div>
+  <div class="nota">
+    <p>
+      <i class="fa fa-star" id="informacion_content_3_i" style="color: #5ea2ba;"></i>
+      Se ha accedido al conjunto de datos más de 10 veces en los últimos 14 días.
+    </p>
+  </div>
+</div>
