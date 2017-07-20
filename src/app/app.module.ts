@@ -50,6 +50,7 @@ import { CooperateComponent } from './components/app-home/static-content/coopera
 import { InfoDevelopersComponent } from './components/app-home/static-content/info-developers/info-developers.component';
 import { InfoApisComponent } from './components/app-home/static-content/info-apis/info-apis.component';
 import { InfoSparqlComponent } from './components/app-home/static-content/info-sparql/info-sparql.component';
+import { FooterComponent } from './components/app-home/common/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import { InfoSparqlComponent } from './components/app-home/static-content/info-s
     CooperateComponent,
     InfoDevelopersComponent,
     InfoApisComponent,
-    InfoSparqlComponent
+    InfoSparqlComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
