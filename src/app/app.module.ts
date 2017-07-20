@@ -51,11 +51,8 @@ import { InfoDevelopersComponent } from './components/app-home/static-content/in
 import { InfoApisComponent } from './components/app-home/static-content/info-apis/info-apis.component';
 import { InfoSparqlComponent } from './components/app-home/static-content/info-sparql/info-sparql.component';
 import { FooterComponent } from './components/app-home/common/footer/footer.component';
-<<<<<<< Updated upstream
-=======
+import { OrgDetailComponent } from "./components/app-home/organism/org-detail/org-detail.component";
 import { OrgsService } from "./services/orgs/orgs.service";
-import { OrgDetailComponent } from './components/app-home/organism/org-detail/org-detail.component';
->>>>>>> Stashed changes
 
 @NgModule({
   declarations: [
@@ -94,12 +91,8 @@ import { OrgDetailComponent } from './components/app-home/organism/org-detail/or
     InfoDevelopersComponent,
     InfoApisComponent,
     InfoSparqlComponent,
-<<<<<<< Updated upstream
-    FooterComponent
-=======
     FooterComponent,
     OrgDetailComponent
->>>>>>> Stashed changes
   ],
   imports: [
     BrowserModule,
