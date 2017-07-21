@@ -100,7 +100,7 @@ p {
     position: relative;
     display: table;
     width: 100%;
-    min-height: 90vh;
+    min-height: 100vh;
     top: 15%;
     left: 0;
     z-index: 1;

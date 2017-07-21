@@ -33,8 +33,8 @@ export class GlobalHomeComponent implements OnInit {
     ];
   }
 
-  move(i) {
-    $("html, body").animate({ scrollTop: window.innerHeight * i }, '1000');
+  move(id) {
+    $("html, body").animate({ scrollTop: ($('.' + id).offset().top - $('#header').height()) }, '1000');
   }
 
   hover (id, src) {

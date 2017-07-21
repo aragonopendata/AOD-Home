@@ -7,13 +7,13 @@
           <i aria-hidden="true" class="fa fa-search" style="display: table; vertical-align: middle;"></i>
       </button>
     </form>
-    <button type="button" class="btn btn-secondary btn-outline goDown" (click)="move(1)">
+    <button type="button" class="btn btn-secondary btn-outline goDown" (click)="move('dataCenter')">
       <img src="../../../../assets/flechaDown.png" alt="x" />
     </button>
   </div>
 </div>
 <div class="jumbotron-fluid dataCenter" id="dataCenter">
-  <button type="button" class="btn btn-secondary goUp" (click)="move(0)">
+  <button type="button" class="btn btn-secondary goUp" (click)="move('search')">
       <img src="../../../../assets/flechaUp.png" alt="x" />
   </button>
   <div class="contenido">
@@ -51,12 +51,12 @@
       </div>
     </div>
   </div>
-  <button type="button" class="btn btn-secondary goDown" (click)="move(2)">
+  <button type="button" class="btn btn-secondary goDown" (click)="move('services')">
     <img src="../../../../assets/flechaDown.png" alt="x" />
   </button>
 </div>
 <div class="jumbotron-fluid services" id="services">
-  <button type="button" class="btn btn-secondary goUp" (click)="move(1)">
+  <button type="button" class="btn btn-secondary goUp" (click)="move('dataCenter')">
     <img src="../../../../assets/flechaUp.png" alt="x" />
   </button>
   <div class="contenido">
@@ -103,12 +103,12 @@
       </div>
     </div>
   </div>
-  <button type="button" class="btn btn-secondary goDown" (click)="move(3)">
+  <button type="button" class="btn btn-secondary goDown" (click)="move('info')">
       <img src="../../../../assets/flechaDown.png" alt="x" />
   </button>
 </div>
 <div class="jumbotron-fluid info" id="info">
-  <button type="button" class="btn btn-secondary goUp" (click)="move(2)">
+  <button type="button" class="btn btn-secondary goUp" (click)="move('services')">
       <img src="../../../../assets/flechaUp.png" alt="x" />
     </button>
   <div class="contenido">
@@ -155,12 +155,12 @@
       </div>
     </div>
   </div>
-  <button type="button" class="btn btn-secondary goDown" (click)="move(4)">
+  <button type="button" class="btn btn-secondary goDown" (click)="move('tools')">
       <img src="../../../../assets/flechaDown.png" alt="x" />
   </button>
 </div>
 <div class="jumbotron-fluid tools" id="tools">
-  <button type="button" class="btn btn-secondary goUp" (click)="move(3)">
+  <button type="button" class="btn btn-secondary goUp" (click)="move('info')">
       <img src="../../../../assets/flechaUp.png" alt="x" />
   </button>
   <div class="contenido">
