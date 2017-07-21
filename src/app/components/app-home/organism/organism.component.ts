@@ -25,7 +25,6 @@ export class OrganismComponent implements OnInit {
     this.setHovers(this.orgs);
 
     this.views = [];
-    this.views.push({label:'Selecciona una vista', value: this.selectedView});
     this.views.push({label:'Ver como lista', value: false});
     this.views.push({label:'Ver como ficha', value: true});
   }

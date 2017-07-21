@@ -16,13 +16,19 @@ export class DataComponent implements OnInit {
   datasets: Dataset[] = [];
   dataset: Dataset;
   topics: Topic[];
+  topic: Topic = null;
   temas: SelectItem[] = [];
+  selectedTopic: String = null;
 
   constructor(private datasetService: DatasetService, private topicService: TopicService) { }
 
   ngOnInit() {
     this.datasets = this.datasetService.getDatasets();
     this.topics = this.topicService.getTopics();
+    this.topic = this.topicService.getTopic();
+    if(this.topic != null) {
+      this.selectedTopic = this.topic.name;
+    }
     this.setTopics(this.topics);
   }
 

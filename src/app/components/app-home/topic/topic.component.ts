@@ -41,4 +41,8 @@ export class TopicComponent implements OnInit {
     }
   }
 
+  setTopic(topic) {
+    this.topicService.setTopic(topic);
+  }
+
 }

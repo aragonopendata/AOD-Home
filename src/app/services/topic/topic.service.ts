@@ -24,4 +24,12 @@ export class TopicService {
   getTopics() {
     return this.topics;
   }
+
+  setTopic(topic: Topic) {
+    this.topic = topic;
+  }
+
+  getTopic() {
+    return this.topic;
+  }
 }
