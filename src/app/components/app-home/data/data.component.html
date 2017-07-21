@@ -1,44 +1,104 @@
 <div class="container">
-  <h1>BANCO DE DATOS</h1>
-  <div class="ui-g">
-    <div class="ui-g-4">
-      <b>Datos sobre </b>
-      <p-dropdown [options]="temas" placeholder="Selecciona un tema"  [(ngModel)]="selectedTopic"></p-dropdown>
+    <h1>BANCO DE DATOS</h1>
+    <div class="ui-g">
+        <div class="ui-g-4">
+            <b>Datos sobre </b>
+            <p-dropdown [options]="temas" placeholder="Selecciona un tema" [(ngModel)]="selectedTopic"></p-dropdown>
+        </div>
+        <div class="ui-g-4">
+            <b>Del tipo </b>
+            <p-dropdown [options]="temas" placeholder="Selecciona un tipo"></p-dropdown>
+        </div>
+        <div class="ui-g-4">
+            <p-dropdown [options]="temas" placeholder="Tema y tipo"></p-dropdown>
+        </div>
     </div>
-    <div class="ui-g-4">
-      <b>Del tipo </b>
-      <p-dropdown [options]="temas" placeholder="Selecciona un tipo"></p-dropdown>
+    <p-dataTable [value]="datasets" [paginator]="true" rows="15" selectionMode="single" routerLink="../../appadmin/datacenter/datasets/showdataset"
+        (onRowSelect)="onRowSelect($event)" [responsive]="true" #dt>
+        <p-column field="name" header="Nombre" [sortable]="true"></p-column>
+        <p-column field="accesos" header="Nº de accesos" [sortable]="true"></p-column>
+        <p-column field="lastUpdate" header="Última actualización" [sortable]="true"></p-column>
+    </p-dataTable>
+    <div class="nota">
+        <p>
+            <i class="fa fa-star" id="informacion_content_3_i" style="color: #5ea2ba;"></i> Se ha accedido al conjunto de
+            datos más de 10 veces en los últimos 14 días.
+        </p>
     </div>
-    <div class="ui-g-4">
-      <p-dropdown [options]="temas" placeholder="Tema y tipo"></p-dropdown>
+    <div class="destacado" style="width: 100%;">
+        <h1>Datos destacados</h1>
+        <h3 style="color: grey">Permítenos recomendarte algunos datos abiertos</h3>
+        <div class="ui-g ">
+            <div class="ui-sm-12 ui-lg-4">
+                <div class="box">
+                    <div class="boxTitle">
+                        <h3>Nuevos datos</h3>
+                    </div>
+                    <div class="boxContent">
+                        <div>
+                            <div>
+                                <a>
+                                Personas de 16 y más años según si han cambiado su situación respecto a la 
+                                actividad en los últimos 12 meses.
+                                </a>
+                            </div>
+                            <div class="separadorVentana"></div>
+                            <div>
+                                <a>
+                            Personas de 16 y más años que están trabajando según si han cambiado de puesto 
+                            de trabajo en los últimos 12 meses
+                            </a>
+                            </div>
+                            <div class="separadorVentana"></div>
+                            <div>
+                                <a>
+                                Personas de 16 y más años que han trabajado alguna vez según 
+                                edad a la que empezaron a trabajar
+                            </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui-sm-12 ui-lg-4">
+                <div class="box">
+                    <div class="boxTitle">
+                        <h3>Más descargados</h3>
+                    </div>
+                    <div class="boxContent">
+                        <div>
+                            <div>
+                                <a>Servicio de descarga cartográfica e:1/5000 y e:1/10000</a>
+                            </div>
+                            <div class="separadorVentana"></div>
+                            <div>
+                                <a>Servicio de descarga cartográfica e:1/1000 por municipio</a>
+                            </div>
+                            <div class="separadorVentana"></div>
+                            <div>
+                                <a>Recurso Educativo - Infantil - MI PUEBLO, MI BARRIO</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui-sm-12 ui-lg-4">
+                <div class="box">
+                    <div class="boxTitle">
+                        <h3>Estadísticas</h3>
+                    </div>
+                    <div class="boxContent">
+                        <div>
+                            <h6>Número de datasets</h6>
+                            <img src="../../../assets/numDtsets.png"/>
+                        </div>
+                        <div class="separadorVentana"></div>
+                        <div>
+                            <h6>Número de recursos</h6>
+                            <img src="../../../assets/numResources.png"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-  <p-dataTable [value]="datasets" [paginator]="true" rows="15" selectionMode="single" routerLink="../../appadmin/datacenter/datasets/showdataset" (onRowSelect)="onRowSelect($event)" [responsive]="true" #dt>
-    <p-column field="name" header="Nombre" [sortable]="true"></p-column>
-    <p-column field="accesos" header="Nº de accesos" [sortable]="true"></p-column>
-    <p-column field="lastUpdate" header="Última actualización" [sortable]="true"></p-column>
-  </p-dataTable>
-  <div class="nota">
-    <p>
-      <i class="fa fa-star" id="informacion_content_3_i" style="color: #5ea2ba;"></i>
-      Se ha accedido al conjunto de datos más de 10 veces en los últimos 14 días.
-    </p>
-  </div>
-  <div class="destacado" style="width: 100%;">
-    <h1>Datos destacados</h1>
-    <button type="button" class="btn btn-secondary goUp" (click)="moveUp()" style="float: right;">
-        <img src="../../../../assets/flechaUp.png" alt="x" width="70px" height="30px"/>
-    </button>
-  <h3>Permítenos recomendarte algunos datos abiertos</h3>
-  <div class="ui-g">
-    <div class="ui-g-4">
-      <h3>Nuevos datos</h3>
-    </div>
-    <div class="ui-g-4">
-      <h3>Más descargados</h3>
-    </div>
-    <div class="ui-g-4">
-      <h3>Estadísticas</h3>
-    </div>
-  </div>
-</div>
