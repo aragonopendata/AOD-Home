@@ -5,6 +5,7 @@ import { Topic } from "../../../models/Topic";
 import { Publicador } from "../../../models/Publicador";
 import { TopicService } from "../../../services/topic/topic.service";
 import { SelectItem } from "primeng/primeng";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-data',
@@ -20,7 +21,7 @@ export class DataComponent implements OnInit {
   temas: SelectItem[] = [];
   selectedTopic: String = null;
 
-  constructor(private datasetService: DatasetService, private topicService: TopicService) { }
+  constructor(private datasetService: DatasetService, private topicService: TopicService, private router: Router) { }
 
   ngOnInit() {
     this.datasets = this.datasetService.getDatasets();
@@ -30,10 +31,6 @@ export class DataComponent implements OnInit {
       this.selectedTopic = this.topic.name;
     }
     this.setTopics(this.topics);
-  }
-
-  onRowSelect(event) {
-    this.showDataset(event.data);
   }
 
   showDataset(dataset: Dataset) {

@@ -13,11 +13,20 @@
             <p-dropdown [options]="temas" placeholder="Tema y tipo"></p-dropdown>
         </div>
     </div>
-    <p-dataTable [value]="datasets" [paginator]="true" rows="15" selectionMode="single" routerLink="../../appadmin/datacenter/datasets/showdataset"
-        (onRowSelect)="onRowSelect($event)" [responsive]="true" #dt>
-        <p-column field="name" header="Nombre" [sortable]="true"></p-column>
-        <p-column field="accesos" header="Nº de accesos" [sortable]="true"></p-column>
-        <p-column field="lastUpdate" header="Última actualización" [sortable]="true"></p-column>
+    <p-dataTable [value]="datasets" [paginator]="true" rows="15" [responsive]="true" #dt>
+        <p-column field="name" header="{{datasets.length}} conjuntos de datos encontrados" [sortable]="true">
+            <ng-template pTemplate="body" let-dataset="rowData">
+                <a routerLink='../../appadmin/datacenter/datasets/showdataset' (click)="showDataset(dataset)">
+                    {{dataset.name}}
+                </a>
+            </ng-template>
+        </p-column>
+        <p-column field="accesos" header="Nº de accesos" [style]="{'width':'160px'}" [sortable]="true">
+            <ng-template pTemplate="body" let-dataset="rowData">
+                25
+            </ng-template>
+        </p-column>
+        <p-column field="lastUpdate" header="Última actualización" [sortable]="true" [style]="{'width':'220px'}"></p-column>
     </p-dataTable>
     <div class="nota">
         <p>

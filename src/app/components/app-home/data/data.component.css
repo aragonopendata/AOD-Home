@@ -1,3 +1,11 @@
+>>> html, body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1;
+    margin: 2px 0 20px;
+    letter-spacing: 0.05em;
+    font-weight: 300;
+}
+
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Roboto', sans-serif;
     line-height: 1;
@@ -19,6 +27,29 @@ p {
     padding-top: 15%;
 }
 
+>>> th {
+    background: #5ea2ba !important;
+    color: white !important;
+}
+
+>>> .ui-datatable-data > tr:hover {
+    background-color: 	rgba(94, 162, 186, 0.1) !important;
+}
+
+>>> .ui-datatable-data > tr > td {
+    border: none !important;
+    border-bottom: 2px solid #5ea2ba !important;
+}
+
+>>> .ui-widget-content {
+    border: none !important;
+}
+
+>>> .ui-paginator-bottom {
+    background: white;
+    border: none;
+}
+
 
 b {
     font-family: 'Roboto', sans-serif;
@@ -26,6 +57,7 @@ b {
     margin: 2px 0 20px;
     letter-spacing: 0.1em;
     font-weight: 700;
+    color: #5ea2ba;
 }
 
 .box {

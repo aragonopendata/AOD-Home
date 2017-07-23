@@ -14,7 +14,7 @@ export class Dataset {
     untilDate: Date;
     languaje: string;
     firstPublish: Date;
-    lastUpdate: Date;
+    lastUpdate: String;
     updateFrequency: SelectItem[];
     publicador: Publicador;
     dataFiles: string[];
@@ -25,8 +25,16 @@ export class Dataset {
         this.url = url;
         this.description = description;
         this.topic = topic;
-        this.lastUpdate = lastUpdate;
+        this.lastUpdate = this.formatDate(lastUpdate);
         this.publicador = publicador;
         this.untilDate = new Date;
+    }
+
+    formatDate(date: Date) {
+        let day = date.getDate();
+        let month = date.getMonth();
+        let year = date.getFullYear();
+        let myFormatDate = day + '/' + month + '/' + year;
+        return myFormatDate;
     }
 }
