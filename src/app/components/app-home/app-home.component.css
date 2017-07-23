@@ -43,9 +43,15 @@ a:hover {
 
 .overlay .closebtn {
     position: absolute;
+    color: #818181;
     top: 20px;
     right: 30px;
     font-size: 60px;
+    cursor: pointer;
+}
+
+.overlay .closebtn:hover {
+    color: white;
 }
 
 @media screen and (max-height: 450px) {
