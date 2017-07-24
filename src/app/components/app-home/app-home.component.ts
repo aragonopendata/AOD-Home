@@ -53,10 +53,6 @@ export class AppHomeComponent implements OnInit {
                 this.srcMenu = '../../../assets/Boton-Menu-Responsive-ON.jpg';
             }
         }
-        $(id).fadeOut(200, function () {
-            $(id).attr("src");
-            $(id).fadeIn(200);
-        });
     }
 
     unhover(id) {
@@ -73,9 +69,5 @@ export class AppHomeComponent implements OnInit {
                 this.srcMenu = '../../../assets/Boton-Menu-Responsive-OFF.png';
             }
         }
-        $(id).fadeOut(200, function () {
-            $(id).attr("src");
-            $(id).fadeIn(200);
-        });
     }
 }
