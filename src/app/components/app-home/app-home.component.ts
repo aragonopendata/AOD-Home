@@ -3,70 +3,79 @@ import * as $ from 'jquery';
 
 
 @Component({
-  selector: 'app-app-home',
-  templateUrl: './app-home.component.html',
-  styleUrls: ['./app-home.component.css']
+    selector: 'app-app-home',
+    templateUrl: './app-home.component.html',
+    styleUrls: ['./app-home.component.css']
 })
 export class AppHomeComponent implements OnInit {
 
-  hovers: any[] = [];
+    menuActive: boolean = false;
+    srcMenu: String = '../../../assets/Boton-Menu-Responsive-OFF.png';
+    srcLogin: String = '../../../assets/Boton-Acceso-Usuarios-OFF.png';
 
-  constructor() {
-    this.hovers = [
-      { id: '#login', hover: false },
-      { id: '#menu', hover: false },
-      { id: '#loginActive', hover: false },
-      { id: '#menuActive', hover: false }
-    ];
-  }
+    constructor() {
 
-  ngOnInit() {
-    
-  }
+    }
 
-  openNav() {
-    $('#myNav').height('100%');
-    $('#nav').attr('class', 'navbar navbar-toggleable-md navbar-light bg-inverse');
-    $('#logo').attr('src', '../assets/AOD-Logo-Responsive.png');
-    $('#menu').attr('src', '../../../assets/Boton-Salir-Menu-Responsive-OFF.png');
-    $('#login').attr('src', '../../../assets/Boton-Acceso-Usuarios-gris.png');
-    $("#login").mouseenter(function(){
-        this.hover('#login', '../../../assets/Boton-Acceso-Usuarios-blanco.png');
-    });
-    $("#login").mouseleave(function(){
-        this.unhover('#login', '../../../assets/Boton-Acceso-Usuarios-gris.png');
-    });
-  }
+    ngOnInit() {
 
-  closeNav() {
-    $('#myNav').height('0%');
-    $('#nav').attr('class', 'navbar navbar-toggleable-md navbar-light bg-faded');
-    $('#logo').attr('src', '../assets/AOD-Logo.png');
-    $('#menu').attr('src', '../../../assets/Boton-Menu-Responsive-OFF.png');
-    $('#login').attr('src', '../../../assets/Boton-Acceso-Usuarios-OFF.png');
-  }
+    }
 
-  hover (id, src) {
-      for (let hover of this.hovers){
-        if(hover.id === id) {
-          hover.hover = !hover.hover;
+    openNav() {
+        if (!this.menuActive) {
+            $('#myNav').height('100%');
+            $('#logo').attr('src',  '../../../assets/AOD-Logo-Responsive.png');
+            this.menuActive = !this.menuActive;
+            $('#nav').attr('class',  'navbar navbar-toggleable-md bg-inverse');
+            this.srcLogin = '../../../assets/Boton-Acceso-Usuarios-gris.png';
+            this.srcMenu = '../../../assets/Boton-Salir-Menu-Responsive-OFF.png';
+        } else {
+            $('#myNav').height('0%');
+            $('#nav').attr('class', 'navbar navbar-toggleable-md bg-light');
+            $('#logo').attr('src',  '../../../assets/AOD-Logo.png');
+            this.menuActive = !this.menuActive;
+            this.srcLogin = '../../../assets/Boton-Acceso-Usuarios-OFF.png';
+            this.srcMenu = '../../../assets/Boton-Menu-Responsive-OFF.png';
         }
-      }
-      $(id).fadeOut(200, function() {
-        $(id).attr("src", src);
-        $(id).fadeIn(200);
-    });
-  }
+    }
 
-  unhover(id, src) {
-    for (let hover of this.hovers){
-        if(hover.id === id) {
-          hover.hover = !hover.hover;
+    hover(id) {
+        if (this.menuActive) {
+            if (id === '#login') {
+                this.srcLogin = '../../../assets/Boton-Acceso-Usuarios-blanco.png';
+            } else if (id === '#menu'){
+                this.srcMenu = '../../../assets/Boton-Salir-Menu-Responsive-ON.png';
+            }
+        } else {
+            if (id === '#login') {
+                this.srcLogin = '../../../assets/Boton-Acceso-Usuarios-ON.png';
+            } else if (id === '#menu') {
+                this.srcMenu = '../../../assets/Boton-Menu-Responsive-ON.jpg';
+            }
         }
-      }
-    $(id).fadeOut(200, function() {
-        $(id).attr("src", src);
-        $(id).fadeIn(200);
-    });
-  }
+        $(id).fadeOut(200, function () {
+            $(id).attr("src");
+            $(id).fadeIn(200);
+        });
+    }
+
+    unhover(id) {
+        if (this.menuActive) {
+            if (id === '#login') {
+                this.srcLogin = '../../../assets/Boton-Acceso-Usuarios-gris.png';
+            } else if (id === '#menu'){
+                this.srcMenu = '../../../assets/Boton-Salir-Menu-Responsive-OFF.png';
+            }
+        } else {
+            if (id === '#login') {
+                this.srcLogin = '../../../assets/Boton-Acceso-Usuarios-OFF.png';
+            } else if (id === '#menu') {
+                this.srcMenu = '../../../assets/Boton-Menu-Responsive-OFF.png';
+            }
+        }
+        $(id).fadeOut(200, function () {
+            $(id).attr("src");
+            $(id).fadeIn(200);
+        });
+    }
 }

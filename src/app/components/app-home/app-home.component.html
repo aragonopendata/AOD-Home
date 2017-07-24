@@ -1,92 +1,91 @@
 <div class="fixed-top" id="header">
-  <div class="relatedHeader">
-    <ul class="nav justify-content-end">
-      <li class="nav-item">
-        <a class="nav-link active" href="/">Open Data</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="http://aragonparticipa.aragon.es">Participación ciudadana</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="http://transparencia.aragon.es/">Transparencia</a>
-      </li>
-    </ul>
-  </div>
-
-  <nav class="navbar navbar-toggleable-md navbar-light" id="nav">
-    <a class="navbar-brand" href="/">
-      <img class="navbar-brand" id="logo" src="../assets/AOD-Logo.png"  class="d-inline-block align-top"  alt="" >
-    </a>
-    <div class="navbar-collapse justify-content-end">
-      <ul class="navbar-nav">
-        <li class="nav-item" (mouseenter)="hover('#login', '../../../assets/Boton-Acceso-Usuarios-ON.png')" (mouseleave)="unhover('#login', '.../../../assets/Boton-Acceso-Usuarios-OFF.png')">
-          <a class="nav-link active" routerLink="/login" routerLinkActive="active">
-            <img id="login" src="../../../assets/Boton-Acceso-Usuarios-OFF.png" alt="x" />
-          </a>
-        </li>
-        <li class="navbar-item" (mouseenter)="hover('#menu', '../../../assets/Boton-Menu-Responsive-ON.jpg')" (mouseleave)="unhover('#menu', '../../../assets/Boton-Menu-Responsive-OFF.png')">
-          <a class="nav-link active" (click)="openNav()">
-            <img id="menu" src="../../../assets/Boton-Menu-Responsive-OFF.png" alt="x" />
-          </a>
-        </li>
-      </ul>
+    <div class="relatedHeader">
+        <ul class="nav justify-content-end">
+            <li class="nav-item">
+                <a class="nav-link active" href="/">Open Data</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://aragonparticipa.aragon.es">Participación ciudadana</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://transparencia.aragon.es/">Transparencia</a>
+            </li>
+        </ul>
     </div>
-  </nav>
+
+    <nav class="navbar navbar-toggleable-md navbar-light" id="nav">
+        <a class="navbar-brand" href="/">
+            <img class="navbar-brand" id="logo" src="../assets/AOD-Logo.png"  class="d-inline-block align-top"  alt="">
+        </a>
+        <div class="navbar-collapse justify-content-end">
+            <ul class="navbar-nav">
+                <li class="nav-item" routerLink="/login" (mouseenter)="hover('#login')" 
+                (mouseleave)="unhover('#login')">
+                    <a class="nav-link" routerLinkActive="active">
+                        <img id="login" src="{{srcLogin}}" alt="x" />
+                    </a>
+                </li>
+                <li class="navbar-item" (click)="openNav()" (mouseenter)="hover('#menu')" 
+                (mouseleave)="unhover('#menu')">
+                    <a class="nav-link">
+                        <img id="menu" src="{{srcMenu}}" alt="x" />
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 </div>
 <div id="myNav" class="overlay">
-  <div class="overlay-content">
-    <span class="closebtn" (click)="closeNav()">
-      <i class="fa fa-close"></i>
-    </span>
-    <div id="accordionmenu">
-      <ul class="accordion">
-        <li style="font-size: 30px; border-top: 1px solid white;">
-          <p data-toggle="collapse" data-target="#datos" data-parent=".accordion" aria-expanded="true">Datos</p>
-          <ul class="collapse" id="datos">
-            <li><a href="#">Banco de datos</a></li>
-            <li><a href="#">Temas</a></li>
-            <li><a href="#">Publicadores</a></li>
-          </ul>
-        </li>
-        <li style="font-size: 30px; border-top: 1px solid white;">
-          <p data-toggle="collapse" data-target="#servicios" data-parent=".accordion" aria-expanded="false">Servicios</p>
-          <ul class="collapse" id="servicios">
-            <li><a href="#">Aragopedia</a></li>
-            <li><a href="#">Presupuestos</a></li>
-            <li><a href="#">Open Social Data</a></li>
-            <li><a href="#">CRAs Aragón</a></li>
-          </ul>
-        </li>
-        <li style="font-size: 30px; border-top: 1px solid white;">
-          <p class="collapsed" data-toggle="collapse" data-target="#info" data-parent=".accordion" aria-expanded="false">Información</p>
-          <ul class="collapse" id="info">
-            <li><a href="#">Información</a></li>
-            <li><a href="#">Aplicaciones</a></li>
-            <li><a href="#">Eventos</a></li>
-            <li><a href="#">Colabora</a></li>
-          </ul>
-        </li>
-        <li style="font-size: 30px; border-top: 1px solid white;">
-          <p class="collapsed" data-toggle="collapse" data-target="#tools" data-parent=".accordion" aria-expanded="false">Herramientas</p>
-          <ul class="collapse" id="tools">
-            <li><a href="#">AOD Campus</a></li>
-            <li><a href="#">Desarrolladores</a></li>
-            <li><a href="#">APIs</a></li>
-            <li><a href="#">SPARQL</a></li>
-            <li><a href="#">GITHUB</a></li>
-          </ul>
-        </li>
-        <li>
-            <form>
-                <input type="search" placeholder="Busca datos abiertos" class="textBox">
-                <button type="submit" class="btnSearch">
+    <div class="overlay-content">
+        <div id="accordionmenu">
+            <ul class="accordion">
+                <li style="font-size: 30px; border-top: 1px solid white;">
+                    <p data-toggle="collapse" data-target="#datos" data-parent=".accordion" aria-expanded="true">Datos</p>
+                    <ul class="collapse" id="datos">
+                        <li><a href="#">Banco de datos</a></li>
+                        <li><a href="#">Temas</a></li>
+                        <li><a href="#">Publicadores</a></li>
+                    </ul>
+                </li>
+                <li style="font-size: 30px; border-top: 1px solid white;">
+                    <p data-toggle="collapse" data-target="#servicios" data-parent=".accordion" aria-expanded="false">Servicios</p>
+                    <ul class="collapse" id="servicios">
+                        <li><a href="#">Aragopedia</a></li>
+                        <li><a href="#">Presupuestos</a></li>
+                        <li><a href="#">Open Social Data</a></li>
+                        <li><a href="#">CRAs Aragón</a></li>
+                    </ul>
+                </li>
+                <li style="font-size: 30px; border-top: 1px solid white;">
+                    <p class="collapsed" data-toggle="collapse" data-target="#info" data-parent=".accordion" aria-expanded="false">Información</p>
+                    <ul class="collapse" id="info">
+                        <li><a href="#">Información</a></li>
+                        <li><a href="#">Aplicaciones</a></li>
+                        <li><a href="#">Eventos</a></li>
+                        <li><a href="#">Colabora</a></li>
+                    </ul>
+                </li>
+                <li style="font-size: 30px; border-top: 1px solid white;">
+                    <p class="collapsed" data-toggle="collapse" data-target="#tools" data-parent=".accordion" aria-expanded="false">Herramientas</p>
+                    <ul class="collapse" id="tools">
+                        <li><a href="#">AOD Campus</a></li>
+                        <li><a href="#">Desarrolladores</a></li>
+                        <li><a href="#">APIs</a></li>
+                        <li><a href="#">SPARQL</a></li>
+                        <li><a href="#">GITHUB</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <form>
+                        <input type="search" placeholder="Busca datos abiertos" class="textBox">
+                        <button type="submit" class="btnSearch">
                     <i aria-hidden="true" class="fa fa-search" style="display: table; vertical-align: middle;"></i>
                 </button>
-            </form>
-        </li>
-      </ul>
+                    </form>
+                </li>
+            </ul>
+        </div>
     </div>
-  </div>
 </div>
 <router-outlet></router-outlet>
 <common-footer></common-footer>
