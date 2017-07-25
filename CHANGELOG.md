@@ -9,4 +9,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - New web front pages designed with Angular 4, Bootstrap 4 and FacesNG.
 - New admin fron pages to manage the web contents and several page information.
 
-[Unreleased]: https://github.com/aragonopendata/GA_OD_Core/compare/master...develop
+[Unreleased]: https://github.com/aragonopendata/AOD-Home/compare/master...develop
