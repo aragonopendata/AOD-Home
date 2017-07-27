@@ -53,6 +53,7 @@ import { InfoSparqlComponent } from './components/app-home/static-content/info-s
 import { FooterComponent } from './components/app-home/common/footer/footer.component';
 import { OrgDetailComponent } from "./components/app-home/organism/org-detail/org-detail.component";
 import { OrgsService } from "./services/orgs/orgs.service";
+import { PageNotFoundComponent } from './components/exceptions/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -92,7 +93,8 @@ import { OrgsService } from "./services/orgs/orgs.service";
     InfoApisComponent,
     InfoSparqlComponent,
     FooterComponent,
-    OrgDetailComponent
+    OrgDetailComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

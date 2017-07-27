@@ -1,0 +1,24 @@
+.messageError {
+    margin-top: 10%;
+    margin-left: 10%;
+}
+
+.codeError {
+    margin-left: 10%;
+}
+
+.videoPlayer {
+    margin-left: 10%;
+    margin-bottom: 10%;
+    text-align: center;
+}
+
+.messageError h1 {
+    font-family: "Roboto";
+    color: rgb(153,151,144);
+    font-size: 46px;
+    font-weight: 100;
+    text-align: justify;
+    line-height: normal;
+    vertical-align: middle;
+}
