@@ -1,272 +1,302 @@
 <div class="container">
-  <h1>INFORMACIÓN</h1>
-  <div id="accordion" role="tablist" aria-multiselectable="true">
-    <div class="card">
-      <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-        <div class="card-header" role="tab" id="headingOne">
-          <h5 class="mb-0">
-              QUÉ ES OPEN DATA
-              <i class="fa fa-plus-circle" id="informacion_content_3_i"></i>
-          </h5>
+    <h1>INFORMACIÓN</h1>
+    <div id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="card">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <div class="card-header" (click)="getChildren('#headingOne')" role="tab" id="headingOne">
+                    <h5 class="mb-0">
+                        QUÉ ES OPEN DATA
+                        <i class="fa fa-plus-circle"></i>
+                    </h5>
+                </div>
+            </a>
+            <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="card-block" style="text-align: justify;">
+                    <p>
+                        Open Data es una iniciativa a nivel global que persigue que los datos y la información, 
+                        especialmente la que poseen las administraciones
+                        públicas, estén disponibles para el conjunto de los ciudadanos. 
+                        La publicación de la información
+                        se realiza además de forma abierta y reutilizable, 
+                        de forma que tanto ciudadanos como empresas puedan
+                        utilizarla para su consulta, para enriquecerla con nuevos datos 
+                        o para generar aplicaciones y servicios
+                        con ella.
+                    </p>
+                    <p>
+                        Tras la filosofía de Datos Abiertos se encuentra también la necesidad de dotar de mayor transparencia al conjunto de las
+                        Administraciones Públicas y por eso esta iniciativa está ligada a las políticas de Gobierno Abierto.
+                        De esta manera, la publicación de los datos que "poseen las Administraciones en formatos abiertos
+                        es la mejor forma de generar confianza en las instituciones, gracias tanto a la "transparencia que
+                        esto aporta al sistema", como a la exposición pública del trabajo en el que se invierten los recursos
+                        públicos.
+                    </p>
+                    <p>
+                        La filosofía de trabajo Open Data se está convirtiendo en una realidad de forma acelerada. Aunque los principios sobre los
+                        que se asienta no son novedosos, el desarrollo de la informática y las TIC ha permitido la explosión
+                        de los datos gracias a la reducción de costes y de tiempos en su publicación y sociabilización, por
+                        eso la apertura de datos está alcanzando tal atención e importancia en estos momentos.
+                    </p>
+                </div>
+            </div>
         </div>
-      </a>
-      <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne">
-        <div class="card-block" style="text-align: justify;">
-          <p>
-            Open Data es una iniciativa a nivel global que persigue que los datos y la información, especialmente la que poseen las administraciones 
-            públicas, estén disponibles para el conjunto de los ciudadanos. La publicación de la información se realiza además de forma abierta y 
-            reutilizable, de forma que tanto ciudadanos como empresas puedan utilizarla para su consulta, para enriquecerla con nuevos datos o 
-            para generar aplicaciones y servicios con ella.
-          </p>
-          <p>
-            Tras la filosofía de Datos Abiertos se encuentra también la necesidad de dotar de mayor transparencia al conjunto de las Administraciones 
-            Públicas y por eso esta iniciativa está ligada a las políticas de Gobierno Abierto. De esta manera, la publicación de los datos que 
-            "poseen las Administraciones en formatos abiertos es la mejor forma de generar confianza en las instituciones, gracias tanto a la 
-            "transparencia que esto aporta al sistema", como a la exposición pública del trabajo en el que se invierten los recursos públicos.
-          </p>
-          <p>
-            La filosofía de trabajo Open Data se está convirtiendo en una realidad de forma acelerada. Aunque los principios sobre los que se 
-            asienta no son novedosos, el desarrollo de la informática y las TIC ha permitido la explosión de los datos gracias a la reducción de 
-            costes y de tiempos en su publicación y sociabilización, por eso la apertura de datos está alcanzando tal atención e importancia en estos momentos.
-          </p>
-        </div>
-      </div>
-    </div>
 
-    <div class="card">
-      <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-        <div class="card-header" role="tab" id="headingTwo">
-          <h5 class="mb-0">
-              REUTILIZACIÓN DE LA INFORMACIÓN DEL SECTOR PÚBLICO
-              <i class="fa fa-plus-circle" id="informacion_content_3_i"></i>
-          </h5>
+        <div class="card">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                <div class="card-header" role="tab" (click)="getChildren('#headingTwo')" id="headingTwo">
+                    <h5 class="mb-0">
+                        REUTILIZACIÓN DE LA INFORMACIÓN DEL SECTOR PÚBLICO
+                        <i class="fa fa-plus-circle"></i>
+                    </h5>
+                </div>
+            </a>
+            <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="card-block" style="text-align: justify;">
+                    <p>
+                        La reutilización de la información es un objetivo fundamental de las políticas de Open Data. La información del sector público
+                        constituye una materia prima importante para diversos productos y servicios de contenidos digitales.
+                        Por sus funciones, la administración pública posee datos de numerosos sectores productivos y temáticas,
+                        así se recopilan informaciones educativas, económicas, medio ambientales, turísticas, etc. que poseen
+                        un indudable interés más allá de su propio uso administrativo. Por ello, la apertura de los datos
+                        del sector público aporta valor a la información por los sucesivos usos que se le puede dar. Estas
+                        razones suponen que la información es un nuevo motor de desarrollo económico y social y su reutilización
+                        es un paso más en la implantación de la sociedad de la información y del conocimiento.
+                    </p>
+                    <p>
+                        Además, la igualdad en el acceso a la información y la posibilidad de la reutilización hacen que esta se constituya como
+                        el elemento que impide el falseamiento de la competencia. Por eso, la mera posibilidad de acceder
+                        a la reutilización consigue mejorar la eficiencia en los mercados de información, lo que permite
+                        a los consumidores gozar de servicios más justos.
+                    </p>
+                    <p>
+                        La reutilización de los datos, además de como una oportunidad económica para las empresas que explotan la información, se
+                        convierte también en palanca para otras mejoras sociales. Se podría hablar así, por ejemplo, del
+                        periodismo de datos, que estructura sus historias alrededor de los datos; de la posibilidad de desarrollar
+                        nuevas herramientas para acceder al conocimiento, que democratizan la información entre todos los
+                        ciudadanos; o de las nuevas técnicas de visualización de datos, que permiten hacer más clara y comprensible
+                        la información que se ofrece.
+                    </p>
+                    <p>
+                        Se puede encontrar documentación adicional sobre reutilización de la información del sector público en algunos informes y
+                        estudios ya publicados como "Reutilización de información pública y privada en España: Avance de
+                        situación para agentes públicos y privados. Una oportunidad para los negocios y el empleo." o "Estudio
+                        de caracterización del sector infomediario 2012."
+                    </p>
+                </div>
+            </div>
         </div>
-      </a>
-      <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
-        <div class="card-block" style="text-align: justify;">
-          <p>
-            La reutilización de la información es un objetivo fundamental de las políticas de Open Data. La información del sector 
-            público constituye una materia prima importante para diversos productos y servicios de contenidos digitales. 
-            Por sus funciones, la administración pública posee datos de numerosos sectores productivos y temáticas, así se 
-            recopilan informaciones educativas, económicas, medio ambientales, turísticas, etc. que poseen un indudable interés 
-            más allá de su propio uso administrativo. Por ello, la apertura de los datos del sector público aporta valor a la información 
-            por los sucesivos usos que se le puede dar. Estas razones suponen que la información es un nuevo motor de desarrollo económico 
-            y social y su reutilización es un paso más en la implantación de la sociedad de la información y del conocimiento.
-          </p>
-          <p>
-            Además, la igualdad en el acceso a la información y la posibilidad de la reutilización hacen que esta se constituya como el 
-            elemento que impide el falseamiento de la competencia. Por eso, la mera posibilidad de acceder a la reutilización consigue 
-            mejorar la eficiencia en los mercados de información, lo que permite a los consumidores gozar de servicios más justos.
-          </p>
-          <p>
-            La reutilización de los datos, además de como una oportunidad económica para las empresas que explotan la información, 
-            se convierte también en palanca para otras mejoras sociales. Se podría hablar así, por ejemplo, del periodismo de datos, 
-            que estructura sus historias alrededor de los datos; de la posibilidad de desarrollar nuevas herramientas para acceder al 
-            conocimiento, que democratizan la información entre todos los ciudadanos; o de las nuevas técnicas de visualización de datos, 
-            que permiten hacer más clara y comprensible la información que se ofrece.
-          </p>
-          <p>
-            Se puede encontrar documentación adicional sobre reutilización de la información del sector público en algunos informes 
-            y estudios ya publicados como "Reutilización de información pública y privada en España: Avance de situación para agentes 
-            públicos y privados. Una oportunidad para los negocios y el empleo." o "Estudio de caracterización del sector infomediario 2012."
-          </p>
-        </div>
-      </div>
-    </div>
 
-    <div class="card">
-      <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-        <div class="card-header" role="tab" id="headingTwo">
-          <h5 class="mb-0">
-              BUENAS PRÁCTICAS
-              <i class="fa fa-plus-circle" id="informacion_content_3_i"></i>
-          </h5>
+        <div class="card">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                <div class="card-header" (click)="getChildren('#headingThree')" role="tab" id="headingThree">
+                    <h5 class="mb-0">
+                        BUENAS PRÁCTICAS
+                        <i class="fa fa-plus-circle"></i>
+                    </h5>
+                </div>
+            </a>
+            <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
+                <div class="card-block" style="text-align: justify;">
+                    <p>
+                        Dentro del mundo de Internet, el World Wide Web Consortium (W3C) es el organismo que se encarga de velar por el desarrollo
+                        de estándares abiertos, libres e interoperables que aseguren el crecimiento de la Web a largo plazo.
+                        Esta organización ha realizado una guía de publicación con pautas sobre cómo han de publicar datos
+                        los gobiernos. Estas pautas para la publicación de los datos, tanto técnicas como de planificación,
+                        han sido seguidas para la elaboración del catálogo de Aragón Open Data. Igualmente existen otras
+                        iniciativas generadoras de manuales de buenas prácticas o de concienciación alrededor de los datos
+                        abiertos como las aportadas por ejemplo por la Sunlight Foundation o por la Open Knowledge Foundation.
+                    </p>
+                    <p>
+                        Además, dentro del ámbito estatal, la “Comunidad Open Data – RISP España” está trabajando en la sensibilización hacia las
+                        políticas de Open Data y ha generado algunos documentos de interés. Entre ellos destaca el Decálogo
+                        Open Data, que es un resumen de buenas prácticas a la hora de afrontar políticas Open Data y que
+                        a continuación se transcribe:
+                    </p>
+                    <img src="../../../../assets/aragon_opendata_02buenas_practicas.jpg" width="75%" />
+                    <p>
+                        Buenas prácticas para la publicación de datos abiertos:
+                    </p>
+                    <ol>
+                        <li>
+                            <b>Armonización entre administraciones.</b><br/>
+                            <p>
+                                Todos los puntos del decálogo se basan en la premisa de que debe existir una armonización entre todas las Administraciones.
+                                Todas las iniciativas Open Data deben compartir los mismos principios y definiciones que
+                                se listan en el decálogo. Este punto 0 es básico para la interoperabilidad y aprovechamiento
+                                eficiente de las sinergias llevadas a cabo por todos los actores Open Data – RISP.
+                            </p>
+                        </li>
+                        <li>
+                            <b>Publicar datos en formatos abiertos y estándares.</b><br/>
+                            <p>
+                                Cualquier iniciativa Open Data debería publicar sus conjuntos de datos en formatos abiertos (no-propietarios) y que sean
+                                adecuados para permitir la reutilización de los mismos por parte del colectivo reutilizador
+                                destinatario.
+                            </p>
+                        </li>
+                        <li>
+                            <b>Usar esquemas y vocabularios consensuados.</b><br/>
+                            <p>
+                                Además de los formatos abiertos y estándar, la estructura de los datos debería seguir un convenio o unos esquemas definidos,
+                                si existieran. Si se crean vocabularios o esquemas de representación de la información específicos,
+                                éstos se deberían exponer públicamente para que el colectivo reutilizador pueda interpretar
+                                correctamente la información.
+                            </p>
+                        </li>
+                        <li>
+                            <b>Inventario en un catálogo de datos estructurado.</b><br/>
+                            <p>
+                                Cualquier iniciativa Open Data debe tener un punto de consulta donde se incluya un inventario con información descriptiva
+                                y técnica sobre los conjuntos de datos que se exponen. Los metadatos que informan sobre cada
+                                conjunto de datos deberían seguir una estructura común y estándar. Asimismo, se deberían
+                                compartir las taxonomías de temáticas u otras necesarias -p.e., toponimia- para clasificar
+                                los conjuntos de datos dentro de los catálogos.
+                            </p>
+                        </li>
+                        <li>
+                            <b>Datos accesibles desde direcciones web persistentes y amigables.</b><br/>
+                            <p>
+                                Tanto las fichas de los conjuntos de datos, como la distribución de la propia información (volcado en un archivo, API de
+                                consulta, RSS, etc.) deberían de estar accesibles desde URLs (direcciones web) que persistan
+                                en el tiempo y así evitar que se pierdan las referencias en el futuro. Además deben seguir
+                                una estructura homogénea y bien definida, con información legible para que los reutilizadores
+                                conozcan o “intuyan” el contenido referido por dichas direcciones web.
+                            </p>
+                        </li>
+                        <li>
+                            <b>Exponer un mínimo conjunto de datos relativos al nivel de competencias del organismo y su estrategia de exposición de datos.</b><br/>
+                            <p>
+                                Cada Administración que impulse una iniciativa Open Data debería crear una hoja de ruta donde especifique la estrategia de
+                                exposición de los conjuntos de datos y sus prioridades. Inicialmente, debería publicar los
+                                conjuntos de mayor interés según las competencias del propio organismo.
+                            </p>
+                        </li>
+                        <li>
+                            <b>Compromiso de servicio, actualización y calidad del dato, manteniendo un canal eficiente de comunicación reutilizador AAPP.</b><br/>
+                            <p>
+                                La Administración debe mantener un mínimo de calidad y servicio en su iniciativa Open Data, manteniendo lo expuesto en la
+                                estrategia de publicación y comprometiéndose con su colectivo reutilizador. Debe establecer
+                                un canal eficiente de comunicación que permita la interacción bidireccional organismo público
+                                – reutilizadores.
+                            </p>
+                        </li>
+                        <li>
+                            <b>Monitorizar y evaluar el uso y servicio mediante métricas.</b><br/>
+                            <p>
+                                La Administración debe crear métricas y evaluar sus indicadores de uso y servicio de la iniciativa Open Data. De esta forma
+                                puede monitorizar el funcionamiento y uso, y así analizar si se está cumpliendo el compromiso
+                                con la comunidad de reutilizadores y cuales son las potenciales carencias del sistema o de
+                                la estrategia.
+                            </p>
+                        </li>
+                        <li>
+                            <b>Datos bajo condiciones de uso no restrictivas y comunes.</b><br/>
+                            <p>
+                                Las condiciones de uso deberían ser lo menos restrictivas posible y permitir la reutilización libre, incluso para fines comerciales.
+                                Se recomienda la creación y uso de licencias tipo, autodocumentadas y que sean comunes entre
+                                distintas administraciones.
+                            </p>
+                        </li>
+                        <li>
+                            <b>Evangelizar y educar en el uso de datos.</b><br/>
+                            <p>
+                                Es necesario educar en el uso de los datos, tanto a los colectivos de reutilización específicos (sector TIC, periodismo,
+                                investigación, etc.) como a la sociedad en general y así fomentar el conocimiento y la inquietud
+                                por procesar información de una forma autónoma. Evitar el “disgusto” por los datos.
+                            </p>
+                        </li>
+                        <li>
+                            <b>Recopilar aplicaciones, herramientas y manuales para motivar y facilitar la reutilización.</b><br/>
+                            <p>
+                                Cualquier iniciativa Open Data debería recopilar ejemplos de uso y herramientas que faciliten y motiven la reutilización
+                                de los datos que se publican.
+                            </p>
+                        </li>
+                    </ol>
+                </div>
+            </div>
         </div>
-      </a>
-      <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
-        <div class="card-block" style="text-align: justify;">
-          <p>
-            Dentro del mundo de Internet, el World Wide Web Consortium (W3C) es el organismo que se encarga de velar por el desarrollo 
-            de estándares abiertos, libres e interoperables que aseguren el crecimiento de la Web a largo plazo. Esta organización ha 
-            realizado una guía de publicación con pautas sobre cómo han de publicar datos los gobiernos. Estas pautas para la publicación 
-            de los datos, tanto técnicas como de planificación, han sido seguidas para la elaboración del catálogo de Aragón Open Data. 
-            Igualmente existen otras iniciativas generadoras de manuales de buenas prácticas o de concienciación alrededor de los datos 
-            abiertos como las aportadas por ejemplo por la Sunlight Foundation o por la Open Knowledge Foundation.
-          </p>
-          <p>
-            Además, dentro del ámbito estatal, la “Comunidad Open Data – RISP España” está trabajando en la sensibilización hacia las 
-            políticas de Open Data y ha generado algunos documentos de interés. Entre ellos destaca el Decálogo Open Data, que es un resumen 
-            de buenas prácticas a la hora de afrontar políticas Open Data y que a continuación se transcribe:
-          </p>
-          <img src="../../../../assets/aragon_opendata_02buenas_practicas.jpg" width="75%"/>
-          <p>
-            Buenas prácticas para la publicación de datos abiertos:
-          </p>
-          <ol>
-            <li>
-              <b>Armonización entre administraciones.</b><br/>
-              <p>
-                Todos los puntos del decálogo se basan en la premisa de que debe existir una armonización entre todas las Administraciones. 
-                Todas las iniciativas Open Data deben compartir los mismos principios y definiciones que se listan en el decálogo. 
-                Este punto 0 es básico para la interoperabilidad y aprovechamiento eficiente de las sinergias llevadas a cabo por todos los actores Open Data – RISP.
-              </p>
-            </li>
-            <li>
-              <b>Publicar datos en formatos abiertos y estándares.</b><br/>
-              <p>
-                Cualquier iniciativa Open Data debería publicar sus conjuntos de datos en formatos abiertos (no-propietarios) y que sean adecuados 
-                para permitir la reutilización de los mismos por parte del colectivo reutilizador destinatario.
-              </p>
-            </li>
-            <li>
-              <b>Usar esquemas y vocabularios consensuados.</b><br/>
-              <p>
-                Además de los formatos abiertos y estándar, la estructura de los datos debería seguir un convenio o unos esquemas definidos, si existieran. 
-                Si se crean vocabularios o esquemas de representación de la información específicos, éstos se deberían exponer públicamente para que el 
-                colectivo reutilizador pueda interpretar correctamente la información.
-              </p>
-            </li>
-            <li>
-              <b>Inventario en un catálogo de datos estructurado.</b><br/>
-              <p>
-                Cualquier iniciativa Open Data debe tener un punto de consulta donde se incluya un inventario con información 
-                descriptiva y técnica sobre los conjuntos de datos que se exponen. Los metadatos que informan sobre cada conjunto 
-                de datos deberían seguir una estructura común y estándar. Asimismo, se deberían compartir las taxonomías de temáticas 
-                u otras necesarias -p.e., toponimia- para clasificar los conjuntos de datos dentro de los catálogos.
-              </p>
-            </li>
-            <li>
-              <b>Datos accesibles desde direcciones web persistentes y amigables.</b><br/>
-              <p>
-                Tanto las fichas de los conjuntos de datos, como la distribución de la propia información (volcado en un archivo, API de consulta, RSS, etc.) 
-                deberían de estar accesibles desde URLs (direcciones web) que persistan en el tiempo y así evitar que se pierdan las referencias en el futuro. 
-                Además deben seguir una estructura homogénea y bien definida, con información legible para que los reutilizadores conozcan o “intuyan” el 
-                contenido referido por dichas direcciones web.
-              </p>
-            </li>
-            <li>
-              <b>Exponer un mínimo conjunto de datos relativos al nivel de competencias del organismo y su estrategia de exposición de datos.</b><br/>
-              <p>
-                Cada Administración que impulse una iniciativa Open Data debería crear una hoja de ruta donde especifique la estrategia de 
-                exposición de los conjuntos de datos y sus prioridades. Inicialmente, debería publicar los conjuntos de mayor interés según las 
-                competencias del propio organismo.
-              </p>
-            </li>
-            <li>
-              <b>Compromiso de servicio, actualización y calidad del dato, manteniendo un canal eficiente de comunicación reutilizador AAPP.</b><br/>
-              <p>
-                La Administración debe mantener un mínimo de calidad y servicio en su iniciativa Open Data, manteniendo lo expuesto en la estrategia 
-                de publicación y comprometiéndose con su colectivo reutilizador. Debe establecer un canal eficiente de comunicación que permita la 
-                interacción bidireccional organismo público – reutilizadores.
-              </p>
-            </li>
-            <li>
-              <b>Monitorizar y evaluar el uso y servicio mediante métricas.</b><br/>
-              <p>
-                La Administración debe crear métricas y evaluar sus indicadores de uso y servicio de la iniciativa Open Data. De esta forma puede 
-                monitorizar el funcionamiento y uso, y así analizar si se está cumpliendo el compromiso con la comunidad de reutilizadores y 
-                cuales son las potenciales carencias del sistema o de la estrategia.
-              </p>
-            </li>
-            <li>
-              <b>Datos bajo condiciones de uso no restrictivas y comunes.</b><br/>
-              <p>
-                Las condiciones de uso deberían ser lo menos restrictivas posible y permitir la reutilización libre, incluso para fines comerciales. 
-                Se recomienda la creación y uso de licencias tipo, autodocumentadas y que sean comunes entre distintas administraciones.
-              </p>
-            </li>
-            <li>
-              <b>Evangelizar y educar en el uso de datos.</b><br/>
-              <p>
-                Es necesario educar en el uso de los datos, tanto a los colectivos de reutilización específicos (sector TIC, periodismo, investigación, etc.) 
-                como a la sociedad en general y así fomentar el conocimiento y la inquietud por procesar información de una forma autónoma. Evitar el “disgusto” por los datos.
-              </p>
-            </li>
-            <li>
-              <b>Recopilar aplicaciones, herramientas y manuales para motivar y facilitar la reutilización.</b><br/>
-              <p>
-                Cualquier iniciativa Open Data debería recopilar ejemplos de uso y herramientas que faciliten y motiven la reutilización de los datos que se publican.
-              </p>
-            </li>
-          </ol>
-        </div>
-      </div>
-    </div>
 
-    <div class="card">
-      <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
-        <div class="card-header" role="tab" id="headingFour">
-          <h5 class="mb-0">
-              MARCO LEGAL EXISTENTE
-              <i class="fa fa-plus-circle" id="informacion_content_3_i"></i>
-          </h5>
+        <div class="card">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                <div class="card-header" (click)="getChildren('#headingFour')" role="tab" id="headingFour">
+                    <h5 class="mb-0">
+                        MARCO LEGAL EXISTENTE
+                        <i class="fa fa-plus-circle"></i>
+                    </h5>
+                </div>
+            </a>
+            <div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingFour">
+                <div class="card-block" style="text-align: justify;">
+                    <p>
+                        La normativa en la que se asientan las prácticas de apertura de datos empieza a ser amplia tanto a nivel nacional como internacional.
+                        Como texto de mayor importancia se puede reseñar que la introducción de la iniciativa Open Data en
+                        el contexto europeo aparece mediante la Directiva 2003/98/CE relativa a la reutilización de la información
+                        del sector público modificada por el Consejo de la Unión Europea el 15 de abril de 2013.
+                    </p>
+                    <p>
+                        Igualmente, a nivel europeo, tanto la Declaración Ministerial de Malmö, como la Declaración Ministerial de Granada para la
+                        Agenda Digital Europea y la propia Agenda Digital Europea tienen presente la importancia de la reutilización
+                        de la información del sector público dentro de sus estrategia a 2015 y 2020 y la incorporan reiteradamente
+                        dentro de sus acciones y articulados. Dentro de la estrategia europea alrededor de los datos abiertos,
+                        y fuera del marco legal, destaca el Informe MEPSIR que supuso un gran impulso y que se realizó poco
+                        después de la publicación de la Directiva 2003/98. El informe MEPSIR incorporaba una metodología
+                        para la medida de la reutilización de la información del sector público y la comparación entre los
+                        diferentes países de la UE.
+                    </p>
+                    <p>
+                        A nivel nacional se incorpora la reutilización de la información en el sector público en el marco legal a partir de la Ley
+                        37/2007, de 16 de noviembre, sobre reutilización de la información del sector público y de algunos
+                        de los contenidos de la Ley 56/2007, de 28 de diciembre, de Medidas de Impulso de la Sociedad de
+                        la Información. Igualmente, la Ley 19/2013, de 9 de diciembre, de transparencia, acceso a la información
+                        pública y buen gobierno, incluye la obligación de publicar de manera activa datos sobre una serie
+                        de temas de interés. A nivel del Sector Público estatal además aparece el Real Decreto 1495/2011,
+                        de 24 de octubre, por el que se desarrolla la Ley 37/2007, de 16 de noviembre, sobre reutilización
+                        de la información del sector público. Recientemente además, se aprobó la Norma Técnica de Interoperabilidad
+                        de Reutilización de recursos de la información mediante Resolución de 19 de febrero de 2013 de la
+                        Secretaría de Estado de Administraciones Públicas. En el ámbito de las CCAA también se está comenzando
+                        a desarrollar legislación al respecto dentro de normas sobre gobierno abierto, participación y transparencia.
+                    </p>
+                    <p>
+                        Con estos antecedentes, el Gobierno de Aragón, mediante Acuerdo de 17 de julio de 2012 ordena el inicio del proyecto de apertura
+                        de datos públicos, en cumplimiento de la Ley 37/2007, de 16 de noviembre, de reutilización de la
+                        información del sector público. Con este Acuerdo se da cobertura jurídica para comenzar con la apertura
+                        de datos dentro del Gobierno de Aragón.
+                    </p>
+                </div>
+            </div>
         </div>
-      </a>
-      <div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingFour">
-        <div class="card-block" style="text-align: justify;">
-          <p>
-            La normativa en la que se asientan las prácticas de apertura de datos empieza a ser amplia tanto a nivel nacional como internacional. 
-            Como texto de mayor importancia se puede reseñar que la introducción de la iniciativa Open Data en el contexto europeo aparece mediante 
-            la Directiva 2003/98/CE relativa a la reutilización de la información del sector público modificada por el Consejo de la Unión 
-            Europea el 15 de abril de 2013.
-          </p>
-          <p>
-            Igualmente, a nivel europeo, tanto la Declaración Ministerial de Malmö, como la Declaración Ministerial de Granada para la Agenda 
-            Digital Europea y la propia Agenda Digital Europea tienen presente la importancia de la reutilización de la información del sector 
-            público dentro de sus estrategia a 2015 y 2020 y la incorporan reiteradamente dentro de sus acciones y articulados. Dentro de la 
-            estrategia europea alrededor de los datos abiertos, y fuera del marco legal, destaca el Informe MEPSIR que supuso un gran impulso 
-            y que se realizó poco después de la publicación de la Directiva 2003/98. El informe MEPSIR incorporaba una metodología para la medida 
-            de la reutilización de la información del sector público y la comparación entre los diferentes países de la UE.
-          </p>
-          <p>
-            A nivel nacional se incorpora la reutilización de la información en el sector público en el marco legal a partir de la 
-            Ley 37/2007, de 16 de noviembre, sobre reutilización de la información del sector público y de algunos de los contenidos 
-            de la Ley 56/2007, de 28 de diciembre, de Medidas de Impulso de la Sociedad de la Información. Igualmente, la Ley 19/2013, 
-            de 9 de diciembre, de transparencia, acceso a la información pública y buen gobierno, incluye la obligación de publicar de 
-            manera activa datos sobre una serie de temas de interés. A nivel del Sector Público estatal además aparece el Real Decreto 
-            1495/2011, de 24 de octubre, por el que se desarrolla la Ley 37/2007, de 16 de noviembre, sobre reutilización de la información 
-            del sector público. Recientemente además, se aprobó la Norma Técnica de Interoperabilidad de Reutilización de recursos de la 
-            información mediante Resolución de 19 de febrero de 2013 de la Secretaría de Estado de Administraciones Públicas. En el ámbito 
-            de las CCAA también se está comenzando a desarrollar legislación al respecto dentro de normas sobre gobierno abierto, participación y transparencia.
-          </p>
-          <p>
-            Con estos antecedentes, el Gobierno de Aragón, mediante Acuerdo de 17 de julio de 2012 ordena el inicio del proyecto de apertura 
-            de datos públicos, en cumplimiento de la Ley 37/2007, de 16 de noviembre, de reutilización de la información del sector público. 
-            Con este Acuerdo se da cobertura jurídica para comenzar con la apertura de datos dentro del Gobierno de Aragón.
-          </p>
-        </div>
-      </div>
-    </div>
 
-    <div class="card">
-      <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
-        <div class="card-header" role="tab" id="headingFive">
-          <h5 class="mb-0">
-              EXPERIENCIAS
-              <i class="fa fa-plus-circle" id="informacion_content_3_i"></i>
-          </h5>
+        <div class="card">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
+                <div class="card-header" (click)="getChildren('#headingFive')" role="tab" id="headingFive">
+                    <h5 class="mb-0">
+                        EXPERIENCIAS
+                        <i class="fa fa-plus-circle"></i>
+                    </h5>
+                </div>
+            </a>
+            <div id="collapseFive" class="collapse" role="tabpanel" aria-labelledby="headingFive">
+                <div class="card-block" style="text-align: justify;">
+                    <p>
+                        Como se ha dicho, Open Data es una iniciativa global que despega gracias a las iniciativas de Estados Unidos y Reino Unido
+                        a partir del año 2009. Desde ese momento existe un desarrollo internacional con numerosas experiencias,
+                        por señalar algunas se pueden mencionar las del Banco Mundial o la de Naciones Unidas.
+                    </p>
+                    <p>
+                        En España existen numerosas iniciativas entre las que se pueden mencionar, a nivel nacional, el Catálogo de Información Pública
+                        de la Administración General del Estado como elemento más visible del Proyecto Aporta. A escala autonómica
+                        existen proyectos como los de Datos Abiertos Andalucía,el Catálogo de datos de Asturias,Dades obertes
+                        CAIB (Baleares),Portal de Datos Abiertos (Junta de Castilla y León),Datos abiertos gencat (Cataluña),Datos
+                        Abiertos de Castilla la Mancha,Open Data Euskadi, Portal Abert@s de la Xunta de Galicia,Dato Abierto
+                        Rioja y Open Data Navarra. A nivel local se encuentran las experiencias de algunos Ayuntamientos
+                        comoe Badalona,Barcelona, Gijón, Lleida, Terrassa y Zaragoza.
+                    </p>
+                    <p>
+                        Para mayor información, el conjunto de iniciativas Open Data alrededor del mundo está resumido por la Fundación CTIC.
+                    </p>
+                </div>
+            </div>
         </div>
-      </a>
-      <div id="collapseFive" class="collapse" role="tabpanel" aria-labelledby="headingFive">
-        <div class="card-block" style="text-align: justify;">
-          <p>
-            Como se ha dicho, Open Data es una iniciativa global que despega gracias a las iniciativas de Estados Unidos y Reino Unido 
-            a partir del año 2009. Desde ese momento existe un desarrollo internacional con numerosas experiencias, por señalar algunas 
-            se pueden mencionar las del Banco Mundial o la de Naciones Unidas.
-          </p>
-          <p>
-            En España existen numerosas iniciativas entre las que se pueden mencionar, a nivel nacional, el Catálogo de Información 
-            Pública de la Administración General del Estado como elemento más visible del Proyecto Aporta. A escala autonómica existen 
-            proyectos como los de Datos Abiertos Andalucía,el Catálogo de datos de Asturias,Dades obertes CAIB (Baleares),Portal de Datos 
-            Abiertos (Junta de Castilla y León),Datos abiertos gencat (Cataluña),Datos Abiertos de Castilla la Mancha,Open Data Euskadi, 
-            Portal Abert@s de la Xunta de Galicia,Dato Abierto Rioja y Open Data Navarra. A nivel local se encuentran las experiencias de 
-            algunos Ayuntamientos comoe Badalona,Barcelona, Gijón, Lleida, Terrassa y Zaragoza.
-          </p>
-          <p>
-            Para mayor información, el conjunto de iniciativas Open Data alrededor del mundo está resumido por la Fundación CTIC.
-          </p>
-        </div>
-      </div>
     </div>
-  </div>
 </div>
