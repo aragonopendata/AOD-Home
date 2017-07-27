@@ -45,9 +45,15 @@ body {
 }
 
 .login-box, .register-box {
-    width: 360px;
+    width: fit-content;
     margin: 7% auto;
-}.login-page, .register-page {
+}
+
+.login-box-body {
+    padding: 5%;
+}
+
+.login-page, .register-page {
      background: #d2d6de;
  }
 

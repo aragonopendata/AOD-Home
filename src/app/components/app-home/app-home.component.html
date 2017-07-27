@@ -37,53 +37,92 @@
 </div>
 <div id="myNav" class="overlay">
     <div class="overlay-content">
-        <div id="accordionmenu">
-            <ul class="accordion">
-                <li style="font-size: 30px; border-top: 1px solid white;">
-                    <p data-toggle="collapse" data-target="#datos" data-parent=".accordion" aria-expanded="true">Datos</p>
-                    <ul class="collapse" id="datos">
-                        <li><a href="#">Banco de datos</a></li>
-                        <li><a href="#">Temas</a></li>
-                        <li><a href="#">Publicadores</a></li>
-                    </ul>
-                </li>
-                <li style="font-size: 30px; border-top: 1px solid white;">
-                    <p data-toggle="collapse" data-target="#servicios" data-parent=".accordion" aria-expanded="false">Servicios</p>
-                    <ul class="collapse" id="servicios">
-                        <li><a href="#">Aragopedia</a></li>
-                        <li><a href="#">Presupuestos</a></li>
-                        <li><a href="#">Open Social Data</a></li>
-                        <li><a href="#">CRAs Aragón</a></li>
-                    </ul>
-                </li>
-                <li style="font-size: 30px; border-top: 1px solid white;">
-                    <p class="collapsed" data-toggle="collapse" data-target="#info" data-parent=".accordion" aria-expanded="false">Información</p>
-                    <ul class="collapse" id="info">
-                        <li><a href="#">Información</a></li>
-                        <li><a href="#">Aplicaciones</a></li>
-                        <li><a href="#">Eventos</a></li>
-                        <li><a href="#">Colabora</a></li>
-                    </ul>
-                </li>
-                <li style="font-size: 30px; border-top: 1px solid white;">
-                    <p class="collapsed" data-toggle="collapse" data-target="#tools" data-parent=".accordion" aria-expanded="false">Herramientas</p>
-                    <ul class="collapse" id="tools">
-                        <li><a href="#">AOD Campus</a></li>
-                        <li><a href="#">Desarrolladores</a></li>
-                        <li><a href="#">APIs</a></li>
-                        <li><a href="#">SPARQL</a></li>
-                        <li><a href="#">GITHUB</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <form>
-                        <input type="search" placeholder="Busca datos abiertos" class="textBox">
-                        <button type="submit" class="btnSearch">
-                            <i aria-hidden="true" class="fa fa-search" style="display: table; vertical-align: middle;"></i>
-                        </button>
-                    </form>
-                </li>
-            </ul>
+        <div id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="card">
+                <div class="card-header" role="tab" id="headingOne">
+                <h5 class="mb-0">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Datos
+                    </a>
+                </h5>
+                </div>
+
+                <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="card-block">
+                        <ul id="datos">
+                            <li><a href="#">Banco de datos</a></li>
+                            <li><a href="#">Temas</a></li>
+                            <li><a href="#">Publicadores</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" role="tab" id="headingTwo">
+                <h5 class="mb-0">
+                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Servicios
+                    </a>
+                </h5>
+                </div>
+                <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="card-block">
+                        <ul id="servicios">
+                            <li><a href="#">Aragopedia</a></li>
+                            <li><a href="#">Presupuestos</a></li>
+                            <li><a href="#">Open Social Data</a></li>
+                            <li><a href="#">CRAs Aragón</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" role="tab" id="headingThree">
+                <h5 class="mb-0">
+                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Información
+                    </a>
+                </h5>
+                </div>
+                <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
+                    <div class="card-block">
+                        <ul id="info">
+                            <li><a href="#">Información</a></li>
+                            <li><a href="#">Aplicaciones</a></li>
+                            <li><a href="#">Eventos</a></li>
+                            <li><a href="#">Colabora</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" role="tab" id="headingFour">
+                    <h5 class="mb-0">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
+                            Herramientas
+                        </a>
+                    </h5>
+                </div>
+                <div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingFour">
+                    <div class="card-block">
+                        <ul id="tools">
+                            <li><a href="#">AOD Campus</a></li>
+                            <li><a href="#">Desarrolladores</a></li>
+                            <li><a href="#">APIs</a></li>
+                            <li><a href="#">SPARQL</a></li>
+                            <li><a href="#">GITHUB</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>   
+        <div>
+            <form>
+                <input type="search" placeholder="Busca datos abiertos" class="textBox">
+                <button type="submit" class="btnSearch">
+                    <i aria-hidden="true" class="fa fa-search" style="display: table; vertical-align: middle;"></i>
+                </button>
+            </form>
         </div>
     </div>
 </div>

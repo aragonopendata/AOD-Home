@@ -1,8 +1,30 @@
-li {
+h1, h2, h3, h4, h5, h6, li {
     font-family: 'Roboto', sans-serif;
     line-height: 1;
     letter-spacing: 0.1em;
     font-weight: 300;
+}
+
+.card-header a {
+    font-size: 25px !important;
+}
+
+.card-header {
+    padding: 1%;
+    background: transparent;
+    border-radius: 0;
+    border: none;
+    border-top: solid 1px white; 
+}
+
+.card {
+    background: transparent;
+    border: none;
+}
+
+.card-block {
+    padding: 0;
+    padding-left: 2%;
 }
 
 a:hover {
@@ -32,14 +54,14 @@ a:hover {
 .overlay-content {
     position: relative;
     width: 100%;
-    padding-left: 5%;
-    padding-right: 5%;
+    padding-left: 10%;
+    padding-right: 10%;
 }
 
 .overlay a, .overlay li {
     padding: 2px;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 18px;
     color: #818181;
     display: block;
     transition: 0.3s;
@@ -50,13 +72,12 @@ a:hover {
 }
 
 @media screen and (max-height: 450px) {
-  .overlay {overflow-y: hidden;}
-  .overlay a, .overlay li {font-size: 20px}
-  .overlay .closebtn {
-    font-size: 40px;
-    top: 15px;
-    right: 35px;
-  }
+  .overlay {
+      overflow-y: hidden;
+      }
+  .overlay a, .overlay li {
+      font-size: 20px
+      }
 }
 
 .textBox {
@@ -110,7 +131,7 @@ a:hover {
 }
 
 .navbar {
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.8);
 }
 
 .navbar-collapse.collapse {
