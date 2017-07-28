@@ -76,7 +76,7 @@ a:hover {
       overflow-y: hidden;
       }
   .overlay a, .overlay li {
-      font-size: 20px
+      font-size: 20px;
       }
 }
 
@@ -125,27 +125,73 @@ a:hover {
     color: white;
 }
 
+.active {
+    color:#ffffff !important;
+    font-weight:bold;
+    border-bottom: 3px solid #76a1b8;
+}
+
 #logo {
     max-width: 100%;
     height: auto;
 }
 
-.navbar {
+#nav {
     background-color: rgba(255, 255, 255, 0.8);
 }
 
-.navbar-collapse.collapse {
-  display: block !important;
+.logo {
+    margin: 10px;
+    z-index: 999;
 }
 
-.navbar-nav>li, .navbar-nav {
-  float: left !important;
+@media screen and (max-width: 1000px) and (min-width: 480px) {
+    .logo {
+        height:60px;
+        width: 329px;
+        margin-top: 12px;
+        margin-left: 5px;
+    }
 }
 
-.navbar-nav.navbar-right:last-child {
-  margin-right: -15px !important;
+@media screen and (max-width: 480px) {
+    .logo {
+        height:33px;
+        width: 200px;
+        margin-top: 10px;
+        margin-left: 5px;
+    }
 }
 
-.navbar-right {
-  float: right !important;
+.menu,.menuLogin {
+    width: 60px;
+    height: 60px;
+    position: fixed;
+    right: 20px;
+    display: inline-block;
+    z-index: 999
+}
+
+.menuLogin {
+    right: 90px;
+}
+
+@media screen and (max-width: 1000px) and (min-width: 480px) {
+    .menu, .menuLogin {
+        height:50px;
+        width: 50px;
+        padding-right: 10%;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .aMenu, .aLogin, .menu, .menuLogin {
+        height: 40px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .menuLogin {
+        right: 65px;
+    }
 }
