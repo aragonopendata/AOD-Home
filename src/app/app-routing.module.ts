@@ -37,6 +37,7 @@ import { InfoSparqlComponent } from './components/app-home/static-content/info-s
 import { InfoApisComponent } from './components/app-home/static-content/info-apis/info-apis.component';
 import { OrgDetailComponent } from './components/app-home/organism/org-detail/org-detail.component';
 import { PageNotFoundComponent } from './components/exceptions/page-not-found/page-not-found.component';
+import { DatasetDetailComponent } from "./components/app-home/data/dataset-detail/dataset-detail.component";
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -44,6 +45,7 @@ const routes: Routes = [
         { path: '', redirectTo: 'globalhome', pathMatch: 'full' },
         { path: 'globalhome', component: GlobalHomeComponent },
         { path: 'data', component: DataComponent },
+        { path: 'datasetdetail', component: DatasetDetailComponent },
         { path: 'topic', component: TopicComponent },
         { path: 'org', component: OrganismComponent },
         { path: 'org/:orgName', component: OrgDetailComponent },

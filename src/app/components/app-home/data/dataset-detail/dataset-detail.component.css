@@ -1,0 +1,71 @@
+.container {
+    padding-top: 12%; 
+}
+
+p {
+    margin: 3px;
+    text-align: justify;
+}
+
+a {
+    cursor: pointer;
+}
+
+.content {
+    padding-bottom: 3%;
+}
+
+.title, .container-fluid {
+    border: solid 2px #5ea2ba;
+}
+
+.title h5{
+    font-weight: 500;
+    margin: 3px;
+}
+
+.container-fluid {
+    border-top: none;
+    padding: 1%;
+}
+
+.container-fluid h6 {
+    margin: 3px;
+    font-weight: 500;
+}
+
+.recomend {
+    padding-top: 3%;
+}
+
+.recomend .container-fluid {
+    border: none;
+}
+
+
+.section {
+    margin-bottom: 3%;
+}
+
+.card {
+    border: none;
+    margin-top: 3%;
+    margin-bottom: 3%;
+}
+
+.card-header {
+    padding: 1%;
+    cursor: pointer;
+    background: transparent;
+    border: solid 2px #5ea2ba;
+}
+
+.card-block {
+    border: solid 2px #5ea2ba;
+    border-top: none;
+}
+
+.card img {
+    margin: 0 auto;
+    max-width: 70%;
+}

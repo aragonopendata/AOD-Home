@@ -1,0 +1,94 @@
+<div class="container">
+  <div class="dtHeader row">
+    <h1 class="globaltitle col-10">{{dataset.name}}</h1>
+    <div class="social col-2">
+      <a>
+        <img src="../../../../../assets/social/facebookIcon.png">
+      </a>
+      <a>
+        <img src="../../../../../assets/social/twitterIcon.png">
+      </a>
+      <a>
+        <img src="../../../../../assets/social/googlePlusIcon.png">
+      </a>
+    </div>
+  </div>
+  <div class="content row">
+    <div class="dtsetPreview col-12">
+      <div id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="card">
+          <div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" role="tab" id="headingOne">
+            <h5 class="mb-0" style="font-weight: 500;">
+              Previsualización del conjunto de datos
+            </h5>
+          </div>
+
+          <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+            <div class="card-block">
+              <p>
+                No se ha encontrado previsualización del conjunto de datos seleccionado.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="infodtset col-sm-12 col-md-8">
+      <div class="title">
+        <h5>Información del conjunto de datos</h5>
+      </div>
+      <div class="container-fluid">
+        <div class="section">
+          <h6>Título</h6>
+          <p>{{dataset.name}}</p>
+        </div>
+        <div class="section">
+          <h6>Descripción</h6>
+          <p>{{dataset.description}}</p>
+        </div>
+        <div class="section">
+          <h6>Categoría</h6>
+          <p>{{dataset.topic.name}}</p>
+        </div>
+        <div class="section">
+          <h6>Etiquetas y palabras clave</h6>
+          <p></p>
+        </div>
+        <div class="section">
+          <h6>Organización responsable de la publicación</h6>
+          <p>{{dataset.publicador.name}}</p>
+        </div>
+        <div class="section">
+          <h6>Última actualización</h6>
+          <p>{{dataset.lastUpdate}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="download col-sm-12 col-md-4">
+      <div class="title">
+        <h5>Descargas</h5>
+      </div>
+      <div class="container-fluid">
+        <div class="section">
+          <h6>Metadatos de la colección</h6>
+          
+        </div>
+        <div class="section">
+          <h6>Archivos con los datos</h6>
+          <p>{{dataset.name}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="recomend col-12">
+      <h4>También te recomendamos</h4>
+      <div class="container-fluid">
+        <div class="card col-sm-12 col-md-6 col-lg-4">
+          <img class="card-img-top" src="../../../../../assets/temas/{{dataset.topic.imageName}}.png" alt="Card image cap" width="fit-content" height="fit-content" style="margin: 10px; margin: 0 auto;">
+          <div class="card-block" style="border: none; text-align: center; font-size: 15px; margin: 10; padding: 10px; height: 40px; background-color: darkslategray; color: white;">
+            <p>{{dataset.topic.name}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

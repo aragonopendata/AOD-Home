@@ -55,6 +55,7 @@ import { OrgDetailComponent } from "./components/app-home/organism/org-detail/or
 import { OrgsService } from "./services/orgs/orgs.service";
 import { PageNotFoundComponent } from './components/exceptions/page-not-found/page-not-found.component';
 import { HeaderComponent } from './components/app-home/common/header/header.component';
+import { DatasetDetailComponent } from "./components/app-home/data/dataset-detail/dataset-detail.component";
 
 @NgModule({
   declarations: [
@@ -96,7 +97,8 @@ import { HeaderComponent } from './components/app-home/common/header/header.comp
     FooterComponent,
     OrgDetailComponent,
     PageNotFoundComponent,
-    HeaderComponent
+    HeaderComponent,
+    DatasetDetailComponent
   ],
   imports: [
     BrowserModule,
