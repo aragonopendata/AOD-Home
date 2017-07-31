@@ -180,6 +180,22 @@ footer .socialNetworkIcon a i {
     color: grey !important;
 }
 
+footer .socialNetworkIcon a.facebook i:hover {
+    color: #3b5998 !important;
+}
+
+footer .socialNetworkIcon a.twitter i:hover {
+    color: #1dcaff !important;
+}
+
+footer .socialNetworkIcon a.youtube i:hover {
+    color: #ff0000 !important;
+}
+
+footer .socialNetworkIcon a.mail i:hover {
+    color: #5ea2ba !important;
+}
+
 footer .socialNetworkIcon a i:hover {
     color: white !important;
 }
