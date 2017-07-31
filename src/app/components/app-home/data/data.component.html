@@ -16,7 +16,7 @@
     <p-dataTable [value]="datasets" [paginator]="true" rows="15" [responsive]="true" #dt>
         <p-column field="name" header="{{datasets.length}} conjuntos de datos encontrados" [sortable]="true">
             <ng-template pTemplate="body" let-dataset="rowData">
-                <a routerLink='../../appadmin/datacenter/datasets/showdataset' (click)="showDataset(dataset)">
+                <a routerLink='../datasetdetail' (click)="showDataset(dataset)">
                     {{dataset.name}}
                 </a>
             </ng-template>
