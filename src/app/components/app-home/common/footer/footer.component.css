@@ -160,6 +160,10 @@ footer .logos li {
     padding-bottom: 15px;
 }
 
+footer .logos a img:hover {
+    outline: 2px double white;
+}
+
 .social-nw {
     margin-right: 0;
     text-align: right;
