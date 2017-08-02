@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpModule, Http } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -11,6 +11,8 @@ import {
   DataListModule, TooltipModule, AutoCompleteModule, ProgressBarModule, RadioButtonModule, CheckboxModule, FileUploadModule, ToolbarModule, TabViewModule
 } from 'primeng/primeng';
 import {MdSidenavModule} from '@angular/material';
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 import { AppComponent } from './app.component';
 import { AdminHomeComponent } from './components/app-admin/admin_home/admin_home.component';
@@ -56,6 +58,11 @@ import { OrgsService } from "./services/orgs/orgs.service";
 import { PageNotFoundComponent } from './components/exceptions/page-not-found/page-not-found.component';
 import { HeaderComponent } from './components/app-home/common/header/header.component';
 import { DatasetDetailComponent } from "./components/app-home/data/dataset-detail/dataset-detail.component";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -127,7 +134,15 @@ import { DatasetDetailComponent } from "./components/app-home/data/dataset-detai
     RadioButtonModule,
     CheckboxModule,
     FileUploadModule,
-    TabViewModule
+    TabViewModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+            loader: {
+              provide: TranslateLoader,
+              useFactory: (createTranslateLoader),
+              deps: [HttpClient]
+            }
+        })
   ],
   providers: [DatasetService, TopicService, PublicadorService, OrgsService],
   bootstrap: [AppComponent]

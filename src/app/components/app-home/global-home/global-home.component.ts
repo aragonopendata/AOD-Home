@@ -10,7 +10,9 @@ export class GlobalHomeComponent implements OnInit {
 
   hovers: any[] = [];
 
-  constructor() { }
+  constructor() {
+
+  }
 
   ngOnInit() {
     this.hovers = [
