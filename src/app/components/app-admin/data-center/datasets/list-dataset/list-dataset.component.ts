@@ -17,7 +17,7 @@ export class ListDatasetComponent implements OnInit {
   constructor(private datasetService: DatasetService) { }
 
   ngOnInit() {
-    this.datasets = this.datasetService.getDatasets();
+    //this.datasets = this.datasetService.getDatasets();
   }
 
   showDataset(dataset: Dataset) {
@@ -25,7 +25,7 @@ export class ListDatasetComponent implements OnInit {
   }
 
   addDataset() {
-    this.dataset = new Dataset('','','',new Topic(23,'',''), new Date, new Publicador('', 0));
+    this.dataset = new Dataset();
     this.datasetService.setDataset(this.dataset);
   }
 }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import * as $ from 'jquery';
+import { AppComponent } from "../../../../app.component";
 
 @Component({
   selector: 'common-header',
@@ -11,6 +12,8 @@ export class HeaderComponent {
   menuActive: boolean = false;
   srcMenu: String = '../../../assets/Boton-Menu-Responsive-OFF.png';
   srcLogin: String = '../../../assets/Boton-Acceso-Usuarios-OFF.png';
+
+  constructor(private locale: AppComponent){ }
 
   openNav() {
         if (!this.menuActive) {

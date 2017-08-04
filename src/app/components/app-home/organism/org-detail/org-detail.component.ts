@@ -17,7 +17,7 @@ export class OrgDetailComponent implements OnInit {
   constructor(private orgsService: OrgsService, private datasetService: DatasetService) { }
 
   ngOnInit() {
-    this.datasets = this.datasetService.getDatasets();
+    //this.datasets = this.datasetService.getDatasets();
     this.org = this.orgsService.getOrg();
   }
 

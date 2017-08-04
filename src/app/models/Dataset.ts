@@ -20,14 +20,8 @@ export class Dataset {
     dataFiles: string[];
     checked: boolean;
 
-    constructor(name: string, url: string, description: string, topic: Topic, lastUpdate: Date, publicador: Publicador) {
-        this.name = name;
-        this.url = url;
-        this.description = description;
-        this.topic = topic;
-        this.lastUpdate = this.formatDate(lastUpdate);
-        this.publicador = publicador;
-        this.untilDate = new Date;
+    constructor() {
+        
     }
 
     formatDate(date: Date) {

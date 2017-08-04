@@ -4,41 +4,40 @@ import {Topic} from '../../models/Topic';
 import {TopicService} from '../topic/topic.service';
 import {PublicadorService} from '../publicador/publicador.service';
 import {Publicador} from '../../models/Publicador';
+import {Http, Response, Headers} from '@angular/http';
+import 'rxjs/add/operator/map';
+import { Configuration } from "../../app.constants";
+import { Observable } from "rxjs/Rx";
 
 @Injectable()
 export class DatasetService {
+
+  private actionUrl: string;
+  private headers: Headers;
 
   private datasets: Dataset[];
   private dataset: Dataset;
   topics: Topic [];
   publicadores: Publicador[];
 
-  constructor(private topicService: TopicService, private publicadorService: PublicadorService) {
+  constructor(private topicService: TopicService, private publicadorService: PublicadorService, private http: Http,
+   private config: Configuration) {
+
+    this.actionUrl = config.completeUrl + config.getDtset;
+    this.headers = new Headers();
+    this.headers.append('Content-Type', 'application/json');
+    this.headers.append('Accept', 'application/json');
+
+
+    //this.datasets = this.getDatasets();
     this.topics = this.topicService.getTopics();
     this.publicadores = this.publicadorService.getPublicadores();
-    this.datasets = [
-      new Dataset('Encuesta sobre la implantación de TIC en Hogares de Zonas Blancas de Aragón. 2016',
-          'http://opendata.aragon.es/datos/encuesta-sobre-la-implantacion-de-tic-en-hogares-de-zonas-blancas-de-aragon-2016',
-          'Difusión de los datos sobre uso TIC en los hogares de las llamadas Zonas blancas de Aragón según la estadística' +
-          'desarrollada por el Servicio de Nuevas tecnologías y Sociedad de la Información del Gobierno de Aragón.',
-          this.topics[0],
-          (new Date),
-          this.publicadores[5]
-      ),
-      new Dataset('Uso de las TIC. Personas por sexo. Año 2015',
-          'http://opendata.aragon.es/datos/uso-de-las-tic-personas-por-sexo-ano-2015',
-          'Avance de resultados de la Encuesta TICH 2015, según la explotación del fichero de microdatos del INE,' +
-          'que recoge los resultados principales de viviendas y personas acerca del uso de las tecnologías de la información y' +
-          'comunicación en los hogares donde residen',
-          this.topics[3],
-          (new Date),
-          this.publicadores[2]
-      )
-    ];
   }
 
-  getDatasets() {
-    return this.datasets;
+  public getDatasets = (): Observable<Dataset[]> => {
+      return this.http.get('/api/ckanDatasets')
+      .map((response: Response) => <Dataset[]>response.json())
+      .catch(this.handleError);
   }
 
   setDataset(dataset: Dataset) {
@@ -59,4 +58,9 @@ export class DatasetService {
   removeDataset(dataset: Dataset) {
     this.datasets.splice(this.datasets.indexOf(dataset), 1);
   }
+
+   private handleError(error: Response) {
+        console.error(error);
+        return Observable.throw(error.json().error || 'Server error');
+    }
 }

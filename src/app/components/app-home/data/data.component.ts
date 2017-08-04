@@ -24,13 +24,13 @@ export class DataComponent implements OnInit {
   constructor(private datasetService: DatasetService, private topicService: TopicService, private router: Router) { }
 
   ngOnInit() {
-    this.datasets = this.datasetService.getDatasets();
-    this.topics = this.topicService.getTopics();
+    this.getDatasets();
+    /*this.topics = this.topicService.getTopics();
     this.topic = this.topicService.getTopic();
     if(this.topic != null) {
       this.selectedTopic = this.topic.name;
     }
-    this.setTopics(this.topics);
+    this.setTopics(this.topics);*/
   }
 
   showDataset(dataset: Dataset) {
@@ -38,7 +38,7 @@ export class DataComponent implements OnInit {
   }
 
   addDataset() {
-    this.dataset = new Dataset('','','',new Topic(23,'',''), new Date, new Publicador('', 0));
+    this.dataset = new Dataset();
     this.datasetService.setDataset(this.dataset);
   }
 
@@ -46,6 +46,14 @@ export class DataComponent implements OnInit {
     for( let i = 0; i < topics.length; i++) {
       this.temas.push({label: topics[i].name, value: topics[i].name});
     }
+  }
+
+  getDatasets(): void {
+    this.datasetService
+            .getDatasets()
+            .subscribe((data:Dataset[]) => this.datasets = data,
+                error => console.log(error),
+                () => console.log('Get all Items complete'));
   }
 
 }

@@ -59,6 +59,7 @@ import { PageNotFoundComponent } from './components/exceptions/page-not-found/pa
 import { HeaderComponent } from './components/app-home/common/header/header.component';
 import { DatasetDetailComponent } from "./components/app-home/data/dataset-detail/dataset-detail.component";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { Configuration } from "./app.constants";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -144,7 +145,7 @@ export function createTranslateLoader(http: HttpClient) {
             }
         })
   ],
-  providers: [DatasetService, TopicService, PublicadorService, OrgsService],
+  providers: [DatasetService, TopicService, PublicadorService, OrgsService, Configuration],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
