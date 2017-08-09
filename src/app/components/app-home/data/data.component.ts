@@ -14,14 +14,17 @@ import { Router } from "@angular/router";
 })
 export class DataComponent implements OnInit {
 
-  datasets: Dataset[] = [];
+  datasets: any[];
   dataset: Dataset;
+  numDatasets: number;
   topics: Topic[];
   topic: Topic = null;
   temas: SelectItem[] = [];
   selectedTopic: String = null;
 
-  constructor(private datasetService: DatasetService, private topicService: TopicService, private router: Router) { }
+  constructor(private datasetService: DatasetService, private topicService: TopicService, private router: Router) {
+    this.datasets = [];
+  }
 
   ngOnInit() {
     this.getDatasets();
@@ -49,11 +52,10 @@ export class DataComponent implements OnInit {
   }
 
   getDatasets(): void {
-    this.datasetService
-            .getDatasets()
-            .subscribe((data:Dataset[]) => this.datasets = data,
-                error => console.log(error),
-                () => console.log('Get all Items complete'));
-  }
+    this.datasetService.getDatasets(20, 0).subscribe(datasets => {
+      this.datasets = JSON.parse(datasets).result.results;
+      this.numDatasets = JSON.parse(datasets).result.count;
+    });
 
+  }
 }

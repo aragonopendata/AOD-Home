@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   ChartModule, PanelModule, FieldsetModule, InputTextModule, DropdownModule,
   InputTextareaModule, ButtonModule, SharedModule, DataTableModule, DialogModule, CalendarModule, InputSwitchModule, EditorModule,
-  DataListModule, TooltipModule, AutoCompleteModule, ProgressBarModule, RadioButtonModule, CheckboxModule, FileUploadModule, ToolbarModule, TabViewModule
+  DataListModule, TooltipModule, AutoCompleteModule, ProgressBarModule, RadioButtonModule, CheckboxModule, FileUploadModule, ToolbarModule, TabViewModule, PaginatorModule
 } from 'primeng/primeng';
 import {MdSidenavModule} from '@angular/material';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
@@ -137,6 +137,7 @@ export function createTranslateLoader(http: HttpClient) {
     FileUploadModule,
     TabViewModule,
     HttpClientModule,
+    PaginatorModule,
     TranslateModule.forRoot({
             loader: {
               provide: TranslateLoader,

@@ -22,7 +22,7 @@ app.use('/api', datasets);
 /**
  * Get port from environment and store in Express.
  */
-const port = process.env.PORT || '9999';
+const port = process.env.PORT || '4200';
 app.set('port', port);
 
 /**
