@@ -4,15 +4,13 @@ const http = require("http");
 const constants = require("../constants");
 
 
-router.get("/ckanDatasets/:params", function(req, res, next) {
+router.get("/datasets/page/:page/rows/:row", function(req, res, next) {
 
     let curl = constants.URL;
     let met = constants.GET_DATASETS;
-    let params = req.params.params;
+    let params = '?rows=' + req.params.row + '&start=' + (req.params.page * 20);
 
     mypath = curl + met + params;
-
-    console.log(mypath);
     
     http.get(mypath, function (results) {
         var body = '';

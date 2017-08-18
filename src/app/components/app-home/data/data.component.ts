@@ -28,12 +28,6 @@ export class DataComponent implements OnInit {
 
   ngOnInit() {
     this.getDatasets();
-    /*this.topics = this.topicService.getTopics();
-    this.topic = this.topicService.getTopic();
-    if(this.topic != null) {
-      this.selectedTopic = this.topic.name;
-    }
-    this.setTopics(this.topics);*/
   }
 
   showDataset(dataset: Dataset) {
@@ -51,11 +45,18 @@ export class DataComponent implements OnInit {
     }
   }
 
+  paginate(event) {
+    this.datasetService.getDatasets(event.rows, event.page).subscribe(datasets => {
+      this.datasets = JSON.parse(datasets).result.results;
+      this.numDatasets = JSON.parse(datasets).result.count;
+    });
+    document.body.scrollTop = 0;
+  }
+
   getDatasets(): void {
     this.datasetService.getDatasets(20, 0).subscribe(datasets => {
       this.datasets = JSON.parse(datasets).result.results;
       this.numDatasets = JSON.parse(datasets).result.count;
     });
-
   }
 }

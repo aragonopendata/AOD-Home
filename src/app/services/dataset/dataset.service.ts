@@ -29,12 +29,8 @@ export class DatasetService {
     this.publicadores = this.publicadorService.getPublicadores();
   }
 
-  public getDatasets(rows: number, start: number) {
-      let params: URLSearchParams = new URLSearchParams();
-      params.set('rows', rows.toString());
-      params.set('start', start.toString());
-
-      return this.http.get('/api/ckanDatasets/', {search: params}).map(res => res.json());
+  public getDatasets(rows: number, page: number) {
+      return this.http.get('/api/datasets/page/' + page.toString() + '/rows/' + rows.toString()).map(res => res.json());
   }
 
   setDataset(dataset: Dataset) {
