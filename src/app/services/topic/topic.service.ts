@@ -1,35 +1,33 @@
 import { Injectable } from '@angular/core';
 import {Topic} from '../../models/Topic';
+import {Http, Response, Headers, URLSearchParams} from '@angular/http';
+import 'rxjs/add/operator/map';
+import { Observable } from "rxjs/Rx";
 
 @Injectable()
 export class TopicService {
 
-  private topics: Topic[];
+  private topics: Observable<Topic[]>;
   private topic: Topic;
-
-  constructor() {
-    this.topics = [
-        new Topic(1, "Ciencia y tecnología", "01-Ciencia"),
-        new Topic(2, "Comercio", "02-Comercio"),
-        new Topic(3, "Cultura y ocio", "03-Cultura"),
-        new Topic(4, "Demografía", "04-Demografia"),
-        new Topic(5, "Deporte", "05-Deporte"),
-        new Topic(6, "Economía", "06-Economia"),
-        new Topic(7, "Educación", "07-Educacion"),
-        new Topic(8, "Empleo", "08-Empleo"),
-        new Topic(9, "Energía", "09-Energia")
-    ];
+  
+  constructor(private http: Http) {
+    
   }
 
-  getTopics() {
-    return this.topics;
+  public getTopics(){
+   return this.http.get('/api/topics').map(res => res.json());
   }
 
-  setTopic(topic: Topic) {
+  setTopics(topic: Topic) {
     this.topic = topic;
   }
 
   getTopic() {
     return this.topic;
   }
+
+  private handleError(error: Response) {
+    console.error(error);
+    return Observable.throw(error.json().error || 'Server error');
+}
 }

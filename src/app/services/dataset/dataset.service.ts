@@ -16,7 +16,7 @@ export class DatasetService {
 
   private datasets: Observable<Dataset[]>;
   private dataset: Dataset;
-  topics: Topic [];
+  topics: Observable<Topic[]>;
   publicadores: Publicador[];
 
   constructor(private topicService: TopicService, private publicadorService: PublicadorService, private http: Http) {

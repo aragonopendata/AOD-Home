@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 
 // Get our API routes
 var datasets = require('./server/routes/datasets');
+var topics = require('./server/routes/topics');
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 // Set our api routes
 app.use('/api', datasets);
+app.use('/api', topics);
 
 /**
  * Get port from environment and store in Express.

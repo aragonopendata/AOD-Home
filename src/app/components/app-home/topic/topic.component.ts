@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TopicService } from "../../../services/topic/topic.service";
 import { Topic } from "../../../models/Topic";
+import { SelectItem } from "primeng/primeng";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-topic',
@@ -9,19 +11,22 @@ import { Topic } from "../../../models/Topic";
 })
 export class TopicComponent implements OnInit {
 
-  topics: Topic[] = [];
+  topics: any[];
+  topic: Topic;
   hovers: any[] = [];
 
-  constructor(private topicService: TopicService) { }
+  constructor(private topicService: TopicService) { 
+    this.topics = [];
+  }
 
   ngOnInit() {
-    this.topics = this.topicService.getTopics();
+    this.getTopics();
     this.setHovers(this.topics);
   }
 
   setHovers(topics: Topic[]) {
     for(let top of topics) {
-      this.hovers.push({ label: top.name, hover: false });
+      this.hovers.push({ label: top.title, hover: false });
     }
   }
 
@@ -42,7 +47,15 @@ export class TopicComponent implements OnInit {
   }
 
   setTopic(topic) {
-    this.topicService.setTopic(topic);
+    this.topicService.setTopics(topic);
+  }
+  
+  getTopics(): void {
+    
+    this.topicService.getTopics().subscribe(topics => {
+      this.topics = JSON.parse(topics).result;
+      this.setHovers(this.topics);
+    });
   }
 
 }

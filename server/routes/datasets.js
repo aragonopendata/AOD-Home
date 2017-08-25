@@ -1,18 +1,19 @@
-var express = require("express");
-var router = express.Router();
-const http = require("http");
-const constants = require("../constants");
+const express = require('express');
+const router = express.Router();
+const url = require('url');
+const http = require('http');
+const httpProxy = require('http-proxy-agent');
+const constants = require('../constants');
 
 
-router.get("/datasets/page/:page/rows/:row", function(req, res, next) {
+router.get('/datasets/page/:page/rows/:row', function(req, res, next) {
 
     let curl = constants.URL;
     let met = constants.GET_DATASETS;
     let params = '?rows=' + req.params.row + '&start=' + (req.params.page * 20);
+    var mypath = curl + met + params;
 
-    mypath = curl + met + params;
-    
-    http.get(mypath, function (results) {
+    http.get(options, function (results) {
         var body = '';
         results.on('data', function(chunk) {
             body += chunk;

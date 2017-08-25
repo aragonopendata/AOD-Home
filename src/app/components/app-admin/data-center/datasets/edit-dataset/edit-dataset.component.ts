@@ -6,6 +6,7 @@ import {Topic} from '../../../../../models/Topic';
 import {SelectItem} from 'primeng/primeng';
 import {PublicadorService} from '../../../../../services/publicador/publicador.service';
 import {Publicador} from '../../../../../models/Publicador';
+import { Observable } from "rxjs/Rx";
 
 @Component({
   selector: 'app-edit-dataset',
@@ -100,10 +101,15 @@ export class EditDatasetComponent implements OnInit {
     }
   }
 
-  setTopics(topics: Topic[]) {
-    for( let i = 0; i < topics.length; i++) {
-      this.topics.push({label: topics[i].name, value: topics[i].name});
-    }
+  setTopics(topics: Observable<Topic>) {
+    var index;
+    topics.forEach(element => {
+      index++;
+      this.topics.push({label: topics[index].name, value: topics[index].name});
+    });
+    // for( let i = 0; i < topics.; i++) {
+    //   this.topics.push({label: topics[i].name, value: topics[i].name});
+    // }
   }
 
   onUpload(event) {
