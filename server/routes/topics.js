@@ -12,14 +12,6 @@ router.get("/", function(req, res, next) {
     let met = constants.GET_TOPICS;
     let params = '?all_fields=true';
     var mypath = curl + met + params;
-    
-    //PROXY CONFIGURATION
-    var proxyConf = process.env.http_proxy || 'http://jbarrio:*$Sorinas17*mix@10.74.255.120:8080/';
-    var endpoint = process.argv[2] || mypath;
-    var proxyAgent = new httpProxy(proxyConf);
-    var options = url.parse(endpoint);
-    options.agent = proxyAgent;
-    // //////////////////
 
     http.get(mypath, function (result) {
         var body = '';
