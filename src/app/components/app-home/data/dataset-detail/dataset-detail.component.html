@@ -1,6 +1,6 @@
 <div class="container">
-  <div class="dtHeader row">
-    <h1 class="globaltitle col-10">{{dataset.name}}</h1>
+  <div class="dtHeader">
+    <h1 class="globaltitle col-10">{{dataset.title}}</h1>
     <div class="social col-2">
       <a>
         <img src="../../../../../assets/social/facebookIcon.png">
@@ -40,27 +40,26 @@
       <div class="container-fluid">
         <div class="section">
           <h6>Título</h6>
-          <p>{{dataset.name}}</p>
+          <p>{{dataset.title}}</p>
         </div>
         <div class="section">
           <h6>Descripción</h6>
-          <p>{{dataset.description}}</p>
+          <p>{{dataset.notes}}</p>
         </div>
         <div class="section">
           <h6>Categoría</h6>
-          <p>{{dataset.topic.name}}</p>
+          <p *ngFor="let group of dataset.groups">{{group.title}}</p>
         </div>
         <div class="section">
           <h6>Etiquetas y palabras clave</h6>
-          <p></p>
+          <button *ngFor="let tag of dataset.tags" pButton type="button" label="{{tag.name}}" style="margin: 2px;"></button>
         </div>
         <div class="section">
           <h6>Organización responsable de la publicación</h6>
-          <p>{{dataset.publicador.name}}</p>
+          <p>{{dataset.organization.title}}</p>
         </div>
         <div class="section">
           <h6>Última actualización</h6>
-          <p>{{dataset.lastUpdate}}</p>
         </div>
       </div>
     </div>
@@ -71,11 +70,10 @@
       <div class="container-fluid">
         <div class="section">
           <h6>Metadatos de la colección</h6>
-          
         </div>
         <div class="section">
           <h6>Archivos con los datos</h6>
-          <p>{{dataset.name}}</p>
+          <p>{{dataset.title}}</p>
         </div>
       </div>
     </div>
@@ -83,9 +81,9 @@
       <h4>También te recomendamos</h4>
       <div class="container-fluid">
         <div class="card col-sm-12 col-md-6 col-lg-4">
-          <img class="card-img-top" src="../../../../../assets/temas/{{dataset.topic.imageName}}.png" alt="Card image cap" width="fit-content" height="fit-content" style="margin: 10px; margin: 0 auto;">
+          <img class="card-img-top" src="" alt="Card image cap" width="fit-content" height="fit-content" style="margin: 10px; margin: 0 auto;">
           <div class="card-block" style="border: none; text-align: center; font-size: 15px; margin: 10; padding: 10px; height: 40px; background-color: darkslategray; color: white;">
-            <p>{{dataset.topic.name}}</p>
+            <p></p>
           </div>
         </div>
       </div>

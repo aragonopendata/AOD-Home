@@ -18,7 +18,7 @@ export class TopicService {
    return this.http.get('/api/topics').map(res => res.json());
   }
 
-  setTopics(topic: Topic) {
+  setTopic(topic: Topic) {
     this.topic = topic;
   }
 

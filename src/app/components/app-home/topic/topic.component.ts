@@ -47,11 +47,10 @@ export class TopicComponent implements OnInit {
   }
 
   setTopic(topic) {
-    this.topicService.setTopics(topic);
+    this.topicService.setTopic(topic);
   }
   
   getTopics(): void {
-    
     this.topicService.getTopics().subscribe(topics => {
       this.topics = JSON.parse(topics).result;
       this.setHovers(this.topics);

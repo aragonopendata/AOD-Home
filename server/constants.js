@@ -8,6 +8,10 @@ exports.URL = "http://opendata.aragon.es/datos/api/action/";
 /*DATASETS*/
 /*Get all datasets*/
 exports.GET_DATASETS = "package_search";
+/*Get datasets by topic
+    param id: the id or name of the topic
+*/
+exports.GET_DATASETS_BY_TOPIC = "group_package_show";
 
 /*TOPICS*/
 /*Get all topics*/

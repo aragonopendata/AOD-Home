@@ -47,6 +47,7 @@ const routes: Routes = [
         { path: 'data', component: DataComponent },
         { path: 'datasetdetail', component: DatasetDetailComponent },
         { path: 'topic', component: TopicComponent },
+        { path: 'data/topic/:topicName', component: DataComponent },
         { path: 'org', component: OrganismComponent },
         { path: 'org/:orgName', component: OrgDetailComponent },
         { path: 'inf', component: InformationComponent },
