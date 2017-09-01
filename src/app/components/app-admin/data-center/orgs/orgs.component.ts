@@ -17,8 +17,8 @@ export class OrgsComponent implements OnInit {
 
 
   constructor(private orgService: OrgsService) {
-    this.orgs = orgService.getOrgs();
-    this.results = this.orgs;
+//    this.orgs = orgService.getOrgs();
+//    this.results = this.orgs;
   }
 
   ngOnInit() { }
@@ -42,7 +42,7 @@ export class OrgsComponent implements OnInit {
       this.results = [];
     }
     for(let i = 0; i < this.orgs.length; i++){
-      if(this.orgs[i].orgName.search(query) != -1) {
+      if(this.orgs[i].title.search(query) != -1) {
         this.selectedOrg = this.orgs[i];
         this.results.push(this.selectedOrg);
       }

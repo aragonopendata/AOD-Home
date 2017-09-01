@@ -1,20 +1,25 @@
+import {Extra} from './Extra';
+import {OrgUser} from './OrgUser';
+
 export class Org {
 
-    orgName: string;
-    orgWeb: string;
-    orgDesc: string;
-    orgDir: string;
-    orgResponsable: string;
-    orgContact: string;
-    numDatasets: number;
+    id: string;
+    name: string;
+    image_url: string;
+    title: string;
+    description: string;
+    packages: number;
+    extras: Extra[];
+    users: OrgUser[];
 
-    constructor(orgName: string, orgWeb: string, orgDesc: string, orgDir: string, orgResponsable: string, orgContact: string, numDatasets: number) {
-        this.orgName = orgName;
-        this.orgWeb = orgWeb;
-        this.orgDesc = orgDesc;
-        this.orgDir = orgDir;
-        this.orgResponsable = orgResponsable;
-        this.orgContact = orgContact;
-        this.numDatasets = numDatasets;
+    constructor(id: string, name: string, image_url: string, title: string, description: string, packages: number, extras: Extra[], users: OrgUser[]) {
+        this.id = id;
+        this.name = name;
+        this.image_url = image_url;
+        this.title = title;
+        this.description = description;
+        this.packages = packages;
+        this.extras = extras;
+        this.users = users;
     }
 }

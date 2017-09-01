@@ -16,3 +16,9 @@ exports.GET_DATASETS_BY_TOPIC = "group_package_show";
 /*TOPICS*/
 /*Get all topics*/
 exports.GET_TOPICS = "group_list";
+
+/*ORGS*/
+/*Get all organizations*/
+exports.GET_ORGS = "organization_list";
+/*Get organization detail*/
+exports.GET_ORG_DETAIL = "organization_show";

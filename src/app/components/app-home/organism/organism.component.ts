@@ -21,8 +21,9 @@ export class OrganismComponent implements OnInit {
   constructor(private orgService: OrgsService) { }
 
   ngOnInit() {
-    this.orgs = this.orgService.getOrgs();
-    this.setHovers(this.orgs);
+    //this.orgs = this.orgService.getOrgs();
+    //this.setHovers(this.orgs);
+    this.getOrgs();
 
     this.views = [];
     this.views.push({label:'Ver como lista', value: false});
@@ -31,7 +32,7 @@ export class OrganismComponent implements OnInit {
 
   setHovers(orgs: Org[]) {
     for(let org of orgs) {
-      this.hovers.push({ label: org.orgName, hover: false });
+      this.hovers.push({ label: org.title, hover: false });
     }
   }
 
@@ -53,6 +54,13 @@ export class OrganismComponent implements OnInit {
 
   showOrg(org: Org) {
     this.orgService.setOrg(org);
+  }
+
+  getOrgs(): void {
+    this.orgService.getOrgs().subscribe(orgs => {
+      this.orgs = JSON.parse(orgs).result;
+      this.setHovers(this.orgs);
+    });
   }
 
 }
