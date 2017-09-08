@@ -3,11 +3,11 @@
     <div class="ui-g">
         <div class="ui-g-4">
             <b>Datos sobre </b>
-            <p-dropdown [options]="topicsSelect" [(ngModel)]="selectedTopic"></p-dropdown>
+            <p-dropdown [options]="topicsSelect" [(ngModel)]="selectedTopic" placeholder="Seleccione un tema" [style]="{'width':'200px'}" (onChange)="setTopicData()"></p-dropdown>
         </div>
         <div class="ui-g-4">
             <b>Del tipo </b>
-            <p-dropdown [options]="temas" placeholder="Selecciona un tipo"></p-dropdown>
+            <p-dropdown [options]="datasetTypes" [(ngModel)]="selectedDatasetTypeDropdown" placeholder="Selecciona un tipo" [style]="{'width':'200px'}"></p-dropdown>
         </div>
         <div class="ui-g-4">
             <p-dropdown [options]="temas" placeholder="Tema y tipo"></p-dropdown>

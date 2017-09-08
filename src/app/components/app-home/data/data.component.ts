@@ -7,6 +7,7 @@ import { TopicService } from "../../../services/topic/topic.service";
 import { SelectItem } from "primeng/primeng";
 import {DropdownModule} from 'primeng/primeng';
 import { Router } from "@angular/router";
+import {Location} from '@angular/common';
 import { TopicComponent } from '../topic/topic.component';
 
 @Component({
@@ -17,32 +18,35 @@ import { TopicComponent } from '../topic/topic.component';
 export class DataComponent implements OnInit {
   
   selectedTopic: string;
-  datasets: any[];
+  datasets: Dataset[];
   dataset: Dataset;
   numDatasets: number;
-  topics: any[];
-  // topic: Topic;
-  topicsSelect: SelectItem[] = [];
-  //selectedTopic: String = null;
 
-  constructor(private datasetService: DatasetService, private topicService: TopicService, private router: Router) {
-    this.datasets = [];
-    this.topics = [];
+  @Input() topics: Topic[];
+   topic: Topic;
+  topicsSelect: SelectItem[];
+  datasetTypes: SelectItem[];
+
+  constructor(private datasetService: DatasetService, private topicService: TopicService, private router: Router, private location: Location) {
   }
 
-  ngOnInit() {
-    this.getSelectedTopic();
+  ngOnInit() {  
+    this.loadDatasets();  
+    this.setTopicsDropdown();
+    this.setDatsetTypeDropdown();
+  }
+
+  loadDatasets(){
+    this.datasets = [];
     if (this.selectedTopic === undefined) {
       this.getDatasets();
     } else {
       this.getDatasetsByTopic(this.selectedTopic);
-    }
-    this.setTopics(this.topics);
+    } 
   }
 
   getSelectedTopic(){
     if(this.topicService.getTopic() === undefined){
-      
     }else{
       this.selectedTopic = this.topicService.getTopic().name;
     }
@@ -57,11 +61,32 @@ export class DataComponent implements OnInit {
     this.datasetService.setDataset(this.dataset);
   }
 
-  setTopics(topics: Topic[]) {
-    this.topicsSelect.push({ label: 'Seleccione tema', value: null });
-    for(let top of topics) {
-      this.topicsSelect.push({ label: top.title, value: top.name });
-    }
+  setTopicsDropdown() {
+      this.topicsSelect = [];
+      this.topicService.getTopics().subscribe(topics => {
+        this.topics = JSON.parse(topics).result;
+        for (let top of this.topics) {
+          this.topicsSelect.push({ label: top.title, value: top.name });
+        }
+      });
+      this.getSelectedTopic();
+  }
+
+  setDatsetTypeDropdown() {
+    this.datasetTypes = [];
+        this.datasetTypes.push({ label: 'Calendario', value: 'Calendario' });
+        this.datasetTypes.push({ label: 'Fotos', value: 'Fotos' });
+        this.datasetTypes.push({ label: 'Hojas de Calculo', value: 'Hojas de Calculo' });
+        this.datasetTypes.push({ label: 'Mapas', value: 'Mapas' });
+        this.datasetTypes.push({ label: 'Recursos Educativos', value: 'Recursos Educativos' });
+        this.datasetTypes.push({ label: 'Recursos Web', value: 'Recursos Web' });
+        this.datasetTypes.push({ label: 'RSS', value: 'RSS' });
+        this.datasetTypes.push({ label: 'Texto plano', value: 'Texto plano' });
+}
+
+  setTopicData(){
+    this.loadDatasets();
+    this.location.replaceState("/home/data/topic/"+this.selectedTopic);
   }
 
   paginate(event) {
@@ -72,8 +97,8 @@ export class DataComponent implements OnInit {
       });
     }else{
       this.datasetService.getDatasetsByTopic(this.selectedTopic, event.rows, event.page).subscribe(datasets => {
-        this.datasets = JSON.parse(datasets).result;        
-        this.numDatasets = JSON.parse(datasets).result;
+        this.datasets = JSON.parse(datasets).result.results;
+        this.numDatasets = JSON.parse(datasets).result.count;
       });
   }
     document.body.scrollTop = 0;
@@ -88,7 +113,7 @@ export class DataComponent implements OnInit {
 
   getDatasetsByTopic(topic: String): void {
     this.datasetService.getDatasetsByTopic(topic,20,0).subscribe(datasets => {
-      this.datasets = JSON.parse(datasets).result;
+      this.datasets = JSON.parse(datasets).result.results;
       this.numDatasets = JSON.parse(datasets).result.count;
     });
   }

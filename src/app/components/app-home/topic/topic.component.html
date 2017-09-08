@@ -2,7 +2,7 @@
   <h1>Temas</h1>
   <div class="ui-g">
     <div class="ui-sm-12 ui-md-6 ui-lg-4 tarjetaContainer" *ngFor="let top of topics; let i = index" (mouseenter)="setHover(top.title, i)" (mouseleave)="unsetHover(top.title, i)">
-      <div class="card" routerLink="../data/topic/{{top.name}}" routerLinkActive="active" (click)="setTopic(top)">
+      <div class="card" routerLink="../data/topic/{{top.name}}" ng-init="selectedTopic = top.name" (click)="setTopic(top)">
         <img class="card-img-top" src="../../../../assets/temas/{{top.image_url | slice:14:top.image_url.length-4}}.png" alt="Card image cap" width="fit-content" height="fit-content" style="margin: 10px;">
         <div class="card-block" style="text-align: center; font-size: 15px; margin: 10; padding: 10px; height: 40px; background-color: darkslategray; color: white;">
           <p>{{top.title}}</p>

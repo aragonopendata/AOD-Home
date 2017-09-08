@@ -2,7 +2,6 @@ var express = require("express");
 var router = express.Router();
 const url = require('url');
 const http = require("http");
-const httpProxy = require('http-proxy-agent');
 const constants = require("../constants");
 
 
