@@ -1,5 +1,5 @@
 <div class="container">
-  <h1>Publicadores</h1>
+  <h1 translate>ORGANIZATIONS.NAME</h1>
   <p-dropdown [options]="views" [(ngModel)]="selectedView"></p-dropdown>
   <div *ngIf="selectedView" class="ui-g">
     <div class="ui-sm-12 ui-md-6 ui-lg-4" *ngFor="let org of orgs; let i = index" (mouseenter)="setHover(org.title, i)" (mouseleave)="unsetHover(org.title, i)">
@@ -12,7 +12,7 @@
           <h6>{{org.title | uppercase}}</h6>
           <p class="description">{{org.description}}</p>
           <div class="numDatasets">
-            <b>{{org.packages}} conjuntos de datos publicados</b>
+            <b translate [translateParams]="{packages: org.packages}">ORGANIZATIONS.PUBLISHED_DATASETS</b>
           </div>
         </div>
       </div>
@@ -21,8 +21,18 @@
 
   <div *ngIf="!selectedView" class="tabla">
     <p-dataTable [value]="orgs" (onRowSelect)="showOrg(rowData)">
-        <p-column field="orgName" header="HAY {{orgs.length}} ORGANIZACIONES"></p-column>
-        <p-column field="numDatasets" [style]="{'width':'150px'}" styleClass="text-right" header="Nº DATASETS"></p-column>
+        <p-column field="orgName" header="{{ 'ORGANIZATIONS.NUMBER_1' | translate }} {{orgs.length}} {{ 'ORGANIZATIONS.NUMBER_2' | translate }}">
+          <ng-template pTemplate="body" let-org="rowData" let-i="rowIndex">
+            <a routerLink='../org/{{i}}' (click)="showOrg(org)">
+                {{org.title}}
+            </a>
+          </ng-template>
+        </p-column>
+        <p-column field="numDatasets" [style]="{'width':'150px'}" styleClass="text-right" header="{{ 'ORGANIZATIONS.DATASETS_NUMBER' | translate }}">
+          <ng-template pTemplate="body" let-org="rowData">
+            {{org.packages}}
+          </ng-template>
+        </p-column>
     </p-dataTable>
   </div>
 </div>

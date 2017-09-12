@@ -19,9 +19,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // Set our api routes
-app.use('/api/datasets', datasets);
-app.use('/api/topics', topics);
-app.use('/api/orgs', orgs);
+app.use('/aod/api/datasets', datasets);
+app.use('/aod/api/topics', topics);
+app.use('/aod/api/orgs', orgs);
 
 /**
  * Get port from environment and store in Express.

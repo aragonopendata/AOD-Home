@@ -3,6 +3,8 @@ exports.ROWS_NUMBER = 20;
 
 /*General request configuration*/
 exports.URL = "http://opendata.aragon.es/datos/api/action/";
+exports.HOSTNAME = "opendata.aragon.es";
+exports.PORT = "80";
 
 /*Specific request configuration*/
 /*DATASETS*/

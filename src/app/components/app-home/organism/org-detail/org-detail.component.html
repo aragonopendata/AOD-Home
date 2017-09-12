@@ -2,53 +2,67 @@
   <h1>{{org.title}}</h1>
   <div class="ui-g details">
     <div class="ui-g-6">
-      <h6><b>NOMBRE DE LA ORGANIZACIÓN:</b></h6>
+      <h6><b translate>ORG_DETAIL.NAME</b></h6>
     </div>
     <div class="ui-g-6">
       <p>{{org.title}}</p>
     </div>
     <div class="ui-g-6">
-      <h6><b>PÁGINA WEB DE LA ORGANIZACIÓN:</b></h6>
+      <h6><b translate>ORG_DETAIL.WEBPAGE</b></h6>
     </div>
     <div class="ui-g-6">
-      <p>{{webpage}}</p>
+      <p>{{webpage || ('NOT_AVAILABLE' | translate)}}</p>
     </div>
     <div class="ui-g-6">
-      <h6><b>DESCRIPCIÓN DE LA ORGANIZACIÓN:</b></h6>
+      <h6><b translate>ORG_DETAIL.DESCRIPTION</b></h6>
     </div>
     <div class="ui-g-6">
-      <p>{{org.description}}</p>
+      <p>{{org.description || ('NOT_AVAILABLE' | translate)}}</p>
     </div>
     <div class="ui-g-6">
-      <h6><b>DIRECCIÓN DE LA ORGANIZACIÓN:</b></h6>
+      <h6><b translate>ORG_DETAIL.ADDRESS</b></h6>
     </div>
     <div class="ui-g-6">
-      <p>{{address}}</p>
+      <p>{{address || ('NOT_AVAILABLE' | translate)}}</p>
     </div>
     <div class="ui-g-6">
-      <h6><b>PERSONA RESPONSABLE DENTRO DE LA ORGANIZACIÓN:</b></h6>
+      <h6><b translate>ORG_DETAIL.PERSON</b></h6>
     </div>
     <div class="ui-g-6">
-      <p>{{person}}</p>
+      <p>{{person || ('NOT_AVAILABLE' | translate)}}</p>
     </div>
     <div class="ui-g-6">
-      <h6><b>EMAIL DE CONTACTO:</b></h6>
+      <h6><b translate>ORG_DETAIL.EMAIL</b></h6>
     </div>
     <div class="ui-g-6">
-      <p>{{email}}</p>
+      <p>{{email || ('NOT_AVAILABLE' | translate)}}</p>
     </div>
   </div>
-  <div class="datasets">
-    <p-dataTable [value]="datasets" [paginator]="true" rows="15" selectionMode="single" routerLink="../../../appadmin/datacenter/datasets/showdataset" (onRowSelect)="onRowSelect($event)" [responsive]="true" #dt>
-      <p-column field="name" header="Nombre" [sortable]="true"></p-column>
-      <p-column field="accesos" header="Nº de accesos" [sortable]="true"></p-column>
-      <p-column field="lastUpdate" header="Última actualización" [sortable]="true"></p-column>
-    </p-dataTable>
-  </div>
+  <p-dataTable [value]="datasets" [responsive]="true" #dt>
+    <p-column field="name" header="{{numDatasets}} {{ 'ORG_DETAIL.FOUND_DATASETS' | translate }}" [sortable]="true">
+        <ng-template pTemplate="body" let-dataset="rowData">
+            <a routerLink='../../datasetdetail' (click)="showDataset(dataset)">
+                {{dataset.title}}
+            </a>
+        </ng-template>
+    </p-column>
+    <p-column field="accesos" header="{{ 'ORG_DETAIL.TRACKING' | translate }}" [style]="{'width':'160px'}" [sortable]="true">
+        <ng-template pTemplate="body" let-dataset="rowData">
+            {{dataset.tracking_summary.total}}
+        </ng-template>
+    </p-column>
+    <p-column field="lastUpdate" header="{{ 'ORG_DETAIL.LAST_UPDATE' | translate }}" [style]="{'width':'220px'}" [sortable]="true">
+        <ng-template pTemplate="body" let-dataset="rowData">
+            {{dataset.metadata_modified | date: 'dd/MM/yyyy'}}
+        </ng-template>
+    </p-column>
+  </p-dataTable>
+  <p-paginator rows="20" totalRecords="{{numDatasets}}" (onPageChange)="paginate($event)"></p-paginator>
+
   <div class="nota">
     <p>
       <i class="fa fa-star" id="informacion_content_3_i" style="color: #5ea2ba;"></i>
-      Se ha accedido al conjunto de datos más de 10 veces en los últimos 14 días.
+      {{ 'LAST_DAYS_HITS' | translate:param }}
     </p>
   </div>
 </div>

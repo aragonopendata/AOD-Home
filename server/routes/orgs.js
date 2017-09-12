@@ -10,7 +10,7 @@ router.get("/", function(req, res, next) {
     let met = constants.GET_ORGS;
     let params = '?all_fields=true';
     var mypath = curl + met + params;
-
+    
     http.get(mypath, function (result) {
         var body = '';
         result.on('data', function(chunk) {
@@ -19,7 +19,6 @@ router.get("/", function(req, res, next) {
         result.on('end', function() {
             res.json(body);
         });
-        console.log(body);
     });
 });
 
@@ -29,8 +28,18 @@ router.get("/:org", function(req, res, next) {
     let met = constants.GET_ORG_DETAIL;
     let params = '?id=' + req.params.org;
     var mypath = curl + met + params;
+    
+    //Header options to send API_KEY
+    var getOptions = {
+        host: constants.HOSTNAME,
+        port: constants.PORT,
+        path: '/datos/api/action/organization_show?id=' + req.params.org,
+        headers: {
+            'Authorization': 'XXXX'
+        }
+    };
 
-    http.get(mypath, function (result) {
+    http.get(getOptions, function (result) {
         var body = '';
         result.on('data', function(chunk) {
             body += chunk;

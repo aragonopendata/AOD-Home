@@ -30,12 +30,16 @@ export class DatasetService {
   }
 
   public getDatasets(rows: number, page: number) {
-    return this.http.get('/api/datasets/page/' + page.toString() + '/rows/' + rows.toString()).map(res => res.json());
+    return this.http.get('/aod/api/datasets/page/' + page.toString() + '/rows/' + rows.toString()).map(res => res.json());
   }
 
   public getDatasetsByTopic(topic: String, rows: number, page: number) {
-    return this.http.get('/api/datasets/topic/'+ topic.toString() +'/page/' + page.toString() + '/rows/' + rows.toString()).map(res => res.json());
-}
+    return this.http.get('/aod/api/datasets/topic/'+ topic.toString() +'/page/' + page.toString() + '/rows/' + rows.toString()).map(res => res.json());
+  }
+ 
+  public getDatasetsByOrganization(organization: String, rows: number, page: number) {
+    return this.http.get('/aod/api/datasets/organization/'+ organization.toString() +'/page/' + page.toString() + '/rows/' + rows.toString()).map(res => res.json());
+  }
  
   setDataset(dataset: Dataset) {
     this.dataset = dataset;

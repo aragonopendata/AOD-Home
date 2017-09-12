@@ -1,3 +1,23 @@
 {
-    "TITLE_DATACENTER": "BANCO DE DATOS"
+    "TITLE_DATACENTER": "BANCO DE DATOS",
+    "NOT_AVAILABLE": "No disponible",
+    "LAST_DAYS_HITS": "Se ha accedido al conjunto de datos más de {{ocurrences}} veces en los últimos {{days}} días.",
+    "ORGANIZATIONS": {
+        "NAME":"Publicadores",
+        "PUBLISHED_DATASETS":"{{packages}} conjuntos de datos publicados",
+        "DATASETS_NUMBER":"Nº DATASETS",
+        "NUMBER_1": "HAY",
+        "NUMBER_2": "ORGANIZACIONES"
+    },
+    "ORG_DETAIL":{
+        "NAME": "NOMBRE DE LA ORGANIZACIÓN:",
+        "WEBPAGE":"PÁGINA WEB DE LA ORGANIZACIÓN:",
+        "DESCRIPTION": "DESCRIPCIÓN DE LA ORGANIZACIÓN:",
+        "ADDRESS": "DIRECCIÓN DE LA ORGANIZACIÓN:",
+        "PERSON": "PERSONA RESPONSABLE DENTRO DE LA ORGANIZACIÓN:",
+        "EMAIL": "EMAIL DE CONTACTO:",
+        "FOUND_DATASETS": "conjuntos de datos encontrados",
+        "TRACKING": "Nº de accesos",
+        "LAST_UPDATE": "Última actualización"
+    }
 }

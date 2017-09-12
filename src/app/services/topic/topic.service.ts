@@ -15,7 +15,7 @@ export class TopicService {
   }
 
   public getTopics(){
-   return this.http.get('/api/topics').map(res => res.json());
+   return this.http.get('/aod/api/topics').map(res => res.json());
   }
 
   setTopic(topic: Topic) {

@@ -28,7 +28,7 @@ export class OrgsService {
   }
 
   getOrgs() {
-    return this.http.get('/api/orgs').map(res => res.json());
+    return this.http.get('/aod/api/orgs').map(res => res.json());
   }
 
   setOrg(org: Org) {
@@ -37,6 +37,6 @@ export class OrgsService {
 
   getOrg() {
     //return this.org;
-    return this.http.get('/api/orgs/' + this.org.name).map(res => res.json());
+    return this.http.get('/aod/api/orgs/' + this.org.name).map(res => res.json());
   }
 }
