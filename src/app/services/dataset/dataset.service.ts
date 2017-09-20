@@ -29,12 +29,12 @@ export class DatasetService {
     this.publicadores = this.publicadorService.getPublicadores();
   }
 
-  public getDatasets(rows: number, page: number) {
-    return this.http.get('/aod/api/datasets/page/' + page.toString() + '/rows/' + rows.toString()).map(res => res.json());
+  public getDatasets(sort: string,rows: number, page: number) {
+      return this.http.get('/aod/api/datasets?sort='+sort+'&page=' + page.toString() + '&rows=' + rows.toString()).map(res => res.json());
   }
 
-  public getDatasetsByTopic(topic: String, rows: number, page: number) {
-    return this.http.get('/aod/api/datasets/topic/'+ topic.toString() +'/page/' + page.toString() + '/rows/' + rows.toString()).map(res => res.json());
+  public getDatasetsByTopic(sort: string, topic: String, rows: number, page: number) {
+    return this.http.get('/aod/api/datasets/topic/'+ topic.toString()+'?sort='+sort+'&page=' + page.toString() + '&rows=' + rows.toString()).map(res => res.json()); 
   }
  
   public getDatasetsByOrganization(organization: String, rows: number, page: number) {

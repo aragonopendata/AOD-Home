@@ -13,20 +13,20 @@
             <p-dropdown [options]="temas" placeholder="Tema y tipo"></p-dropdown>
         </div>
     </div>
-    <p-dataTable [value]="datasets" [responsive]="true" #dt>
-        <p-column field="name" header="{{numDatasets}} conjuntos de datos encontrados" [sortable]="true">
+    <p-dataTable [value]="datasets" [responsive]="true" (onSort)="setOrder($event)" #dt>
+        <p-column field="name" header="{{numDatasets}} conjuntos de datos encontrados" sortable="custom" [sortable]="true">
             <ng-template pTemplate="body" let-dataset="rowData">
-                <a routerLink='../datasetdetail' (click)="showDataset(dataset)">
+                <a routerLink='/home/datasetdetail' (click)="showDataset(dataset)">
                     {{dataset.title}}
                 </a>
             </ng-template>
         </p-column>
-        <p-column field="accesos" header="Nº de accesos" [style]="{'width':'160px'}" [sortable]="true">
+        <p-column field="accesos" header="Nº de accesos" [style]="{'width':'160px'}" sortable="custom" [sortable]="true">
             <ng-template pTemplate="body" let-dataset="rowData">
                 {{dataset.tracking_summary.total}}
             </ng-template>
         </p-column>
-        <p-column field="lastUpdate" header="Última actualización" [style]="{'width':'220px'}" [sortable]="true">
+        <p-column field="lastUpdate" header="Última actualización" [style]="{'width':'220px'}" sortable="custom" [sortable]="true">
             <ng-template pTemplate="body" let-dataset="rowData">
                 {{dataset.metadata_modified | date: 'dd/MM/yyyy'}}
             </ng-template>

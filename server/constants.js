@@ -10,10 +10,10 @@ exports.PORT = "80";
 /*DATASETS*/
 /*Get all datasets*/
 exports.GET_DATASETS = "package_search";
-/*Get datasets by topic
-    param id: the id or name of the topic
-*/
-exports.GET_DATASETS_BY_TOPIC = "group_package_show";
+/*Get new datasets*/
+exports.GET_NEW_DATASETS = "package_search?sort=metadata_modified desc&rows=3&start=0";
+/*Get most downloaded datasets*/
+exports.GET_DOWNLOADED_DATASETS = "package_search?sort=views_recent desc&rows=3&start=0";
 
 /*TOPICS*/
 /*Get all topics*/

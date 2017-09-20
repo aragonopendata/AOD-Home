@@ -22,7 +22,6 @@
               Previsualización del conjunto de datos
             </h5>
           </div>
-
           <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
             <div class="card-block">
               <p>
@@ -52,41 +51,70 @@
         </div>
         <div class="section">
           <h6>Etiquetas y palabras clave</h6>
-          <button *ngFor="let tag of dataset.tags" pButton type="button" label="{{tag.name}}" style="margin: 2px;"></button>
+          <button *ngFor="let tag of dataset.tags" class="tags" pButton type="button" label="{{tag.name}}" style="margin: 2px;"></button>
         </div>
         <div class="section">
           <h6>Organización responsable de la publicación</h6>
           <p>{{dataset.organization.title}}</p>
         </div>
         <div class="section">
-          <h6>Última actualización</h6>
+          <h6>Territorio en el que existen los datos</h6>
+          <p>Este conjunto de datos contiene datos en el territorio de {{extraTypeAragopedia}}</p>
+          <p>Esta es la <a href="extraUriAragopedia"> URI del recurso {{extraShortUriAragopedia}}</a></p>
+        </div>
+        <div class="section">
+          <h6>Frecuencia de actualización</h6>
+          <p>{{extraFrequency}}</p>
+        </div>
+        <div class="section">
+          <h6>Periodo de tiempo en el que existen datos</h6>
+          <p>De {{extraTemporalFrom}} a {{extraTemporalUntil}}</p>
+        </div>
+        <div class="section">
+          <h6>Licencia</h6>
+          <p>{{dataset.license_title}}</p>
+        </div>
+        <div class="section">
+          <h6>Nivel de detalle</h6>
+          <p>{{extraGranularity}}</p>
+        </div>
+        <div class="section">
+          <h6>Calidad del dato</h6>
+          <p>{{extraDataQuality}}</p>
+        </div>
+        <div class="section">
+          <h6>Diccionario de datos</h6>
+          <button *ngFor="let dic of extraDictionaryURL; let i = index" class="tags" pButton type="button" label="[{{i+1}}] Documento de diccionario de datos" style="margin: 2px;"></button>
         </div>
       </div>
     </div>
-    <div class="download col-sm-12 col-md-4">
-      <div class="title">
-        <h5>Descargas</h5>
-      </div>
-      <div class="container-fluid">
-        <div class="section">
-          <h6>Metadatos de la colección</h6>
+      <div class="download col-sm-12 col-md-4">
+        <div class="title">
+          <h5>Descargas</h5>
         </div>
-        <div class="section">
-          <h6>Archivos con los datos</h6>
-          <p>{{dataset.title}}</p>
-        </div>
-      </div>
-    </div>
-    <div class="recomend col-12">
-      <h4>También te recomendamos</h4>
-      <div class="container-fluid">
-        <div class="card col-sm-12 col-md-6 col-lg-4">
-          <img class="card-img-top" src="" alt="Card image cap" width="fit-content" height="fit-content" style="margin: 10px; margin: 0 auto;">
-          <div class="card-block" style="border: none; text-align: center; font-size: 15px; margin: 10; padding: 10px; height: 40px; background-color: darkslategray; color: white;">
-            <p></p>
+        <div class="container-fluid">
+          <div class="section">
+            <h6>Metadatos de la colección</h6>
+          </div>
+          <div class="section">
+            <h6>Archivos con los datos</h6>
+            <div *ngFor="let resource of dataset.resources">
+              <p>{{resource.name}}</p>
+              <button class="tags" pButton type="button" label="{{resource.format | uppercase}}" style="margin: 2px;"></button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <div class="recomend col-12">
+        <h4>También te pueden interesar estos datos</h4>
+        <div class="container-fluid">
+          <div class="card col-sm-12 col-md-6 col-lg-4">
+            <img class="card-img-top" src="" alt="Card image cap" width="fit-content" height="fit-content" style="margin: 10px; margin: 0 auto;">
+            <div class="card-block" style="border: none; text-align: center; font-size: 15px; margin: 10; padding: 10px; height: 40px; background-color: darkslategray; color: white;">
+              <p></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    
   </div>
-</div>
