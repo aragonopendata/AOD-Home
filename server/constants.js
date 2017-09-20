@@ -10,6 +10,8 @@ exports.PORT = "80";
 /*DATASETS*/
 /*Get all datasets*/
 exports.GET_DATASETS = "package_search";
+/*Get datasets by title*/
+exports.GET_DATASETS_AUTOCOMPLETE = "package_autocomplete";
 /*Get new datasets*/
 exports.GET_NEW_DATASETS = "package_search?sort=metadata_modified desc&rows=3&start=0";
 /*Get most downloaded datasets*/

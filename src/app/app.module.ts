@@ -60,6 +60,7 @@ import { HeaderComponent } from './components/app-home/common/header/header.comp
 import { DatasetDetailComponent } from "./components/app-home/data/dataset-detail/dataset-detail.component";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { Configuration } from "./app.constants";
+import { DataSetAutocompleteComponent } from "./components/app-home/data/dataset-autocomplete/dataset-autocomplete.component";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -106,7 +107,8 @@ export function createTranslateLoader(http: HttpClient) {
     OrgDetailComponent,
     PageNotFoundComponent,
     HeaderComponent,
-    DatasetDetailComponent
+    DatasetDetailComponent,
+    DataSetAutocompleteComponent
   ],
   imports: [
     BrowserModule,

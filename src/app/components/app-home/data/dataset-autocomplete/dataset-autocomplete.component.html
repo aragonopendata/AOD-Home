@@ -1,0 +1,14 @@
+<form class="search" id="form-home">
+  <button type="submit" class="btnSearch">
+          <i aria-hidden="true" class="fa fa-search" style="display: table; vertical-align: middle;"></i>
+      </button>
+  <input autocomplete="off" #searchBox name="searchBox" placeholder="BUSCA DATOS ABIERTOS" type="search" class="textBox" (keyup)="search(searchBox.value)"
+  />
+  <ng-container *ngIf="show">
+    <div *ngFor="let dataset of datasetAutocomplete" class="search-result">
+      <a routerLink='../datasetdetail' (click)="showDataset(dataset.name)">
+              {{dataset.title}}
+          </a>
+    </div>
+  </ng-container>
+</form>

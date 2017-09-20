@@ -30,6 +30,7 @@ export class Dataset {
     publicador: Publicador;
     dataFiles: string[];
     checked: boolean;
+    title: string;
     extras: Extras[];
 
     constructor() {
