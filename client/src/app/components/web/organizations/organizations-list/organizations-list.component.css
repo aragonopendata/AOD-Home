@@ -1,0 +1,55 @@
+.container {
+    padding-top: 15%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1;
+    margin: 2px 0 20px;
+    letter-spacing: 0.1em;
+    color: #5ea2ba;
+    font-weight: 300;
+}
+
+p {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1;
+    margin: 2px 0 20px;
+    letter-spacing: 0.1em;
+    font-weight: 300;
+}
+
+b {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1;
+    margin: 2px 0 20px;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+}
+
+.card {
+    margin: 0 auto;
+    float: none;
+    cursor: pointer;
+}
+
+.card, .card-img-top {
+    align-self: center;
+    max-width: 80%;
+    height: auto;
+}
+
+.numDatasets {
+    position: absolute;
+    bottom: 0;
+}
+
+.tabla {
+    margin: 10px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    line-height: 1;
+    margin: 2px 0 20px;
+    letter-spacing: 0.1em;
+    font-weight: 300;
+}

@@ -1,0 +1,343 @@
+<div style="margin: 2%;">
+	<h3>Editar conjunto de datos</h3>
+	<h5>{{dataset.name}}</h5>
+</div>
+<div style="margin: 2%;">
+	<!-- Nav tabs -->
+	<ul class="nav nav-tabs nav-fill" role="tablist">
+		<li class="nav-item">
+			<a class="nav-link active" data-toggle="tab" href="#tit_desc" role="tab">Nombre y descripción *</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" data-toggle="tab" href="#tem_tag" role="tab">Temática y etiquetas *</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" data-toggle="tab" href="#geo" role="tab">Cobertura geográfica *</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" data-toggle="tab" href="#tmp" role="tab">Cobertura temporal</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" data-toggle="tab" href="#lang" role="tab">Idiomas</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" data-toggle="tab" href="#extra" role="tab">Extras</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" data-toggle="tab" href="#pub_lic" role="tab">Publicador y licencia</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" data-toggle="tab" href="#files" role="tab">Ficheros de datos *</a>
+		</li>
+	</ul>
+
+	<!-- Tab panes -->
+	<div class="tab-content" style="padding-bottom: 5%;">
+		<div class="tab-pane active" id="tit_desc" role="tabpanel">
+			<div class="ui-g-12" style="padding: 1%; text-align: justify;">
+				<div style="margin-top: 2%;">
+					<h3>Titulo *</h3>
+					<p>
+						Por favor, dale un nombre a tu conjunto de datos. El nombre que des al conjunto de datos es importante porque se convierte
+						en su identificador.
+					</p>
+					<input type="text" size="150" pInputText [(ngModel)]="dataset.name">
+				</div>
+				<div style="margin-top: 2%;">
+					<h3 style="margin-top: 2%;">URL</h3>
+					<p *ngIf="!editEnable">{{dataset.url}}</p>
+					<div *ngIf="editEnable">
+						{{baseUrl}}
+						<input type="text" size="100" pInputText [(ngModel)]="editableUrl">
+					</div>
+					<div>
+						<button *ngIf="!editEnable" type="button" (click)="edit()" pButton label="Editar"></button>
+						<button *ngIf="editEnable" type="button" (click)="save()" pButton label="Guardar"></button>
+					</div>
+				</div>
+				<h3 style="margin-top: 2%;">Descripción *</h3>
+				<p>
+					La descripción es la primera aproximación de un usuario a tu conjunto de datos, así que se debería comenzar contando brevemente
+					qué contiene el mismo. Si el conjunto de datos contiene informaciones parciales, limitaciones o deficiencias este es
+					el lugar en el que puedes mencionarlas de forma que los usuarios puedan saber el alcance de la información. En algunos
+					casos los usuarios ayudan a mejorar la información, así que no desaproveches la oportunidad de acercarles la realidad
+					del dato.
+				</p>
+				<textarea [(ngModel)]="dataset.description" rows="5" cols="150" pInputTextarea></textarea>
+			</div>
+		</div>
+		<div class="tab-pane" id="tem_tag" role="tabpanel">
+			<div class="ui-g-12" style="padding: 1%; text-align: justify;">
+				<h3 style="margin-top: 2%;">Temática *</h3>
+				<p>
+					Por favor, escoge la temática que crees que se adapta mejor a la información que contiene tu conjunto de datos.
+				</p>
+				<p-dropdown [options]="topics" [(ngModel)]="selectedTopic" [style]="{'width':'300px'}"></p-dropdown>
+				<h3 style="margin-top: 2%;">Etiquetas</h3>
+				<p>
+					Por favor, introduce un listado de etiquetas que describan el contenido de tu conjunto de datos. Utiliza palabras comunes
+					para describirlo. A poder ser utiliza palabras de las que te sugiere el formulario, ya que son palabras que provienen
+					de EuroVoc (<a href="http://eurovoc.europa.eu/drupal/?q=es">http://eurovoc.europa.eu/drupal/?q=es</a>) y su uso
+					mejora mucho la interoperabilidad del conjunto de datos.
+				</p>
+				<p>Escribe la primera letra en mayúscula y el resto en minúscula.</p>
+				<input type="text" size="100" pInputText>
+				<div class="ui-g-12">
+					<div class="ui-g-1">
+						<span class="badge badge-default" style="text-align: left">Comercio electrónico</span>
+					</div>
+					<div class="ui-g-1">
+						<span class="badge badge-default" style="text-align: left">Dato estadístico</span>
+					</div>
+					<div class="ui-g-1">
+						<span class="badge badge-default" style="text-align: left">Internet</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane" id="geo" role="tabpanel">
+			<div class="ui-g-12" style="padding: 1%; text-align: justify;">
+				<h3 style="margin-top: 2%;">Cobertura geográfica *</h3>
+				<p>
+					Por favor introduce el ámbito geográfico del que tu conjunto de datos contiene información. Únicamente es posible escribir
+					dentro de una de las opciones que se muestran y además hay que hacerlo con uno de los territorios que se da en los listados
+					(salvo si se rellena el campo otro).
+				</p>
+				<div class="ui-g-12">
+					<div class="ui-g-2">
+						<p-radioButton name="group1" value="Aragón" label="Aragón"></p-radioButton>
+					</div>
+					<div class="ui-g-12">
+						<div class="ui-g-2">
+							<p-radioButton name="group1" value="Option 2" label="Provincia de: "></p-radioButton>
+						</div>
+						<div class="ui-g-10">
+							<input type="text" size="50" pInputText>
+						</div>
+					</div>
+					<div class="ui-g-12">
+						<div class="ui-g-2">
+							<p-radioButton name="group1" value="Option 3" label="Comarca de: "></p-radioButton>
+						</div>
+						<div class="ui-g-10">
+							<input type="text" size="50" pInputText>
+						</div>
+					</div>
+					<div class="ui-g-12">
+						<div class="ui-g-2">
+							<p-radioButton name="group1" value="Option 4" label="Municipio de: "></p-radioButton>
+						</div>
+						<div class="ui-g-10">
+							<input type="text" size="50" pInputText>
+						</div>
+					</div>
+					<div class="ui-g-12">
+						<div class="ui-g-2">
+							<p-radioButton name="group1" value="Option 5" label="Otro: "></p-radioButton>
+						</div>
+						<div class="ui-g-10">
+							<input type="text" size="50" pInputText>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane" id="tmp" role="tabpanel">
+			<h3 style="margin-top: 2%;">Fecha de la primera publicación del conjunto de datos</h3>
+			<p>
+				Fecha de primera publicación del conjunto de datos (esta información la rellena automáticamente el sistema).
+			</p>
+			<p-calendar showSeconds="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" [(ngModel)]="dataset.firstPublish"
+			 [showTime]="true"></p-calendar>
+			<h3 style="margin-top: 2%;">Fecha de la última modificación del conjunto de datos</h3>
+			<p>
+				Fecha de última modificación del conjunto de datos (esta información la rellena automáticamente el sistema).
+			</p>
+			<p-calendar showSeconds="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" [(ngModel)]="dataset.lastUpdate"
+			 [showTime]="true"></p-calendar>
+			<h3 style="margin-top: 2%;">Frecuencia de actualización</h3>
+			<p>
+				Por favor, indica la frecuencia con la que se actualiza la información del conjunto de datos:
+			</p>
+			<p-dropdown [options]="freq" [style]="{'width':'300px'}"></p-dropdown>
+			<h3 style="margin-top: 2%;">Cobertura temporal del conjunto de datos</h3>
+			<p>
+				Por favor, indica en este campo el periodo temporal del que contiene información tu conjunto de datos. Si tu conjunto de
+				datos está vivo y se va refrescando a medida que pasa el tiempo, deja seleccionada la casilla de selección que aparece
+				en la parte de "hasta…". En ese caso entenderemos que tu conjunto de datos contiene información desde la fecha que indiques
+				hasta la actualidad.
+			</p>
+			<p>
+				Este conjunto de datos contiene información desde:
+			</p>
+			<p-calendar showSeconds="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" [(ngModel)]="dataset.fromDate"
+			 [showTime]="true"></p-calendar>
+			<p>
+				hasta:
+			</p>
+			<p-checkbox [(ngModel)]="dataset.checked" binary="true"></p-checkbox>
+			<p-calendar *ngIf="!dataset.checked" showSeconds="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030"
+			 [(ngModel)]="dataset.untilDate" [showTime]="true"></p-calendar>
+		</div>
+		<div class="tab-pane" id="lang" role="tabpanel">
+			<h3 style="margin-top: 2%;">Idiomas</h3>
+			<p>
+				Por favor, selecciona el idioma o idiomas en los que existe información en tu conjunto de datos.
+			</p>
+			<div class="ui-g" style="width:250px;margin-bottom:10px">
+				<div class="ui-g-12" *ngFor="let languaje of languajes">
+					<p-checkbox value="{{languaje}}" label="{{languaje}}"></p-checkbox>
+				</div>
+				<input type="text" size="50" pInputText>
+			</div>
+		</div>
+		<div class="tab-pane" id="extra" role="tabpanel">
+			<h3 style="margin-top: 2%;">Nivel de detalle</h3>
+			<p>
+				Este campo debe indicar el menor nivel de detalle al que se refiere el conjunto de datos. El menor nivel de detalle se puede
+				referir a diferentes "dimensiones" del conjunto de datos si es que este las tuviera, por lo que en este campo se admite
+				más de una palabra.
+			</p>
+			<p>
+				Por ejemplo el menor nivel de detalle dentro de una "dimensión" temporal podrían ser segundos, minutos, horas…; en la "dimensión"
+				espacial podría ser calle, código postal, municipio…; en la "dimensión" de entidades podría ser persona, escuela, parque
+				natural…
+			</p>
+			<p>
+				Escribe la primera letra de cada nivel de detalle en mayúscula y el resto en minúscula.
+			</p>
+			<input placeholder="Nivel de detalle" type="text" size="50" pInputText>
+			<h3 style="margin-top: 2%;">Calidad del dato</h3>
+			<p>
+				Si has utilizado alguna metodología para controlar la calidad de los datos este es el lugar para explicarla.
+			</p>
+			<textarea rows="10" placeholder="Calidad del dato" cols="150" pInputTextarea></textarea>
+			<p>
+				Si tus metodologías de control de calidad están explicadas en un enlace externo copia aquí la dirección o direcciones.
+			</p>
+			<div class="ui-g-12" *ngFor="let urlCalidad of urlsCalidad; let i of index">
+				<input type="text" size="50" placeholder="URL de acceso" pInputText>
+				<button type="button" (click)="quitUrl()" pButton label="Quitar"></button>
+			</div>
+			<button type="button" (click)="addUrl()" pButton label="Añadir"></button>
+			<h3 style="margin-top: 2%;">Diccionario de datos</h3>
+			<p>
+				En este campo puedes comentar y añadir cualquier clase de información que ayude a la comprensión del conjunto de datos. De
+				manera más amplia que en el campo descripción puedes incorporar aquí comentarios y enlaces de interés.
+			</p>
+			<textarea rows="10" placeholder="Diccionario de datos" cols="150" pInputTextarea></textarea>
+			<p>
+				Si la información de interés se encuentra publicada en un enlace externo copia aquí la dirección o direcciones.
+			</p>
+			<div class="ui-g-12" *ngFor="let urlDic of urlsDic; let i of index">
+				<input type="text" size="50" placeholder="URL de acceso" pInputText>
+				<button type="button" (click)="quitUrl()" pButton label="Quitar"></button>
+			</div>
+			<button type="button" (click)="addUrl()" pButton label="Añadir"></button>
+		</div>
+		<div class="tab-pane" id="pub_lic" role="tabpanel">
+			<h3 style="margin-top: 2%;">Publicador</h3>
+			<p>
+				Seleccione una organización entre las disponibles:
+			</p>
+			<p-dropdown [options]="publicadores" [(ngModel)]="selectedPublicador" [style]="{'width':'300px'}"></p-dropdown>
+			<p>
+				En esta sección se muestran la organización encargada de la publicación de este conjunto de datos tal y cómo se facilitarán
+				a los usuarios.
+			</p>
+			<p>
+				Esta información se ha confeccionado con los datos aportados al dar de alta la organización publicadora, para modificarla
+				utiliza la pizarra de administración de tu organización.
+			</p>
+			<ul>
+				<li>
+					Publicado por: <span>{{selectedPublicador}}</span>
+				</li>
+				<li>
+					Enlace a la pizarra de administración: <span><button type="button" routerLink="../../datacenterhome" pButton label="Pizarra"></button></span>
+				</li>
+			</ul>
+			<h3 style="margin-top: 2%;">Licencia</h3>
+			<p>
+				Para promover la máxima reutilización, en Aragón Open Data establecemos por defecto una licencia Creative Commons Attribution
+				4.0 según se expone en la sección "Términos de uso" (
+				<a href="http://opendata.aragon.es/terminos">http://opendata.aragon.es/terminos</a>). Si tu conjunto de datos por alguna
+				razón legal, contractual o de otro tipo no puede ser ofrecido con esta licencia escríbenos a opendata@aragon.es y la
+				modificaremos.
+			</p>
+		</div>
+		<div class="tab-pane" id="files" role="tabpanel">
+			<h3 style="margin-top: 2%;">Ficheros de datos *</h3>
+			<ul>
+				<li>
+					Nombre del recurso: Introduce un nombre descriptivo del archivo descargable, puedes utilizar el mismo nombre que para el
+					conjunto de datos.
+				</li>
+				<li>
+					Modo de acceso: Si a tu descargable se accede a través de algún formato intermedio (por ejemplo, a través de una página web
+					=> HTML, de un fichero comprimido => ZIP…) indícanoslo en este campo. Si no existe un formato intermedio deja este campo
+					en blanco.
+				</li>
+				<li>
+					Formato de descarga: Introduce el formato del recurso que contiene la información.
+				</li>
+				<li>
+					Acceso al recurso: Elige si enlazar a una URL de descarga, conectar con una vista de base de datos o subir un recurso a nuestro
+					servidor (este último caso lo desaconsejamos y sólo se realizará si no existe otra forma de suministrar la información).
+				</li>
+			</ul>
+			<div class="ui-g-12" *ngFor="let file of files; let i = index">
+				<div class="ui-g-4">
+					<h3>Nombre del recurso</h3>
+					<input type="text" size="50" placeholder="Nombre" pInputText>
+				</div>
+				<div class="ui-g-4">
+					<h3>Formato de descarga</h3>
+					<p-dropdown [options]="formatos" placeholder="Selecciona un formato" [style]="{'width':'300px'}"></p-dropdown>
+				</div>
+				<div class="ui-g-4">
+					<h3>Modo de acceso</h3>
+					<p-dropdown [options]="accessModes" placeholder="Selecciona un modo de acceso" [style]="{'width':'300px'}"></p-dropdown>
+				</div>
+				<div class="ui-g-4">
+					<h3>Acceso al recurso</h3>
+					<p-dropdown [options]="accesoRecurso" placeholder="Selecciona un tipo de acceso" [(ngModel)]="accesoSelected" [style]="{'width':'300px'}"></p-dropdown>
+				</div>
+				<div class="ui-g-8">
+					<h3>Contenido</h3>
+					<input *ngIf="accesoSelected==='0'" type="text" size="50" placeholder="http://..." pInputText>
+					<p-dropdown *ngIf="accesoSelected==='1'" placeholder="Selecciona una vista" [options]="vistas" [style]="{'width':'300px'}"></p-dropdown>
+					<p-fileUpload *ngIf="accesoSelected==='2'" name="demo[]" url="http://localhost:4200/upload" (onUpload)="onUpload($event)"
+					 multiple="multiple" accept="image/*" maxFileSize="1000000">
+						<ng-template pTemplate type="content">
+							<ul *ngIf="uploadedFiles.length">
+								<li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+							</ul>
+						</ng-template>
+					</p-fileUpload>
+				</div>
+				<div class="ui-g-12">
+					<button type="button" pButton icon="fa-minus" (click)="deleteFile(i)" label="Eliminar"></button>
+				</div>
+			</div>
+			<div class="ui-g-12">
+				<button type="button" pButton (click)="addFile()" icon="fa-plus" label="Añadir"></button>
+			</div>
+			<p>
+				Importante:
+			</p>
+			<ul>
+				<li>
+					No introduzcas nada en formato PDF, ya que no es reutilizable y lo eliminaremos en cuanto lo detectemos.
+				</li>
+				<li>
+					Los formatos más habituales y preferidos por nosotros y por los reutilizadores son CSV, XML, JSON y RDF.
+				</li>
+				<li>
+					Introduce sólo los enlaces que permitan la descarga del conjunto de datos, cualquier otro enlace de interés para el usuario
+					lo puedes introducir en la sección "Extras".
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>

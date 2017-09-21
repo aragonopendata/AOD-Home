@@ -1,0 +1,41 @@
+<div class="container">
+	<h1>SPARQL</h1>
+	<div id="accordion" role="tablist" aria-multiselectable="true">
+		<div class="card">
+			<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+				<div class="card-header" (click)="getChildren('#headingOne')" role="tab" id="headingOne">
+					<h5 class="mb-0">
+						Punto SPARQL
+						<i class="fa fa-plus-circle" id="informacion_content_3_i"></i>
+					</h5>
+				</div>
+			</a>
+			<div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+				<div class="card-block" style="text-align: justify;">
+					<h3>INTRODUCCIÓN</h3>
+					<p>
+						En esta página se describen algunas consultas típicas que se pueden realizar en el endpoint SPARQL que se ha habilitado para
+						Aragopedia (nota: los datos más recientes actualizados siempre se podrán encontrar en el grafo: http://aragon.opendata.es/graph/Aragopedia/latest),
+						y que contiene todos los datos que han sido transformados a partir de su wiki. Se puede encontrar una descripción más
+						detallada sobre el lenguaje SPARQL en las páginas correspondientes del consorcio W3C.
+					</p>
+					<p>
+						Comenzaremos con consultas sencillas, para ir complicándolas progresivamente, mostrando así distintas posibilidades de explotación
+						de los datos disponibles en este endpoint. Todas estas consultas se realizan teniendo en cuenta el vocabulario usado
+						en Aragopedia.
+					</p>
+					<p>
+						Para finalizar, se muestran los emparejamientos entre los recursos de Aragopedia y sus equivalentes en otras iniciativas.
+					</p>
+					<h4>Creando consultas sencillas</h4>
+					<h5>Obteniendo la lista de municipios</h5>
+					<p>Por ejemplo, una primera consulta podría ser la de obtener todos los municipios disponibles en la Aragopedia:</p>
+					<div class="textbox">
+						<p class="queries">SELECT DISTINCT ?xWHERE {{'{'}}?x a
+							<http://dbpedia.org/ontology/Municipality>{{'}'}}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

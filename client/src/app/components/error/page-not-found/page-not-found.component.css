@@ -1,0 +1,47 @@
+.messageError {
+    margin-top: 10%;
+    margin-left: 10%;
+}
+
+.codeError {
+    margin-left: 10%;
+    margin-bottom: 1%;
+}
+
+.videoPlayer {
+    margin-left: 10%;
+    position: relative;
+    padding-top: 30px;
+    padding-bottom: 50%;
+    height: 0;
+    overflow: hidden;
+}
+ 
+.videoPlayer iframe,
+.videoPlayer object,
+.videoPlayer embed {
+    position: absolute;
+    top: 0;
+    width: 70%;
+    height: 70%;
+    left: 0;
+}
+
+.messageError h1 {
+    font-family: 'Roboto';
+    color: rgb(153,151,144);
+    font-size: 46px;
+    font-weight: 100;
+    text-align: justify;
+    line-height: normal;
+    vertical-align: middle;
+}
+
+.opendataSearch {
+    margin-left: 10%;
+    margin-top: -12%;
+    margin-bottom: 10%;
+    /*font-size: 42px;
+    line-height: normal;
+    font-weight: 100;*/
+}

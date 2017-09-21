@@ -1,0 +1,25 @@
+<md-sidenav-container class="example-sidenav-fab-container" id="wrapper">
+	<md-sidenav #sidenav mode="side" opened="true" id="sidebar-wrapper">
+		<ul id="sidemenu" class="sidebar-nav">
+			<li>
+				<a routerLink="/admin/datacenter" routerLinkActive="active">
+          <span class="sidebar-title">Home</span>
+        </a>
+			</li>
+			<li>
+				<a routerLink="/admin/datacenter/organizations" routerLinkActive="active">
+          <span class="sidebar-title">Organizaciones</span>
+        </a>
+			</li>
+			<li>
+				<a routerLink="/admin/datacenter/datasets" routerLinkActive="active">
+          <span class="sidebar-title">Datasets</span>
+        </a>
+			</li>
+		</ul>
+	</md-sidenav>
+	<button md-mini-fab class="example-fab" (click)="sidenav.toggle()">
+    <i class="material-icons">menu</i>
+  </button>
+	<router-outlet></router-outlet>
+</md-sidenav-container>

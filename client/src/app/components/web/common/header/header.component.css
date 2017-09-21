@@ -1,0 +1,197 @@
+h1, h2, h3, h4, h5, h6, li {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1;
+    letter-spacing: 0.1em;
+    font-weight: 300;
+}
+
+.card-header a {
+    font-size: 25px !important;
+}
+
+.card-header {
+    padding: 1%;
+    background: transparent;
+    border-radius: 0;
+    border: none;
+    border-top: solid 1px white; 
+}
+
+.card {
+    background: transparent;
+    border: none;
+}
+
+.card-block {
+    padding: 0;
+    padding-left: 2%;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+.overlay {
+    height: 0%;
+    width: 100%;
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.82);
+    overflow-y: auto;
+    scroll-behavior: auto;
+    transition: 0.5s;
+}
+
+.overlay p {
+    cursor: pointer;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.overlay-content {
+    position: relative;
+    width: 100%;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.overlay a, .overlay li {
+    padding: 2px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.overlay a:hover, .overlay a:focus, .overlay li:hover, .overlay li:focus {
+    color: #f1f1f1;
+}
+
+@media screen and (max-height: 450px) {
+  .overlay {
+      overflow-y: hidden;
+      }
+  .overlay a, .overlay li {
+      font-size: 20px;
+      }
+}
+
+.textBox {
+    color: white;
+    background: transparent;
+    border: none;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    height: 100px;
+    width: 90%;
+    font-size: 80px;
+    padding-right: 10%;
+}
+
+.textBox:focus {
+    outline: none;
+}
+
+.btnSearch {
+    background: transparent;
+    color:white;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    float: right;
+    font-size: 80px;
+    height: 100px;
+    width: 10%;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.relatedHeader {
+    background-color:  #494949;
+}
+
+.relatedHeader a {
+    color: #e0e0e0;
+}
+
+
+.relatedHeader a:hover {
+    color: white;
+}
+
+.active {
+    color:#ffffff !important;
+    font-weight:bold;
+    border-bottom: 3px solid #76a1b8;
+}
+
+#logo {
+    max-width: 100%;
+    height: auto;
+}
+
+#nav {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.logo {
+    margin: 10px;
+    z-index: 999;
+}
+
+@media screen and (max-width: 1000px) and (min-width: 480px) {
+    .logo {
+        height:60px;
+        width: 329px;
+        margin-top: 12px;
+        margin-left: 5px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .logo {
+        height:33px;
+        width: 200px;
+        margin-top: 10px;
+        margin-left: 5px;
+    }
+}
+
+.menu,.menuLogin {
+    width: 60px;
+    height: 60px;
+    position: fixed;
+    right: 20px;
+    display: inline-block;
+    z-index: 999
+}
+
+.menuLogin {
+    right: 90px;
+}
+
+@media screen and (max-width: 1000px) and (min-width: 480px) {
+    .menu, .menuLogin {
+        height:50px;
+        width: 50px;
+        padding-right: 10%;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .aMenu, .aLogin, .menu, .menuLogin {
+        height: 40px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .menuLogin {
+        right: 65px;
+    }
+}

@@ -1,0 +1,229 @@
+<div class="jumbotron-fluid search" id="search">
+	<div class="back"></div>
+	<div class="cont">
+		<dataset-autocomplete></dataset-autocomplete>
+		<button type="button" class="btn btn-secondary btn-outline goDown" (click)="move('dataCenter')">
+      		<img src="../../../../assets/flechaDown.png" alt="x" />
+    	</button>
+	</div>
+</div>
+<div class="jumbotron-fluid dataCenter" id="dataCenter">
+	<button type="button" class="btn btn-secondary goUp" (click)="move('search')">
+      	<img src="../../../../assets/flechaUp.png" alt="x" />
+  	</button>
+	<div class="contenido">
+		<h1>Datos</h1>
+		<p class="titleDesc">
+			Lo más importante de Aragón Open Data son sus datos y los hemos ordenado para que puedas encontrarlos fácilmente.
+		</p>
+		<div class="ui-g">
+			<div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
+				<div class="card card-inverse" routerLink="/datos/catalogo" routerLinkActive="active" (mouseenter)="hover('#imgBD','../../../../assets/cards/Card-01-BancoDatos-ON.jpg')"
+				 (mouseleave)="unhover('#imgBD','../../../../assets/cards/Card-01-BancoDatos-OFF.jpg')">
+					<img class="card-img" id="imgBD" src="../../../../assets/cards/Card-01-BancoDatos-OFF.jpg" alt="Card image">
+					<div *ngIf="hovers[0].hover" class="card-img-overlay" style="text-align: center;">
+						<h2 translate>TITLE_DATACENTER</h2>
+						<p>Además de buscar, puedes acceder a los datos mediante categorías y filtros.</p>
+					</div>
+				</div>
+			</div>
+			<div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
+				<div class="card card-inverse" routerLink="/datos/temas" routerLinkActive="active" (mouseenter)="hover('#imgTem', '../../../../assets/cards/Card-02-Temas-ON.jpg')"
+				 (mouseleave)="unhover('#imgTem', '../../../../assets/cards/Card-02-Temas-OFF.jpg')">
+					<img class="card-img" id="imgTem" src="../../../../assets/cards/Card-02-Temas-OFF.jpg" alt="Card image">
+					<div *ngIf="hovers[1].hover" class="card-img-overlay" style="text-align: center;">
+						<h2>Temas</h2>
+						<p>Puedes llegar a los datos mediante la navegación temática.</p>
+					</div>
+				</div>
+			</div>
+			<div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
+				<div class="card card-inverse" routerLink="/datos/publicadores" routerLinkActive="active" (mouseenter)="hover('#imgPub', '../../../../assets/cards/Card-03-Publicadores-ON.jpg')"
+				 (mouseleave)="unhover('#imgPub', '../../../../assets/cards/Card-03-Publicadores-OFF.jpg')">
+					<img class="card-img" id="imgPub" src="../../../../assets/cards/Card-03-Publicadores-OFF.jpg" alt="Card image">
+					<div *ngIf="hovers[2].hover" class="card-img-overlay" style="text-align: center;">
+						<h2>Publicadores</h2>
+						<p>Conoce qué organizaciones aportan sus datos a Aragón Open Data.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<button type="button" class="btn btn-secondary goDown" (click)="move('services')">
+    	<img src="../../../../assets/flechaDown.png" alt="x" />
+  	</button>
+</div>
+<div class="jumbotron-fluid services" id="services">
+	<button type="button" class="btn btn-secondary goUp" (click)="move('dataCenter')">
+    	<img src="../../../../assets/flechaUp.png" alt="x" />
+  	</button>
+	<div class="contenido">
+		<h1>Servicios</h1>
+		<p class="titleDesc">
+			En Aragón Open Data hemos creado servicios para ofrecer los datos, reutilizarlos y acceder de forma sencilla a la información.
+		</p>
+		<div class="ui-g">
+			<div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
+				<div class="card card-inverse" (click)="goToUrl('/servicios/aragopedia')" (mouseenter)="hover('#imgAragopedia','../../../../assets/cards/Card-05-Aragopedia-ON.jpg')"
+				 (mouseleave)="unhover('#imgAragopedia','../../../../assets/cards/Card-05-Aragopedia-OFF.jpg')">
+					<img class="card-img" id="imgAragopedia" src="../../../../assets/cards/Card-05-Aragopedia-OFF.jpg" alt="Card image">
+					<div *ngIf="hovers[3].hover" class="card-img-overlay" style="text-align: center;">
+						<h2>Aragopedia</h2>
+						<p>Entiende y usa los datos abiertos de Aragón Open Data a través de los municipios y comarcas de Aragón.</p>
+					</div>
+				</div>
+			</div>
+			<div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
+				<div class="card card-inverse" (click)="goToUrl('/presupuestos')" (mouseenter)="hover('#imgPre', '../../../../assets/cards/Card-06-Presupuestos-ON.jpg')" (mouseleave)="unhover('#imgPre', '../../../../assets/cards/Card-06-Presupuestos-OFF.jpg')">
+					<img class="card-img" id="imgPre" src="../../../../assets/cards/Card-06-Presupuestos-OFF.jpg" alt="Card image">
+					<div *ngIf="hovers[4].hover" class="card-img-overlay" style="text-align: center;">
+						<h2>Presupuestos</h2>
+						<p>Conoce de un modo claro cómo se distribuye el presupuesto de Aragón y de dónde vienen los ingresos y a qué destinamos
+							el gasto.</p>
+					</div>
+				</div>
+			</div>
+			<div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
+				<div class="card card-inverse" (click)="goToUrl('/servicios/open-social-data')" (mouseenter)="hover('#imgOSD', '../../../../assets/cards/Card-04-OpenSocialData-ON.jpg')"
+				 (mouseleave)="unhover('#imgOSD', '../../../../assets/cards/Card-04-OpenSocialData-OFF.jpg')">
+					<img class="card-img" id="imgOSD" src="../../../../assets/cards/Card-04-OpenSocialData-OFF.jpg" alt="Card image">
+					<div *ngIf="hovers[5].hover" class="card-img-overlay" style="text-align: center;">
+						<h2>Open Social Data</h2>
+						<p>Escucha, visualiza y analiza las conversaciones sobre Aragón en las redes sociales y conoce qué está pasando.</p>
+					</div>
+				</div>
+			</div>
+			<div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
+				<div class="card card-inverse" (click)="goToUrl('/servicios/cras')" (mouseenter)="hover('#imgCRAs', '../../../../assets/cards/Card-07-CRAs-ON.jpg')" (mouseleave)="unhover('#imgCRAs', '../../../../assets/cards/Card-07-CRAs-OFF.jpg')">
+					<img class="card-img" id="imgCRAs" src="../../../../assets/cards/Card-07-CRAs-OFF.jpg" alt="Card image">
+					<div *ngIf="hovers[6].hover" class="card-img-overlay" style="text-align: center;">
+						<h2>CRAs Aragón</h2>
+						<p>Descubre más sobre los Colegios Rurales Agrupados de Aragón.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<button type="button" class="btn btn-secondary goDown" (click)="move('info')">
+      	<img src="../../../../assets/flechaDown.png" alt="x" />
+  	</button>
+</div>
+<div class="jumbotron-fluid info" id="info">
+	<button type="button" class="btn btn-secondary goUp" (click)="move('services')">
+      	<img src="../../../../assets/flechaUp.png" alt="x" />
+    </button>
+	<div class="contenido">
+		<h1 class="titleDesc">Información</h1>
+		<p>
+			Te explicamos qué es Aragón Open Data, qué hacemos y cómo puedes sumarte y colaborar.
+		</p>
+		<div class="ui-g">
+			<div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
+				<div class="card card-inverse" routerLink="/info/open-data" (mouseenter)="hover('#imgInfo','../../../../assets/cards/Card-10-Informacion-ON.jpg')"
+				 (mouseleave)="unhover('#imgInfo','../../../../assets/cards/Card-10-Informacion-OFF.jpg')">
+					<img class="card-img" id="imgInfo" src="../../../../assets/cards/Card-10-Informacion-OFF.jpg" alt="Card image">
+					<div *ngIf="hovers[7].hover" class="card-img-overlay" style="text-align: center;">
+						<h2>Información</h2>
+						<p>Conoce más sobre el entorno open data y qué hacemos en Aragón.</p>
+					</div>
+				</div>
+			</div>
+			<div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
+				<div class="card card-inverse" routerLink="/info/aplicaciones" (mouseenter)="hover('#imgApp', '../../../../assets/cards/Card-09-Aplicaciones-ON.jpg')"
+				 (mouseleave)="unhover('#imgApp', '../../../../assets/cards/Card-09-Aplicaciones-OFF.jpg')">
+					<img class="card-img" id="imgApp" src="../../../../assets/cards/Card-09-Aplicaciones-OFF.jpg" alt="Card image">
+					<div *ngIf="hovers[8].hover" class="card-img-overlay" style="text-align: center;">
+						<h2>Aplicaciones</h2>
+						<p>Otras aplicaciones que aprovechan y reutilizan nuestros datos para ofrecértelos.</p>
+					</div>
+				</div>
+			</div>
+			<div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
+				<div class="card card-inverse" routerLink="/info/eventos" (mouseenter)="hover('#imgEv', '../../../../assets/cards/Card-11-Eventos-ON.jpg')"
+				 (mouseleave)="unhover('#imgEv', '../../../../assets/cards/Card-11-Eventos-OFF.jpg')">
+					<img class="card-img" id="imgEv" src="../../../../assets/cards/Card-11-Eventos-OFF.jpg" alt="Card image">
+					<div *ngIf="hovers[9].hover" class="card-img-overlay" style="text-align: center;">
+						<h2>Eventos</h2>
+						<p>Agenda y actividades de Aragón Open Data.</p>
+					</div>
+				</div>
+			</div>
+			<div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
+				<div class="card card-inverse" routerLink="/info/colabora" (mouseenter)="hover('#imgCol', '../../../../assets/cards/Card-08-Colabora-ON.jpg')"
+				 (mouseleave)="unhover('#imgCol', '../../../../assets/cards/Card-08-Colabora-OFF.jpg')">
+					<img class="card-img" id="imgCol" src="../../../../assets/cards/Card-08-Colabora-OFF.jpg" alt="Card image">
+					<div *ngIf="hovers[10].hover" class="card-img-overlay" style="text-align: center;">
+						<h2>Colabora</h2>
+						<p>Sugiere datos, formatos y utilidades que te gustaría disponer de Aragón Open Data.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<button type="button" class="btn btn-secondary goDown" (click)="move('tools')">
+      	<img src="../../../../assets/flechaDown.png" alt="x" />
+  	</button>
+</div>
+<div class="jumbotron-fluid tools" id="tools">
+	<button type="button" class="btn btn-secondary goUp" (click)="move('info')">
+      	<img src="../../../../assets/flechaUp.png" alt="x" />
+  	</button>
+	<div class="contenido">
+		<h1 class="titleDesc">Herramientas</h1>
+		<p>
+			Aprende y consigue nuestros contenidos, datos y código con estas utilidades hechas para ti.
+		</p>
+		<div class="ui-g">
+			<div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
+				<div class="card card-inverse" (mouseenter)="hover('#imgCampus','../../../../assets/cards/Card-12-Campus-ON.jpg')" (mouseleave)="unhover('#imgCampus','../../../../assets/cards/Card-12-Campus-OFF.jpg')">
+					<img class="card-img" id="imgCampus" src="../../../../assets/cards/Card-12-Campus-OFF.jpg" alt="Card image">
+					<div *ngIf="hovers[11].hover" class="card-img-overlay" style="text-align: center;">
+						<h2>AOD Campus</h2>
+						<p>Contenido ofrecido para que aprendas y te formes a través de nuestros materiales y tutoriales.</p>
+					</div>
+				</div>
+			</div>
+			<div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
+				<div class="card card-inverse" routerLink="/herramientas/desarrolladores" (mouseenter)="hover('#imgDesa', '../../../../assets/cards/Card-13-Desarrolladores-ON.jpg')"
+				 (mouseleave)="unhover('#imgDesa', '../../../../assets/cards/Card-13-Desarrolladores-OFF.jpg')">
+					<img class="card-img" id="imgDesa" src="../../../../assets/cards/Card-13-Desarrolladores-OFF.jpg" alt="Card image">
+					<div *ngIf="hovers[12].hover" class="card-img-overlay" style="text-align: center;">
+						<h2>Desarrolladores</h2>
+						<p>Estándares, interoperabilidad, estructuras y herramientas en las que se sustenta Aragón Open Data.</p>
+					</div>
+				</div>
+			</div>
+			<div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
+				<div class="card card-inverse" routerLink="/herramientas/apis" (mouseenter)="hover('#imgAPIs', '../../../../assets/cards/Card-14-APIs-ON.jpg')"
+				 (mouseleave)="unhover('#imgAPIs', '../../../../assets/cards/Card-14-APIs-OFF.jpg')">
+					<img class="card-img" id="imgAPIs" src="../../../../assets/cards/Card-14-APIs-OFF.jpg" alt="Card image">
+					<div *ngIf="hovers[13].hover" class="card-img-overlay" style="text-align: center;">
+						<h2>APIs</h2>
+						<p>Tienes APIs para la búsqueda de datos, para AragoPedia y para el servicio Open Social Data.</p>
+					</div>
+				</div>
+			</div>
+			<div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
+				<div class="card card-inverse" routerLink="/herramientas/sparql" (mouseenter)="hover('#imgSPARQL','../../../../assets/cards/Card-15-SPARQL-ON.jpg')"
+				 (mouseleave)="unhover('#imgSPARQL','../../../../assets/cards/Card-15-SPARQL-OFF.jpg')">
+					<img class="card-img" id="imgSPARQL" src="../../../../assets/cards/Card-15-SPARQL-OFF.jpg" alt="Card image">
+					<div *ngIf="hovers[14].hover" class="card-img-overlay" style="text-align: center;">
+						<h2>SPARQL</h2>
+						<p>Obtén datos e información de la Aragopedia a través de este punto de consulta.</p>
+					</div>
+				</div>
+			</div>
+			<div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
+				<div class="card card-inverse" (click)="goToUrl('http://github.com/aragonopendata')" (mouseenter)="hover('#imgGit', '../../../../assets/cards/Card-16-GITHUB-ON.jpg')" (mouseleave)="unhover('#imgGit', '../../../../assets/cards/Card-16-GITHUB-OFF.jpg')">
+					<img class="card-img" id="imgGit" src="../../../../assets/cards/Card-16-GITHUB-OFF.jpg" alt="Card image">
+					<div *ngIf="hovers[15].hover" class="card-img-overlay" style="text-align: center;">
+						<h2>GITHUB</h2>
+						<p>Código y fuentes usadas para desarrollar Aragón Open Data lo tienes disponible en nuestro perfil de GitHub.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="btn"></div>
+	</div>
+</div>
+<div style="clear:both;"></div>
