@@ -36,6 +36,19 @@ export class DatasetsService {
 	}
 
 	/**
+	 * Gets a list of all the datasets by a text.
+	 * @param text - Text for the search.
+	 * @param sort - Sort order.
+	 * @param page - Page to show.
+	 * @param rows - Rows per page.
+	 */
+	public getDatasetsByText(sort: string, page: number, rows: number, text: string) {
+		let fullUrl = this.baseUrl + '/datasets?text='+text+'&sort=' + sort + '&page=' + page.toString() + '&rows=' + rows.toString();
+		console.log('Servicio DATASETS - Request: ' + fullUrl);
+		return this.http.get(fullUrl).map(res => res.json());
+	}
+
+	/**
 	 * Gets a dataset by name.
 	 * @param datasetName - Dataset name.
 	 */
@@ -74,6 +87,26 @@ export class DatasetsService {
 	}
 
 	/**
+	 * Gets a list of the new datasets.
+	 * 
+	 */
+	public getNewestDataset() {
+		let fullUrl = this.baseUrl + '/datasets/newest';
+		console.log('Servicio DATASETS - Request: ' + fullUrl);
+		return this.http.get(fullUrl).map(res => res.json());
+	}
+
+	/**
+	 * Gets a list of the most downloaded datasets.
+	 * 
+	 */
+	public getDownloadedDataset() {
+		let fullUrl = this.baseUrl + '/datasets/downloaded';
+		console.log('Servicio DATASETS - Request: ' + fullUrl);
+		return this.http.get(fullUrl).map(res => res.json());
+	}
+
+	/**
 	 * Gets a list of dataset names which match with the given text.
 	 * @param text - Text to search.
 	 * @param limit - Results limit.
@@ -97,6 +130,15 @@ export class DatasetsService {
 	 */
 	public getDataset() {
 		return this.dataset;
+	}
+
+	/**
+	 * Gets statics about datasets and resources
+	 */
+	public getDatasetsStatics() {
+		let fullUrl = this.baseUrl + '/datasets/count';
+		console.log('Servicio DATASETS - Request: ' + fullUrl);
+		return this.http.get(fullUrl).map(res => res.json());
 	}
 
 	/**

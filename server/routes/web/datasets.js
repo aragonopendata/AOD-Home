@@ -132,7 +132,7 @@ router.get('/datasets/tags', function (req, res, next) {
 
 /** GET NEWEST DATASETS */
 router.get('/datasets/newest', function (req, res, next) {
-    logger.debug('Servicio: Obtener datasets por tags');
+    logger.debug('Servicio: Obtener datasets recientes');
     let serviceBaseUrl = constants.CKAN_API_BASE_URL;
     let serviceName = constants.DATASETS_SEARCH_NEWEST;
     let serviceRequestUrl = serviceBaseUrl + serviceName;
@@ -171,7 +171,7 @@ router.get('/datasets/newest', function (req, res, next) {
     });
 });
 
-/** GET MOST RECENT DATASETS */
+/** GET MOST DOWNLOADED DATASETS */
 router.get('/datasets/downloaded', function (req, res, next) {
     logger.debug('Servicio: Obtener datasets por tags');
     let serviceBaseUrl = constants.CKAN_API_BASE_URL;
@@ -182,6 +182,43 @@ router.get('/datasets/downloaded', function (req, res, next) {
     } else {
         serviceRequestUrl += '&rows=' + constants.DATASETS_SEARCH_MOST_DOWNLOADED_ROWS_LIMIT;
     }
+    logger.notice('URL de petición: ' + serviceRequestUrl);
+
+    //Proxy checking
+    let httpConf = null;
+    if (constants.REQUESTS_NEED_PROXY == true) {
+        logger.warning('Realizando petición a través de proxy');
+        let httpProxyConf = proxy.getproxyOptions(serviceRequestUrl);
+        httpConf = httpProxyConf;
+    } else {
+        httpConf = serviceRequestUrl;
+    }
+    
+    http.get(httpConf, function (results) {
+        var body = '';
+        results.on('error', function () {
+            body = {
+                status: constants.REQUEST_ERROR_STATUS_500,
+                message: 'Error in request'
+            };
+            res.json(errorBody);
+        });
+        results.on('data', function (chunk) {
+            body += chunk;
+        });
+        results.on('end', function () {
+            res.json(body);
+        });
+    });
+});
+
+/** GET NUMBER OF DATASETS AND RESOURCES */
+router.get('/datasets/count', function (req, res, next) {
+    logger.debug('Servicio: Obtener número de datasets y recursos');
+    let serviceBaseUrl = constants.CKAN_API_BASE_URL;
+    let serviceName = constants.DATASETS_SEARCH;
+    let serviceRequestUrl = serviceBaseUrl + serviceName + '?rows=0&start=0';
+    
     logger.notice('URL de petición: ' + serviceRequestUrl);
 
     //Proxy checking
