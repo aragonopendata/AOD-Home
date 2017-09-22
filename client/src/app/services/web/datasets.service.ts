@@ -1,7 +1,7 @@
 import 'rxjs/add/operator/map';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { Http, Response, Headers, URLSearchParams } from '@angular/http';
+import { Http, Response, URLSearchParams } from '@angular/http';
 import { ConstantsService } from '../../app.constants';
 import { Dataset } from '../../models/Dataset';
 
@@ -10,7 +10,6 @@ export class DatasetsService {
 
 	private baseUrl: string;
 	private actionUrl: string;
-	private corsHeaders: Headers;
 	private datasets: Observable<Dataset[]>;
 	private datasetsDetail: Dataset[];
 	private dataset: Dataset;
@@ -22,7 +21,6 @@ export class DatasetsService {
 	 */
 	constructor(private http: Http, private constants: ConstantsService) {
 		this.baseUrl = this.constants.AOD_API_WEB_BASE_URL;
-		this.corsHeaders = new Headers(this.constants.CORS_HEADERS);
 	}
 
 	/**
@@ -34,7 +32,7 @@ export class DatasetsService {
 	public getDatasets(sort: string, page: number, rows: number) {
 		let fullUrl = this.baseUrl + '/datasets?sort=' + sort + '&page=' + page.toString() + '&rows=' + rows.toString();
 		console.log('Servicio DATASETS - Request: ' + fullUrl);
-		return this.http.get(fullUrl, { headers: this.corsHeaders }).map(res => res.json());
+		return this.http.get(fullUrl).map(res => res.json());
 	}
 
 	/**
@@ -59,7 +57,7 @@ export class DatasetsService {
 	public getDatasetsByTopic(topicName: string, sort: string, page: number, rows: number) {
 		let fullUrl = this.baseUrl + '/datasets/topic/' + topicName + '?sort=' + sort + '&page=' + page.toString() + '&rows=' + rows.toString();
 		console.log('Servicio DATASETS - Request: ' + fullUrl);
-		return this.http.get(fullUrl, { headers: this.corsHeaders }).map(res => res.json());
+		return this.http.get(fullUrl).map(res => res.json());
 	}
 
 	/**

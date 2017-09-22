@@ -3,6 +3,8 @@ const express = require('express');
 const path = require('path');
 const http = require('http');
 const bodyParser = require('body-parser');
+//CORS USE
+const corsHeaders = require('./server/conf/cors-headers');
 //LOG SETTINGS
 const logConfig = require('./server/conf/log-conf');
 const loggerSettings = logConfig.getLogSettings();
@@ -26,7 +28,8 @@ var login = require('./server/routes/login');
 
 // EXPRESS APP
 const app = express();
-
+// Cors Response headers
+app.use(corsHeaders.permission);
 // Parsers for POST data
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
@@ -39,12 +42,12 @@ app.get('/', function (req, res) {
 });
 
 // Set our api routes
-app.use('/aod/api/web', datasets);
-app.use('/aod/api/web', topics);
-app.use('/aod/api/web', organizations);
-app.use('/aod/api/web', contents);
+app.use('/aod/services/web', datasets);
+app.use('/aod/services/web', topics);
+app.use('/aod/services/web', organizations);
+app.use('/aod/services/web', contents);
 //app.use('/api/web', campus);
-app.use('/aod/api/admin', usersAdmin);
+app.use('/aod/services/admin', usersAdmin);
 //app.use('/api/admin', rolesAdmin);
 //app.use('/api/admin', contentsAdmin);
 //app.use('/api/admin', datasetsAdmin);
