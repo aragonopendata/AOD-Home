@@ -26,7 +26,7 @@
     </div>
    
     <p-dataTable [value]="datasets" [responsive]="true" (onSort)="setOrder($event)" #dt>
-        <p-column field="name" header="{{numDatasets}} conjuntos de datos encontrados" sortable="custom" [sortable]="true">
+        <p-column field="name" header="{{numDatasets}} conjuntos de datos encontrados" sortable="custom" sortFunction="orderTable($event)">
             <ng-template pTemplate="body" let-dataset="rowData">
                 <a routerLink='/datos/catalogo/{{dataset.name}}' (click)="showDataset(dataset)">
                         {{dataset.title}}

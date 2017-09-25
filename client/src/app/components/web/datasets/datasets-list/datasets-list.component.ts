@@ -49,7 +49,7 @@ export class DatasetsListComponent implements OnInit {
 
     ngOnInit() {
         this.sort = 'relevance,-metadata_modified';
-        this.setDatasetsStatics();
+        this.setDatasetsStats();
         this.setTopicsDropdown();
         this.setOrgsDropdown();
         this.loadDatasets();
@@ -59,7 +59,6 @@ export class DatasetsListComponent implements OnInit {
     }
 
     loadDatasets() {
-        this.datasets = [];
         if (this.selectedTopic === undefined) {
             this.getDatasets(null, null);
         } else {
@@ -107,6 +106,7 @@ export class DatasetsListComponent implements OnInit {
     }
 
     getDatasets(page: number, rows: number): void {
+        this.datasets = [];
         var pageNumber = (page != null ? page : 0);
         var rowsNumber = (rows != null ? rows : this.pageRows);
         this.datasetsService.getDatasets(this.sort, pageNumber, rowsNumber).subscribe(datasets => {
@@ -116,6 +116,7 @@ export class DatasetsListComponent implements OnInit {
     }
 
     getDatasetsByTopic(topic: string, page: number, rows: number): void {
+        this.datasets = [];
         var pageNumber = (page != null ? page : 0);
         var rowsNumber = (rows != null ? rows : this.pageRows);
         this.datasetsService.getDatasetsByTopic(topic, this.sort, pageNumber, rowsNumber).subscribe(datasets => {
@@ -210,8 +211,8 @@ export class DatasetsListComponent implements OnInit {
         this.getDatasetsByOrg(null, null, this.selectedOrg);
     }
 
-    setDatasetsStatics(){
-        this.datasetsService.getDatasetsStatics().subscribe(datasets => {
+    setDatasetsStats(){
+        this.datasetsService.getDatasetsStats().subscribe(datasets => {
             this.datasetCount =JSON.parse(datasets).result.count+"";
             while (this.datasetCount.length < 8) this.datasetCount = "0" + this.datasetCount;
             return this.datasetCount;

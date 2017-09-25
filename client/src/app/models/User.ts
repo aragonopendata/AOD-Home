@@ -1,7 +1,18 @@
 export class User {
+    about: string;
+    capacity: string;
+    created: Date;
+    activity_streams_email_notifications: boolean;
+    email_hash: string;
+    number_of_edits: number;
+    number_administered_packages: number;
+    display_name: string;
+    fullname: string;
     id: string;
+    openid: string;
     name: string;
     email: string;
+    //ADMIN
     username: string = '';
     role: string = '';
     singupDate: Date = null;

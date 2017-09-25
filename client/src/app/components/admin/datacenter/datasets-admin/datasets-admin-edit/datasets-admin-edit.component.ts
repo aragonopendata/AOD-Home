@@ -78,7 +78,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 			{ label: 'DWG', value: '2' }
 		];
 
-		this.setPublicadores(this.organizationsAdminService.getOrganizations());
+		//this.setPublicadores(this.organizationsAdminService.getOrganizations());
 		this.selectedPublicador = this.dataset.organization.name;
 
 		this.urlsCalidad = [''];

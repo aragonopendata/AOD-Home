@@ -4,7 +4,5 @@ export class Autocomplete {
     name: string;
     title: string;
 
-    constructor() {
-
-    }
+    constructor() { }
 }

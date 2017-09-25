@@ -15,7 +15,11 @@ export class ConstantsService {
         this.DATASET_AUTOCOMPLETE_LIMIT_RESULTS = 8;
         this.AOD_BASE_URL = 'http://miv-aodfront-01.aragon.local:7030';
         this.PRESUPUESTOS_BASE_URL = 'http://miv-aodfront-01.aragon.local:7031';
-        this.AOD_API_WEB_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/web';
-        this.AOD_API_ADMIN_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/admin';
+        //DEV
+        //this.AOD_API_WEB_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/web';
+        //this.AOD_API_ADMIN_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/admin';
+        //LOCAL
+        this.AOD_API_WEB_BASE_URL = 'http://localhost:4200/aod/services/web';
+        this.AOD_API_ADMIN_BASE_URL = 'http://localhost:4200/aod/services/admin';
     }
 }

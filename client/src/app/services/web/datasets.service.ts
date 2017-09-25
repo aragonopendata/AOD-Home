@@ -10,7 +10,6 @@ export class DatasetsService {
 
 	private baseUrl: string;
 	private actionUrl: string;
-	private datasets: Observable<Dataset[]>;
 	private datasetsDetail: Dataset[];
 	private dataset: Dataset;
 
@@ -43,7 +42,7 @@ export class DatasetsService {
 	 * @param rows - Rows per page.
 	 */
 	public getDatasetsByText(sort: string, page: number, rows: number, text: string) {
-		let fullUrl = this.baseUrl + '/datasets?text='+text+'&sort=' + sort + '&page=' + page.toString() + '&rows=' + rows.toString();
+		let fullUrl = this.baseUrl + '/datasets?text=' + text + '&sort=' + sort + '&page=' + page.toString() + '&rows=' + rows.toString();
 		console.log('Servicio DATASETS - Request: ' + fullUrl);
 		return this.http.get(fullUrl).map(res => res.json());
 	}
@@ -55,9 +54,7 @@ export class DatasetsService {
 	public getDatasetByName(datasetName: string) {
 		let fullUrl = this.baseUrl + '/datasets/' + datasetName;
 		console.log('Servicio DATASETS - Request: ' + fullUrl);
-		this.http.get(fullUrl).map(res => res.json()).subscribe(data => {
-			//this.datasetsDetail = JSON.parse(data).result.results as Dataset[];
-		});
+		return this.http.get(fullUrl).map(res => res.json());
 	}
 
 	/**
@@ -107,6 +104,15 @@ export class DatasetsService {
 	}
 
 	/**
+	 * Gets stats about datasets and resources
+	 */
+	public getDatasetsStats() {
+		let fullUrl = this.baseUrl + '/datasets/count';
+		console.log('Servicio DATASETS - Request: ' + fullUrl);
+		return this.http.get(fullUrl).map(res => res.json());
+	}
+
+	/**
 	 * Gets a list of dataset names which match with the given text.
 	 * @param text - Text to search.
 	 * @param limit - Results limit.
@@ -130,15 +136,6 @@ export class DatasetsService {
 	 */
 	public getDataset() {
 		return this.dataset;
-	}
-
-	/**
-	 * Gets statics about datasets and resources
-	 */
-	public getDatasetsStatics() {
-		let fullUrl = this.baseUrl + '/datasets/count';
-		console.log('Servicio DATASETS - Request: ' + fullUrl);
-		return this.http.get(fullUrl).map(res => res.json());
 	}
 
 	/**

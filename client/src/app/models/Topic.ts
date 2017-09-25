@@ -1,20 +1,31 @@
+import { Extra } from './Extra';
+import { User } from './User';
+import { Dataset } from './Dataset';
+import { Tag } from './Tag';
+
 export class Topic {
 
-    id: string;
-    name: string;
-    image_url: string;
-    title: string;
+    users: User[];
+    display_name: string;
     description: string;
-    packages: number;
+    title: string;
+    package_count: number;
+    created: Date;
+    approval_status: string;
+    is_organization: boolean;
+    state: boolean;
+    extras: Extra[];
+    image_url: string;
+    groups: Topic[];
+    num_followers: boolean;
+    revision_id: string;
+    packages: Dataset[];
+    type: string;
+    id: string;
+    tags: Tag[];
+    name: string;  
 
-    constructor(id: string, name: string, image_url: string, title: string, description: string, packages: number) {
-        this.id = id;
-        this.name = name;
-        this.image_url = image_url;
-        this.title = title;
-        this.description = description;
-        this.packages = packages;
-    }
+    constructor() { }
 
     public formatImageUrl(image_url: string) {
         let myFormatImageUrl = image_url.slice(14, image_url.length - 4);

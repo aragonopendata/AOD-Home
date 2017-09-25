@@ -29,7 +29,8 @@ export class DatasetAutocompleteComponent implements OnInit {
 	show: boolean;
 	private resultsLimit: number;
 
-	constructor(private datasetService: DatasetsService, private router: Router, private constants: ConstantsService) { 
+	constructor(private datasetService: DatasetsService, private router: Router
+			, private constants: ConstantsService, private changeDetector: ChangeDetectorRef) {
 		this.resultsLimit = constants.DATASET_AUTOCOMPLETE_LIMIT_RESULTS;
 	}
 
@@ -38,14 +39,23 @@ export class DatasetAutocompleteComponent implements OnInit {
 		this.show = true;
 	}
 
+	searchByText(title: string) {
+		
+	}
+
 	search(title: string): void {
-		this.datasetTitle.next(decodeURI(title));
+		//Lectura cuando hay al menos 3 caracteres, (3 espacios produce error).
+		if (title.length >= 3) {
+			this.datasetTitle.next(title);
+		} else {
+			this.datasetAutocomplete = null;
+		}
 	}
 
 	getAutocomplete(): void {
 		//Funciona la busqueda, falla al poner un caracter especial
 		this.datasetTitle
-			.debounceTime(300)
+			.debounceTime(200)
 			.distinctUntilChanged()
 			.switchMap(title => title
 				? this.datasetService.getDatasetsAutocomplete(title, this.resultsLimit)
@@ -53,18 +63,7 @@ export class DatasetAutocompleteComponent implements OnInit {
 			.catch(error => {
 				console.log(error);
 				return Observable.of<Autocomplete[]>([]);
-			}).subscribe(data => {
-				if (data != '') {
-					this.datasetAutocomplete = JSON.parse(data).result;
-					this.show = true;
-				} else {
-					this.show = false;
-				}
-			});
-	}
-	//Redirecciona pero no linkea el dataset.
-	showDataset(name: string) {
-		//dataset = this.datasetService.getDatasetByName(name);
-		this.datasetService.setDataset(this.dataset);
+			}).subscribe(data =>
+				this.datasetAutocomplete = JSON.parse(data).result);
 	}
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DatasetsService } from '../../../../services/web/datasets.service';
 import { Dataset } from '../../../../models/Dataset';
+import { Router, ActivatedRoute, Params} from '@angular/router';
 
 @Component({
 	selector: 'app-datasets-detail',
@@ -10,7 +11,7 @@ import { Dataset } from '../../../../models/Dataset';
 
 export class DatasetsDetailComponent implements OnInit {
 
-	dataset: Dataset = null;
+	dataset: Dataset = new Dataset();
 	extraDictionary: string;
 	extraDictionaryURL: string[];
 	extraDataQuality: string;
@@ -23,14 +24,22 @@ export class DatasetsDetailComponent implements OnInit {
 	extraShortUriAragopedia: string;
 	extraNameAragopedia: string;
 
-	constructor(private datasetsService: DatasetsService) { }
+	constructor(private datasetsService: DatasetsService,
+		private activatedRoute: ActivatedRoute) { }
 
 	ngOnInit() {
-		this.dataset = this.datasetsService.getDataset();
-		this.getExtras();
+		this.activatedRoute.params.subscribe(params => {
+			this.dataset.name =  params['datasetName'];
+		});
+		console.log('Dataset a buscar: ' + this.dataset.name);
+		this.datasetsService.getDatasetByName(this.dataset.name).subscribe(dataResult => {
+			this.dataset = dataResult.result.results;
+			this.getExtras();
+		});
 	}
 
 	getExtras() {
+		console.log('Obteniendo extras del dataset');
 		this.extraDictionaryURL = [];
 		for (var index = 0; index < this.dataset.extras.length; index++) {
 			if (this.dataset.extras[index].key.indexOf('Data Dictionary URL') == 0) {

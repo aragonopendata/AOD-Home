@@ -1,4 +1,4 @@
-export class Extra {    
+export class DatasetExtra {
     state: boolean;
     value: string;
     revision_timestamp: Date;
