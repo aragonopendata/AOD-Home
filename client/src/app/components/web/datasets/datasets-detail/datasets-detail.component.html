@@ -48,7 +48,9 @@
 				</div>
 				<div class="section">
 					<h6>Categoría</h6>
-					<p *ngFor="let group of dataset.groups">{{group.title}}</p>
+					<p *ngFor="let group of dataset.groups">
+						<a routerLink='/datos/catalogo/temas/{{group.name}}'>{{group.title}}</a>
+					</p>
 				</div>
 				<div class="section">
 					<h6>Etiquetas y palabras clave</h6>

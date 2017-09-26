@@ -53,7 +53,11 @@ export class DatasetsListComponent implements OnInit {
         this.activatedRoute.queryParams.subscribe(params => {
             this.textSearch = params['texto'];
             console.log(this.textSearch);
+        });
+        this.activatedRoute.params.subscribe(params => {
+            this.selectedTopic =  params['topicName'];
 		});
+
         this.sort = 'relevance,-metadata_modified';
         this.setDatasetsStatics();
         this.setTopicsDropdown();
@@ -129,6 +133,7 @@ export class DatasetsListComponent implements OnInit {
     getDatasetsByTopic(topic: string, page: number, rows: number): void {
         var pageNumber = (page != null ? page : 0);
         var rowsNumber = (rows != null ? rows : this.pageRows);
+        this.selectedSearchOption = 'tema-y-tipo';
         this.datasetsService.getDatasetsByTopic(topic, this.sort, pageNumber, rowsNumber).subscribe(datasets => {
             this.datasets =  JSON.parse(datasets).result.results;
             this.numDatasets =  JSON.parse(datasets).result.count;
