@@ -2,6 +2,12 @@ import * as $ from 'jquery';
 import { Component, OnInit } from '@angular/core';
 import { AppComponent } from '../../../../app.component';
 import { ConstantsService } from '../../../../app.constants';
+import { Dataset } from "app/models/Dataset";
+import { Observable } from "rxjs/Observable";
+import { Subject } from "rxjs";
+import { Autocomplete } from "app/models/Autocomplete";
+import { Router } from "@angular/router";
+import { DatasetsService } from "app/services/web/datasets.service";
 
 @Component({
     selector: 'app-header',
@@ -14,13 +20,20 @@ export class HeaderComponent implements OnInit {
     menuActive: boolean = false;
     srcMenu: String = '../../../assets/Boton-Menu-Responsive-OFF.png';
     srcLogin: String = '../../../assets/Boton-Acceso-Usuarios-OFF.png';
+    dataset: Dataset;
+	datasetAutocomplete: Observable<Autocomplete[]>;
+	private datasetTitle = new Subject<string>();
+	private resultsLimit: number;
 
-    constructor(private locale: AppComponent, private constants: ConstantsService) { 
+    constructor(private locale: AppComponent, private constants: ConstantsService,
+            private datasetService: DatasetsService, private router: Router) { 
         this.aodBaseUrl = this.constants.AOD_BASE_URL;
         this.presupuestosBaseUrl = this.constants.PRESUPUESTOS_BASE_URL;
+        this.resultsLimit=4;
     }
 
     openNav() {
+        console.log(this.menuActive);
         if (!this.menuActive) {
             $('body,html').css('overflow-y', 'hidden');
             $('.overlay').css('top', $('#header').height());
@@ -73,7 +86,36 @@ export class HeaderComponent implements OnInit {
         }
     }
 
+    search(title: string): void {
+		//Lectura cuando hay al menos 3 caracteres, (3 espacios produce error).
+		if (title.length >= 3) {
+			this.datasetTitle.next(title);
+		} else {
+			this.datasetAutocomplete = null;
+		}
+	}
+
+	getAutocomplete(): void {
+		//Funciona la busqueda, falla al poner un caracter especial
+		this.datasetTitle
+			.debounceTime(100)
+			.distinctUntilChanged()
+			.switchMap(title => title
+				? this.datasetService.getDatasetsAutocomplete(title, this.resultsLimit)
+				: Observable.of<Autocomplete[]>([]))
+			.catch(error => {
+				console.log(error);
+				return Observable.of<Autocomplete[]>([]);
+			}).subscribe(data =>
+				this.datasetAutocomplete = JSON.parse(data).result);
+	}
+
+	searchDatasetsByText(text: string){
+		this.router.navigateByUrl('/datos/catalogo?text='+text);
+    }
+
     ngOnInit() {
+        this.getAutocomplete();
     }
 
 }
