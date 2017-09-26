@@ -54,11 +54,11 @@ module.exports = {
                     break;
                 case 'texto-plano':
                     query += '&q=(((res_format:XLS OR res_format:xls ) AND (res_url:http*.xls )) OR res_format:json OR res_format:JSON OR res_format:xml OR res_format:XML OR res_format:csv OR res_format:CSV OR res_format:px OR res_format:PX OR res_format:url OR res_format:URL) AND dataset_type:dataset AND entity_type:package AND state:active AND capacity:public'
-    
+
             }
-    
+
         }
-       
+
 
         return query;
     },

@@ -57,12 +57,11 @@ export class DatasetsListComponent implements OnInit {
     ngOnInit() {
         this.activatedRoute.queryParams.subscribe(params => {
             this.textSearch = params['texto'];
-            console.log(this.textSearch);
         });
         this.activatedRoute.params.subscribe(params => {
-            this.selectedTopic =  params['topicName'];
+            this.selectedTopic = params['topicName'];
         });
-        
+
         this.sort = 'relevance,-metadata_modified';
         this.setDatasetsStats();
         this.setTopicsDropdown();
@@ -79,23 +78,23 @@ export class DatasetsListComponent implements OnInit {
         if (this.textSearch != undefined) {
             this.searchDatasetsByText(this.textSearch);
             this.searchValue = this.textSearch;
-        }else if(this.selectedTopic){
+        } else if (this.selectedTopic) {
             this.getDatasetsByTopic(this.selectedTopic, null, null, this.selectedType);
-            this.selectedSearchOption='tema-y-tipo';
-        }else if (this.selectedOrg) {
+            this.selectedSearchOption = 'tema-y-tipo';
+        } else if (this.selectedOrg) {
             this.getDatasetsByOrg(null, null, this.selectedOrg, this.selectedType);
-        }else{
+        } else {
             this.selectedType = undefined;
             this.getDatasets(null, null);
         }
     }
 
-    changeType(){
-        if(this.selectedTopic){
+    changeType() {
+        if (this.selectedTopic) {
             this.getDatasetsByTopic(this.selectedTopic, null, null, this.selectedType);
-        }else if(this.selectedOrg){
+        } else if (this.selectedOrg) {
             this.getDatasetsByOrg(null, null, this.selectedOrg, this.selectedType);
-        }else{
+        } else {
             this.selectedType = undefined;
             this.getDatasets(null, null);
         }
@@ -279,7 +278,7 @@ export class DatasetsListComponent implements OnInit {
 
     setDatasetsStats() {
         this.datasetsService.getDatasetsStats().subscribe(datasets => {
-            this.datasetCount = JSON.parse(datasets).result.count+"";
+            this.datasetCount = JSON.parse(datasets).result.count + "";
             while (this.datasetCount.length < 8) this.datasetCount = "0" + this.datasetCount;
             return this.datasetCount;
         });

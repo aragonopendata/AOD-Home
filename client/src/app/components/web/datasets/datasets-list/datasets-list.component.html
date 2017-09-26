@@ -3,13 +3,10 @@
     <div class="ui-g">
         <div *ngIf="selectedSearchOption == 'busqueda-libre'" class="ui-g-8">
             <b class="ui-g-4">DATOS CON EL TEXTO </b>
-                <div class="ui-inputgroup">
-                    <input style="width:500px" type="text" [value]="searchValue" (keyup.enter)="searchDatasetsByText(searchInput.value)" #searchInput>
-                    <button pButton type="button" icon="fa-search" (click)="searchDatasetsByText(searchInput.value)" class="ui-button-secondary"></button>
-                </div>
-            <!-- <input type="text" [value]="searchValue" (keyup.enter)="searchDatasetsByText(searchInput.value)"class="ui-g-7"
-                #searchInput>
-            <button class="ui-g-1" type="button" (click)="searchDatasetsByText(searchInput.value)"><i aria-hidden="true" class="fa fa-search"></i></button> -->
+            <div class="ui-inputgroup">
+                <input style="width:500px" type="text" [value]="searchValue" (keyup.enter)="searchDatasetsByText(searchInput.value)" #searchInput>
+                <button pButton type="button" icon="fa-search" (click)="searchDatasetsByText(searchInput.value)" class="ui-button-secondary"></button>
+            </div>
         </div>
         <div *ngIf="selectedSearchOption == 'buscador-homer'" class="ui-g-8">
             <b>BUSCAR</b>

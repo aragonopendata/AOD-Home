@@ -32,7 +32,7 @@ export class StaticContentService {
 		console.log('Servicio STATIC-CONTENTS - Request: ' + fullUrl);
 		return this.http.get(fullUrl).map(res => res.json());
 	}
-	
+
 	/**
 	 * Gets the 'Eventos' static content of the section 'Información'.
 	 */
@@ -41,7 +41,7 @@ export class StaticContentService {
 		console.log('Servicio STATIC-CONTENTS - Request: ' + fullUrl);
 		return this.http.get(fullUrl).map(res => res.json());
 	}
-	
+
 	/**
 	 * Gets the 'Desarrolladores' static content of the section 'Herramientas'.
 	 */
@@ -50,7 +50,7 @@ export class StaticContentService {
 		console.log('Servicio STATIC-CONTENTS - Request: ' + fullUrl);
 		return this.http.get(fullUrl).map(res => res.json());
 	}
-	
+
 	/**
 	 * Gets the 'APIs' static content of the section 'Herramientas'.
 	 */
@@ -59,7 +59,7 @@ export class StaticContentService {
 		console.log('Servicio STATIC-CONTENTS - Request: ' + fullUrl);
 		return this.http.get(fullUrl).map(res => res.json());
 	}
-	
+
 	/**
 	 * Gets the 'Sparql' static content of the section 'Herramientas'.
 	 */

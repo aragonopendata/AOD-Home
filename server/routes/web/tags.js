@@ -16,8 +16,8 @@ router.get('/tags', function (req, res, next) {
     let serviceName = constants.TAGS_LIST;
     let serviceRequestUrl = serviceBaseUrl + serviceName;
     console.log(req.query.q);
-    if(req.query.q){
-        serviceRequestUrl+='?q='+req.query.q;
+    if (req.query.q) {
+        serviceRequestUrl += '?q=' + req.query.q;
     }
     logger.notice('URL de petición: ' + serviceRequestUrl);
 

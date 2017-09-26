@@ -50,8 +50,32 @@ a:focus {
     text-decoration: none;
 }
 
->>>.ui-accordion {
+>>>.ui-accordion .ui-accordion-header a {
     color: #5EA2BA;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto'
+                ,'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans'
+                ,'Helvetica Neue', sans-serif;
     cursor: pointer;
+    line-height: 2em;
+    font-size: 30px;
+    padding: 0px 0px 0px 10px;
+    margin: 0;
+    text-decoration: none;
+}
+
+>>>.ui-accordion .ui-accordion-header:not(.ui-state-active):not(.ui-state-disabled):hover a {
+    color: #5EA2BA;
+    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto'
+                ,'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans'
+                ,'Helvetica Neue', sans-serif;
+    cursor: pointer;
+    line-height: 2em;
+    font-size: 30px;
+    padding: 0px 0px 0px 10px;
+    margin: 0;
+    text-decoration: none;
+}
+
+>>>.ui-accordion .ui-accordion-header .ui-accordion-content .ui-widget-content a {
+    color: #5EA2BA;
 }

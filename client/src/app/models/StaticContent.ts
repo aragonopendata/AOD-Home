@@ -1,9 +1,10 @@
 export class StaticContent {
-    sectionId: string;
+    sectionId: number;
     sectionTitle: string;
     sectionSubtitle: string;
     sectionDescription: string;
-    contentOrder: string;
+    contentOrder: number;
     contentTitle: string;
     contentText: string;
+    targetUrl: string;
 }

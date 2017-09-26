@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DatasetsService } from '../../../../services/web/datasets.service';
 import { Dataset } from '../../../../models/Dataset';
 import { ResourceAux } from '../../../../models/ResourceAux';
-import { Router, ActivatedRoute, Params} from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
 	selector: 'app-datasets-detail',

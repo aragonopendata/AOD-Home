@@ -2,7 +2,7 @@
     <h1>{{sectionTitle}}</h1>
     <h3>{{sectionSubtitle}}</h3>
     <h5 *ngIf="!sectionDescription != null">{{sectionDescription}}</h5>
-    <p-accordion (onOpen)="changeIcon($event)" (onClose)="changeIcon($event)">
+    <p-accordion [activeIndex]="index" [multiple]="true">
         <div *ngFor="let content of contents">
             <p-accordionTab>
                 <p-header>

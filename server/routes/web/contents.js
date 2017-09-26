@@ -18,7 +18,7 @@ router.get('/static-content/info/open-data', function (req, res, next) {
     const query = {
         text: 'SELECT sec.id as "sectionId", sec.title as "sectionTitle", sec.subtitle as "sectionSubtitle" '
                  + ', sec.description as "sectionDescription", cnt.content_order as "contentOrder" ' 
-                 + ', cnt.title AS "contentTitle", cnt.content as "contentText" ' 
+                 + ', cnt.title AS "contentTitle", cnt.content as "contentText", cnt.target_url AS "targetUrl" ' 
               + 'FROM manager.sections sec '
               + 'JOIN manager.static_contents cnt '
                 + 'ON sec.id = cnt.id_section '
