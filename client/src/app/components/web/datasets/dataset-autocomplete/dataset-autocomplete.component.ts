@@ -58,7 +58,7 @@ export class DatasetAutocompleteComponent implements OnInit {
 				console.log(error);
 				return Observable.of<Autocomplete[]>([]);
 			}).subscribe(data =>
-				this.datasetAutocomplete = <Autocomplete[]>JSON.parse(data).result);
+				this.datasetAutocomplete = JSON.parse(data).result);
 	}
 
 	hideList(){

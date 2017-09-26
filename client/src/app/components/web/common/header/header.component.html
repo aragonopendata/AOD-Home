@@ -115,13 +115,13 @@
             </div>
             <div>
                 <form>
-                    <button type="button" class="btnSearch" (click)="searchDatasetsByText(searchBox.value)">
+                    <button type="button" class="btnSearch" routerLink="/datos/catalogo" [queryParams]="{texto:searchBox.value}" (click)="openNav()">
                         <i aria-hidden="true" class="fa fa-search" style="display: table; vertical-align: middle;"></i>
                     </button>
-                    <input autocomplete="off" #searchBox name="searchBox" placeholder="BUSCA DATOS ABIERTOS" type="search" class="textBox" (keyup)="search(searchBox.value)"
+                    <input autocomplete="off" #searchBox id="searchBox" name="searchBox" placeholder="BUSCA DATOS ABIERTOS" type="search" class="textBox" (keyup)="search(searchBox.value)"
                         (keyup.enter)="searchDatasetsByText(searchBox.value); openNav();" />
                     <div id="resultsList" *ngFor="let autocomplete of datasetAutocomplete" class="search-result">
-                        <a routerLink='/datos/{{autocomplete.name}}' (click)="openNav()">
+                        <a routerLink='/datos/catalogo{{autocomplete.name}}' (click)="openNav()">
                             {{autocomplete.title}}
                         </a>
                     </div>

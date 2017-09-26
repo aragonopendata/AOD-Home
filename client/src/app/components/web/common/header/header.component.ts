@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit {
     srcMenu: String = '../../../assets/Boton-Menu-Responsive-OFF.png';
     srcLogin: String = '../../../assets/Boton-Acceso-Usuarios-OFF.png';
     dataset: Dataset;
-	datasetAutocomplete: Observable<Autocomplete[]>;
+	datasetAutocomplete: Autocomplete[];
 	private datasetTitle = new Subject<string>();
 	private resultsLimit: number;
 
@@ -48,9 +48,11 @@ export class HeaderComponent implements OnInit {
             $('#myNav').height('0%');
             $('#nav').attr('class', 'navbar navbar-toggleable-md bg-light');
             $('#logo').attr('src', '../../../assets/AOD-Logo.png');
+            $('#searchBox').val('');
             this.menuActive = !this.menuActive;
             this.srcLogin = '../../../assets/Boton-Acceso-Usuarios-OFF.png';
             this.srcMenu = '../../../assets/Boton-Menu-Responsive-OFF.png';
+            this.datasetAutocomplete = [];
         }
     }
 
