@@ -33,7 +33,7 @@ export class DatasetsDetailComponent implements OnInit {
 		});
 		console.log('Dataset a buscar: ' + this.dataset.name);
 		this.datasetsService.getDatasetByName(this.dataset.name).subscribe(dataResult => {
-			this.dataset = dataResult.result.results;
+			this.dataset = JSON.parse(dataResult).result;
 			this.getExtras();
 		});
 	}
