@@ -2,7 +2,7 @@ import { OrganizationsService } from './../../../../services/web/organizations.s
 import { Organization } from './../../../../models/Organization';
 import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { Location } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { SelectItem, DropdownModule } from 'primeng/primeng';
 import { DatasetsService } from '../../../../services/web/datasets.service';
 import { TopicsService } from '../../../../services/web/topics.service';
@@ -10,7 +10,6 @@ import { TopicsListComponent } from '../../topics/topics-list/topics-list.compon
 import { Dataset } from '../../../../models/Dataset';
 import { Topic } from '../../../../models/Topic';
 import { ConstantsService } from '../../../../app.constants';
-import { ActivatedRoute  } from '@angular/router';
 
 @Component({
     selector: 'app-datasets-list',
@@ -51,8 +50,8 @@ export class DatasetsListComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.activatedRoute.params.subscribe(params => {
-            this.textSearch =  params['text'];
+        this.activatedRoute.queryParams.subscribe(params => {
+            this.textSearch = params['texto'];
             console.log(this.textSearch);
 		});
         this.sort = 'relevance,-metadata_modified';
@@ -67,7 +66,7 @@ export class DatasetsListComponent implements OnInit {
 
     loadDatasets() {
         this.datasets = [];
-        if (this.textSearch!=undefined) {
+        if (this.textSearch != undefined) {
             this.searchDatasetsByText(this.textSearch);
             this.searchValue = this.textSearch;
         } else {
@@ -226,11 +225,7 @@ export class DatasetsListComponent implements OnInit {
         this.datasetsService.getDatasetsStats().subscribe(datasets => {
             this.datasetCount =JSON.parse(datasets).result.count+"";
             while (this.datasetCount.length < 8) this.datasetCount = "0" + this.datasetCount;
-            return this.datasetCount;
-            
-        });
-
-    
+            return this.datasetCount;       
+        });    
     }
-
 }

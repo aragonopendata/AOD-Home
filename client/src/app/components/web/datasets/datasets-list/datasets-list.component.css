@@ -103,7 +103,7 @@ b {
     margin-bottom: 10px;
 }
 
-a{
+a {
 	font-size: 14px !important;
 	text-align: left;
 	color: #3b515c !important;
@@ -114,12 +114,12 @@ a{
 	word-wrap: break-word;
 }
 
-a:hover{
+a:hover {
 	font-size: 14px !important;
 	color: #000 !important;
 }
 
-.counter{
+.counter {
     font-family: 'Roboto', sans-serif;
     line-height: 1;
     margin: 2px 0 20px;

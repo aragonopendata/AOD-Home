@@ -1,14 +1,14 @@
 <form class="search" id="form-home">
-	<button type="button" class="btnSearch" (click)="searchDatasetsByText(searchBox.value)">
-				<i aria-hidden="true" class="fa fa-search" style="display: table; vertical-align: middle;"></i>
-			</button>
+	<button type="button" class="btnSearch" routerLink="/datos/catalogo" [queryParams]="{texto:searchBox.value}">
+		<i aria-hidden="true" class="fa fa-search" style="display: table; vertical-align: middle;"></i>
+	</button>
 	<input autocomplete="off" #searchBox name="searchBox" placeholder="BUSCA DATOS ABIERTOS" type="search" class="textBox" (keyup)="search(searchBox.value)"
 	 (keyup.enter)="searchDatasetsByText(searchBox.value)" (focus)="show=true;" />
 	<ng-container *ngIf="show">
 		<div *ngFor="let autocomplete of datasetAutocomplete" class="search-result">
 			<a routerLink='/datos/catalogo/{{autocomplete.name}}'>
-					{{autocomplete.title}}
-				</a>
+				{{autocomplete.title}}
+			</a>
 		</div>
 	</ng-container>
 </form>

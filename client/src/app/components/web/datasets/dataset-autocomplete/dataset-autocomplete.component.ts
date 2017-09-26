@@ -23,14 +23,14 @@ import { Autocomplete } from '../../../../models/Autocomplete';
 export class DatasetAutocompleteComponent implements OnInit {
 
 	dataset: Dataset;
-	datasetAutocomplete: Observable<Autocomplete[]>;
+	datasetAutocomplete: Autocomplete[];
 	private datasetTitle = new Subject<string>();
 	private resultsLimit: number;
 	show: boolean;
 
 	constructor(private datasetService: DatasetsService, private router: Router, private constants: ConstantsService) {
 		this.resultsLimit = constants.DATASET_AUTOCOMPLETE_LIMIT_RESULTS;
-		this.show=true;
+		this.show = true;
 	}
 
 	ngOnInit(): void {
@@ -58,14 +58,10 @@ export class DatasetAutocompleteComponent implements OnInit {
 				console.log(error);
 				return Observable.of<Autocomplete[]>([]);
 			}).subscribe(data =>
-				this.datasetAutocomplete = JSON.parse(data).result);
-	}
-
-	searchDatasetsByText(text: string){
-		this.router.navigateByUrl('/datos/catalogo?text='+text);
+				this.datasetAutocomplete = <Autocomplete[]>JSON.parse(data).result);
 	}
 
 	hideList(){
-		this.show=false;
+		this.show = false;
 	}
 }

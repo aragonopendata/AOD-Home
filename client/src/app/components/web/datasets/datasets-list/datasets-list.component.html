@@ -1,7 +1,7 @@
 <div class="container">
     <h1 translate>TITLE_DATACENTER</h1>
     <div class="ui-g">
-        <div *ngIf="selectedSearchOption == 'busqueda-libre'"  class="ui-g-8">
+        <div *ngIf="selectedSearchOption == 'busqueda-libre'" class="ui-g-8">
             <b>DATOS CON EL TEXTO </b>
             <input type="text" (keyup.enter)="searchDatasetsByText(searchInput.value)" value="{{searchValue}}" #searchInput>
             <img src="../../../../../assets/lupa.jpg" alt="BUSCAR DATOS" (click)="searchDatasetsByText(searchInput.value)"/>
