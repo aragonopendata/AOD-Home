@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DatasetsService } from '../../../../services/web/datasets.service';
 import { Dataset } from '../../../../models/Dataset';
+import { ResourceAux } from '../../../../models/ResourceAux';
 import { Router, ActivatedRoute, Params} from '@angular/router';
 
 @Component({
@@ -23,6 +24,7 @@ export class DatasetsDetailComponent implements OnInit {
 	extraTypeAragopedia: string;
 	extraShortUriAragopedia: string;
 	extraNameAragopedia: string;
+	resourcesAux: ResourceAux[] = new Array();
 
 	constructor(private datasetsService: DatasetsService,
 		private activatedRoute: ActivatedRoute) { }
@@ -36,6 +38,7 @@ export class DatasetsDetailComponent implements OnInit {
 			this.dataset = JSON.parse(dataResult).result;
 			this.dataset.organization_name = JSON.parse(dataResult).result.organization.title;
 			this.getExtras();
+			this.getResourcesAux();
 		});
 	}
 
@@ -79,5 +82,39 @@ export class DatasetsDetailComponent implements OnInit {
 					break;
 			}
 		}
+	}
+
+	getResourcesAux() {
+		console.log('Obteniendo los recursos para mostrarlos en el dataset');
+		for (let newRes of this.dataset.resources) {
+			this.keepResourceName(newRes.name, newRes.url, newRes.format);
+		}
+	}
+
+	keepResourceName (name: string, url: string, format: string) {
+		var i: number;
+		var duplicate: boolean;
+		duplicate = false;
+		for (i = 0; i < this.resourcesAux.length; i++) {
+			if (this.resourcesAux[i].name == name) {
+				this.resourcesAux[i].sources.push(url);
+				this.resourcesAux[i].formats.push(format);
+				duplicate = true;
+			}
+		}
+
+		if (!duplicate) {
+			var newResourceAux: ResourceAux = new ResourceAux();
+			newResourceAux.name = name;
+			newResourceAux.sources = new Array();
+			newResourceAux.sources.push(url);
+			newResourceAux.formats = new Array();
+			newResourceAux.formats.push(format);
+			this.resourcesAux.push(newResourceAux);
+		}
+	}
+
+	downloadFile(url: string) {
+		window.open(url, "_blank");
 	}
 }

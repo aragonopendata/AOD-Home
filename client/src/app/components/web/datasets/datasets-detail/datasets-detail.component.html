@@ -101,12 +101,14 @@
 					<h6>Metadatos de la colección</h6>
 				</div>
 				<div class="section">
-					<h6>Archivos con los datos</h6>
-					<div *ngFor="let resource of dataset.resources">
-						<p>{{resource.name}}</p>
-						<button class="tags" pButton type="button" label="{{resource.format | uppercase}}" style="margin: 2px;"></button>
+						<h6>Archivos con los datos</h6>
+						<div *ngFor="let resource of resourcesAux">
+							<p>{{resource.name}}</p>
+							<div *ngFor="let url of resource.sources; let i = index">
+								<button class="tags" pButton type="button" label="{{resource.formats[i]}}" style="margin: 2px;" (click)="downloadFile(url)"></button>
+							</div>
+						</div>
 					</div>
-				</div>
 			</div>
 		</div>
 		<div class="recomend col-12">
