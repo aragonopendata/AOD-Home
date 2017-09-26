@@ -21,9 +21,9 @@
             <a class="navbar-brand logo" href="/">
               <img class="navbar-brand" id="logo" src="../assets/AOD-Logo.png"  class="d-inline-block align-top"  alt="">
           </a>
-            <div class="nav-item menuLogin" routerLink="/login" (mouseenter)="hover('#login')" (mouseleave)="unhover('#login')">
-                <a class="nav-link aLogin" routerLinkActive="active">
-                  <img id="login" class="aLogin" src="{{srcLogin}}" alt="x" />
+            <div id="loginLink" class="nav-item menuLogin" routerLink="/login" (mouseenter)="hover('#login')" (mouseleave)="unhover('#login')">
+                <a class="nav-link aLogin" routerLinkActive="active" (click)="focusUserName()">
+                  <img id="login" class="aLogin" src="{{srcLogin}}" alt="x"  border="0"/>
               </a>
             </div>
             <div class="navbar-item menu" (click)="openNav()" (mouseenter)="hover('#menu')" (mouseleave)="unhover('#menu')">
@@ -115,15 +115,17 @@
             </div>
             <div>
                 <form>
-                    <button type="button" class="btnSearch" routerLink="/datos/catalogo" [queryParams]="{texto:searchBox.value}" (click)="openNav()">
+                    <button type="button" class="btnSearch" (click)="searchDatasetsByText(searchBox.value); openNav();">
                         <i aria-hidden="true" class="fa fa-search" style="display: table; vertical-align: middle;"></i>
                     </button>
-                    <input autocomplete="off" #searchBox id="searchBox" name="searchBox" placeholder="BUSCA DATOS ABIERTOS" type="search" class="textBox" (keyup)="search(searchBox.value)"
+                    <input autocomplete="off" #searchBox name="searchBox" placeholder="BUSCA DATOS ABIERTOS" type="search" class="textBox" (keyup)="search(searchBox.value)"
                         (keyup.enter)="searchDatasetsByText(searchBox.value); openNav();" />
-                    <div id="resultsList" *ngFor="let autocomplete of datasetAutocomplete" class="search-result">
-                        <a routerLink='/datos/catalogo{{autocomplete.name}}' (click)="openNav()">
-                            {{autocomplete.title}}
-                        </a>
+                    <div id="resultsList">
+                        <div *ngFor="let autocomplete of datasetAutocomplete" class="search-result">
+                            <a routerLink='/datos/{{autocomplete.name}}' (click)="openNav()">
+                                {{autocomplete.title}}
+                            </a>
+                        </div>
                     </div>
                 </form>
             </div>

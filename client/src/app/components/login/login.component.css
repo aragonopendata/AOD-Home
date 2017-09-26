@@ -47,6 +47,10 @@ body {
     width: 100%;
 }
 
+.login-box{
+    padding-top: 50px;
+}
+
 .login-box, .register-box {
     width: fit-content;
     margin: 7% auto;

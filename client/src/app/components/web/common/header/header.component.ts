@@ -41,6 +41,7 @@ export class HeaderComponent implements OnInit {
             $('#logo').attr('src', '../../../assets/AOD-Logo-Responsive.png');
             this.menuActive = !this.menuActive;
             $('#nav').attr('class', 'navbar navbar-toggleable-md bg-inverse');
+            $('#nav').css('background-color', '#212529');
             this.srcLogin = '../../../assets/Boton-Acceso-Usuarios-gris.png';
             this.srcMenu = '../../../assets/Boton-Salir-Menu-Responsive-OFF.png';
         } else {
@@ -114,6 +115,10 @@ export class HeaderComponent implements OnInit {
 
 	searchDatasetsByText(text: string){
 		this.router.navigateByUrl('/datos/catalogo?text='+text);
+    }
+
+    focusUserName(){
+        document.getElementById("loginLink").blur();
     }
 
     ngOnInit() {

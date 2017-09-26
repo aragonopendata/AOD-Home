@@ -57,11 +57,14 @@ a:hover {
     padding-left: 10%;
     padding-right: 10%;
 }
+.overlay #resultsList{
+    border-bottom: 1px solid white;
+}
 
 .overlay a, .overlay li {
     padding: 2px;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 25px;
     color: #818181;
     display: block;
     transition: 0.3s;
@@ -90,6 +93,7 @@ a:hover {
     width: 90%;
     font-size: 80px;
     padding-right: 10%;
+    font-family: 'Roboto', sans-serif;
 }
 
 .textBox:focus {
