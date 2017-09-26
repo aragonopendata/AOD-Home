@@ -14,7 +14,7 @@ body {
 p {
     font-family: 'Roboto', sans-serif;
     line-height: 1;
-    margin: 2px 0 20px;
+    margin: 10px;
     letter-spacing: 0.1em;
     font-weight: 300;
 }
@@ -48,4 +48,10 @@ a:hover {
 a:focus {
     color: #5EA2BA;
     text-decoration: none;
+}
+
+>>>.ui-accordion {
+    color: #5EA2BA;
+    font-family: 'Roboto', sans-serif;
+    cursor: pointer;
 }

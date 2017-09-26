@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import $ from 'jquery';
+import { AccordionModule } from 'primeng/primeng';
+import { StaticContent } from '../../../../../models/StaticContent';
+import { StaticContentService } from '../../../../../services/web/static-content.service';
 
 @Component({
     selector: 'app-open-data',
@@ -7,44 +9,24 @@ import $ from 'jquery';
     styleUrls: ['./open-data.component.css']
 })
 export class OpenDataComponent implements OnInit {
+    activeIndex: number;
+    contents: StaticContent[];
+    sectionTitle: string;
+    sectionSubtitle: string;
+    sectionDescription: string;
 
-    activated: boolean = false;
-    idActive: String = '';
-
-    constructor() { }
+    constructor(private staticContentService: StaticContentService) { }
 
     ngOnInit() {
-        let i: number = 0;
-        $('i').each(function () {
-            $(this).attr('id_', i);
-            i++;
+        this.getStaticContentInfo();
+    }
+
+    getStaticContentInfo() {
+        this.staticContentService.getOpenDataInfoStaticContent().subscribe(staticContent => {
+            this.contents = staticContent;
+            this.sectionTitle = this.contents[0].sectionTitle;
+            this.sectionSubtitle = this.contents[0].sectionSubtitle;
+            this.sectionDescription = this.contents[0].sectionDescription;
         });
     }
-
-    getChildren(id) {
-        if (this.idActive.localeCompare(id) === 0 || this.idActive.localeCompare('') === 0) {
-            this.activated = !this.activated;
-            this.changeIcon($(id).children().children());
-            if (this.idActive.localeCompare(id) === 0) {
-                this.idActive = '';
-            } else {
-                this.idActive = id;
-            }
-        } else {
-            this.activated = !this.activated;
-            this.changeIcon($(this.idActive).children().children());
-            this.activated = !this.activated;
-            this.changeIcon($(id).children().children());
-            this.idActive = id;
-        }
-    }
-
-    changeIcon(tag) {
-        if (this.activated) {
-            $(tag).attr('class', 'fa fa-minus-circle');
-        } else {
-            $(tag).attr('class', 'fa fa-plus-circle');
-        }
-    }
-
 }

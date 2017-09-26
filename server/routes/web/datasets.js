@@ -338,8 +338,8 @@ router.get('/datasets/organization/:organizationName', function (req, res, next)
 router.get('/datasets/:datasetName', function (req, res, next) {
     logger.debug('Servicio: Obtener dataset por nombre');
     let serviceBaseUrl = constants.CKAN_API_BASE_URL;
-    let serviceName = constants.DATASETS_SEARCH;
-    let serviceRequestUrl = serviceBaseUrl + serviceName + '?fq=name:' + req.params.datasetName;
+    let serviceName = constants.DATASET_SHOW;
+    let serviceRequestUrl = serviceBaseUrl + serviceName + '?id=' + req.params.datasetName;
     logger.notice('URL de petición: ' + serviceRequestUrl);
 
     //Proxy checking

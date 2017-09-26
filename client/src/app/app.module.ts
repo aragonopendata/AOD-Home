@@ -10,7 +10,7 @@ import {
 	InputTextareaModule, ButtonModule, SharedModule, DataTableModule, DialogModule, 
 	CalendarModule, InputSwitchModule, EditorModule, DataListModule, TooltipModule, 
 	AutoCompleteModule, ProgressBarModule, RadioButtonModule, CheckboxModule, FileUploadModule, 
-	ToolbarModule, TabViewModule, PaginatorModule } from 'primeng/primeng';
+	ToolbarModule, TabViewModule, PaginatorModule, AccordionModule } from 'primeng/primeng';
 import { MdSidenavModule} from '@angular/material';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -162,6 +162,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 		TabViewModule,
 		HttpClientModule,
 		PaginatorModule,
+		AccordionModule,
 		TranslateModule.forRoot({
 			loader: {
 				provide: TranslateLoader,

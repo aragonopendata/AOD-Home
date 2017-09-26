@@ -1,144 +1,16 @@
 <div class="container">
-	<h1>APIS</h1>
-	<div id="accordion" role="tablist" aria-multiselectable="true">
-		<div class="card">
-			<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-				<div class="card-header" (click)="getChildren('#headingOne')" role="tab" id="headingOne">
-					<h5 class="mb-0">
-						API CKAN
-						<i class="fa fa-plus-circle" id="informacion_content_3_i"></i>
-					</h5>
-				</div>
-			</a>
-			<div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne">
-				<div class="card-block" style="text-align: justify;">
-					<p>
-						La web de Aragón Open Data está desarrollada sobre CKAN, que es un producto de software libre creado y evolucionado por la
-						Open Knowledge Foundation. Este producto incorpora de manera nativa una API que permite el acceso directo a los datos.
-						Se puede encontrar toda la información de la API siguiendo este enlace.
-					</p>
-					<p>
-						La URI de acceso principal a la API es:<br/> /datos/api
-					</p>
-					<p>
-						De forma adicional, la API de CKAN ha sido ampliada con tres operaciones más:<br/> Para obtener el número de conjuntos
-						de datos y de recursos almacenados en Aragón Open Data: /datos/api/getDataCount<br/> Para obtener los cinco conjuntos
-						de datos más recientes almacenados en Aragón Open Data: /datos/api/mostRecentDataset<br/> Para obtener los cinco conjuntos
-						de datos más visitados en Aragón Open Data: /datos/api/mostDownloadedDataset<br/>
-					</p>
-				</div>
-			</div>
+	<h1>{{sectionTitle}}</h1>
+	<h3>{{sectionSubtitle}}</h3>
+	<h5 *ngIf="!sectionDescription != null">{{sectionDescription}}</h5>
+	<p-accordion (onOpen)="changeIcon($event)" (onClose)="changeIcon($event)">
+		<div *ngFor="let content of contents">
+			<p-accordionTab>
+				<p-header>
+					{{content.contentTitle}}
+					<i id="{{content.contentOrder}}" class="{{buttonClass}}"></i>
+				</p-header>
+				<p [innerHTML]="content.contentText"></p>
+			</p-accordionTab>
 		</div>
-
-		<div class="card">
-			<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-				<div class="card-header" (click)="getChildren('#headingTwo')" role="tab" id="headingTwo">
-					<h5 class="mb-0">
-						API Social data
-						<i class="fa fa-plus-circle" id="informacion_content_3_i"></i>
-					</h5>
-				</div>
-			</a>
-			<div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
-				<div class="card-block" style="text-align: justify;">
-					<p>
-						Para acceder a los servicios ofrecidos por la API de Aragón Open SocialData es necesario acceder a una URL distinta en función
-						del servicio solicitado. Todas las URL están compuestas por dos partes, la base y los endpoints de cada servicio.
-					</p>
-					<p>
-						/socialdata
-					</p>
-					<p>
-						Un endpoint, dentro del contexto de una API REST, es un mecanismo que permite ejecutar métodos remotos y obtener los resultados
-						de ellos, de esta manera los usuarios de la API pueden realizar consultas sobre los datos. La API de Aragón Open SocialData
-						provee dos endpoints, uno para recoger información relacionada con las tendencias del momento en Aragón y otra para
-						acceder al contenido sin agregar.
-					</p>
-				</div>
-			</div>
-		</div>
-
-		<div class="card">
-			<a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-				<div class="card-header" (click)="getChildren('#headingThree')" role="tab" id="headingThree">
-					<h5 class="mb-0">
-						API AragoPedia
-						<i class="fa fa-plus-circle" id="informacion_content_3_i"></i>
-					</h5>
-				</div>
-			</a>
-			<div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
-				<div class="card-block" style="text-align: justify;">
-					<p>
-						La web de AragoPedia está desarrollada sobre MediaWiki, que es un producto de software libre desarrollado por y para su uso
-						por Wikimedia y sus proyectos. Está disponible libremente a otros para su uso (y modificación), y es utilizado por
-						muchas entidades alrededor del mundo. Este producto incorpora de manera nativa una API que permite el acceso directo
-						a los contenidos almacenados. Se puede encontrar toda la información de la API siguiendo este enlace.
-					</p>
-				</div>
-			</div>
-		</div>
-
-		<div class="card">
-			<a data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
-				<div class="card-header" (click)="getChildren('#headingFour')" role="tab" id="headingFour">
-					<h5 class="mb-0">
-						API AragoDBpedia 1.0
-						<i class="fa fa-plus-circle" id="informacion_content_3_i"></i>
-					</h5>
-				</div>
-			</a>
-			<div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingFour">
-				<div class="card-block" style="text-align: justify;">
-					<h5>Necesidad de credenciales</h5>
-					<p>
-						Para obtener resultados de esta API, es necesario proporcionar a las llamadas un parámetro con una credencial (api_key).
-						Esta api_key se puede obtener de forma gratuita mediante el registro como usuario de la página 3scale.net
-					</p>
-					<p>
-						Por el momento, se ofrece la posibilidad de utilizar una api_key genérica y compartida, si bien en el futuro podría ser necesario
-						el registro individualizado de todos los usuarios.
-					</p>
-					<p>
-						En el caso de que seas un desarrollador que vaya a hacer un uso intensivo de este servicio, rogamos contactes con nosotros
-						a través de opendata@aragon.es para proporcionarte una api_key individualizada para tus desarrollos.
-					</p>
-				</div>
-			</div>
-		</div>
-
-		<div class="card">
-			<a data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
-				<div class="card-header" (click)="getChildren('#headingFive')" role="tab" id="headingFive">
-					<h5 class="mb-0">
-						GOBIERNO ARAGÓN OPEN DATA CORE (GA_OD_Core)
-						<i class="fa fa-plus-circle" id="informacion_content_3_i"></i>
-					</h5>
-				</div>
-			</a>
-			<div id="collapseFive" class="collapse" role="tabpanel" aria-labelledby="headingFive">
-				<div class="card-block" style="text-align: justify;">
-					<p>
-						GA_OD_Core se trata de un API creada con la finalidad de poder obtener datos de determinadas Vistas usadas y servidas actualmente
-						a través del portal OpendataAragon.
-					</p>
-					<h5>¿Para que sirve?</h5>
-					<p>
-						Con esta API pretendemos dar la oportunidad a desarrolladores de consultar estos datos de forma que estén siempre actualizados
-						y preparados para ser usados en otras aplicaciones o servicios.
-					</p>
-					<h5>¿Cómo se usa?</h5>
-					<p>
-						La URL base para acceder a los servicios de la API de Aragón OpenData GA_OD_Core es la siguiente./GA_OD_Core.
-					</p>
-					<p>
-						Con la tecnología del framework swagger, se muestra la documentación de manera descriptiva y estructurada. /GA_OD_Core/ui
-					</p>
-					<p>
-						Desde ahí podremos consultar todas las funcionalidades que posee, las cuales describimos a continuación.
-					</p>
-				</div>
-			</div>
-		</div>
-	</div>
+	</p-accordion>
 </div>

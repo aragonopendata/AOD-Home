@@ -25,14 +25,18 @@ export class OrganizationsService {
 	 * @param organizationName - Organization name.
 	 */
 	public getOrganizationByName(organizationName: string) {
-		return this.http.get(this.baseUrl + '/organizations/' + organizationName).map(res => res.json());
+		let fullUrl = this.baseUrl + '/organizations/' + organizationName;
+		console.log('Servicio ORGANIZATIONS - Request: ' + fullUrl);
+		return this.http.get(fullUrl).map(res => res.json());
 	}
 
 	/**
 	 * Gets a list of all existing organizations.
 	 */
 	public getOrganizations() {
-		return this.http.get(this.baseUrl + '/organizations').map(res => res.json());
+		let fullUrl = this.baseUrl + '/organizations';
+		console.log('Servicio ORGANIZATIONS - Request: ' + fullUrl);
+		return this.http.get(fullUrl).map(res => res.json());
 	}
 
 	/**
@@ -47,6 +51,8 @@ export class OrganizationsService {
 	 * Gets an organization.
 	 */
 	public getOrganization() {
-		return this.http.get(this.baseUrl + '/organizations/' + this.organization.name).map(res => res.json());
+		let fullUrl = this.baseUrl + '/organizations/' + this.organization.name;
+		console.log('Servicio ORGANIZATIONS - Request: ' + fullUrl);
+		return this.http.get(fullUrl).map(res => res.json());
 	}
 }

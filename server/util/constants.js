@@ -23,6 +23,8 @@ exports.DATASETS_SEARCH_MOST_DOWNLOADED = 'package_search?sort=views_recent desc
 exports.DATASETS_SEARCH_MOST_DOWNLOADED_ROWS_LIMIT = 3;
 //Get datasets by title
 exports.DATASETS_SEARCH_AUTOCOMPLETE = 'package_autocomplete';
+//Get dataset by name
+exports.DATASET_SHOW = 'package_show';
 
 /* TOPICS */
 //List all topics

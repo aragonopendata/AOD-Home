@@ -1,94 +1,16 @@
 <div class="container">
-	<h1>DESARROLLADORES</h1>
-	<div id="accordion" role="tablist" aria-multiselectable="true">
-		<div class="card">
-			<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-				<div class="card-header" (click)="getChildren('#headingOne')" role="tab" id="headingOne">
-					<h5 class="mb-0">
-						INTEROPERABILIDAD
-						<i class="fa fa-plus-circle" id="informacion_content_3_i"></i>
-					</h5>
-				</div>
-			</a>
-			<div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne">
-				<div class="card-block" style="text-align: justify;">
-					<p>
-						La Resolución de 19 de febrero de 2013, de la Secretaría de Estado de Administraciones Públicas, aprueba la Norma Técnica
-						de Interoperabilidad de Reutilización de recursos de la información. A partir de ese documento Aragón Open Data a realizado
-						un completo proceso de auditoria para adecuarse a los estándares ahí establecidos. A partir de la versión de la Web
-						de Aragón Open Data publicada el 6 de febrero de 2014 los contenidos de la propia web se han adaptado para poder cumplir
-						lo recogido en dicha norma incluso en apartados que únicamente se establecían como recomendación. De esta forma se
-						ha revisado por completo la política de URIs de Aragón Open Data, los metadatos y las taxonomías primarias de información
-						para adaptarlas a las NTI.
-					</p>
-					<p>
-						En el siguiente enlace puede encontrarse el documento de auditoria de la web.
-					</p>
-				</div>
-			</div>
+	<h1>{{sectionTitle}}</h1>
+	<h3>{{sectionSubtitle}}</h3>
+	<h5 *ngIf="!sectionDescription != null">{{sectionDescription}}</h5>
+	<p-accordion (onOpen)="changeIcon($event)" (onClose)="changeIcon($event)">
+		<div *ngFor="let content of contents">
+			<p-accordionTab>
+				<p-header>
+					{{content.contentTitle}}
+					<i id="{{content.contentOrder}}" class="{{buttonClass}}"></i>
+				</p-header>
+				<p [innerHTML]="content.contentText"></p>
+			</p-accordionTab>
 		</div>
-
-		<div class="card">
-			<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-				<div class="card-header" (click)="getChildren('#headingTwo')" role="tab" id="headingTwo">
-					<h5 class="mb-0">
-						TECNOLOGÍA UTILIZADA
-						<i class="fa fa-plus-circle" id="informacion_content_3_i"></i>
-					</h5>
-				</div>
-			</a>
-			<div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
-				<div class="card-block" style="text-align: justify;">
-					<p>
-						El portal opendata.aragon.es está desarrollado íntegramente sobre tecnología abierta con código libre. El portal se asienta
-						sobre un servidor con sistema operativo Ubuntu. Se utiliza como sistema de gestión de base de datos relacional el producto
-						software PostgreSQL, el cual es libre y publicado bajo la licencia BSD. Como motor de búsqueda de código abierto se
-						utiliza Apache Solr basado en la librería de programación en Java Lucene.
-					</p>
-					<p>
-						La Web está desarrollada sobre CKAN, que es una plataforma Web específica para el almacenamiento y distribución de datos,
-						como hojas de cálculo y el contenido de bases de datos, que está apoyada por la Open Knowledge Foundation. La programación
-						de CKAN se efectúa sobre Python, que es un lenguaje de programación interpretado cuya filosofía hace hincapié en una
-						sintaxis muy limpia y que favorezca un código legible. Como CMS para todo aquello que no son datos se ha utilizado
-						Wolf CMS, que utiliza PHP como lenguaje de programación y que está licenciado bajo GNU General Public License Versión
-						3.
-					</p>
-					<p>
-						El diseño de AragoPedia se ha realizado utilizado el software MediaWiki que, entre otros, es el software que utiliza WikiPedia
-						para ofrecer su servicio. Para la parte de tratamiento semántico de la información se ha utilizado Virtuoso. Por su
-						parte, el servicio de escucha activa es un desarrollo propio realizado con Python como lenguaje de programación.
-					</p>
-				</div>
-			</div>
-		</div>
-
-		<div class="card">
-			<a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-				<div class="card-header" (click)="getChildren('#headingThree')" role="tab" id="headingThree">
-					<h5 class="mb-0">
-						DESCARGA DIRECTA
-						<i class="fa fa-plus-circle" id="informacion_content_3_i"></i>
-					</h5>
-				</div>
-			</a>
-			<div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
-				<div class="card-block" style="text-align: justify;">
-					<p>
-						Para la descarga directa de la información dentro del portal se utilizan diferentes tipos de formatos de archivos. Desde
-						Aragón Open Data se considera necesaria la liberación de los datos en formatos no propietarios que permitan su mejor
-						reutilización. Sin embargo, para mejorar la utilidad de los datos, también se ofrecerán datos en formatos propietarios,
-						pero que por ser comunes y de amplio uso se han convertido en estándares para los usuarios.
-					</p>
-					<p>
-						Sin ánimo de ser exhaustivos, se podrán ofrecerán formatos propietarios como XLS (Microsoft Office Excel), DOC (Microsoft
-						Office Word), SHP (ESRI) o DWG (Autodesk) y formatos libres como ODF (Open Document Format for office applications),
-						con sus extensiones .odt para texto, .ods para hoja de cálculo, .odp para presentaciones, .odg para dibujos, .odc para
-						gráficas, .odf para fórmulas matemáticas, .odb para base de datos y .odi para imágenes, CSV (Comma Separeted Values),
-						XML (eXtensible Markup Language), TMX (Translation Memory eXchange), JSON (JavaScript Object Notation), RDF (Resource
-						Description Framework) o KML (Keyhole Markup Language).
-					</p>
-				</div>
-			</div>
-		</div>
-	</div>
+	</p-accordion>
 </div>

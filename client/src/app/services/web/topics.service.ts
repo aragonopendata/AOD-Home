@@ -24,7 +24,9 @@ export class TopicsService {
 	 * Gets a list of existing topics.
 	 */
 	public getTopics() {
-		return this.http.get(this.baseUrl + '/topics').map(res => res.json());
+		let fullUrl = this.baseUrl + '/topics';
+		console.log('Servicio TOPICS - Request: ' + fullUrl);
+		return this.http.get(fullUrl).map(res => res.json());
 	}
 
 	/**
