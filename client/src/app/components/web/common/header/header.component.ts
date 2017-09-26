@@ -41,7 +41,7 @@ export class HeaderComponent implements OnInit {
             $('#logo').attr('src', '../../../assets/AOD-Logo-Responsive.png');
             this.menuActive = !this.menuActive;
             $('#nav').attr('class', 'navbar navbar-toggleable-md bg-inverse');
-            $('#nav').css('background-color', '#212529');
+            $('#nav').css('background-color', 'rgba(0,0,0, 0.82)');
             this.srcLogin = '../../../assets/Boton-Acceso-Usuarios-gris.png';
             this.srcMenu = '../../../assets/Boton-Salir-Menu-Responsive-OFF.png';
         } else {
@@ -112,10 +112,6 @@ export class HeaderComponent implements OnInit {
 			}).subscribe(data =>
 				this.datasetAutocomplete = JSON.parse(data).result);
 	}
-
-	searchDatasetsByText(text: string){
-		this.router.navigateByUrl('/datos/catalogo?text='+text);
-    }
 
     focusUserName(){
         document.getElementById("loginLink").blur();
