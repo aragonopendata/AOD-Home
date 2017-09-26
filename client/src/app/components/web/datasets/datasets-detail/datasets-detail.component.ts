@@ -34,6 +34,7 @@ export class DatasetsDetailComponent implements OnInit {
 		console.log('Dataset a buscar: ' + this.dataset.name);
 		this.datasetsService.getDatasetByName(this.dataset.name).subscribe(dataResult => {
 			this.dataset = JSON.parse(dataResult).result;
+			this.dataset.organization_name = JSON.parse(dataResult).result.organization.title;
 			this.getExtras();
 		});
 	}
