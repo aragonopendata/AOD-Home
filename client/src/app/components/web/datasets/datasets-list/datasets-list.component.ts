@@ -10,6 +10,7 @@ import { TopicsListComponent } from '../../topics/topics-list/topics-list.compon
 import { Dataset } from '../../../../models/Dataset';
 import { Topic } from '../../../../models/Topic';
 import { ConstantsService } from '../../../../app.constants';
+import { ActivatedRoute  } from '@angular/router';
 
 @Component({
     selector: 'app-datasets-list',
@@ -32,6 +33,8 @@ export class DatasetsListComponent implements OnInit {
     totalDataset: string[];
     datasetCount: string;
     totalResources: string;
+    searchValue: string;
+    textSearch: string;
 
     @Input() topics: Topic[];
     topic: Topic;
@@ -43,13 +46,17 @@ export class DatasetsListComponent implements OnInit {
 
     constructor(private datasetsService: DatasetsService, private topicsService: TopicsService, private orgsService: OrganizationsService, private router: Router
               , private location: Location, private changeDetectorRef: ChangeDetectorRef
-              , private constants: ConstantsService) {
+              , private constants: ConstantsService, private activatedRoute:ActivatedRoute) {
         this.pageRows = constants.DATASET_LIST_ROWS_PER_PAGE;
     }
 
     ngOnInit() {
+        this.activatedRoute.params.subscribe(params => {
+            this.textSearch =  params['text'];
+            console.log(this.textSearch);
+		});
         this.sort = 'relevance,-metadata_modified';
-        this.setDatasetsStats();
+        this.setDatasetsStatics();
         this.setTopicsDropdown();
         this.setOrgsDropdown();
         this.loadDatasets();
@@ -59,10 +66,16 @@ export class DatasetsListComponent implements OnInit {
     }
 
     loadDatasets() {
-        if (this.selectedTopic === undefined) {
-            this.getDatasets(null, null);
+        this.datasets = [];
+        if (this.textSearch!=undefined) {
+            this.searchDatasetsByText(this.textSearch);
+            this.searchValue = this.textSearch;
         } else {
-            this.getDatasetsByTopic(this.selectedTopic, null, null);
+            if (this.selectedTopic === undefined) {
+                this.getDatasets(null, null);
+            } else {
+                this.getDatasetsByTopic(this.selectedTopic, null, null);
+            }
         }
     }
 
@@ -106,7 +119,6 @@ export class DatasetsListComponent implements OnInit {
     }
 
     getDatasets(page: number, rows: number): void {
-        this.datasets = [];
         var pageNumber = (page != null ? page : 0);
         var rowsNumber = (rows != null ? rows : this.pageRows);
         this.datasetsService.getDatasets(this.sort, pageNumber, rowsNumber).subscribe(datasets => {
@@ -116,7 +128,6 @@ export class DatasetsListComponent implements OnInit {
     }
 
     getDatasetsByTopic(topic: string, page: number, rows: number): void {
-        this.datasets = [];
         var pageNumber = (page != null ? page : 0);
         var rowsNumber = (rows != null ? rows : this.pageRows);
         this.datasetsService.getDatasetsByTopic(topic, this.sort, pageNumber, rowsNumber).subscribe(datasets => {
@@ -211,7 +222,7 @@ export class DatasetsListComponent implements OnInit {
         this.getDatasetsByOrg(null, null, this.selectedOrg);
     }
 
-    setDatasetsStats(){
+    setDatasetsStatics(){
         this.datasetsService.getDatasetsStats().subscribe(datasets => {
             this.datasetCount =JSON.parse(datasets).result.count+"";
             while (this.datasetCount.length < 8) this.datasetCount = "0" + this.datasetCount;

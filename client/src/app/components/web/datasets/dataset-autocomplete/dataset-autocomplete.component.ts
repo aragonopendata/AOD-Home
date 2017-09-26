@@ -4,7 +4,6 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 
 import { Component, OnInit, HostListener } from '@angular/core';
-import { ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -26,21 +25,16 @@ export class DatasetAutocompleteComponent implements OnInit {
 	dataset: Dataset;
 	datasetAutocomplete: Observable<Autocomplete[]>;
 	private datasetTitle = new Subject<string>();
-	show: boolean;
 	private resultsLimit: number;
+	show: boolean;
 
-	constructor(private datasetService: DatasetsService, private router: Router
-			, private constants: ConstantsService, private changeDetector: ChangeDetectorRef) {
+	constructor(private datasetService: DatasetsService, private router: Router, private constants: ConstantsService) {
 		this.resultsLimit = constants.DATASET_AUTOCOMPLETE_LIMIT_RESULTS;
+		this.show=true;
 	}
 
 	ngOnInit(): void {
 		this.getAutocomplete();
-		this.show = true;
-	}
-
-	searchByText(title: string) {
-		
 	}
 
 	search(title: string): void {
@@ -55,7 +49,7 @@ export class DatasetAutocompleteComponent implements OnInit {
 	getAutocomplete(): void {
 		//Funciona la busqueda, falla al poner un caracter especial
 		this.datasetTitle
-			.debounceTime(200)
+			.debounceTime(50)
 			.distinctUntilChanged()
 			.switchMap(title => title
 				? this.datasetService.getDatasetsAutocomplete(title, this.resultsLimit)
@@ -65,5 +59,13 @@ export class DatasetAutocompleteComponent implements OnInit {
 				return Observable.of<Autocomplete[]>([]);
 			}).subscribe(data =>
 				this.datasetAutocomplete = JSON.parse(data).result);
+	}
+
+	searchDatasetsByText(text: string){
+		this.router.navigateByUrl('/datos/catalogo?text='+text);
+	}
+
+	hideList(){
+		this.show=false;
 	}
 }

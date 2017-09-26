@@ -3,8 +3,8 @@
     <div class="ui-g">
         <div *ngIf="selectedSearchOption == 'busqueda-libre'"  class="ui-g-8">
             <b>DATOS CON EL TEXTO </b>
-            <input type="text" (keyup.enter)="searchDatasetsByFilter(searchInput.value)" #searchInput>
-            <img src="../../../../../assets/lupa.jpg" alt="BUSCAR DATOS" (click)="searchDatasetsByFilter(searchInput.value)"/>
+            <input type="text" (keyup.enter)="searchDatasetsByText(searchInput.value)" value="{{searchValue}}" #searchInput>
+            <img src="../../../../../assets/lupa.jpg" alt="BUSCAR DATOS" (click)="searchDatasetsByText(searchInput.value)"/>
         </div>
         <div *ngIf="selectedSearchOption == 'tema-y-tipo'" class="ui-g-4">
             <b>Datos sobre </b>
