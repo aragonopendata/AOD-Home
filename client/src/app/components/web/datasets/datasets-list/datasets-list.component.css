@@ -128,3 +128,7 @@ a:hover {
     font-weight: 300;
     font-size:xx-large;
 }
+
+.p-autocomplete{
+    width: 100%;
+  }

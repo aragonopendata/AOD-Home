@@ -12,6 +12,7 @@ const logger = require('js-logging').dailyFile([loggerSettings]);
 
 // API ROUTES
 var datasets = require('./server/routes/web/datasets');
+var tags = require('./server/routes/web/tags');
 var topics = require('./server/routes/web/topics');
 var organizations = require('./server/routes/web/organizations');
 var contents = require('./server/routes/web/contents');
@@ -20,6 +21,7 @@ var usersAdmin = require('./server/routes/admin/users');
 //var rolesAdmin = require('./server/routes/admin/roles');
 //var contentsAdmin = require('./server/routes/admin/contents');
 //var datasetsAdmin = require('./server/routes/admin/datasets');
+//var tagsAdmin = require('./server/routes/admin/datasets');
 //var organizationsAdmin = require('./server/routes/admin/organizations');
 //var campusAdmin = require('./server/routes/admin/campus');
 
@@ -43,6 +45,7 @@ app.get('/', function (req, res) {
 
 // Set our api routes
 app.use('/aod/services/web', datasets);
+app.use('/aod/services/web', tags);
 app.use('/aod/services/web', topics);
 app.use('/aod/services/web', organizations);
 app.use('/aod/services/web', contents);
@@ -51,6 +54,7 @@ app.use('/aod/services/admin', usersAdmin);
 //app.use('/api/admin', rolesAdmin);
 //app.use('/api/admin', contentsAdmin);
 //app.use('/api/admin', datasetsAdmin);
+//app.use('/api/admin', tagsAdmin);
 //app.use('/api/admin', organizationsAdmin);
 //app.use('/api/admin', campusAdmin);
 

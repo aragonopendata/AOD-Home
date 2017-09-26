@@ -75,7 +75,7 @@ export class OrganizationsDetailComponent implements OnInit {
 	getDatasets(page: number, rows: number): void {
 		var pageNumber = (page != null ? page : 0);
         var rowsNumber = (rows != null ? rows : this.pageRows);
-        this.datasetsService.getDatasetsByOrganization(this.org.name, this.sort, pageNumber, rowsNumber).subscribe(datasets => {
+        this.datasetsService.getDatasetsByOrganization(this.org.name, this.sort, pageNumber, rowsNumber,null).subscribe(datasets => {
             this.datasets = JSON.parse(datasets).result.results;
             this.numDatasets = JSON.parse(datasets).result.count;
         });

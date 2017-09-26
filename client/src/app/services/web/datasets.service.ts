@@ -28,8 +28,8 @@ export class DatasetsService {
 	 * @param page - Page to show.
 	 * @param rows - Rows per page.
 	 */
-	public getDatasets(sort: string, page: number, rows: number) {
-		let fullUrl = this.baseUrl + '/datasets?sort=' + sort + '&page=' + page.toString() + '&rows=' + rows.toString();
+	public getDatasets(sort: string, page: number, rows: number, type: string) {
+		let fullUrl = this.baseUrl + '/datasets?sort=' + sort + '&page=' + page.toString() + '&rows=' + rows.toString()+'&tipo='+type;
 		console.log('Servicio DATASETS - Request: ' + fullUrl);
 		return this.http.get(fullUrl).map(res => res.json());
 	}
@@ -64,8 +64,8 @@ export class DatasetsService {
 	 * @param page - Page to show.
 	 * @param rows - Rows per page.
 	 */
-	public getDatasetsByTopic(topicName: string, sort: string, page: number, rows: number) {
-		let fullUrl = this.baseUrl + '/datasets/topic/' + topicName + '?sort=' + sort + '&page=' + page.toString() + '&rows=' + rows.toString();
+	public getDatasetsByTopic(topicName: string, sort: string, page: number, rows: number,type: string) {
+		let fullUrl = this.baseUrl + '/datasets/topic/' + topicName + '?sort=' + sort + '&page=' + page.toString() + '&rows=' + rows.toString()+'&tipo='+type;
 		console.log('Servicio DATASETS - Request: ' + fullUrl);
 		return this.http.get(fullUrl).map(res => res.json());
 	}
@@ -77,11 +77,32 @@ export class DatasetsService {
 	 * @param page - Page to show.
 	 * @param rows - Rows per page.
 	 */
-	public getDatasetsByOrganization(organizationName: string, sort: string, page: number, rows: number) {
-		let fullUrl = this.baseUrl + '/datasets/organization/' + organizationName + '?sort=' + sort + '&page=' + page.toString() + '&rows=' + rows.toString();
+	public getDatasetsByOrganization(organizationName: string, sort: string, page: number, rows: number,type: string) {
+		let fullUrl = this.baseUrl + '/datasets/organization/' + organizationName + '?sort=' + sort + '&page=' + page.toString() + '&rows=' + rows.toString()+'&tipo='+type;
 		console.log('Servicio DATASETS - Request: ' + fullUrl);
 		return this.http.get(fullUrl).map(res => res.json());
 	}
+
+	/**
+	 * Gets a list of datasets related to the given organization.
+	 * @param organizationName - Organization name.
+	 * @param sort - Sort order.
+	 * @param page - Page to show.
+	 * @param rows - Rows per page.
+	 */
+	public getDatasetsBytags(sort: string, page: number, rows: number,tags:  string[]) {
+		let tagsArray = [];
+        let tagsQuery = '';
+		tagsArray = tags;
+		tagsArray.forEach(tag => {
+			tagsQuery+='+'+tag.name;
+		});
+
+		let fullUrl = this.baseUrl + '/datasets/tags?sort=' + sort + '&page=' + page.toString() + '&rows=' + rows.toString()+'&tags='+tagsQuery;
+		console.log('Servicio DATASETS - Request: ' + fullUrl);
+		return this.http.get(fullUrl).map(res => res.json());
+	}
+	
 
 	/**
 	 * Gets a list of the new datasets.
@@ -136,6 +157,21 @@ export class DatasetsService {
 	 */
 	public getDataset() {
 		return this.dataset;
+	}
+
+	/**
+	 * Gets a list of Tags.
+	 * 
+	 */
+	public getTags(query: string) {
+		//TODO Change to AOD API
+		let fullUrl = "http://opendata.aragon.es/datos/api/action/tag_list"
+		//let fullUrl = this.baseUrl + '/tags';	
+		if(query){
+			fullUrl+='?q='+query;
+		}
+		console.log('Servicio DATASETS - Request: ' + fullUrl);
+		return this.http.get(fullUrl).map(res => res.json());
 	}
 
 	/**

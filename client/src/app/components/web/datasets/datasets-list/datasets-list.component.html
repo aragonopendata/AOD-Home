@@ -2,29 +2,56 @@
     <h1 translate>TITLE_DATACENTER</h1>
     <div class="ui-g">
         <div *ngIf="selectedSearchOption == 'busqueda-libre'" class="ui-g-8">
-            <b>DATOS CON EL TEXTO </b>
-            <input type="text" (keyup.enter)="searchDatasetsByText(searchInput.value)" value="{{searchValue}}" #searchInput>
-            <img src="../../../../../assets/lupa.jpg" alt="BUSCAR DATOS" (click)="searchDatasetsByText(searchInput.value)"/>
+            <b class="ui-g-4">DATOS CON EL TEXTO </b>
+                <div class="ui-inputgroup">
+                    <input style="width:500px" type="text" [value]="searchValue" (keyup.enter)="searchDatasetsByText(searchInput.value)" #searchInput>
+                    <button pButton type="button" icon="fa-search" (click)="searchDatasetsByText(searchInput.value)" class="ui-button-secondary"></button>
+                </div>
+            <!-- <input type="text" [value]="searchValue" (keyup.enter)="searchDatasetsByText(searchInput.value)"class="ui-g-7"
+                #searchInput>
+            <button class="ui-g-1" type="button" (click)="searchDatasetsByText(searchInput.value)"><i aria-hidden="true" class="fa fa-search"></i></button> -->
+        </div>
+        <div *ngIf="selectedSearchOption == 'buscador-homer'" class="ui-g-8">
+            <b>BUSCAR</b>
+            <input type="text" [value]="searchHomerValue" [style]="{'width':'200px'}" #searchHomerInput>
+            <b>EN</b>
+            <p-dropdown [options]="langsSelect" [(ngModel)]="selectedLang" [style]="{'width':'240px'}"></p-dropdown>
+            <button type="button"><i aria-hidden="true" class="fa fa-search"></i></button>
+        </div>
+        <div *ngIf="selectedSearchOption == 'etiquetas'" class="ui-g-8">
+            <p-autoComplete [(ngModel)]="tags" [suggestions]="filteredTagsMultiple" (completeMethod)="filterTagsMultiple($event)" [minLength]="1"
+                placeholder="Etiquetas" field="name" [multiple]="true">
+            </p-autoComplete>
+            <button type="button" (click)="getDatasetsByTags()"><i aria-hidden="true" class="fa fa-search"></i></button>
         </div>
         <div *ngIf="selectedSearchOption == 'tema-y-tipo'" class="ui-g-4">
             <b>Datos sobre </b>
-            <p-dropdown [options]="topicsSelect" [(ngModel)]="selectedTopic" placeholder="Seleccione un tema" [style]="{'width':'200px'}"
-                (onChange)="setTopicData()"></p-dropdown>
+            <!-- <p-dropdown [options]="topicsSelect" [(ngModel)]="selectedTopic" [style]="{'width':'200px'}" (onChange)="loadDatasets()"></p-dropdown> -->
+            <select class="ui-dropdown-label ui-inputtext ui-corner-all" [(ngModel)]="selectedTopic" (change)="loadDatasets()">
+                <option *ngFor="let topSel of topicsSelect" [ngValue]="topSel.value">{{topSel.label}}</option>
+              </select>
         </div>
         <div *ngIf="selectedSearchOption == 'organizacion-y-tipo'" class="ui-g-4">
-                <b>Datos sobre </b>
-                <p-dropdown [options]="orgsSelect" [(ngModel)]="selectedOrg" placeholder="Seleccione organización" [style]="{'width':'200px'}"
-                    (onChange)="searchDatasetsetByOrg()"></p-dropdown>
-            </div>
+            <b>Datos sobre </b>
+            <p-dropdown [options]="orgsSelect" [(ngModel)]="selectedOrg" placeholder="Todas las organizaciones" [style]="{'width':'240px'}"
+                (onChange)="searchDatasetsetByOrg()"></p-dropdown>
+            <!-- <select class="ui-dropdown-label ui-inputtext ui-corner-all" [(ngModel)]="selectedOrg" [style]="{'width':'200px'}" (change)="searchDatasetsetByOrg()">
+                <option *ngFor="let orgs of orgsSelect" [ngValue]="orgs.value">{{orgs.label}}</option>
+            </select> -->
+        </div>
         <div *ngIf="selectedSearchOption == 'tema-y-tipo' || selectedSearchOption == 'organizacion-y-tipo'" class="ui-g-4">
             <b>Del tipo </b>
-            <p-dropdown [options]="datasetTypes" [(ngModel)]="selectedDatasetTypeDropdown" placeholder="Selecciona un tipo" [style]="{'width':'200px'}"></p-dropdown>
+            <!-- <p-dropdown [options]="datasetTypes" [(ngModel)]="selectedType" placeholder="Todos los tipos" [style]="{'width':'200px'}"
+                (onChange)="changeType()"></p-dropdown> -->
+            <select class="ui-dropdown-label ui-inputtext ui-corner-all" [(ngModel)]="selectedType" (change)="changeType()">
+                <option *ngFor="let types of datasetTypes" [ngValue]="types.value">{{types.label}}</option>
+            </select>
         </div>
         <div class="ui-g-4">
-            <p-dropdown [options]="searchOptions" [(ngModel)]="selectedSearchOption" placeholder="Selecciona una búsqueda" [style]="{'width':'250px'}" ></p-dropdown>
+            <p-dropdown [options]="searchOptions" [(ngModel)]="selectedSearchOption" placeholder="Selecciona una búsqueda" (onChange)="resetSearch()"></p-dropdown>
         </div>
     </div>
-   
+
     <p-dataTable [value]="datasets" [responsive]="true" (onSort)="setOrder($event)" #dt>
         <p-column field="name" header="{{numDatasets}} conjuntos de datos encontrados" sortable="custom" sortFunction="orderTable($event)">
             <ng-template pTemplate="body" let-dataset="rowData">

@@ -36,6 +36,10 @@ exports.ORGANIZATIONS_LIST = 'organization_list';
 //Show organization detail
 exports.ORGANIZATION_DETAIL = 'organization_show';
 
+/* TAGS */
+//List all tags
+exports.TAGS_LIST = 'tag_list';
+
 /* ******************* */
 /* DATABASE PROPERTIES */
 exports.DB_HOST = 'host';
