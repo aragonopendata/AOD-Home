@@ -61,7 +61,8 @@ export class DatasetAutocompleteComponent implements OnInit {
 				this.datasetAutocomplete = JSON.parse(data).result);
 	}
 
-	hideList(){
-		this.show = false;
+	searchDatasetsByText(text: string){
+		this.router.navigate(['/datos/catalogo'], { queryParams: { texto: text} });
+
 	}
 }

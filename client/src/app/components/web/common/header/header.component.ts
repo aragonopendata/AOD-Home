@@ -117,6 +117,10 @@ export class HeaderComponent implements OnInit {
         document.getElementById("loginLink").blur();
     }
 
+    searchDatasetsByText(text: string){
+		this.router.navigate(['/datos/catalogo'], { queryParams: { texto: text} });
+	}
+
     ngOnInit() {
         this.getAutocomplete();
     }
