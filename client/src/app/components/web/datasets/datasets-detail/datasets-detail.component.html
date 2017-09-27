@@ -54,7 +54,7 @@
 				</div>
 				<div class="section">
 					<h6>Etiquetas y palabras clave</h6>
-					<button *ngFor="let tag of dataset.tags" class="tags" pButton type="button" label="{{tag.name}}" style="margin: 2px;"></button>
+					<button *ngFor="let tag of dataset.tags" class="tags" pButton type="button" routerLink="/datos/catalogo/etiquetas" [queryParams]="{etq:tag.name}" pButton label="{{tag.name}}" style="margin: 2px;"></button>
 				</div>
 				<div class="section">
 					<h6>Organización responsable de la publicación</h6>
