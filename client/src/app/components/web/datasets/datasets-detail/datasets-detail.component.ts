@@ -38,7 +38,7 @@ export class DatasetsDetailComponent implements OnInit {
 			this.dataset = JSON.parse(dataResult).result;
 			this.dataset.organization_name = JSON.parse(dataResult).result.organization.title;
 			this.getExtras();
-			this.getResourcesAux();
+			this.makeFileSourceList();
 		});
 	}
 
@@ -84,34 +84,50 @@ export class DatasetsDetailComponent implements OnInit {
 		}
 	}
 
-	getResourcesAux() {
+	makeFileSourceList() {
 		console.log('Obteniendo los recursos para mostrarlos en el dataset');
 		for (let newRes of this.dataset.resources) {
-			this.keepResourceName(newRes.name, newRes.url, newRes.format);
+			this.keepDataResource(newRes.name, newRes.url, newRes.format);
 		}
 	}
 
-	keepResourceName (name: string, url: string, format: string) {
+	keepDataResource (name: string, url: string, format: string) {
 		var i: number;
-		var duplicate: boolean;
-		duplicate = false;
+		var existsSource: boolean;
+		existsSource = false;
 		for (i = 0; i < this.resourcesAux.length; i++) {
-			if (this.resourcesAux[i].name == name) {
-				this.resourcesAux[i].sources.push(url);
-				this.resourcesAux[i].formats.push(format);
-				duplicate = true;
+			if (this.existsResourceWithSameName(this.resourcesAux[i].name, name)) {
+				this.insertSourceWithOtherFormat(i,url,format);
+				existsSource = true;
 			}
 		}
 
-		if (!duplicate) {
-			var newResourceAux: ResourceAux = new ResourceAux();
-			newResourceAux.name = name;
-			newResourceAux.sources = new Array();
-			newResourceAux.sources.push(url);
-			newResourceAux.formats = new Array();
-			newResourceAux.formats.push(format);
-			this.resourcesAux.push(newResourceAux);
+		if (!existsSource) {
+			this.insertNewResource(name, url, format);
 		}
+	}
+
+	existsResourceWithSameName (resourceAuxName: string, newResourceName: string) {
+		if (resourceAuxName == newResourceName) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	insertSourceWithOtherFormat(position: number, url: string, format: string) {
+		this.resourcesAux[position].sources.push(url);
+		this.resourcesAux[position].formats.push(format);
+	}
+
+	insertNewResource(name: string, url: string, format: string) {
+		var newResourceAux: ResourceAux = new ResourceAux();
+		newResourceAux.name = name;
+		newResourceAux.sources = new Array();
+		newResourceAux.sources.push(url);
+		newResourceAux.formats = new Array();
+		newResourceAux.formats.push(format);
+		this.resourcesAux.push(newResourceAux);
 	}
 
 	downloadFile(url: string) {
