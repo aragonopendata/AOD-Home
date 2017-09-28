@@ -21,7 +21,7 @@
 
 	<div *ngIf="!selectedView" class="tabla">
 		<p-dataTable [value]="orgs" (onRowSelect)="showOrg(rowData)">
-			<p-column field="orgName" header="{{ 'ORGANIZATIONS.NUMBER_1' | translate }} {{orgs.length}} {{ 'ORGANIZATIONS.NUMBER_2' | translate }}">
+			<p-column field="orgName" header="{{ 'ORGANIZATIONS.TOTAL_ORGANIZATIONS_1' | translate }} {{orgs.length}} {{ 'ORGANIZATIONS.TOTAL_ORGANIZATIONS_2' | translate }}">
 				<ng-template pTemplate="body" let-org="rowData" let-i="rowIndex">
 					<a routerLink='/datos/publicadores/{{org.name}}' (click)="showOrg(org)">
 					  {{org.title}}

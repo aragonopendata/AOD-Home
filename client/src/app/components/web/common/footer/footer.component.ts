@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ConstantsService } from '../../../../app.constants';
 
 @Component({
 	selector: 'app-footer',
@@ -6,8 +7,11 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls: ['./footer.component.css']
 })
 export class FooterComponent implements OnInit {
+	aodBaseUrl: String
 
-	constructor() { }
+	constructor(private constants: ConstantsService) { 
+		this.aodBaseUrl = this.constants.AOD_BASE_URL;
+	}
 
 	ngOnInit() {
 	}
