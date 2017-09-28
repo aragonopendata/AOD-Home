@@ -55,7 +55,7 @@ router.get('/datasets/autocomplete', function (req, res, next) {
     let serviceName = constants.DATASETS_SEARCH_AUTOCOMPLETE;
     let serviceRequestUrl = serviceBaseUrl + serviceName + utils.getRequestCommonParams(req);
     if (req.query.text) {
-        serviceRequestUrl += '&q=%' + req.query.text + '%';
+        serviceRequestUrl += '&q=%' + encodeURIComponent(req.query.text) + '%';
     } else {
         serviceRequestUrl += '&q=%%';
     }

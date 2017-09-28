@@ -132,3 +132,21 @@ a:hover {
 .p-autocomplete{
     width: 100%;
   }
+
+.searchFilter{
+    background: #ffffff;
+    color: #222222;
+    border-radius: 3px;
+    padding: .25em;
+}
+
+.searchFilterOrg{
+    width: 78%;
+}
+.searchFilterSubGroup{
+    width: 280px;
+}
+
+.searchFilter:enabled:hover {
+    border-color: #5ea2ba;
+}

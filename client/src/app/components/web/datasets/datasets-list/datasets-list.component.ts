@@ -22,7 +22,8 @@ export class DatasetsListComponent implements OnInit {
     selectedTopic: string;
     selectedOrg: string;
     selectedType: string;
-    selectedSearchOption: string = 'busqueda-libre';
+    selectedGroup: string;
+    selectedSearchOption: string;
     sort: string;
     datasets: Dataset[];
     newestDatasets: Dataset[];
@@ -47,21 +48,39 @@ export class DatasetsListComponent implements OnInit {
     datasetTypes: SelectItem[];
     searchOptions: SelectItem[];
     langsSelect: SelectItem[];
+    groupSelect: SelectItem[];
 
     constructor(private datasetsService: DatasetsService, private topicsService: TopicsService, private orgsService: OrganizationsService, private router: Router
         , private location: Location, private changeDetectorRef: ChangeDetectorRef
         , private constants: ConstantsService, private activatedRoute: ActivatedRoute) {
         this.pageRows = constants.DATASET_LIST_ROWS_PER_PAGE;
+        if(this.selectedSearchOption === undefined){
+            this.selectedSearchOption = 'busqueda-libre';
+        } 
     }
 
     ngOnInit() {
         this.activatedRoute.queryParams.subscribe(params => {
             this.textSearch = params['texto'];
-        });
-        this.activatedRoute.params.subscribe(params => {
-            this.selectedTopic = params['topicName'];
+            this.selectedType = params['tipo'];
+            if(params['etq']){
+                let tagParams: string= ''+params['etq'];
+                let tags = [] = tagParams.split(',');
+                let filtered = [];
+                for (let i = 0; i < tags.length; i++) {
+                        filtered.push({ name: tags[i], value: tags[i] });
+                }
+                this.tags = filtered;
+            }
+            
         });
 
+        this.activatedRoute.params.subscribe(params => {
+            this.selectedTopic = params['topicName'];
+            this.selectedOrg = params['organizationName'];
+            
+         });
+        
         this.sort = 'relevance,-metadata_modified';
         this.setDatasetsStats();
         this.setTopicsDropdown();
@@ -70,7 +89,9 @@ export class DatasetsListComponent implements OnInit {
         this.setDatasetsTypeDropdown();
         this.setSearchOptions();
         this.setLanguagesDropdown();
+        this.setGroupsDropdown();
         this.setInfoTables();
+
     }
 
     loadDatasets() {
@@ -83,21 +104,65 @@ export class DatasetsListComponent implements OnInit {
             this.selectedSearchOption = 'tema-y-tipo';
         } else if (this.selectedOrg) {
             this.getDatasetsByOrg(null, null, this.selectedOrg, this.selectedType);
-        } else {
-            this.selectedType = undefined;
+            this.selectedSearchOption = 'organizacion-y-tipo';
+        } if(this.tags){
+            this.getDatasetsByTags(null,null);
+            this.selectedSearchOption = 'etiquetas';
+        }else{
             this.getDatasets(null, null);
         }
+        
     }
 
     changeType() {
         if (this.selectedTopic) {
-            this.getDatasetsByTopic(this.selectedTopic, null, null, this.selectedType);
+            if(this.selectedType){
+                this.router.navigate(['/datos/catalogo/temas/'+this.selectedTopic], { queryParams: { tipo: this.selectedType} });
+                this.getDatasetsByTopic(this.selectedTopic, null, null, this.selectedType);
+            }else{
+                this.router.navigate(['/datos/catalogo/temas/'+this.selectedTopic]);
+                this.getDatasetsByTopic(this.selectedTopic, null, null, null);
+            }
         } else if (this.selectedOrg) {
-            this.getDatasetsByOrg(null, null, this.selectedOrg, this.selectedType);
-        } else {
-            this.selectedType = undefined;
+            if(this.selectedType){
+                this.router.navigate(['/datos/catalogo/publicadores/'+this.selectedOrg], { queryParams: { tipo: this.selectedType} });
+                this.getDatasetsByOrg(null, null, this.selectedOrg, this.selectedType);
+            }else{
+                this.router.navigate(['/datos/catalogo/publicadores/'+this.selectedOrg]);
+                this.getDatasetsByOrg(null, null, this.selectedOrg, null);
+            }
+        }else{
+            if(this.selectedType){
+                this.location.go('/datos/catalogo?tipo='+this.selectedType);
+            }else{
+                this.location.go('/datos/catalogo');
+            }
             this.getDatasets(null, null);
         }
+    }
+
+    changeTags(){
+       if(this.tags.length > 0){
+        console.log("TRUE "+this.tags.length);
+        let tagsList = [];
+        let tagUrl = '';
+        tagsList = this.tags;
+        let i = 0;
+        tagsList.forEach(tag => {
+            if(i==0){
+                tagUrl+='?etq='+tag.name;
+            }else{
+                tagUrl+='&etq='+tag.name;
+            }
+            i++;
+        });
+        this.location.go('/datos/catalogo/etiquetas'+tagUrl);
+        this.getDatasetsByTags(null,null);
+       }else{
+        this.location.go('/datos/catalogo');
+        this.getDatasets(null,null);
+       }
+        
     }
 
     resetSearch() {
@@ -105,9 +170,10 @@ export class DatasetsListComponent implements OnInit {
         this.selectedOrg = undefined;
         this.selectedType = undefined;
         this.searchValue = '';
-        this.tags = [];
+        this.tags = undefined;
         this.textSearch = undefined;
         this.loadDatasets();
+        this.location.go('/datos/catalogo');
     }
 
     showDataset(dataset: Dataset) {
@@ -191,6 +257,7 @@ export class DatasetsListComponent implements OnInit {
             this.datasets = JSON.parse(datasets).result.results;
             this.numDatasets = JSON.parse(datasets).result.count;
         });
+        
     }
 
     setTopicsDropdown() {
@@ -254,6 +321,26 @@ export class DatasetsListComponent implements OnInit {
         this.langsSelect.push({ label: 'ελληνικά', value: 'es' });
         this.langsSelect.push({ label: 'Slovenščina', value: 'es' });
         this.langsSelect.push({ label: 'Српски', value: 'es' });
+    }
+
+    setGroupsDropdown(){
+        this.groupSelect = [];
+        this.groupSelect.push({ label: 'Todos los grupos', value: undefined });
+        this.groupSelect.push({ label: 'Territorio', value: 'Territorio' });
+        this.groupSelect.push({ label: 'Demografía y Población', value: 'Demografía y Población' });
+        this.groupSelect.push({ label: 'Educación y Formación', value: 'Educación y Formación' });
+        this.groupSelect.push({ label: 'Salud', value: 'Salud' });
+        this.groupSelect.push({ label: 'Nivel, Calidad y Condiciones de Vida', value: 'Nivel, Calidad y Condiciones de Vida' });
+        this.groupSelect.push({ label: 'Análisis Sociales, Justicia, Cultura y Deporte', value: 'Análisis Sociales, Justicia, Cultura y Deporte' });
+        this.groupSelect.push({ label: 'Trabajo, Salarios y Relaciones Laborales', value: 'Trabajo, Salarios y Relaciones Laborales' });
+        this.groupSelect.push({ label: 'Agricultura, Industria y Construcción', value: 'Agricultura, Industria y Construcción' });
+        this.groupSelect.push({ label: 'Servicios, Comercio, Transporte y Turismo', value: 'Servicios, Comercio, Transporte y Turismo' });
+        this.groupSelect.push({ label: 'Precios', value: 'Precios' });
+        this.groupSelect.push({ label: 'PIB, Renta, Comercio Exterior y Empresas', value: 'PIB, Renta, Comercio Exterior y Empresas' });
+        this.groupSelect.push({ label: 'Financieras. Mercantiles. Tributarias', value: 'Financieras. Mercantiles. Tributarias' });
+        this.groupSelect.push({ label: 'I+D+i y Tecnologías de la Información (TIC)', value: 'I+D+i y Tecnologías de la Información (TIC)' });
+        this.groupSelect.push({ label: 'Medio Ambiente y Energía', value: 'Medio Ambiente y Energía' });
+        this.groupSelect.push({ label: 'Sector Público. Elecciones', value: 'Sector Público. Elecciones' });
     }
 
     setInfoTables() {

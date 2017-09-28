@@ -6,7 +6,7 @@
 	 	(keyup)="search(searchBox.value)" (keyup.enter)="searchDatasetsByText(searchBox.value)" />
 	<ng-container *ngIf="show">
 		<div *ngFor="let autocomplete of datasetAutocomplete" class="search-result">
-			<a routerLink='/datos/catalogo/{{autocomplete.name}}'>
+			<a routerLink='/datos/catalogo/dataset/{{autocomplete.name}}'>
 				{{autocomplete.title}}
 			</a>
 		</div>

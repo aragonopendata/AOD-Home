@@ -73,7 +73,7 @@ module.exports = {
         query = '&fq=tags:';
         if (tagsParams.length > 0) {
             for (var key in tagsParams) {
-                query += '+' + tagsParams[key];
+                query += '+' + encodeURIComponent(tagsParams[key]);
             }
         }
         return query;
