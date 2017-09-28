@@ -1,42 +1,31 @@
 <div class="container">
 	<h1>{{org.title}}</h1>
 	<div class="ui-g details">
-		<div class="ui-g-6">
+		<div class="ui-g-12">
 			<h6><b translate>ORGANIZATION_DETAIL.NAME</b></h6>
-		</div>
-		<div class="ui-g-6">
 			<p>{{org.title}}</p>
-		</div>
-		<div class="ui-g-6">
+		</div>		
+		<div class="ui-g-12">
 			<h6><b translate>ORGANIZATION_DETAIL.WEBPAGE</b></h6>
-		</div>
-		<div class="ui-g-6">
 			<p>{{webpage || ('NOT_AVAILABLE' | translate)}}</p>
-		</div>
-		<div class="ui-g-6">
+		</div>		
+		<div class="ui-g-12">
 			<h6><b translate>ORGANIZATION_DETAIL.DESCRIPTION</b></h6>
-		</div>
-		<div class="ui-g-6">
 			<p>{{org.description || ('NOT_AVAILABLE' | translate)}}</p>
-		</div>
-		<div class="ui-g-6">
+		</div>		
+		<div class="ui-g-12">
 			<h6><b translate>ORGANIZATION_DETAIL.ADDRESS</b></h6>
-		</div>
-		<div class="ui-g-6">
 			<p>{{address || ('NOT_AVAILABLE' | translate)}}</p>
-		</div>
-		<div class="ui-g-6">
+		</div>		
+		<div class="ui-g-12">
 			<h6><b translate>ORGANIZATION_DETAIL.PERSON</b></h6>
-		</div>
-		<div class="ui-g-6">
 			<p>{{person || ('NOT_AVAILABLE' | translate)}}</p>
-		</div>
-		<div class="ui-g-6">
+		</div>		
+		<div class="ui-g-12">
 			<h6><b translate>ORGANIZATION_DETAIL.EMAIL</b></h6>
-		</div>
-		<div class="ui-g-6">
 			<p>{{email || ('NOT_AVAILABLE' | translate)}}</p>
 		</div>
+		<div class="ui-g-12"></div>
 	</div>
 	<p-dataTable [value]="datasets" [responsive]="true" #dt>
 		<p-column field="name" header="{{numDatasets}} {{ 'ORGANIZATION_DETAIL.FOUND_DATASETS' | translate }}" [sortable]="true">
@@ -60,7 +49,8 @@
 	<p-paginator rows="{{pageRows}}" totalRecords="{{numDatasets}}" (onPageChange)="paginate($event)"></p-paginator>
 	<div class="nota">
 		<p>
-			<i class="fa fa-star" id="informacion_content_3_i" style="color: #5ea2ba;"></i> {{ 'LAST_DAYS_HITS' | translate:param }}
+			<i class="fa fa-star" id="informacion_content_3_i" style="color: #5ea2ba;"></i> {{ 'LAST_DAYS_HITS' | translate:param
+			}}
 		</p>
 	</div>
 </div>

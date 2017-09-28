@@ -17,12 +17,32 @@ p {
     margin: 2px 0 20px;
     letter-spacing: 0.1em;
     font-weight: 300;
-}
+    width: 80%;
+    text-align: justify; 
+    }
 
 b {
     font-family: 'Roboto', sans-serif;
     line-height: 1;
     margin: 2px 0 20px;
     letter-spacing: 0.1em;
-    font-weight: 700;
+    font-weight: 700; 
+}
+
+>>> th {
+    background: #5ea2ba !important;
+    color: white !important;
+}
+
+>>> .ui-datatable-data > tr > td {
+    border: none !important;
+    border-bottom: 2px solid #5ea2ba !important;
+}
+
+>>> .ui-datatable-data > tr:hover {
+    background-color: 	rgba(94, 162, 186, 0.1) !important;
+}
+
+>>> .ui-widget-content {
+    border: none !important;
 }

@@ -1,5 +1,5 @@
 .container {
-    padding-top: 15%;
+    padding-top: 15%;   
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -19,6 +19,17 @@ p {
     font-weight: 300;
 }
 
+.description{
+    font-family: 'Roboto', sans-serif;
+    line-height: 1;
+    margin: 2px 0 5px;
+    letter-spacing: 0.05em;
+    font-weight: 300;
+    overflow: hidden;
+    white-space:nowrap;
+    text-overflow: ellipsis;
+}
+
 b {
     font-family: 'Roboto', sans-serif;
     line-height: 1;
@@ -31,17 +42,54 @@ b {
     margin: 0 auto;
     float: none;
     cursor: pointer;
+    align-self: center;
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
 }
 
-.card, .card-img-top {
+.card-img-top {
     align-self: center;
     max-width: 80%;
+    max-height: 100%;
     height: auto;
+}
+
+.card-block{
+    position: relative;
+    vertical-align: middle;
+}
+
+.tittle{
+   text-align: center;
+}
+
+>>> th {
+    background: #5ea2ba !important;
+    color: white !important;
+}
+
+>>> .ui-datatable-data > tr > td {
+    border: none !important;
+    border-bottom: 2px solid #5ea2ba !important;
+}
+
+>>> .ui-datatable-data > tr:hover {
+    background-color: 	rgba(94, 162, 186, 0.1) !important;
+}
+
+>>> .ui-widget-content {
+    border: none !important;
 }
 
 .numDatasets {
     position: absolute;
     bottom: 0;
+}
+
+.orgName {
+    position: absolute;
+    bottom: 0;    
 }
 
 .tabla {

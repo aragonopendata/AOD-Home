@@ -54,7 +54,7 @@ exports.DB_CONNECTION_TIMEOUT_MILLIS = 1000;
 /* **************** */
 /* PROXY PROPERTIES */
 exports.REQUESTS_NEED_PROXY = false;
-exports.PROXY_USER = 'user';
-exports.PROXY_PASS = 'pass';
-exports.PROXY_URL = 'url';
-exports.PROXY_PORT = 'port';
+exports.PROXY_USER = 'acebollero';
+exports.PROXY_PASS = 'Cebixz0789';
+exports.PROXY_URL = '10.74.255.120 ';
+exports.PROXY_PORT = '8080';
