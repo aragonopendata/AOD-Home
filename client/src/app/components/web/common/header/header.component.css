@@ -36,12 +36,11 @@ a:hover {
     height: 0%;
     width: 100%;
     position: fixed;
-    z-index: 3;
+    z-index: 3; 
     top: 0;
     left: 0;
     background-color: rgba(0,0,0, 0.82);
-    overflow-y: auto;
-    scroll-behavior: auto;
+    overflow: hidden;
     transition: 0.5s;
 }
 
@@ -75,14 +74,14 @@ a:hover {
     color: #f1f1f1;
 }
 
-@media screen and (max-height: 450px) {
-  .overlay {
-      overflow-y: hidden;
-      }
-  .overlay a, .overlay li {
-      font-size: 20px;
-      }
-}
+@media screen and (max-height: 600px) {
+    .overlay{
+        overflow: scroll;
+    }
+    .overlay .search a{
+        font-size: 20px;
+        }
+  }
 
 .textBox {
     color: white;

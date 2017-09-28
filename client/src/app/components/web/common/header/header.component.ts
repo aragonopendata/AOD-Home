@@ -33,7 +33,6 @@ export class HeaderComponent implements OnInit {
     }
 
     openNav() {
-        console.log(this.menuActive);
         if (!this.menuActive) {
             $('body,html').css('overflow-y', 'hidden');
             $('.overlay').css('top', $('#header').height());
@@ -119,7 +118,11 @@ export class HeaderComponent implements OnInit {
 
     searchDatasetsByText(text: string){
 		this.router.navigate(['/datos/catalogo'], { queryParams: { texto: text} });
-	}
+    }
+    
+    onResize(event) {
+        $('.overlay').css('top', $('#header').height());
+    } 
 
     ngOnInit() {
         this.getAutocomplete();
