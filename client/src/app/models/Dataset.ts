@@ -40,7 +40,6 @@ export class Dataset {
     extras: Extra[];
     license_url: string;
     organization: Organization;
-    organization_name: string;
     revision_id: string;
     //ADMIN FIELDS ??
     acessos: number;

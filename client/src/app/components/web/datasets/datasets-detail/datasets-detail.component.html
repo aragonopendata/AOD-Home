@@ -58,7 +58,7 @@
 				</div>
 				<div class="section">
 					<h6>Organización responsable de la publicación</h6>
-					<p>{{dataset.organization_name}}</p>
+					<p>{{dataset.organization?.title}}</p>
 				</div>
 				<div class="section">
 					<h6>Territorio en el que existen los datos</h6>
@@ -96,7 +96,7 @@
 			<div class="title">
 				<h5>Descargas</h5>
 			</div>
-			<div class="container-fluid">
+			<div class="container-fluid horizontalFormat">
 				<div class="section">
 					<h6>Metadatos de la colección</h6>
 				</div>
@@ -105,7 +105,12 @@
 						<div *ngFor="let resource of resourcesAux">
 							<p>{{resource.name}}</p>
 							<div *ngFor="let url of resource.sources; let i = index">
-								<button class="tags" pButton type="button" label="{{resource.formats[i]}}" style="margin: 2px;" (click)="downloadFile(url)"></button>
+								<div class="horizontalFormat" *ngIf="resource.getSourcesSize() != i+1">
+									<button class="tags" pButton type="button" label="{{resource.formats[i]}}" style="margin: 2px;" (click)="downloadFile(url)"></button>
+								</div>
+								<div *ngIf="resource.getSourcesSize() == i+1">
+									<button class="tags" pButton type="button" label="{{resource.formats[i]}}" style="margin: 2px;" (click)="downloadFile(url)"></button>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -113,14 +118,32 @@
 		</div>
 		<div class="recomend col-12">
 			<h4>También te pueden interesar estos datos</h4>
-			<div class="container-fluid">
-				<div class="card col-sm-12 col-md-6 col-lg-4">
-					<img class="card-img-top" src="" alt="Card image cap" width="fit-content" height="fit-content" style="margin: 10px; margin: 0 auto;">
-					<div class="card-block" style="border: none; text-align: center; font-size: 15px; margin: 10; padding: 10px; height: 40px; background-color: darkslategray; color: white;">
-						<p></p>
-					</div>
+
+			<div class="ui-g">
+				<div class="ui-sm-12 ui-md-6 ui-lg-4 tarjetaContainer" *ngFor="let dsRecommended of datasetsRecommended; let i = index" (mouseenter)="setHover(dsRecommended.name, i)" (mouseleave)="unsetHover(dsRecommended.name, i)">
+					<div class="recommendedCard" routerLink="/datos/catalogo/dataset/{{dsRecommended.name}}" (click)="showDataset(dsRecommended)">
+						<div *ngFor="let topic of dsRecommended.groups">
+							
+							<!--<div *ngIf="!hovers[i]?.hover">-->
+								<img class="card-img-top" src="../../../../assets/temas/{{topic.image_url | slice:14:topic.image_url.length-4}}.png" alt="{{topic.title | uppercase}}" width="fit-content" height="fit-content">
+								<p>{{topic.title}}</p>
+								<div class="recommended-card-block">
+									<p>{{dsRecommended.title}}</p>
+								</div>
+							<!--</div>-->
+							<!--<div *ngIf="hovers[i]?.hover" class="detail bg-faded" style="position: absolute; width: 100%; height: 100%; padding: 10px; background-color: rgba(235,241,244, 0.95); opacity: 80%; ">
+									<h6>TÍTULO</h6>
+									<h6>{{dsRecommended.title}}</h6>
+									<h6>CATEGORÍA</h6>
+									<h6>{{topic.title}}</h6>
+									<h6>PUBLICADOR</h6>
+									<h6>{{dsRecommended.organization.title}}</h6>
+							</div>-->
+						</div>
+					</div>	
 				</div>
 			</div>
+
 		</div>
 	</div>
 </div>

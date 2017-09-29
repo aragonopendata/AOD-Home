@@ -4,6 +4,10 @@ export class ResourceAux {
     formats: string[];
 
     constructor() {
-        
+   
+    }
+
+    getSourcesSize(){
+        return this.sources.length;
     }
 }
