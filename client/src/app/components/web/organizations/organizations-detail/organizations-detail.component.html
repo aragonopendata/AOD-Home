@@ -7,7 +7,12 @@
 		</div>		
 		<div class="ui-g-12">
 			<h6><b translate>ORGANIZATION_DETAIL.WEBPAGE</b></h6>
-			<p>{{webpage || ('NOT_AVAILABLE' | translate)}}</p>
+			<div *ngIf="webpage; else NOT_AVAILABLE">
+				<p><a href="{{webpage}}">{{webpage}}</a></p>
+			</div>
+			<div *ngIf="!webpage">
+				<p>{{('NOT_AVAILABLE' | translate)}}</p>
+			</div>
 		</div>		
 		<div class="ui-g-12">
 			<h6><b translate>ORGANIZATION_DETAIL.DESCRIPTION</b></h6>
@@ -35,8 +40,8 @@
 				  </a>
 			</ng-template>
 		</p-column>
-		<p-column field="accesos" header="{{ 'ORGANIZATION_DETAIL.TRACKING' | translate }}" [style]="{'width':'160px'}" [sortable]="true">
-			<ng-template pTemplate="body" let-dataset="rowData">
+		<p-column field="accesos" header="{{ 'ORGANIZATION_DETAIL.TRACKING' | translate }}" (click)="setOrder(event)" [style]="{'width':'160px'}" [sortable]="true">
+			<ng-template pTemplate="body"  let-dataset="rowData">
 				{{dataset.tracking_summary.total}}
 			</ng-template>
 		</p-column>

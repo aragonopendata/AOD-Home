@@ -85,19 +85,19 @@ exports.TAGS_LIST = 'tag_list';
 
 /* ******************* */
 /* DATABASE PROPERTIES */
-exports.DB_HOST = 'localhost';
-exports.DB_NAME = 'aod';
-exports.DB_PORT = 5432;
-exports.DB_USER = 'aod_admin';
-exports.DB_PASSWORD = 'M4n4g3r';
+exports.DB_HOST = '';
+exports.DB_NAME = '';
+exports.DB_PORT = 0;
+exports.DB_USER = '';
+exports.DB_PASSWORD = '';
 exports.DB_MAX_CONNECTIONS = 10; //default 10
 exports.DB_IDLE_TIMEOUT_MILLIS = 10000; // default 10000 (10 seconds)
 exports.DB_CONNECTION_TIMEOUT_MILLIS = 1000;
 
 /* **************** */
 /* PROXY PROPERTIES */
-exports.REQUESTS_NEED_PROXY = true;
-exports.PROXY_USER = 'jortizsisamon';
-exports.PROXY_PASS = 'Mix*210814*';
-exports.PROXY_URL = '10.74.255.120';
-exports.PROXY_PORT = '8080';
+exports.REQUESTS_NEED_PROXY = false;
+exports.PROXY_USER = '';
+exports.PROXY_PASS = '';
+exports.PROXY_URL = '';
+exports.PROXY_PORT = '';
