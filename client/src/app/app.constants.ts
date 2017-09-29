@@ -19,7 +19,7 @@ export class Constants {
     public static OASI_YOUTUBE_URL = 'https://www.youtube.com/watch?v=8d409yteTJM&amp;list=PLQ3k0vA0UZvhBVOz_mCq-9Wyn3VCB6QCe';
     public static AOD_MAIL = 'opendata@aragon.es';
     public static ARAGON_PARTICIPA_WEB_URL = 'http://aragonparticipa.aragon.es';
-    public static TRANSPARENCIA_WEB_URL = 'http://aragonparticipa.aragon.es';
+    public static TRANSPARENCIA_WEB_URL = 'http://transparencia.aragon.es/';
 
     //COMMON CONSTANTS
     public static DATASET_LIST_ROWS_PER_PAGE = 20;

@@ -24,6 +24,7 @@ export class HeaderComponent implements OnInit {
 	private datasetTitle = new Subject<string>();
     private resultsLimit: number;
     //Dynamic URL build parameters
+    routerLinkLogin: string;
 	routerLinkPageNotFound: string;
     routerLinkDataCatalog: string;
     routerLinkDataCatalogDataset: string;
@@ -54,6 +55,7 @@ export class HeaderComponent implements OnInit {
         this.transparenciaWebUrl = Constants.TRANSPARENCIA_WEB_URL;
         this.aragonParticipaWebUrl = Constants.ARAGON_PARTICIPA_WEB_URL;
         this.resultsLimit = Constants.DATASET_AUTOCOMPLETE_HEADER_LIMIT_RESULTS;
+        this.routerLinkLogin = Constants.ROUTER_LINK_LOGIN;
         this.routerLinkDataCatalog = Constants.ROUTER_LINK_DATA_CATALOG;
         this.routerLinkDataCatalogDataset = Constants.ROUTER_LINK_DATA_CATALOG_DATASET;
 		this.routerLinkDataTopics = Constants.ROUTER_LINK_DATA_TOPICS;

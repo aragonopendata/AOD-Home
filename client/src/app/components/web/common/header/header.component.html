@@ -9,27 +9,26 @@
                 <a class="nav-link active" href="/">Open Data</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{transparenciaWebUrl}}">Participación ciudadana</a>
+                <a class="nav-link" href="{{aragonParticipaWebUrl}}">Participación ciudadana</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{aragonParticipaWebUrl}}">Transparencia</a>
+                <a class="nav-link" href="{{transparenciaWebUrl}}">Transparencia</a>
             </li>
         </ul>
     </div>
-
     <div class="navbar navbar-toggleable-md navbar-light" id="nav">
         <a class="navbar-brand logo" href="/">
               <img class="navbar-brand" id="logo" src="../assets/AOD-Logo.png"  class="d-inline-block align-top"  alt="">
           </a>
-        <div id="loginLink" class="nav-item menuLogin" routerLink="/login" (mouseenter)="hover('#login')" (mouseleave)="unhover('#login')">
+        <div id="loginLink" class="nav-item menuLogin" routerLink="/{{routerLinkLogin}}" (mouseenter)="hover('#login')" (mouseleave)="unhover('#login')">
             <a class="nav-link aLogin" routerLinkActive="active" (click)="focusUserName()">
-                  <img id="login" class="aLogin" src="{{srcLogin}}" alt="x"  border="0"/>
-              </a>
+                <img id="login" class="aLogin" src="{{srcLogin}}" alt="x"  border="0"/>
+            </a>
         </div>
         <div class="navbar-item menu" (click)="openNav()" (mouseenter)="hover('#menu')" (mouseleave)="unhover('#menu')">
             <a class="nav-link aMenu">
-                  <img id="menu" class="aMenu" src="{{srcMenu}}" alt="x" />
-              </a>
+                <img id="menu" class="aMenu" src="{{srcMenu}}" alt="x" />
+            </a>
         </div>
     </div>
 </div>
@@ -65,10 +64,10 @@
                 <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
                     <div class="card-block">
                         <ul id="servicios">
-                            <li><a href="{{aodBaseUrl}}/{{routerLinkServicesAragopedia}}">Aragopedia</a></li>
-                            <li><a href="{{presupuestosBaseUrl}}">Presupuestos</a></li>
-                            <li><a href="{{aodBaseUrl}}/{{routerLinkServicesSocialData}}">Open Social Data</a></li>
-                            <li><a href="{{aodBaseUrl}}/{{routerLinkServicesCras}}">CRAs Aragón</a></li>
+                            <li><a href="{{aodBaseUrl}}/{{routerLinkServicesAragopedia}}" (click)="openNav()">Aragopedia</a></li>
+                            <li><a href="{{presupuestosBaseUrl}}" (click)="openNav()">Presupuestos</a></li>
+                            <li><a href="{{aodBaseUrl}}/{{routerLinkServicesSocialData}}" (click)="openNav()">Open Social Data</a></li>
+                            <li><a href="{{aodBaseUrl}}/{{routerLinkServicesCras}}" (click)="openNav()">CRAs Aragón</a></li>
                         </ul>
                     </div>
                 </div>
