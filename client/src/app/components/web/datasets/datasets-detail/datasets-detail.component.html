@@ -38,54 +38,54 @@
 				<h5>Información del conjunto de datos</h5>
 			</div>
 			<div class="container-fluid">
-				<div class="section">
+				<div class="section" *ngIf="dataset.title">
 					<h6>Título</h6>
 					<p>{{dataset.title}}</p>
 				</div>
-				<div class="section">
+				<div class="section" *ngIf="dataset.description">
 					<h6>Descripción</h6>
 					<p>{{dataset.description}}</p>
 				</div>
-				<div class="section">
+				<div class="section" *ngIf="dataset.groups">
 					<h6>Categoría</h6>
 					<p *ngFor="let group of dataset.groups">
 						<a routerLink='/{{routerLinkDataCatalogTopics}}/{{group.name}}'>{{group.title}}</a>
 					</p>
 				</div>
-				<div class="section">
+				<div class="section" *ngIf="dataset.tags">
 					<h6>Etiquetas y palabras clave</h6>
 					<button *ngFor="let tag of dataset.tags" class="tags" pButton type="button" routerLink="/{{routerLinkDataCatalogTags}}" [queryParams]="{etq:tag.name}" pButton label="{{tag.name}}" style="margin: 2px;"></button>
 				</div>
-				<div class="section">
+				<div class="section" *ngIf="dataset.organization">
 					<h6>Organización responsable de la publicación</h6>
-					<p>{{dataset.organization?.title}}</p>
+					<a routerLink='/{{routerLinkDataCatalogOrgs}}/{{dataset.organization?.name}}'>{{dataset.organization?.title}}</a>
 				</div>
 				<div class="section">
 					<h6>Territorio en el que existen los datos</h6>
 					<p>Este conjunto de datos contiene datos en el territorio de {{extraTypeAragopedia}}</p>
 					<p>Esta es la <a href="extraUriAragopedia"> URI del recurso {{extraShortUriAragopedia}}</a></p>
 				</div>
-				<div class="section">
+				<div class="section" *ngIf="extraFrequency">
 					<h6>Frecuencia de actualización</h6>
 					<p>{{extraFrequency}}</p>
 				</div>
-				<div class="section">
+				<div class="section" *ngIf="extraTemporalFrom && extraTemporalUntil">
 					<h6>Periodo de tiempo en el que existen datos</h6>
 					<p>De {{extraTemporalFrom}} a {{extraTemporalUntil}}</p>
 				</div>
-				<div class="section">
+				<div class="section" *ngIf="dataset.license_title">
 					<h6>Licencia</h6>
 					<p>{{dataset.license_title}}</p>
 				</div>
-				<div class="section">
+				<div class="section" *ngIf="extraGranularity">
 					<h6>Nivel de detalle</h6>
 					<p>{{extraGranularity}}</p>
 				</div>
-				<div class="section">
+				<div class="section" *ngIf="extraDataQuality">
 					<h6>Calidad del dato</h6>
 					<p>{{extraDataQuality}}</p>
 				</div>
-				<div class="section">
+				<div class="section" *ngIf="extraDictionaryURL">
 					<h6>Diccionario de datos</h6>
 					<button *ngFor="let dic of extraDictionaryURL; let i = index" class="tags" pButton type="button" label="[{{i+1}}] Documento de diccionario de datos"
 					 style="margin: 2px;"></button>
@@ -116,7 +116,7 @@
 					</div>
 			</div>
 		</div>
-		<div class="recomend col-12">
+		<div class="recomend col-12" *ngIf="datasetsRecommended">
 			<h4>También te pueden interesar estos datos</h4>
 
 			<div class="ui-g">

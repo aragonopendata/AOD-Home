@@ -30,6 +30,7 @@ export class DatasetsDetailComponent implements OnInit {
 	//Dynamic URL build parameters
 	routerLinkDataCatalogTopics: string;
 	routerLinkDataCatalogTags: string;
+	routerLinkDataCatalogOrgs: string;
 
 	hovers: any[] = [];
 
@@ -37,6 +38,7 @@ export class DatasetsDetailComponent implements OnInit {
 			private activatedRoute: ActivatedRoute) { 
 		this.routerLinkDataCatalogTopics = Constants.ROUTER_LINK_DATA_CATALOG_TOPICS;
 		this.routerLinkDataCatalogTags = Constants.ROUTER_LINK_DATA_CATALOG_TAGS;
+		this.routerLinkDataCatalogOrgs = Constants.ROUTER_LINK_DATA_CATALOG_ORGANIZATIONS;
 	}
 
 	ngOnInit() {
