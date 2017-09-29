@@ -1,13 +1,13 @@
 import * as $ from 'jquery';
 import { Component, OnInit } from '@angular/core';
 import { AppComponent } from '../../../../app.component';
-import { ConstantsService } from '../../../../app.constants';
-import { Dataset } from "app/models/Dataset";
-import { Observable } from "rxjs/Observable";
-import { Subject } from "rxjs";
-import { Autocomplete } from "app/models/Autocomplete";
-import { Router } from "@angular/router";
-import { DatasetsService } from "app/services/web/datasets.service";
+import { Constants } from '../../../../app.constants';
+import { Dataset } from 'app/models/Dataset';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs';
+import { Autocomplete } from 'app/models/Autocomplete';
+import { Router } from '@angular/router';
+import { DatasetsService } from 'app/services/web/datasets.service';
 
 @Component({
     selector: 'app-header',
@@ -15,21 +15,61 @@ import { DatasetsService } from "app/services/web/datasets.service";
     styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-    aodBaseUrl: String;
-    presupuestosBaseUrl: String;
+    
     menuActive: boolean = false;
     srcMenu: String = '../../../assets/Boton-Menu-Responsive-OFF.png';
     srcLogin: String = '../../../assets/Boton-Acceso-Usuarios-OFF.png';
     dataset: Dataset;
 	datasetAutocomplete: Autocomplete[];
 	private datasetTitle = new Subject<string>();
-	private resultsLimit: number;
+    private resultsLimit: number;
+    //Dynamic URL build parameters
+	routerLinkPageNotFound: string;
+    routerLinkDataCatalog: string;
+    routerLinkDataCatalogDataset: string;
+	routerLinkDataTopics: string;
+	routerLinkDataOrganizations: string;
+	routerLinkServicesAragopedia: string;
+	routerLinkServicesPresupuestos: string;
+	routerLinkServicesCras: string;
+	routerLinkServicesSocialData: string;
+	routerLinkInfoOpenData: string;
+	routerLinkInfoApplications: string;
+	routerLinkInfoEventos: string;
+	routerLinkInfoCollaboration: string;
+	routerLinkToolsCampus: string;
+	routerLinkToolsDevelopers: string;
+	routerLinkToolsApis: string;
+	routerLinkToolsSparql: string;
+	routerLinkToolsGithub: string;
+    aodBaseUrl: string;
+    presupuestosBaseUrl: string;
+    transparenciaWebUrl: string;
+    aragonParticipaWebUrl: string;
 
-    constructor(private locale: AppComponent, private constants: ConstantsService,
+    constructor(private locale: AppComponent, private constants: Constants,
             private datasetService: DatasetsService, private router: Router) { 
-        this.aodBaseUrl = this.constants.AOD_BASE_URL;
-        this.presupuestosBaseUrl = this.constants.PRESUPUESTOS_BASE_URL;
-        this.resultsLimit=4;
+        this.aodBaseUrl = Constants.AOD_BASE_URL;
+        this.presupuestosBaseUrl = Constants.PRESUPUESTOS_BASE_URL;
+        this.transparenciaWebUrl = Constants.TRANSPARENCIA_WEB_URL;
+        this.aragonParticipaWebUrl = Constants.ARAGON_PARTICIPA_WEB_URL;
+        this.resultsLimit = Constants.DATASET_AUTOCOMPLETE_HEADER_LIMIT_RESULTS;
+        this.routerLinkDataCatalog = Constants.ROUTER_LINK_DATA_CATALOG;
+        this.routerLinkDataCatalogDataset = Constants.ROUTER_LINK_DATA_CATALOG_DATASET;
+		this.routerLinkDataTopics = Constants.ROUTER_LINK_DATA_TOPICS;
+		this.routerLinkDataOrganizations = Constants.ROUTER_LINK_DATA_ORGANIZATIONS;
+		this.routerLinkServicesAragopedia = Constants.ROUTER_LINK_SERVICES_ARAGOPEDIA;
+		this.routerLinkServicesCras = Constants.ROUTER_LINK_SERVICES_CRAS;
+		this.routerLinkServicesSocialData = Constants.ROUTER_LINK_SERVICES_SOCIAL_DATA;
+		this.routerLinkInfoOpenData = Constants.ROUTER_LINK_INFORMATION_OPEN_DATA;
+		this.routerLinkInfoApplications = Constants.ROUTER_LINK_INFORMATION_APPS;
+		this.routerLinkInfoEventos = Constants.ROUTER_LINK_INFORMATION_EVENTS;
+		this.routerLinkInfoCollaboration = Constants.ROUTER_LINK_INFORMATION_COLLABORATION;
+		this.routerLinkToolsCampus = Constants.ROUTER_LINK_TOOLS_CAMPUS;
+		this.routerLinkToolsDevelopers = Constants.ROUTER_LINK_TOOLS_DEVELOPERS;
+		this.routerLinkToolsApis = Constants.ROUTER_LINK_TOOLS_APIS;
+		this.routerLinkToolsSparql = Constants.ROUTER_LINK_TOOLS_SPARQL;
+		this.routerLinkToolsGithub = Constants.AOD_GITHUB_URL;
     }
 
     openNav() {
@@ -90,7 +130,7 @@ export class HeaderComponent implements OnInit {
 
     search(title: string): void {
 		//Lectura cuando hay al menos 3 caracteres, (3 espacios produce error).
-		if (title.length >= 3) {
+		if (title.length >= Constants.DATASET_AUTOCOMPLETE_MIN_CHARS) {
 			this.datasetTitle.next(title);
 		} else {
 			this.datasetAutocomplete = null;
@@ -100,7 +140,7 @@ export class HeaderComponent implements OnInit {
 	getAutocomplete(): void {
 		//Funciona la busqueda, falla al poner un caracter especial
 		this.datasetTitle
-			.debounceTime(100)
+			.debounceTime(Constants.DATASET_AUTOCOMPLETE_DEBOUNCE_TIME)
 			.distinctUntilChanged()
 			.switchMap(title => title
 				? this.datasetService.getDatasetsAutocomplete(title, this.resultsLimit)
@@ -113,11 +153,11 @@ export class HeaderComponent implements OnInit {
 	}
 
     focusUserName(){
-        document.getElementById("loginLink").blur();
+        document.getElementById('loginLink').blur();
     }
 
     searchDatasetsByText(text: string){
-		this.router.navigate(['/datos/catalogo'], { queryParams: { texto: text} });
+		this.router.navigate(['/' + this.routerLinkDataCatalog], { queryParams: { texto: text} });
     }
     
     onResize(event) {

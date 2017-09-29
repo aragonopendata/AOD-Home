@@ -9,7 +9,7 @@ const loggerSettings = logConfig.getLogSettings();
 const logger = require('js-logging').dailyFile([loggerSettings]);
 
 /** LIST ALL TOPICS */
-router.get('/topics', function (req, res, next) {
+router.get(constants.API_URL_TOPICS, function (req, res, next) {
     logger.debug('Servicio: Listado de temas');
     let serviceBaseUrl = constants.CKAN_API_BASE_URL;
     let serviceName = constants.TOPICS_LIST;

@@ -2,9 +2,9 @@
 
 const express = require('express');
 const router = express.Router();
+const constants = require('../../util/constants');
 //DB SETTINGS
 const db = require('../../db/db-connection');
-const dbQueries = require('../../db/db-queries');
 const pool = db.getPool();
 
 //LOG SETTINGS
@@ -12,9 +12,9 @@ const logConfig = require('../../conf/log-conf');
 const loggerSettings = logConfig.getLogSettings();
 const logger = require('js-logging').dailyFile([loggerSettings]);
 
-router.get('/static-content/info/open-data', function (req, res, next) {
-    let sectionTitle = 'INFORMACIÓN';
-    let sectionSubtitle = 'OPEN DATA';
+router.get(constants.API_URL_STATIC_CONTENT_INFO_OPEN_DATA, function (req, res, next) {
+    let sectionTitle = constants.STATIC_CONTENT_SECTION_TITLE_INFO;
+    let sectionSubtitle = constants.STATIC_CONTENT_SUBSECTION_TITLE_OPEN_DATA;
     const query = {
         text: 'SELECT sec.id as "sectionId", sec.title as "sectionTitle", sec.subtitle as "sectionSubtitle" '
                  + ', sec.description as "sectionDescription", cnt.content_order as "contentOrder" ' 
@@ -25,7 +25,7 @@ router.get('/static-content/info/open-data', function (req, res, next) {
              + 'WHERE sec.title = $1 and sec.subtitle = $2 '
              + 'ORDER BY cnt.content_order ASC',
         values: [sectionTitle, sectionSubtitle],
-        rowMode: 'json'
+        rowMode: constants.SQL_RESULSET_FORMAT
     };
 
     pool.on('error', (err, client) => {
@@ -54,9 +54,9 @@ router.get('/static-content/info/open-data', function (req, res, next) {
     });
 });
 
-router.get('/static-content/info/applications', function (req, res, next) {
-    let sectionTitle = 'INFORMACIÓN';
-    let sectionSubtitle = 'APLICACIONES';
+router.get(constants.API_URL_STATIC_CONTENT_INFO_APPS, function (req, res, next) {
+    let sectionTitle = constants.STATIC_CONTENT_SECTION_TITLE_INFO;
+    let sectionSubtitle = constants.STATIC_CONTENT_SUBSECTION_TITLE_APPS;
     const query = {
         text: 'SELECT sec.id as "sectionId", sec.title as "sectionTitle", sec.subtitle as "sectionSubtitle" '
                  + ', sec.description as "sectionDescription", cnt.content_order as "contentOrder" ' 
@@ -67,7 +67,7 @@ router.get('/static-content/info/applications', function (req, res, next) {
              + 'WHERE sec.title = $1 and sec.subtitle = $2 '
              + 'ORDER BY cnt.content_order ASC',
         values: [sectionTitle, sectionSubtitle],
-        rowMode: 'json'
+        rowMode: constants.SQL_RESULSET_FORMAT
     };
 
     pool.on('error', (err, client) => {
@@ -96,9 +96,9 @@ router.get('/static-content/info/applications', function (req, res, next) {
     });
 });
 
-router.get('/static-content/info/events', function (req, res, next) {
-    let sectionTitle = 'INFORMACIÓN';
-    let sectionSubtitle = 'EVENTOS';
+router.get(constants.API_URL_STATIC_CONTENT_INFO_EVENTS, function (req, res, next) {
+    let sectionTitle = constants.STATIC_CONTENT_SECTION_TITLE_INFO;
+    let sectionSubtitle = constants.STATIC_CONTENT_SUBSECTION_TITLE_EVENTS;
     const query = {
         text: 'SELECT sec.id as "sectionId", sec.title as "sectionTitle", sec.subtitle as "sectionSubtitle" '
                  + ', sec.description as "sectionDescription", cnt.content_order as "contentOrder" ' 
@@ -109,7 +109,7 @@ router.get('/static-content/info/events', function (req, res, next) {
              + 'WHERE sec.title = $1 and sec.subtitle = $2 '
              + 'ORDER BY cnt.content_order ASC',
         values: [sectionTitle, sectionSubtitle],
-        rowMode: 'json'
+        rowMode: constants.SQL_RESULSET_FORMAT
     };
 
     pool.on('error', (err, client) => {
@@ -138,13 +138,13 @@ router.get('/static-content/info/events', function (req, res, next) {
     });
 });
 
-router.get('/static-content/info/collaboration', function (req, res, next) {
+router.get(constants.API_URL_STATIC_CONTENT_INFO_COLLABORATION, function (req, res, next) {
     
 });
 
-router.get('/static-content/tools/developers', function (req, res, next) {
-    let sectionTitle = 'HERRAMIENTAS';
-    let sectionSubtitle = 'DESARROLLADORES';
+router.get(constants.API_URL_STATIC_CONTENT_TOOLS_DEVELOPERS, function (req, res, next) {
+    let sectionTitle = constants.STATIC_CONTENT_SECTION_TITLE_TOOLS;
+    let sectionSubtitle = constants.STATIC_CONTENT_SUBSECTION_TITLE_DEVELOPERS;
     const query = {
         text: 'SELECT sec.id as "sectionId", sec.title as "sectionTitle", sec.subtitle as "sectionSubtitle" '
                  + ', sec.description as "sectionDescription", cnt.content_order as "contentOrder" ' 
@@ -155,7 +155,7 @@ router.get('/static-content/tools/developers', function (req, res, next) {
              + 'WHERE sec.title = $1 and sec.subtitle = $2 '
              + 'ORDER BY cnt.content_order ASC',
         values: [sectionTitle, sectionSubtitle],
-        rowMode: 'json'
+        rowMode: constants.SQL_RESULSET_FORMAT
     };
 
     pool.on('error', (err, client) => {
@@ -184,9 +184,9 @@ router.get('/static-content/tools/developers', function (req, res, next) {
     });
 });
 
-router.get('/static-content/tools/apis', function (req, res, next) {
-    let sectionTitle = 'HERRAMIENTAS';
-    let sectionSubtitle = 'APIS';
+router.get(constants.API_URL_STATIC_CONTENT_TOOLS_APIS, function (req, res, next) {
+    let sectionTitle = constants.STATIC_CONTENT_SECTION_TITLE_TOOLS;
+    let sectionSubtitle = constants.STATIC_CONTENT_SUBSECTION_TITLE_APIS;
     const query = {
         text: 'SELECT sec.id as "sectionId", sec.title as "sectionTitle", sec.subtitle as "sectionSubtitle" '
                  + ', sec.description as "sectionDescription", cnt.content_order as "contentOrder" ' 
@@ -197,7 +197,7 @@ router.get('/static-content/tools/apis', function (req, res, next) {
              + 'WHERE sec.title = $1 and sec.subtitle = $2 '
              + 'ORDER BY cnt.content_order ASC',
         values: [sectionTitle, sectionSubtitle],
-        rowMode: 'json'
+        rowMode: constants.SQL_RESULSET_FORMAT
     };
 
     pool.on('error', (err, client) => {
@@ -226,9 +226,9 @@ router.get('/static-content/tools/apis', function (req, res, next) {
     });
 });
 
-router.get('/static-content/tools/sparql', function (req, res, next) {
-    let sectionTitle = 'HERRAMIENTAS';
-    let sectionSubtitle = 'SPARQL';
+router.get(constants.API_URL_STATIC_CONTENT_TOOLS_SPARQL, function (req, res, next) {
+    let sectionTitle = constants.STATIC_CONTENT_SECTION_TITLE_TOOLS;
+    let sectionSubtitle = constants.STATIC_CONTENT_SUBSECTION_TITLE_SPARQL;
     const query = {
         text: 'SELECT sec.id as "sectionId", sec.title as "sectionTitle", sec.subtitle as "sectionSubtitle" '
                  + ', sec.description as "sectionDescription", cnt.content_order as "contentOrder" ' 
@@ -239,7 +239,7 @@ router.get('/static-content/tools/sparql', function (req, res, next) {
              + 'WHERE sec.title = $1 and sec.subtitle = $2 '
              + 'ORDER BY cnt.content_order ASC',
         values: [sectionTitle, sectionSubtitle],
-        rowMode: 'json'
+        rowMode: constants.SQL_RESULSET_FORMAT
     };
 
     pool.on('error', (err, client) => {

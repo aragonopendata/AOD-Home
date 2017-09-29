@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params} from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Organization } from '../../../../models/Organization';
 import { OrganizationsService } from '../../../../services/web/organizations.service';
 import { DatasetsService } from '../../../../services/web/datasets.service';
 import { Dataset } from '../../../../models/Dataset';
-import { ConstantsService } from '../../../../app.constants';
+import { Constants } from '../../../../app.constants';
 
 @Component({
 	selector: 'app-organizations-detail',
@@ -22,22 +22,22 @@ export class OrganizationsDetailComponent implements OnInit {
 	sort: string;
 	datasets: Dataset[];
 	numDatasets: number;
-	param = { ocurrences: '10', days: '14' };
-	pageRows: number;
+	param = { ocurrences: Constants.DATASET_HIGLIGHT_OCURRENCES, days: Constants.DATASET_HIGLIGHT_DAYS };
+	//Dynamic URL build parameters
+	routerLinkDataCatalogDataset: string;
 
 	constructor(private organizationsService: OrganizationsService
-			  , private datasetsService: DatasetsService
-			  , private constants: ConstantsService
-			  , private activatedRoute: ActivatedRoute) {
-		this.pageRows = constants.DATASET_LIST_ROWS_PER_PAGE;
+			, private datasetsService: DatasetsService
+			, private activatedRoute: ActivatedRoute) {
+		this.routerLinkDataCatalogDataset = '/' + Constants.ROUTER_LINK_DATA_CATALOG_DATASET;
 	}
 
 	ngOnInit() {
 		this.activatedRoute.params.subscribe(params => {
-			this.org.name =  params['organizationName'];
+			this.org.name = params[Constants.ROUTER_LINK_DATA_PARAM_ORGANIZATION_NAME];
 		});
 		this.organizationsService.getOrganizationByName(this.org.name).subscribe(org => {
-			this.sort = 'relevance,-metadata_modified';
+			this.sort = Constants.SERVER_API_LINK_PARAM_SORT_DEFAULT_VALUE;
 			this.org = JSON.parse(org).result;
 			this.getExtras();
 			this.getEmail();
@@ -49,11 +49,11 @@ export class OrganizationsDetailComponent implements OnInit {
 		//webpage, address and person from extras
 		if (this.org.extras !== undefined) {
 			for (let extra of this.org.extras) {
-				if (extra.key === 'webpage') {
+				if (extra.key === Constants.ORGANIZATION_EXTRA_WEBPAGE) {
 					this.webpage = extra.value;
-				} else if (extra.key === 'address') {
+				} else if (extra.key === Constants.ORGANIZATION_EXTRA_ADDRESS) {
 					this.address = extra.value;
-				} else if (extra.key === 'person') {
+				} else if (extra.key === Constants.ORGANIZATION_EXTRA_PERSON) {
 					this.person = extra.value;
 				}
 			}
@@ -74,11 +74,11 @@ export class OrganizationsDetailComponent implements OnInit {
 
 	getDatasets(page: number, rows: number): void {
 		var pageNumber = (page != null ? page : 0);
-        var rowsNumber = (rows != null ? rows : this.pageRows);
-        this.datasetsService.getDatasetsByOrganization(this.org.name, this.sort, pageNumber, rowsNumber,null).subscribe(datasets => {
-            this.datasets = JSON.parse(datasets).result.results;
-            this.numDatasets = JSON.parse(datasets).result.count;
-        });
+		var rowsNumber = (rows != null ? rows : Constants.DATASET_LIST_ROWS_PER_PAGE);
+		this.datasetsService.getDatasetsByOrganization(this.org.name, this.sort, pageNumber, rowsNumber, null).subscribe(datasets => {
+			this.datasets = JSON.parse(datasets).result.results;
+			this.numDatasets = JSON.parse(datasets).result.count;
+		});
 	}
 
 	showDataset(dataset: Dataset) {
@@ -89,5 +89,4 @@ export class OrganizationsDetailComponent implements OnInit {
 		this.getDatasets(event.page, event.rows);
 		document.body.scrollTop = 0;
 	}
-
 }

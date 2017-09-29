@@ -15,7 +15,7 @@ import { MdSidenavModule} from '@angular/material';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { Logger, Options } from 'angular2-logger/core';
-
+import { Constants } from './app.constants';
 // Components
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -61,7 +61,6 @@ import { DatasetsAdminShowComponent } from './components/admin/datacenter/datase
 import { DatasetsAdminEditComponent } from './components/admin/datacenter/datasets-admin/datasets-admin-edit/datasets-admin-edit.component';
 import { DatasetsAdminListComponent } from './components/admin/datacenter/datasets-admin/datasets-admin-list/datasets-admin-list.component';
 // Services
-import { ConstantsService } from './app.constants';
 import { DatasetsService } from './services/web/datasets.service';
 import { TopicsService } from './services/web/topics.service';
 import { OrganizationsService } from './services/web/organizations.service';
@@ -173,7 +172,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 	],
 	providers: [
 		Logger,
-		ConstantsService,
+		Constants,
 		DatasetsService,
 		TopicsService,
 		OrganizationsService,

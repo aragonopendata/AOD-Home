@@ -3,6 +3,7 @@ import { DatasetsService } from '../../../../services/web/datasets.service';
 import { Dataset } from '../../../../models/Dataset';
 import { ResourceAux } from '../../../../models/ResourceAux';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Constants } from '../../../../app.constants';
 
 @Component({
 	selector: 'app-datasets-detail',
@@ -25,13 +26,19 @@ export class DatasetsDetailComponent implements OnInit {
 	extraShortUriAragopedia: string;
 	extraNameAragopedia: string;
 	resourcesAux: ResourceAux[] = new Array();
+	//Dynamic URL build parameters
+	routerLinkDataCatalogTopics: string;
+	routerLinkDataCatalogTags: string;
 
 	constructor(private datasetsService: DatasetsService,
-		private activatedRoute: ActivatedRoute) { }
+			private activatedRoute: ActivatedRoute) { 
+		this.routerLinkDataCatalogTopics = Constants.ROUTER_LINK_DATA_CATALOG_TOPICS;
+		this.routerLinkDataCatalogTags = Constants.ROUTER_LINK_DATA_CATALOG_TAGS;
+	}
 
 	ngOnInit() {
 		this.activatedRoute.params.subscribe(params => {
-			this.dataset.name =  params['datasetName'];
+			this.dataset.name =  params[Constants.ROUTER_LINK_DATA_PARAM_DATASET_NAME];
 		});
 		console.log('Dataset a buscar: ' + this.dataset.name);
 		this.datasetsService.getDatasetByName(this.dataset.name).subscribe(dataResult => {
@@ -46,38 +53,38 @@ export class DatasetsDetailComponent implements OnInit {
 		console.log('Obteniendo extras del dataset');
 		this.extraDictionaryURL = [];
 		for (var index = 0; index < this.dataset.extras.length; index++) {
-			if (this.dataset.extras[index].key.indexOf('Data Dictionary URL') == 0) {
+			if (this.dataset.extras[index].key.indexOf(Constants.DATASET_EXTRA_DATA_DICTIONARY_URL) == 0) {
 				this.extraDictionaryURL.push(this.dataset.extras[index].value);
 			}
 			switch (this.dataset.extras[index].key) {
-				case 'Data Dictionary':
+				case Constants.DATASET_EXTRA_DATA_DICTIONARY:
 					this.extraDictionary = this.dataset.extras[index].value;
 					break;
-				case 'Data Quality':
+				case Constants.DATASET_EXTRA_DATA_QUALITY:
 					this.extraDataQuality = this.dataset.extras[index].value;
 					break;
-				case 'Frequency':
+				case Constants.DATASET_EXTRA_FREQUENCY:
 					this.extraFrequency = this.dataset.extras[index].value;
 					break;
-				case 'Granularity':
+				case Constants.DATASET_EXTRA_GRANULARITY:
 					this.extraGranularity = this.dataset.extras[index].value;
 					break;
-				case 'TemporalFrom':
+				case Constants.DATASET_EXTRA_TEMPORAL_FROM:
 					this.extraTemporalFrom = this.dataset.extras[index].value;
 					break;
-				case 'TemporalUntil':
+				case Constants.DATASET_EXTRA_TEMPORAL_UNTIL:
 					this.extraTemporalUntil = this.dataset.extras[index].value;
 					break;
-				case 'nameAragopedia':
+				case Constants.DATASET_EXTRA_NAME_ARAGOPEDIA:
 					this.extraNameAragopedia = this.dataset.extras[index].value;
 					break;
-				case 'shortUriAragopedia':
+				case Constants.DATASET_EXTRA_SHORT_URI_ARAGOPEDIA:
 					this.extraShortUriAragopedia = this.dataset.extras[index].value;
 					break;
-				case 'typeAragopedia':
+				case Constants.DATASET_EXTRA_TYPE_ARAGOPEDIA:
 					this.extraTypeAragopedia = this.dataset.extras[index].value;
 					break;
-				case 'uriAragopedia':
+				case Constants.DATASET_EXTRA_URI_ARAGOPEDIA:
 					this.extraUriAragopedia = this.dataset.extras[index].value;
 					break;
 			}
@@ -131,6 +138,6 @@ export class DatasetsDetailComponent implements OnInit {
 	}
 
 	downloadFile(url: string) {
-		window.open(url, "_blank");
+		window.open(url, '_blank');
 	}
 }

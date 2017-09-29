@@ -1,8 +1,10 @@
-function crosPermission(){
+const constants = require('../util/constants');
+
+function crosPermission() {
     this.permission = function(req, res, next) {
-        res.header('Access-Control-Allow-Origin','*');
-        res.header('Access-Control-Allow-Headers','Access-Control-Allow-Headers, Access-Control-Allow-Methods, Access-Control-Allow-Origin, Content-Type, Origin, X-Requested-With, Accept, Authorization');
-        res.header('Access-Control-Allow-Methods','GET, POST, PUT, DELETE, PATCH, OPTIONS');
+        res.header(constants.CORS_HEADERS_ALLOW_ORIGIN_HEADER, constants.CORS_HEADERS_ALLOW_ORIGIN_VALUE);
+        res.header(constants.CORS_HEADERS_ALLOW_HEADERS_HEADER, constants.CORS_HEADERS_ALLOW_HEADERS_VALUE);
+        res.header(constants.CORS_HEADERS_ALLOW_METHODS_HEADER, constants.CORS_HEADERS_ALLOW_METHODS_VALUE);
         next();
     }
 }

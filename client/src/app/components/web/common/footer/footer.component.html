@@ -3,7 +3,7 @@
 		<div class="col-md-4 threeCol">
 			<div class="titleFooter">AVISO LEGAL</div>
 			<div class="threeCol_child">
-				<a href="/info/open-data">TERMINOS DE USO</a>
+				<a href="/{{routerLinkInfoOpenData}}#{{routerLinkTermsFragment}}">TERMINOS DE USO</a>
 			</div>
 			<div class="eur-logo">
 				<div class="img-eur-logo"></div>
@@ -27,12 +27,12 @@
 		<div class="col-md-4 threeCol">
 			<div class="titleFooter">CONTENIDO DESTACADO</div>
 			<ul>
-				<li><a href="/datos/catalogo">BANCO DE DATOS</a></li>
-				<li><a href="{{aodBaseUrl}}/servicios/aragopedia">ARAGOPEDIA</a></li>
-				<li><a href="{{aodBaseUrl}}/servicios/open-social-data">OPEN SOCIAL DATA</a></li>
-				<li><a href="/info/colabora">COLABORA</a></li>
-				<li><a href="/info/aplicaciones">APLICACIONES</a></li>
-				<li><a href="/info/open-data">INFO OPEN DATA</a></li>
+				<li><a routerLink="/{{routerLinkDataCatalog}}">BANCO DE DATOS</a></li>
+				<li><a href="{{aodBaseUrl}}/{{routerLinkServicesAragopedia}}">ARAGOPEDIA</a></li>
+				<li><a href="{{aodBaseUrl}}/{{routerLinkServicesSocialData}}">OPEN SOCIAL DATA</a></li>
+				<li><a routerLink="/{{routerLinkInfoCollaboration}}">COLABORA</a></li>
+				<li><a routerLink="/{{routerLinkInfoApplications}}">APLICACIONES</a></li>
+				<li><a routerLink="/{{routerLinkInfoOpenData}}">INFO OPEN DATA</a></li>
 			</ul>
 		</div>
 
@@ -40,37 +40,37 @@
 			<div class="titleFooter">POWERED BY</div>
 			<ul class="logos">
 				<li>
-					<a class="ckan" href="http://ckan.org/" target="_blank">
+					<a class="ckan" href="{{ckanUrl}}" target="_blank">
             <img src="../../../../assets/footer/cajaLogoCKAN.jpg">
           </a>
 				</li>
 				<li>
-					<a class="mediawiki" href="http://mediawiki.org/" target="_blank">
+					<a class="mediawiki" href="{{mediaWikiUrl}}" target="_blank">
             <img src="../../../../assets/footer/cajaLogoMediaWiki.jpg">
           </a>
 				</li>
 				<li>
-					<a class="virtuoso" href="http://virtuoso.openlinksw.com/" target="_blank">
+					<a class="virtuoso" href="{{virtuosoUrl}}" target="_blank">
             <img src="../../../../assets/footer/cajaLogoVirtuoso.jpg">
           </a>
 				</li>
 				<li>
-					<a class="elda" href="http://epimorphics.github.io/elda/" target="_blank">
+					<a class="elda" href="{{eldaUrl}}" target="_blank">
             <img src="../../../../assets/footer/cajaLogoElda.jpg">
           </a>
 				</li>
 				<li>
-					<a class="swagger" href="http://swagger.io/" target="_blank">
+					<a class="swagger" href="{{swaggerUrl}}" target="_blank">
             <img src="../../../../assets/footer/cajaLogoSwagger.jpg">
           </a>
 				</li>
 				<li>
-					<a class="node" href="https://nodejs.org/" target="_blank">
+					<a class="node" href="{{nodeJsUrl}}" target="_blank">
             <img src="../../../../assets/footer/cajaLogoNodeJS.jpg">
           </a>
 				</li>
 				<li>
-					<a class="angular" href="https://angular.io/" target="_blank">
+					<a class="angular" href="{{angularUrl}}" target="_blank">
             <img src="../../../../assets/footer/cajaLogoAngular.jpg">
           </a>
 				</li>
@@ -86,22 +86,22 @@
 		</div>
 		<div class="social-nw">
 			<div class="socialNetworkIcon">
-				<a class="facebook" href="https://www.facebook.com/observatorio.aragones">
+				<a class="facebook" href="{{oasiFacebookUrl}}">
             <i class="fa fa-facebook-official"></i>
           </a>
 			</div>
 			<div class="socialNetworkIcon">
-				<a class="twitter" href="https://www.twitter.com/oasi">
+				<a class="twitter" href="{{oasiTwitterUrl}}">
             <i class="fa fa-twitter"></i>
           </a>
 			</div>
 			<div class="socialNetworkIcon">
-				<a class="youtube" href="https://www.youtube.com/watch?v=8d409yteTJM&amp;list=PLQ3k0vA0UZvhBVOz_mCq-9Wyn3VCB6QCe">
+				<a class="youtube" href="{{oasiYoutubeUrl}}">
             <i class="fa fa-youtube-play"></i>
           </a>
 			</div>
 			<div class="socialNetworkIcon">
-				<a class="mail" href="mailto:opendata@aragon.es">
+				<a class="mail" href="mailto:{{aodMail}}">
             <i class="fa fa-envelope-o"><span>AOD</span></i>
           </a>
 			</div>

@@ -10,7 +10,7 @@ const loggerSettings = logConfig.getLogSettings();
 const logger = require('js-logging').dailyFile([loggerSettings]);
 
 /** GET ALL TAGS */
-router.get('/tags', function (req, res, next) {
+router.get(constants.API_URL_TAGS, function (req, res, next) {
     logger.debug('Servicio: Listado de tags');
     let serviceBaseUrl = constants.CKAN_API_BASE_URL;
     let serviceName = constants.TAGS_LIST;

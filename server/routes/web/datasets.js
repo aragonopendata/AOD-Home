@@ -10,7 +10,7 @@ const loggerSettings = logConfig.getLogSettings();
 const logger = require('js-logging').dailyFile([loggerSettings]);
 
 /** GET DATASETS PAGINATED */
-router.get('/datasets', function (req, res, next) {
+router.get(constants.API_URL_DATASETS, function (req, res, next) {
     logger.debug('Servicio: Listado de datasets paginados');
     let serviceBaseUrl = constants.CKAN_API_BASE_URL;
     let serviceName = constants.DATASETS_SEARCH;
@@ -49,7 +49,7 @@ router.get('/datasets', function (req, res, next) {
 });
 
 /** GET DATASETS BY AUTOCOMPLETE */
-router.get('/datasets/autocomplete', function (req, res, next) {
+router.get(constants.API_URL_DATASETS_AUTOCOMPLETE, function (req, res, next) {
     logger.debug('Servicio: Obtener nombres de dataset mediante texto autocompletado');
     let serviceBaseUrl = constants.CKAN_API_BASE_URL;
     let serviceName = constants.DATASETS_SEARCH_AUTOCOMPLETE;
@@ -95,7 +95,7 @@ router.get('/datasets/autocomplete', function (req, res, next) {
 });
 
 /** GET DATASETS BY TAGS */
-router.get('/datasets/tags', function (req, res, next) {
+router.get(constants.API_URL_DATASETS_TAGS, function (req, res, next) {
     logger.debug('Servicio: Obtener datasets por tags');
     let serviceBaseUrl = constants.CKAN_API_BASE_URL;
     let serviceName = constants.DATASETS_SEARCH;
@@ -111,7 +111,7 @@ router.get('/datasets/tags', function (req, res, next) {
     } else {
         httpConf = serviceRequestUrl;
     }
-    
+
     http.get(httpConf, function (results) {
         var body = '';
         results.on('error', function () {
@@ -131,7 +131,7 @@ router.get('/datasets/tags', function (req, res, next) {
 });
 
 /** GET NEWEST DATASETS */
-router.get('/datasets/newest', function (req, res, next) {
+router.get(constants.API_URL_DATASETS_NEWEST, function (req, res, next) {
     logger.debug('Servicio: Obtener datasets recientes');
     let serviceBaseUrl = constants.CKAN_API_BASE_URL;
     let serviceName = constants.DATASETS_SEARCH_NEWEST;
@@ -152,7 +152,7 @@ router.get('/datasets/newest', function (req, res, next) {
     } else {
         httpConf = serviceRequestUrl;
     }
-    
+
     http.get(httpConf, function (results) {
         var body = '';
         results.on('error', function () {
@@ -172,7 +172,7 @@ router.get('/datasets/newest', function (req, res, next) {
 });
 
 /** GET MOST DOWNLOADED DATASETS */
-router.get('/datasets/downloaded', function (req, res, next) {
+router.get(constants.API_URL_DATASETS_DOWNLOADED, function (req, res, next) {
     logger.debug('Servicio: Obtener datasets por tags');
     let serviceBaseUrl = constants.CKAN_API_BASE_URL;
     let serviceName = constants.DATASETS_SEARCH_MOST_DOWNLOADED;
@@ -193,7 +193,7 @@ router.get('/datasets/downloaded', function (req, res, next) {
     } else {
         httpConf = serviceRequestUrl;
     }
-    
+
     http.get(httpConf, function (results) {
         var body = '';
         results.on('error', function () {
@@ -213,12 +213,12 @@ router.get('/datasets/downloaded', function (req, res, next) {
 });
 
 /** GET NUMBER OF DATASETS AND RESOURCES */
-router.get('/datasets/count', function (req, res, next) {
+router.get(constants.API_URL_DATASETS_COUNT, function (req, res, next) {
     logger.debug('Servicio: Obtener número de datasets y recursos');
     let serviceBaseUrl = constants.CKAN_API_BASE_URL;
     let serviceName = constants.DATASETS_SEARCH;
     let serviceRequestUrl = serviceBaseUrl + serviceName + '?rows=0&start=0';
-    
+
     logger.notice('URL de petición: ' + serviceRequestUrl);
 
     //Proxy checking
@@ -230,7 +230,7 @@ router.get('/datasets/count', function (req, res, next) {
     } else {
         httpConf = serviceRequestUrl;
     }
-    
+
     http.get(httpConf, function (results) {
         var body = '';
         results.on('error', function () {
@@ -250,7 +250,7 @@ router.get('/datasets/count', function (req, res, next) {
 });
 
 /** GET DATASETS BY TOPIC */
-router.get('/datasets/topic/:topicName', function (req, res, next) {
+router.get(constants.API_URL_DATASETS_TOPIC + '/:topicName', function (req, res, next) {
     logger.debug('Servicio: Listado de datasets por tema');
     let serviceBaseUrl = constants.CKAN_API_BASE_URL;
     let serviceName = constants.DATASETS_SEARCH;
@@ -293,7 +293,7 @@ router.get('/datasets/topic/:topicName', function (req, res, next) {
 });
 
 /** GET DATASETS BY ORGANIZATION */
-router.get('/datasets/organization/:organizationName', function (req, res, next) {
+router.get(constants.API_URL_DATASETS_ORGANIZATION + '/:organizationName', function (req, res, next) {
     logger.debug('Servicio: Listado de datasets por organización');
     let serviceBaseUrl = constants.CKAN_API_BASE_URL;
     let serviceName = constants.DATASETS_SEARCH;
@@ -335,7 +335,7 @@ router.get('/datasets/organization/:organizationName', function (req, res, next)
 });
 
 /** GET DATASET BY NAME */
-router.get('/datasets/:datasetName', function (req, res, next) {
+router.get(constants.API_URL_DATASETS + '/:datasetName', function (req, res, next) {
     logger.debug('Servicio: Obtener dataset por nombre');
     let serviceBaseUrl = constants.CKAN_API_BASE_URL;
     let serviceName = constants.DATASET_SHOW;

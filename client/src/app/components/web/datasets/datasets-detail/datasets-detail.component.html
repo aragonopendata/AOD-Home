@@ -49,12 +49,12 @@
 				<div class="section">
 					<h6>Categoría</h6>
 					<p *ngFor="let group of dataset.groups">
-						<a routerLink='/datos/catalogo/temas/{{group.name}}'>{{group.title}}</a>
+						<a routerLink='/{{routerLinkDataCatalogTopics}}/{{group.name}}'>{{group.title}}</a>
 					</p>
 				</div>
 				<div class="section">
 					<h6>Etiquetas y palabras clave</h6>
-					<button *ngFor="let tag of dataset.tags" class="tags" pButton type="button" routerLink="/datos/catalogo/etiquetas" [queryParams]="{etq:tag.name}" pButton label="{{tag.name}}" style="margin: 2px;"></button>
+					<button *ngFor="let tag of dataset.tags" class="tags" pButton type="button" routerLink="/{{routerLinkDataCatalogTags}}" [queryParams]="{etq:tag.name}" pButton label="{{tag.name}}" style="margin: 2px;"></button>
 				</div>
 				<div class="section">
 					<h6>Organización responsable de la publicación</h6>

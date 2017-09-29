@@ -9,7 +9,7 @@ const loggerSettings = logConfig.getLogSettings();
 const logger = require('js-logging').dailyFile([loggerSettings]);
 
 /** GET ALL ORGANIZATIONS */
-router.get('/organizations', function (req, res, next) {
+router.get(constants.API_URL_ORGANIZATIONS, function (req, res, next) {
     logger.debug('Servicio: Listado de organizaciones');
     let serviceBaseUrl = constants.CKAN_API_BASE_URL;
     let serviceName = constants.ORGANIZATIONS_LIST;
@@ -46,7 +46,7 @@ router.get('/organizations', function (req, res, next) {
 });
 
 /** GET ORGANIZATION DETAIL */
-router.get('/organizations/:organizationName', function (req, res, next) {
+router.get(constants.API_URL_ORGANIZATIONS + '/:organizationName', function (req, res, next) {
     logger.debug('Servicio: Listado de organizaciones');
     let serviceBaseUrl = constants.CKAN_API_BASE_URL;
     let serviceName = constants.ORGANIZATION_DETAIL;

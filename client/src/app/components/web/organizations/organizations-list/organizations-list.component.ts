@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SelectItem } from 'primeng/primeng';
 import { Organization } from '../../../../models/Organization';
 import { OrganizationsService } from '../../../../services/web/organizations.service';
+import { Constants } from '../../../../app.constants';
 
 @Component({
 	selector: 'app-organizations-list',
@@ -17,7 +18,12 @@ export class OrganizationsListComponent implements OnInit {
 	orgs: Organization[];
 	hovers: any[] = [];
 
-	constructor(private orgService: OrganizationsService) { }
+	//Dynamic URL build parameters
+	routerLinkDataOrganizations: string;
+
+	constructor(private orgService: OrganizationsService) {
+		this.routerLinkDataOrganizations = '/' + Constants.ROUTER_LINK_DATA_ORGANIZATIONS;
+	}
 
 	ngOnInit() {
 		//this.orgs = this.orgService.getOrgs();
@@ -25,8 +31,8 @@ export class OrganizationsListComponent implements OnInit {
 		this.getOrgs();
 
 		this.views = [];
-		this.views.push({ label: 'Ver como lista', value: false });
-		this.views.push({ label: 'Ver como ficha', value: true });
+		this.views.push({ label: Constants.ORGANIZATION_COMBO_VIEWS_LIST_OPTION, value: false });
+		this.views.push({ label: Constants.ORGANIZATION_COMBO_VIEWS_CARD_OPTION, value: true });
 	}
 
 	setHovers(orgs: Organization[]) {

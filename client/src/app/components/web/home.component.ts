@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ConstantsService } from '../../app.constants';
+import { Constants } from '../../app.constants';
 import $ from 'jquery';
 
 @Component({
@@ -11,12 +11,43 @@ import $ from 'jquery';
 export class HomeComponent implements OnInit {
 
 	hovers: any[] = [];
-	aodBaseUrl: string;
-	presupuestosBaseUrl: string;
+	//Dynamic URL build parameters
+	routerLinkPageNotFound: string;
+	routerLinkDataCatalog: string;
+	routerLinkDataTopics: string;
+	routerLinkDataOrganizations: string;
+	routerLinkServicesAragopedia: string;
+	routerLinkServicesPresupuestos: string;
+	routerLinkServicesCras: string;
+	routerLinkServicesSocialData: string;
+	routerLinkInfoOpenData: string;
+	routerLinkInfoApplications: string;
+	routerLinkInfoEventos: string;
+	routerLinkInfoCollaboration: string;
+	routerLinkToolsCampus: string;
+	routerLinkToolsDevelopers: string;
+	routerLinkToolsApis: string;
+	routerLinkToolsSparql: string;
+	routerLinkToolsGithub: string;
 
-	constructor(private constants: ConstantsService) {
-		this.aodBaseUrl = this.constants.AOD_BASE_URL;
-		this.presupuestosBaseUrl = this.constants.PRESUPUESTOS_BASE_URL;
+	constructor() { 
+		//Dynamic URL build to send to HTML template
+		this.routerLinkDataCatalog = Constants.ROUTER_LINK_DATA_CATALOG;
+		this.routerLinkDataTopics = Constants.ROUTER_LINK_DATA_TOPICS;
+		this.routerLinkDataOrganizations = Constants.ROUTER_LINK_DATA_ORGANIZATIONS;
+		this.routerLinkServicesAragopedia = Constants.ROUTER_LINK_SERVICES_ARAGOPEDIA;
+		this.routerLinkServicesPresupuestos = Constants.ROUTER_LINK_SERVICES_PRESUPUESTOS;
+		this.routerLinkServicesCras = Constants.ROUTER_LINK_SERVICES_CRAS;
+		this.routerLinkServicesSocialData = Constants.ROUTER_LINK_SERVICES_SOCIAL_DATA;
+		this.routerLinkInfoOpenData = Constants.ROUTER_LINK_INFORMATION_OPEN_DATA;
+		this.routerLinkInfoApplications = Constants.ROUTER_LINK_INFORMATION_APPS;
+		this.routerLinkInfoEventos = Constants.ROUTER_LINK_INFORMATION_EVENTS;
+		this.routerLinkInfoCollaboration = Constants.ROUTER_LINK_INFORMATION_COLLABORATION;
+		this.routerLinkToolsCampus = Constants.ROUTER_LINK_TOOLS_CAMPUS;
+		this.routerLinkToolsDevelopers = Constants.ROUTER_LINK_TOOLS_DEVELOPERS;
+		this.routerLinkToolsApis = Constants.ROUTER_LINK_TOOLS_APIS;
+		this.routerLinkToolsSparql = Constants.ROUTER_LINK_TOOLS_SPARQL;
+		this.routerLinkToolsGithub = Constants.AOD_GITHUB_URL;
 	}
 
 	ngOnInit() {
@@ -71,19 +102,22 @@ export class HomeComponent implements OnInit {
 	goToUrl(url: string) {
 		let fullUrl = '';
 		if (url && url != undefined && url != '') {
-			if (url.includes('aragopedia')) {
-				fullUrl += this.aodBaseUrl + url;
+			if (this.routerLinkServicesAragopedia === url) {
+				fullUrl += Constants.AOD_BASE_URL + '/' + url;
 				window.location.href = fullUrl;
-			} else if (url.includes('presupuestos')) {
-				fullUrl += this.presupuestosBaseUrl;
+			} else if (this.routerLinkServicesPresupuestos === url) {
+				fullUrl += Constants.PRESUPUESTOS_BASE_URL;
 				window.location.href = fullUrl;
-			} else if (url.includes('open-social-data')) {
-				fullUrl += this.aodBaseUrl + url;
+			} else if (this.routerLinkServicesSocialData === url) {
+				fullUrl += Constants.AOD_BASE_URL + '/' + url;
 				window.location.href = fullUrl;
-			} else if (url.includes('cras')) {
-				fullUrl += this.aodBaseUrl + url;
+			} else if (this.routerLinkServicesCras === url) {
+				fullUrl += Constants.AOD_BASE_URL + '/' + url;
 				window.location.href = fullUrl;
+			} else if (this.routerLinkToolsGithub === url) {
+				window.location.href = url;
 			} else {
+				fullUrl += Constants.AOD_BASE_URL + '/' + Constants.ROUTER_LINK_404;
 				window.location.href = url;
 			}
 		} else {

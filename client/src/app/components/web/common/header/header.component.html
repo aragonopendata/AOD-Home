@@ -9,10 +9,10 @@
                 <a class="nav-link active" href="/">Open Data</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="http://aragonparticipa.aragon.es">Participación ciudadana</a>
+                <a class="nav-link" href="{{transparenciaWebUrl}}">Participación ciudadana</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="http://transparencia.aragon.es/">Transparencia</a>
+                <a class="nav-link" href="{{aragonParticipaWebUrl}}">Transparencia</a>
             </li>
         </ul>
     </div>
@@ -47,9 +47,9 @@
                 <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne">
                     <div class="card-block">
                         <ul id="datos">
-                            <li><a routerLink="/datos/catalogo" (click)="openNav()">Banco de datos</a></li>
-                            <li><a routerLink="/datos/temas" (click)="openNav()">Temas</a></li>
-                            <li><a routerLink="/datos/publicadores" (click)="openNav()">Publicadores</a></li>
+                            <li><a routerLink="/{{routerLinkDataCatalog}}" (click)="openNav()">Banco de datos</a></li>
+                            <li><a routerLink="/{{routerLinkDataTopics}}" (click)="openNav()">Temas</a></li>
+                            <li><a routerLink="/{{routerLinkDataOrganizations}}" (click)="openNav()">Publicadores</a></li>
                         </ul>
                     </div>
                 </div>
@@ -65,10 +65,10 @@
                 <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
                     <div class="card-block">
                         <ul id="servicios">
-                            <li><a href="{{aodBaseUrl}}/servicios/aragopedia">Aragopedia</a></li>
+                            <li><a href="{{aodBaseUrl}}/{{routerLinkServicesAragopedia}}">Aragopedia</a></li>
                             <li><a href="{{presupuestosBaseUrl}}">Presupuestos</a></li>
-                            <li><a href="{{aodBaseUrl}}/servicios/open-social-data">Open Social Data</a></li>
-                            <li><a href="{{aodBaseUrl}}/servicios/cras">CRAs Aragón</a></li>
+                            <li><a href="{{aodBaseUrl}}/{{routerLinkServicesSocialData}}">Open Social Data</a></li>
+                            <li><a href="{{aodBaseUrl}}/{{routerLinkServicesCras}}">CRAs Aragón</a></li>
                         </ul>
                     </div>
                 </div>
@@ -84,10 +84,10 @@
                 <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
                     <div class="card-block">
                         <ul id="info">
-                            <li><a routerLink="/info/open-data" (click)="openNav()">Información</a></li>
-                            <li><a routerLink="/info/aplicaciones" (click)="openNav()">Aplicaciones</a></li>
-                            <li><a routerLink="/info/eventos" (click)="openNav()">Eventos</a></li>
-                            <li><a routerLink="/info/colabora" (click)="openNav()">Colabora</a></li>
+                            <li><a routerLink="/{{routerLinkInfoOpenData}}" (click)="openNav()">Información</a></li>
+                            <li><a routerLink="/{{routerLinkInfoApplications}}" (click)="openNav()">Aplicaciones</a></li>
+                            <li><a routerLink="/{{routerLinkInfoEventos}}" (click)="openNav()">Eventos</a></li>
+                            <li><a routerLink="/{{routerLinkInfoCollaboration}}" (click)="openNav()">Colabora</a></li>
                         </ul>
                     </div>
                 </div>
@@ -103,11 +103,11 @@
                 <div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingFour">
                     <div class="card-block">
                         <ul id="tools">
-                            <li><a routerLink="/herramientas/campus" (click)="openNav()">AOD Campus</a></li>
-                            <li><a routerLink="/herramientas/desarrolladores" (click)="openNav()">Desarrolladores</a></li>
-                            <li><a routerLink="/herramientas/apis" (click)="openNav()">APIs</a></li>
-                            <li><a routerLink="/herramientas/sparql" (click)="openNav()">SPARQL</a></li>
-                            <li><a href="http://github.com/aragonopendata" (click)="openNav()">GITHUB</a></li>
+                            <li><a routerLink="/{{routerLinkToolsCampus}}" (click)="openNav()">AOD Campus</a></li>
+                            <li><a routerLink="/{{routerLinkToolsDevelopers}}" (click)="openNav()">Desarrolladores</a></li>
+                            <li><a routerLink="/{{routerLinkToolsApis}}" (click)="openNav()">APIs</a></li>
+                            <li><a routerLink="/{{routerLinkToolsSparql}}" (click)="openNav()">SPARQL</a></li>
+                            <li><a href="{{routerLinkToolsGithub}}" (click)="openNav()">GITHUB</a></li>
                         </ul>
                     </div>
                 </div>
@@ -115,14 +115,14 @@
         </div>
         <div>
             <form class="search">
-                <button type="button" class="btnSearch" routerLink="/datos/catalogo" [queryParams]="{texto:searchBox.value}" (click)="openNav()">
+                <button type="button" class="btnSearch" routerLink="/{{routerLinkDataCatalog}}" [queryParams]="{texto:searchBox.value}" (click)="openNav()">
                         <i aria-hidden="true" class="fa fa-search" style="display: table; vertical-align: middle;"></i>
                     </button>
                 <input autocomplete="off" #searchBox id="searchBox" placeholder="BUSCA DATOS ABIERTOS" type="search" class="textBox" (keyup)="search(searchBox.value)"
                     (keyup.enter)="searchDatasetsByText(searchBox.value); openNav();" />
                 <div id="resultsList">
                     <div *ngFor="let autocomplete of datasetAutocomplete" class="search-result">
-                        <a routerLink='/datos/catalogo/{{autocomplete.name}}' (click)="openNav()">
+                        <a routerLink='/{{routerLinkDataCatalogDataset}}/{{autocomplete.name}}' (click)="openNav()">
                                 {{autocomplete.title}}
                             </a>
                     </div>

@@ -55,5 +55,4 @@ export class TopicsListComponent implements OnInit {
 			this.setHovers();
 		});
 	}
-
 }

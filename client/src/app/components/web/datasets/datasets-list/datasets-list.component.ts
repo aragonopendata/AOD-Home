@@ -9,7 +9,7 @@ import { TopicsService } from '../../../../services/web/topics.service';
 import { TopicsListComponent } from '../../topics/topics-list/topics-list.component';
 import { Dataset } from '../../../../models/Dataset';
 import { Topic } from '../../../../models/Topic';
-import { ConstantsService } from '../../../../app.constants';
+import { Constants } from '../../../../app.constants';
 
 @Component({
     selector: 'app-datasets-list',
@@ -50,38 +50,64 @@ export class DatasetsListComponent implements OnInit {
     langsSelect: SelectItem[];
     groupSelect: SelectItem[];
 
-    constructor(private datasetsService: DatasetsService, private topicsService: TopicsService, private orgsService: OrganizationsService, private router: Router
-        , private location: Location, private changeDetectorRef: ChangeDetectorRef
-        , private constants: ConstantsService, private activatedRoute: ActivatedRoute) {
-        this.pageRows = constants.DATASET_LIST_ROWS_PER_PAGE;
-        if(this.selectedSearchOption === undefined){
-            this.selectedSearchOption = 'busqueda-libre';
-        } 
+    datasetSearchOptionFreeSearch: string;
+    datasetSearchOptionTopics: string;
+    datasetSearchOptionOrganizations: string;
+    datasetSearchOptionTags: string;
+    datasetSearchOptionStats: string;
+    datasetSearchOptionHomer: string;
+    //Dynamic URL build parameters
+	routerLinkPageNotFound: string;
+    routerLinkDataCatalog: string;
+    routerLinkDataCatalogDataset: string;
+    routerLinkDataCatalogTopics: string;
+    routerLinkDataCatalogOrganizations: string;
+    routerLinkDataCatalogTags: string;
+
+    constructor(private datasetsService: DatasetsService, private topicsService: TopicsService
+            , private orgsService: OrganizationsService, private router: Router
+            , private location: Location, private changeDetectorRef: ChangeDetectorRef
+            , private activatedRoute: ActivatedRoute) {
+        this.pageRows = Constants.DATASET_LIST_ROWS_PER_PAGE;
+        this.routerLinkDataCatalog = Constants.ROUTER_LINK_DATA_CATALOG;
+        this.routerLinkDataCatalogDataset = Constants.ROUTER_LINK_DATA_CATALOG_DATASET;
+        this.routerLinkDataCatalogTopics = Constants.ROUTER_LINK_DATA_CATALOG_TOPICS;
+        this.routerLinkDataCatalogOrganizations = Constants.ROUTER_LINK_DATA_CATALOG_ORGANIZATIONS;
+        this.routerLinkDataCatalogTags = Constants.ROUTER_LINK_DATA_CATALOG_TAGS;
+        this.datasetSearchOptionFreeSearch = Constants.DATASET_LIST_SEARCH_OPTION_FREE_SEARCH;
+        this.datasetSearchOptionTopics = Constants.DATASET_LIST_SEARCH_OPTION_TOPICS;
+        this.datasetSearchOptionOrganizations = Constants.DATASET_LIST_SEARCH_OPTION_ORGANIZATIONS;
+        this.datasetSearchOptionTags = Constants.DATASET_LIST_SEARCH_OPTION_TAGS;
+        this.datasetSearchOptionStats = Constants.DATASET_LIST_SEARCH_OPTION_STATS;
+        this.datasetSearchOptionHomer = Constants.DATASET_LIST_SEARCH_OPTION_HOMER;
+        if (this.selectedSearchOption === undefined) {
+            this.selectedSearchOption = this.datasetSearchOptionFreeSearch;
+        }
     }
 
     ngOnInit() {
         this.activatedRoute.queryParams.subscribe(params => {
-            this.textSearch = params['texto'];
-            this.selectedType = params['tipo'];
-            if(params['etq']){
-                let tagParams: string= ''+params['etq'];
+            this.textSearch = params[Constants.ROUTER_LINK_DATA_PARAM_TEXT];
+            this.selectedType = params[Constants.ROUTER_LINK_DATA_PARAM_TYPE];
+            if (params[Constants.ROUTER_LINK_DATA_PARAM_TAG]) {
+                let tagParams: string = '' + params[Constants.ROUTER_LINK_DATA_PARAM_TAG];
                 let tags = [] = tagParams.split(',');
                 let filtered = [];
                 for (let i = 0; i < tags.length; i++) {
-                        filtered.push({ name: tags[i], value: tags[i] });
+                    filtered.push({ name: tags[i], value: tags[i] });
                 }
                 this.tags = filtered;
             }
-            
+
         });
 
         this.activatedRoute.params.subscribe(params => {
-            this.selectedTopic = params['topicName'];
-            this.selectedOrg = params['organizationName'];
-            
-         });
-        
-        this.sort = 'relevance,-metadata_modified';
+            this.selectedTopic = params[Constants.ROUTER_LINK_DATA_PARAM_TOPIC_NAME];
+            this.selectedOrg = params[Constants.ROUTER_LINK_DATA_PARAM_ORGANIZATION_NAME];
+
+        });
+
+        this.sort = Constants.SERVER_API_LINK_PARAM_SORT_DEFAULT_VALUE;
         this.setDatasetsStats();
         this.setTopicsDropdown();
         this.setOrgsDropdown();
@@ -91,7 +117,6 @@ export class DatasetsListComponent implements OnInit {
         this.setLanguagesDropdown();
         this.setGroupsDropdown();
         this.setInfoTables();
-
     }
 
     loadDatasets() {
@@ -101,68 +126,68 @@ export class DatasetsListComponent implements OnInit {
             this.searchValue = this.textSearch;
         } else if (this.selectedTopic) {
             this.getDatasetsByTopic(this.selectedTopic, null, null, this.selectedType);
-            this.selectedSearchOption = 'tema-y-tipo';
+            this.selectedSearchOption = this.datasetSearchOptionTopics;
         } else if (this.selectedOrg) {
             this.getDatasetsByOrg(null, null, this.selectedOrg, this.selectedType);
-            this.selectedSearchOption = 'organizacion-y-tipo';
-        } if(this.tags){
-            this.getDatasetsByTags(null,null);
-            this.selectedSearchOption = 'etiquetas';
-        }else{
+            this.selectedSearchOption = this.datasetSearchOptionOrganizations;
+        } if (this.tags) {
+            this.getDatasetsByTags(null, null);
+            this.selectedSearchOption = this.datasetSearchOptionTags;
+        } else {
             this.getDatasets(null, null);
         }
-        
     }
 
     changeType() {
         if (this.selectedTopic) {
-            if(this.selectedType){
-                this.router.navigate(['/datos/catalogo/temas/'+this.selectedTopic], { queryParams: { tipo: this.selectedType} });
+            if (this.selectedType) {
+                this.router.navigate(['/' + this.routerLinkDataCatalogTopics + '/' + this.selectedTopic], { queryParams: { tipo: this.selectedType } });
                 this.getDatasetsByTopic(this.selectedTopic, null, null, this.selectedType);
-            }else{
-                this.router.navigate(['/datos/catalogo/temas/'+this.selectedTopic]);
+            } else {
+                this.router.navigate(['/' + this.routerLinkDataCatalogTopics + '/' + this.selectedTopic]);
                 this.getDatasetsByTopic(this.selectedTopic, null, null, null);
             }
         } else if (this.selectedOrg) {
-            if(this.selectedType){
-                this.router.navigate(['/datos/catalogo/publicadores/'+this.selectedOrg], { queryParams: { tipo: this.selectedType} });
+            if (this.selectedType) {
+                this.router.navigate(['/' + this.routerLinkDataCatalogOrganizations + '/' + this.selectedOrg], { queryParams: { tipo: this.selectedType } });
                 this.getDatasetsByOrg(null, null, this.selectedOrg, this.selectedType);
-            }else{
-                this.router.navigate(['/datos/catalogo/publicadores/'+this.selectedOrg]);
+            } else {
+                this.router.navigate(['/' + this.routerLinkDataCatalogOrganizations + '/' + this.selectedOrg]);
                 this.getDatasetsByOrg(null, null, this.selectedOrg, null);
             }
-        }else{
-            if(this.selectedType){
-                this.location.go('/datos/catalogo?tipo='+this.selectedType);
-            }else{
-                this.location.go('/datos/catalogo');
+        } else {
+            if (this.selectedType) {
+                this.location.go('/' + this.routerLinkDataCatalog 
+                    + '?' + Constants.ROUTER_LINK_DATA_PARAM_TYPE + '=' + this.selectedType);
+            } else {
+                this.location.go('/' + this.routerLinkDataCatalog);
             }
             this.getDatasets(null, null);
         }
     }
 
-    changeTags(){
-       if(this.tags.length > 0){
-        console.log("TRUE "+this.tags.length);
-        let tagsList = [];
-        let tagUrl = '';
-        tagsList = this.tags;
-        let i = 0;
-        tagsList.forEach(tag => {
-            if(i==0){
-                tagUrl+='?etq='+tag.name;
-            }else{
-                tagUrl+='&etq='+tag.name;
-            }
-            i++;
-        });
-        this.location.go('/datos/catalogo/etiquetas'+tagUrl);
-        this.getDatasetsByTags(null,null);
-       }else{
-        this.location.go('/datos/catalogo');
-        this.getDatasets(null,null);
-       }
-        
+    changeTags() {
+        if (this.tags.length > 0) {
+            console.log('TRUE ' + this.tags.length);
+            let tagsList = [];
+            let tagUrl = '';
+            tagsList = this.tags;
+            let i = 0;
+            tagsList.forEach(tag => {
+                if (i == 0) {
+                    tagUrl += '?' + Constants.ROUTER_LINK_DATA_PARAM_TAG + '=' + tag.name;
+                } else {
+                    tagUrl += '&' + Constants.ROUTER_LINK_DATA_PARAM_TAG + '=' + tag.name;
+                }
+                i++;
+            });
+            this.location.go('/' + this.routerLinkDataCatalogTags + tagUrl);
+            this.getDatasetsByTags(null, null);
+        } else {
+            this.location.go('/' + this.routerLinkDataCatalog);
+            this.getDatasets(null, null);
+        }
+
     }
 
     resetSearch() {
@@ -173,7 +198,7 @@ export class DatasetsListComponent implements OnInit {
         this.tags = undefined;
         this.textSearch = undefined;
         this.loadDatasets();
-        this.location.go('/datos/catalogo');
+        this.location.go('/' + this.routerLinkDataCatalog);
     }
 
     showDataset(dataset: Dataset) {
@@ -187,14 +212,20 @@ export class DatasetsListComponent implements OnInit {
 
     setOrder(event) {
         switch (event.field) {
-            case 'name':
-                this.sort == 'title_string' ? this.sort = '-title_string' : this.sort = 'title_string';
+            case Constants.DATASET_LIST_SORT_COLUMN_NAME:
+                this.sort == Constants.SERVER_API_LINK_PARAM_SORT_TITLE_STRING 
+                    ? this.sort = '-' + Constants.SERVER_API_LINK_PARAM_SORT_TITLE_STRING 
+                    : this.sort = Constants.SERVER_API_LINK_PARAM_SORT_TITLE_STRING;
                 break;
-            case 'accesos':
-                this.sort == 'views_total' ? this.sort = '-views_total' : this.sort = 'views_total';
+            case Constants.DATASET_LIST_SORT_COLUMN_ACCESS:
+                this.sort == Constants.SERVER_API_LINK_PARAM_SORT_VIEWS_TOTAL 
+                    ? this.sort = '-' + Constants.SERVER_API_LINK_PARAM_SORT_VIEWS_TOTAL 
+                    : this.sort = Constants.SERVER_API_LINK_PARAM_SORT_VIEWS_TOTAL;
                 break;
-            case 'lastUpdate':
-                this.sort == 'metadata_modified' ? this.sort = '-metadata_modified' : this.sort = 'metadata_modified';
+            case Constants.DATASET_LIST_SORT_COLUMN_LAST_UPDATE:
+                this.sort == Constants.SERVER_API_LINK_PARAM_SORT_METADATA_MODIFIED 
+                    ? this.sort = '-' + Constants.SERVER_API_LINK_PARAM_SORT_METADATA_MODIFIED 
+                    : this.sort = Constants.SERVER_API_LINK_PARAM_SORT_METADATA_MODIFIED;
                 break;
         }
         this.loadDatasets();
@@ -257,7 +288,7 @@ export class DatasetsListComponent implements OnInit {
             this.datasets = JSON.parse(datasets).result.results;
             this.numDatasets = JSON.parse(datasets).result.count;
         });
-        
+
     }
 
     setTopicsDropdown() {
@@ -304,12 +335,12 @@ export class DatasetsListComponent implements OnInit {
 
     setSearchOptions() {
         this.searchOptions = [];
-        this.searchOptions.push({ label: 'Búsqueda libre', value: 'busqueda-libre' });
-        this.searchOptions.push({ label: 'Tema y tipo', value: 'tema-y-tipo' });
-        this.searchOptions.push({ label: 'Organización y tipo', value: 'organizacion-y-tipo' });
-        this.searchOptions.push({ label: 'Etiquetas', value: 'etiquetas' });
-        this.searchOptions.push({ label: 'Información estadística', value: 'informacion-estadistica' });
-        this.searchOptions.push({ label: 'Buscador Homer', value: 'buscador-homer' });
+        this.searchOptions.push({ label: 'Búsqueda libre', value: this.datasetSearchOptionFreeSearch });
+        this.searchOptions.push({ label: 'Tema y tipo', value: this.datasetSearchOptionTopics });
+        this.searchOptions.push({ label: 'Organización y tipo', value: this.datasetSearchOptionOrganizations });
+        this.searchOptions.push({ label: 'Etiquetas', value: this.datasetSearchOptionTags });
+        this.searchOptions.push({ label: 'Información estadística', value: this.datasetSearchOptionStats });
+        this.searchOptions.push({ label: 'Buscador Homer', value: this.datasetSearchOptionHomer });
     }
 
     setLanguagesDropdown() {
@@ -323,7 +354,7 @@ export class DatasetsListComponent implements OnInit {
         this.langsSelect.push({ label: 'Српски', value: 'es' });
     }
 
-    setGroupsDropdown(){
+    setGroupsDropdown() {
         this.groupSelect = [];
         this.groupSelect.push({ label: 'Todos los grupos', value: undefined });
         this.groupSelect.push({ label: 'Territorio', value: 'Territorio' });
@@ -362,11 +393,10 @@ export class DatasetsListComponent implements OnInit {
         this.getDatasetsByOrg(null, null, this.selectedOrg, this.selectedType);
     }
 
-
     setDatasetsStats() {
         this.datasetsService.getDatasetsStats().subscribe(datasets => {
-            this.datasetCount = JSON.parse(datasets).result.count + "";
-            while (this.datasetCount.length < 8) this.datasetCount = "0" + this.datasetCount;
+            this.datasetCount = JSON.parse(datasets).result.count + '';
+            while (this.datasetCount.length < 8) this.datasetCount = '0' + this.datasetCount;
             return this.datasetCount;
         });
     }

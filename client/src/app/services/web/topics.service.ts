@@ -3,53 +3,29 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { Topic } from '../../models/Topic';
 import { Http, Response, Headers, URLSearchParams } from '@angular/http';
-import { ConstantsService } from '../../app.constants';
+import { Constants } from '../../app.constants';
 
 @Injectable()
 export class TopicsService {
 	private topics: Observable<Topic[]>;
 	private topic: Topic;
-	private baseUrl: String;
 
-	/**
-	 * Topics service class constructor.
-	 * @param http - Http module.
-	 * @param constants - Constants class.
-	 */
-	constructor(private http: Http, private constants: ConstantsService) {
-		this.baseUrl = this.constants.AOD_API_WEB_BASE_URL;
-	}
+	constructor(private http: Http) { }
 
-	/**
-	 * Gets a list of existing topics.
-	 */
 	public getTopics() {
-		let fullUrl = this.baseUrl + '/topics';
-		console.log('Servicio TOPICS - Request: ' + fullUrl);
+		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_TOPICS;
 		return this.http.get(fullUrl).map(res => res.json());
 	}
 
-	/**
-	 * Sets a topic.
-	 * @param topic - Topic to set.
-	 */
 	public setTopic(topic: Topic) {
 		this.topic = topic;
 	}
 
-	/**
-	 * Gets a topic.
-	 */
 	public getTopic() {
 		return this.topic;
 	}
 
-	/**
-	 * Handles any error thrown.
-	 * @param error - Error handled.
-	 */
 	private handleError(error: Response) {
-		console.error(error);
 		return Observable.throw(error.json().error || 'Server error');
 	}
 }

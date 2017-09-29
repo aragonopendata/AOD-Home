@@ -3,7 +3,7 @@
 	<p-dropdown [options]="views" [(ngModel)]="selectedView"></p-dropdown>
 	<div *ngIf="selectedView" class="ui-g">
 		<div class="ui-sm-12 ui-md-6 ui-lg-4" *ngFor="let org of orgs; let i = index" (mouseenter)="setHover(org.title, i)" (mouseleave)="unsetHover(org.title, i)">
-			<div class="card" routerLink="/datos/publicadores/{{org.name}}" (click)="showOrg(org)">
+			<div class="card" routerLink="{{routerLinkDataOrganizations}}/{{org.name}}" (click)="showOrg(org)">
 				<img class="card-img-top" src="../../../../assets/logoDGA.png" alt="Card image cap" width="fit-content" height="70" style="margin: 10px;">
 				<div class="card-block" style="position: relative; font-size: 15px; margin: 10; padding-top: 10px; height: 70px; background-color: darkslategray; color: white;">
 					<p class="tittle"> {{org.title}}</p>
@@ -23,7 +23,7 @@
 		<p-dataTable [value]="orgs" (onRowSelect)="showOrg(rowData)">
 			<p-column field="orgName" header="{{ 'ORGANIZATIONS.TOTAL_ORGANIZATIONS_1' | translate }} {{orgs.length}} {{ 'ORGANIZATIONS.TOTAL_ORGANIZATIONS_2' | translate }}">
 				<ng-template pTemplate="body" let-org="rowData" let-i="rowIndex">
-					<a routerLink='/datos/publicadores/{{org.name}}' (click)="showOrg(org)">
+					<a routerLink='{{routerLinkDataOrganizations}}/{{org.name}}' (click)="showOrg(org)">
 					  {{org.title}}
 				  </a>
 				</ng-template>

@@ -30,7 +30,7 @@
 	<p-dataTable [value]="datasets" [responsive]="true" #dt>
 		<p-column field="name" header="{{numDatasets}} {{ 'ORGANIZATION_DETAIL.FOUND_DATASETS' | translate }}" [sortable]="true">
 			<ng-template pTemplate="body" let-dataset="rowData">
-				<a routerLink='/datos/catalogo/dataset/{{dataset.name}}' (click)="showDataset(dataset)">
+				<a routerLink='{{routerLinkDataCatalogDataset}}/{{dataset.name}}' (click)="showDataset(dataset)">
 					  {{dataset.title}}
 				  </a>
 			</ng-template>
