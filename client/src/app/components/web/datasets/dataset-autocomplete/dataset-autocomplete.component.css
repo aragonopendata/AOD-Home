@@ -62,13 +62,47 @@
 	text-transform:uppercase;
 }
 
-.content {
-	position: absolute;
-	width: 100%;
-	height: 78%;
-	top: 22%;
-	left: 0;
-	z-index: -1;
+@media screen and (max-height: 800px) {
+
+	::-webkit-input-placeholder {
+        font-size: 50px;
+	}
+	:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+		font-size: 50px;
+	}
+	
+	::-moz-placeholder { /* Mozilla Firefox 19+ */
+		font-size: 50px;;
+	}
+	
+	:-ms-input-placeholder { /* Internet Explorer 10-11 */
+		font-size: 50px;
+	}
+	
+	::-ms-input-placeholder { /* Microsoft Edge */
+		font-size: 50px;
+	}
+}
+
+@media screen and (max-height: 500px) {
+    ::-webkit-input-placeholder {
+        font-size: 30px;
+	}
+	:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+		font-size: 30px;
+	}
+	
+	::-moz-placeholder { /* Mozilla Firefox 19+ */
+		font-size: 30px;;
+	}
+	
+	:-ms-input-placeholder { /* Internet Explorer 10-11 */
+		font-size: 30px;
+	}
+	
+	::-ms-input-placeholder { /* Microsoft Edge */
+		font-size: 30px;
+	}
 }
 
 .textBox:focus {
@@ -78,7 +112,6 @@
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
 	color:    #5EA2BA;
 }
-
 :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
 	color:    #5EA2BA;
 	opacity:  1;

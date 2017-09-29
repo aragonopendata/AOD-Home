@@ -164,6 +164,10 @@ export class HeaderComponent implements OnInit {
     
     onResize(event) {
         $('.overlay').css('top', $('#header').height());
+        if(this.menuActive==true){
+            $('#myNav').height($(window).height() - $('#header').height());
+            
+        }
     } 
 
     ngOnInit() {

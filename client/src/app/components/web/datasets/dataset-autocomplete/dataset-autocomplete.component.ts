@@ -3,7 +3,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -63,7 +63,7 @@ export class DatasetAutocompleteComponent implements OnInit {
 				console.log(error);
 				return Observable.of<Autocomplete[]>([]);
 			}).subscribe(data =>
-				this.datasetAutocomplete = JSON.parse(data).result);
+				this.datasetAutocomplete = <Autocomplete[]>JSON.parse(data).result);
 	}
 
 	searchDatasetsByText(text: string){

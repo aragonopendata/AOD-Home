@@ -74,14 +74,32 @@ a:hover {
     color: #f1f1f1;
 }
 
-@media screen and (max-height: 600px) {
+@media screen and (max-height: 700px) {
     .overlay{
         overflow: scroll;
     }
-    .overlay .search a{
+}
+
+@media screen and (max-height: 600px) {
+    input,
+    input::-webkit-input-placeholder {
+        font-size: 50px;
+    }
+    .btnSearch {
+        font-size: 30px;
+    }
+}
+
+@media screen and (max-height: 400px) {
+    input,
+    input::-webkit-input-placeholder {
         font-size: 20px;
-        }
-  }
+    }
+    btnSearch {
+        font-size: 20px;
+    }
+}
+
 
 .textBox {
     color: white;
