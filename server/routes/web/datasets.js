@@ -370,4 +370,39 @@ router.get(constants.API_URL_DATASETS + '/:datasetName', function (req, res, nex
     });
 });
 
+/** GET DATASET HOMER */
+router.get('/homer', function (req, res, next) {
+    logger.debug('Servicio: Obtener dataset HOMER');
+    let serviceBaseUrl = constants.HOMER_API_BASE_URL;
+    let serviceRequestUrl = serviceBaseUrl + utils.getRequestHomerCommonParams(req);
+    logger.notice('URL de petición: ' + serviceRequestUrl);
+    console.log("datasets.js " + serviceRequestUrl);
+    //Proxy checking
+    let httpConf = null;
+    if (constants.REQUESTS_NEED_PROXY == true) {
+        logger.warning('Realizando petición a través de proxy');
+        let httpProxyConf = proxy.getproxyOptions(serviceRequestUrl);
+        httpConf = httpProxyConf;
+    } else {
+        httpConf = serviceRequestUrl;
+    }
+
+    http.get(httpConf, function (results) {
+        var body = '';
+        results.on('error', function () {
+            body = {
+                status: constants.REQUEST_ERROR_STATUS_500,
+                message: 'Error in request'
+            };
+            res.json(errorBody);
+        });
+        results.on('data', function (chunk) {
+            body += chunk;
+        });
+        results.on('end', function () {
+            res.json(body);
+        });
+    });
+});
+
 module.exports = router;

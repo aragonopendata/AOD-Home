@@ -83,6 +83,11 @@ exports.ORGANIZATION_DETAIL = 'organization_show';
 //List all tags
 exports.TAGS_LIST = 'tag_list';
 
+/* HOMER PROPERTIES */
+exports.HOMER_API_BASE_URL = 'http://opendata-federation.csi.it/fed-homer/documents/select';
+//Results per page in lists
+exports.DATASETS_HOMER_SEARCH_ROWS_PER_PAGE = 20;
+
 /* ******************* */
 /* DATABASE PROPERTIES */
 exports.DB_HOST = '';

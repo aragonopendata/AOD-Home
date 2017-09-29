@@ -63,6 +63,7 @@ export class Constants {
     public static ROUTER_LINK_DATA_CATALOG_STATS = 'datos/catalogo/estadisticas';
     public static ROUTER_LINK_DATA_CATALOG_HOMER = 'datos/catalogo/homer';
     public static ROUTER_LINK_DATA_CATALOG_DATASET = 'datos/catalogo/dataset';
+    public static ROUTER_LINK_DATA_CATALOG_HOMER_DETAIL = 'datos/catalogo/homer/dataset';
     public static ROUTER_LINK_DATA_TOPICS = 'datos/temas';
     public static ROUTER_LINK_DATA_ORGANIZATIONS = 'datos/publicadores';
     public static ROUTER_LINK_INFORMATION = 'informacion';
@@ -130,6 +131,8 @@ export class Constants {
     public static ROUTER_LINK_DATA_PARAM_TEXT = 'texto';
     public static ROUTER_LINK_DATA_PARAM_TYPE = 'tipo';
     public static ROUTER_LINK_DATA_PARAM_TAG = 'etq';
+    public static ROUTER_LINK_DATA_PARAM_LANG = 'lang';
+    public static ROUTER_LINK_DATA_PARAM_TEXT_HOMER = 'text';
     public static ROUTER_LINK_TERMS_FRAGMENT = 'terminos-licencias';
 
     //SERVER API URLS
@@ -141,6 +144,7 @@ export class Constants {
     public static SERVER_API_LINK_DATASETS_NEWEST = '/datasets/newest';
     public static SERVER_API_LINK_DATASETS_DOWNLOADED = '/datasets/downloaded';
     public static SERVER_API_LINK_DATASETS_COUNT = '/datasets/count';
+    public static SERVER_API_LINK_DATASETS_HOMER = '/homer';
     public static SERVER_API_LINK_TOPICS = '/topics';
     public static SERVER_API_LINK_ORGANIZATIONS = '/organizations';
     public static SERVER_API_LINK_STATIC_CONTENT_INFO = '/static-content/info';
@@ -157,8 +161,10 @@ export class Constants {
     public static SERVER_API_LINK_PARAM_TYPE = 'type';
     public static SERVER_API_LINK_PARAM_TAGS = 'tags';
     public static SERVER_API_LINK_PARAM_TEXT = 'text';
+    public static SERVER_API_LINK_PARAM_LANG = 'lang';
     public static SERVER_API_LINK_PARAM_LIMIT = 'limit';
     public static SERVER_API_LINK_PARAM_SORT_DEFAULT_VALUE = 'relevance,-metadata_modified';
+    public static SERVER_API_LINK_PARAM_SORT_HOMER_DEFAULT_VALUE = 'field';
     public static SERVER_API_LINK_PARAM_SORT_TITLE_STRING = 'title_string';
     public static SERVER_API_LINK_PARAM_SORT_VIEWS_TOTAL = 'views_total';
     public static SERVER_API_LINK_PARAM_SORT_METADATA_MODIFIED = 'metadata_modified';

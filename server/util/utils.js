@@ -73,5 +73,53 @@ module.exports = {
             }
         }
         return query;
+    },
+
+    getRequestHomerCommonParams: function (req) {
+        var query = '';
+        let sortParams = [];
+        let sortOrders = [];
+        let sorting = '';
+
+        sorting = req.query.sort;
+        if (sorting) {
+            sortParams = sorting.replace(' ', '').split(',');
+        }
+        for (var key in sortParams) {
+            sortParams[key].charAt(0) == '-' ? sortOrders.push('desc') : sortOrders.push('asc');
+            if (sortParams[key].charAt(0) == '-') {
+                sortParams[key] = sortParams[key].slice(1);
+            }
+        }
+
+        query = '?sort=';
+        if (sortParams.length > 0 && sortOrders.length > 0) {
+            for (var key in sortParams) {
+                query += sortParams[key] + ' ' + sortOrders[key] + ',';
+            }
+        } else {
+            query += 'field asc';
+        }
+
+        if (req.query.rows && req.query.page) {
+            query += '&rows=' + req.query.rows + '&start=' + (req.query.page * constants.DATASETS_HOMER_SEARCH_ROWS_PER_PAGE);
+        }
+
+        // if (req.query.lang){
+        //     query += '&lang='+req.query.lang;
+        // }else{
+        //     query += '&lang=*';
+        // }
+        
+        if(req.query.text) {
+            query += '&q='+req.query.text;
+        }else{
+            query += '&q=*';
+        }
+        query += '&wt=json';
+
+        return query;
     }
+
+
 };

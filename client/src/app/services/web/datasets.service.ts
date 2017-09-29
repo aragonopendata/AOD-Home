@@ -113,6 +113,24 @@ export class DatasetsService {
 		return this.http.get(fullUrl).map(res => res.json());
 	}
 
+	/**
+	 * Gets a list of all the datasets from Homer by a text.
+	 * @param text - Text for the search.
+	 * @param lang - Language for the search.
+	 * @param sort - Sort order.
+	 * @param page - Page to show.
+	 * @param rows - Rows per page.
+	 */
+	public getDatasetsHomer(sort: string, page: number, rows: number, text: string, lang: string) {
+		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS_HOMER 
+		+ '?' + Constants.SERVER_API_LINK_PARAM_SORT + '=' + sort 
+		+ '&' + Constants.SERVER_API_LINK_PARAM_PAGE + '=' + page.toString() 
+		+ '&' + Constants.SERVER_API_LINK_PARAM_ROWS + '=' + rows.toString()
+		+ '&' + Constants.SERVER_API_LINK_PARAM_LANG + '=' + lang
+		+ '&' + Constants.SERVER_API_LINK_PARAM_TEXT + '=' + text;
+		return this.http.get(fullUrl).map(res => res.json());
+	}
+
 	private handleError(error: Response) {
 		console.error(error);
 		return Observable.throw(error.json().error || 'Server error');

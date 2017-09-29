@@ -60,7 +60,6 @@ b {
 }
 
 .box {
-    width: 90%;
     padding: 0;
     border: solid 1px #5ea2ba;
     margin-bottom: 1%;
@@ -77,8 +76,7 @@ b {
 }
 
 .boxTitle h3 {
-    padding-left: 8px; 
-    padding-left: 10px; 
+    padding: 15px; 
     display: table-cell;
     vertical-align: middle;
     color: white;
@@ -127,6 +125,30 @@ a:hover {
     color: #5ea2ba !important;
     font-weight: 300;
     font-size:xx-large;
+}
+
+.normalCount {
+    margin: 1px;
+    left: 1px;
+    padding: initial;
+    color: #5ea1b9;
+    font-weight: 900;
+    background: -webkit-linear-gradient(white, e2e2dc);
+    background: -o-linear-gradient(white, e2e2dc);
+    background: -moz-linear-gradient(white, e2e2dc);
+    background: linear-gradient(white, #e2e2dc);
+}
+
+.slimCount {
+    margin: 1px;
+    left: 1px;
+    padding: initial;
+    color: #5ea1b9;
+    font-weight: normal;
+    background: -webkit-linear-gradient(white, e2e2dc);
+    background: -o-linear-gradient(white, e2e2dc);
+    background: -moz-linear-gradient(white, e2e2dc);
+    background: linear-gradient(white, #e2e2dc);
 }
 
 .p-autocomplete{

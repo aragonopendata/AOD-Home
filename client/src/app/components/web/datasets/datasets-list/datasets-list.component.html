@@ -1,7 +1,7 @@
 <div class="container">
     <h1 translate>TITLE_DATACENTER</h1>
     <div class="ui-g">
-        <div *ngIf="selectedSearchOption == datasetSearchOptionFreeSearch" class="ui-g-8">
+            <div *ngIf="selectedSearchOption == datasetSearchOptionFreeSearch" class="ui-g-8">
             <b class="ui-g-4">DATOS CON EL TEXTO </b>
             <div class="ui-inputgroup">
                 <input style="width:500px" type="text" [value]="searchValue" (keyup.enter)="searchDatasetsByText(searchInput.value)" #searchInput>
@@ -10,10 +10,13 @@
         </div>
         <div *ngIf="selectedSearchOption == datasetSearchOptionHomer" class="ui-g-8">
             <b>BUSCAR</b>
-            <input type="text" [value]="searchHomerValue" [style]="{'width':'200px'}" #searchHomerInput>
+            <input type="text" [value]="searchHomerValue" [style]="{'width':'200px'}" (keyup.enter)="searchDatasetsByHomer(searchHomerInput.value)" #searchHomerInput>
             <b>EN</b>
-            <p-dropdown [options]="langsSelect" [(ngModel)]="selectedLang" [style]="{'width':'240px'}"></p-dropdown>
-            <button type="button"><i aria-hidden="true" class="fa fa-search"></i></button>
+            <!-- <p-dropdown [options]="langsSelect" [(ngModel)]="selectedLang" [style]="{'width':'240px'}"></p-dropdown> -->
+            <select class="ui-dropdown-label ui-inputtext ui-corner-all" [(ngModel)]="selectedLang">
+                <option *ngFor="let langSel of langsSelect" [ngValue]="langSel.value">{{langSel.label}}</option>
+              </select>
+            <button type="button" (click)="searchDatasetsByHomer(searchHomerInput.value)" ><i aria-hidden="true" class="fa fa-search"></i></button>
         </div>
         <div *ngIf="selectedSearchOption == datasetSearchOptionTags" class="ui-g-8">
             <p-autoComplete [(ngModel)]="tags" [suggestions]="filteredTagsMultiple" (completeMethod)="filterTagsMultiple($event)" [minLength]="1"
@@ -195,11 +198,11 @@
             </select>
         </div>
     </div>
-
+    <div *ngIf="selectedSearchOption != datasetSearchOptionHomer">
     <p-dataTable [value]="datasets" [responsive]="true" (onSort)="setOrder($event)" #dt>
         <p-column field="name" header="{{numDatasets}} conjuntos de datos encontrados" sortable="custom" sortFunction="orderTable($event)">
             <ng-template pTemplate="body" let-dataset="rowData">
-                <a routerLink='/{{routerLinkDataCatalogDataset}}/{{dataset.name}}' (click)="showDataset(dataset)">
+                    <a routerLink='/{{routerLinkDataCatalogDataset}}/{{dataset.name}}' (click)="showDataset(dataset)">
                         {{dataset.title}}
                     </a>
             </ng-template>
@@ -234,7 +237,7 @@
                     <div class="boxContent">
                         <div>
                             <div *ngFor="let newDataset of newestDatasets">
-                                <a routerLink='/{{routerLinkDataCatalogDataset}}/{{newDataset.name}}' (click)="showDataset(newDataset)" class="textosNormales">
+                                    <a routerLink='/{{routerLinkDataCatalogDataset}}/{{newDataset.name}}' (click)="showDataset(newDataset)" class="textosNormales">
                                     {{newDataset.title}}
                                 </a>
                                 <div *ngIf="newestDatasets.indexOf(newDataset) != 2" class="separadorVentana"></div>
@@ -252,7 +255,7 @@
                     <div class="boxContent">
                         <div>
                             <div *ngFor="let downloadedDataset of downloadedDatasets">
-                                <a routerLink='/{{routerLinkDataCatalogDataset}}/{{downloadedDataset.name}}' (click)="showDataset(downloadedDataset)" class="textosNormales">
+                                    <a routerLink='/{{routerLinkDataCatalogDataset}}/{{downloadedDataset.name}}' (click)="showDataset(downloadedDataset)" class="textosNormales">
                                     {{downloadedDataset.title}}
                                 </a>
                                 <div *ngIf="downloadedDatasets.indexOf(downloadedDataset) != 2" class="separadorVentana"></div>
@@ -270,7 +273,9 @@
                     <div class="boxContent">
                         <div>
                             <h6>Número de datasets</h6>
-                            <p class="counter">{{datasetCount}}</p>
+                            <h1>
+                                <span *ngFor="let num of datasetCount" [ngClass]="num.label == 'slim' ? 'slimCount': 'normalCount'">{{num.value}}</span>
+                            </h1>
                         </div>
                         <div class="separadorVentana"></div>
                         <div>
@@ -281,4 +286,27 @@
                 </div>
             </div>
         </div>
+    </div>
+    </div>
+    <div *ngIf="selectedSearchOption == datasetSearchOptionHomer">
+        <p-dataTable [value]="datasetsHomer" [responsive]="true" (onSort)="setOrderHomer($event)" #dt>
+            <p-column field="name" header="ENCONTRADOS {{numDatasetsHomer}} RESULTADOS EN HOMER" sortable="custom" sortFunction="orderTableHomer($event)">
+                <ng-template pTemplate="body" let-datasetHomer="rowData">
+                    <a routerLink='//{{routerLinkDataCatalogDatasetHomer}}/{{datasetHomer.package_id}}' (click)="showDatasetHomer(dataset)">
+                            {{datasetHomer.title}}
+                        </a>
+                </ng-template>
+            </p-column>
+            <p-column field="portal" header="PORTAL" [style]="{'width':'220px'}" sortable="custom" [sortable]="true">
+                <ng-template pTemplate="body" let-datasetHomer="rowData">
+                    {{datasetHomer.portal}}
+                </ng-template>
+            </p-column>
+            <p-column field="language" header="IDIOMA" [style]="{'width':'160px'}" sortable="custom" [sortable]="true">
+                <ng-template pTemplate="body" let-datasetHomer="rowData">
+                    {{datasetHomer.language}}
+                </ng-template>
+            </p-column>
+        </p-dataTable>
+        <p-paginator rows="{{pageRows}}" totalRecords="{{numDatasetsHomer}}" (onPageChange)="paginateHomer($event)"></p-paginator>
     </div>
