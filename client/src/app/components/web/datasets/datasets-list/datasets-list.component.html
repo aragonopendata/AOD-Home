@@ -2,7 +2,7 @@
     <h1 translate>TITLE_DATACENTER</h1>
     <div class="ui-g">
             <div *ngIf="selectedSearchOption == datasetSearchOptionFreeSearch" class="ui-g-8">
-            <b class="ui-g-4">DATOS CON EL TEXTO </b>
+            <b class="ui-g-4">DATOS SOBRE </b>
             <div class="ui-inputgroup">
                 <input style="width:500px" type="text" [value]="searchValue" (keyup.enter)="searchDatasetsByText(searchInput.value)" #searchInput>
                 <button pButton type="button" icon="fa-search" (click)="searchDatasetsByText(searchInput.value)" class="ui-button-secondary"></button>
