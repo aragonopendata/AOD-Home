@@ -205,14 +205,15 @@
                     <a routerLink='/{{routerLinkDataCatalogDataset}}/{{dataset.name}}' (click)="showDataset(dataset)">
                         {{dataset.title}}
                     </a>
+                    <img src="../../../../../assets/popular.png" alt="" *ngIf="dataset.tracking_summary.recent > 10" />
             </ng-template>
         </p-column>
-        <p-column field="accesos" header="Nº de accesos" [style]="{'width':'160px'}" sortable="custom" [sortable]="true">
+        <p-column field="accesos" header="Nº de accesos" [style]="{'width':'160px'}" sortable="custom" sortFunction="orderTable($event)">
             <ng-template pTemplate="body" let-dataset="rowData">
                 {{dataset.tracking_summary.total}}
             </ng-template>
         </p-column>
-        <p-column field="lastUpdate" header="Última actualización" [style]="{'width':'220px'}" sortable="custom" [sortable]="true">
+        <p-column field="lastUpdate" header="Última actualización" [style]="{'width':'220px'}" sortable="custom" sortFunction="orderTable($event)">
             <ng-template pTemplate="body" let-dataset="rowData">
                 {{dataset.metadata_modified | date: 'dd/MM/yyyy'}}
             </ng-template>

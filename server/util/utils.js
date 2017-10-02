@@ -104,12 +104,10 @@ module.exports = {
         if (req.query.rows && req.query.page) {
             query += '&rows=' + req.query.rows + '&start=' + (req.query.page * constants.DATASETS_HOMER_SEARCH_ROWS_PER_PAGE);
         }
-
-        // if (req.query.lang){
-        //     query += '&lang='+req.query.lang;
-        // }else{
-        //     query += '&lang=*';
-        // }
+        
+        if (req.query.lang != 'undefined'){
+            query += '&lang='+req.query.lang;
+        }
         
         if(req.query.text) {
             query += '&q='+req.query.text;

@@ -376,7 +376,7 @@ router.get('/homer', function (req, res, next) {
     let serviceBaseUrl = constants.HOMER_API_BASE_URL;
     let serviceRequestUrl = serviceBaseUrl + utils.getRequestHomerCommonParams(req);
     logger.notice('URL de petición: ' + serviceRequestUrl);
-    console.log("datasets.js " + serviceRequestUrl);
+    
     //Proxy checking
     let httpConf = null;
     if (constants.REQUESTS_NEED_PROXY == true) {
