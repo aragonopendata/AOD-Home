@@ -57,21 +57,6 @@ p {
     }
   }
 
-.btnSearch {
-    background: transparent;
-    color: #5EA2BA;
-    outline: none;
-    border: none;
-    cursor: pointer;
-    float: right;
-    font-size: 5vw;
-    height: 15vh;
-    width: 10%;
-    border-bottom: 1px solid #5EA2BA;
-    text-align: center;
-    vertical-align: middle;
-}
-
 .search {
     position: relative;
     display: table;
@@ -80,18 +65,6 @@ p {
     top: 15%;
     left: 0;
     z-index: 2;
-}
-
-.textBox {
-    color: #5EA2BA;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid #5EA2BA;
-    height: 15vh;
-    width: 90%;
-    font-size: 4vw;
-    padding-right: 10%;
-    text-transform: uppercase;
 }
 
 .content {
@@ -176,12 +149,23 @@ p {
     position: absolute;
     width: 65%;
     height: 100;
-    top: 35%;
+    top: 40%;
     left: 15%;
     right: 15%;
     margin: 0 auto;
     z-index: 1;
+    display: table;
 }
+#autocomplete{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+@media screen and (max-width: 500px) {
+    .searcher{
+        top: 55%;
+    }
+}   
 
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
     color:    #5EA2BA;
