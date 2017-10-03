@@ -161,11 +161,23 @@ p {
     vertical-align: middle;
 }
 
+@media screen and (max-height: 500px) {
+    .searcher{
+        top: 55%;
+    }
+}  
+
 @media screen and (max-width: 500px) {
     .searcher{
         top: 55%;
     }
-}   
+}
+
+@media screen and (min-width: 500px) and (max-width: 1366px) {
+    .searcher{
+        top: 50%;
+    }
+}
 
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
     color:    #5EA2BA;

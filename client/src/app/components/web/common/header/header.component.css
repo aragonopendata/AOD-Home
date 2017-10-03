@@ -100,6 +100,11 @@ a:hover {
     }
 }
 
+@media screen and (max-width: 1000px) and (min-width: 480px){
+    #header {
+     height: 80px;
+    }
+}
 
 .textBox {
     color: white;
@@ -146,6 +151,30 @@ a:hover {
 .relatedHeader a:hover {
     color: white;
 }
+
+.primary-nav {
+    display:-webkit-flex;
+    display:flex;
+    list-style-type:none;
+    padding:0;
+    justify-content:flex-end;
+}
+
+.left {
+    margin-right:auto;
+}
+
+#imgGobAragon{
+    padding-left: 10px;
+}
+
+#imgGobFEDER{
+    padding-left: 10px;
+}
+
+@media screen and (max-width: 500px) {
+    
+} 
 
 .active {
     color:#ffffff !important;
