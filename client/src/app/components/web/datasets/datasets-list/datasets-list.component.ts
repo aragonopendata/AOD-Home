@@ -70,6 +70,12 @@ export class DatasetsListComponent implements OnInit {
     routerLinkDataCatalogOrganizations: string;
     routerLinkDataCatalogTags: string;
     routerLinkDataCatalogDatasetHomer: string;
+    //Pagination Params
+    pages: number [];
+    actualPage:number;
+    pagesShow: string[];
+    pageFirst: number;
+    pageLast: number;
 
     constructor(private datasetsService: DatasetsService, private topicsService: TopicsService
         , private orgsService: OrganizationsService, private router: Router
@@ -127,6 +133,7 @@ export class DatasetsListComponent implements OnInit {
         this.setLanguagesDropdown();
         this.setGroupsDropdown();
         this.setInfoTables();
+        
     }
 
     loadDatasets() {
@@ -140,20 +147,74 @@ export class DatasetsListComponent implements OnInit {
         } else if (this.selectedOrg) {
             this.getDatasetsByOrg(null, null, this.selectedOrg, this.selectedType);
             this.selectedSearchOption = this.datasetSearchOptionOrganizations;
-        } if(this.tags){
+        } else if(this.tags){
             this.getDatasetsByTags(null,null);
             this.selectedSearchOption = this.datasetSearchOptionTags;
-        }else if(this.selectedSearchOption == this.datasetSearchOptionHomer){
+        } else if(this.selectedSearchOption == this.datasetSearchOptionHomer){
             this.getDatasetsByHomer(null,null);
         } else if(this.textSearchHomer){
             this.selectedSearchOption = this.datasetSearchOptionHomer;
             this.searchHomerValue = this.textSearchHomer;
             this.getDatasetsByHomer(null,null);
-
         } else {
             this.getDatasets(null, null);
         }
-        
+    }
+
+    setPagination(actual: number, total: number){
+        this.actualPage = actual;
+        this.pageFirst = 0;
+        this.pageLast = Math.ceil(+total/+this.pageRows);        
+        this.pages = [];
+        this.pagesShow = [];
+        for (var index = 0; index < this.pageLast; index++) {
+            this.pages.push(+index+1);   
+        }
+        if (this.actualPage<3) {
+            for (var index = 0; index < 5; index++) {
+                if(this.pages[index]){
+                    this.pagesShow.push(String (+this.pages[index]));
+                }
+            }
+        } else if (this.actualPage >= (135)) {
+            for (var index = (+this.pageLast-5); index < this.pageLast; index++) {
+                if(this.pages[index]){
+                    this.pagesShow.push(String (+this.pages[index]));
+                }
+            }
+        } else{
+            for (var index = (+actual-2); index <= (+this.actualPage+2); index++) {
+                if(this.pages[index]){
+                    this.pagesShow.push(String (+this.pages[index]));
+                }
+            }
+        }
+    }
+
+    paginate(page:number) {
+        --page;
+        if (this.textSearch != undefined) {
+            this.searchDatasetsByText(this.textSearch);
+            this.searchValue = this.textSearch;
+        } else if (this.selectedTopic) {
+            this.getDatasetsByTopic(this.selectedTopic, page, this.pageRows, this.selectedType);
+            this.selectedSearchOption = this.datasetSearchOptionTopics;
+        } else if (this.selectedOrg) {
+            this.getDatasetsByOrg(page, this.pageRows, this.selectedOrg, this.selectedType);
+            this.selectedSearchOption = this.datasetSearchOptionOrganizations;
+        } else if(this.tags){
+            this.getDatasetsByTags(page, this.pageRows);
+            this.selectedSearchOption = this.datasetSearchOptionTags;
+        }else if(this.selectedSearchOption == this.datasetSearchOptionHomer){
+            this.getDatasetsByHomer(page, this.pageRows);
+        } else if(this.textSearchHomer){
+            this.selectedSearchOption = this.datasetSearchOptionHomer;
+            this.searchHomerValue = this.textSearchHomer;
+            this.getDatasetsByHomer(page, this.pageRows);
+        } else {
+            this.getDatasets(page, this.pageRows);
+        }
+        document.body.scrollTop = 0;
     }
 
     changeType() {
@@ -186,7 +247,6 @@ export class DatasetsListComponent implements OnInit {
 
     changeTags() {
         if (this.tags.length > 0) {
-            console.log('TRUE ' + this.tags.length);
         let tagsList = [];
         let tagUrl = '';
         tagsList = this.tags;
@@ -223,12 +283,17 @@ export class DatasetsListComponent implements OnInit {
         this.datasetsService.setDataset(dataset);
     }
 
+    showDatasetHomer(datasetHomer: DatasetHomer) {
+        this.datasetsService.setDatasetHomer(datasetHomer);
+    }
+
     addDataset() {
         this.dataset = new Dataset();
         this.datasetsService.setDataset(this.dataset);
     }
 
     setOrder(event) {
+        event.page = 0;
         switch (event.field) {
             case Constants.DATASET_LIST_SORT_COLUMN_NAME:
             this.sort == Constants.SERVER_API_LINK_PARAM_SORT_TITLE_STRING 
@@ -250,18 +315,27 @@ export class DatasetsListComponent implements OnInit {
         this.changeDetectorRef.detectChanges();
     }
 
-    paginate(event) {
-        if (this.selectedTopic === undefined) {
-            this.getDatasets(event.page, event.rows);
-        } else {
-            this.getDatasetsByTopic(this.selectedTopic, event.page, event.rows, this.selectedType);
+    setOrderHomer(event) {
+        event.page = 0;
+        switch (event.field) {
+            case Constants.DATASET_LIST_HOMER_SORT_COLUMN_NAME:
+            this.sortHomer == Constants.SERVER_API_LINK_PARAM_SORT_HOMER_NAME 
+                ? this.sortHomer = '-' + Constants.SERVER_API_LINK_PARAM_SORT_HOMER_NAME 
+                : this.sortHomer = Constants.SERVER_API_LINK_PARAM_SORT_HOMER_NAME;
+            break;
+        case Constants.DATASET_LIST_HOMER_SORT_COLUMN_PORTAL:
+            this.sortHomer == Constants.SERVER_API_LINK_PARAM_SORT_HOMER_PORTAL 
+                ? this.sortHomer = '-' + Constants.SERVER_API_LINK_PARAM_SORT_HOMER_PORTAL 
+                : this.sortHomer = Constants.SERVER_API_LINK_PARAM_SORT_HOMER_PORTAL;
+            break;
+            case Constants.DATASET_LIST_HOMER_SORT_COLUMN_LANGUAGE:
+            this.sortHomer == Constants.SERVER_API_LINK_PARAM_SORT_HOMER_LANGUAGE 
+                ? this.sortHomer = '-' + Constants.SERVER_API_LINK_PARAM_SORT_HOMER_LANGUAGE 
+                : this.sortHomer = Constants.SERVER_API_LINK_PARAM_SORT_HOMER_LANGUAGE;
+                break;
         }
-        document.body.scrollTop = 0;
-    }
-
-    paginateHomer(event) {
-        this.getDatasetsByHomer(event.page, event.rows);
-        document.body.scrollTop = 0;
+        this.loadDatasets();
+        this.changeDetectorRef.detectChanges();
     }
 
     getDatasets(page: number, rows: number): void {
@@ -271,6 +345,7 @@ export class DatasetsListComponent implements OnInit {
         this.datasetsService.getDatasets(this.sort, pageNumber, rowsNumber, this.selectedType).subscribe(datasets => {
             this.datasets = JSON.parse(datasets).result.results;
             this.numDatasets = JSON.parse(datasets).result.count;
+            this.setPagination(pageNumber,this.numDatasets);
         });
     }
 
@@ -281,6 +356,7 @@ export class DatasetsListComponent implements OnInit {
         this.datasetsService.getDatasetsByTopic(topic, this.sort, pageNumber, rowsNumber, type).subscribe(datasets => {
             this.datasets = JSON.parse(datasets).result.results;
             this.numDatasets = JSON.parse(datasets).result.count;
+            this.setPagination(pageNumber,this.numDatasets);
         });
     }
 
@@ -290,6 +366,7 @@ export class DatasetsListComponent implements OnInit {
         this.datasetsService.getDatasetsByText(this.sort, pageNumber, rowsNumber, searchParam).subscribe(datasets => {
             this.datasets = JSON.parse(datasets).result.results;
             this.numDatasets = JSON.parse(datasets).result.count;
+            this.setPagination(pageNumber,this.numDatasets);
         });
     }
 
@@ -300,6 +377,7 @@ export class DatasetsListComponent implements OnInit {
         this.datasetsService.getDatasetsByOrganization(org, this.sort, pageNumber, rowsNumber, type).subscribe(datasets => {
             this.datasets = JSON.parse(datasets).result.results;
             this.numDatasets = JSON.parse(datasets).result.count;
+            this.setPagination(pageNumber,this.numDatasets);
         });
     }
 
@@ -310,6 +388,7 @@ export class DatasetsListComponent implements OnInit {
         this.datasetsService.getDatasetsBytags(this.sort, pageNumber, rowsNumber, this.tags).subscribe(datasets => {
             this.datasets = JSON.parse(datasets).result.results;
             this.numDatasets = JSON.parse(datasets).result.count;
+            this.setPagination(pageNumber,this.numDatasets);
         });
         
     }
@@ -321,6 +400,7 @@ export class DatasetsListComponent implements OnInit {
         this.datasetsService.getDatasetsHomer(this.sortHomer, pageNumber, rowsNumber, this.searchHomerValue, this.selectedLang).subscribe(datasetsHomer => {
             this.datasetsHomer = JSON.parse(datasetsHomer).response.docs;
             this.numDatasetsHomer = JSON.parse(datasetsHomer).response.numFound;
+            this.setPagination(pageNumber, this.numDatasetsHomer);
         });
     }
 

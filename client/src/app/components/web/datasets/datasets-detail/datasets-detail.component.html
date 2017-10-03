@@ -1,4 +1,4 @@
-<div class="container">
+<div *ngIf="dataset.name != undefined" class="container">
 	<div class="dtHeader">
 		<h1 class="globaltitle col-10">{{dataset.title}}</h1>
 		<div class="social col-2">
@@ -145,5 +145,78 @@
 			</div>
 
 		</div>
+	</div>
+</div>
+<div *ngIf="datasetHomer" class="container">
+	<div class="dtHeader">
+		<h1 class="globaltitle col-10">{{datasetHomer.title}}</h1>
+		<div class="social col-2">
+			<a>
+			  <img src="../../../../../assets/social/facebookIcon.png">
+			</a>
+			<a>
+			  <img src="../../../../../assets/social/twitterIcon.png">
+			</a>
+			<a>
+			  <img src="../../../../../assets/social/googlePlusIcon.png">
+			</a>
+		</div>
+	</div>
+	<div class="content row">
+		<div class="infodtset col-sm-12 col-md-8">
+			<div class="title">
+				<h5>Información del conjunto de datos Homer</h5>
+			</div>
+			<div class="container-fluid">
+				<div class="section" *ngIf="datasetHomer.title">
+					<h6>Título</h6>
+					<p>{{datasetHomer.title}}</p>
+				</div>
+				<div class="section" *ngIf="datasetHomer.description">
+					<h6>Descripción</h6>
+					<div [innerHTML]="datasetHomer.description"></div>
+				</div>
+				<div class="section" *ngIf="datasetHomer.description">
+					<h6>Palabra clave / etiqueta</h6>
+					<button *ngFor="let tag of datasetHomer.tag" class="tags" pButton type="button" pButton label="{{tag}}" style="margin: 2px;"></button>
+				</div>
+				<div class="section" *ngIf="datasetHomer.description">
+					<h6>Publicador</h6>
+					<p *ngFor="let author of datasetHomer.author">{{author}}</p>
+				</div>
+				<div class="section" *ngIf="datasetHomer.description">
+					<h6>Idioma</h6>
+					<p>{{datasetHomer.language}}</p>
+				</div>
+				<div class="section" *ngIf="datasetHomer.description">
+					<h6>Licencia</h6>
+					<p>{{datasetHomer.license_id}}</p>
+				</div>
+				<div class="section" *ngIf="datasetHomer.description">
+					<h6>Temas</h6>
+					<p *ngFor="let topic of datasetHomer.topic">{{topic}}</p>
+				</div>
+				<div class="section" *ngIf="datasetHomer.description">
+					<h6>Portal</h6>
+					<p>{{datasetHomer.portal}}</p>
+				</div>
+			</div>
+		</div>
+		<div class="download col-sm-12 col-md-4">
+			<div class="title">
+				<h5>Descargas</h5>
+			</div>
+			<div class="container-fluid horizontalFormat">
+				<div class="section">
+					<h6>Metadato original</h6>
+					<button class="tags" pButton type="button" pButton label="Metadato" (click)="downloadFile(datasetHomer.metadata_origin)" style="margin: 2px;"></button>
+				</div>
+				<div class="section">
+					<h6>Dato</h6>
+					<button class="tags" pButton type="button" pButton label="Dato" (click)="downloadFile(datasetHomer.url)" style="margin: 2px;"></button>
+				</div>
+			</div>
+		</div>
+		
 	</div>
 </div>

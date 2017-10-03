@@ -4,12 +4,14 @@ import { Observable } from 'rxjs/Rx';
 import { Http, Response, URLSearchParams } from '@angular/http';
 import { Constants } from '../../app.constants';
 import { Dataset } from '../../models/Dataset';
+import { DatasetHomer } from '../../models/DatasetHomer';
 
 @Injectable()
 export class DatasetsService {
 
 	private datasetsDetail: Dataset[];
 	private dataset: Dataset;
+	private datasetHomer: DatasetHomer;
 
 	constructor(private http: Http) { }
 
@@ -34,6 +36,12 @@ export class DatasetsService {
 	public getDatasetByName(datasetName: string) {
 		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS 
 						+ '/' + datasetName;
+		return this.http.get(fullUrl).map(res => res.json());
+	}
+
+	public getDatasetHomerByPackageId(datasetHomerName: string) {
+		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS_HOMER 
+						+ '/' + datasetHomerName;
 		return this.http.get(fullUrl).map(res => res.json());
 	}
 
@@ -97,6 +105,10 @@ export class DatasetsService {
 
 	public setDataset(dataset: Dataset) {
 		this.dataset = dataset;
+	}
+
+	public setDatasetHomer(datasetHomer: DatasetHomer) {
+		this.datasetHomer = datasetHomer;
 	}
 
 	public getDataset() {

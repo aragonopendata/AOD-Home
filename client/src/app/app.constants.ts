@@ -32,6 +32,9 @@ export class Constants {
     public static DATASET_LIST_SORT_COLUMN_NAME = 'name';
     public static DATASET_LIST_SORT_COLUMN_ACCESS = 'accesos';
     public static DATASET_LIST_SORT_COLUMN_LAST_UPDATE = 'lastUpdate';
+    public static DATASET_LIST_HOMER_SORT_COLUMN_NAME = 'name';
+    public static DATASET_LIST_HOMER_SORT_COLUMN_LANGUAGE = 'language';
+    public static DATASET_LIST_HOMER_SORT_COLUMN_PORTAL = 'portal';
     public static DATASET_HIGLIGHT_OCURRENCES = '10';
     public static DATASET_HIGLIGHT_DAYS = '14';
     public static DATASET_AUTOCOMPLETE_DEBOUNCE_TIME = 50;
@@ -63,7 +66,7 @@ export class Constants {
     public static ROUTER_LINK_DATA_CATALOG_STATS = 'datos/catalogo/estadisticas';
     public static ROUTER_LINK_DATA_CATALOG_HOMER = 'datos/catalogo/homer';
     public static ROUTER_LINK_DATA_CATALOG_DATASET = 'datos/catalogo/dataset';
-    public static ROUTER_LINK_DATA_CATALOG_HOMER_DETAIL = 'datos/catalogo/homer/dataset';
+    public static ROUTER_LINK_DATA_CATALOG_HOMER_DETAIL = 'datos/catalogo/homerDataset';
     public static ROUTER_LINK_DATA_TOPICS = 'datos/temas';
     public static ROUTER_LINK_DATA_ORGANIZATIONS = 'datos/publicadores';
     public static ROUTER_LINK_INFORMATION = 'informacion';
@@ -126,6 +129,7 @@ export class Constants {
     public static ROUTER_LINK_SERVICES_CRAS = 'servicios/cras';
     public static ROUTER_LINK_SERVICES_SOCIAL_DATA = 'servicios/open-social-data';
     public static ROUTER_LINK_DATA_PARAM_DATASET_NAME = 'datasetName';
+    public static ROUTER_LINK_DATA_PARAM_DATASET_HOMER_NAME = 'datasetHomerName';
     public static ROUTER_LINK_DATA_PARAM_TOPIC_NAME = 'topicName';
     public static ROUTER_LINK_DATA_PARAM_ORGANIZATION_NAME = 'organizationName';
     public static ROUTER_LINK_DATA_PARAM_TEXT = 'texto';
@@ -164,8 +168,11 @@ export class Constants {
     public static SERVER_API_LINK_PARAM_LANG = 'lang';
     public static SERVER_API_LINK_PARAM_LIMIT = 'limit';
     public static SERVER_API_LINK_PARAM_SORT_DEFAULT_VALUE = 'relevance,-metadata_modified';
-    public static SERVER_API_LINK_PARAM_SORT_HOMER_DEFAULT_VALUE = 'field';
+    public static SERVER_API_LINK_PARAM_SORT_HOMER_DEFAULT_VALUE = 'title';
     public static SERVER_API_LINK_PARAM_SORT_TITLE_STRING = 'title_string';
     public static SERVER_API_LINK_PARAM_SORT_VIEWS_TOTAL = 'views_total';
     public static SERVER_API_LINK_PARAM_SORT_METADATA_MODIFIED = 'metadata_modified';
+    public static SERVER_API_LINK_PARAM_SORT_HOMER_NAME = 'title';
+    public static SERVER_API_LINK_PARAM_SORT_HOMER_PORTAL = 'portal';
+    public static SERVER_API_LINK_PARAM_SORT_HOMER_LANGUAGE = 'language';
 }

@@ -405,4 +405,39 @@ router.get('/homer', function (req, res, next) {
     });
 });
 
+/** GET DATASET HOMER BY PACKAGEID */
+router.get(constants.API_URL_DATASETS_HOMER + '/:datasetHomerName', function (req, res, next) {
+    logger.debug('Servicio: Obtener dataset homer por identificador');
+    let serviceBaseUrl = constants.HOMER_API_BASE_URL;
+    let serviceRequestUrl = serviceBaseUrl + '?q=package_id:'+ req.params.datasetHomerName + '&wt=json';
+    logger.notice('URL de petición: ' + serviceRequestUrl);
+
+    //Proxy checking
+    let httpConf = null;
+    if (constants.REQUESTS_NEED_PROXY == true) {
+        logger.warning('Realizando petición a través de proxy');
+        let httpProxyConf = proxy.getproxyOptions(serviceRequestUrl);
+        httpConf = httpProxyConf;
+    } else {
+        httpConf = serviceRequestUrl;
+    }
+
+    http.get(httpConf, function (results) {
+        var body = '';
+        results.on('error', function () {
+            body = {
+                status: constants.REQUEST_ERROR_STATUS_500,
+                message: 'Error in request'
+            };
+            res.json(errorBody);
+        });
+        results.on('data', function (chunk) {
+            body += chunk;
+        });
+        results.on('end', function () {
+            res.json(body);
+        });
+    });
+});
+
 module.exports = router;

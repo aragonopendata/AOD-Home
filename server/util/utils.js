@@ -11,49 +11,49 @@ module.exports = {
             sortParams = sorting.replace(' ', '').split(',');
         }
         for (var key in sortParams) {
-            sortParams[key].charAt(0) == '-' ? sortOrders.push('desc') : sortOrders.push('asc');
+            sortParams[key].charAt(0) == '-' ? sortOrders.push(constants.SERVER_API_SORT_DESC) : sortOrders.push(constants.SERVER_API_SORT_ASC);
             if (sortParams[key].charAt(0) == '-') {
                 sortParams[key] = sortParams[key].slice(1);
             }
         }
 
-        query = '?sort=';
+        query = '?'+constants.SERVER_API_LINK_PARAM_SORT+'=';
         if (sortParams.length > 0 && sortOrders.length > 0) {
             for (var key in sortParams) {
                 query += sortParams[key] + ' ' + sortOrders[key] + ',';
             }
         } else {
-            query += 'relevance asc,metadata_modified desc';
+            query += constants.SERVER_API_LINK_DEFAULT_SORT;
         }
         if (req.query.rows && req.query.page) {
-            query += '&rows=' + req.query.rows + '&start=' + (req.query.page * constants.DATASETS_SEARCH_ROWS_PER_PAGE);
+            query += '&'+constants.SERVER_API_LINK_PARAM_ROWS+'=' + req.query.rows + '&'+constants.SERVER_API_LINK_PARAM_START+'=' + (req.query.page * constants.DATASETS_SEARCH_ROWS_PER_PAGE);
         }
-
-        if (req.query.tipo) {
-            switch (req.query.tipo) {
-                case 'calendario':
-                    query += '&q=(res_format:ics OR ICS)AND dataset_type:dataset AND entity_type:package AND state:active AND capacity:public'
+        
+        if (req.query.type) {
+            switch (req.query.type) {
+                case constants.SERVER_API_LINK_PARAM_TYPE_CALENDAR:
+                    query += constants.SERVER_API_LINK_PARAM_TYPE_CALENDAR_QUERY
                     break;
-                case 'fotos':
-                    query += '&q=(res_format:(jpeg OR JPEG OR jpg OR JPG OR png OR PNG OR gif OR GIF))AND dataset_type:dataset AND entity_type:package AND state:active AND capacity:public'
+                case constants.SERVER_API_LINK_PARAM_TYPE_PHOTO:
+                    query += constants.SERVER_API_LINK_PARAM_TYPE_PHOTO_QUERY
                     break;
-                case 'hojas-de-calculo':
-                    query += '&q=(res_format:(XLS OR xls OR ods OR ODS OR xlsx OR XLSX))AND dataset_type:dataset AND entity_type:package AND state:active AND capacity:public';
+                case constants.SERVER_API_LINK_PARAM_TYPE_SPREADSHEET:
+                    query += constants.SERVER_API_LINK_PARAM_TYPE_SPREADSHEET_QUERY
                     break;
-                case 'mapas':
-                    query += '&q=(res_format:(dxf OR DXF OR gml OR GML OR geojson OR GEOJSON OR kmz OR KMZ OR shp OR SHP OR dgn OR DGN OR dwg OR DWG))AND dataset_type:dataset AND entity_type:package AND state:active AND capacity:public';
+                case constants.SERVER_API_LINK_PARAM_TYPE_MAPS:
+                    query += constants.SERVER_API_LINK_PARAM_TYPE_MAPS_QUERY
                     break;
-                case 'recursos-educativos':
-                    query += '&q=(name:(recurso-educativo*))AND dataset_type:dataset AND entity_type:package AND state:active AND capacity:public';
+                case constants.SERVER_API_LINK_PARAM_TYPE_EDUCATION_RESOURCES:
+                    query += constants.SERVER_API_LINK_PARAM_TYPE_EDUCATION_RESOURCES_QUERY
                     break;
-                case 'recursos-web':
-                    query += '&q=(res_format:(html OR HTML OR url OR URL))AND dataset_type:dataset AND entity_type:package AND state:active AND capacity:public';
+                case constants.SERVER_API_LINK_PARAM_TYPE_WEB_RESOURCES:
+                    query += constants.SERVER_API_LINK_PARAM_TYPE_WEB_RESOURCES_QUERY
                     break;
-                case 'rss':
-                    query += '&q=(res_format:(rss OR RSS))AND dataset_type:dataset AND entity_type:package AND state:active AND capacity:public';
+                case constants.SERVER_API_LINK_PARAM_TYPE_RSS:
+                    query += constants.SERVER_API_LINK_PARAM_TYPE_RSS_QUERY
                     break;
-                case 'texto-plano':
-                    query += '&q=(((res_format:XLS OR res_format:xls ) AND (res_url:http*.xls )) OR res_format:json OR res_format:JSON OR res_format:xml OR res_format:XML OR res_format:csv OR res_format:CSV OR res_format:px OR res_format:PX OR res_format:url OR res_format:URL) AND dataset_type:dataset AND entity_type:package AND state:active AND capacity:public';
+                case constants.SERVER_API_LINK_PARAM_TYPE_PLAIN_TEXT:
+                    query += constants.SERVER_API_LINK_PARAM_TYPE_PLAIN_TEXT_QUERY
             }
         }
         return query;
@@ -66,7 +66,7 @@ module.exports = {
         tags = req.query.tags;
         if (tags) tagsParams = tags.replace(' ', '').split(',');
 
-        query = '&fq=tags:';
+        query = '&fq='+constants.SERVER_API_LINK_PARAM_TAGS+':';
         if (tagsParams.length > 0) {
             for (var key in tagsParams) {
                 query += '+' + encodeURIComponent(tagsParams[key]);
@@ -86,27 +86,27 @@ module.exports = {
             sortParams = sorting.replace(' ', '').split(',');
         }
         for (var key in sortParams) {
-            sortParams[key].charAt(0) == '-' ? sortOrders.push('desc') : sortOrders.push('asc');
+            sortParams[key].charAt(0) == '-' ? sortOrders.push(constants.SERVER_API_SORT_DESC) : sortOrders.push(constants.SERVER_API_SORT_ASC);
             if (sortParams[key].charAt(0) == '-') {
                 sortParams[key] = sortParams[key].slice(1);
             }
         }
 
-        query = '?sort=';
+        query = '?'+constants.SERVER_API_LINK_PARAM_SORT+'=';
         if (sortParams.length > 0 && sortOrders.length > 0) {
             for (var key in sortParams) {
                 query += sortParams[key] + ' ' + sortOrders[key] + ',';
             }
         } else {
-            query += 'field asc';
+            query += constants.SERVER_API_LINK_DEFAULT_SORT_HOMER;
         }
 
         if (req.query.rows && req.query.page) {
-            query += '&rows=' + req.query.rows + '&start=' + (req.query.page * constants.DATASETS_HOMER_SEARCH_ROWS_PER_PAGE);
+            query += '&'+constants.SERVER_API_LINK_PARAM_ROWS+'=' + req.query.rows + '&'+constants.SERVER_API_LINK_PARAM_START+'=' + (req.query.page * constants.DATASETS_HOMER_SEARCH_ROWS_PER_PAGE);
         }
         
         if (req.query.lang != 'undefined'){
-            query += '&lang='+req.query.lang;
+            query += '&'+constants.SERVER_API_LINK_PARAM_LANG+'='+req.query.lang;
         }
         
         if(req.query.text) {
@@ -114,7 +114,7 @@ module.exports = {
         }else{
             query += '&q=*';
         }
-        query += '&wt=json';
+        query += constants.SERVER_API_LINK_PARAM_HOMER_RESPONSE_FORMAT;
 
         return query;
     }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DatasetsService } from '../../../../services/web/datasets.service';
 import { Dataset } from '../../../../models/Dataset';
+import { DatasetHomer } from '../../../../models/DatasetHomer';
 import { ResourceAux } from '../../../../models/ResourceAux';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../../../../app.constants';
@@ -14,6 +15,7 @@ import { Constants } from '../../../../app.constants';
 export class DatasetsDetailComponent implements OnInit {
 
 	dataset: Dataset = new Dataset();
+	datasetHomer: DatasetHomer = new DatasetHomer();
 	extraDictionary: string;
 	extraDictionaryURL: string[];
 	extraDataQuality: string;
@@ -44,8 +46,14 @@ export class DatasetsDetailComponent implements OnInit {
 	ngOnInit() {
 		this.activatedRoute.params.subscribe(params => {
 			this.dataset.name =  params[Constants.ROUTER_LINK_DATA_PARAM_DATASET_NAME];
+			this.datasetHomer.package_id =  params[Constants.ROUTER_LINK_DATA_PARAM_DATASET_HOMER_NAME];
 		});
-		this.loadDataset(this.dataset);
+		if(this.dataset.name){
+			this.loadDataset(this.dataset);
+		}
+		if(this.datasetHomer.package_id){
+			this.loadDatasetHomer(this.datasetHomer);
+		}
 	}
 
 	initializeDataset() {
@@ -53,6 +61,7 @@ export class DatasetsDetailComponent implements OnInit {
 		this.resourcesAux = new Array();
 		this.datasetsRecommended = new Array();
 	}
+	
 
 	loadDataset(dataset: Dataset) {
 		this.initializeDataset();
@@ -62,6 +71,14 @@ export class DatasetsDetailComponent implements OnInit {
 			this.getExtras();
 			this.getDatasetsRecommended();
 			this.makeFileSourceList();
+		});
+	}
+
+	loadDatasetHomer(datasetHomer: DatasetHomer) {
+		this.datasetHomer = new DatasetHomer();
+		console.log('Dataset a buscar: ' + datasetHomer.package_id);
+		this.datasetsService.getDatasetHomerByPackageId(datasetHomer.package_id).subscribe(dataResult => {
+			this.datasetHomer = JSON.parse(dataResult).response.docs[0];
 		});
 	}
 

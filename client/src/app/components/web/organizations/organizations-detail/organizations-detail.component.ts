@@ -89,4 +89,27 @@ export class OrganizationsDetailComponent implements OnInit {
 		this.getDatasets(event.page, event.rows);
 		document.body.scrollTop = 0;
 	}
+
+	setOrder(event) {
+		console.log("order");
+		switch (event.field) {
+            case Constants.DATASET_LIST_SORT_COLUMN_NAME:
+            this.sort == Constants.SERVER_API_LINK_PARAM_SORT_TITLE_STRING 
+                ? this.sort = '-' + Constants.SERVER_API_LINK_PARAM_SORT_TITLE_STRING 
+                : this.sort = Constants.SERVER_API_LINK_PARAM_SORT_TITLE_STRING;
+            break;
+        case Constants.DATASET_LIST_SORT_COLUMN_ACCESS:
+            this.sort == Constants.SERVER_API_LINK_PARAM_SORT_VIEWS_TOTAL 
+                ? this.sort = '-' + Constants.SERVER_API_LINK_PARAM_SORT_VIEWS_TOTAL 
+                : this.sort = Constants.SERVER_API_LINK_PARAM_SORT_VIEWS_TOTAL;
+            break;
+        case Constants.DATASET_LIST_SORT_COLUMN_LAST_UPDATE:
+            this.sort == Constants.SERVER_API_LINK_PARAM_SORT_METADATA_MODIFIED 
+                ? this.sort = '-' + Constants.SERVER_API_LINK_PARAM_SORT_METADATA_MODIFIED 
+                : this.sort = Constants.SERVER_API_LINK_PARAM_SORT_METADATA_MODIFIED;
+                break;
+		}
+		this.datasets = [];
+        this.getDatasets(null, null);
+	}
 }

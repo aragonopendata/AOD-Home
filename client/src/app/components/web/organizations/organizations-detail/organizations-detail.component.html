@@ -32,26 +32,27 @@
 		</div>
 		<div class="ui-g-12"></div>
 	</div>
-	<p-dataTable [value]="datasets" [responsive]="true" #dt>
-		<p-column field="name" header="{{numDatasets}} {{ 'ORGANIZATION_DETAIL.FOUND_DATASETS' | translate }}" [sortable]="true">
+	<p-dataTable [value]="datasets" [responsive]="true" (onSort)="setOrder($event)"#dt>
+		<p-column field="name" header="{{numDatasets}} {{ 'ORGANIZATION_DETAIL.FOUND_DATASETS' | translate }}" sortable="custom" sortFunction="setOrder($event)">
 			<ng-template pTemplate="body" let-dataset="rowData">
 				<a routerLink='{{routerLinkDataCatalogDataset}}/{{dataset.name}}' (click)="showDataset(dataset)">
 					  {{dataset.title}}
 				  </a>
 			</ng-template>
 		</p-column>
-		<p-column field="accesos" header="{{ 'ORGANIZATION_DETAIL.TRACKING' | translate }}" (click)="setOrder(event)" [style]="{'width':'160px'}" [sortable]="true">
+		<p-column field="accesos" header="{{ 'ORGANIZATION_DETAIL.TRACKING' | translate }}" [style]="{'width':'160px'}" sortable="custom" sortFunction="setOrder($event)">
 			<ng-template pTemplate="body"  let-dataset="rowData">
 				{{dataset.tracking_summary.total}}
 			</ng-template>
 		</p-column>
-		<p-column field="lastUpdate" header="{{ 'ORGANIZATION_DETAIL.LAST_UPDATE' | translate }}" [style]="{'width':'220px'}" [sortable]="true">
+		<p-column field="lastUpdate" header="{{ 'ORGANIZATION_DETAIL.LAST_UPDATE' | translate }}" [style]="{'width':'220px'}" sortable="custom" sortFunction="setOrder($event)">
 			<ng-template pTemplate="body" let-dataset="rowData">
 				{{dataset.metadata_modified | date: 'dd/MM/yyyy'}}
 			</ng-template>
 		</p-column>
 	</p-dataTable>
-	<p-paginator rows="{{pageRows}}" totalRecords="{{numDatasets}}" (onPageChange)="paginate($event)"></p-paginator>
+	
+	<!-- <p-paginator rows="{{pageRows}}" totalRecords="{{numDatasets}}" (onPageChange)="paginate($event)"></p-paginator> -->
 	<div class="nota">
 		<p>
 			<i class="fa fa-star" id="informacion_content_3_i" style="color: #5ea2ba;"></i> {{ 'LAST_DAYS_HITS' | translate:param
