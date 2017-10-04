@@ -57,7 +57,7 @@ p {
     }
   }
 
-.search {
+.searchMain {
     position: relative;
     display: table;
     width: 100%;
@@ -223,7 +223,7 @@ button {
     height: auto;
 }
 
-.search .goDown {
+.searchMain .goDown {
     position: absolute;
     bottom: 0;
 }

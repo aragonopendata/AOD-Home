@@ -100,12 +100,6 @@ a:hover {
     }
 }
 
-@media screen and (max-width: 1000px) and (min-width: 480px){
-    #header {
-     height: 80px;
-    }
-}
-
 .textBox {
     color: white;
     background: transparent;
@@ -141,6 +135,7 @@ a:hover {
 
 .relatedHeader {
     background-color:  #494949;
+    padding: 10px;
 }
 
 .relatedHeader a {
@@ -162,19 +157,8 @@ a:hover {
 
 .left {
     margin-right:auto;
+    margin-left: 10px;
 }
-
-#imgGobAragon{
-    padding-left: 10px;
-}
-
-#imgGobFEDER{
-    padding-left: 10px;
-}
-
-@media screen and (max-width: 500px) {
-    
-} 
 
 .active {
     color:#ffffff !important;
@@ -244,5 +228,62 @@ a:hover {
 @media screen and (max-width: 450px) {
     .menuLogin {
         right: 65px;
+    }
+}
+
+@media screen and (max-width: 1250px) and (min-width: 480px){
+    .textBox{
+        font-size: 25px;
+        height: 60px;
+    }
+    .btnSearch{
+        font-size: 25px;
+        height: 60px;
+    }
+    ::-webkit-input-placeholder {
+        font-size: 20px !important;
+     }
+     
+     :-moz-placeholder { /* Firefox 18- */
+        font-size: 20px !important;
+     }
+
+     ::-moz-placeholder {  /* Firefox 19+ */
+        font-size: 20px !important;
+     }
+	
+	:-ms-input-placeholder { /* Internet Explorer 10-11 */
+        font-size: 20px !important;
+	}
+	
+	::-ms-input-placeholder { /* Microsoft Edge */
+        font-size: 20px !important;
+	}
+}
+
+@media screen and (max-width: 480px){
+    .textBox{
+        visibility: hidden;
+    }
+    .btnSearch{
+        visibility: hidden;
+    }
+    .overlay #resultsList{
+        border: 0;
+        visibility: hidden;
+    }
+}
+
+@media screen and (max-width: 850px){
+    #imgGobAragon{
+        width: 100%;
+    }
+    .left{
+        margin-left: 0;
+        width: 100%;
+        padding-top:8px;
+    }
+    .right{
+        width: 100%;
     }
 }
