@@ -3,6 +3,7 @@ import { SelectItem } from 'primeng/primeng';
 import { Router } from '@angular/router';
 import { TopicsService } from '../../../../services/web/topics.service';
 import { Topic } from '../../../../models/Topic';
+import { Constants } from '../../../../app.constants';
 
 @Component({
 	selector: 'app-topics-list',
@@ -14,9 +15,15 @@ export class TopicsListComponent implements OnInit {
 	topics: Topic[];
 	topic: Topic;
 	hovers: any[] = [];
+	
+	//Dynamic URL build parameters
+	routerLinkDataTopics: string;
+	assetsUrl: string;
 
 	constructor(private topicsService: TopicsService) {
 		this.topics = [];
+		this.routerLinkDataTopics = Constants.ROUTER_LINK_DATA_TOPICS;
+		this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
 	}
 
 	ngOnInit() {

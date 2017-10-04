@@ -20,9 +20,11 @@ export class OrganizationsListComponent implements OnInit {
 
 	//Dynamic URL build parameters
 	routerLinkDataOrganizations: string;
+	assetsUrl: string;
 
 	constructor(private orgService: OrganizationsService) {
-		this.routerLinkDataOrganizations = '/' + Constants.ROUTER_LINK_DATA_ORGANIZATIONS;
+		this.routerLinkDataOrganizations = Constants.ROUTER_LINK_DATA_ORGANIZATIONS;
+		this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
 	}
 
 	ngOnInit() {

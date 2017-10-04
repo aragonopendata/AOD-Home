@@ -2,8 +2,8 @@
 	<h1>Temas</h1>
 	<div class="ui-g">
 		<div class="ui-sm-12 ui-md-6 ui-lg-4 tarjetaContainer" *ngFor="let topic of topics; let i = index" (mouseenter)="setHover(topic.title, i)" (mouseleave)="unsetHover(topic.title, i)">
-			<div class="card" routerLink="/datos/catalogo/temas/{{topic.name}}" ng-init="selectedTopic = topic.name" (click)="setTopic(topic)">
-				<img class="card-img-top" src="../../../../assets/temas/{{topic.image_url | slice:14:topic.image_url.length-4}}.png" alt="{{topic.title | uppercase}}" width="fit-content" height="fit-content">
+			<div class="card" routerLink="/{{routerLinkDataTopics}}/{{topic.name}}" ng-init="selectedTopic = topic.name" (click)="setTopic(topic)">
+				<img class="card-img-top" src="{{assetsUrl}}/{{topic.image_url}}" alt="{{topic.title | uppercase}}" width="fit-content" height="fit-content">
 				<div class="card-block">
 					<p>{{topic.title}}</p>
 				</div>

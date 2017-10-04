@@ -17,7 +17,7 @@ module.exports = {
             }
         }
 
-        query = '?'+constants.SERVER_API_LINK_PARAM_SORT+'=';
+        query = '?' + constants.SERVER_API_LINK_PARAM_SORT + '=';
         if (sortParams.length > 0 && sortOrders.length > 0) {
             for (var key in sortParams) {
                 query += sortParams[key] + ' ' + sortOrders[key] + ',';
@@ -26,9 +26,9 @@ module.exports = {
             query += constants.SERVER_API_LINK_DEFAULT_SORT;
         }
         if (req.query.rows && req.query.page) {
-            query += '&'+constants.SERVER_API_LINK_PARAM_ROWS+'=' + req.query.rows + '&'+constants.SERVER_API_LINK_PARAM_START+'=' + (req.query.page * constants.DATASETS_SEARCH_ROWS_PER_PAGE);
+            query += '&' + constants.SERVER_API_LINK_PARAM_ROWS + '=' + req.query.rows + '&' + constants.SERVER_API_LINK_PARAM_START + '=' + (req.query.page * constants.DATASETS_SEARCH_ROWS_PER_PAGE);
         }
-        
+
         if (req.query.type) {
             switch (req.query.type) {
                 case constants.SERVER_API_LINK_PARAM_TYPE_CALENDAR:
@@ -66,7 +66,7 @@ module.exports = {
         tags = req.query.tags;
         if (tags) tagsParams = tags.replace(' ', '').split(',');
 
-        query = '&fq='+constants.SERVER_API_LINK_PARAM_TAGS+':';
+        query = '&fq=' + constants.SERVER_API_LINK_PARAM_TAGS + ':';
         if (tagsParams.length > 0) {
             for (var key in tagsParams) {
                 query += '+' + encodeURIComponent(tagsParams[key]);
@@ -92,7 +92,7 @@ module.exports = {
             }
         }
 
-        query = '?'+constants.SERVER_API_LINK_PARAM_SORT+'=';
+        query = '?' + constants.SERVER_API_LINK_PARAM_SORT + '=';
         if (sortParams.length > 0 && sortOrders.length > 0) {
             for (var key in sortParams) {
                 query += sortParams[key] + ' ' + sortOrders[key] + ',';
@@ -102,22 +102,20 @@ module.exports = {
         }
 
         if (req.query.rows && req.query.page) {
-            query += '&'+constants.SERVER_API_LINK_PARAM_ROWS+'=' + req.query.rows + '&'+constants.SERVER_API_LINK_PARAM_START+'=' + (req.query.page * constants.DATASETS_HOMER_SEARCH_ROWS_PER_PAGE);
+            query += '&' + constants.SERVER_API_LINK_PARAM_ROWS + '=' + req.query.rows + '&' + constants.SERVER_API_LINK_PARAM_START + '=' + (req.query.page * constants.DATASETS_HOMER_SEARCH_ROWS_PER_PAGE);
         }
-        
-        if (req.query.lang != 'undefined'){
-            query += '&'+constants.SERVER_API_LINK_PARAM_LANG+'='+req.query.lang;
+
+        if (req.query.lang != 'undefined') {
+            query += '&' + constants.SERVER_API_LINK_PARAM_LANG + '=' + req.query.lang;
         }
-        
-        if(req.query.text) {
-            query += '&q='+req.query.text;
-        }else{
+
+        if (req.query.text) {
+            query += '&q=' + req.query.text;
+        } else {
             query += '&q=*';
         }
         query += constants.SERVER_API_LINK_PARAM_HOMER_RESPONSE_FORMAT;
 
         return query;
     }
-
-
 };
