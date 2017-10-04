@@ -33,6 +33,9 @@ export class DatasetsDetailComponent implements OnInit {
 	routerLinkDataCatalogTopics: string;
 	routerLinkDataCatalogTags: string;
 	routerLinkDataCatalogOrgs: string;
+	routerLinkFacebookShare: string;
+	routerLinkTwitterShare: string;
+	routerLinkGooglePlusShare: string;
 
 	hovers: any[] = [];
 
@@ -41,6 +44,9 @@ export class DatasetsDetailComponent implements OnInit {
 		this.routerLinkDataCatalogTopics = Constants.ROUTER_LINK_DATA_CATALOG_TOPICS;
 		this.routerLinkDataCatalogTags = Constants.ROUTER_LINK_DATA_CATALOG_TAGS;
 		this.routerLinkDataCatalogOrgs = Constants.ROUTER_LINK_DATA_CATALOG_ORGANIZATIONS;
+		this.routerLinkFacebookShare = Constants.SHARE_FACEBOOK;
+		this.routerLinkTwitterShare = Constants.SHARE_TWITTER;
+		this.routerLinkGooglePlusShare = Constants.SHARE_GOOGLE_PLUS;
 	}
 
 	ngOnInit() {

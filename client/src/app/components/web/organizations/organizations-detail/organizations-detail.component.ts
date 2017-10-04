@@ -25,11 +25,17 @@ export class OrganizationsDetailComponent implements OnInit {
 	param = { ocurrences: Constants.DATASET_HIGLIGHT_OCURRENCES, days: Constants.DATASET_HIGLIGHT_DAYS };
 	//Dynamic URL build parameters
 	routerLinkDataCatalogDataset: string;
+	routerLinkFacebookShare: string;
+	routerLinkTwitterShare: string;
+	routerLinkGooglePlusShare: string;
 
 	constructor(private organizationsService: OrganizationsService
 			, private datasetsService: DatasetsService
 			, private activatedRoute: ActivatedRoute) {
 		this.routerLinkDataCatalogDataset = '/' + Constants.ROUTER_LINK_DATA_CATALOG_DATASET;
+		this.routerLinkFacebookShare = Constants.SHARE_FACEBOOK;
+		this.routerLinkTwitterShare = Constants.SHARE_TWITTER;
+		this.routerLinkGooglePlusShare = Constants.SHARE_GOOGLE_PLUS;
 	}
 
 	ngOnInit() {

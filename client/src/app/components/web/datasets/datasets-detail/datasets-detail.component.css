@@ -7,8 +7,22 @@ p {
     text-align: justify;
 }
 
-a {
-    cursor: pointer;
+a { 
+	text-align:left;
+	/*color:#4F7589 !important;*/
+	color:#3b515c !important;
+	text-decoration: none;
+	outline:0;
+	letter-spacing: 1px;
+	font-weight: bold;
+}
+
+a:hover { 
+	text-align:left;
+	color:#000000 !important;
+	text-decoration: none;
+	letter-spacing: 1px;
+	font-weight: bold;
 }
 
 .content {

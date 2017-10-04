@@ -22,9 +22,16 @@ export class OrganizationsListComponent implements OnInit {
 	routerLinkDataOrganizations: string;
 	assetsUrl: string;
 
+	routerLinkFacebookShare: string;
+	routerLinkTwitterShare: string;
+	routerLinkGooglePlusShare: string;
+
 	constructor(private orgService: OrganizationsService) {
 		this.routerLinkDataOrganizations = Constants.ROUTER_LINK_DATA_ORGANIZATIONS;
 		this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
+		this.routerLinkFacebookShare = Constants.SHARE_FACEBOOK;
+		this.routerLinkTwitterShare = Constants.SHARE_TWITTER;
+		this.routerLinkGooglePlusShare = Constants.SHARE_GOOGLE_PLUS;
 	}
 
 	ngOnInit() {

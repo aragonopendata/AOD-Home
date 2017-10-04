@@ -22,6 +22,10 @@ export class Constants {
     public static AOD_MAIL = 'opendata@aragon.es';
     public static ARAGON_PARTICIPA_WEB_URL = 'http://aragonparticipa.aragon.es';
     public static TRANSPARENCIA_WEB_URL = 'http://transparencia.aragon.es/';
+    
+    public static SHARE_FACEBOOK= 'https://www.facebook.com/sharer.php?u=';
+    public static SHARE_TWITTER= 'https://twitter.com/share?url=';
+    public static SHARE_GOOGLE_PLUS= 'https://plus.google.com/share?url=';
 
     //COMMON CONSTANTS
     public static DATASET_LIST_ROWS_PER_PAGE = 20;

@@ -19,11 +19,17 @@ export class TopicsListComponent implements OnInit {
 	//Dynamic URL build parameters
 	routerLinkDataTopics: string;
 	assetsUrl: string;
+	routerLinkFacebookShare: string;
+	routerLinkTwitterShare: string;
+	routerLinkGooglePlusShare: string;
 
 	constructor(private topicsService: TopicsService) {
 		this.topics = [];
 		this.routerLinkDataTopics = Constants.ROUTER_LINK_DATA_TOPICS;
 		this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
+		this.routerLinkFacebookShare = Constants.SHARE_FACEBOOK;
+		this.routerLinkTwitterShare = Constants.SHARE_TWITTER;
+		this.routerLinkGooglePlusShare = Constants.SHARE_GOOGLE_PLUS;
 	}
 
 	ngOnInit() {

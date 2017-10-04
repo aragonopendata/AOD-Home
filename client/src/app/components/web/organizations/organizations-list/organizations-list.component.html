@@ -1,5 +1,18 @@
 <div class="container">
-	<h1 translate>ORGANIZATIONS.NAME</h1>
+	<div class="dtHeader row">
+		<h1 class="globaltitle col-10" translate>ORGANIZATIONS.NAME</h1>
+		<div class="social col-2">
+			<a href="{{routerLinkFacebookShare}}" target="_blank" title="Compartir en Facebook">
+				<img src="../../../../../assets/social/facebookIcon.png" alt="Facebook">
+			</a>
+			<a href="{{routerLinkTwitterShare}}" target="_blank" title="Compartir en Twitter">
+				<img src="../../../../../assets/social/twitterIcon.png" alt="Twitter">
+			</a>
+			<a href="{{routerLinkGooglePlusShare}}" target="_blank" title="Compartir en Google Plus">
+				<img src="../../../../../assets/social/googlePlusIcon.png" alt="Google Plus">
+			</a>
+		</div>
+	</div>
 	<p-dropdown [options]="views" [(ngModel)]="selectedView"></p-dropdown>
 	<div *ngIf="selectedView" class="ui-g">
 		<div class="ui-sm-12 ui-md-6 ui-lg-4" *ngFor="let org of orgs; let i = index" (mouseenter)="setHover(org.title, i)" (mouseleave)="unsetHover(org.title, i)">

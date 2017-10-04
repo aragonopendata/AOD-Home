@@ -1,15 +1,15 @@
 <div *ngIf="dataset.name != undefined" class="container">
-	<div class="dtHeader">
+	<div class="dtHeader row">
 		<h1 class="globaltitle col-10">{{dataset.title}}</h1>
 		<div class="social col-2">
-			<a>
-			  <img src="../../../../../assets/social/facebookIcon.png">
+			<a href="{{routerLinkFacebookShare}}" target="_blank" title="Compartir en Facebook">
+			  <img src="../../../../../assets/social/facebookIcon.png" alt="Facebook">
 			</a>
-			<a>
-			  <img src="../../../../../assets/social/twitterIcon.png">
+			<a href="{{routerLinkTwitterShare}}" target="_blank" title="Compartir en Twitter">
+			  <img src="../../../../../assets/social/twitterIcon.png" alt="Twitter">
 			</a>
-			<a>
-			  <img src="../../../../../assets/social/googlePlusIcon.png">
+			<a href="{{routerLinkGooglePlusShare}}" target="_blank" title="Compartir en Google Plus">
+			  <img src="../../../../../assets/social/googlePlusIcon.png" alt="Google Plus">
 			</a>
 		</div>
 	</div>
@@ -54,7 +54,8 @@
 				</div>
 				<div class="section" *ngIf="dataset.tags">
 					<h6>Etiquetas y palabras clave</h6>
-					<button *ngFor="let tag of dataset.tags" class="tags" pButton type="button" routerLink="/{{routerLinkDataCatalogTags}}" [queryParams]="{etq:tag.name}" pButton label="{{tag.name}}" style="margin: 2px;"></button>
+					<button *ngFor="let tag of dataset.tags" class="tags" pButton type="button" routerLink="/{{routerLinkDataCatalogTags}}" [queryParams]="{etq:tag.name}"
+					 pButton label="{{tag.name}}" style="margin: 2px;"></button>
 				</div>
 				<div class="section" *ngIf="dataset.organization">
 					<h6>Organización responsable de la publicación</h6>
@@ -85,7 +86,7 @@
 					<h6>Calidad del dato</h6>
 					<p>{{extraDataQuality}}</p>
 				</div>
-				<div class="section" *ngIf="extraDictionaryURL">
+				<div class="section" *ngIf="extraDictionaryURL.length != 0">
 					<h6>Diccionario de datos</h6>
 					<button *ngFor="let dic of extraDictionaryURL; let i = index" class="tags" pButton type="button" label="[{{i+1}}] Documento de diccionario de datos"
 					 style="margin: 2px;"></button>
@@ -100,36 +101,38 @@
 				<div class="section">
 					<h6>Metadatos de la colección</h6>
 				</div>
-				<div class="section">
-						<h6>Archivos con los datos</h6>
-						<div *ngFor="let resource of resourcesAux">
-							<p>{{resource.name}}</p>
-							<div *ngFor="let url of resource.sources; let i = index">
-								<div class="horizontalFormat" *ngIf="resource.getSourcesSize() != i+1">
-									<button class="tags" pButton type="button" label="{{resource.formats[i]}}" style="margin: 2px;" (click)="downloadFile(url)"></button>
-								</div>
-								<div *ngIf="resource.getSourcesSize() == i+1">
-									<button class="tags" pButton type="button" label="{{resource.formats[i]}}" style="margin: 2px;" (click)="downloadFile(url)"></button>
-								</div>
+				<div class="section" *ngIf="resourcesAux.length != 0">
+					<h6>Archivos con los datos</h6>
+					<div *ngFor="let resource of resourcesAux">
+						<p>{{resource.name}}</p>
+						<div *ngFor="let url of resource.sources; let i = index">
+							<div class="horizontalFormat" *ngIf="resource.getSourcesSize() != i+1">
+								<button class="tags" pButton type="button" label="{{resource.formats[i]}}" style="margin: 2px;" (click)="downloadFile(url)"></button>
+							</div>
+							<div *ngIf="resource.getSourcesSize() == i+1">
+								<button class="tags" pButton type="button" label="{{resource.formats[i]}}" style="margin: 2px;" (click)="downloadFile(url)"></button>
 							</div>
 						</div>
 					</div>
+				</div>
 			</div>
 		</div>
 		<div class="recomend col-12" *ngIf="datasetsRecommended">
 			<h4>También te pueden interesar estos datos</h4>
 
 			<div class="ui-g">
-				<div class="ui-sm-12 ui-md-6 ui-lg-4 tarjetaContainer" *ngFor="let dsRecommended of datasetsRecommended; let i = index" (mouseenter)="setHover(dsRecommended.name, i)" (mouseleave)="unsetHover(dsRecommended.name, i)">
+				<div class="ui-sm-12 ui-md-6 ui-lg-4 tarjetaContainer" *ngFor="let dsRecommended of datasetsRecommended; let i = index" (mouseenter)="setHover(dsRecommended.name, i)"
+				 (mouseleave)="unsetHover(dsRecommended.name, i)">
 					<div class="recommendedCard" routerLink="/datos/catalogo/dataset/{{dsRecommended.name}}" (click)="showDataset(dsRecommended)">
 						<div *ngFor="let topic of dsRecommended.groups">
-							
+
 							<!--<div *ngIf="!hovers[i]?.hover">-->
-								<img class="card-img-top" src="../../../../assets/temas/{{topic.image_url | slice:14:topic.image_url.length-4}}.png" alt="{{topic.title | uppercase}}" width="fit-content" height="fit-content">
-								<p>{{topic.title}}</p>
-								<div class="recommended-card-block">
-									<p>{{dsRecommended.title}}</p>
-								</div>
+							<img class="card-img-top" src="../../../../assets/temas/{{topic.image_url | slice:14:topic.image_url.length-4}}.png" alt="{{topic.title | uppercase}}"
+							 width="fit-content" height="fit-content">
+							<p>{{topic.title}}</p>
+							<div class="recommended-card-block">
+								<p>{{dsRecommended.title}}</p>
+							</div>
 							<!--</div>-->
 							<!--<div *ngIf="hovers[i]?.hover" class="detail bg-faded" style="position: absolute; width: 100%; height: 100%; padding: 10px; background-color: rgba(235,241,244, 0.95); opacity: 80%; ">
 									<h6>TÍTULO</h6>
@@ -140,25 +143,25 @@
 									<h6>{{dsRecommended.organization.title}}</h6>
 							</div>-->
 						</div>
-					</div>	
+					</div>
 				</div>
 			</div>
 
 		</div>
 	</div>
 </div>
-<div *ngIf="datasetHomer" class="container">
-	<div class="dtHeader">
+<div *ngIf="datasetHomer.package_id != undefined" class="container">
+	<div class="dtHeader row">
 		<h1 class="globaltitle col-10">{{datasetHomer.title}}</h1>
 		<div class="social col-2">
-			<a>
-			  <img src="../../../../../assets/social/facebookIcon.png">
+			<a href="{{routerLinkFacebookShare}}" target="_blank" title="Compartir en Facebook">
+			  <img src="../../../../../assets/social/facebookIcon.png" alt="Facebook">
 			</a>
-			<a>
-			  <img src="../../../../../assets/social/twitterIcon.png">
+			<a href="{{routerLinkTwitterShare}}" target="_blank" title="Compartir en Twitter">
+			  <img src="../../../../../assets/social/twitterIcon.png" alt="Twitter">
 			</a>
-			<a>
-			  <img src="../../../../../assets/social/googlePlusIcon.png">
+			<a href="{{routerLinkGooglePlusShare}}" target="_blank" title="Compartir en Google Plus">
+			  <img src="../../../../../assets/social/googlePlusIcon.png" alt="Google Plus">
 			</a>
 		</div>
 	</div>
@@ -176,47 +179,48 @@
 					<h6>Descripción</h6>
 					<div [innerHTML]="datasetHomer.description"></div>
 				</div>
-				<div class="section" *ngIf="datasetHomer.description">
+				<div class="section" *ngIf="datasetHomer.tag.length != 0">
 					<h6>Palabra clave / etiqueta</h6>
 					<button *ngFor="let tag of datasetHomer.tag" class="tags" pButton type="button" pButton label="{{tag}}" style="margin: 2px;"></button>
 				</div>
-				<div class="section" *ngIf="datasetHomer.description">
+				<div class="section" *ngIf="datasetHomer.author.length != 0">
 					<h6>Publicador</h6>
 					<p *ngFor="let author of datasetHomer.author">{{author}}</p>
 				</div>
-				<div class="section" *ngIf="datasetHomer.description">
+				<div class="section" *ngIf="datasetHomer.language">
 					<h6>Idioma</h6>
 					<p>{{datasetHomer.language}}</p>
 				</div>
-				<div class="section" *ngIf="datasetHomer.description">
+				<div class="section" *ngIf="datasetHomer.license_id">
 					<h6>Licencia</h6>
 					<p>{{datasetHomer.license_id}}</p>
 				</div>
-				<div class="section" *ngIf="datasetHomer.description">
+				<div class="section" *ngIf="datasetHomer.topic.length != 0">
 					<h6>Temas</h6>
 					<p *ngFor="let topic of datasetHomer.topic">{{topic}}</p>
 				</div>
-				<div class="section" *ngIf="datasetHomer.description">
+				<div class="section" *ngIf="datasetHomer.portal">
 					<h6>Portal</h6>
 					<p>{{datasetHomer.portal}}</p>
 				</div>
 			</div>
 		</div>
-		<div class="download col-sm-12 col-md-4">
+		<div class="download col-sm-12 col-md-4" *ngIf="datasetHomer.metadata_origin && datasetHomer.url">
 			<div class="title">
 				<h5>Descargas</h5>
 			</div>
 			<div class="container-fluid horizontalFormat">
-				<div class="section">
+				<div class="section" *ngIf="datasetHomer.metadata_origin">
 					<h6>Metadato original</h6>
-					<button class="tags" pButton type="button" pButton label="Metadato" (click)="downloadFile(datasetHomer.metadata_origin)" style="margin: 2px;"></button>
+					<button class="tags" pButton type="button" pButton label="Metadato" (click)="downloadFile(datasetHomer.metadata_origin)"
+					 style="margin: 2px;"></button>
 				</div>
-				<div class="section">
+				<div class="section" *ngIf="datasetHomer.url">
 					<h6>Dato</h6>
 					<button class="tags" pButton type="button" pButton label="Dato" (click)="downloadFile(datasetHomer.url)" style="margin: 2px;"></button>
 				</div>
 			</div>
 		</div>
-		
+
 	</div>
 </div>

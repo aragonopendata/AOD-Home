@@ -1,5 +1,5 @@
 .container {
-    padding-top: 15%;
+    padding-top: 10%;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -45,4 +45,22 @@ b {
 
 >>> .ui-widget-content {
     border: none !important;
+}
+
+a { 
+	text-align:left;
+	/*color:#4F7589 !important;*/
+	color:#3b515c !important;
+	text-decoration: none;
+	outline:0;
+	letter-spacing: 1px;
+	font-weight: bold;
+}
+
+a:hover { 
+	text-align:left;
+	color:#000000 !important;
+	text-decoration: none;
+	letter-spacing: 1px;
+	font-weight: bold;
 }
