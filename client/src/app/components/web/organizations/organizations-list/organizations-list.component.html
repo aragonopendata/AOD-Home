@@ -17,7 +17,9 @@
 	<div *ngIf="selectedView" class="ui-g">
 		<div class="ui-sm-12 ui-md-6 ui-lg-4" *ngFor="let org of orgs; let i = index" (mouseenter)="setHover(org.title, i)" (mouseleave)="unsetHover(org.title, i)">
 			<div class="card" routerLink="/{{routerLinkDataOrganizations}}/{{org.name}}" (click)="showOrg(org)">
-				<img class="card-img-top" src="{{assetsUrl}}/{{org.image_url}}" alt="Card image cap" width="fit-content" height="70" style="margin: 10px;">
+				<div class="card-img-top">
+					<img src="{{assetsUrl}}/{{org.image_url}}" alt="Card image cap" width="297"/>
+				</div>
 				<div class="card-block" style="position: relative; font-size: 15px; margin: 10; padding-top: 10px; height: 70px; background-color: darkslategray; color: white;">
 					<p class="tittle"> {{org.title}}</p>
 				</div>

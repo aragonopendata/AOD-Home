@@ -231,7 +231,7 @@ a:hover {
     }
 }
 
-@media screen and (max-width: 1250px) and (min-width: 480px){
+@media screen and (max-width: 1250px) and (min-width: 360px){
     .textBox{
         font-size: 25px;
         height: 60px;
@@ -239,6 +239,9 @@ a:hover {
     .btnSearch{
         font-size: 25px;
         height: 60px;
+    }
+    .overlay a, .overlay li{
+        font-size: 20px;
     }
     ::-webkit-input-placeholder {
         font-size: 20px !important;
@@ -261,18 +264,55 @@ a:hover {
 	}
 }
 
-@media screen and (max-width: 480px){
+@media screen and (max-width: 360px) {
     .textBox{
-        visibility: hidden;
+        font-size: 25px;
+        height: 50px;
     }
     .btnSearch{
-        visibility: hidden;
+        font-size: 25px;
+        height: 50px;
     }
-    .overlay #resultsList{
-        border: 0;
-        visibility: hidden;
+    .overlay a, .overlay li{
+        font-size: 15px;
     }
+    .logo{
+        height: 34px;
+        width: 160px;
+    }
+    .menuLogin{
+        height:30px;
+    }
+    .menu{
+        height: 30px;
+    }
+    .aLogin{
+        height: 30px;
+    }
+    .aMenu{
+        height: 30px;
+    }
+    ::-webkit-input-placeholder {
+        font-size: 15px !important;
+     }
+     
+     :-moz-placeholder { /* Firefox 18- */
+        font-size: 15px !important;
+     }
+
+     ::-moz-placeholder {  /* Firefox 19+ */
+        font-size: 15px !important;
+     }
+	
+	:-ms-input-placeholder { /* Internet Explorer 10-11 */
+        font-size: 15px !important;
+	}
+	
+	::-ms-input-placeholder { /* Microsoft Edge */
+        font-size: 15px !important;
+	}    
 }
+
 
 @media screen and (max-width: 850px){
     #imgGobAragon{

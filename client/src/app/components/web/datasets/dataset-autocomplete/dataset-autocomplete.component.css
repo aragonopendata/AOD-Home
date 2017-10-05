@@ -192,6 +192,9 @@
 }
 
 @media screen and (max-width: 520px) {
+	.search-result{
+		font-size: 15px;
+	}
 	#searchBox 	{
 		height: 5vh;
 		padding-right: 5%;
