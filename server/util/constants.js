@@ -19,7 +19,8 @@ exports.API_URL_DATASETS_AUTOCOMPLETE = '/datasets/autocomplete';
 exports.API_URL_DATASETS_TAGS = '/datasets/tags';
 exports.API_URL_DATASETS_NEWEST = '/datasets/newest';
 exports.API_URL_DATASETS_DOWNLOADED = '/datasets/downloaded';
-exports.API_URL_DATASETS_COUNT = '/datasets/count';
+exports.API_URL_DATASETS_COUNT = '/datasets/countDatasets';
+exports.API_URL_RESOURCES_COUNT = '/datasets/countResources';
 exports.API_URL_DATASETS_TOPIC = '/datasets/topic';
 exports.API_URL_DATASETS_ORGANIZATION = '/datasets/organization';
 exports.API_URL_ORGANIZATIONS = '/organizations';
@@ -58,6 +59,8 @@ exports.DATASETS_SEARCH_ROWS_PER_PAGE = 20;
 exports.DATASETS_AUTOCOMPLETE_LIMIT = 8;
 //Search datasets
 exports.DATASETS_SEARCH = 'package_search';
+//Search number of datasets
+exports.DATASETS_SEARCH_COUNT = 'package_search?rows=0&start=0';
 //Get newest datasets
 exports.DATASETS_SEARCH_NEWEST = 'package_search?sort=metadata_modified desc&start=0';
 //Results per newest datasets
@@ -84,6 +87,10 @@ exports.ORGANIZATION_DETAIL = 'organization_show';
 /* TAGS */
 //List all tags
 exports.TAGS_LIST = 'tag_list';
+
+/* RESOURCES */
+//List all resources
+exports.RESOURCES_SEARCH_COUNT = 'resource_search?query=hash:&limit=0';
 
 /* HOMER PROPERTIES */
 exports.HOMER_API_BASE_URL = 'http://opendata-federation.csi.it/fed-homer/documents/select';

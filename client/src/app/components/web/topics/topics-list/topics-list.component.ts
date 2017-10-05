@@ -64,8 +64,12 @@ export class TopicsListComponent implements OnInit {
 
 	getTopics(): void {
 		this.topicsService.getTopics().subscribe(topics => {
-			this.topics = JSON.parse(topics).result;
-			this.setHovers();
+			try {
+				this.topics = JSON.parse(topics).result;
+				this.setHovers();
+			} catch (error) {
+				console.error("Error: getTopics() - topics-list.component.ts");
+			}
 		});
 	}
 }

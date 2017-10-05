@@ -38,7 +38,7 @@ export class DatasetsListComponent implements OnInit {
     pageRows: number;
     totalDataset: string[];
     datasetCount: SelectItem[];
-    totalResources: string;
+    resourceCount: SelectItem[];
     searchValue: string = '';
     textSearch: string;
     textSearchHomer: string;
@@ -76,6 +76,9 @@ export class DatasetsListComponent implements OnInit {
     pagesShow: string[];
     pageFirst: number;
     pageLast: number;
+    //Error Params
+    errorTitle: string;
+    errorMessage: string;
 
     constructor(private datasetsService: DatasetsService, private topicsService: TopicsService
         , private orgsService: OrganizationsService, private router: Router
@@ -101,25 +104,32 @@ export class DatasetsListComponent implements OnInit {
 
     ngOnInit() {
         this.activatedRoute.queryParams.subscribe(params => {
-            this.textSearch = params[Constants.ROUTER_LINK_DATA_PARAM_TEXT];
-            this.selectedType = params[Constants.ROUTER_LINK_DATA_PARAM_TYPE];
-            if (params[Constants.ROUTER_LINK_DATA_PARAM_TAG]) {
-                let tagParams: string = '' + params[Constants.ROUTER_LINK_DATA_PARAM_TAG];
-                let tags = [] = tagParams.split(',');
-                let filtered = [];
-                for (let i = 0; i < tags.length; i++) {
-                        filtered.push({ name: tags[i], value: tags[i] });
+            try {
+                this.textSearch = params[Constants.ROUTER_LINK_DATA_PARAM_TEXT];
+                this.selectedType = params[Constants.ROUTER_LINK_DATA_PARAM_TYPE];
+                if (params[Constants.ROUTER_LINK_DATA_PARAM_TAG]) {
+                    let tagParams: string = '' + params[Constants.ROUTER_LINK_DATA_PARAM_TAG];
+                    let tags = [] = tagParams.split(',');
+                    let filtered = [];
+                    for (let i = 0; i < tags.length; i++) {
+                            filtered.push({ name: tags[i], value: tags[i] });
+                    }
+                    this.tags = filtered;
                 }
-                this.tags = filtered;
+                this.selectedLang = params[Constants.ROUTER_LINK_DATA_PARAM_LANG];
+                this.textSearchHomer = params[Constants.ROUTER_LINK_DATA_PARAM_TEXT_HOMER];
+            } catch (error) {
+                console.error("Error: ngOnInit() queryParams - datasets-list.component.ts");
             }
-            this.selectedLang = params[Constants.ROUTER_LINK_DATA_PARAM_LANG];
-            this.textSearchHomer = params[Constants.ROUTER_LINK_DATA_PARAM_TEXT_HOMER];
-            
         });
 
         this.activatedRoute.params.subscribe(params => {
-            this.selectedTopic = params[Constants.ROUTER_LINK_DATA_PARAM_TOPIC_NAME];
-            this.selectedOrg = params[Constants.ROUTER_LINK_DATA_PARAM_ORGANIZATION_NAME];
+            try {
+                this.selectedTopic = params[Constants.ROUTER_LINK_DATA_PARAM_TOPIC_NAME];
+                this.selectedOrg = params[Constants.ROUTER_LINK_DATA_PARAM_ORGANIZATION_NAME];
+            } catch (error) {
+                console.error("Error: ngOnInit() params - datasets-list.component.ts");
+            }
          });
         
         this.sort = Constants.SERVER_API_LINK_PARAM_SORT_DEFAULT_VALUE;
@@ -343,9 +353,15 @@ export class DatasetsListComponent implements OnInit {
         var pageNumber = (page != null ? page : 0);
         var rowsNumber = (rows != null ? rows : this.pageRows);
         this.datasetsService.getDatasets(this.sort, pageNumber, rowsNumber, this.selectedType).subscribe(datasets => {
-            this.datasets = JSON.parse(datasets).result.results;
-            this.numDatasets = JSON.parse(datasets).result.count;
-            this.setPagination(pageNumber,this.numDatasets);
+            try {
+                this.datasets = JSON.parse(datasets).result.results;
+                this.numDatasets = JSON.parse(datasets).result.count;
+                this.setPagination(pageNumber,this.numDatasets);
+            } catch (error) {
+                console.error("Error: getDatasets() - datasets-list.component.ts");
+                this.errorTitle="Error";
+                this.errorMessage="Ha ocurrido un error en la carga de Datsets";
+            }
         });
     }
 
@@ -354,9 +370,15 @@ export class DatasetsListComponent implements OnInit {
         var pageNumber = (page != null ? page : 0);
         var rowsNumber = (rows != null ? rows : this.pageRows);
         this.datasetsService.getDatasetsByTopic(topic, this.sort, pageNumber, rowsNumber, type).subscribe(datasets => {
-            this.datasets = JSON.parse(datasets).result.results;
-            this.numDatasets = JSON.parse(datasets).result.count;
-            this.setPagination(pageNumber,this.numDatasets);
+            try {
+                this.datasets = JSON.parse(datasets).result.results;
+                this.numDatasets = JSON.parse(datasets).result.count;
+                this.setPagination(pageNumber,this.numDatasets);
+            } catch (error) {
+                console.error("Error: getDatasetsBySearch() - datasets-list.component.ts");
+                this.errorTitle="Error";
+                this.errorMessage="Ha ocurrido un error en la carga de Datsets";
+            }
         });
     }
 
@@ -364,9 +386,15 @@ export class DatasetsListComponent implements OnInit {
         var pageNumber = (page != null ? page : 0);
         var rowsNumber = (rows != null ? rows : this.pageRows);
         this.datasetsService.getDatasetsByText(this.sort, pageNumber, rowsNumber, searchParam).subscribe(datasets => {
-            this.datasets = JSON.parse(datasets).result.results;
-            this.numDatasets = JSON.parse(datasets).result.count;
-            this.setPagination(pageNumber,this.numDatasets);
+            try {
+                this.datasets = JSON.parse(datasets).result.results;
+                this.numDatasets = JSON.parse(datasets).result.count;
+                this.setPagination(pageNumber,this.numDatasets);
+            } catch (error) {
+                console.error("Error: getDatasetsBySearch() - datasets-list.component.ts");
+                this.errorTitle="Error";
+                this.errorMessage="Ha ocurrido un error en la carga de Datsets";
+            }
         });
     }
 
@@ -375,9 +403,15 @@ export class DatasetsListComponent implements OnInit {
         var pageNumber = (page != null ? page : 0);
         var rowsNumber = (rows != null ? rows : this.pageRows);
         this.datasetsService.getDatasetsByOrganization(org, this.sort, pageNumber, rowsNumber, type).subscribe(datasets => {
-            this.datasets = JSON.parse(datasets).result.results;
-            this.numDatasets = JSON.parse(datasets).result.count;
-            this.setPagination(pageNumber,this.numDatasets);
+            try {
+                this.datasets = JSON.parse(datasets).result.results;
+                this.numDatasets = JSON.parse(datasets).result.count;
+                this.setPagination(pageNumber,this.numDatasets);
+            } catch (error) {
+                console.error("Error: getDatasetsByOrg() - datasets-list.component.ts");
+                this.errorTitle="Error";
+                this.errorMessage="Ha ocurrido un error en la carga de Datsets";
+            }
         });
     }
 
@@ -386,9 +420,15 @@ export class DatasetsListComponent implements OnInit {
         var pageNumber = (page != null ? page : 0);
         var rowsNumber = (rows != null ? rows : this.pageRows);
         this.datasetsService.getDatasetsBytags(this.sort, pageNumber, rowsNumber, this.tags).subscribe(datasets => {
-            this.datasets = JSON.parse(datasets).result.results;
-            this.numDatasets = JSON.parse(datasets).result.count;
-            this.setPagination(pageNumber,this.numDatasets);
+            try {
+                this.datasets = JSON.parse(datasets).result.results;
+                this.numDatasets = JSON.parse(datasets).result.count;
+                this.setPagination(pageNumber,this.numDatasets);
+            } catch (error) {
+                console.error("Error: getDatasetsByTags() - datasets-list.component.ts");
+                this.errorTitle="Error";
+                this.errorMessage="Ha ocurrido un error en la carga de Datsets";
+            }
         });
         
     }
@@ -409,9 +449,15 @@ export class DatasetsListComponent implements OnInit {
         this.topicsSelect = [];
         this.topicsSelect.push({ label: 'Todos los temas', value: undefined });
         this.topicsService.getTopics().subscribe(topics => {
-            this.topics = JSON.parse(topics).result;
-            for (let top of this.topics) {
-                this.topicsSelect.push({ label: top.title, value: top.name });
+            try {
+                this.topics = JSON.parse(topics).result;
+                for (let top of this.topics) {
+                    this.topicsSelect.push({ label: top.title, value: top.name });
+                } 
+            } catch (error) {
+                console.error("Error: setTopicsDropdown() - datasets-list.component.ts");
+                this.errorTitle="Error";
+                this.errorMessage="Ha ocurrido un error en la carga de Datsets";
             }
         });
     }
@@ -419,9 +465,15 @@ export class DatasetsListComponent implements OnInit {
         this.orgsSelect = [];
         this.orgsSelect.push({ label: 'Todas las organizaciones', value: undefined });
         this.orgsService.getOrganizations().subscribe(orgs => {
-            this.orgs = JSON.parse(orgs).result;
-            for (let org of this.orgs) {
-                this.orgsSelect.push({ label: org.title, value: org.name });
+            try {
+                this.orgs = JSON.parse(orgs).result;
+                for (let org of this.orgs) {
+                    this.orgsSelect.push({ label: org.title, value: org.name });
+                }
+            } catch (error) {
+                console.error("Error: setOrgsDropdown() - datasets-list.component.ts");
+                this.errorTitle="Error";
+                this.errorMessage="Ha ocurrido un error en la carga de Datsets";
             }
         });
     }
@@ -490,10 +542,22 @@ export class DatasetsListComponent implements OnInit {
 
     setInfoTables() {
         this.datasetsService.getNewestDataset().subscribe(datasets => {
-            this.newestDatasets = JSON.parse(datasets).result.results;
+            try {
+                this.newestDatasets = JSON.parse(datasets).result.results;
+            } catch (error) {
+                console.error("Error: setInfoTables() - datasets-list.component.ts");
+                this.errorTitle="Error";
+                this.errorMessage="Ha ocurrido un error en la carga de Datsets";
+            }
         });
         this.datasetsService.getDownloadedDataset().subscribe(datasets => {
-            this.downloadedDatasets = JSON.parse(datasets).result.results;
+            try {
+                this.downloadedDatasets = JSON.parse(datasets).result.results;
+            } catch (error) {
+                console.error("Error: setInfoTables() - datasets-list.component.ts");
+                this.errorTitle="Error";
+                this.errorMessage="Ha ocurrido un error en la carga de Datsets";
+            }
         });
     }
 
@@ -515,19 +579,45 @@ export class DatasetsListComponent implements OnInit {
 
 
     setDatasetsStats() {
-        this.datasetsService.getDatasetsStats().subscribe(datasets => {
-            this.datasetCount = [];
-            let totalNumDatasets = '';            
-            totalNumDatasets = JSON.parse(datasets).result.count + '';
-            while (totalNumDatasets.length < 8) totalNumDatasets = 'S' + totalNumDatasets;
-            for (var i = 0; i < totalNumDatasets.length; i++) {
-                if(totalNumDatasets[i] == 'S'){
-                    this.datasetCount.push({ label: 'slim', value: '0' });
-                }else{
-                    this.datasetCount.push({ label: 'normal', value: totalNumDatasets[i]});
+        this.datasetsService.getDatasetsNumber().subscribe(datasets => {
+            try {
+                this.datasetCount = [];
+                let totalNumDatasets = '';            
+                totalNumDatasets = JSON.parse(datasets).result.count + '';
+                while (totalNumDatasets.length < 8) totalNumDatasets = 'S' + totalNumDatasets;
+                for (var i = 0; i < totalNumDatasets.length; i++) {
+                    if(totalNumDatasets[i] == 'S'){
+                        this.datasetCount.push({ label: 'slim', value: '0' });
+                    }else{
+                        this.datasetCount.push({ label: 'normal', value: totalNumDatasets[i]});
+                    }
                 }
+                return this.datasetCount;
+            } catch (error) {
+                console.error("Error: setDatasetsStats() - datasets-list.component.ts");
+                this.errorTitle="Error";
+                this.errorMessage="Ha ocurrido un error en la carga de Datsets";
             }
-            return this.datasetCount;
+        });
+        this.datasetsService.getResourcesNumber().subscribe(resources => {
+            try {
+                this.resourceCount = [];
+                let totalNumResources = '';            
+                totalNumResources = JSON.parse(resources).result.count + '';
+                while (totalNumResources.length < 8) totalNumResources = 'S' + totalNumResources;
+                for (var i = 0; i < totalNumResources.length; i++) {
+                    if(totalNumResources[i] == 'S'){
+                        this.resourceCount.push({ label: 'slim', value: '0' });
+                    }else{
+                        this.resourceCount.push({ label: 'normal', value: totalNumResources[i]});
+                    }
+                }
+                return this.resourceCount;
+            } catch (error) {
+                console.error("Error: setDatasetsStats() - datasets-list.component.ts");
+                this.errorTitle="Error";
+                this.errorMessage="Ha ocurrido un error en la carga de Datsets";
+            }
         });
     }
 
@@ -545,7 +635,13 @@ export class DatasetsListComponent implements OnInit {
     filterTagsMultiple(event) {
         let query = event.query;
         this.datasetsService.getTags(query).subscribe(tags => {
-            this.filteredTagsMultiple = this.filterTag(query, tags.result);
+            try {
+                this.filteredTagsMultiple = this.filterTag(query, tags.result);
+            } catch (error) {
+                console.log("Error filterTagsMultiple() - datasets-list.component.ts");
+                this.errorTitle="Error";
+                this.errorMessage="Ha ocurrido un error en la carga de Datsets";
+            }
         });
     }
 }

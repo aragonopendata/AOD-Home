@@ -91,8 +91,13 @@ export class DatasetsService {
 		return this.http.get(fullUrl).map(res => res.json());
 	}
 
-	public getDatasetsStats() {
+	public getDatasetsNumber() {
 		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS_COUNT;
+		return this.http.get(fullUrl).map(res => res.json());
+	}
+
+	public getResourcesNumber() {
+		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_RESOURCES_COUNT;
 		return this.http.get(fullUrl).map(res => res.json());
 	}
 

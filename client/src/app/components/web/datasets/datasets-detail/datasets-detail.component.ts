@@ -51,9 +51,14 @@ export class DatasetsDetailComponent implements OnInit {
 
 	ngOnInit() {
 		this.activatedRoute.params.subscribe(params => {
-			this.dataset.name =  params[Constants.ROUTER_LINK_DATA_PARAM_DATASET_NAME];
-			this.datasetHomer.package_id =  params[Constants.ROUTER_LINK_DATA_PARAM_DATASET_HOMER_NAME];
+			try {
+				this.dataset.name =  params[Constants.ROUTER_LINK_DATA_PARAM_DATASET_NAME];
+				this.datasetHomer.package_id =  params[Constants.ROUTER_LINK_DATA_PARAM_DATASET_HOMER_NAME];
+			} catch (error) {
+				console.error("Error: ngOnInit() params - datasets-detail.component.ts");
+			}
 		});
+
 		if(this.dataset.name){
 			this.loadDataset(this.dataset);
 		}
@@ -71,20 +76,26 @@ export class DatasetsDetailComponent implements OnInit {
 
 	loadDataset(dataset: Dataset) {
 		this.initializeDataset();
-		console.log('Dataset a buscar: ' + dataset.name);
 		this.datasetsService.getDatasetByName(dataset.name).subscribe(dataResult => {
-			this.dataset = JSON.parse(dataResult).result;
-			this.getExtras();
-			this.getDatasetsRecommended();
-			this.makeFileSourceList();
+			try {
+				this.dataset = JSON.parse(dataResult).result;
+				this.getExtras();
+				this.getDatasetsRecommended();
+				this.makeFileSourceList();
+			} catch (error) {
+				console.error("Error: loadDataset() - datasets-detail.component.ts");
+			}
 		});
 	}
 
 	loadDatasetHomer(datasetHomer: DatasetHomer) {
 		this.datasetHomer = new DatasetHomer();
-		console.log('Dataset a buscar: ' + datasetHomer.package_id);
 		this.datasetsService.getDatasetHomerByPackageId(datasetHomer.package_id).subscribe(dataResult => {
-			this.datasetHomer = JSON.parse(dataResult).response.docs[0];
+			try {
+				this.datasetHomer = JSON.parse(dataResult).response.docs[0];
+			} catch (error) {
+				console.error("Error: loadDatasetHomer() - datasets-detail.component.ts");
+			}
 		});
 	}
 
@@ -136,26 +147,38 @@ export class DatasetsDetailComponent implements OnInit {
 		let datasetRecommendedByTag: Dataset = new Dataset();
 
 		this.datasetsService.getDatasetsByTopic(this.dataset.groups[0].name, null, 1, 1, this.dataset.type).subscribe(topicDataResult => {
-			datasetRecommendedByTopic = JSON.parse(topicDataResult).result.results[0];
-			if(this.isDatasetDefined(datasetRecommendedByTopic) && !this.existsDatasetRecommended(datasetRecommendedByTopic)) {
-				this.datasetsRecommended.push(datasetRecommendedByTopic);
+			try {
+				datasetRecommendedByTopic = JSON.parse(topicDataResult).result.results[0];
+				if(this.isDatasetDefined(datasetRecommendedByTopic) && !this.existsDatasetRecommended(datasetRecommendedByTopic)) {
+					this.datasetsRecommended.push(datasetRecommendedByTopic);
+				}
+			} catch (error) {
+				console.error("Error: getDatasetsRecommended() - datasets-detail.component.ts");
 			}
 		});
 		this.datasetsService.getDatasetsByOrganization(this.dataset.organization.name, null, 1, 1, this.dataset.type).subscribe(orgDataResult => {
-			datasetRecommendedByOrganization = JSON.parse(orgDataResult).result.results[0];
-			if(this.isDatasetDefined(datasetRecommendedByOrganization) && !this.existsDatasetRecommended(datasetRecommendedByOrganization)) {
-				this.datasetsRecommended.push(datasetRecommendedByOrganization);
+			try {
+				datasetRecommendedByOrganization = JSON.parse(orgDataResult).result.results[0];
+				if(this.isDatasetDefined(datasetRecommendedByOrganization) && !this.existsDatasetRecommended(datasetRecommendedByOrganization)) {
+					this.datasetsRecommended.push(datasetRecommendedByOrganization);
+				}
+			} catch (error) {
+				console.error("Error: getDatasetsRecommended() - datasets-detail.component.ts");
 			}
 		});
 
 		let tagsArray = [];
 		tagsArray.push({ name: this.dataset.tags[0].name, value: this.dataset.tags[0].name });
 		this.datasetsService.getDatasetsBytags(null, 1, 1, tagsArray).subscribe(tagDataResult => {
-			datasetRecommendedByTag = JSON.parse(tagDataResult).result.results[0];
-			if(this.isDatasetDefined(datasetRecommendedByTag) && !this.existsDatasetRecommended(datasetRecommendedByTag)) {
-				this.datasetsRecommended.push(datasetRecommendedByTag);
+			try {
+				datasetRecommendedByTag = JSON.parse(tagDataResult).result.results[0];
+				if(this.isDatasetDefined(datasetRecommendedByTag) && !this.existsDatasetRecommended(datasetRecommendedByTag)) {
+					this.datasetsRecommended.push(datasetRecommendedByTag);
+				}
+				this.setHovers();
+			} catch (error) {
+				console.error("Error: getDatasetsRecommended() - datasets-detail.component.ts");
 			}
-			this.setHovers();
 		});
 	}
 

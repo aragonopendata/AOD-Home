@@ -1,4 +1,8 @@
 const constants = require('./constants');
+//LOG SETTINGS
+const logConfig = require('../conf/log-conf');
+const loggerSettings = logConfig.getLogSettings();
+const logger = require('js-logging').dailyFile([loggerSettings]);
 
 module.exports = {
     getRequestCommonParams: function (req) {
@@ -117,5 +121,15 @@ module.exports = {
         query += constants.SERVER_API_LINK_PARAM_HOMER_RESPONSE_FORMAT;
 
         return query;
+    },
+
+    errorHandler: function (err,res,serviceName) {
+    logger.error('Error '+err.code+' in request '+serviceName);
+    var bodyerr = '';
+    bodyerr = {
+        status: constants.REQUEST_ERROR_STATUS_500,
+        message: 'Error: '+err.code+' in request '+serviceName
+    };
+    res.json(bodyerr)
     }
 };

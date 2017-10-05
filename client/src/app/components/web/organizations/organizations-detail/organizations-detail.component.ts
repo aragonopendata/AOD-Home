@@ -43,11 +43,15 @@ export class OrganizationsDetailComponent implements OnInit {
 			this.org.name = params[Constants.ROUTER_LINK_DATA_PARAM_ORGANIZATION_NAME];
 		});
 		this.organizationsService.getOrganizationByName(this.org.name).subscribe(org => {
-			this.sort = Constants.SERVER_API_LINK_PARAM_SORT_DEFAULT_VALUE;
-			this.org = JSON.parse(org).result;
-			this.getExtras();
-			this.getEmail();
-			this.getDatasets(null, null);
+			try {
+				this.sort = Constants.SERVER_API_LINK_PARAM_SORT_DEFAULT_VALUE;
+				this.org = JSON.parse(org).result;
+				this.getExtras();
+				this.getEmail();
+				this.getDatasets(null, null);
+			} catch (error) {
+				console.error("Error: ngOnInit() - organizations-detail.component.ts");
+			}
 		});
 	}
 
@@ -82,8 +86,13 @@ export class OrganizationsDetailComponent implements OnInit {
 		var pageNumber = (page != null ? page : 0);
 		var rowsNumber = (rows != null ? rows : Constants.DATASET_LIST_ROWS_PER_PAGE);
 		this.datasetsService.getDatasetsByOrganization(this.org.name, this.sort, pageNumber, rowsNumber, null).subscribe(datasets => {
-			this.datasets = JSON.parse(datasets).result.results;
-			this.numDatasets = JSON.parse(datasets).result.count;
+			try {
+				this.datasets = JSON.parse(datasets).result.results;
+				this.numDatasets = JSON.parse(datasets).result.count;
+			} catch (error) {
+				console.error("Error: getDatasets() - organizations-detail.component.ts");
+			}
+			
 		});
 	}
 

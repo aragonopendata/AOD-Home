@@ -1,7 +1,31 @@
-<div class="container">
+<div class="container" *ngIf="errorTitle">
+    <div class="alert alert-warning" role="alert">
+        <div class="row">
+            <div class="col-xs-3">
+                <i class="fa fa-exclamation-triangle fa-5x"></i>
+            </div>
+            <div class="col-xs-9">
+                <h1>{{errorTitle}}</h1>
+                <h1>{{errorMessage}}</h1>
+                <h2>Si lo desea puede volver al inicio</h2>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="row">
+                              <div class="col-xs-3">
+                                <i class="fa fa-exclamation-triangle fa-5x"></i>
+                              </div>
+                              <div class="col-xs-9 text-right">
+                                  <p>{{errorMessage}}</p>
+                                  <p>Si lo desea puede <a href="/" class="alert-link">volver al Inicio</a></p>
+                              </div>
+                            </div> -->
+
+</div>
+<div class="container" *ngIf="!errorTitle">
     <h1 translate>TITLE_DATACENTER</h1>
     <div class="ui-g">
-            <div *ngIf="selectedSearchOption == datasetSearchOptionFreeSearch" class="ui-g-8">
+        <div *ngIf="selectedSearchOption == datasetSearchOptionFreeSearch" class="ui-g-8">
             <b class="ui-g-4">DATOS SOBRE </b>
             <div class="ui-inputgroup">
                 <input style="width:500px" type="text" [value]="searchValue" (keyup.enter)="searchDatasetsByText(searchInput.value)" #searchInput>
@@ -10,13 +34,14 @@
         </div>
         <div *ngIf="selectedSearchOption == datasetSearchOptionHomer" class="ui-g-8">
             <b>BUSCAR</b>
-            <input type="text" [value]="searchHomerValue" [style]="{'width':'200px'}" (keyup.enter)="searchDatasetsByHomer(searchHomerInput.value)" #searchHomerInput>
+            <input type="text" [value]="searchHomerValue" [style]="{'width':'200px'}" (keyup.enter)="searchDatasetsByHomer(searchHomerInput.value)"
+                #searchHomerInput>
             <b>EN</b>
             <!-- <p-dropdown [options]="langsSelect" [(ngModel)]="selectedLang" [style]="{'width':'240px'}"></p-dropdown> -->
             <select class="ui-dropdown-label ui-inputtext ui-corner-all" [(ngModel)]="selectedLang">
                 <option *ngFor="let langSel of langsSelect" [ngValue]="langSel.value">{{langSel.label}}</option>
               </select>
-            <button type="button" (click)="searchDatasetsByHomer(searchHomerInput.value)" ><i aria-hidden="true" class="fa fa-search"></i></button>
+            <button type="button" (click)="searchDatasetsByHomer(searchHomerInput.value)"><i aria-hidden="true" class="fa fa-search"></i></button>
         </div>
         <div *ngIf="selectedSearchOption == datasetSearchOptionTags" class="ui-g-8">
             <p-autoComplete [(ngModel)]="tags" [suggestions]="filteredTagsMultiple" (completeMethod)="filterTagsMultiple($event)" [minLength]="1"
@@ -29,16 +54,17 @@
             <select class="ui-dropdown-label ui-inputtext ui-corner-all" [(ngModel)]="selectedTopic" (change)="changeType()">
                 <option *ngFor="let topSel of topicsSelect" [ngValue]="topSel.value">{{topSel.label}}</option>
               </select>
-        </div>       
+        </div>
         <div *ngIf="selectedSearchOption == datasetSearchOptionOrganizations" class="ui-g-6">
-            <b>Datos sobre </b>            
+            <b>Datos sobre </b>
             <select class="searchFilter searchFilterOrg" [(ngModel)]="selectedOrg" (change)="changeType()">
                 <option *ngFor="let orgs of orgsSelect" [ngValue]="orgs.value">{{orgs.label}}</option>
             </select>
         </div>
-        <div *ngIf="selectedSearchOption == datasetSearchOptionOrganizations || selectedSearchOption == datasetSearchOptionTopics" class="ui-g-3">
-                <b>Del tipo </b>
-                <select class="searchFilter" [(ngModel)]="selectedType" (change)="changeType()">
+        <div *ngIf="selectedSearchOption == datasetSearchOptionOrganizations || selectedSearchOption == datasetSearchOptionTopics"
+            class="ui-g-3">
+            <b>Del tipo </b>
+            <select class="searchFilter" [(ngModel)]="selectedType" (change)="changeType()">
                     <option *ngFor="let types of datasetTypes" [ngValue]="types.value">{{types.label}}</option>
                 </select>
         </div>
@@ -199,123 +225,125 @@
         </div>
     </div>
     <div *ngIf="selectedSearchOption != datasetSearchOptionHomer">
-    <p-dataTable [value]="datasets" [responsive]="true" (onSort)="setOrder($event)" #dt>
-        <p-column field="name" header="{{numDatasets}} conjuntos de datos encontrados" sortable="custom" sortFunction="orderTable($event)">
-            <ng-template pTemplate="body" let-dataset="rowData">
+        <p-dataTable [value]="datasets" [responsive]="true" (onSort)="setOrder($event)" #dt>
+            <p-column field="name" header="{{numDatasets}} conjuntos de datos encontrados" sortable="custom" sortFunction="orderTable($event)">
+                <ng-template pTemplate="body" let-dataset="rowData">
                     <a routerLink='/{{routerLinkDataCatalogDataset}}/{{dataset.name}}' (click)="showDataset(dataset)">
                         {{dataset.title}}
                     </a>
                     <i class="fa fa-star" id="informacion_content_3_i" style="color: #5ea2ba;" *ngIf="dataset.tracking_summary.recent > 10"></i>
-            </ng-template>
-        </p-column>
-        <p-column field="accesos" header="Nº de accesos" [style]="{'width':'160px'}" sortable="custom" sortFunction="orderTable($event)">
-            <ng-template pTemplate="body" let-dataset="rowData">
-                {{dataset.tracking_summary.total}}
-            </ng-template>
-        </p-column>
-        <p-column field="lastUpdate" header="Última actualización" [style]="{'width':'220px'}" sortable="custom" sortFunction="orderTable($event)">
-            <ng-template pTemplate="body" let-dataset="rowData">
-                {{dataset.metadata_modified | date: 'dd/MM/yyyy'}}
-            </ng-template>
-        </p-column>
-    </p-dataTable>
-    <nav aria-label="Pagination">
-        <ul class="pagination justify-content-center">
-            <li [ngClass]="actualPage >= 1 ? 'page-item': 'page-item disabled'">
-                <a class="page-link" (click)="paginate(+pageFirst+1)" aria-label="Primero">
+                </ng-template>
+            </p-column>
+            <p-column field="accesos" header="Nº de accesos" [style]="{'width':'160px'}" sortable="custom" sortFunction="orderTable($event)">
+                <ng-template pTemplate="body" let-dataset="rowData">
+                    {{dataset.tracking_summary.total}}
+                </ng-template>
+            </p-column>
+            <p-column field="lastUpdate" header="Última actualización" [style]="{'width':'220px'}" sortable="custom" sortFunction="orderTable($event)">
+                <ng-template pTemplate="body" let-dataset="rowData">
+                    {{dataset.metadata_modified | date: 'dd/MM/yyyy'}}
+                </ng-template>
+            </p-column>
+        </p-dataTable>
+        <nav aria-label="Pagination">
+            <ul class="pagination justify-content-center">
+                <li [ngClass]="actualPage >= 1 ? 'page-item': 'page-item disabled'">
+                    <a class="page-link" (click)="paginate(+pageFirst+1)" aria-label="Primero">
                 <i class="fa fa-fast-backward" ></i>
                 </a>
-            </li>
-            <li [ngClass]="actualPage >= 1 ? 'page-item': 'page-item disabled'">
-                <a class="page-link" (click)="paginate(+actualPage)" aria-label="Anterior">
+                </li>
+                <li [ngClass]="actualPage >= 1 ? 'page-item': 'page-item disabled'">
+                    <a class="page-link" (click)="paginate(+actualPage)" aria-label="Anterior">
                 <i class="fa fa-step-backward"></i>
                 </a>
-            </li>
-            <li *ngFor="let pageShow of pagesShow" [ngClass]="pageShow == (+actualPage+1) ? 'page-item active': 'page-item'" >
-                <a class="page-link" (click)="paginate(pageShow)">{{pageShow}}</a>
-            </li>
-            
-            <li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
+                </li>
+                <li *ngFor="let pageShow of pagesShow" [ngClass]="pageShow == (+actualPage+1) ? 'page-item active': 'page-item'">
+                    <a class="page-link" (click)="paginate(pageShow)">{{pageShow}}</a>
+                </li>
+
+                <li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
                     <a class="page-link" (click)="paginate(+actualPage+2)" aria-label="Siguiente">
                     <i class="fa fa-step-forward"></i>
                     </a>
-            </li>
-            <li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
+                </li>
+                <li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
                     <a class="page-link" (click)="paginate(pageLast)" aria-label="Ultimo">
                     <i class="fa fa-fast-forward"></i>
                     </a>
-            </li>
-        </ul>
-    </nav>
+                </li>
+            </ul>
+        </nav>
 
-    <div class="nota">
-        <p>
-            <i class="fa fa-star" id="informacion_content_3_i" style="color: #5ea2ba;"></i> Se ha accedido al conjunto de
-            datos más de 10 veces en los últimos 14 días.
-        </p>
-    </div>
-    <div class="destacado" style="width: 100%;">
-        <h1>Datos destacados</h1>
-        <h3 style="color: grey">Permítenos recomendarte algunos datos abiertos</h3>
-        <div class="ui-g ">
-            <div class="ui-sm-12 ui-lg-4">
-                <div class="box">
-                    <div class="boxTitle">
-                        <h3>NUEVOS DATOS</h3>
-                    </div>
-                    <div class="boxContent">
-                        <div>
-                            <div *ngFor="let newDataset of newestDatasets">
+        <div class="nota">
+            <p>
+                <i class="fa fa-star" id="informacion_content_3_i" style="color: #5ea2ba;"></i> Se ha accedido al conjunto
+                de datos más de 10 veces en los últimos 14 días.
+            </p>
+        </div>
+        <div class="destacado" style="width: 100%;">
+            <h1>Datos destacados</h1>
+            <h3 style="color: grey">Permítenos recomendarte algunos datos abiertos</h3>
+            <div class="ui-g ">
+                <div class="ui-sm-12 ui-lg-4">
+                    <div class="box">
+                        <div class="boxTitle">
+                            <h3>NUEVOS DATOS</h3>
+                        </div>
+                        <div class="boxContent">
+                            <div>
+                                <div *ngFor="let newDataset of newestDatasets">
                                     <a routerLink='/{{routerLinkDataCatalogDataset}}/{{newDataset.name}}' (click)="showDataset(newDataset)" class="textosNormales">
                                     {{newDataset.title}}
                                 </a>
-                                <div *ngIf="newestDatasets.indexOf(newDataset) != 2" class="separadorVentana"></div>
-                            </div>
+                                    <div *ngIf="newestDatasets.indexOf(newDataset) != 2" class="separadorVentana"></div>
+                                </div>
 
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="ui-sm-12 ui-lg-4">
-                <div class="box">
-                    <div class="boxTitle">
-                        <h3>MÁS DESCARGADOS</h3>
-                    </div>
-                    <div class="boxContent">
-                        <div>
-                            <div *ngFor="let downloadedDataset of downloadedDatasets">
+                <div class="ui-sm-12 ui-lg-4">
+                    <div class="box">
+                        <div class="boxTitle">
+                            <h3>MÁS DESCARGADOS</h3>
+                        </div>
+                        <div class="boxContent">
+                            <div>
+                                <div *ngFor="let downloadedDataset of downloadedDatasets">
                                     <a routerLink='/{{routerLinkDataCatalogDataset}}/{{downloadedDataset.name}}' (click)="showDataset(downloadedDataset)" class="textosNormales">
                                     {{downloadedDataset.title}}
                                 </a>
-                                <div *ngIf="downloadedDatasets.indexOf(downloadedDataset) != 2" class="separadorVentana"></div>
-                            </div>
+                                    <div *ngIf="downloadedDatasets.indexOf(downloadedDataset) != 2" class="separadorVentana"></div>
+                                </div>
 
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="ui-sm-12 ui-lg-4">
-                <div class="box">
-                    <div class="boxTitle">
-                        <h3>ESTADÍSTICAS</h3>
-                    </div>
-                    <div class="boxContent">
-                        <div>
-                            <h6>Número de datasets</h6>
-                            <h1>
-                                <span *ngFor="let num of datasetCount" [ngClass]="num.label == 'slim' ? 'slimCount': 'normalCount'">{{num.value}}</span>
-                            </h1>
+                <div class="ui-sm-12 ui-lg-4">
+                    <div class="box">
+                        <div class="boxTitle">
+                            <h3>ESTADÍSTICAS</h3>
                         </div>
-                        <div class="separadorVentana"></div>
-                        <div>
-                            <h6>Número de recursos</h6>
-                            <img src="../../../assets/numResources.png" />
+                        <div class="boxContent">
+                            <div>
+                                <h6>Número de datasets</h6>
+                                <h1>
+                                    <span *ngFor="let num of datasetCount" [ngClass]="num.label == 'slim' ? 'slimCount': 'normalCount'">{{num.value}}</span>
+                                </h1>
+                            </div>
+                            <div class="separadorVentana"></div>
+                            <div>
+                                <h6>Número de recursos</h6>
+                                <h1>
+                                    <span *ngFor="let num of resourceCount" [ngClass]="num.label == 'slim' ? 'slimCount': 'normalCount'">{{num.value}}</span>
+                                </h1>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
     <div *ngIf="selectedSearchOption == datasetSearchOptionHomer">
         <p-dataTable [value]="datasetsHomer" [responsive]="true" (onSort)="setOrderHomer($event)" #dt>
@@ -349,17 +377,17 @@
                     <i class="fa fa-step-backward"></i>
                     </a>
                 </li>
-                <li *ngFor="let pageShow of pagesShow" [ngClass]="pageShow == (+actualPage+1) ? 'page-item active': 'page-item'" >
+                <li *ngFor="let pageShow of pagesShow" [ngClass]="pageShow == (+actualPage+1) ? 'page-item active': 'page-item'">
                     <a class="page-link" (click)="paginate(pageShow)">{{pageShow}}</a>
                 </li>
-                
+
                 <li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
-                        <a class="page-link" (click)="paginate(+actualPage+2)" aria-label="Siguiente">
+                    <a class="page-link" (click)="paginate(+actualPage+2)" aria-label="Siguiente">
                         <i class="fa fa-step-forward"></i>
                         </a>
                 </li>
                 <li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
-                        <a class="page-link" (click)="paginate(pageLast)" aria-label="Ultimo">
+                    <a class="page-link" (click)="paginate(pageLast)" aria-label="Ultimo">
                         <i class="fa fa-fast-forward"></i>
                         </a>
                 </li>

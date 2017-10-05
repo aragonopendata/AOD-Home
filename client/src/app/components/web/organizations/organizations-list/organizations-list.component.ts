@@ -72,8 +72,12 @@ export class OrganizationsListComponent implements OnInit {
 
 	getOrgs(): void {
 		this.orgService.getOrganizations().subscribe(orgs => {
-			this.orgs = JSON.parse(orgs).result;
-			this.setHovers(this.orgs);
+			try {
+				this.orgs = JSON.parse(orgs).result;
+				this.setHovers(this.orgs);
+			} catch (error) {
+				console.error("Error: getOrgs() - organizations-list.component.ts");
+			}
 		});
 	}
 

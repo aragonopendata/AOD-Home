@@ -62,8 +62,14 @@ export class DatasetAutocompleteComponent implements OnInit {
 			.catch(error => {
 				console.log(error);
 				return Observable.of<Autocomplete[]>([]);
-			}).subscribe(data =>
-				this.datasetAutocomplete = <Autocomplete[]>JSON.parse(data).result);
+			}).subscribe(data => {
+				try {
+					this.datasetAutocomplete = <Autocomplete[]>JSON.parse(data).result;	
+				} catch (error) {
+					console.error("Error: getAutocomplete() - datasets-autocomplete.component.ts");
+				}
+				
+			});
 	}
 
 	searchDatasetsByText(text: string){

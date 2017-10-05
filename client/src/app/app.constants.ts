@@ -153,7 +153,8 @@ export class Constants {
     public static SERVER_API_LINK_DATASETS_TAGS = '/datasets/tags';
     public static SERVER_API_LINK_DATASETS_NEWEST = '/datasets/newest';
     public static SERVER_API_LINK_DATASETS_DOWNLOADED = '/datasets/downloaded';
-    public static SERVER_API_LINK_DATASETS_COUNT = '/datasets/count';
+    public static SERVER_API_LINK_DATASETS_COUNT = '/datasets/countDatasets';
+    public static SERVER_API_LINK_RESOURCES_COUNT = '/datasets/countResources';
     public static SERVER_API_LINK_DATASETS_HOMER = '/homer';
     public static SERVER_API_LINK_TOPICS = '/topics';
     public static SERVER_API_LINK_ORGANIZATIONS = '/organizations';
