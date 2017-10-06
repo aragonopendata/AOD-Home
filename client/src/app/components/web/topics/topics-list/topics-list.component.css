@@ -66,3 +66,18 @@ b {
     height: 100%;
     padding: 10px;
 }
+
+.alert-info{
+    color: #ffffff;
+    background-color: #d0dee6;
+    border-color: #587a8c;
+}
+
+.alert-info h1, h2, a{
+    font-family: 'Roboto', sans-serif;
+    line-height: 1;
+    margin: 2px 0 20px;
+    letter-spacing: 0.1em;
+    color: #5EA2BA;
+    font-weight: 300;   
+}

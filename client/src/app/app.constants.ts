@@ -29,6 +29,7 @@ export class Constants {
 
     //COMMON CONSTANTS
     public static DATASET_LIST_ROWS_PER_PAGE = 20;
+    public static DATASET_LIST_EMPTY = 'No se han encontrado datos';
     public static DATASET_LIST_SEARCH_OPTION_FREE_SEARCH = 'busqueda-libre';
     public static DATASET_LIST_SEARCH_OPTION_TOPICS = 'tema-y-tipo';
     public static DATASET_LIST_SEARCH_OPTION_ORGANIZATIONS = 'organizacion-y-tipo';

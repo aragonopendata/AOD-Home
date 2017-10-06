@@ -1,26 +1,20 @@
 <div class="container" *ngIf="errorTitle">
-    <div class="alert alert-warning" role="alert">
+    <div class="alert alert-info" role="alert">
         <div class="row">
             <div class="col-xs-3">
-                <i class="fa fa-exclamation-triangle fa-5x"></i>
-            </div>
+                <i class="fa fa-exclamation-triangle fa-5x" style="margin:15px;color: #5ea2ba;"></i>
+            </div> 
             <div class="col-xs-9">
                 <h1>{{errorTitle}}</h1>
-                <h1>{{errorMessage}}</h1>
-                <h2>Si lo desea puede volver al inicio</h2>
+                <h2>{{errorMessage}}</h2>
+                
+                    <a class="mail" href="mailto:opendata@aragon.es">
+                       <h2> <i class="fa fa-envelope-o"></i> Contactar con el Administrador</h2>
+                    </a>
+                
             </div>
         </div>
     </div>
-    <!-- <div class="row">
-                              <div class="col-xs-3">
-                                <i class="fa fa-exclamation-triangle fa-5x"></i>
-                              </div>
-                              <div class="col-xs-9 text-right">
-                                  <p>{{errorMessage}}</p>
-                                  <p>Si lo desea puede <a href="/" class="alert-link">volver al Inicio</a></p>
-                              </div>
-                            </div> -->
-
 </div>
 <div class="container" *ngIf="!errorTitle">
     <h1 translate>TITLE_DATACENTER</h1>
@@ -225,7 +219,7 @@
         </div>
     </div>
     <div *ngIf="selectedSearchOption != datasetSearchOptionHomer">
-        <p-dataTable [value]="datasets" [responsive]="true" (onSort)="setOrder($event)" #dt>
+        <p-dataTable [value]="datasets" [responsive]="true" emptyMessage="{{emptyMessage}}" (onSort)="setOrder($event)" #dt>
             <p-column field="name" header="{{numDatasets}} conjuntos de datos encontrados" sortable="custom" sortFunction="orderTable($event)">
                 <ng-template pTemplate="body" let-dataset="rowData">
                     <a routerLink='/{{routerLinkDataCatalogDataset}}/{{dataset.name}}' (click)="showDataset(dataset)">
@@ -346,7 +340,7 @@
         </div>
     </div>
     <div *ngIf="selectedSearchOption == datasetSearchOptionHomer">
-        <p-dataTable [value]="datasetsHomer" [responsive]="true" (onSort)="setOrderHomer($event)" #dt>
+        <p-dataTable [value]="datasetsHomer" emptyMessage="{{emptyMessage}}" [responsive]="true" (onSort)="setOrderHomer($event)" #dt>
             <p-column field="name" header="ENCONTRADOS {{numDatasetsHomer}} RESULTADOS EN HOMER" sortable="custom" sortFunction="orderTableHomer($event)">
                 <ng-template pTemplate="body" let-datasetHomer="rowData">
                     <a routerLink='//{{routerLinkDataCatalogDatasetHomer}}/{{datasetHomer.package_id}}' (click)="showDatasetHomer(datasetHomer)">

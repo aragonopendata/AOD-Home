@@ -26,6 +26,10 @@ export class OrganizationsListComponent implements OnInit {
 	routerLinkTwitterShare: string;
 	routerLinkGooglePlusShare: string;
 
+	//Error Params
+    errorTitle: string;
+    errorMessage: string;
+
 	constructor(private orgService: OrganizationsService) {
 		this.routerLinkDataOrganizations = Constants.ROUTER_LINK_DATA_ORGANIZATIONS;
 		this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
@@ -77,6 +81,8 @@ export class OrganizationsListComponent implements OnInit {
 				this.setHovers(this.orgs);
 			} catch (error) {
 				console.error("Error: getOrgs() - organizations-list.component.ts");
+				this.errorTitle="Se ha producido un error";
+                this.errorMessage="Se ha producido un error en la carga de Publicadores, vuelva a intentarlo y si el error persiste contacte con el administrador.";
 			}
 		});
 	}

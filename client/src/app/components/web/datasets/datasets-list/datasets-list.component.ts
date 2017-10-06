@@ -55,6 +55,7 @@ export class DatasetsListComponent implements OnInit {
     searchOptions: SelectItem[];
     langsSelect: SelectItem[];
     groupSelect: SelectItem[];
+    emptyMessage: string;
 
     datasetSearchOptionFreeSearch: string;
     datasetSearchOptionTopics: string;
@@ -97,6 +98,7 @@ export class DatasetsListComponent implements OnInit {
     this.datasetSearchOptionStats = Constants.DATASET_LIST_SEARCH_OPTION_STATS;
     this.datasetSearchOptionHomer = Constants.DATASET_LIST_SEARCH_OPTION_HOMER;
     this.routerLinkDataCatalogDatasetHomer = Constants.ROUTER_LINK_DATA_CATALOG_HOMER_DETAIL;
+    this.emptyMessage = Constants.DATASET_LIST_EMPTY;
     if (this.selectedSearchOption === undefined) {
         this.selectedSearchOption = this.datasetSearchOptionFreeSearch;
     } 
@@ -359,8 +361,8 @@ export class DatasetsListComponent implements OnInit {
                 this.setPagination(pageNumber,this.numDatasets);
             } catch (error) {
                 console.error("Error: getDatasets() - datasets-list.component.ts");
-                this.errorTitle="Error";
-                this.errorMessage="Ha ocurrido un error en la carga de Datsets";
+                this.errorTitle="Se ha producido un error";
+                this.errorMessage="Se ha producido un error en la carga de Datsets, vuelva a intentarlo y si el error persiste contacte con el administrador.";
             }
         });
     }
@@ -376,8 +378,8 @@ export class DatasetsListComponent implements OnInit {
                 this.setPagination(pageNumber,this.numDatasets);
             } catch (error) {
                 console.error("Error: getDatasetsBySearch() - datasets-list.component.ts");
-                this.errorTitle="Error";
-                this.errorMessage="Ha ocurrido un error en la carga de Datsets";
+                this.errorTitle="Se ha producido un error";
+                this.errorMessage="Se ha producido un error en la carga de Datsets, vuelva a intentarlo y si el error persiste contacte con el administrador.";
             }
         });
     }
@@ -392,8 +394,8 @@ export class DatasetsListComponent implements OnInit {
                 this.setPagination(pageNumber,this.numDatasets);
             } catch (error) {
                 console.error("Error: getDatasetsBySearch() - datasets-list.component.ts");
-                this.errorTitle="Error";
-                this.errorMessage="Ha ocurrido un error en la carga de Datsets";
+                this.errorTitle="Se ha producido un error";
+                this.errorMessage="Se ha producido un error en la carga de Datsets, vuelva a intentarlo y si el error persiste contacte con el administrador.";
             }
         });
     }
@@ -409,8 +411,8 @@ export class DatasetsListComponent implements OnInit {
                 this.setPagination(pageNumber,this.numDatasets);
             } catch (error) {
                 console.error("Error: getDatasetsByOrg() - datasets-list.component.ts");
-                this.errorTitle="Error";
-                this.errorMessage="Ha ocurrido un error en la carga de Datsets";
+                this.errorTitle="Se ha producido un error";
+                this.errorMessage="Se ha producido un error en la carga de Datsets, vuelva a intentarlo y si el error persiste contacte con el administrador.";
             }
         });
     }
@@ -426,8 +428,8 @@ export class DatasetsListComponent implements OnInit {
                 this.setPagination(pageNumber,this.numDatasets);
             } catch (error) {
                 console.error("Error: getDatasetsByTags() - datasets-list.component.ts");
-                this.errorTitle="Error";
-                this.errorMessage="Ha ocurrido un error en la carga de Datsets";
+                this.errorTitle="Se ha producido un error";
+                this.errorMessage="Se ha producido un error en la carga de Datsets, vuelva a intentarlo y si el error persiste contacte con el administrador.";
             }
         });
         
@@ -438,9 +440,14 @@ export class DatasetsListComponent implements OnInit {
         var pageNumber = (page != null ? page : 0);
         var rowsNumber = (rows != null ? rows : this.pageRows);
         this.datasetsService.getDatasetsHomer(this.sortHomer, pageNumber, rowsNumber, this.searchHomerValue, this.selectedLang).subscribe(datasetsHomer => {
-            this.datasetsHomer = JSON.parse(datasetsHomer).response.docs;
-            this.numDatasetsHomer = JSON.parse(datasetsHomer).response.numFound;
-            this.setPagination(pageNumber, this.numDatasetsHomer);
+            try {
+                this.datasetsHomer = JSON.parse(datasetsHomer).response.docs;
+                this.numDatasetsHomer = JSON.parse(datasetsHomer).response.numFound;
+                this.setPagination(pageNumber, this.numDatasetsHomer);
+            } catch (error) {
+                this.errorTitle="Se ha producido un error";
+                this.errorMessage="Se ha producido un error en la carga de Datsets, vuelva a intentarlo y si el error persiste contacte con el administrador.";
+            }
         });
     }
 
@@ -456,8 +463,8 @@ export class DatasetsListComponent implements OnInit {
                 } 
             } catch (error) {
                 console.error("Error: setTopicsDropdown() - datasets-list.component.ts");
-                this.errorTitle="Error";
-                this.errorMessage="Ha ocurrido un error en la carga de Datsets";
+                this.errorTitle="Se ha producido un error";
+                this.errorMessage="Se ha producido un error en la carga de Datsets, vuelva a intentarlo y si el error persiste contacte con el administrador.";
             }
         });
     }
@@ -472,8 +479,8 @@ export class DatasetsListComponent implements OnInit {
                 }
             } catch (error) {
                 console.error("Error: setOrgsDropdown() - datasets-list.component.ts");
-                this.errorTitle="Error";
-                this.errorMessage="Ha ocurrido un error en la carga de Datsets";
+                this.errorTitle="Se ha producido un error";
+                this.errorMessage="Se ha producido un error al cargar la lista, vuelva a intentarlo y si el error persiste contacte con el administrador.";
             }
         });
     }
@@ -546,8 +553,8 @@ export class DatasetsListComponent implements OnInit {
                 this.newestDatasets = JSON.parse(datasets).result.results;
             } catch (error) {
                 console.error("Error: setInfoTables() - datasets-list.component.ts");
-                this.errorTitle="Error";
-                this.errorMessage="Ha ocurrido un error en la carga de Datsets";
+                this.errorTitle="Se ha producido un error";
+                this.errorMessage="Se ha producido un error al obtener los datasets recientes, vuelva a intentarlo y si el error persiste contacte con el administrador.";
             }
         });
         this.datasetsService.getDownloadedDataset().subscribe(datasets => {
@@ -595,8 +602,8 @@ export class DatasetsListComponent implements OnInit {
                 return this.datasetCount;
             } catch (error) {
                 console.error("Error: setDatasetsStats() - datasets-list.component.ts");
-                this.errorTitle="Error";
-                this.errorMessage="Ha ocurrido un error en la carga de Datsets";
+                this.errorTitle="Se ha producido un error";
+                this.errorMessage="Se ha producido un error al cargar los datasets, vuelva a intentarlo y si el error persiste contacte con el administrador.";
             }
         });
         this.datasetsService.getResourcesNumber().subscribe(resources => {
@@ -615,8 +622,8 @@ export class DatasetsListComponent implements OnInit {
                 return this.resourceCount;
             } catch (error) {
                 console.error("Error: setDatasetsStats() - datasets-list.component.ts");
-                this.errorTitle="Error";
-                this.errorMessage="Ha ocurrido un error en la carga de Datsets";
+                this.errorTitle="Se ha producido un error";
+                this.errorMessage="Se ha producido un error al cargar los datasets, vuelva a intentarlo y si el error persiste contacte con el administrador.";
             }
         });
     }
@@ -639,8 +646,8 @@ export class DatasetsListComponent implements OnInit {
                 this.filteredTagsMultiple = this.filterTag(query, tags.result);
             } catch (error) {
                 console.log("Error filterTagsMultiple() - datasets-list.component.ts");
-                this.errorTitle="Error";
-                this.errorMessage="Ha ocurrido un error en la carga de Datsets";
+                this.errorTitle="Se ha producido un error";
+                this.errorMessage="Se ha producido un error con el filtrado por etiquetas, vuelva a intentarlo y si el error persiste contacte con el administrador.";
             }
         });
     }

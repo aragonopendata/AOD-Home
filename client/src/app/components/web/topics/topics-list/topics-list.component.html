@@ -13,6 +13,22 @@
 			</a>
 		</div>
 	</div>
+	<div class="container" *ngIf="errorTitle">
+		<div class="alert alert-info" role="alert">
+			<div class="row">
+				<div class="col-xs-3">
+					<i class="fa fa-exclamation-triangle fa-5x" style="margin:15px;color: #5ea2ba;"></i>
+				</div> 
+				<div class="col-xs-9">
+					<h1>{{errorTitle}}</h1>
+					<h2>{{errorMessage}}</h2>
+						<a class="mail" href="mailto:opendata@aragon.es">
+						   <h2> <i class="fa fa-envelope-o"></i> Contactar con el Administrador</h2>
+						</a>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="ui-g">
 		<div class="ui-sm-12 ui-md-6 ui-lg-4 tarjetaContainer" *ngFor="let topic of topics; let i = index" (mouseenter)="setHover(topic.title, i)" (mouseleave)="unsetHover(topic.title, i)">
 			<div class="card" routerLink="/{{routerLinkDataCatalogDataset}}/{{topic.name}}" ng-init="selectedTopic = topic.name" (click)="setTopic(topic)">
