@@ -25,7 +25,7 @@ export class TopicsListComponent implements OnInit {
 
 	constructor(private topicsService: TopicsService) {
 		this.topics = [];
-		this.routerLinkDataTopics = Constants.ROUTER_LINK_DATA_TOPICS;
+		this.routerLinkDataTopics = Constants.ROUTER_LINK_DATA_CATALOG_TOPICS;
 		this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
 		this.routerLinkFacebookShare = Constants.SHARE_FACEBOOK;
 		this.routerLinkTwitterShare = Constants.SHARE_TWITTER;
