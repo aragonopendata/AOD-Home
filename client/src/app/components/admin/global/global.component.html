@@ -1,5 +1,5 @@
-<md-sidenav-container class="example-sidenav-fab-container" id="wrapper">
-	<md-sidenav #sidenav mode="side" opened="true" id="sidebar-wrapper">
+<div class="container" id="wrapper">
+	<div #sidenav mode="side" opened="true" id="sidebar-wrapper">
 		<ul id="sidemenu" class="sidebar-nav">
 			<li>
 				<a routerLink="./" routerLinkActive="active">
@@ -61,9 +61,9 @@
 				</ul>
 			</li>
 		</ul>
-	</md-sidenav>
+	</div>
 	<button md-mini-fab class="example-fab" (click)="sidenav.toggle()">
     	<i class="material-icons">menu</i>
   	</button>
 	<router-outlet></router-outlet>
-</md-sidenav-container>
+<div>

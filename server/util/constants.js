@@ -49,7 +49,8 @@ exports.SQL_RESULSET_FORMAT = 'json';
 
 /* *************** */
 /* CKAN PROPERTIES */
-exports.CKAN_API_BASE_URL = 'http://opendata.aragon.es/datos/api/action/';
+//exports.CKAN_API_BASE_URL = 'http://opendata.aragon.es/datos/api/action/';
+exports.CKAN_API_BASE_URL = 'http://miv-aodfront-01.aragon.local:5000/api/action';
 exports.AOD_API_WEB_BASE_URL = 'http://localhost:4200/aod/services/web';
 
 /* DATASETS */

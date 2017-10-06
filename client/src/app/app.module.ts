@@ -11,7 +11,6 @@ import {
 	CalendarModule, InputSwitchModule, EditorModule, DataListModule, TooltipModule, 
 	AutoCompleteModule, ProgressBarModule, RadioButtonModule, CheckboxModule, FileUploadModule, 
 	ToolbarModule, TabViewModule, PaginatorModule, AccordionModule } from 'primeng/primeng';
-import { MdSidenavModule} from '@angular/material';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { Logger, Options } from 'angular2-logger/core';
@@ -146,7 +145,6 @@ export function HttpLoaderFactory(http: HttpClient) {
 		ButtonModule,
 		DataTableModule,
 		SharedModule,
-		MdSidenavModule,
 		DialogModule,
 		CalendarModule,
 		InputSwitchModule,
