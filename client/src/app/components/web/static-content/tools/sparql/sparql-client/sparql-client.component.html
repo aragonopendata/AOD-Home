@@ -1,3 +1,70 @@
-<p>
-	sparql-client works!
-</p>
+<div class="container">
+	<h1>Cliente de consulta SPARQL</h1>
+	<div id="main" class="textosNormales">
+		<br>
+		<form action="/sparql" method="get">
+			<table style="width:100%;text-align: left;border-spacing: 10px;border-collapse: separate;">
+				<tr>
+					<td colspan="2">
+						<label for="default-graph-uri">Grafo:</label>
+						<input name="default-graph-uri" id="default-graph-uri" value="http://opendata.aragon.es/graph/Aragopedia/latest" size="80"
+						 type="text" readonly="true">
+					</td>
+				</tr>
+				<tr>
+					<td style="vertical-align:middle;">
+						<label for="query">Consulta:</label>
+					</td>
+					<td>
+						<textarea rows="18" cols="80" name="query" id="query" onchange="format_select(this)" onkeyup="format_select(this)">select distinct ?Concept where {[] a ?Concept} LIMIT 100</textarea>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="format">Formato de los resultados:</label>
+					</td>
+					<td>
+						<select name="format" id="format" onchange="format_change(this)"> 
+							<option value="auto">Auto</option> 
+							<option value="text/html" selected="selected">HTML</option> 
+							<option value="application/vnd.ms-excel">Spreadsheet</option> 
+							<option value="application/sparql-results+xml">XML</option> 
+							<option value="application/sparql-results+json">JSON</option> 
+							<option value="application/javascript">Javascript</option> 
+							<option value="text/plain">NTriples</option> 
+							<option value="application/rdf+xml">RDF/XML</option> 
+							<option value="text/csv">CSV</option> 
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="timeout">Tiempo máximo de ejecución:</label>
+					</td>
+					<td>
+						<input name="timeout" id="timeout" value="0" type="text"> milisegundos
+						<span class="info"> 
+				<i>(valores inferiores a 1000 no serán tenidos en cuenta)</i> 
+			  </span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label class="n" for="options">Opciones</label>
+					</td>
+					<td>
+						<fieldset id="options">
+							<input name="debug" id="debug" checked="checked" type="checkbox" />
+							<label for="debug" class="ckb">Chequeo de variables vacías</label>
+						</fieldset>
+					</td>
+				</tr>
+			</table>
+			<br/>
+			<br/>
+			<input value="Lanzar consulta" type="submit" />
+			<input value="Reiniciar" type="reset" />
+		</form>
+	</div>
+</div>
+<div class="huecoSeccionHome"></div>

@@ -42,17 +42,13 @@ exports.STATIC_CONTENT_SUBSECTION_TITLE_COLLABORATION = 'COLABORA';
 exports.STATIC_CONTENT_SUBSECTION_TITLE_DEVELOPERS = 'DESARROLLADORES';
 exports.STATIC_CONTENT_SUBSECTION_TITLE_APIS = 'APIS';
 exports.STATIC_CONTENT_SUBSECTION_TITLE_SPARQL = 'SPARQL';
-
 /* SQL CONSTANTS */
 exports.SQL_RESULSET_FORMAT = 'json';
 
-
 /* *************** */
 /* CKAN PROPERTIES */
-//exports.CKAN_API_BASE_URL = 'http://opendata.aragon.es/datos/api/action/';
-exports.CKAN_API_BASE_URL = 'http://miv-aodfront-01.aragon.local:5000/api/action';
-exports.AOD_API_WEB_BASE_URL = 'http://localhost:4200/aod/services/web';
-
+exports.CKAN_API_BASE_URL = 'http://opendata.aragon.es/datos/api/action/';
+//exports.CKAN_API_BASE_URL = 'http://miv-aodfront-01.aragon.local:5000/api/action/';
 /* DATASETS */
 //Results per page in lists
 exports.DATASETS_SEARCH_ROWS_PER_PAGE = 20;
@@ -74,25 +70,20 @@ exports.DATASETS_SEARCH_MOST_DOWNLOADED_ROWS_LIMIT = 3;
 exports.DATASETS_SEARCH_AUTOCOMPLETE = 'package_autocomplete';
 //Get dataset by name
 exports.DATASET_SHOW = 'package_show';
-
 /* TOPICS */
 //List all topics
 exports.TOPICS_LIST = 'group_list';
-
 /* ORGANIZATIONS */
 //List all organizations
 exports.ORGANIZATIONS_LIST = 'organization_list';
 //Show organization detail
 exports.ORGANIZATION_DETAIL = 'organization_show';
-
 /* TAGS */
 //List all tags
 exports.TAGS_LIST = 'tag_list';
-
 /* RESOURCES */
 //List all resources
 exports.RESOURCES_SEARCH_COUNT = 'resource_search?query=hash:&limit=0';
-
 /* HOMER PROPERTIES */
 exports.HOMER_API_BASE_URL = 'http://opendata-federation.csi.it/fed-homer/documents/select';
 //Results per page in lists

@@ -283,7 +283,6 @@ router.get(constants.API_URL_DATASETS_TOPIC + '/:topicName', function (req, res,
         logger.debug('Servicio: Listado de datasets por tema');
         let serviceBaseUrl = constants.CKAN_API_BASE_URL;
         let serviceName = constants.DATASETS_SEARCH;
-        logger.notice('Request: ' + req);
         let serviceRequestUrl = serviceBaseUrl + serviceName + utils.getRequestCommonParams(req);
         if (req.params.topicName) {
             serviceRequestUrl += '&fq=groups:' + req.params.topicName;

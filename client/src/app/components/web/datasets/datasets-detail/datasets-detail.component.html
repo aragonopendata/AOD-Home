@@ -3,13 +3,13 @@
 		<h1 class="globaltitle col-10">{{dataset.title}}</h1>
 		<div class="social col-2">
 			<a href="{{routerLinkFacebookShare}}" target="_blank" title="Compartir en Facebook">
-			  <img src="../../../../../assets/social/facebookIcon.png" alt="Facebook">
+			  <img src="{{assetsUrl}}/social/facebookIcon.png" alt="Facebook">
 			</a>
 			<a href="{{routerLinkTwitterShare}}" target="_blank" title="Compartir en Twitter">
-			  <img src="../../../../../assets/social/twitterIcon.png" alt="Twitter">
+			  <img src="{{assetsUrl}}/social/twitterIcon.png" alt="Twitter">
 			</a>
 			<a href="{{routerLinkGooglePlusShare}}" target="_blank" title="Compartir en Google Plus">
-			  <img src="../../../../../assets/social/googlePlusIcon.png" alt="Google Plus">
+			  <img src="{{assetsUrl}}/social/googlePlusIcon.png" alt="Google Plus">
 			</a>
 		</div>
 	</div>
@@ -59,12 +59,12 @@
 				</div>
 				<div class="section" *ngIf="dataset.organization">
 					<h6>Organización responsable de la publicación</h6>
-					<a routerLink='/{{routerLinkDataCatalogOrgs}}/{{dataset.organization?.name}}'>{{dataset.organization?.title}}</a>
+					<a routerLink='/{{routerLinkDataOrgs}}/{{dataset.organization?.name}}'>{{dataset.organization?.title}}</a>
 				</div>
 				<div class="section">
 					<h6>Territorio en el que existen los datos</h6>
 					<p>Este conjunto de datos contiene datos en el territorio de {{extraTypeAragopedia}}</p>
-					<p>Esta es la <a href="extraUriAragopedia"> URI del recurso {{extraShortUriAragopedia}}</a></p>
+					<p>Esta es la <a href="{{extraUriAragopedia}}"> URI del recurso {{extraShortUriAragopedia}}</a></p>
 				</div>
 				<div class="section" *ngIf="extraFrequency">
 					<h6>Frecuencia de actualización</h6>
@@ -123,25 +123,14 @@
 			<div class="ui-g">
 				<div class="ui-sm-12 ui-md-6 ui-lg-4 tarjetaContainer" *ngFor="let dsRecommended of datasetsRecommended; let i = index" (mouseenter)="setHover(dsRecommended.name, i)"
 				 (mouseleave)="unsetHover(dsRecommended.name, i)">
-					<div class="recommendedCard" routerLink="/datos/catalogo/dataset/{{dsRecommended.name}}" (click)="showDataset(dsRecommended)">
+					<div class="recommendedCard" routerLink="/{{routerLinkDataCatalogDataset}}/{{dsRecommended.name}}" (click)="showDataset(dsRecommended)">
 						<div *ngFor="let topic of dsRecommended.groups">
-
-							<!--<div *ngIf="!hovers[i]?.hover">-->
-							<img class="card-img-top" src="../../../../assets/temas/{{topic.image_url | slice:14:topic.image_url.length-4}}.png" alt="{{topic.title | uppercase}}"
+							<img class="card-img-top" src="{{assetsUrl}}/{{topic.image_url}}" alt="{{topic.title | uppercase}}"
 							 width="fit-content" height="fit-content">
 							<p>{{topic.title}}</p>
 							<div class="recommended-card-block">
 								<p>{{dsRecommended.title}}</p>
 							</div>
-							<!--</div>-->
-							<!--<div *ngIf="hovers[i]?.hover" class="detail bg-faded" style="position: absolute; width: 100%; height: 100%; padding: 10px; background-color: rgba(235,241,244, 0.95); opacity: 80%; ">
-									<h6>TÍTULO</h6>
-									<h6>{{dsRecommended.title}}</h6>
-									<h6>CATEGORÍA</h6>
-									<h6>{{topic.title}}</h6>
-									<h6>PUBLICADOR</h6>
-									<h6>{{dsRecommended.organization.title}}</h6>
-							</div>-->
 						</div>
 					</div>
 				</div>
@@ -155,13 +144,13 @@
 		<h1 class="globaltitle col-10">{{datasetHomer.title}}</h1>
 		<div class="social col-2">
 			<a href="{{routerLinkFacebookShare}}" target="_blank" title="Compartir en Facebook">
-			  <img src="../../../../../assets/social/facebookIcon.png" alt="Facebook">
+			  <img src="{{assetsUrl}}/social/facebookIcon.png" alt="Facebook">
 			</a>
 			<a href="{{routerLinkTwitterShare}}" target="_blank" title="Compartir en Twitter">
-			  <img src="../../../../../assets/social/twitterIcon.png" alt="Twitter">
+			  <img src="{{assetsUrl}}/social/twitterIcon.png" alt="Twitter">
 			</a>
 			<a href="{{routerLinkGooglePlusShare}}" target="_blank" title="Compartir en Google Plus">
-			  <img src="../../../../../assets/social/googlePlusIcon.png" alt="Google Plus">
+			  <img src="{{assetsUrl}}/social/googlePlusIcon.png" alt="Google Plus">
 			</a>
 		</div>
 	</div>

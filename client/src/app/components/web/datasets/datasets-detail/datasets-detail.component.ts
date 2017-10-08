@@ -30,23 +30,26 @@ export class DatasetsDetailComponent implements OnInit {
 	resourcesAux: ResourceAux[] = new Array();
 	datasetsRecommended: Dataset[] = new Array();
 	//Dynamic URL build parameters
+	assetsUrl: string;
+	routerLinkDataCatalogDataset: string;
 	routerLinkDataCatalogTopics: string;
 	routerLinkDataCatalogTags: string;
-	routerLinkDataCatalogOrgs: string;
+	routerLinkDataOrgs: string;
 	routerLinkFacebookShare: string;
 	routerLinkTwitterShare: string;
 	routerLinkGooglePlusShare: string;
 
 	hovers: any[] = [];
 
-	constructor(private datasetsService: DatasetsService,
-			private activatedRoute: ActivatedRoute) { 
+	constructor(private datasetsService: DatasetsService, private activatedRoute: ActivatedRoute) { 
+		this.routerLinkDataCatalogDataset = Constants.ROUTER_LINK_DATA_CATALOG_DATASET;
 		this.routerLinkDataCatalogTopics = Constants.ROUTER_LINK_DATA_CATALOG_TOPICS;
 		this.routerLinkDataCatalogTags = Constants.ROUTER_LINK_DATA_CATALOG_TAGS;
-		this.routerLinkDataCatalogOrgs = Constants.ROUTER_LINK_DATA_CATALOG_ORGANIZATIONS;
+		this.routerLinkDataOrgs = Constants.ROUTER_LINK_DATA_ORGANIZATIONS;
 		this.routerLinkFacebookShare = Constants.SHARE_FACEBOOK;
 		this.routerLinkTwitterShare = Constants.SHARE_TWITTER;
 		this.routerLinkGooglePlusShare = Constants.SHARE_GOOGLE_PLUS;
+		this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
 	}
 
 	ngOnInit() {
@@ -73,7 +76,6 @@ export class DatasetsDetailComponent implements OnInit {
 		this.datasetsRecommended = new Array();
 	}
 	
-
 	loadDataset(dataset: Dataset) {
 		this.initializeDataset();
 		this.datasetsService.getDatasetByName(dataset.name).subscribe(dataResult => {

@@ -28,10 +28,12 @@ export class OrganizationsDetailComponent implements OnInit {
 	routerLinkFacebookShare: string;
 	routerLinkTwitterShare: string;
 	routerLinkGooglePlusShare: string;
+	assetsUrl: string;
 
 	constructor(private organizationsService: OrganizationsService
 			, private datasetsService: DatasetsService
 			, private activatedRoute: ActivatedRoute) {
+		this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
 		this.routerLinkDataCatalogDataset = '/' + Constants.ROUTER_LINK_DATA_CATALOG_DATASET;
 		this.routerLinkFacebookShare = Constants.SHARE_FACEBOOK;
 		this.routerLinkTwitterShare = Constants.SHARE_TWITTER;

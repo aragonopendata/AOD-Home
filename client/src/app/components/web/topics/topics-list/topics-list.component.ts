@@ -22,7 +22,8 @@ export class TopicsListComponent implements OnInit {
 	routerLinkFacebookShare: string;
 	routerLinkTwitterShare: string;
 	routerLinkGooglePlusShare: string;
-
+	aodMail: string;
+	
 	//Error Params
     errorTitle: string;
     errorMessage: string;
@@ -34,6 +35,7 @@ export class TopicsListComponent implements OnInit {
 		this.routerLinkFacebookShare = Constants.SHARE_FACEBOOK;
 		this.routerLinkTwitterShare = Constants.SHARE_TWITTER;
 		this.routerLinkGooglePlusShare = Constants.SHARE_GOOGLE_PLUS;
+		this.aodMail = Constants.AOD_MAIL;
 	}
 
 	ngOnInit() {

@@ -8,6 +8,7 @@ export class Constants {
     public static AOD_API_WEB_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/web';
     //public static AOD_API_ADMIN_BASE_URL = 'http://localhost:4200/aod/services/admin';
     public static AOD_API_ADMIN_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/admin';
+    public static AOD_COLLABORATION_URL = 'https://aragon.uservoice.com/forums/192552-datos-que-me-gustar%C3%ADa-reutilizar';
     public static AOD_GITHUB_URL = 'http://github.com/aragonopendata';
     public static CKAN_URL = 'http://ckan.org/';
     public static MEDIA_WIKI_URL = 'http://mediawiki.org/';
@@ -72,8 +73,8 @@ export class Constants {
     public static ROUTER_LINK_DATA_CATALOG_TAGS = 'datos/catalogo/etiquetas';
     public static ROUTER_LINK_DATA_CATALOG_STATS = 'datos/catalogo/estadisticas';
     public static ROUTER_LINK_DATA_CATALOG_HOMER = 'datos/catalogo/homer';
+    public static ROUTER_LINK_DATA_CATALOG_HOMER_DATASET = 'datos/catalogo/homer/dataset';
     public static ROUTER_LINK_DATA_CATALOG_DATASET = 'datos/catalogo/dataset';
-    public static ROUTER_LINK_DATA_CATALOG_HOMER_DETAIL = 'datos/catalogo/homerDataset';
     public static ROUTER_LINK_DATA_TOPICS = 'datos/temas';
     public static ROUTER_LINK_DATA_ORGANIZATIONS = 'datos/publicadores';
     public static ROUTER_LINK_INFORMATION = 'informacion';

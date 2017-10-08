@@ -16,13 +16,13 @@ router.get(constants.API_URL_STATIC_CONTENT_INFO_OPEN_DATA, function (req, res, 
     let sectionTitle = constants.STATIC_CONTENT_SECTION_TITLE_INFO;
     let sectionSubtitle = constants.STATIC_CONTENT_SUBSECTION_TITLE_OPEN_DATA;
     const query = {
-        text: 'SELECT sec.id as "sectionId", sec.title as "sectionTitle", sec.subtitle as "sectionSubtitle" '
-                 + ', sec.description as "sectionDescription", cnt.content_order as "contentOrder" ' 
-                 + ', cnt.title AS "contentTitle", cnt.content as "contentText", cnt.target_url AS "targetUrl" ' 
+        text: 'SELECT sec.id AS "sectionId", sec.title AS "sectionTitle", sec.subtitle AS "sectionSubtitle" '
+                 + ', sec.description AS "sectionDescription", cnt.content_order AS "contentOrder" ' 
+                 + ', cnt.title AS "contentTitle", cnt.content AS "contentText", cnt.target_url AS "targetUrl" ' 
               + 'FROM manager.sections sec '
               + 'JOIN manager.static_contents cnt '
                 + 'ON sec.id = cnt.id_section '
-             + 'WHERE sec.title = $1 and sec.subtitle = $2 '
+             + 'WHERE sec.title = $1 AND sec.subtitle = $2 '
              + 'ORDER BY cnt.content_order ASC',
         values: [sectionTitle, sectionSubtitle],
         rowMode: constants.SQL_RESULSET_FORMAT
@@ -58,13 +58,13 @@ router.get(constants.API_URL_STATIC_CONTENT_INFO_APPS, function (req, res, next)
     let sectionTitle = constants.STATIC_CONTENT_SECTION_TITLE_INFO;
     let sectionSubtitle = constants.STATIC_CONTENT_SUBSECTION_TITLE_APPS;
     const query = {
-        text: 'SELECT sec.id as "sectionId", sec.title as "sectionTitle", sec.subtitle as "sectionSubtitle" '
-                 + ', sec.description as "sectionDescription", cnt.content_order as "contentOrder" ' 
-                 + ', cnt.title AS "contentTitle", cnt.content as "contentText" ' 
+        text: 'SELECT sec.id AS "sectionId", sec.title AS "sectionTitle", sec.subtitle AS "sectionSubtitle" '
+                 + ', sec.description AS "sectionDescription", cnt.content_order AS "contentOrder" ' 
+                 + ', cnt.title AS "contentTitle", cnt.content AS "contentText" ' 
               + 'FROM manager.sections sec '
               + 'JOIN manager.static_contents cnt '
                 + 'ON sec.id = cnt.id_section '
-             + 'WHERE sec.title = $1 and sec.subtitle = $2 '
+             + 'WHERE sec.title = $1 AND sec.subtitle = $2 '
              + 'ORDER BY cnt.content_order ASC',
         values: [sectionTitle, sectionSubtitle],
         rowMode: constants.SQL_RESULSET_FORMAT
@@ -100,13 +100,13 @@ router.get(constants.API_URL_STATIC_CONTENT_INFO_EVENTS, function (req, res, nex
     let sectionTitle = constants.STATIC_CONTENT_SECTION_TITLE_INFO;
     let sectionSubtitle = constants.STATIC_CONTENT_SUBSECTION_TITLE_EVENTS;
     const query = {
-        text: 'SELECT sec.id as "sectionId", sec.title as "sectionTitle", sec.subtitle as "sectionSubtitle" '
-                 + ', sec.description as "sectionDescription", cnt.content_order as "contentOrder" ' 
-                 + ', cnt.title AS "contentTitle", cnt.content as "contentText" ' 
+        text: 'SELECT sec.id AS "sectionId", sec.title AS "sectionTitle", sec.subtitle AS "sectionSubtitle" '
+                 + ', sec.description AS "sectionDescription", cnt.content_order AS "contentOrder" ' 
+                 + ', cnt.title AS "contentTitle", cnt.content AS "contentText" ' 
               + 'FROM manager.sections sec '
               + 'JOIN manager.static_contents cnt '
                 + 'ON sec.id = cnt.id_section '
-             + 'WHERE sec.title = $1 and sec.subtitle = $2 '
+             + 'WHERE sec.title = $1 AND sec.subtitle = $2 '
              + 'ORDER BY cnt.content_order ASC',
         values: [sectionTitle, sectionSubtitle],
         rowMode: constants.SQL_RESULSET_FORMAT
@@ -146,13 +146,13 @@ router.get(constants.API_URL_STATIC_CONTENT_TOOLS_DEVELOPERS, function (req, res
     let sectionTitle = constants.STATIC_CONTENT_SECTION_TITLE_TOOLS;
     let sectionSubtitle = constants.STATIC_CONTENT_SUBSECTION_TITLE_DEVELOPERS;
     const query = {
-        text: 'SELECT sec.id as "sectionId", sec.title as "sectionTitle", sec.subtitle as "sectionSubtitle" '
-                 + ', sec.description as "sectionDescription", cnt.content_order as "contentOrder" ' 
-                 + ', cnt.title AS "contentTitle", cnt.content as "contentText" ' 
+        text: 'SELECT sec.id AS "sectionId", sec.title AS "sectionTitle", sec.subtitle AS "sectionSubtitle" '
+                 + ', sec.description AS "sectionDescription", cnt.content_order AS "contentOrder" ' 
+                 + ', cnt.title AS "contentTitle", cnt.content AS "contentText" ' 
               + 'FROM manager.sections sec '
               + 'JOIN manager.static_contents cnt '
                 + 'ON sec.id = cnt.id_section '
-             + 'WHERE sec.title = $1 and sec.subtitle = $2 '
+             + 'WHERE sec.title = $1 AND sec.subtitle = $2 '
              + 'ORDER BY cnt.content_order ASC',
         values: [sectionTitle, sectionSubtitle],
         rowMode: constants.SQL_RESULSET_FORMAT
@@ -188,13 +188,13 @@ router.get(constants.API_URL_STATIC_CONTENT_TOOLS_APIS, function (req, res, next
     let sectionTitle = constants.STATIC_CONTENT_SECTION_TITLE_TOOLS;
     let sectionSubtitle = constants.STATIC_CONTENT_SUBSECTION_TITLE_APIS;
     const query = {
-        text: 'SELECT sec.id as "sectionId", sec.title as "sectionTitle", sec.subtitle as "sectionSubtitle" '
-                 + ', sec.description as "sectionDescription", cnt.content_order as "contentOrder" ' 
-                 + ', cnt.title AS "contentTitle", cnt.content as "contentText" ' 
+        text: 'SELECT sec.id AS "sectionId", sec.title AS "sectionTitle", sec.subtitle AS "sectionSubtitle" '
+                 + ', sec.description AS "sectionDescription", cnt.content_order AS "contentOrder" ' 
+                 + ', cnt.title AS "contentTitle", cnt.content AS "contentText" ' 
               + 'FROM manager.sections sec '
               + 'JOIN manager.static_contents cnt '
                 + 'ON sec.id = cnt.id_section '
-             + 'WHERE sec.title = $1 and sec.subtitle = $2 '
+             + 'WHERE sec.title = $1 AND sec.subtitle = $2 '
              + 'ORDER BY cnt.content_order ASC',
         values: [sectionTitle, sectionSubtitle],
         rowMode: constants.SQL_RESULSET_FORMAT
@@ -230,13 +230,13 @@ router.get(constants.API_URL_STATIC_CONTENT_TOOLS_SPARQL, function (req, res, ne
     let sectionTitle = constants.STATIC_CONTENT_SECTION_TITLE_TOOLS;
     let sectionSubtitle = constants.STATIC_CONTENT_SUBSECTION_TITLE_SPARQL;
     const query = {
-        text: 'SELECT sec.id as "sectionId", sec.title as "sectionTitle", sec.subtitle as "sectionSubtitle" '
-                 + ', sec.description as "sectionDescription", cnt.content_order as "contentOrder" ' 
-                 + ', cnt.title AS "contentTitle", cnt.content as "contentText" ' 
+        text: 'SELECT sec.id AS "sectionId", sec.title AS "sectionTitle", sec.subtitle AS "sectionSubtitle" '
+                 + ', sec.description AS "sectionDescription", cnt.content_order AS "contentOrder" ' 
+                 + ', cnt.title AS "contentTitle", cnt.content AS "contentText" ' 
               + 'FROM manager.sections sec '
               + 'JOIN manager.static_contents cnt '
                 + 'ON sec.id = cnt.id_section '
-             + 'WHERE sec.title = $1 and sec.subtitle = $2 '
+             + 'WHERE sec.title = $1 AND sec.subtitle = $2 '
              + 'ORDER BY cnt.content_order ASC',
         values: [sectionTitle, sectionSubtitle],
         rowMode: constants.SQL_RESULSET_FORMAT

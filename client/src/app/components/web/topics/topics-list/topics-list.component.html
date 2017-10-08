@@ -3,13 +3,13 @@
 		<h1 class="globaltitle col-10">Temas</h1>
 		<div class="social col-2">
 			<a href="{{routerLinkFacebookShare}}" target="_blank" title="Compartir en Facebook">
-				<img src="../../../../../assets/social/facebookIcon.png" alt="Facebook">
+				<img src="{{assetsUrl}}/social/facebookIcon.png" alt="Facebook">
 			</a>
 			<a href="{{routerLinkTwitterShare}}" target="_blank" title="Compartir en Twitter">
-				<img src="../../../../../assets/social/twitterIcon.png" alt="Twitter">
+				<img src="{{assetsUrl}}/social/twitterIcon.png" alt="Twitter">
 			</a>
 			<a href="{{routerLinkGooglePlusShare}}" target="_blank" title="Compartir en Google Plus">
-				<img src="../../../../../assets/social/googlePlusIcon.png" alt="Google Plus">
+				<img src="{{assetsUrl}}/social/googlePlusIcon.png" alt="Google Plus">
 			</a>
 		</div>
 	</div>
@@ -21,17 +21,18 @@
 				</div> 
 				<div class="col-xs-9">
 					<h1>{{errorTitle}}</h1>
-					<h2>{{errorMessage}}</h2>
-						<a class="mail" href="mailto:opendata@aragon.es">
-						   <h2> <i class="fa fa-envelope-o"></i> Contactar con el Administrador</h2>
-						</a>
+					<h3>{{errorMessage}}</h3>
+					Por favor, repita la operación y si el error persiste
+					<a class="mail" href="mailto:{{aodMail}}">
+						<h3>contacte con el Administrador <i class="fa fa-envelope-o"></i></h3>
+					</a>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="ui-g">
 		<div class="ui-sm-12 ui-md-6 ui-lg-4 tarjetaContainer" *ngFor="let topic of topics; let i = index" (mouseenter)="setHover(topic.title, i)" (mouseleave)="unsetHover(topic.title, i)">
-			<div class="card" routerLink="/{{routerLinkDataCatalogDataset}}/{{topic.name}}" ng-init="selectedTopic = topic.name" (click)="setTopic(topic)">
+			<div class="card" routerLink="/{{routerLinkDataTopics}}/{{topic.name}}" ng-init="selectedTopic = topic.name" (click)="setTopic(topic)">
 				<img class="card-img-top" src="{{assetsUrl}}/{{topic.image_url}}" alt="{{topic.title | uppercase}}" width="fit-content" height="fit-content">
 				<div class="card-block">
 					<p>{{topic.title}}</p>

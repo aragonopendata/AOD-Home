@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Constants } from '../../../../../app.constants';
 
 @Component({
 	selector: 'app-collaboration',
@@ -7,7 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CollaborationComponent implements OnInit {
 
-	constructor() { }
+	//Dynamic URL build parameters
+	routerLinkCollaborationService: string;
+
+	constructor() { 
+		this.routerLinkCollaborationService = Constants.AOD_COLLABORATION_URL;
+	}
 
 	ngOnInit() {
 	}

@@ -3,15 +3,15 @@
         <div class="row">
             <div class="col-xs-3">
                 <i class="fa fa-exclamation-triangle fa-5x" style="margin:15px;color: #5ea2ba;"></i>
-            </div> 
+            </div>
             <div class="col-xs-9">
                 <h1>{{errorTitle}}</h1>
                 <h2>{{errorMessage}}</h2>
-                
-                    <a class="mail" href="mailto:opendata@aragon.es">
-                       <h2> <i class="fa fa-envelope-o"></i> Contactar con el Administrador</h2>
-                    </a>
-                
+
+                <a class="mail" href="mailto:opendata@aragon.es">
+                    <h2> <i class="fa fa-envelope-o"></i> Contactar con el Administrador</h2>
+                </a>
+
             </div>
         </div>
     </div>
@@ -47,7 +47,7 @@
             <b>Datos sobre </b>
             <select class="ui-dropdown-label ui-inputtext ui-corner-all" [(ngModel)]="selectedTopic" (change)="changeType()">
                 <option *ngFor="let topSel of topicsSelect" [ngValue]="topSel.value">{{topSel.label}}</option>
-              </select>
+            </select>
         </div>
         <div *ngIf="selectedSearchOption == datasetSearchOptionOrganizations" class="ui-g-6">
             <b>Datos sobre </b>
@@ -59,8 +59,8 @@
             class="ui-g-3">
             <b>Del tipo </b>
             <select class="searchFilter" [(ngModel)]="selectedType" (change)="changeType()">
-                    <option *ngFor="let types of datasetTypes" [ngValue]="types.value">{{types.label}}</option>
-                </select>
+                <option *ngFor="let types of datasetTypes" [ngValue]="types.value">{{types.label}}</option>
+            </select>
         </div>
         <div *ngIf="selectedSearchOption == datasetSearchOptionStats" class="ui-g-9">
             <b>DEL GRUPO </b>
@@ -209,9 +209,7 @@
                 <option value="1503">Actividades del Sector Público</option>
                 <option value="1504">Elecciones</option>
             </select>
-
         </div>
-
         <div class="ui-g-3">
             <select class="ui-dropdown-label ui-inputtext ui-corner-all " [(ngModel)]="selectedSearchOption" (change)="resetSearch()">
                 <option *ngFor="let search of searchOptions" [ngValue]="search.value">{{search.label}}</option>

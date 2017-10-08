@@ -97,7 +97,7 @@ export class DatasetsListComponent implements OnInit {
     this.datasetSearchOptionTags = Constants.DATASET_LIST_SEARCH_OPTION_TAGS;
     this.datasetSearchOptionStats = Constants.DATASET_LIST_SEARCH_OPTION_STATS;
     this.datasetSearchOptionHomer = Constants.DATASET_LIST_SEARCH_OPTION_HOMER;
-    this.routerLinkDataCatalogDatasetHomer = Constants.ROUTER_LINK_DATA_CATALOG_HOMER_DETAIL;
+    this.routerLinkDataCatalogDatasetHomer = Constants.ROUTER_LINK_DATA_CATALOG_HOMER_DATASET;
     this.emptyMessage = Constants.DATASET_LIST_EMPTY;
     if (this.selectedSearchOption === undefined) {
         this.selectedSearchOption = this.datasetSearchOptionFreeSearch;
