@@ -76,7 +76,7 @@
 				</div>
 				<div class="section" *ngIf="dataset.license_title">
 					<h6>Licencia</h6>
-					<p>{{dataset.license_title}}</p>
+					<p><a href="{{dataset.license_url}}" target="_blank">{{dataset.license_title}}</a></p>
 				</div>
 				<div class="section" *ngIf="extraGranularity">
 					<h6>Nivel de detalle</h6>
@@ -88,8 +88,9 @@
 				</div>
 				<div class="section" *ngIf="extraDictionaryURL.length != 0">
 					<h6>Diccionario de datos</h6>
-					<button *ngFor="let dic of extraDictionaryURL; let i = index" class="tags" pButton type="button" label="[{{i+1}}] Documento de diccionario de datos"
-					 style="margin: 2px;"></button>
+					<a *ngFor="let dic of extraDictionaryURL; let i = index" class="tags" routerLink="{{dic}}" target="_blank"
+					pButton type="button" label="[{{i+1}}] Documento de diccionario de datos"
+					style="margin: 2px;"></a>
 				</div>
 			</div>
 		</div>
@@ -170,7 +171,7 @@
 				</div>
 				<div class="section" *ngIf="datasetHomer.tag.length != 0">
 					<h6>Palabra clave / etiqueta</h6>
-					<button *ngFor="let tag of datasetHomer.tag" class="tags" pButton type="button" pButton label="{{tag}}" style="margin: 2px;"></button>
+					<p style="margin-top:20px"><span *ngFor="let tag of datasetHomer.tag" class="tagsHomer" style="margin: 2px;">{{tag}}</span></p>
 				</div>
 				<div class="section" *ngIf="datasetHomer.author.length != 0">
 					<h6>Publicador</h6>

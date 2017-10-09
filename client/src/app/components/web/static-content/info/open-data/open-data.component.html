@@ -1,24 +1,25 @@
-<div class="container">
-    <h1>{{sectionTitle}}</h1>
-    <h3>{{sectionSubtitle}}</h3>
-    <h5 *ngIf="!sectionDescription != null">{{sectionDescription}}</h5>
-    <div id="accordion" role="tablist" aria-multiselectable="true">
-        <div *ngFor="let content of contents">
-            <div class="card">
-                <div class="card-header" role="tab" id="{{content.contentOrder}}">
-                    <h5 class="mb-0">
-                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#{{content.targetUrl}}" aria-expanded="false"
-                            aria-controls="content.contentOrder">
+<div class="container">
+        <h1>{{sectionTitle}}</h1>
+        <h3>{{sectionSubtitle}}</h3>
+        <h5 *ngIf="!sectionDescription != null">{{sectionDescription}}</h5>
+        <div id="accordion"  role="tablist"  aria-multiselectable="true">
+            <div *ngFor="let content of contents">
+                <div class="card">
+                    <div class="card-header"  role="tab"  id="{{content.contentOrder}}">
+                        <div>
+                            <a id="{{content.targetUrl}}Link"  class="collapsed headLink"  data-toggle="collapse"  data-parent="#accordion"  href="#{{content.targetUrl}}"
+                                 aria-expanded="false"  aria-controls="content.contentOrder">
                             {{content.contentTitle}}
-                        </a>
-                    </h5>
-                </div>
-                <div id="{{content.targetUrl}}" class="collapse" role="tabpanel" aria-labelledby="content.contentOrder">
-                    <div class="card-block">
-                        <p [innerHTML]="content.contentText"></p>
+                                <i class="fa fa-plus-circle"  aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div id="{{content.targetUrl}}"  class="collapse"  role="tabpanel"  aria-labelledby="content.contentOrder">
+                        <div class="card-block">
+                            <p [innerHTML]="content.contentText"></p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>

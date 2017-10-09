@@ -50,32 +50,18 @@ a:focus {
     text-decoration: none;
 }
 
->>>.ui-accordion .ui-accordion-header a {
-    color: #5EA2BA;
-    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto'
-                ,'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans'
-                ,'Helvetica Neue', sans-serif;
-    cursor: pointer;
-    line-height: 2em;
-    font-size: 30px;
-    padding: 0px 0px 0px 10px;
-    margin: 0;
-    text-decoration: none;
+[aria-expanded=true] i:before{
+    content: "\f056";
 }
 
->>>.ui-accordion .ui-accordion-header:not(.ui-state-active):not(.ui-state-disabled):hover a {
-    color: #5EA2BA;
-    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto'
-                ,'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans'
-                ,'Helvetica Neue', sans-serif;
-    cursor: pointer;
-    line-height: 2em;
-    font-size: 30px;
-    padding: 0px 0px 0px 10px;
-    margin: 0;
-    text-decoration: none;
+.collapsed{
+font-weight: 300;
+font-size: 30px;
+letter-spacing: 0.1em;
 }
 
->>>.ui-accordion .ui-accordion-header .ui-accordion-content .ui-widget-content a {
-    color: #5EA2BA;
-}
+.headLink{
+font-weight: 300;
+font-size: 30px;
+letter-spacing: 0.1em;
+} 
