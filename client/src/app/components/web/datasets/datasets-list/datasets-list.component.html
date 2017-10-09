@@ -38,10 +38,12 @@
             <button type="button" (click)="searchDatasetsByHomer(searchHomerInput.value)"><i aria-hidden="true" class="fa fa-search"></i></button>
         </div>
         <div *ngIf="selectedSearchOption == datasetSearchOptionTags" class="ui-g-8">
-            <p-autoComplete [(ngModel)]="tags" [suggestions]="filteredTagsMultiple" (completeMethod)="filterTagsMultiple($event)" [minLength]="1"
-                placeholder="Etiquetas" value="#{tags}" field="name" [multiple]="true">
-            </p-autoComplete>
-            <button type="button" (click)="changeTags()"><i aria-hidden="true" class="fa fa-search"></i></button>
+            <div class="ui-inputgroup">
+                <p-autoComplete [(ngModel)]="tags" [suggestions]="filteredTagsMultiple" (completeMethod)="filterTagsMultiple($event)" [minLength]="1"
+                    placeholder="Etiquetas" value="#{tags}" field="name" [multiple]="true">
+                </p-autoComplete>
+                <button pButton type="button" icon="fa-search" (click)="changeTags()" class="ui-button-secondary"></button>
+        </div>
         </div>
         <div *ngIf="selectedSearchOption == datasetSearchOptionTopics" class="ui-g-4">
             <b>Datos sobre </b>
@@ -249,10 +251,9 @@
                 <i class="fa fa-step-backward"></i>
                 </a>
                 </li>
-                <li *ngFor="let pageShow of pagesShow" [ngClass]="pageShow == (+actualPage+1) ? 'page-item active': 'page-item'">
+                <li *ngFor="let pageShow of pagesShow" [ngClass]="pageShow == '-' ? 'page-item disabled' : (pageShow == (+actualPage+1) ? 'page-item active': 'page-item')">
                     <a class="page-link" (click)="paginate(pageShow)">{{pageShow}}</a>
                 </li>
-
                 <li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
                     <a class="page-link" (click)="paginate(+actualPage+2)" aria-label="Siguiente">
                     <i class="fa fa-step-forward"></i>
@@ -369,7 +370,7 @@
                     <i class="fa fa-step-backward"></i>
                     </a>
                 </li>
-                <li *ngFor="let pageShow of pagesShow" [ngClass]="pageShow == (+actualPage+1) ? 'page-item active': 'page-item'">
+                <li *ngFor="let pageShow of pagesShow" [ngClass]="pageShow == '-' ? 'page-item disabled' : (pageShow == (+actualPage+1) ? 'page-item active': 'page-item')">
                     <a class="page-link" (click)="paginate(pageShow)">{{pageShow}}</a>
                 </li>
 

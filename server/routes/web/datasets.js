@@ -170,7 +170,7 @@ router.get(constants.API_URL_DATASETS_NEWEST, function (req, res, next) {
 /** GET MOST DOWNLOADED DATASETS */
 router.get(constants.API_URL_DATASETS_DOWNLOADED, function (req, res, next) {
     try {
-        logger.debug('Servicio: Obtener datasets por tags');
+        logger.debug('Servicio: Obtener datasets más descargados');
         let serviceBaseUrl = constants.CKAN_API_BASE_URL;
         let serviceName = constants.DATASETS_SEARCH_MOST_DOWNLOADED;
         let serviceRequestUrl = serviceBaseUrl + serviceName;

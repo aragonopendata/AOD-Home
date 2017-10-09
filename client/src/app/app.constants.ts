@@ -51,6 +51,7 @@ export class Constants {
     public static DATASET_AUTOCOMPLETE_HEADER_LIMIT_RESULTS = 4;
     public static ORGANIZATION_COMBO_VIEWS_LIST_OPTION = 'Ver como lista';
     public static ORGANIZATION_COMBO_VIEWS_CARD_OPTION = 'Ver como ficha';
+    public static ORGANIZATION_DATASET_LIST_ROWS_PER_PAGE = 20;
     public static ORGANIZATION_EXTRA_WEBPAGE = 'webpage';
     public static ORGANIZATION_EXTRA_ADDRESS = 'address';
     public static ORGANIZATION_EXTRA_PERSON = 'person';
@@ -159,6 +160,7 @@ export class Constants {
     public static SERVER_API_LINK_RESOURCES_COUNT = '/datasets/countResources';
     public static SERVER_API_LINK_DATASETS_HOMER = '/homer';
     public static SERVER_API_LINK_TOPICS = '/topics';
+    public static SERVER_API_LINK_TAGS = '/tags';
     public static SERVER_API_LINK_ORGANIZATIONS = '/organizations';
     public static SERVER_API_LINK_STATIC_CONTENT_INFO = '/static-content/info';
     public static SERVER_API_LINK_STATIC_CONTENT_INFO_OPEN_DATA = '/open-data';

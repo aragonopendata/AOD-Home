@@ -16,7 +16,6 @@ router.get(constants.API_URL_TAGS, function (req, res, next) {
         let serviceBaseUrl = constants.CKAN_API_BASE_URL;
         let serviceName = constants.TAGS_LIST;
         let serviceRequestUrl = serviceBaseUrl + serviceName;
-        console.log(req.query.q);
         if (req.query.q) {
             serviceRequestUrl += '?q=' + req.query.q;
         }

@@ -121,9 +121,7 @@ export class DatasetsService {
 	}
 
 	public getTags(query: string) {
-		//TODO Change to AOD API
-		let fullUrl = 'http://opendata.aragon.es/datos/api/action/tag_list'
-		//let fullUrl = Constants.AOD_API_WEB_BASE_URL + '/tags';	
+		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_TAGS;
 		if (query) {
 			fullUrl += '?q=' + query;
 		}

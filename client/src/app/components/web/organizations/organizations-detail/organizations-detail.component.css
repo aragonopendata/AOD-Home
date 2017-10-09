@@ -64,3 +64,17 @@ a:hover {
 	letter-spacing: 1px;
 	font-weight: bold;
 }
+
+.pagination {
+    margin-top: 5px;
+}
+
+.page-item.active .page-link {
+    background-color: #5ea2ba;
+    border-color: #5ea2ba;
+}
+
+.page-item.disabled .page-link {
+    background: #ddd !important;
+    border-color: #cecccc;
+}

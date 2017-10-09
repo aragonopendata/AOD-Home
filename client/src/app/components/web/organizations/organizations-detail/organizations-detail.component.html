@@ -1,4 +1,22 @@
-<div class="container">
+<div class="container" *ngIf="errorTitle">
+		<div class="alert alert-info" role="alert">
+			<div class="row">
+				<div class="col-xs-3">
+					<i class="fa fa-exclamation-triangle fa-5x" style="margin:15px;color: #5ea2ba;"></i>
+				</div>
+				<div class="col-xs-9">
+					<h1>{{errorTitle}}</h1>
+					<h2>{{errorMessage}}</h2>
+	
+					<a class="mail" href="mailto:opendata@aragon.es">
+						<h2> <i class="fa fa-envelope-o"></i> Contactar con el Administrador</h2>
+					</a>
+	
+				</div>
+			</div>
+		</div>
+	</div>
+<div class="container" *ngIf="!errorTitle">
 		<div class="dtHeader row">
 				<h1 class="globaltitle col-10">{{org.title}}</h1>
 				<div class="social col-2">
@@ -64,7 +82,34 @@
 			</ng-template>
 		</p-column>
 	</p-dataTable>
-	
+	<nav aria-label="Pagination">
+            <ul class="pagination justify-content-center">
+                <li [ngClass]="actualPage >= 1 ? 'page-item': 'page-item disabled'">
+                    <a class="page-link" (click)="paginate(+pageFirst+1)" aria-label="Primero">
+                    <i class="fa fa-fast-backward" ></i>
+                    </a>
+                </li>
+                <li [ngClass]="actualPage >= 1 ? 'page-item': 'page-item disabled'">
+                    <a class="page-link" (click)="paginate(+actualPage)" aria-label="Anterior">
+                    <i class="fa fa-step-backward"></i>
+                    </a>
+                </li>
+                <li *ngFor="let pageShow of pagesShow" [ngClass]="pageShow == '-' ? 'page-item disabled' : (pageShow == (+actualPage+1) ? 'page-item active': 'page-item')">
+                    <a class="page-link" (click)="paginate(pageShow)">{{pageShow}}</a>
+                </li>
+
+                <li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
+                    <a class="page-link" (click)="paginate(+actualPage+2)" aria-label="Siguiente">
+                        <i class="fa fa-step-forward"></i>
+                        </a>
+                </li>
+                <li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
+                    <a class="page-link" (click)="paginate(pageLast)" aria-label="Ultimo">
+                        <i class="fa fa-fast-forward"></i>
+                        </a>
+                </li>
+            </ul>
+        </nav>
 	<!-- <p-paginator rows="{{pageRows}}" totalRecords="{{numDatasets}}" (onPageChange)="paginate($event)"></p-paginator> -->
 	<div class="nota">
 		<p>

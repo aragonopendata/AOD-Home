@@ -179,10 +179,13 @@ export class DatasetsListComponent implements OnInit {
         this.pageLast = Math.ceil(+total/+this.pageRows);        
         this.pages = [];
         this.pagesShow = [];
+        if(this.pageLast == 0){
+            this.pagesShow.push('-');   
+        }
         for (var index = 0; index < this.pageLast; index++) {
             this.pages.push(+index+1);   
         }
-        if (this.actualPage<3) {
+        if (this.actualPage<4) {
             for (var index = 0; index < 5; index++) {
                 if(this.pages[index]){
                     this.pagesShow.push(String (+this.pages[index]));
@@ -628,23 +631,18 @@ export class DatasetsListComponent implements OnInit {
         });
     }
 
-    filterTag(query, tags: any[]): any[] {
-        let filtered = [];
-        for (let i = 0; i < tags.length; i++) {
-            let tag = tags[i];
-            if (tag.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-                filtered.push({ name: tag, value: tag });
-            }
-        }
-        return filtered;
-    }
-
     filterTagsMultiple(event) {
         let query = event.query;
         this.datasetsService.getTags(query).subscribe(tags => {
             try {
-                this.filteredTagsMultiple = this.filterTag(query, tags.result);
-            } catch (error) {
+                this.filteredTagsMultiple = [];
+                for (let i = 0; i < JSON.parse(tags).result.length; i++) {
+                    let tag = JSON.parse(tags).result[i];
+                    if (tag.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+                        this.filteredTagsMultiple.push({ name: tag, value: tag });
+                    }
+                }
+             } catch (error) {
                 console.log("Error filterTagsMultiple() - datasets-list.component.ts");
                 this.errorTitle="Se ha producido un error";
                 this.errorMessage="Se ha producido un error con el filtrado por etiquetas, vuelva a intentarlo y si el error persiste contacte con el administrador.";
