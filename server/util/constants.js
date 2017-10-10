@@ -33,6 +33,8 @@ exports.API_URL_STATIC_CONTENT_INFO_COLLABORATION = '/static-content/info/collab
 exports.API_URL_STATIC_CONTENT_TOOLS_DEVELOPERS = '/static-content/tools/developers';
 exports.API_URL_STATIC_CONTENT_TOOLS_APIS = '/static-content/tools/apis';
 exports.API_URL_STATIC_CONTENT_TOOLS_SPARQL = '/static-content/tools/sparql';
+exports.API_URL_STATIC_CONTENT_TOOLS_SPARQL_CLIENT = '/static-content/tools/sparql-client';
+exports.API_URL_STATIC_CONTENT_TOOLS_SPARQL_GRAPHS = '/static-content/tools/sparql-client/graphs';
 exports.STATIC_CONTENT_SECTION_TITLE_INFO = 'INFORMACIÓN';
 exports.STATIC_CONTENT_SECTION_TITLE_TOOLS = 'HERRAMIENTAS';
 exports.STATIC_CONTENT_SUBSECTION_TITLE_OPEN_DATA = 'OPEN DATA';
@@ -121,6 +123,16 @@ exports.SERVER_API_LINK_PARAM_TYPE_EDUCATION_RESOURCES_QUERY = '&q=(name:(recurs
 exports.SERVER_API_LINK_PARAM_TYPE_WEB_RESOURCES_QUERY = '&q=(res_format:(html OR HTML OR url OR URL))AND dataset_type:dataset AND entity_type:package AND state:active AND capacity:public';
 exports.SERVER_API_LINK_PARAM_TYPE_RSS_QUERY = '&q=(res_format:(rss OR RSS))AND dataset_type:dataset AND entity_type:package AND state:active AND capacity:public';
 exports.SERVER_API_LINK_PARAM_TYPE_PLAIN_TEXT_QUERY = '&q=(((res_format:XLS OR res_format:xls ) AND (res_url:http*.xls )) OR res_format:json OR res_format:JSON OR res_format:xml OR res_format:XML OR res_format:csv OR res_format:CSV OR res_format:px OR res_format:PX OR res_format:url OR res_format:URL) AND dataset_type:dataset AND entity_type:package AND state:active AND capacity:public';
+
+/*  SPARQL */
+exports.SPARQL_API_BASE_URL = 'http://opendata.aragon.es/sparql';
+//exports.SPARQL_API_BASE_URL = 'http://miv-aodfront-01.aragon.local:7030/sparql';
+exports.SPARQL_API_QUERY_URL_ALL_GRAPHS = '?query=SELECT  DISTINCT ?g WHERE  { GRAPH ?g {?s ?p ?o} } ORDER BY ?g &format=json';
+exports.SPARQL_API_LINK_PARAM_GRAPH = '?default-graph-uri=';
+exports.SPARQL_API_LINK_PARAM_QUERY = '&query=';
+exports.SPARQL_API_LINK_PARAM_FORMAT = '&format=';
+exports.SPARQL_API_LINK_PARAM_TIMEOUT = '&timeout=';
+exports.SPARQL_API_LINK_PARAM_DEBUG = '&debug=';
 
 /* ******************* */
 /* DATABASE PROPERTIES */

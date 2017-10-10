@@ -1,70 +1,83 @@
-<div class="container">
-	<h1>Cliente de consulta SPARQL</h1>
-	<div id="main" class="textosNormales">
-		<br>
-		<form action="/sparql" method="get">
-			<table style="width:100%;text-align: left;border-spacing: 10px;border-collapse: separate;">
-				<tr>
-					<td colspan="2">
-						<label for="default-graph-uri">Grafo:</label>
-						<input name="default-graph-uri" id="default-graph-uri" value="http://opendata.aragon.es/graph/Aragopedia/latest" size="80"
-						 type="text" readonly="true">
-					</td>
-				</tr>
-				<tr>
-					<td style="vertical-align:middle;">
-						<label for="query">Consulta:</label>
-					</td>
-					<td>
-						<textarea rows="18" cols="80" name="query" id="query" onchange="format_select(this)" onkeyup="format_select(this)">select distinct ?Concept where {[] a ?Concept} LIMIT 100</textarea>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label for="format">Formato de los resultados:</label>
-					</td>
-					<td>
-						<select name="format" id="format" onchange="format_change(this)"> 
-							<option value="auto">Auto</option> 
-							<option value="text/html" selected="selected">HTML</option> 
-							<option value="application/vnd.ms-excel">Spreadsheet</option> 
-							<option value="application/sparql-results+xml">XML</option> 
-							<option value="application/sparql-results+json">JSON</option> 
-							<option value="application/javascript">Javascript</option> 
-							<option value="text/plain">NTriples</option> 
-							<option value="application/rdf+xml">RDF/XML</option> 
-							<option value="text/csv">CSV</option> 
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label for="timeout">Tiempo máximo de ejecución:</label>
-					</td>
-					<td>
-						<input name="timeout" id="timeout" value="0" type="text"> milisegundos
-						<span class="info"> 
-				<i>(valores inferiores a 1000 no serán tenidos en cuenta)</i> 
-			  </span>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label class="n" for="options">Opciones</label>
-					</td>
-					<td>
-						<fieldset id="options">
-							<input name="debug" id="debug" checked="checked" type="checkbox" />
-							<label for="debug" class="ckb">Chequeo de variables vacías</label>
-						</fieldset>
-					</td>
-				</tr>
-			</table>
-			<br/>
-			<br/>
-			<input value="Lanzar consulta" type="submit" />
-			<input value="Reiniciar" type="reset" />
-		</form>
-	</div>
+<div class="container" *ngIf="errorTitle">
+		<div class="alert alert-info" role="alert">
+			<div class="row">
+				<div class="col-xs-3">
+					<i class="fa fa-exclamation-triangle fa-5x" style="margin:15px;color: #5ea2ba;"></i>
+				</div>
+				<div class="col-xs-9">
+					<h1>{{errorTitle}}</h1>
+					<h2>{{errorMessage}}</h2>
+	
+					<a class="mail" href="mailto:opendata@aragon.es">
+						<h2> <i class="fa fa-envelope-o"></i> Contactar con el Administrador</h2>
+					</a>
+	
+				</div>
+			</div>
+		</div>
 </div>
-<div class="huecoSeccionHome"></div>
+<div *ngIf="!sparqlResult && !errorTitle" class="container">
+		<h1>Cliente de consulta SPARQL</h1>
+		<div id="main" class="textosNormales">
+			<br>
+			<form #f="ngForm" (ngSubmit)="onSubmit(f)">
+				<div class="form-group row">
+					<label for="example-text-input" class="col-3 col-form-label">Grafo:</label>
+					<div class="form-group">
+						<select class="form-control" id="graph" name="graph" required [(ngModel)]="graph">
+							<option *ngFor="let graph of graphsSelect" [ngValue]="graph">{{graph}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="example-text-input" class="col-3 col-form-label">Consulta:</label>
+					<div class="form-group">
+						<textarea class="form-control" id="query" required name="query" rows="18" cols="80" [(ngModel)]="query"></textarea>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="example-text-input" class="col-3 col-form-label">Formato de los resultados:</label>
+					<div class="form-group">
+						<select class="form-control" name="format" required id="format" [(ngModel)]="format">
+							<option value="{{sparqlClientFormatOptionAuto}}">Auto</option> 
+							<option value="{{sparqlClientFormatOptionHtml}}">HTML</option> 
+							<option value="{{sparqlClientFormatOptionExcel}}">Spreadsheet</option> 
+							<option value="{{sparqlClientFormatOptionXml}}">XML</option> 
+							<option value="{{sparqlClientFormatOptionJson}}">JSON</option> 
+							<option value="{{sparqlClientFormatOptionJavascript}}">Javascript</option> 
+							<option value="{{sparqlClientFormatOptionPlainText}}">NTriples</option> 
+							<option value="{{sparqlClientFormatOptionRdfXml}}">RDF/XML</option> 
+							<option value="{{sparqlClientFormatOptionCsv}}">CSV</option> 
+						</select>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="example-text-input" class="col-3 col-form-label">Tiempo máximo de ejecución:</label>
+					<div class="form-group row">
+							<div class="col-3">
+									<input class="form-control" type="number" name="timeout" id="timeout" [(ngModel)]="timeout">
+							</div>
+							<label class="col-9 col-form-label">milisegundos(valores inferiores a 1000 no serán tenidos en cuenta)</label>
+					</div>
+					
+				</div>
+				<div class="form-group row">
+					<label for="example-text-input" class="col-3 col-form-label">Opciones:</label>
+					<label class="custom-control custom-checkbox">
+							<input type="checkbox" id="debug" name="debug" [checked]="debug" class="custom-control-input" [(ngModel)]="debug">
+							<span class="custom-control-indicator"></span>
+							<span class="custom-control-description">Chequeo de variables vacías</span>
+					</label>
+				</div>
+				<div class="form-group row">
+					<button type="submit" class="btn btn-primary">Lanzar Consulta</button>
+					
+					<button style="margin-left:5px" type="button" (click)="resetForm()" class="btn btn-primary">Reiniciar</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div *ngIf="sparqlResult" class="container">
+		<p [innerHTML]="sparqlResult"></p>
+	</div>
+	<div class="huecoSeccionHome"></div>

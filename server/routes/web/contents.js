@@ -3,6 +3,8 @@
 const express = require('express');
 const router = express.Router();
 const constants = require('../../util/constants');
+const http = require('http');
+const proxy = require('../../conf/proxy-conf');
 //DB SETTINGS
 const db = require('../../db/db-connection');
 const pool = db.getPool();
@@ -268,8 +270,99 @@ router.get(constants.API_URL_STATIC_CONTENT_TOOLS_SPARQL, function (req, res, ne
     });
 });
 
-router.get('/static-content/tools/sparql-client?graph=:graph&query=:query', function (req, res, next) {
+router.get(constants.API_URL_STATIC_CONTENT_TOOLS_SPARQL_CLIENT, function (req, res, next) {
+    try {
+        logger.debug('Servicio: Petición SPARQL');
+        let serviceBaseUrl = constants.SPARQL_API_BASE_URL;
+        let serviceRequestUrl = serviceBaseUrl;
+        if (req.query.graph) {
+            serviceRequestUrl += constants.SPARQL_API_LINK_PARAM_GRAPH + encodeURIComponent(req.query.graph);
+        }
     
+        if (req.query.query) {
+            serviceRequestUrl += constants.SPARQL_API_LINK_PARAM_QUERY + encodeURIComponent(req.query.query);
+        }
+    
+        if (req.query.format) {
+            serviceRequestUrl += constants.SPARQL_API_LINK_PARAM_FORMAT + encodeURIComponent(req.query.format);
+        }
+    
+        if (req.query.timeout) {
+            serviceRequestUrl += constants.SPARQL_API_LINK_PARAM_TIMEOUT + encodeURIComponent(req.query.timeout);
+        }
+    
+        if (req.query.debug) {
+            serviceRequestUrl += constants.SPARQL_API_LINK_PARAM_DEBUG + encodeURIComponent(req.query.debug);
+        }
+    
+        logger.notice('URL de petición: ' + serviceRequestUrl);
+
+        //Proxy checking
+        let httpConf = null;
+        if (constants.REQUESTS_NEED_PROXY == true) {
+            logger.warning('Realizando petición a través de proxy');
+            let httpProxyConf = proxy.getproxyOptions(serviceRequestUrl);
+            httpConf = httpProxyConf;
+        } else {
+            httpConf = serviceRequestUrl;
+        }
+    
+        http.get(httpConf, function (results) {
+            var body = '';
+            results.on('data', function (chunk) {
+                body += chunk;
+            });
+            results.on('end', function () {
+                res.json(body);
+            });
+        }).on('error', function (err) {
+            utils.errorHandler(err,res,serviceName);
+        });   
+
+    } catch (error) {
+        logger.error(error);
+    }
+
 });
+
+router.get(constants.API_URL_STATIC_CONTENT_TOOLS_SPARQL_GRAPHS, function (req, res, next) {
+    try {
+        logger.debug('Servicio: Petición SPARQL Obtener Grafos');
+        let serviceBaseUrl = constants.SPARQL_API_BASE_URL;
+        let serviceRequestUrl = serviceBaseUrl;
+  
+        serviceRequestUrl += constants.SPARQL_API_QUERY_URL_ALL_GRAPHS;
+    
+        logger.notice('URL de petición: ' + serviceRequestUrl);
+
+        //Proxy checking
+        let httpConf = null;
+        if (constants.REQUESTS_NEED_PROXY == true) {
+            logger.warning('Realizando petición a través de proxy');
+            let httpProxyConf = proxy.getproxyOptions(serviceRequestUrl);
+            httpConf = httpProxyConf;
+        } else {
+            httpConf = serviceRequestUrl;
+        }
+    
+        http.get(httpConf, function (results) {
+            var body = '';
+            results.on('data', function (chunk) {
+                body += chunk;
+            });
+            results.on('end', function () {
+                res.json(body);
+            });
+        }).on('error', function (err) {
+            utils.errorHandler(err,res,serviceName);
+        });   
+
+    } catch (error) {
+        logger.error(error);
+    }
+
+});
+
+
 
 module.exports = router;

@@ -90,3 +90,18 @@ h1, h2, h3, h4, h5 {
 .textosNormales a.recuadroNoResaltado:hover { 
   color: #FFF !important; 
 }
+
+.btn-primary {
+    color: #fff;
+    background-color: #5ea1b9 !important; 
+    border-color: #86b9cb !important; 
+}
+
+.custom-control-input:focus ~ .custom-control-indicator {
+    box-shadow: 0 0 0 1px #fff, 0 0 0 3px #86b9cb;
+}
+
+.custom-control-input:checked ~ .custom-control-indicator {
+    color: #fff;
+    background-color: #5ea1b9;
+}

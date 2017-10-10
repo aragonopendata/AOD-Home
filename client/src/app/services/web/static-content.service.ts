@@ -42,4 +42,24 @@ export class StaticContentService {
 						+ Constants.SERVER_API_LINK_STATIC_CONTENT_TOOLS_SPARQL;
 		return this.http.get(fullUrl).map(res => res.json());
 	}
+
+	public getSparqlGraphs() {
+		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_STATIC_CONTENT_TOOLS 
+						+ Constants.SERVER_API_LINK_STATIC_CONTENT_TOOLS_SPARQL_GRAPHS;
+		return this.http.get(fullUrl).map(res => res.json());
+	}
+
+	public sendSparqlClient(formParms) {
+		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_STATIC_CONTENT_TOOLS 
+					+ Constants.SERVER_API_LINK_STATIC_CONTENT_TOOLS_SPARQL_CLIENT
+					+ '?' + Constants.SERVER_API_LINK_SPARQL_CLIENT_PARAM_GRAPH + '=' + formParms.graph 
+					+ '&' + Constants.SERVER_API_LINK_SPARQL_CLIENT_PARAM_QUERY + '=' + formParms.query
+					+ '&' + Constants.SERVER_API_LINK_SPARQL_CLIENT_PARAM_FORMAT + '=' + formParms.format
+					+ '&' + Constants.SERVER_API_LINK_SPARQL_CLIENT_PARAM_TIMEOUT + '=' + formParms.timeout
+					if(formParms.debug == true){
+						+ '&' + Constants.SERVER_API_LINK_SPARQL_CLIENT_PARAM_DEBUG + '=on';
+					}
+			console.log(fullUrl);
+		return this.http.get(fullUrl).map(res => res.json());
+	}
 }

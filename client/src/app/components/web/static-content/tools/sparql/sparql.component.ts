@@ -21,7 +21,7 @@ export class SparqlComponent implements OnInit {
     }
 
     getStaticContentInfo() {
-        this.staticContentService.getEventsInfoStaticContent().subscribe(staticContent => {
+        this.staticContentService.getSparqlToolsStaticContent().subscribe(staticContent => {            
             this.contents = staticContent;
             this.sectionTitle = this.contents[0].sectionTitle;
             this.sectionSubtitle = this.contents[0].sectionSubtitle;

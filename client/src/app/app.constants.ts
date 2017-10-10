@@ -89,6 +89,7 @@ export class Constants {
     public static ROUTER_LINK_TOOLS_APIS = 'herramientas/apis';
     public static ROUTER_LINK_TOOLS_SPARQL = 'herramientas/sparql';
     public static ROUTER_LINK_TOOLS_SPARQL_CLIENT = 'herramientas/sparql/client';
+    public static ROUTER_LINK_TOOLS_DEFAULT_SPARQL_CLIENT = 'portal/cliente-sparql';    
     public static ROUTER_LINK_LOGIN = 'login';
     public static ROUTER_LINK_LOGIN_FORGOT_PASSWORD = 'login/forgot-password';
     public static ROUTER_LINK_LOGIN_RESTORE_PASSWORD = 'login/restore-password';
@@ -170,6 +171,8 @@ export class Constants {
     public static SERVER_API_LINK_STATIC_CONTENT_TOOLS_DEVELOPERS = '/developers';
     public static SERVER_API_LINK_STATIC_CONTENT_TOOLS_APIS = '/apis';
     public static SERVER_API_LINK_STATIC_CONTENT_TOOLS_SPARQL = '/sparql';
+    public static SERVER_API_LINK_STATIC_CONTENT_TOOLS_SPARQL_CLIENT = '/sparql-client';
+    public static SERVER_API_LINK_STATIC_CONTENT_TOOLS_SPARQL_GRAPHS = '/sparql-client/graphs';
     public static SERVER_API_LINK_PARAM_SORT = 'sort';
     public static SERVER_API_LINK_PARAM_PAGE = 'page';
     public static SERVER_API_LINK_PARAM_ROWS = 'rows';
@@ -186,4 +189,37 @@ export class Constants {
     public static SERVER_API_LINK_PARAM_SORT_HOMER_NAME = 'title';
     public static SERVER_API_LINK_PARAM_SORT_HOMER_PORTAL = 'portal';
     public static SERVER_API_LINK_PARAM_SORT_HOMER_LANGUAGE = 'language';
+
+    public static SERVER_API_LINK_SPARQL_CLIENT_PARAM_GRAPH = 'graph';
+    public static SERVER_API_LINK_SPARQL_CLIENT_PARAM_QUERY = 'query';
+    public static SERVER_API_LINK_SPARQL_CLIENT_PARAM_FORMAT = 'format';
+    public static SERVER_API_LINK_SPARQL_CLIENT_PARAM_TIMEOUT = 'timeout';
+    public static SERVER_API_LINK_SPARQL_CLIENT_PARAM_DEBUG = 'debug';
+
+    public static SPARQL_CLIENT_DEFAULT_GRAPH = 'http://opendata.aragon.es/graph/Aragopedia/latest';
+    public static SPARQL_CLIENT_DEFAULT_QUERY = 'select distinct ?Concept where {[] a ?Concept} LIMIT 100';
+    public static SPARQL_CLIENT_DEFAULT_FORMAT = 'text/html';
+    public static SPARQL_CLIENT_DEFAULT_TIMEOUT = 0;
+    public static SPARQL_CLIENT_DEFAULT_DEBUG = true;
+    
+    public static SPARQL_CLIENT_FORMAT_OPTIONS_AUTO = 'auto';
+    public static SPARQL_CLIENT_FORMAT_OPTIONS_HTML = 'text/html';
+    public static SPARQL_CLIENT_FORMAT_OPTIONS_EXCEL = 'application/vnd.ms-excel';
+    public static SPARQL_CLIENT_FORMAT_OPTIONS_XML = 'application/sparql-results+xml';
+    public static SPARQL_CLIENT_FORMAT_OPTIONS_JSON = 'application/sparql-results+json';
+    public static SPARQL_CLIENT_FORMAT_OPTIONS_JAVASCRIPT = 'application/javascript';
+    public static SPARQL_CLIENT_FORMAT_OPTIONS_PLAIN_TEXT = 'text/plain';
+    public static SPARQL_CLIENT_FORMAT_OPTIONS_RDF_XML = 'application/rdf+xml';
+    public static SPARQL_CLIENT_FORMAT_OPTIONS_CSV = 'text/csv';
+
+    public static SPARQL_CLIENT_FILE_NAME = 'Sparql';
+    public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_XML = '.xml';
+    public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_XLS = '.xls';
+    public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_SRX = '.srx';
+    public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_JSON = '.json';
+    public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_JS = '.js';
+    public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_TXT = '.txt';
+    public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_RDF = '.rdf';
+    public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_CSV = '.csv';
+    
 }
