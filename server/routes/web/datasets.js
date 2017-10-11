@@ -17,7 +17,7 @@ router.get(constants.API_URL_DATASETS, function (req, res, next) {
         let serviceName = constants.DATASETS_SEARCH;
         let serviceRequestUrl = serviceBaseUrl + serviceName + utils.getRequestCommonParams(req);
         if (req.query.text) {
-            serviceRequestUrl += '&q=' + req.query.text;
+            serviceRequestUrl += '&q=' + encodeURIComponent(req.query.text);
         }
         logger.notice('URL de petición: ' + serviceRequestUrl);
     

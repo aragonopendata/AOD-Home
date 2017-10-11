@@ -142,7 +142,7 @@
 </div>
 <div *ngIf="datasetHomer.package_id != undefined" class="container">
 	<div class="dtHeader row">
-		<h1 class="globaltitle col-10">{{datasetHomer.title}}</h1>
+		<h1 *ngIf="datasetHomer.title" class="globaltitle col-10">{{datasetHomer.title}}</h1>
 		<div class="social col-2">
 			<a href="{{routerLinkFacebookShare}}" target="_blank" title="Compartir en Facebook">
 			  <img src="../../../../../assets/social/facebookIcon.png" alt="Facebook">
@@ -169,11 +169,13 @@
 					<h6>Descripción</h6>
 					<div [innerHTML]="datasetHomer.description"></div>
 				</div>
-				<div class="section" *ngIf="datasetHomer.tag.length != 0">
+				<div class="section" *ngIf="datasetHomer.tag && datasetHomer.tag.length != 0">
 					<h6>Palabra clave / etiqueta</h6>
-					<p style="margin-top:20px"><span *ngFor="let tag of datasetHomer.tag" class="tagsHomer" style="margin: 2px;">{{tag}}</span></p>
+					<div class="row" style="padding:10px">
+					<span *ngFor="let tag of datasetHomer.tag" class="tagsHomer">{{tag}}</span>
+					</div>
 				</div>
-				<div class="section" *ngIf="datasetHomer.author.length != 0">
+				<div class="section" *ngIf="datasetHomer.author && datasetHomer.author.length != 0">
 					<h6>Publicador</h6>
 					<p *ngFor="let author of datasetHomer.author">{{author}}</p>
 				</div>
@@ -185,7 +187,7 @@
 					<h6>Licencia</h6>
 					<p>{{datasetHomer.license_id}}</p>
 				</div>
-				<div class="section" *ngIf="datasetHomer.topic.length != 0">
+				<div class="section" *ngIf="datasetHomer.topic && datasetHomer.topic.length != 0">
 					<h6>Temas</h6>
 					<p *ngFor="let topic of datasetHomer.topic">{{topic}}</p>
 				</div>

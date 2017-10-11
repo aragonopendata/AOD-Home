@@ -95,6 +95,7 @@ export class DatasetsDetailComponent implements OnInit {
 		this.datasetsService.getDatasetHomerByPackageId(datasetHomer.package_id).subscribe(dataResult => {
 			try {
 				this.datasetHomer = JSON.parse(dataResult).response.docs[0];
+				console.log(this.datasetHomer);
 			} catch (error) {
 				console.error("Error: loadDatasetHomer() - datasets-detail.component.ts");
 			}

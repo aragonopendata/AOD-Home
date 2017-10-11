@@ -156,6 +156,7 @@ a:hover {
 	text-decoration: none  !important;
     font-weight: bold;
     border-radius: 2px;
+    margin: 2px;
 }
 
 .horizontalFormat {
