@@ -76,7 +76,6 @@ export class HeaderComponent implements OnInit {
 
     openNav() {
         if (!this.menuActive) {
-            $('body,html').css('overflow-y', 'hidden');
             $('.overlay').css('top', $('#header').height());
             $('#myNav').height($(window).height() - $('#header').height());
             $('#logo').attr('src', '../../../assets/AOD-Logo-Responsive.png');

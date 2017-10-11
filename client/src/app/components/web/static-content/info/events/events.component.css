@@ -45,3 +45,19 @@ a:focus {
     color: #5EA2BA;
     text-decoration: none;
 }
+
+[aria-expanded=true] i:before{
+    content: "\f056";
+}
+
+.collapsed{
+    font-weight: 300;
+    font-size: 30px;
+    letter-spacing: 0.1em;
+}
+
+.headLink{
+    font-weight: 300;
+    font-size: 30px;
+    letter-spacing: 0.1em;
+} 

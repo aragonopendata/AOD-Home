@@ -29,6 +29,7 @@ import { TopicsListComponent } from './components/web/topics/topics-list/topics-
 import { OrganizationsDetailComponent } from './components/web/organizations/organizations-detail/organizations-detail.component';
 import { OrganizationsListComponent } from './components/web/organizations/organizations-list/organizations-list.component';
 import { OpenDataComponent } from './components/web/static-content/info/open-data/open-data.component';
+import { OpenDataSafeHtmlPipe } from "./components/web/static-content/info/open-data/open-data-safeHTML.pipe";
 import { ApplicationsComponent } from './components/web/static-content/info/applications/applications.component';
 import { EventsComponent } from './components/web/static-content/info/events/events.component';
 import { CollaborationComponent } from './components/web/static-content/info/collaboration/collaboration.component';
@@ -92,6 +93,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 		OrganizationsDetailComponent,
 		OrganizationsListComponent,
 		OpenDataComponent,
+		OpenDataSafeHtmlPipe,
 		ApplicationsComponent,
 		EventsComponent,
 		CollaborationComponent,

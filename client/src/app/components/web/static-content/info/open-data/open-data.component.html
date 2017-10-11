@@ -16,7 +16,7 @@
                     </div>
                     <div id="{{content.targetUrl}}"  class="collapse"  role="tabpanel"  aria-labelledby="content.contentOrder">
                         <div class="card-block">
-                            <p [innerHTML]="content.contentText"></p>
+                            <p [innerHTML]="content.contentText | safeHtml"></p>
                         </div>
                     </div>
                 </div>
