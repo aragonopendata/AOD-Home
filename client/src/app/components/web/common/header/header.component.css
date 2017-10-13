@@ -327,3 +327,8 @@ a:hover {
         width: 100%;
     }
 }
+
+.headerLogos{
+    height: 45px;
+    width: auto;
+}
