@@ -38,13 +38,6 @@ export class EventsComponent implements OnInit {
             this.sectionSubtitle = this.contents[0].sectionSubtitle;
             this.sectionDescription = this.contents[0].sectionDescription;
             this.getUrlFragment();
-            if (this.targetUrl && this.targetUrl != null && this.targetUrl != '') {
-                this.contents.forEach(content => {
-                    if (this.targetUrl === content.targetUrl) {
-                        this.index = (content.contentOrder - 1);
-                    }
-                });
-            }
         });
     }
 
@@ -55,11 +48,11 @@ export class EventsComponent implements OnInit {
     openSection(){
         if(this.targetUrl != this.url && this.targetUrl != null){
             this.url = this.targetUrl;
-            document.getElementById('jacathon-Link').setAttribute('aria-expanded','true');
-            document.getElementById('jacathon-Link').setAttribute('class','headLink');
-            document.getElementById('jacathon').setAttribute('class','collapse show');
-            var element = document.getElementById('jacathon-Link');
-            $("html, body").animate({ scrollTop: $(element).offset().top - 200}, '500');
+            var element = document.getElementById(this.url+'Link');
+            $("html, body").animate({ scrollTop: $(element).offset().top - ($('#header').height()+20)}, '500');
+            document.getElementById(this.url+'Link').setAttribute('aria-expanded','true');
+            document.getElementById(this.url+'Link').setAttribute('class','headLink');
+            document.getElementById(this.url).setAttribute('class','collapse show');
         }
     }
 }
