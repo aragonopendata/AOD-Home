@@ -150,7 +150,7 @@ router.get(constants.API_URL_STATIC_CONTENT_TOOLS_DEVELOPERS, function (req, res
     const query = {
         text: 'SELECT sec.id AS "sectionId", sec.title AS "sectionTitle", sec.subtitle AS "sectionSubtitle" '
                  + ', sec.description AS "sectionDescription", cnt.content_order AS "contentOrder" ' 
-                 + ', cnt.title AS "contentTitle", cnt.content AS "contentText" ' 
+                 + ', cnt.title AS "contentTitle", cnt.content AS "contentText", cnt.target_url AS "targetUrl" '
               + 'FROM manager.sections sec '
               + 'JOIN manager.static_contents cnt '
                 + 'ON sec.id = cnt.id_section '
@@ -192,7 +192,7 @@ router.get(constants.API_URL_STATIC_CONTENT_TOOLS_APIS, function (req, res, next
     const query = {
         text: 'SELECT sec.id AS "sectionId", sec.title AS "sectionTitle", sec.subtitle AS "sectionSubtitle" '
                  + ', sec.description AS "sectionDescription", cnt.content_order AS "contentOrder" ' 
-                 + ', cnt.title AS "contentTitle", cnt.content AS "contentText" ' 
+                 + ', cnt.title AS "contentTitle", cnt.content AS "contentText", cnt.target_url AS "targetUrl" '
               + 'FROM manager.sections sec '
               + 'JOIN manager.static_contents cnt '
                 + 'ON sec.id = cnt.id_section '

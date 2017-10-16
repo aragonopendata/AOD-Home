@@ -1,16 +1,25 @@
 <div class="container">
 	<h1>{{sectionTitle}}</h1>
 	<h3>{{sectionSubtitle}}</h3>
-	<h5 *ngIf="!sectionDescription != null">{{sectionDescription}}</h5>
-	<p-accordion (onOpen)="changeIcon($event)" (onClose)="changeIcon($event)">
-		<div *ngFor="let content of contents">
-			<p-accordionTab>
-				<p-header>
-					{{content.contentTitle}}
-					<i id="{{content.contentOrder}}" class="{{buttonClass}}"></i>
-				</p-header>
-				<p [innerHTML]="content.contentText"></p>
-			</p-accordionTab>
+	<h5 *ngIf="!sectionDescription != null">{{sectionDescription}}</h5>
+	<div id="accordion"  role="tablist"  aria-multiselectable="true">
+		<div *ngFor="let content of contents">
+			<div class="card">
+				<div class="card-header"  role="tab"  id="{{content.contentOrder}}">
+					<div>
+						<a id="{{content.targetUrl}}Link"  class="collapsed headLink"  data-toggle="collapse"  data-parent="#accordion"  href="#{{content.targetUrl}}"
+							 aria-expanded="false"  aria-controls="content.contentOrder">
+						{{content.contentTitle}}
+							<i class="fa fa-plus-circle"  aria-hidden="true"></i>
+						</a>
+					</div>
+				</div>
+				<div id="{{content.targetUrl}}"  class="collapse"  role="tabpanel"  aria-labelledby="content.contentOrder">
+					<div class="card-block">
+						<p class="textContent" [innerHTML]="content.contentText | safeHtml"></p>
+					</div>
+				</div>
+			</div>
 		</div>
-	</p-accordion>
+	</div>
 </div>

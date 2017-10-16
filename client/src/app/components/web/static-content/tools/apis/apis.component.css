@@ -7,10 +7,14 @@ h1, h2, h3, h4, h5 {
     font-weight: 300;
 }
 
+body {
+    background-color: #F7F7F9 !important;
+}
+
 p {
     font-family: 'Roboto', sans-serif;
-    line-height: 1;
-    margin: 2px 0 20px;
+    line-height: 1.3;
+    margin: 10px;
     letter-spacing: 0.1em;
     font-weight: 300;
 }
@@ -44,4 +48,47 @@ a:hover {
 a:focus {
     color: #5EA2BA;
     text-decoration: none;
+}
+
+[aria-expanded=true] i:before{
+    content: "\f056";
+}
+
+.collapsed{
+font-weight: 300;
+font-size: 30px;
+letter-spacing: 0.1em;
+}
+
+.headLink{
+font-weight: 300;
+font-size: 30px;
+letter-spacing: 0.1em;
+}
+
+.textContent a{
+    display: inline-block;
+    color: #5ea2ba;
+}
+.textContent a:hover{
+    color:#000000;
+}
+
+
+.textContent a:after{
+    content: '';
+    display: block;
+    height: 1px;
+    width: 0;
+    background: transparent;
+    transition: all .3s ease;
+}
+
+.textContent a:hover:after{
+    width: 100%;
+    background: #5ea2ba;
+}
+
+.textContent img{
+    margin-bottom: 10px;
 }

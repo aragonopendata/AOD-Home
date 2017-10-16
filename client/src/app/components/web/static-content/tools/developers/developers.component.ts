@@ -1,23 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, ViewEncapsulation  } from '@angular/core';
+import { AccordionModule } from 'primeng/primeng';
 import { StaticContent } from '../../../../../models/StaticContent';
 import { StaticContentService } from '../../../../../services/web/static-content.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import $ from 'jquery';
 
 @Component({
     selector: 'app-developers',
     templateUrl: './developers.component.html',
     styleUrls: ['./developers.component.css']
 })
-export class DevelopersComponent implements OnInit {
-
+export class DevelopersComponent implements OnInit, AfterViewChecked {
+    index: number = 0;
     contents: StaticContent[];
     sectionTitle: string;
     sectionSubtitle: string;
     sectionDescription: string;
+    targetUrl: string;
+    url: string = null;
 
-    constructor(private staticContentService: StaticContentService) { }
+    constructor(private staticContentService: StaticContentService, private activatedRoute: ActivatedRoute) { }
 
     ngOnInit() {
         this.getStaticContentInfo();
+        
+    }
+
+    getUrlFragment() {
+        this.activatedRoute.fragment.subscribe(fragment => {
+            this.targetUrl = fragment;
+		});
     }
 
     getStaticContentInfo() {
@@ -26,6 +38,29 @@ export class DevelopersComponent implements OnInit {
             this.sectionTitle = this.contents[0].sectionTitle;
             this.sectionSubtitle = this.contents[0].sectionSubtitle;
             this.sectionDescription = this.contents[0].sectionDescription;
+            this.getUrlFragment();
+            if (this.targetUrl && this.targetUrl != null && this.targetUrl != '') {
+                this.contents.forEach(content => {
+                    if (this.targetUrl === content.targetUrl) {
+                        this.index = (content.contentOrder - 1);
+                    }
+                });
+            }
         });
+    }
+
+    ngAfterViewChecked() {
+        this.openSection();
+    }
+
+    openSection(){
+        if(this.targetUrl != this.url && this.targetUrl != null){
+            this.url = this.targetUrl;
+            var element = document.getElementById(this.url+'Link');
+            $("html, body").animate({ scrollTop: $(element).offset().top - 200}, '500');
+            document.getElementById(this.url+'Link').setAttribute('aria-expanded','true');
+            document.getElementById(this.url+'Link').setAttribute('class','headLink');
+            document.getElementById(this.url).setAttribute('class','collapse show');
+        }
     }
 }
