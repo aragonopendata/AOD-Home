@@ -32,8 +32,6 @@
 .twoCol {
     float: left;
     display: block;
-    width: 49%;
-    height: 100%;
     padding-top: 15px;
 }
 
@@ -48,7 +46,7 @@
     font-size: 10px !important;
     color: grey !important;
     height: fit fit-content;
-    padding: 20px;
+    padding: 15px 20px 20px 20px;
     text-transform: uppercase;
 }
 
@@ -65,7 +63,7 @@ a:hover {
     font-weight: 500 !important;
     color: #a0a0a0 !important;
     padding-bottom: 3em;
-    padding-left: 45px;
+   
 }
 
 .normal-txt-eur {
@@ -73,6 +71,8 @@ a:hover {
     letter-spacing: 0.2px !important;
     line-height: normal !important;
     margin-top: 1em;
+    font-size: 10.5px;
+    color: grey;
 }
 
 .italic-txt-eur {
@@ -80,10 +80,32 @@ a:hover {
     display: block !important;
     font-style: italic !important;
     margin-top: 1em;
+    font-size: 10.5px;
+    color: grey;
+}
+.paddingleft20{
+    padding-left: 20px;
+}
+
+.paddingleft45{
+    padding-left: 45px;
 }
 
 .cc-logo {
-    padding-left: 45px;
+    padding-left: 20px;
+    margin-top:10px;
+}
+
+.margintop10{
+    margin-top:10px;
+
+}
+.marginleft21{
+    margin-left: 21px;
+}
+.separate{
+    margin: 30px 20px 20px 20px;
+    border-bottom: 1px solid #718080;
 }
 
 .txt-cc-logo {
@@ -171,13 +193,9 @@ footer .logos a img:hover {
 }
 
 .social-nw {
-    margin-right: 0;
-    text-align: right;
-    float: left;
+    margin-right: 25px;
     display: block;
-    width: 49%;
-    height: 100%;
-    padding-top: 15px;
+    padding-top: 30px;
     font-size: 26px;
 }
 

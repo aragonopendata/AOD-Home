@@ -135,7 +135,7 @@ a:hover {
 
 .relatedHeader {
     background-color:  #494949;
-    padding: 10px;
+    
 }
 
 .relatedHeader a {
@@ -160,11 +160,7 @@ a:hover {
     margin-left: 10px;
 }
 
-.active {
-    color:#ffffff !important;
-    font-weight:bold;
-    border-bottom: 3px solid #76a1b8;
-}
+
 
 #logo {
     max-width: 100%;
@@ -189,6 +185,7 @@ a:hover {
     }
 }
 
+
 @media screen and (max-width: 480px) {
     .logo {
         height:33px;
@@ -197,7 +194,10 @@ a:hover {
         margin-left: 5px;
     }
 }
-
+.nav-link{
+    float: right !important;
+    padding: 0.1rem 0.3rem !important;
+}
 .menu,.menuLogin {
     width: 60px;
     height: 60px;
@@ -264,6 +264,104 @@ a:hover {
 	}
 }
 
+@media (max-width: 768px) { 
+    .imgob{
+        width :25%;
+        vertical-align: text-top;
+    }
+    .nav-link{
+        font-size: 7px;
+    }
+    .col-xs-2{
+        width: 50%;
+      
+    }
+}
+
+@media (max-width: 450px) { 
+    .imgob{
+        width :25%;
+        vertical-align: text-top;
+    }
+    .nav-link{
+        font-size: 5.3px;
+    }
+    .col-xs-2{
+        width: 50%;
+        height: 17px;
+    }
+}
+
+
+@media (min-width:768px) and (max-width: 940px) { 
+    
+    .imgob{ 
+        width :18%;
+    }
+    .nav-link{
+        font-size: 12px;
+    }
+ }
+@media (min-width: 940px) and (max-width: 1170px) { 
+    .imgob{
+        width :13%;
+    }
+    .nav-link{
+        font-size: 10px;
+    }
+ }
+@media (min-width: 1170px) { 
+    .imgob{
+        width :8%;
+    }
+    .nav-link{
+        font-size: 11px;
+        display: block
+    }
+
+ }
+
+
+
+.active {
+    color:#ffffff !important;
+    font-weight:bold;
+    border-bottom: 3px solid #76a1b8;
+    text-align: center;
+}
+  @include media-breakpoint-up(sm) {
+    .active {
+        color:#ffffff !important;
+        font-weight:bold;
+        border-bottom: 3px solid #76a1b8;
+        text-align: center;
+      font-size: 12px;
+    }
+
+   
+  }
+  
+  @include media-breakpoint-up(md) {
+    .active {
+        color:#ffffff !important;
+        font-weight:bold;
+        border-bottom: 3px solid #76a1b8;
+        text-align: center;
+      font-size: 14px;
+    }
+    
+  }
+  
+  @include media-breakpoint-up(lg) {
+    .active {
+        color:#ffffff !important;
+        font-weight:bold;
+        border-bottom: 3px solid #76a1b8;
+        text-align: center;
+      font-size: 16px;
+    }
+  }
+
 @media screen and (max-width: 360px) {
     .textBox{
         font-size: 25px;
@@ -315,9 +413,7 @@ a:hover {
 
 
 @media screen and (max-width: 850px){
-    #imgGobAragon{
-        width: 100%;
-    }
+    
     .left{
         margin-left: 0;
         width: 100%;
@@ -328,7 +424,3 @@ a:hover {
     }
 }
 
-.headerLogos{
-    height: 40px;
-    width: auto;
-}

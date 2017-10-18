@@ -1,26 +1,28 @@
 <div id="header" class="fixed-top">
-        <div class="relatedHeader">
-            <!--<ul class="nav">
-                    <button (click)="locale.switchLanguage('en')">Inglés</button>
-                    <button (click)="locale.switchLanguage('es')">Español</button>
-                </ul>-->
-            <ul class="primary nav">
-                <li id="imgGobAragon">
-                    <img class="headerLogos" src="./../../../../assets/header/logoDGABlanco.png" />
-                </li>
-                <li class="left" id="imgGobFEDER">
-                    <img class="headerLogos" src="./../../../../assets/header/logoFEDER.png" />
-                </li>
-                <li class="right">
-                    <a class="nav-link active" href="/">Open Data</a>
-                </li>
-                <li class="right">
-                    <a class="nav-link" href="{{aragonParticipaWebUrl}}">Participación ciudadana</a>
-                </li>
-                <li class="right">
-                    <a class="nav-link" href="{{transparenciaWebUrl}}">Transparencia</a>
-                </li>
-            </ul>
+    <div class="relatedHeader container-fluid">
+        <!--<ul class="nav">
+                <button (click)="locale.switchLanguage('en')">Inglés</button>
+                <button (click)="locale.switchLanguage('es')">Español</button>
+            </ul>--> 
+        <div class="row primary nav">
+            <div class="col-xs-2 col-sm-6 "> <img class="img-fluid imgob" id="imgGobAragon" src="./../../../../assets/header/logoDGABlanco.png"  />
+                <img id="imgGobFEDER" class="img-fluid imgob" src="./../../../../assets/header/logoFEDER.png" />
+            </div>            
+            <div class="col-xs-2  col-sm-6">               
+                <a class="nav-link " href="{{transparenciaWebUrl}}">Transparencia</a>
+                <a class="nav-link " href="{{aragonParticipaWebUrl}}">Participación ciudadana</a>
+                <a class="nav-link active" href="/">Open Data</a>                 
+            </div>
+        </div>     
+    </div>
+    <div class="navbar navbar-toggleable-md navbar-light" id="nav">
+        <a class="navbar-brand logo" href="/">
+              <img class="navbar-brand" id="logo" src="../assets/AOD-Logo.png"  class="d-inline-block align-top"  alt="">
+          </a>
+        <div id="loginLink" class="nav-item menuLogin" routerLink="/{{routerLinkLogin}}" (mouseenter)="hover('#login')" (mouseleave)="unhover('#login')">
+            <a class="nav-link aLogin" routerLinkActive="active" (click)="focusUserName()">
+                <img id="login" class="aLogin" src="{{srcLogin}}" alt="x"  border="0"/>
+            </a>
         </div>
         <div class="navbar navbar-toggleable-md navbar-light" id="nav">
             <a class="navbar-brand logo" href="/">
