@@ -50,10 +50,10 @@ exports.SQL_RESULSET_FORMAT = 'json';
 
 /* *************** */
 /* CKAN PROPERTIES */
-//exports.CKAN_API_BASE_URL = 'http://miv-aodfront-01.aragon.local:5000/api/action/';
-exports.CKAN_API_BASE_URL = 'http://localhost:14500/api/action/';
-//exports.CKAN_BASE_URL = 'http://miv-aodfront-01.aragon.local:5000';
-exports.CKAN_BASE_URL = 'http://localhost:14500';
+exports.CKAN_API_BASE_URL = 'http://miv-aodfront-01.aragon.local:5000/api/action/';
+//exports.CKAN_API_BASE_URL = 'http://localhost:14500/api/action/';
+exports.CKAN_BASE_URL = 'http://miv-aodfront-01.aragon.local:5000';
+//exports.CKAN_BASE_URL = 'http://localhost:14500';
 
 /* DATASETS */
 //Results per page in lists
