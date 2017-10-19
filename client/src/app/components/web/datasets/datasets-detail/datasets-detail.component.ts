@@ -27,6 +27,17 @@ export class DatasetsDetailComponent implements OnInit {
 	extraTypeAragopedia: string;
 	extraShortUriAragopedia: string;
 	extraNameAragopedia: string;
+
+	extraIAESTTemaEstadistico: string;
+	extraIAESTUnidadEstadistica: string;
+	extraIAESTPoblacionEstadistica: string;
+	extraIAESTUnidadMedida: string;
+	extraIAESTTipoOperacion: string;
+	extraIAESTTipologiaDatosOrigen: string;
+	extraIAESTFuente: string;
+	extraIAESTTratamientoEstadistico: string;
+	extraIAESTLegislacionUE: string;
+
 	resourcesAux: ResourceAux[] = new Array();
 	datasetsRecommended: Dataset[] = new Array();
 	//Dynamic URL build parameters
@@ -41,14 +52,14 @@ export class DatasetsDetailComponent implements OnInit {
 
 	hovers: any[] = [];
 
-	constructor(private datasetsService: DatasetsService, private activatedRoute: ActivatedRoute) { 
+	constructor(private datasetsService: DatasetsService, private activatedRoute: ActivatedRoute) {
 		this.routerLinkDataCatalogDataset = Constants.ROUTER_LINK_DATA_CATALOG_DATASET;
 		this.routerLinkDataCatalogTopics = Constants.ROUTER_LINK_DATA_CATALOG_TOPICS;
 		this.routerLinkDataCatalogTags = Constants.ROUTER_LINK_DATA_CATALOG_TAGS;
 		this.routerLinkDataOrgs = Constants.ROUTER_LINK_DATA_ORGANIZATIONS;
-		this.routerLinkFacebookShare = Constants.SHARE_FACEBOOK;
-		this.routerLinkTwitterShare = Constants.SHARE_TWITTER;
-		this.routerLinkGooglePlusShare = Constants.SHARE_GOOGLE_PLUS;
+		this.routerLinkFacebookShare = Constants.SHARE_FACEBOOK + window.location.href;
+		this.routerLinkTwitterShare = Constants.SHARE_TWITTER + window.location.href;
+		this.routerLinkGooglePlusShare = Constants.SHARE_GOOGLE_PLUS + window.location.href;
 		this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
 	}
 
@@ -82,6 +93,7 @@ export class DatasetsDetailComponent implements OnInit {
 			try {
 				this.dataset = JSON.parse(dataResult).result;
 				this.getExtras();
+				this.getExtrasIAEST();
 				this.getDatasetsRecommended();
 				this.makeFileSourceList();
 			} catch (error) {
@@ -95,7 +107,6 @@ export class DatasetsDetailComponent implements OnInit {
 		this.datasetsService.getDatasetHomerByPackageId(datasetHomer.package_id).subscribe(dataResult => {
 			try {
 				this.datasetHomer = JSON.parse(dataResult).response.docs[0];
-				console.log(this.datasetHomer);
 			} catch (error) {
 				console.error("Error: loadDatasetHomer() - datasets-detail.component.ts");
 			}
@@ -144,6 +155,43 @@ export class DatasetsDetailComponent implements OnInit {
 		}
 	}
 
+	getExtrasIAEST() {
+		if(this.dataset.extrasIAEST){
+			console.log('Obteniendo extras IAEST del dataset');
+			for (var index = 0; index < this.dataset.extrasIAEST.length; index++) {
+				switch (this.dataset.extrasIAEST[index].key) {
+					case Constants.DATASET_EXTRA_IAEST_TEMA_ESTADISTICO:
+						this.extraIAESTTemaEstadistico = this.dataset.extrasIAEST[index].value;
+					break;
+					case Constants.DATASET_EXTRA_IAEST_UNIDAD_ESTADISTICA:
+						this.extraIAESTUnidadEstadistica = this.dataset.extrasIAEST[index].value;
+					break;
+					case Constants.DATASET_EXTRA_IAEST_POBLACION_ESTADISTICA:
+						this.extraIAESTPoblacionEstadistica = this.dataset.extrasIAEST[index].value;
+					break;
+					case Constants.DATASET_EXTRA_IAEST_UNIDAD_MEDIDA:
+						this.extraIAESTUnidadMedida = this.dataset.extrasIAEST[index].value;
+					break;
+					case Constants.DATASET_EXTRA_IAEST_TIPO_OPERACION:
+						this.extraIAESTTipoOperacion = this.dataset.extrasIAEST[index].value;
+					break;
+					case Constants.DATASET_EXTRA_IAEST_TIPOLOGIA_DATOS_ORIGEN:
+						this.extraIAESTTipologiaDatosOrigen = this.dataset.extrasIAEST[index].value;	
+					break;
+					case Constants.DATASET_EXTRA_IAEST_FUENTE:
+						this.extraIAESTFuente = this.dataset.extrasIAEST[index].value;
+					break;
+					case Constants.DATASET_EXTRA_IAEST_TRATAMIENTO_ESTADISTICO:
+						this.extraIAESTTratamientoEstadistico = this.dataset.extrasIAEST[index].value;
+					break;
+					case Constants.DATASET_EXTRA_IAEST_LEGISLACION_UE:
+						this.extraIAESTLegislacionUE = this.dataset.extrasIAEST[index].value;
+					break;
+				}
+			}
+		}	
+	}
+
 	getDatasetsRecommended() {
 		let datasetRecommendedByTopic: Dataset = new Dataset();
 		let datasetRecommendedByOrganization: Dataset = new Dataset();
@@ -153,6 +201,13 @@ export class DatasetsDetailComponent implements OnInit {
 			try {
 				datasetRecommendedByTopic = JSON.parse(topicDataResult).result.results[0];
 				if(this.isDatasetDefined(datasetRecommendedByTopic) && !this.existsDatasetRecommended(datasetRecommendedByTopic)) {
+					if (datasetRecommendedByTopic.groups) {
+						for (var i = 0; i < datasetRecommendedByTopic.groups.length; i++) {
+							let startIndex = +datasetRecommendedByTopic.groups[i].image_display_url.indexOf('ckan/temas/')+11;
+							let myFormatImageUrl = datasetRecommendedByTopic.groups[i].image_display_url.slice(startIndex, datasetRecommendedByTopic.groups[i].image_display_url.length);
+							datasetRecommendedByTopic.groups[i].image_url = 'public/i/temas/'+myFormatImageUrl;
+						}
+					}					
 					this.datasetsRecommended.push(datasetRecommendedByTopic);
 				}
 			} catch (error) {
@@ -162,7 +217,14 @@ export class DatasetsDetailComponent implements OnInit {
 		this.datasetsService.getDatasetsByOrganization(this.dataset.organization.name, null, 1, 1, this.dataset.type).subscribe(orgDataResult => {
 			try {
 				datasetRecommendedByOrganization = JSON.parse(orgDataResult).result.results[0];
-				if(this.isDatasetDefined(datasetRecommendedByOrganization) && !this.existsDatasetRecommended(datasetRecommendedByOrganization)) {
+				if(this.isDatasetDefined(datasetRecommendedByOrganization) && !this.existsDatasetRecommended(datasetRecommendedByOrganization)) {					
+					if (datasetRecommendedByOrganization.groups) {
+						for (var i = 0; i < datasetRecommendedByOrganization.groups.length; i++) {
+							let startIndex = +datasetRecommendedByOrganization.groups[i].image_display_url.indexOf('ckan/temas/')+11;
+							let myFormatImageUrl = datasetRecommendedByOrganization.groups[i].image_display_url.slice(startIndex, datasetRecommendedByOrganization.groups[i].image_display_url.length);
+							datasetRecommendedByOrganization.groups[i].image_url = 'public/i/temas/'+myFormatImageUrl;
+						}
+					}					
 					this.datasetsRecommended.push(datasetRecommendedByOrganization);
 				}
 			} catch (error) {
@@ -176,6 +238,13 @@ export class DatasetsDetailComponent implements OnInit {
 			try {
 				datasetRecommendedByTag = JSON.parse(tagDataResult).result.results[0];
 				if(this.isDatasetDefined(datasetRecommendedByTag) && !this.existsDatasetRecommended(datasetRecommendedByTag)) {
+					if (datasetRecommendedByTag.groups) {
+						for (var i = 0; i < datasetRecommendedByTag.groups.length; i++) {
+							let startIndex = +datasetRecommendedByTag.groups[i].image_display_url.indexOf('ckan/temas/')+11;
+							let myFormatImageUrl = datasetRecommendedByTag.groups[i].image_display_url.slice(startIndex, datasetRecommendedByTag.groups[i].image_display_url.length);
+							datasetRecommendedByTag.groups[i].image_url = 'public/i/temas/'+myFormatImageUrl;
+						}
+					}		
 					this.datasetsRecommended.push(datasetRecommendedByTag);
 				}
 				this.setHovers();
@@ -260,7 +329,7 @@ export class DatasetsDetailComponent implements OnInit {
 	setHovers() {
 		for (let ds of this.datasetsRecommended) {
 			this.hovers.push({ label: ds.name, hover: false });
-		}
+		}	
 	}
 
 	setHover(name, index) {
@@ -282,5 +351,23 @@ export class DatasetsDetailComponent implements OnInit {
 	showDataset(dataset: Dataset) {
 		this.datasetsService.setDataset(dataset);
 		this.loadDataset(dataset);
+	}
+
+	downloadRDF(datasetName: string){
+		this.datasetsService.getDatasetRDF(datasetName).subscribe(result => {
+			let blob = new Blob(['\ufeff' + result], { type: Constants.DATASET_RDF_FORMAT_OPTIONS_RDF });
+			let dwldLink = document.createElement("a");
+			let url = URL.createObjectURL(blob);
+			let isSafariBrowser = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
+			if (isSafariBrowser) {  //if Safari open in new window to save file with random filename.
+				dwldLink.setAttribute('target', '_blank');
+			}
+			dwldLink.setAttribute('href', url);
+			dwldLink.setAttribute('download', datasetName + Constants.DATASET_RDF_FILE_EXTENSION_RDF);
+			dwldLink.style.visibility = 'hidden';
+			document.body.appendChild(dwldLink);
+			dwldLink.click();
+			document.body.removeChild(dwldLink);		
+		});
 	}
 }

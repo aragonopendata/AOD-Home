@@ -127,7 +127,6 @@ export class SparqlClientComponent implements OnInit {
 	
 
 	onSubmit(f: NgForm) {
-		console.log(f.value);
 		this.staticContentService.sendSparqlClient(f.value).subscribe(result => {
 			if(f.value.format == Constants.SPARQL_CLIENT_FORMAT_OPTIONS_HTML){
 				this.sparqlResult = result;

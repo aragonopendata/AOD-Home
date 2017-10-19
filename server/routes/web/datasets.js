@@ -20,7 +20,7 @@ router.get(constants.API_URL_DATASETS, function (req, res, next) {
             serviceRequestUrl += '&q=' + encodeURIComponent(req.query.text);
         }
         logger.notice('URL de petición: ' + serviceRequestUrl);
-    
+
         //Proxy checking
         let httpConf = null;
         if (constants.REQUESTS_NEED_PROXY == true) {
@@ -461,5 +461,41 @@ router.get(constants.API_URL_DATASETS_HOMER + '/:datasetHomerName', function (re
         logger.error('Error in route' + constants.API_URL_DATASETS_HOMER);
     }
 });
+
+/** GET RDF FILE OF DATASET */
+router.get(constants.API_URL_DATASETS_RDF + '/:datasetName', function (req, res, next) {
+    try {
+        logger.debug('Servicio: Obtener RDF del dataset por nombre');
+        let serviceBaseUrl = constants.CKAN_BASE_URL;
+        let serviceName = constants.DATASET_RDF_DATASET;
+        let serviceRequestUrl = serviceBaseUrl + serviceName + '/'+ req.params.datasetName + constants.DATASET_RDF_EXTENSION;
+        logger.notice('URL de petición: ' + serviceRequestUrl);
+        
+        //Proxy checking
+        let httpConf = null;
+        if (constants.REQUESTS_NEED_PROXY == true) {
+            logger.warning('Realizando petición a través de proxy');
+            let httpProxyConf = proxy.getproxyOptions(serviceRequestUrl);
+            httpConf = httpProxyConf;
+        } else {
+            httpConf = serviceRequestUrl;
+        }
+
+        http.get(httpConf, function (results) {
+            var body = '';
+            results.on('data', function (chunk) {
+                body += chunk;
+            });
+            results.on('end', function () {
+                res.json(body);
+            });
+        }).on('error', function (err) {
+            utils.errorHandler(err,res,serviceName);
+        });
+    } catch (error) {
+        logger.error('Error in route' + constants.API_URL_DATASETS_RDF);
+    }
+});
+
 
 module.exports = router;

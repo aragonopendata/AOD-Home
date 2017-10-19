@@ -146,6 +146,12 @@ export class DatasetsService {
 		return this.http.get(fullUrl).map(res => res.json());
 	}
 
+	public getDatasetRDF(datasetName: string) {
+		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS_RDF 
+						+ '/' + datasetName;
+		return this.http.get(fullUrl).map(res => res.json());
+	}
+
 	private handleError(error: Response) {
 		console.error(error);
 		return Observable.throw(error.json().error || 'Server error');

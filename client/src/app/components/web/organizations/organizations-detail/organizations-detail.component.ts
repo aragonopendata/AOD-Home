@@ -46,9 +46,9 @@ export class OrganizationsDetailComponent implements OnInit {
 		this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
 		this.routerLinkDataCatalogDataset = '/' + Constants.ROUTER_LINK_DATA_CATALOG_DATASET;
 		this.pageRows = Constants.ORGANIZATION_DATASET_LIST_ROWS_PER_PAGE;
-		this.routerLinkFacebookShare = Constants.SHARE_FACEBOOK;
-		this.routerLinkTwitterShare = Constants.SHARE_TWITTER;
-		this.routerLinkGooglePlusShare = Constants.SHARE_GOOGLE_PLUS;
+		this.routerLinkFacebookShare = Constants.SHARE_FACEBOOK + window.location.href;
+		this.routerLinkTwitterShare = Constants.SHARE_TWITTER + window.location.href;
+		this.routerLinkGooglePlusShare = Constants.SHARE_GOOGLE_PLUS + window.location.href;
 	}
 
 	ngOnInit() {

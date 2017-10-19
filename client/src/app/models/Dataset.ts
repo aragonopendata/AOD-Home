@@ -38,6 +38,7 @@ export class Dataset {
     title: string;
     description: string;
     extras: Extra[];
+    extrasIAEST: Extra[];
     license_url: string;
     organization: Organization;
     revision_id: string;

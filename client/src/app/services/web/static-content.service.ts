@@ -59,7 +59,6 @@ export class StaticContentService {
 					if(formParms.debug == true){
 						+ '&' + Constants.SERVER_API_LINK_SPARQL_CLIENT_PARAM_DEBUG + '=on';
 					}
-			console.log(fullUrl);
 		return this.http.get(fullUrl).map(res => res.json());
 	}
 }

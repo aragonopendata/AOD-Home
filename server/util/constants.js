@@ -23,6 +23,7 @@ exports.API_URL_DATASETS_COUNT = '/datasets/countDatasets';
 exports.API_URL_RESOURCES_COUNT = '/datasets/countResources';
 exports.API_URL_DATASETS_TOPIC = '/datasets/topic';
 exports.API_URL_DATASETS_ORGANIZATION = '/datasets/organization';
+exports.API_URL_DATASETS_RDF = '/datasets/rdf';
 exports.API_URL_ORGANIZATIONS = '/organizations';
 exports.API_URL_TOPICS = '/topics';
 exports.API_URL_TAGS = '/tags';
@@ -49,8 +50,11 @@ exports.SQL_RESULSET_FORMAT = 'json';
 
 /* *************** */
 /* CKAN PROPERTIES */
-exports.CKAN_API_BASE_URL = 'http://opendata.aragon.es/datos/api/action/';
 //exports.CKAN_API_BASE_URL = 'http://miv-aodfront-01.aragon.local:5000/api/action/';
+exports.CKAN_API_BASE_URL = 'http://localhost:14500/api/action/';
+//exports.CKAN_BASE_URL = 'http://miv-aodfront-01.aragon.local:5000';
+exports.CKAN_BASE_URL = 'http://localhost:14500';
+
 /* DATASETS */
 //Results per page in lists
 exports.DATASETS_SEARCH_ROWS_PER_PAGE = 20;
@@ -72,6 +76,10 @@ exports.DATASETS_SEARCH_MOST_DOWNLOADED_ROWS_LIMIT = 3;
 exports.DATASETS_SEARCH_AUTOCOMPLETE = 'package_autocomplete';
 //Get dataset by name
 exports.DATASET_SHOW = 'package_show';
+//Get dataset rdf by name
+exports.DATASET_RDF_DATASET = '/dataset';
+exports.DATASET_RDF_EXTENSION = '.rdf';
+
 /* TOPICS */
 //List all topics
 exports.TOPICS_LIST = 'group_list';
@@ -125,8 +133,8 @@ exports.SERVER_API_LINK_PARAM_TYPE_RSS_QUERY = '&q=(res_format:(rss OR RSS))AND 
 exports.SERVER_API_LINK_PARAM_TYPE_PLAIN_TEXT_QUERY = '&q=(((res_format:XLS OR res_format:xls ) AND (res_url:http*.xls )) OR res_format:json OR res_format:JSON OR res_format:xml OR res_format:XML OR res_format:csv OR res_format:CSV OR res_format:px OR res_format:PX OR res_format:url OR res_format:URL) AND dataset_type:dataset AND entity_type:package AND state:active AND capacity:public';
 
 /*  SPARQL */
-exports.SPARQL_API_BASE_URL = 'http://opendata.aragon.es/sparql';
-//exports.SPARQL_API_BASE_URL = 'http://miv-aodfront-01.aragon.local:7030/sparql';
+exports.SPARQL_API_BASE_URL = 'http://miv-aodfront-01.aragon.local:7030/sparql';
+//exports.SPARQL_API_BASE_URL = 'http://localhost:14730/sparql';
 exports.SPARQL_API_QUERY_URL_ALL_GRAPHS = '?query=SELECT  DISTINCT ?g WHERE  { GRAPH ?g {?s ?p ?o} } ORDER BY ?g &format=json';
 exports.SPARQL_API_LINK_PARAM_GRAPH = '?default-graph-uri=';
 exports.SPARQL_API_LINK_PARAM_QUERY = '&query=';

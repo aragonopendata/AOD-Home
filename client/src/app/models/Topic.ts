@@ -16,6 +16,7 @@ export class Topic {
     state: boolean;
     extras: Extra[];
     image_url: string;
+    image_display_url: string;
     groups: Topic[];
     num_followers: boolean;
     revision_id: string;

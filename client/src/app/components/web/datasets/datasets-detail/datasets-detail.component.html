@@ -88,12 +88,13 @@
 				</div>
 				<div class="section" *ngIf="extraDictionaryURL.length != 0">
 					<h6>Diccionario de datos</h6>
-					<a *ngFor="let dic of extraDictionaryURL; let i = index" class="tags" routerLink="{{dic}}" target="_blank"
+					<a *ngFor="let dic of extraDictionaryURL; let i = index" class="tags" href="{{dic}}" target="_blank" target="_blank"
 					pButton type="button" label="[{{i+1}}] Documento de diccionario de datos"
 					style="margin: 2px;"></a>
 				</div>
 			</div>
 		</div>
+		
 		<div class="download col-sm-12 col-md-4">
 			<div class="title">
 				<h5>Descargas</h5>
@@ -101,6 +102,8 @@
 			<div class="container-fluid horizontalFormat">
 				<div class="section">
 					<h6>Metadatos de la colección</h6>
+					<button class="tags" pButton type="button" pButton label="RDF" (click)="downloadRDF(dataset.name)"
+					style="margin: 2px;"></button>
 				</div>
 				<div class="section" *ngIf="resourcesAux.length != 0">
 					<h6>Archivos con los datos</h6>
@@ -118,25 +121,78 @@
 				</div>
 			</div>
 		</div>
+
+		<div *ngIf="dataset.extrasIAEST && dataset.extrasIAEST.length != 0" class="infodtset col-sm-12 col-md-8" style="margin-top: 5px;">
+				<div class="title">
+					<h5>Propiedades adicionales de los metadatos</h5>
+				</div>
+				<div class="container-fluid">
+					<div class="section" *ngIf="extraIAESTTemaEstadistico">
+						<h6>Tema estadístico</h6>
+						<p>{{extraIAESTTemaEstadistico}}</p>
+					</div>
+					<div class="section" *ngIf="extraIAESTUnidadEstadistica">
+						<h6>Unidad Estadística</h6>
+						<p>{{extraIAESTUnidadEstadistica}}</p>
+					</div>
+					<div class="section" *ngIf="extraIAESTPoblacionEstadistica">
+						<h6>Población estadística</h6>
+						<p>{{extraIAESTPoblacionEstadistica}}</p>
+					</div>
+					<div class="section" *ngIf="extraIAESTUnidadMedida">
+						<h6>Unidad de medida</h6>
+						<p>{{extraIAESTUnidadMedida}}</p>
+					</div>
+					<div class="section" *ngIf="extraIAESTTipoOperacion">
+						<h6>Tipo de operación</h6>
+						<p>{{extraIAESTTipoOperacion}}</p>
+					</div>
+					<div class="section" *ngIf="extraIAESTTipologiaDatosOrigen">
+						<h6>Tipología de datos de origen</h6>
+						<p>{{extraIAESTTipologiaDatosOrigen}}</p>
+					</div>
+					<div class="section" *ngIf="extraIAESTFuente">
+						<h6>Fuente</h6>
+						<p>{{extraIAESTFuente}}</p>
+					</div>
+					<div class="section" *ngIf="extraIAESTTratamientoEstadistico">
+						<h6>Tratamiento estadístico</h6>
+						<p>{{extraIAESTTratamientoEstadistico}}</p>
+					</div>					
+					<div class="section" *ngIf="extraIAESTLegislacionUE">
+						<h6>Legislación UE</h6>
+						<p class="textContent" [innerHTML]="extraIAESTLegislacionUE"></p>
+					</div>					
+				</div>
+		</div>
 		<div class="recomend col-12" *ngIf="datasetsRecommended">
 			<h4>También te pueden interesar estos datos</h4>
 
-			<div class="ui-g">
-				<div class="ui-sm-12 ui-md-6 ui-lg-4 tarjetaContainer" *ngFor="let dsRecommended of datasetsRecommended; let i = index" (mouseenter)="setHover(dsRecommended.name, i)"
-				 (mouseleave)="unsetHover(dsRecommended.name, i)">
-					<div class="recommendedCard" routerLink="/{{routerLinkDataCatalogDataset}}/{{dsRecommended.name}}" (click)="showDataset(dsRecommended)">
-						<div *ngFor="let topic of dsRecommended.groups">
-							<img class="card-img-top" src="{{assetsUrl}}/{{topic.image_url}}" alt="{{topic.title | uppercase}}"
-							 width="fit-content" height="fit-content">
-							<p>{{topic.title}}</p>
-							<div class="recommended-card-block">
-								<p>{{dsRecommended.title}}</p>
+			 <div class="ui-g">
+					<div class="ui-sm-12 ui-md-6 ui-lg-4 tarjetaContainer" *ngFor="let dsRecommended of datasetsRecommended; let i = index" (mouseenter)="setHover(dsRecommended.name, i)" (mouseleave)="unsetHover(dsRecommended.name, i)">
+						<div class="recommendedCard" routerLink="/datos/catalogo/dataset/{{dsRecommended.name}}" (click)="showDataset(dsRecommended)">
+							<div *ngFor="let topic of dsRecommended.groups">
+								
+								<div *ngIf="!hovers[i]?.hover">
+									<img class="card-img-top" src="{{assetsUrl}}/{{topic.image_url}}" alt="{{topic.title | uppercase}}" width="fit-content" height="fit-content">
+									<p>{{topic.title}}</p>
+									<div class="recommended-card-block">
+										<p>{{dsRecommended.title}}</p>
+									</div>
+								</div>
+								<div *ngIf="hovers[i]?.hover" class="detail bg-faded" style="width: 100%; height: 100%; padding: 10px; background-color: rgba(235,241,244, 0.95); opacity: 80%; ">
+										<h6>TÍTULO</h6>
+										<h6>{{dsRecommended.title}}</h6>
+										<h6>CATEGORÍA</h6>
+										<h6>{{topic.title}}</h6>
+										<h6>PUBLICADOR</h6>
+										<h6>{{dsRecommended.organization.title}}</h6>
+								</div>
 							</div>
-						</div>
+						</div>	
 					</div>
 				</div>
-			</div>
-
+			
 		</div>
 	</div>
 </div>

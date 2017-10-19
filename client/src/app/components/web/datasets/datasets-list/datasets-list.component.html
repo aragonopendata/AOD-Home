@@ -18,206 +18,150 @@
 </div>
 <div class="container" *ngIf="!errorTitle">
     <h1 translate>TITLE_DATACENTER</h1>
-    <div class="ui-g">
-        <div *ngIf="selectedSearchOption == datasetSearchOptionFreeSearch" class="ui-g-8">
-            <b class="ui-g-4">DATOS SOBRE </b>
-            <div class="ui-inputgroup">
-                <input style="width:500px" type="text" [value]="searchValue" (keyup.enter)="searchDatasetsByText(searchInput.value)" #searchInput>
-                <button pButton type="button" icon="fa-search" (click)="searchDatasetsByText(searchInput.value)" class="ui-button-secondary"></button>
+<!-- Search -->
+<div class="row">
+        <div class="col-9" *ngIf="selectedSearchOption == datasetSearchOptionFreeSearch" >
+            <div class="form-group">
+                <label for="exampleSelect1">Datos Sobre:</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Buscar por..." [value]="searchValue" (keyup.enter)="searchDatasetsByText(searchInput.value)" #searchInput>
+                        <span class="input-group-btn">
+                            <button class="btn btn-secondary" type="button" (click)="searchDatasetsByText(searchInput.value)" ><i class="fa fa-search" aria-hidden="true"></i></button>
+                        </span>
+                    </div>                
             </div>
         </div>
-        <div *ngIf="selectedSearchOption == datasetSearchOptionHomer" class="ui-g-8">
-            <b>BUSCAR</b>
-            <input type="text" [value]="searchHomerValue" [style]="{'width':'200px'}" (keyup.enter)="searchDatasetsByHomer(searchHomerInput.value)"
-                #searchHomerInput>
-            <b>EN</b>
-            <!-- <p-dropdown [options]="langsSelect" [(ngModel)]="selectedLang" [style]="{'width':'240px'}"></p-dropdown> -->
-            <select class="ui-dropdown-label ui-inputtext ui-corner-all" [(ngModel)]="selectedLang">
-                <option *ngFor="let langSel of langsSelect" [ngValue]="langSel.value">{{langSel.label}}</option>
-              </select>
-            <button type="button" (click)="searchDatasetsByHomer(searchHomerInput.value)"><i aria-hidden="true" class="fa fa-search"></i></button>
+      
+        <div class="col-5" *ngIf="selectedSearchOption == datasetSearchOptionTopics">
+            <div class="form-group">
+                <label>Datos sobre:</label>
+                <select class="form-control" [(ngModel)]="selectedTopic" (change)="changeType()">
+                    <option *ngFor="let topSel of topicsSelect" [ngValue]="topSel.value">{{topSel.label}}</option>
+                </select>
+            </div>
         </div>
-        <div *ngIf="selectedSearchOption == datasetSearchOptionTags" class="ui-g-8">
-            <div class="ui-inputgroup">
-                <p-autoComplete [(ngModel)]="tags" [suggestions]="filteredTagsMultiple" (completeMethod)="filterTagsMultiple($event)" [minLength]="1"
-                    placeholder="Etiquetas" value="#{tags}" field="name" [multiple]="true">
-                </p-autoComplete>
-                <button pButton type="button" icon="fa-search" (click)="changeTags()" class="ui-button-secondary"></button>
+        <div class="col-5" *ngIf="selectedSearchOption == datasetSearchOptionOrganizations">
+            <div class="form-group">
+                <label>Datos sobre:</label>
+                <select class="form-control" [(ngModel)]="selectedOrg" (change)="changeType()">
+                        <option *ngFor="let orgs of orgsSelect" [ngValue]="orgs.value">{{orgs.label}}</option>
+                </select>
+            </div>
         </div>
+
+        <div class="col-4" *ngIf="selectedSearchOption == datasetSearchOptionOrganizations || selectedSearchOption == datasetSearchOptionTopics">
+            <div class="form-group">
+                <label >Del tipo:</label>
+                <select class="form-control" [(ngModel)]="selectedType" (change)="changeType()">
+                    <option *ngFor="let types of datasetTypes" [ngValue]="types.value">{{types.label}}</option>
+                </select>
+            </div>
         </div>
-        <div *ngIf="selectedSearchOption == datasetSearchOptionTopics" class="ui-g-4">
-            <b>Datos sobre </b>
-            <select class="ui-dropdown-label ui-inputtext ui-corner-all" [(ngModel)]="selectedTopic" (change)="changeType()">
-                <option *ngFor="let topSel of topicsSelect" [ngValue]="topSel.value">{{topSel.label}}</option>
-            </select>
+
+        <div class="col-9" *ngIf="selectedSearchOption == datasetSearchOptionTags" >
+            <div class="form-group">
+                <label >Etiquetas:</label>
+                <div class="input-group">
+                        <p-autoComplete [style]="{'width':'100%'}" [inputStyle]="{'padding': '0 1.5em 0.25em'}" [(ngModel)]="tags" [suggestions]="filteredTagsMultiple" (completeMethod)="filterTagsMultiple($event)" [minLength]="1"
+                        placeholder="Etiquetas" value="#{tags}" field="name" [multiple]="true" >
+                    </p-autoComplete>
+                    <span class="input-group-btn">
+                        <button class="btn btn-secondary" type="button" (click)="changeTags()" ><i class="fa fa-search" aria-hidden="true"></i></button>
+                    </span>
+                    <!-- <button pButton type="button" icon="fa-search" class="ui-button-secondary"></button> -->
+                </div>   
+            </div> 
         </div>
-        <div *ngIf="selectedSearchOption == datasetSearchOptionOrganizations" class="ui-g-6">
-            <b>Datos sobre </b>
-            <select class="searchFilter searchFilterOrg" [(ngModel)]="selectedOrg" (change)="changeType()">
-                <option *ngFor="let orgs of orgsSelect" [ngValue]="orgs.value">{{orgs.label}}</option>
-            </select>
+        <div [ngClass]="selectedSearchOption == datasetSearchOptionStats && selectedGroup == undefined ? 'col-9' : 'col-4'" *ngIf="selectedSearchOption == datasetSearchOptionStats">
+            <div class="form-group">
+                <label >Del Grupo:</label>
+                <select class="form-control" [(ngModel)]="selectedGroup" (change)="resetSubGroupSearch()">
+                    <option *ngFor="let group of groupSelect" [ngValue]="group.value">{{group.label}}</option>
+                </select>
+            </div>
         </div>
-        <div *ngIf="selectedSearchOption == datasetSearchOptionOrganizations || selectedSearchOption == datasetSearchOptionTopics"
-            class="ui-g-3">
-            <b>Del tipo </b>
-            <select class="searchFilter" [(ngModel)]="selectedType" (change)="changeType()">
-                <option *ngFor="let types of datasetTypes" [ngValue]="types.value">{{types.label}}</option>
-            </select>
+        
+        <div class="col-5" *ngIf="selectedGroup != undefined">
+            <div class="form-group">
+                <label >Del Subgrupo:</label>
+                <select *ngIf="selectedGroup == groupsOptionTerritorio" class="form-control" [(ngModel)]="selectedSubGroup">
+                    <option *ngFor="let subGroup of subGroupTerritorioSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
+                </select>
+                <select *ngIf="selectedGroup == groupsOptionDemografia" class="form-control" [(ngModel)]="selectedSubGroup">
+                    <option *ngFor="let subGroup of subGroupDemografiaSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
+                </select>
+                <select *ngIf="selectedGroup == groupsOptionEducacion" class="form-control" [(ngModel)]="selectedSubGroup">
+                    <option *ngFor="let subGroup of subGroupEducacionSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
+                </select>
+                <select *ngIf="selectedGroup == groupsOptionSalud" class="form-control" [(ngModel)]="selectedSubGroup">
+                    <option *ngFor="let subGroup of subGroupSaludSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
+                </select>
+                <select *ngIf="selectedGroup == groupsOptionNivelCalidadVida" class="form-control" [(ngModel)]="selectedSubGroup">
+                    <option *ngFor="let subGroup of subGroupNivelCalidadVidaSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
+                </select>
+                <select *ngIf="selectedGroup == groupsOptionAnalisisSociales" class="form-control" [(ngModel)]="selectedSubGroup">
+                    <option *ngFor="let subGroup of subGroupAnalisisSocialesSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
+                </select>
+                <select *ngIf="selectedGroup == groupsOptionTrabajoSalarios" class="form-control" [(ngModel)]="selectedSubGroup">
+                    <option *ngFor="let subGroup of subGroupTrabajoSalariosSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
+                </select>
+                <select *ngIf="selectedGroup == groupsOptionAgricultura" class="form-control" [(ngModel)]="selectedSubGroup">
+                    <option *ngFor="let subGroup of subGroupAgriculturaSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
+                </select>
+                <select *ngIf="selectedGroup == groupsOptionServicios" class="form-control" [(ngModel)]="selectedSubGroup">
+                    <option *ngFor="let subGroup of subGroupServiciosSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
+                </select>
+                <select *ngIf="selectedGroup == groupsOptionPrecios" class="form-control" [(ngModel)]="selectedSubGroup">
+                    <option *ngFor="let subGroup of subGroupPreciosSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
+                </select>
+                <select *ngIf="selectedGroup == groupsOptionPib" class="form-control" [(ngModel)]="selectedSubGroup">
+                    <option *ngFor="let subGroup of subGroupPIBSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
+                </select>
+                <select *ngIf="selectedGroup == groupsOptionFinancieras" class="form-control" [(ngModel)]="selectedSubGroup">
+                    <option *ngFor="let subGroup of subGroupFinancierasSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
+                </select>
+                <select *ngIf="selectedGroup == groupsOptionIDITic" class="form-control" [(ngModel)]="selectedSubGroup">
+                    <option *ngFor="let subGroup of subGroupIDITicSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
+                </select>
+                <select *ngIf="selectedGroup == groupsOptionMedioAmbiente" class="form-control" [(ngModel)]="selectedSubGroup">
+                    <option *ngFor="let subGroup of subGroupMedioAmbienteSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
+                </select>
+                <select *ngIf="selectedGroup == groupsOptionSectorPublico" class="form-control" [(ngModel)]="selectedSubGroup">
+                        <option *ngFor="let subGroup of subGroupSectorPublicoSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
+                </select>
+            </div>
         </div>
-        <div *ngIf="selectedSearchOption == datasetSearchOptionStats" class="ui-g-9">
-            <b>DEL GRUPO </b>
-            <select class="searchFilter searchFilterSubGroup" [(ngModel)]="selectedGroup">
-                <option *ngFor="let group of groupSelect" [ngValue]="group.value">{{group.label}}</option>
-            </select>
-            <b *ngIf="selectedGroup != undefined">DEL SUBGRUPO </b>
-            <select *ngIf="selectedGroup == 'Territorio'" class="searchFilter searchFilterSubGroup">
-                <option value="01" selected="selected">Todos los subgrupos</option>
-                <option value="0101">Espacio físico. Características geográficas</option>
-                <option value="0102">Usos del suelo</option>
-                <option value="0103">Nomenclaturas territoriales</option>
-                <option value="0104">Infraestructuras</option>
-                <option value="0105">Municipios</option>
-                <option value="0106">Comarcas</option>
-                <option value="0107">Zonas sectoriales</option>
-            </select>
-            <select *ngIf="selectedGroup == 'Demografía y Población'" class="searchFilter searchFilterSubGroup">
-                <option value="0201">Cifras de población y Censos demográficos</option>
-                <option value="0202">Indicadores demográficos</option>
-                <option value="0203">Estudios demográficos</option>
-                <option value="0204">Migraciones</option>
-                <option value="0205">Movimiento Natural de Población</option>
-            </select>
-            <select *ngIf="selectedGroup == 'Educación y Formación'" class="searchFilter searchFilterSubGroup">
-                <option value="0301">Enseñanza no universitaria</option>
-                <option value="0302">Enseñanza universitaria</option>
-                <option value="0303">Gasto público en educación</option>
-                <option value="0304">Becas y ayudas</option>
-                <option value="0305">Transición Educativa-Laboral</option>
-                <option value="0306">Encuesta sobre la participación de la población adulta en las actividades de aprendizaje</option>
-                <option value="0307">Nivel educativo de la población</option>
-            </select>
-            <select *ngIf="selectedGroup == 'Salud'" class="searchFilter searchFilterSubGroup">
-                <option value="0401">Esperanza de vida en salud</option>
-                <option value="0402">Población y pirámides de población por zonas de salud</option>
-                <option value="0403">Tarjetas Sanitarias</option>
-                <option value="0404">Encuesta Nacional de Salud</option>
-                <option value="0405">Sectores sanitarios y zonas de salud</option>
-                <option value="0406">Infraestructura sanitaria</option>
-                <option value="0407">Dotación de personal</option>
-                <option value="0408">Discapacidades y Dependencia</option>
-                <option value="0409">Morbilidad Hospitalaria</option>
-                <option value="0410">Defunciones según la causa de muerte</option>
-                <option value="0411">Estadísticas de Donación y Trasplantes</option>
-                <option value="0412">Interrupción Voluntaria del Embarazo (IVE's)</option>
-                <option value="0413">Otras estadísticas de Salud</option>
-            </select>
-            <select *ngIf="selectedGroup == 'Nivel, Calidad y Condiciones de Vida'" class="searchFilter searchFilterSubGroup">
-                <option value="0501">Condiciones de vida y pobreza</option>
-                <option value="0502">Presupuestos Familiares, Gastos e Ingresos</option>
-                <option value="0503">Otras Estadísticas de Hogares</option>
-                <option value="0504">índice de Precios al Consumo</option>
-                <option value="0505">Pensiones y Prestaciones Sociales</option>
-                <option value="0506">Vivienda</option>
-            </select>
-            <select *ngIf="selectedGroup == 'Análisis Sociales, Justicia, Cultura y Deporte'" class="searchFilter searchFilterSubGroup">
-                <option value="0601">Análisis sociales</option>
-                <option value="0602">La Dependencia en Aragón</option>
-                <option value="0603">Cooperación para el desarrollo</option>
-                <option value="0604">Encuesta de Usos lingüísticos</option>
-                <option value="0605">Sector no lucrativo</option>
-                <option value="0606">Estadísticas de género</option>
-                <option value="0607">Justicia y Seguridad Ciudadana</option>
-                <option value="0608">Cultura</option>
-                <option value="0609">Deporte</option>
-            </select>
-            <select *ngIf="selectedGroup == 'Trabajo, Salarios y Relaciones Laborales'" class="searchFilter searchFilterSubGroup">
-                <option value="0701">Encuesta de Población Activa</option>
-                <option value="0702">Paro registrado</option>
-                <option value="0703">Afilados a la Seguridad Social</option>
-                <option value="0704">Movimiento Laboral Registrado</option>
-                <option value="0705">Relaciones Laborales</option>
-                <option value="0706">Costes Laborales</option>
-                <option value="0707">Salarios</option>
-                <option value="0708">Prestaciones por desempleo y otras</option>
-                <option value="0709">Accidentes y Enfermedades profesionales</option>
-                <option value="0710">Actividad laboral según los Censos de Población</option>
-                <option value="0711">Pricipales Indicadores del mercado laboral</option>
-                <option value="0712">Herramientas de apoyo</option>
-            </select>
-            <select *ngIf="selectedGroup == 'Agricultura, Industria y Construcción'" class="searchFilter searchFilterSubGroup">
-                <option value="0801">Agricultura, ganadería, selvicultura y pesca</option>
-                <option value="0802">Industria manufacturera y extractiva</option>
-                <option value="0803">Construcción</option>
-            </select>
-            <select *ngIf="selectedGroup == 'Servicios, Comercio, Transporte y Turismo'" class="searchFilter searchFilterSubGroup">
-                <option value="0901">Encuestas globales del sector servicios</option>
-                <option value="0902">Comercio</option>
-                <option value="0903">Transporte y servicios postales</option>
-                <option value="0904">Turismo</option>
-                <option value="0905">Actividad Inmobiliaria y Vivienda</option>
-            </select>
-            <select *ngIf="selectedGroup == 'Precios'" class="searchFilter searchFilterSubGroup">
-                <option value="1001">índice de precios de consumo (IPC)</option>
-                <option value="1002">Precios de gasolinas y gasóleos</option>
-                <option value="1003">Precios de la vivienda</option>
-                <option value="1004">Precios del suelo urbano</option>
-                <option value="1005">Precios del suelo agrario/de la tierra</option>
-                <option value="1006">Precios de la Industria</option>
-                <option value="1007">Precios hosteleros</option>
-                <option value="1008">Precios agrarios</option>
-            </select>
-            <select *ngIf="selectedGroup == 'PIB, Renta, Comercio Exterior y Empresas'" class="searchFilter searchFilterSubGroup">
-                <option value="1101">PIB, Valor Añadido y Renta</option>
-                <option value="1102">Comercio exterior</option>
-                <option value="1103">Empresas</option>
-            </select>
-            <select *ngIf="selectedGroup == 'Financieras. Mercantiles. Tributarias'" class="searchFilter searchFilterSubGroup">
-                <option value="1201">Entidades de depósito y crédito</option>
-                <option value="1202">Efectos de comercio devueltos impagados</option>
-                <option value="1203">Hipotecas</option>
-                <option value="1204">Sociedades mercantiles</option>
-                <option value="1205">Estados contables de las empresas Aragonesas</option>
-                <option value="1206">Suspensiones de pagos y declaraciones de quiebras</option>
-                <option value="1207">Estadística de procedimiento concursal</option>
-                <option value="1208">Información tributaria</option>
-            </select>
-            <select *ngIf="selectedGroup == 'I+D+i y Tecnologías de la Información (TIC)'" class="searchFilter searchFilterSubGroup">
-                <option value="1301">Investigación y Desarrollo (I+D) e Innovación</option>
-                <option value="1302">Tecnologías de la Información y Comunicación</option>
-            </select>
-            <select *ngIf="selectedGroup == 'Medio Ambiente y Energía'" class="searchFilter searchFilterSubGroup">
-                <option value="14">Sectores Productivos y Medio ambiente</option>
-                <option value="1401">Agua</option>
-                <option value="1402">Calidad del aire / Contaminación atmosférica</option>
-                <option value="1403">Cambio climático / Emisiones a la atmósfera</option>
-                <option value="1404">Clima / Datos climatológicos</option>
-                <option value="1405">Gasto en Medio Ambiente y Cuentas Ambientales</option>
-                <option value="1406">Hogares y Medio Ambiente</option>
-                <option value="1407">Medio ambiente urbano</option>
-                <option value="1408">Naturaleza y biodiversidad</option>
-                <option value="1409">Prevención ambiental</option>
-                <option value="1410">Residuos</option>
-                <option value="1411">Riesgos naturales y tecnológicos</option>
-                <option value="1412">Suelos y Usos del suelo</option>
-                <option value="1413">Tributos ambientales</option>
-                <option value="1414">Utilización de recursos naturales</option>
-                <option value="1415">Medio ambiente y desarrollo sostenible</option>
-                <option value="1416">Diccionario de términos medioambientales</option>
-                <option value="1417">Energía</option>
-            </select>
-            <select *ngIf="selectedGroup == 'Sector Público. Elecciones'" class="searchFilter searchFilterSubGroup">
-                <option value="1501">Empleo Público</option>
-                <option value="1502">Presupuestos de la Administración Pública</option>
-                <option value="1503">Actividades del Sector Público</option>
-                <option value="1504">Elecciones</option>
-            </select>
+        <div class="col-6" *ngIf="selectedSearchOption == datasetSearchOptionHomer">
+            <div class="form-group">
+                <label>Buscar:</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Buscar por..." [value]="searchHomerValue" (keyup.enter)="searchDatasetsByText(searchHomerInput.value)" #searchHomerInput>
+                    <span class="input-group-btn">
+                        <button class="btn btn-secondary" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    </span>
+                </div>                
+            </div>
         </div>
-        <div class="ui-g-3">
-            <select class="ui-dropdown-label ui-inputtext ui-corner-all " [(ngModel)]="selectedSearchOption" (change)="resetSearch()">
-                <option *ngFor="let search of searchOptions" [ngValue]="search.value">{{search.label}}</option>
-            </select>
+        <div class="col-3" *ngIf="selectedSearchOption == datasetSearchOptionHomer">
+            <div class="form-group">
+                <label >Idioma:</label>
+                <select class="form-control" [(ngModel)]="selectedLang">
+                    <option *ngFor="let langSel of langsSelect" [ngValue]="langSel.value">{{langSel.label}}</option>
+                </select>
+            </div>
         </div>
-    </div>
+
+        <div class="col-3">
+            <div class="form-group">
+                <label >Tipo de búsqueda</label>
+                <select class="form-control" [(ngModel)]="selectedSearchOption" (change)="resetSearch()">
+                    <option *ngFor="let search of searchOptions" [ngValue]="search.value">{{search.label}}</option>
+                </select>
+            </div>
+        </div>
+      </div>
+<!-- End Search -->
+
     <div *ngIf="selectedSearchOption != datasetSearchOptionHomer">
         <p-dataTable [value]="datasets" [responsive]="true" emptyMessage="{{emptyMessage}}" (onSort)="setOrder($event)" #dt>
             <p-column field="name" header="{{numDatasets}} conjuntos de datos encontrados" sortable="custom" sortFunction="orderTable($event)">
@@ -225,12 +169,12 @@
                     <a routerLink='/{{routerLinkDataCatalogDataset}}/{{dataset.name}}' (click)="showDataset(dataset)">
                         {{dataset.title}}
                     </a>
-                    <i class="fa fa-star" id="informacion_content_3_i" style="color: #5ea2ba;" *ngIf="dataset.tracking_summary.recent > 10"></i>
+                    <i class="fa fa-star" id="informacion_content_3_i" style="color: #5ea2ba;" *ngIf="dataset.tracking_summary && (dataset.tracking_summary.recent > 10)"></i>
                 </ng-template>
             </p-column>
             <p-column field="accesos" header="Nº de accesos" [style]="{'width':'160px'}" sortable="custom" sortFunction="orderTable($event)">
                 <ng-template pTemplate="body" let-dataset="rowData">
-                    {{dataset.tracking_summary.total}}
+                    {{dataset?.tracking_summary?.total || '0'}}
                 </ng-template>
             </p-column>
             <p-column field="lastUpdate" header="Última actualización" [style]="{'width':'220px'}" sortable="custom" sortFunction="orderTable($event)">
