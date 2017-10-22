@@ -1,6 +1,6 @@
 const constants = require('../util/constants');
 
-function crosPermission() {
+function corsPermission() {
     this.permission = function(req, res, next) {
         res.header(constants.CORS_HEADERS_ALLOW_ORIGIN_HEADER, constants.CORS_HEADERS_ALLOW_ORIGIN_VALUE);
         res.header(constants.CORS_HEADERS_ALLOW_HEADERS_HEADER, constants.CORS_HEADERS_ALLOW_HEADERS_VALUE);
@@ -8,5 +8,5 @@ function crosPermission() {
         next();
     }
 }
-  
-module.exports= new crosPermission();
+
+module.exports = new corsPermission();

@@ -75,7 +75,7 @@
         <div [ngClass]="selectedSearchOption == datasetSearchOptionStats && selectedGroup == undefined ? 'col-9' : 'col-4'" *ngIf="selectedSearchOption == datasetSearchOptionStats">
             <div class="form-group">
                 <label >Del Grupo:</label>
-                <select class="form-control" [(ngModel)]="selectedGroup" (change)="resetSubGroupSearch()">
+                <select class="form-control" [(ngModel)]="selectedGroup" (change)="resetSubGroupSearch();changeStatistics()">
                     <option *ngFor="let group of groupSelect" [ngValue]="group.value">{{group.label}}</option>
                 </select>
             </div>
@@ -84,49 +84,49 @@
         <div class="col-5" *ngIf="selectedGroup != undefined">
             <div class="form-group">
                 <label >Del Subgrupo:</label>
-                <select *ngIf="selectedGroup == groupsOptionTerritorio" class="form-control" [(ngModel)]="selectedSubGroup">
+                <select *ngIf="selectedGroup == groupsOptionTerritorio" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStatistics()">
                     <option *ngFor="let subGroup of subGroupTerritorioSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
-                <select *ngIf="selectedGroup == groupsOptionDemografia" class="form-control" [(ngModel)]="selectedSubGroup">
+                <select *ngIf="selectedGroup == groupsOptionDemografia" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStatistics()">
                     <option *ngFor="let subGroup of subGroupDemografiaSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
-                <select *ngIf="selectedGroup == groupsOptionEducacion" class="form-control" [(ngModel)]="selectedSubGroup">
+                <select *ngIf="selectedGroup == groupsOptionEducacion" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStatistics()">
                     <option *ngFor="let subGroup of subGroupEducacionSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
-                <select *ngIf="selectedGroup == groupsOptionSalud" class="form-control" [(ngModel)]="selectedSubGroup">
+                <select *ngIf="selectedGroup == groupsOptionSalud" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStatistics()">
                     <option *ngFor="let subGroup of subGroupSaludSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
-                <select *ngIf="selectedGroup == groupsOptionNivelCalidadVida" class="form-control" [(ngModel)]="selectedSubGroup">
+                <select *ngIf="selectedGroup == groupsOptionNivelCalidadVida" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStatistics()">
                     <option *ngFor="let subGroup of subGroupNivelCalidadVidaSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
-                <select *ngIf="selectedGroup == groupsOptionAnalisisSociales" class="form-control" [(ngModel)]="selectedSubGroup">
+                <select *ngIf="selectedGroup == groupsOptionAnalisisSociales" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStatistics()">
                     <option *ngFor="let subGroup of subGroupAnalisisSocialesSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
-                <select *ngIf="selectedGroup == groupsOptionTrabajoSalarios" class="form-control" [(ngModel)]="selectedSubGroup">
+                <select *ngIf="selectedGroup == groupsOptionTrabajoSalarios" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStatistics()">
                     <option *ngFor="let subGroup of subGroupTrabajoSalariosSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
-                <select *ngIf="selectedGroup == groupsOptionAgricultura" class="form-control" [(ngModel)]="selectedSubGroup">
+                <select *ngIf="selectedGroup == groupsOptionAgricultura" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStatistics()">
                     <option *ngFor="let subGroup of subGroupAgriculturaSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
-                <select *ngIf="selectedGroup == groupsOptionServicios" class="form-control" [(ngModel)]="selectedSubGroup">
+                <select *ngIf="selectedGroup == groupsOptionServicios" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStatistics()">
                     <option *ngFor="let subGroup of subGroupServiciosSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
-                <select *ngIf="selectedGroup == groupsOptionPrecios" class="form-control" [(ngModel)]="selectedSubGroup">
+                <select *ngIf="selectedGroup == groupsOptionPrecios" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStatistics()">
                     <option *ngFor="let subGroup of subGroupPreciosSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
-                <select *ngIf="selectedGroup == groupsOptionPib" class="form-control" [(ngModel)]="selectedSubGroup">
+                <select *ngIf="selectedGroup == groupsOptionPib" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStatistics()">
                     <option *ngFor="let subGroup of subGroupPIBSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
-                <select *ngIf="selectedGroup == groupsOptionFinancieras" class="form-control" [(ngModel)]="selectedSubGroup">
+                <select *ngIf="selectedGroup == groupsOptionFinancieras" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStatistics()">
                     <option *ngFor="let subGroup of subGroupFinancierasSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
-                <select *ngIf="selectedGroup == groupsOptionIDITic" class="form-control" [(ngModel)]="selectedSubGroup">
+                <select *ngIf="selectedGroup == groupsOptionIDITic" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStatistics()">
                     <option *ngFor="let subGroup of subGroupIDITicSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
-                <select *ngIf="selectedGroup == groupsOptionMedioAmbiente" class="form-control" [(ngModel)]="selectedSubGroup">
+                <select *ngIf="selectedGroup == groupsOptionMedioAmbiente" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStatistics()">
                     <option *ngFor="let subGroup of subGroupMedioAmbienteSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
-                <select *ngIf="selectedGroup == groupsOptionSectorPublico" class="form-control" [(ngModel)]="selectedSubGroup">
+                <select *ngIf="selectedGroup == groupsOptionSectorPublico" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStatistics()">
                         <option *ngFor="let subGroup of subGroupSectorPublicoSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
             </div>

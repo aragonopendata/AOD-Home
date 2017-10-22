@@ -23,10 +23,14 @@ export class Constants {
     public static AOD_MAIL = 'opendata@aragon.es';
     public static ARAGON_PARTICIPA_WEB_URL = 'http://aragonparticipa.aragon.es';
     public static TRANSPARENCIA_WEB_URL = 'http://transparencia.aragon.es/';
-    
-    public static SHARE_FACEBOOK= 'https://www.facebook.com/sharer.php?u=';
-    public static SHARE_TWITTER= 'https://twitter.com/share?url=';
-    public static SHARE_GOOGLE_PLUS= 'https://plus.google.com/share?url=';
+
+    public static SHARE_FACEBOOK = 'https://www.facebook.com/sharer.php?u=';
+    public static SHARE_TWITTER = 'https://twitter.com/share?url=';
+    public static SHARE_GOOGLE_PLUS = 'https://plus.google.com/share?url=';
+
+    //ERROR CONSTANTS
+    public static DATASET_LIST_ERROR_TITLE = 'Se ha producido un error';
+    public static DATASET_LIST_ERROR_MESSAGE = 'Se ha producido un error en la carga de datos, vuelva a intentarlo y si el error persiste contacte con el administrador.';
 
     //COMMON CONSTANTS
     public static DATASET_LIST_ROWS_PER_PAGE = 20;
@@ -86,148 +90,148 @@ export class Constants {
     public static DATASET_LIST_DROPDOWN_LANG_SR_LABEL = 'Српски';
     public static DATASET_LIST_DROPDOWN_LANG_SR_VALUE = 'sr';
 
-    public static DATASET_LIST_DROPDOWN_GROUPS_ALL = 'Todos los grupos';
-    public static DATASET_LIST_DROPDOWN_GROUPS_TERRITORIO = 'Territorio';
-    public static DATASET_LIST_DROPDOWN_GROUPS_DEMOGRAFIA = 'Demografía y Población';
-    public static DATASET_LIST_DROPDOWN_GROUPS_EDUCACION = 'Educación y Formación';
-    public static DATASET_LIST_DROPDOWN_GROUPS_SALUD = 'Salud';
-    public static DATASET_LIST_DROPDOWN_GROUPS_NIVELCALIDADVIDA = 'Nivel, Calidad y Condiciones de Vida';
-    public static DATASET_LIST_DROPDOWN_GROUPS_ANALISISSOCIALES = 'Análisis Sociales, Justicia, Cultura y Deporte';
-    public static DATASET_LIST_DROPDOWN_GROUPS_TRABAJOSALARIOS = 'Trabajo, Salarios y Relaciones Laborales';
-    public static DATASET_LIST_DROPDOWN_GROUPS_AGRICULTURA = 'Agricultura, Industria y Construcción';
-    public static DATASET_LIST_DROPDOWN_GROUPS_SERVICIOS = 'Servicios, Comercio, Transporte y Turismo';
-    public static DATASET_LIST_DROPDOWN_GROUPS_PRECIOS = 'Precios';
-    public static DATASET_LIST_DROPDOWN_GROUPS_PIB = 'PIB, Renta, Comercio Exterior y Empresas';
-    public static DATASET_LIST_DROPDOWN_GROUPS_FINANCIERAS = 'Financieras. Mercantiles. Tributarias';
-    public static DATASET_LIST_DROPDOWN_GROUPS_IDITIC = 'I+D+i y Tecnologías de la Información (TIC)';
-    public static DATASET_LIST_DROPDOWN_GROUPS_MEDIOAMBIENTE = 'Medio Ambiente y Energía';
-    public static DATASET_LIST_DROPDOWN_GROUPS_SECTORPUBLICO = 'Sector Público. Elecciones';
-    
-    public static DATASET_LIST_DROPDOWN_SUBGROUPS_ALL = 'Todos los subgrupos';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_ESPACIO_FISICO = 'Espacio físico. Características geográficas';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_USOS_SUELO = 'Usos del suelo';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_NOMENCLATURAS = 'Nomenclaturas territoriales';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_INFRAESTRUCTURAS = 'Infraestructuras';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_MUNICIPIOS = 'Municipios';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_COMARCAS = 'Comarcas';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_ZONAS_SECTORIALES = 'Zonas sectoriales';
+    public static DATASET_LIST_DROPDOWN_GROUPS_ALL = { label: 'Todos los grupos', value: undefined };
+    public static DATASET_LIST_DROPDOWN_GROUPS_TERRITORIO = { label: 'Territorio', value: '01' };
+    public static DATASET_LIST_DROPDOWN_GROUPS_DEMOGRAFIA = { label: 'Demografía y Población', value: '02' };
+    public static DATASET_LIST_DROPDOWN_GROUPS_EDUCACION = { label: 'Educación y Formación', value: '03' };
+    public static DATASET_LIST_DROPDOWN_GROUPS_SALUD = { label: 'Salud', value: '04' };
+    public static DATASET_LIST_DROPDOWN_GROUPS_NIVELCALIDADVIDA = { label: 'Nivel, Calidad y Condiciones de Vida', value: '05' };
+    public static DATASET_LIST_DROPDOWN_GROUPS_ANALISISSOCIALES = { label: 'Análisis Sociales, Justicia, Cultura y Deporte', value: '06' };
+    public static DATASET_LIST_DROPDOWN_GROUPS_TRABAJOSALARIOS = { label: 'Trabajo, Salarios y Relaciones Laborales', value: '07' };
+    public static DATASET_LIST_DROPDOWN_GROUPS_AGRICULTURA = { label: 'Agricultura, Industria y Construcción', value: '08' };
+    public static DATASET_LIST_DROPDOWN_GROUPS_SERVICIOS = { label: 'Servicios, Comercio, Transporte y Turismo', value: '09' };
+    public static DATASET_LIST_DROPDOWN_GROUPS_PRECIOS = { label: 'Precios', value: '10' };
+    public static DATASET_LIST_DROPDOWN_GROUPS_PIB = { label: 'PIB, Renta, Comercio Exterior y Empresas', value: '11' };
+    public static DATASET_LIST_DROPDOWN_GROUPS_FINANCIERAS = { label: 'Financieras. Mercantiles. Tributarias', value: '12' };
+    public static DATASET_LIST_DROPDOWN_GROUPS_IDITIC = { label: 'I+D+i y Tecnologías de la Información (TIC)', value: '13' };
+    public static DATASET_LIST_DROPDOWN_GROUPS_MEDIOAMBIENTE = { label: 'Medio Ambiente y Energía', value: '14' };
+    public static DATASET_LIST_DROPDOWN_GROUPS_SECTORPUBLICO = { label: 'Sector Público. Elecciones', value: '15' };
 
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_DEMOGRAFIA_CIFRAS_POBLACION = 'Cifras de población y Censos demográficos';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_DEMOGRAFIA_INDICADORES_DEMOGRAFICOS = 'Indicadores demográficos';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_DEMOGRAFIA_ESTUDIOS_DEMOGRAFICOS = 'Estudios demográficos';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_DEMOGRAFIA_MIGRACIONES = 'Migraciones';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_DEMOGRAFIA_MOVIMIENTO_NATURAL = 'Movimiento Natural de Población';
-    
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_ENSENANZA_NO_UNIVERSITARIA = 'Enseñanza no universitaria';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_ENSENANZA_UNIVERSITARIA = 'Enseñanza universitaria';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_GASTO_PUBLICO = 'Gasto público en educación';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_BECAS = 'Becas y ayudas';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_TRANSICION = 'Transición Educativa-Laboral';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_ENCUESTA = 'Encuesta sobre la participación de la población adulta en las actividades de aprendizaje';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_NIVEL = 'Nivel educativo de la población';
-    
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_ESPERANZA = 'Esperanza de vida en salud';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_POBLACION = 'Población y pirámides de población por zonas de salud';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_TARJETAS = 'Tarjetas Sanitarias';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_ENCUESTA = 'Encuesta Nacional de Salud';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_SECTORES = 'Sectores sanitarios y zonas de salud';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_INFRAESTRUCTURA = 'Infraestructura sanitaria';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_DOTACION = 'Dotación de personal';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_DISCAPACIDADES = 'Discapacidades y Dependencia';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_MORBILIDAD = 'Morbilidad Hospitalaria';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_DEFUNCIONES = 'Defunciones según la causa de muerte';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_ESTADISTICAS = 'Estadísticas de Donación y Trasplantes';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_INTERRUPCION = 'Interrupción Voluntaria del Embarazo (IVE\'s)';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_OTRAS = 'Otras estadísticas de Salud';
+    public static DATASET_LIST_DROPDOWN_SUBGROUPS_ALL = { label: 'Todos los subgrupos', value: undefined };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_ESPACIO_FISICO = { label: 'Espacio físico. Características geográficas', value: '0101' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_USOS_SUELO = { label: 'Usos del suelo', value: '0102' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_NOMENCLATURAS = { label: 'Nomenclaturas territoriales', value: '0103' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_INFRAESTRUCTURAS = { label: 'Infraestructuras', value: '0104' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_MUNICIPIOS = { label: 'Municipios', value: '0105' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_COMARCAS = { label: 'Comarcas', value: '0106' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_ZONAS_SECTORIALES = { label: 'Zonas sectoriales', value: '0107' };
 
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_CONDICIONES = 'Condiciones de vida y pobreza';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_PRESUPUESTOS = 'Presupuestos Familiares, Gastos e Ingresos';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_OTRAS = 'Otras Estadísticas de Hogares';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_INDICE = 'índice de Precios al Consumo';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_PENSIONES = 'Pensiones y Prestaciones Sociales';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_VIVIENDA = 'Vivienda';
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_DEMOGRAFIA_CIFRAS_POBLACION = { label: 'Cifras de población y Censos demográficos', value: '0201' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_DEMOGRAFIA_INDICADORES_DEMOGRAFICOS = { label: 'Indicadores demográficos', value: '0202' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_DEMOGRAFIA_ESTUDIOS_DEMOGRAFICOS = { label: 'Estudios demográficos', value: '0203' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_DEMOGRAFIA_MIGRACIONES = { label: 'Migraciones', value: '0204' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_DEMOGRAFIA_MOVIMIENTO_NATURAL = { label: 'Movimiento Natural de Población', value: '0205' };
 
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_ANALISIS = 'Análisis sociales';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_DEPENDENCIA = 'La Dependencia en Aragón';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_COOPERACION = 'Cooperación para el desarrollo';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_ENCUESTA = 'Encuesta de Usos lingüísticos';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_SECTOR = 'Sector no lucrativo';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_ESTADISTICA = 'Estadísticas de género';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_JUSTICIA = 'Justicia y Seguridad Ciudadana';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_CULTURA = 'Cultura';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_DEPORTE = 'Deporte';
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_ENSENANZA_NO_UNIVERSITARIA = { label: 'Enseñanza no universitaria', value: '0301' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_ENSENANZA_UNIVERSITARIA = { label: 'Enseñanza universitaria', value: '0302' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_GASTO_PUBLICO = { label: 'Gasto público en educación', value: '0303' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_BECAS = { label: 'Becas y ayudas', value: '0304' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_TRANSICION = { label: 'Transición Educativa-Laboral', value: '0305' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_ENCUESTA = { label: 'Encuesta sobre la participación de la población adulta en las actividades de aprendizaje', value: '0306' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_NIVEL = { label: 'Nivel educativo de la población', value: '0307' };
 
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_ENCUESTA = 'Encuesta de Población Activa';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_PARO = 'Paro registrado';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_AFILIADOS = 'Afilados a la Seguridad Social';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_MOVIMIENTO = 'Movimiento Laboral Registrado';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_RELACIONES = 'Relaciones Laborales';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_COSTES = 'Costes Laborales';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_SALARIOS = 'Salarios';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_PRESTACIONES = 'Prestaciones por desempleo y otras';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_ACCIDENTES = 'Accidentes y Enfermedades profesionales';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_ACTIVIDAD = 'Actividad laboral según los Censos de Población';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_PRINCIPALES = 'Principales Indicadores del mercado laboral';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_HERRAMIENTAS = 'Herramientas de apoyo';
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_ESPERANZA = { label: 'Esperanza de vida en salud', value: '0401' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_POBLACION = { label: 'Población y pirámides de población por zonas de salud', value: '0402' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_TARJETAS = { label: 'Tarjetas Sanitarias', value: '0403' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_ENCUESTA = { label: 'Encuesta Nacional de Salud', value: '0404' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_SECTORES = { label: 'Sectores sanitarios y zonas de salud', value: '0405' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_INFRAESTRUCTURA = { label: 'Infraestructura sanitaria', value: '0406' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_DOTACION = { label: 'Dotación de personal', value: '0407' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_DISCAPACIDADES = { label: 'Discapacidades y Dependencia', value: '0408' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_MORBILIDAD = { label: 'Morbilidad Hospitalaria', value: '0409' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_DEFUNCIONES = { label: 'Defunciones según la causa de muerte', value: '0410' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_ESTADISTICAS = { label: 'Estadísticas de Donación y Trasplantes', value: '0411' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_INTERRUPCION = { label: 'Interrupción Voluntaria del Embarazo (IVE\'s)', value: '0412' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_OTRAS = { label: 'Otras estadísticas de Salud', value: '0413' };
 
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_AGRICULTURA_AGRICULTURA = 'Agricultura, ganadería, selvicultura y pesca';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_AGRICULTURA_INDUSTRIA = 'Industria manufacturera y extractiva';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_AGRICULTURA_CONSTRUCCION = 'Construcción';
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_CONDICIONES = { label: 'Condiciones de vida y pobreza', value: '0501' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_PRESUPUESTOS = { label: 'Presupuestos Familiares, Gastos e Ingresos', value: '0502' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_OTRAS = { label: 'Otras Estadísticas de Hogares', value: '0503' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_INDICE = { label: 'índice de Precios al Consumo', value: '0504' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_PENSIONES = { label: 'Pensiones y Prestaciones Sociales', value: '0505' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_VIVIENDA = { label: 'Vivienda', value: '0506' };
 
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_SERVICIOS_ENCUESTAS = 'Encuestas globales del sector servicios';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_SERVICIOS_COMERCIO = 'Comercio';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_SERVICIOS_TRANSPORTE = 'Transporte y servicios postales';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_SERVICIOS_TURISMO = 'Turismo';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_SERVICIOS_ACTIVIDAD = 'Actividad Inmobiliaria y Vivienda';
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_ANALISIS = { label: 'Análisis sociales', value: '0601' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_DEPENDENCIA = { label: 'La Dependencia en Aragón', value: '0602' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_COOPERACION = { label: 'Cooperación para el desarrollo', value: '0603' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_ENCUESTA = { label: 'Encuesta de Usos lingüísticos', value: '0604' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_SECTOR = { label: 'Sector no lucrativo', value: '0605' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_ESTADISTICA = { label: 'Estadísticas de género', value: '0606' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_JUSTICIA = { label: 'Justicia y Seguridad Ciudadana', value: '0607' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_CULTURA = { label: 'Cultura', value: '0608' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_DEPORTE = { label: 'Deporte', value: '0609' };
 
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_INDICE = 'índice de precios de consumo (IPC)';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_GASOLINAS = 'Precios de gasolinas y gasóleos';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_VIVIENDA = 'Precios de la vivienda';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_SUELO_URBANO = 'Precios del suelo urbano';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_SUELO_AGRARIO = 'Precios del suelo agrario/de la tierra';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_INDUSTRIA = 'Precios de la Industria';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_HOSTELEROS = 'Precios hosteleros';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_AGRARIOS = 'Precios agrarios';
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_ENCUESTA = { label: 'Encuesta de Población Activa', value: '0701' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_PARO = { label: 'Paro registrado', value: '0702' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_AFILIADOS = { label: 'Afilados a la Seguridad Social', value: '0703' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_MOVIMIENTO = { label: 'Movimiento Laboral Registrado', value: '0704' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_RELACIONES = { label: 'Relaciones Laborales', value: '0705' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_COSTES = { label: 'Costes Laborales', value: '0706' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_SALARIOS = { label: 'Salarios', value: '0707' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_PRESTACIONES = { label: 'Prestaciones por desempleo y otras', value: '0708' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_ACCIDENTES = { label: 'Accidentes y Enfermedades profesionales', value: '0709' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_ACTIVIDAD = { label: 'Actividad laboral según los Censos de Población', value: '0710' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_PRINCIPALES = { label: 'Principales Indicadores del mercado laboral', value: '0711' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_HERRAMIENTAS = { label: 'Herramientas de apoyo', value: '0712' };
 
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_PIB_VALOR = 'PIB, Valor Añadido y Renta';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_PIB_COMERCIO = 'Comercio exterior';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_PIB_EMPRESAS = 'Empresas';
-    
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_ENTIDADES = 'Entidades de depósito y crédito';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_EFECTOS = 'Efectos de comercio devueltos impagados';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_HIPOTECAS = 'Hipotecas';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_SOCIEDADES = 'Sociedades mercantiles';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_ESTADOS = 'Estados contables de las empresas Aragonesas';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_SUSPENSIONES = 'Suspensiones de pagos y declaraciones de quiebras';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_ESTADISTICA = 'Estadística de procedimiento concursal';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_INFORMACION = 'Información tributaria';
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_AGRICULTURA_AGRICULTURA = { label: 'Agricultura, ganadería, selvicultura y pesca', value: '0801' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_AGRICULTURA_INDUSTRIA = { label: 'Industria manufacturera y extractiva', value: '0802' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_AGRICULTURA_CONSTRUCCION = { label: 'Construcción', value: '0803' };
 
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_IDITIC_INVESTIGACION = 'Investigación y Desarrollo (I+D) e Innovación';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_IDITIC_TECNOLOGIAS = 'Tecnologías de la Información y Comunicación';
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_SERVICIOS_ENCUESTAS = { label: 'Encuestas globales del sector servicios', value: '0901' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_SERVICIOS_COMERCIO = { label: 'Comercio', value: '0902' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_SERVICIOS_TRANSPORTE = { label: 'Transporte y servicios postales', value: '0903' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_SERVICIOS_TURISMO = { label: 'Turismo', value: '0904' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_SERVICIOS_ACTIVIDAD = { label: 'Actividad Inmobiliaria y Vivienda', value: '0905' };
 
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_SECTORES = 'Sectores Productivos y Medio ambiente';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_AGUA = 'Agua';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_CALIDAD_AIRE = 'Calidad del aire / Contaminación atmosférica';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_CAMBIO_CLIMATICO = 'Cambio climático / Emisiones a la atmósfera';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_CLIMA = 'Clima / Datos climatológicos';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_GASTO = 'Gasto en Medio Ambiente y Cuentas Ambientales';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_HOGARES = 'Hogares y Medio Ambiente';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_MEDIO_AMBIENTE = 'Medio ambiente urbano';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_NATURALEZA = 'Naturaleza y biodiversidad';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_PREVENCION = 'Prevención ambiental';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_RESIDUOS = 'Residuos';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_RIESGOS = 'Riesgos naturales y tecnológicos';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_SUELOS = 'Suelos y Usos del suelo';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_TRIBUTOS = 'Tributos ambientales';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_UTILIZACION = 'Utilización de recursos naturales';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_DESARROLLO = 'Medio ambiente y desarrollo sostenible';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_DICCIONARIO = 'Diccionario de términos medioambientales';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_ENERGIA = 'Energía';
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_INDICE = { label: 'índice de precios de consumo (IPC)', value: '1001' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_GASOLINAS = { label: 'Precios de gasolinas y gasóleos', value: '1002' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_VIVIENDA = { label: 'Precios de la vivienda', value: '1003' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_SUELO_URBANO = { label: 'Precios del suelo urbano', value: '1004' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_SUELO_AGRARIO = { label: 'Precios del suelo agrario/de la tierra', value: '1005' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_INDUSTRIA = { label: 'Precios de la Industria', value: '1006' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_HOSTELEROS = { label: 'Precios hosteleros', value: '1007' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_AGRARIOS = { label: 'Precios agrarios', value: '1008' };
 
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_SECTORPUBLICO_EMPLEO = 'Empleo Público';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_SECTORPUBLICO_PRESUPUESTOS = 'Presupuestos de la Administración Pública';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_SECTORPUBLICO_ACTIVIDADES = 'Actividades del Sector Público';
-    public static DATASET_LIST_DROPDOWN_SUBGROUP_SECTORPUBLICO_ELECCIONES = 'Elecciones';
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_PIB_VALOR = { label: 'PIB, Valor Añadido y Renta', value: '1101' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_PIB_COMERCIO = { label: 'Comercio exterior', value: '1102' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_PIB_EMPRESAS = { label: 'Empresas', value: '1103' };
+
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_ENTIDADES = { label: 'Entidades de depósito y crédito', value: '1201' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_EFECTOS = { label: 'Efectos de comercio devueltos impagados', value: '1202' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_HIPOTECAS = { label: 'Hipotecas', value: '1203' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_SOCIEDADES = { label: 'Sociedades mercantiles', value: '1204' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_ESTADOS = { label: 'Estados contables de las empresas Aragonesas', value: '1205' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_SUSPENSIONES = { label: 'Suspensiones de pagos y declaraciones de quiebras', value: '1206' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_ESTADISTICA = { label: 'Estadística de procedimiento concursal', value: '1207' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_INFORMACION = { label: 'Información tributaria', value: '1208' };
+
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_IDITIC_INVESTIGACION = { label: 'Investigación y Desarrollo (I+D) e Innovación', value: '1301' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_IDITIC_TECNOLOGIAS = { label: 'Tecnologías de la Información y Comunicación', value: '1302' };
+
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_SECTORES = { label: 'Sectores Productivos y Medio ambiente', value: '14' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_AGUA = { label: 'Agua', value: '1401' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_CALIDAD_AIRE = { label: 'Calidad del aire / Contaminación atmosférica', value: '1402' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_CAMBIO_CLIMATICO = { label: 'Cambio climático / Emisiones a la atmósfera', value: '1403' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_CLIMA = { label: 'Clima / Datos climatológicos', value: '1404' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_GASTO = { label: 'Gasto en Medio Ambiente y Cuentas Ambientales', value: '1405' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_HOGARES = { label: 'Hogares y Medio Ambiente', value: '1406' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_MEDIO_AMBIENTE = { label: 'Medio ambiente urbano', value: '1407' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_NATURALEZA = { label: 'Naturaleza y biodiversidad', value: '1408' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_PREVENCION = { label: 'Prevención ambiental', value: '1409' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_RESIDUOS = { label: 'Residuos', value: '1410' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_RIESGOS = { label: 'Riesgos naturales y tecnológicos', value: '1411' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_SUELOS = { label: 'Suelos y Usos del suelo', value: '1412' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_TRIBUTOS = { label: 'Tributos ambientales', value: '1413' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_UTILIZACION = { label: 'Utilización de recursos naturales', value: '1414' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_DESARROLLO = { label: 'Medio ambiente y desarrollo sostenible', value: '1415' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_DICCIONARIO = { label: 'Diccionario de términos medioambientales', value: '1416' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_ENERGIA = { label: 'Energía', value: '1417' };
+
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_SECTORPUBLICO_EMPLEO = { label: 'Empleo Público', value: '1501' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_SECTORPUBLICO_PRESUPUESTOS = { label: 'Presupuestos de la Administración Pública', value: '1502' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_SECTORPUBLICO_ACTIVIDADES = { label: 'Actividades del Sector Público', value: '1503' };
+    public static DATASET_LIST_DROPDOWN_SUBGROUP_SECTORPUBLICO_ELECCIONES = { label: 'Elecciones', value: '1504' };
 
     public static DATASET_HIGLIGHT_OCURRENCES = '10';
     public static DATASET_HIGLIGHT_DAYS = '14';
@@ -288,7 +292,7 @@ export class Constants {
     public static ROUTER_LINK_TOOLS_APIS = 'herramientas/apis';
     public static ROUTER_LINK_TOOLS_SPARQL = 'herramientas/sparql';
     public static ROUTER_LINK_TOOLS_SPARQL_CLIENT = 'herramientas/sparql/client';
-    public static ROUTER_LINK_TOOLS_DEFAULT_SPARQL_CLIENT = 'portal/cliente-sparql';    
+    public static ROUTER_LINK_TOOLS_DEFAULT_SPARQL_CLIENT = 'portal/cliente-sparql';
     public static ROUTER_LINK_LOGIN = 'login';
     public static ROUTER_LINK_LOGIN_FORGOT_PASSWORD = 'login/forgot-password';
     public static ROUTER_LINK_LOGIN_RESTORE_PASSWORD = 'login/restore-password';
@@ -359,6 +363,7 @@ export class Constants {
     public static SERVER_API_LINK_DATASETS_COUNT = '/datasets/countDatasets';
     public static SERVER_API_LINK_RESOURCES_COUNT = '/datasets/countResources';
     public static SERVER_API_LINK_DATASETS_RDF = '/datasets/rdf';
+    public static SERVER_API_LINK_DATASETS_STATS_SEARCH = '/datasets/stats';
     public static SERVER_API_LINK_DATASETS_HOMER = '/homer';
     public static SERVER_API_LINK_TOPICS = '/topics';
     public static SERVER_API_LINK_TAGS = '/tags';
@@ -401,7 +406,7 @@ export class Constants {
     public static SPARQL_CLIENT_DEFAULT_FORMAT = 'text/html';
     public static SPARQL_CLIENT_DEFAULT_TIMEOUT = 0;
     public static SPARQL_CLIENT_DEFAULT_DEBUG = true;
-    
+
     public static SPARQL_CLIENT_FORMAT_OPTIONS_AUTO = 'auto';
     public static SPARQL_CLIENT_FORMAT_OPTIONS_HTML = 'text/html';
     public static SPARQL_CLIENT_FORMAT_OPTIONS_EXCEL = 'application/vnd.ms-excel';
@@ -421,5 +426,5 @@ export class Constants {
     public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_TXT = '.txt';
     public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_RDF = '.rdf';
     public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_CSV = '.csv';
-    
+
 }

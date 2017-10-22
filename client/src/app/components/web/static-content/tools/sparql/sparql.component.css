@@ -1,3 +1,5 @@
+@import url('http://fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,700italic,900,900italic,300italic,300,100italic,100');
+
 h1, h2, h3, h4, h5 {
     font-family: 'Roboto', sans-serif;
     line-height: 1;
@@ -7,12 +9,27 @@ h1, h2, h3, h4, h5 {
     font-weight: 300;
 }
 
-p {
-    font-family: 'Roboto', sans-serif;
-    line-height: 1;
-    margin: 2px 0 20px;
-    letter-spacing: 0.1em;
-    font-weight: 300;
+a {
+    color: #5ea2ba;
+}
+
+a:hover {
+    color: #5ea2ba;
+    text-decoration: none;
+}
+
+a:focus {
+    color: #5ea2ba;
+    text-decoration: none;
+}
+
+.textContent {
+    margin: 15px;
+}
+
+.textContent /deep/ ul{
+    list-style-type: none;
+    padding-left: 0px;
 }
 
 b {
@@ -24,7 +41,7 @@ b {
 }
 
 .card {
-    margin: 5px;
+    margin-bottom: 5px;
     border-color: #5EA2BA;
 }
 
@@ -32,32 +49,45 @@ b {
     padding-top: 15%;
 }
 
-a {
-    color: #5EA2BA;
-}
-
-a:hover {
-    color: #5EA2BA;
-    text-decoration: none;
-}
-
-a:focus {
-    color: #5EA2BA;
-    text-decoration: none;
-}
-
 [aria-expanded=true] i:before{
     content: "\f056";
 }
-
-.collapsed{
-font-weight: 300;
-font-size: 30px;
-letter-spacing: 0.1em;
+.textContent /deep/ a{
+    color: #5ea2ba;
+    position: relative;
+    cursor: pointer;
 }
 
-.headLink{
-font-weight: 300;
-font-size: 30px;
-letter-spacing: 0.1em;
-} 
+.textContent /deep/ a:hover{
+color: #000000;
+text-decoration: none;
+}
+
+.textContent /deep/ a:hover:after{
+width: 100%;
+}
+
+.textContent /deep/ a:after{
+content: '';
+position: absolute;
+bottom: 0;
+left: 0;
+width: 0%;
+border-bottom: 1px solid #5ea2ba;
+transition: 0.3s;
+}
+
+.textContent /deep/ pre {
+font-family: monospace, monospace;
+background-color: #F5F5F5;
+border: 1px solid rgba(0,0,0,0.15);
+border-radius: 4px;
+display: block;
+white-space: pre-wrap;
+padding: 10px;
+}
+
+.textContent /deep/ .titularesPeques{
+    color: #000000;
+    font-weight: bold;
+}

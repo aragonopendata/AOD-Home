@@ -1,3 +1,5 @@
+@import url('http://fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,700italic,900,900italic,300italic,300,100italic,100');
+
 h1, h2, h3, h4, h5 {
     font-family: 'Roboto', sans-serif;
     line-height: 1;
@@ -25,14 +27,7 @@ a:focus {
     text-decoration: none;
 }
 
-p {
-    font-family: 'Roboto', sans-serif;
-    line-height: 1.3;
-    letter-spacing: 0.1em;
-    font-weight: 300 !important;
-}
-
-p ul{
+p ul {
     list-style-type: none;
     padding-left: 0px;
 }
@@ -44,12 +39,12 @@ b {
     font-weight: 700;
 }
 
-.textContent{
+.textContent {
     margin: 15px;
 }
 
 .card {
-    margin: 5px;
+    margin-bottom: 5px;
     border-color: #5EA2BA;
 }
 
@@ -57,47 +52,49 @@ b {
     padding-top: 15%;
 }
 
-[aria-expanded=true] i:before{
+[aria-expanded=true] i:before {
     content: "\f056";
 }
 
-.collapsed{
+.collapsed {
     font-weight: 300;
     font-size: 30px;
     letter-spacing: 0.1em;
 }
 
-.headLink{
+.headLink {
     font-weight: 300;
     font-size: 30px;
     letter-spacing: 0.1em;
 }
 
-.textContent a{
+.textContent /deep/ a {
+    display: inline-block;
     color: #5ea2ba;
-    position: relative;
-    cursor: pointer;
+}
+.textContent /deep/ a:hover {
+    color:#000000;
+    text-decoration:none;
 }
 
-.textContent a:hover{
-    color: #000000;
-    text-decoration: none;
+.textContent /deep/ a:after {
+    content: '';
+    display: block;
+    height: 1px;
+    width: 0;
+    transition: all .3s ease;
+    border-bottom: 1px solid #5ea2ba;
+    padding-top: 1px;
 }
 
-.textContent a:hover:after{
+.textContent /deep/ a:hover:after {
     width: 100%;
 }
 
-.textContent a:after{
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0%;
-    border-bottom: 1px solid #5ea2ba;
-    transition: 0.3s;
+.textContent img {
+    margin-bottom: 10px;
 }
 
-.textContent img{
-    margin-bottom: 10px;
+.textContent section {
+    margin-bottom: 20px;
 }

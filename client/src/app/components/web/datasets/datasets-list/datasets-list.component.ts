@@ -70,7 +70,7 @@ export class DatasetsListComponent implements OnInit {
     subGroupFinancierasSelect: SelectItem[];
     subGroupIDITicSelect: SelectItem[];
     subGroupMedioAmbienteSelect: SelectItem[];
-    subGroupSectorPublicoSelect: SelectItem[];    
+    subGroupSectorPublicoSelect: SelectItem[];
     emptyMessage: string;
 
     groupsOptionTerritorio: string;
@@ -96,7 +96,7 @@ export class DatasetsListComponent implements OnInit {
     datasetSearchOptionStats: string;
     datasetSearchOptionHomer: string;
     //Dynamic URL build parameters
-	routerLinkPageNotFound: string;
+    routerLinkPageNotFound: string;
     routerLinkDataCatalog: string;
     routerLinkDataCatalogDataset: string;
     routerLinkDataCatalogTopics: string;
@@ -104,51 +104,55 @@ export class DatasetsListComponent implements OnInit {
     routerLinkDataCatalogTags: string;
     routerLinkDataCatalogDatasetHomer: string;
     //Pagination Params
-    pages: number [];
-    actualPage:number;
+    pages: number[];
+    actualPage: number;
     pagesShow: string[];
     pageFirst: number;
     pageLast: number;
     //Error Params
     errorTitle: string;
     errorMessage: string;
+    datasetListErrorTitle: string;
+    datasetListErrorMessage: string;
 
     constructor(private datasetsService: DatasetsService, private topicsService: TopicsService
-        , private orgsService: OrganizationsService, private router: Router
-        , private location: Location, private changeDetectorRef: ChangeDetectorRef
-        , private activatedRoute: ActivatedRoute) {
-    this.pageRows = Constants.DATASET_LIST_ROWS_PER_PAGE;
-    this.routerLinkDataCatalog = Constants.ROUTER_LINK_DATA_CATALOG;
-    this.routerLinkDataCatalogDataset = Constants.ROUTER_LINK_DATA_CATALOG_DATASET;
-    this.routerLinkDataCatalogTopics = Constants.ROUTER_LINK_DATA_CATALOG_TOPICS;
-    this.routerLinkDataCatalogOrganizations = Constants.ROUTER_LINK_DATA_CATALOG_ORGANIZATIONS;
-    this.routerLinkDataCatalogTags = Constants.ROUTER_LINK_DATA_CATALOG_TAGS;
-    this.datasetSearchOptionFreeSearch = Constants.DATASET_LIST_SEARCH_OPTION_FREE_SEARCH;
-    this.datasetSearchOptionTopics = Constants.DATASET_LIST_SEARCH_OPTION_TOPICS;
-    this.datasetSearchOptionOrganizations = Constants.DATASET_LIST_SEARCH_OPTION_ORGANIZATIONS;
-    this.datasetSearchOptionTags = Constants.DATASET_LIST_SEARCH_OPTION_TAGS;
-    this.datasetSearchOptionStats = Constants.DATASET_LIST_SEARCH_OPTION_STATS;
-    this.datasetSearchOptionHomer = Constants.DATASET_LIST_SEARCH_OPTION_HOMER;
-    this.routerLinkDataCatalogDatasetHomer = Constants.ROUTER_LINK_DATA_CATALOG_HOMER_DATASET;
-    this.emptyMessage = Constants.DATASET_LIST_EMPTY;
-    if (this.selectedSearchOption === undefined) {
-        this.selectedSearchOption = this.datasetSearchOptionFreeSearch;
-    }
-    this.groupsOptionTerritorio = Constants.DATASET_LIST_DROPDOWN_GROUPS_TERRITORIO;
-    this.groupsOptionDemografia = Constants.DATASET_LIST_DROPDOWN_GROUPS_DEMOGRAFIA;
-    this.groupsOptionEducacion = Constants.DATASET_LIST_DROPDOWN_GROUPS_EDUCACION;
-    this.groupsOptionSalud = Constants.DATASET_LIST_DROPDOWN_GROUPS_SALUD;
-    this.groupsOptionNivelCalidadVida = Constants.DATASET_LIST_DROPDOWN_GROUPS_NIVELCALIDADVIDA;
-    this.groupsOptionAnalisisSociales = Constants.DATASET_LIST_DROPDOWN_GROUPS_ANALISISSOCIALES;
-    this.groupsOptionTrabajoSalarios = Constants.DATASET_LIST_DROPDOWN_GROUPS_TRABAJOSALARIOS;
-    this.groupsOptionAgricultura = Constants.DATASET_LIST_DROPDOWN_GROUPS_AGRICULTURA;
-    this.groupsOptionServicios = Constants.DATASET_LIST_DROPDOWN_GROUPS_SERVICIOS;
-    this.groupsOptionPrecios = Constants.DATASET_LIST_DROPDOWN_GROUPS_PRECIOS;
-    this.groupsOptionPib = Constants.DATASET_LIST_DROPDOWN_GROUPS_PIB;
-    this.groupsOptionFinancieras = Constants.DATASET_LIST_DROPDOWN_GROUPS_FINANCIERAS;
-    this.groupsOptionIDITic = Constants.DATASET_LIST_DROPDOWN_GROUPS_IDITIC;
-    this.groupsOptionMedioAmbiente = Constants.DATASET_LIST_DROPDOWN_GROUPS_MEDIOAMBIENTE;
-    this.groupsOptionSectorPublico = Constants.DATASET_LIST_DROPDOWN_GROUPS_SECTORPUBLICO; 
+            , private orgsService: OrganizationsService, private router: Router
+            , private location: Location, private changeDetectorRef: ChangeDetectorRef
+            , private activatedRoute: ActivatedRoute) {
+        this.datasetListErrorTitle = Constants.DATASET_LIST_ERROR_TITLE;
+        this.datasetListErrorMessage = Constants.DATASET_LIST_ERROR_MESSAGE;
+        this.pageRows = Constants.DATASET_LIST_ROWS_PER_PAGE;
+        this.routerLinkDataCatalog = Constants.ROUTER_LINK_DATA_CATALOG;
+        this.routerLinkDataCatalogDataset = Constants.ROUTER_LINK_DATA_CATALOG_DATASET;
+        this.routerLinkDataCatalogTopics = Constants.ROUTER_LINK_DATA_CATALOG_TOPICS;
+        this.routerLinkDataCatalogOrganizations = Constants.ROUTER_LINK_DATA_CATALOG_ORGANIZATIONS;
+        this.routerLinkDataCatalogTags = Constants.ROUTER_LINK_DATA_CATALOG_TAGS;
+        this.datasetSearchOptionFreeSearch = Constants.DATASET_LIST_SEARCH_OPTION_FREE_SEARCH;
+        this.datasetSearchOptionTopics = Constants.DATASET_LIST_SEARCH_OPTION_TOPICS;
+        this.datasetSearchOptionOrganizations = Constants.DATASET_LIST_SEARCH_OPTION_ORGANIZATIONS;
+        this.datasetSearchOptionTags = Constants.DATASET_LIST_SEARCH_OPTION_TAGS;
+        this.datasetSearchOptionStats = Constants.DATASET_LIST_SEARCH_OPTION_STATS;
+        this.datasetSearchOptionHomer = Constants.DATASET_LIST_SEARCH_OPTION_HOMER;
+        this.routerLinkDataCatalogDatasetHomer = Constants.ROUTER_LINK_DATA_CATALOG_HOMER_DATASET;
+        this.emptyMessage = Constants.DATASET_LIST_EMPTY;
+        if (this.selectedSearchOption === undefined) {
+            this.selectedSearchOption = this.datasetSearchOptionFreeSearch;
+        }
+        this.groupsOptionTerritorio = Constants.DATASET_LIST_DROPDOWN_GROUPS_TERRITORIO.value;
+        this.groupsOptionDemografia = Constants.DATASET_LIST_DROPDOWN_GROUPS_DEMOGRAFIA.value;
+        this.groupsOptionEducacion = Constants.DATASET_LIST_DROPDOWN_GROUPS_EDUCACION.value;
+        this.groupsOptionSalud = Constants.DATASET_LIST_DROPDOWN_GROUPS_SALUD.value;
+        this.groupsOptionNivelCalidadVida = Constants.DATASET_LIST_DROPDOWN_GROUPS_NIVELCALIDADVIDA.value;
+        this.groupsOptionAnalisisSociales = Constants.DATASET_LIST_DROPDOWN_GROUPS_ANALISISSOCIALES.value;
+        this.groupsOptionTrabajoSalarios = Constants.DATASET_LIST_DROPDOWN_GROUPS_TRABAJOSALARIOS.value;
+        this.groupsOptionAgricultura = Constants.DATASET_LIST_DROPDOWN_GROUPS_AGRICULTURA.value;
+        this.groupsOptionServicios = Constants.DATASET_LIST_DROPDOWN_GROUPS_SERVICIOS.value;
+        this.groupsOptionPrecios = Constants.DATASET_LIST_DROPDOWN_GROUPS_PRECIOS.value;
+        this.groupsOptionPib = Constants.DATASET_LIST_DROPDOWN_GROUPS_PIB.value;
+        this.groupsOptionFinancieras = Constants.DATASET_LIST_DROPDOWN_GROUPS_FINANCIERAS.value;
+        this.groupsOptionIDITic = Constants.DATASET_LIST_DROPDOWN_GROUPS_IDITIC.value;
+        this.groupsOptionMedioAmbiente = Constants.DATASET_LIST_DROPDOWN_GROUPS_MEDIOAMBIENTE.value;
+        this.groupsOptionSectorPublico = Constants.DATASET_LIST_DROPDOWN_GROUPS_SECTORPUBLICO.value;
     }
 
     ngOnInit() {
@@ -161,14 +165,14 @@ export class DatasetsListComponent implements OnInit {
                     let tags = [] = tagParams.split(',');
                     let filtered = [];
                     for (let i = 0; i < tags.length; i++) {
-                            filtered.push({ name: tags[i], value: tags[i] });
+                        filtered.push({ name: tags[i], value: tags[i] });
                     }
                     this.tags = filtered;
                 }
                 this.selectedLang = params[Constants.ROUTER_LINK_DATA_PARAM_LANG];
                 this.textSearchHomer = params[Constants.ROUTER_LINK_DATA_PARAM_TEXT_HOMER];
             } catch (error) {
-                console.error("Error: ngOnInit() queryParams - datasets-list.component.ts");
+                console.error('Error: ngOnInit() queryParams - datasets-list.component.ts');
             }
         });
 
@@ -177,10 +181,10 @@ export class DatasetsListComponent implements OnInit {
                 this.selectedTopic = params[Constants.ROUTER_LINK_DATA_PARAM_TOPIC_NAME];
                 this.selectedOrg = params[Constants.ROUTER_LINK_DATA_PARAM_ORGANIZATION_NAME];
             } catch (error) {
-                console.error("Error: ngOnInit() params - datasets-list.component.ts");
+                console.error('Error: ngOnInit() params - datasets-list.component.ts');
             }
-         });
-        
+        });
+
         this.sort = Constants.SERVER_API_LINK_PARAM_SORT_DEFAULT_VALUE;
         this.sortHomer = Constants.SERVER_API_LINK_PARAM_SORT_HOMER_DEFAULT_VALUE;
         this.setDatasetsStats();
@@ -193,7 +197,6 @@ export class DatasetsListComponent implements OnInit {
         this.setGroupsDropdown();
         this.setSubGroupsDropdown();
         this.setInfoTables();
-        
     }
 
     loadDatasets() {
@@ -207,54 +210,56 @@ export class DatasetsListComponent implements OnInit {
         } else if (this.selectedOrg) {
             this.getDatasetsByOrg(null, null, this.selectedOrg, this.selectedType);
             this.selectedSearchOption = this.datasetSearchOptionOrganizations;
-        } else if(this.tags){
-            this.getDatasetsByTags(null,null);
+        } else if (this.tags) {
+            this.getDatasetsByTags(null, null);
             this.selectedSearchOption = this.datasetSearchOptionTags;
-        } else if(this.selectedSearchOption == this.datasetSearchOptionHomer){
-            this.getDatasetsByHomer(null,null);
-        } else if(this.textSearchHomer){
+        } else if (this.selectedSearchOption == this.datasetSearchOptionHomer) {
+            this.getDatasetsByHomer(null, null);
+        } else if (this.selectedSearchOption == this.datasetSearchOptionStats) {
+            this.getDatasetsByStats(this.selectedSubGroup, null, null);
+        } else if (this.textSearchHomer) {
             this.selectedSearchOption = this.datasetSearchOptionHomer;
             this.searchHomerValue = this.textSearchHomer;
-            this.getDatasetsByHomer(null,null);
+            this.getDatasetsByHomer(null, null);
         } else {
             this.getDatasets(null, null);
         }
     }
 
-    setPagination(actual: number, total: number){
+    setPagination(actual: number, total: number) {
         this.actualPage = actual;
         this.pageFirst = 0;
-        this.pageLast = Math.ceil(+total/+this.pageRows);        
+        this.pageLast = Math.ceil(+total / +this.pageRows);
         this.pages = [];
         this.pagesShow = [];
-        if(this.pageLast == 0){
-            this.pagesShow.push('-');   
+        if (this.pageLast == 0) {
+            this.pagesShow.push('-');
         }
         for (var index = 0; index < this.pageLast; index++) {
-            this.pages.push(+index+1);   
+            this.pages.push(+index + 1);
         }
-        if (this.actualPage<4) {
+        if (this.actualPage < 4) {
             for (var index = 0; index < 5; index++) {
-                if(this.pages[index]){
-                    this.pagesShow.push(String (+this.pages[index]));
+                if (this.pages[index]) {
+                    this.pagesShow.push(String(+this.pages[index]));
                 }
             }
         } else if (this.actualPage >= (135)) {
-            for (var index = (+this.pageLast-5); index < this.pageLast; index++) {
-                if(this.pages[index]){
-                    this.pagesShow.push(String (+this.pages[index]));
+            for (var index = (+this.pageLast - 5); index < this.pageLast; index++) {
+                if (this.pages[index]) {
+                    this.pagesShow.push(String(+this.pages[index]));
                 }
             }
-        } else{
-            for (var index = (+actual-2); index <= (+this.actualPage+2); index++) {
-                if(this.pages[index]){
-                    this.pagesShow.push(String (+this.pages[index]));
+        } else {
+            for (var index = (+actual - 2); index <= (+this.actualPage + 2); index++) {
+                if (this.pages[index]) {
+                    this.pagesShow.push(String(+this.pages[index]));
                 }
             }
         }
     }
 
-    paginate(page:number) {
+    paginate(page: number) {
         --page;
         if (this.textSearch != undefined) {
             this.searchDatasetsByText(this.textSearch);
@@ -265,12 +270,15 @@ export class DatasetsListComponent implements OnInit {
         } else if (this.selectedOrg) {
             this.getDatasetsByOrg(page, this.pageRows, this.selectedOrg, this.selectedType);
             this.selectedSearchOption = this.datasetSearchOptionOrganizations;
-        } else if(this.tags){
+        } else if (this.selectedSearchOption == this.datasetSearchOptionStats) {
+            this.getDatasetsByStats(this.selectedSubGroup, page, this.pageRows);
+            this.selectedSearchOption = this.datasetSearchOptionStats;
+        } else if (this.tags) {
             this.getDatasetsByTags(page, this.pageRows);
             this.selectedSearchOption = this.datasetSearchOptionTags;
-        }else if(this.selectedSearchOption == this.datasetSearchOptionHomer){
+        } else if (this.selectedSearchOption == this.datasetSearchOptionHomer) {
             this.getDatasetsByHomer(page, this.pageRows);
-        } else if(this.textSearchHomer){
+        } else if (this.textSearchHomer) {
             this.selectedSearchOption = this.datasetSearchOptionHomer;
             this.searchHomerValue = this.textSearchHomer;
             this.getDatasetsByHomer(page, this.pageRows);
@@ -299,8 +307,8 @@ export class DatasetsListComponent implements OnInit {
             }
         } else {
             if (this.selectedType) {
-                this.location.go('/' + this.routerLinkDataCatalog 
-                + '?' + Constants.ROUTER_LINK_DATA_PARAM_TYPE + '=' + this.selectedType);
+                this.location.go('/' + this.routerLinkDataCatalog
+                    + '?' + Constants.ROUTER_LINK_DATA_PARAM_TYPE + '=' + this.selectedType);
             } else {
                 this.location.go('/' + this.routerLinkDataCatalog);
             }
@@ -308,27 +316,36 @@ export class DatasetsListComponent implements OnInit {
         }
     }
 
+    changeStats() {
+        console.log(this.selectedGroup);
+        console.log(this.selectedSubGroup);
+        if (this.selectedSubGroup != undefined) {
+            this.getDatasetsByStats(this.selectedSubGroup, null, null);
+        } else {
+            this.getDatasetsByStats(this.selectedGroup, null, null);
+        }
+    }
+
     changeTags() {
         if (this.tags.length > 0) {
-        let tagsList = [];
-        let tagUrl = '';
-        tagsList = this.tags;
-        let i = 0;
-        tagsList.forEach(tag => {
-            if (i == 0) {
-                tagUrl += '?' + Constants.ROUTER_LINK_DATA_PARAM_TAG + '=' + tag.name;
-            } else {
-                tagUrl += '&' + Constants.ROUTER_LINK_DATA_PARAM_TAG + '=' + tag.name;
-            }
-            i++;
-        });
-        this.location.go('/' + this.routerLinkDataCatalogTags + tagUrl);
-        this.getDatasetsByTags(null, null);
-       } else {
-        this.location.go('/' + this.routerLinkDataCatalog);
-        this.getDatasets(null, null);
-       }
-        
+            let tagsList = [];
+            let tagUrl = '';
+            tagsList = this.tags;
+            let i = 0;
+            tagsList.forEach(tag => {
+                if (i == 0) {
+                    tagUrl += '?' + Constants.ROUTER_LINK_DATA_PARAM_TAG + '=' + tag.name;
+                } else {
+                    tagUrl += '&' + Constants.ROUTER_LINK_DATA_PARAM_TAG + '=' + tag.name;
+                }
+                i++;
+            });
+            this.location.go('/' + this.routerLinkDataCatalogTags + tagUrl);
+            this.getDatasetsByTags(null, null);
+        } else {
+            this.location.go('/' + this.routerLinkDataCatalog);
+            this.getDatasets(null, null);
+        }
     }
 
     resetSearch() {
@@ -344,7 +361,7 @@ export class DatasetsListComponent implements OnInit {
         this.location.go('/' + this.routerLinkDataCatalog);
     }
 
-    resetSubGroupSearch(){
+    resetSubGroupSearch() {
         this.selectedSubGroup = undefined;
     }
 
@@ -365,19 +382,19 @@ export class DatasetsListComponent implements OnInit {
         event.page = 0;
         switch (event.field) {
             case Constants.DATASET_LIST_SORT_COLUMN_NAME:
-            this.sort == Constants.SERVER_API_LINK_PARAM_SORT_TITLE_STRING 
-                ? this.sort = '-' + Constants.SERVER_API_LINK_PARAM_SORT_TITLE_STRING 
-                : this.sort = Constants.SERVER_API_LINK_PARAM_SORT_TITLE_STRING;
-            break;
-        case Constants.DATASET_LIST_SORT_COLUMN_ACCESS:
-            this.sort == Constants.SERVER_API_LINK_PARAM_SORT_VIEWS_TOTAL 
-                ? this.sort = '-' + Constants.SERVER_API_LINK_PARAM_SORT_VIEWS_TOTAL 
-                : this.sort = Constants.SERVER_API_LINK_PARAM_SORT_VIEWS_TOTAL;
-            break;
-        case Constants.DATASET_LIST_SORT_COLUMN_LAST_UPDATE:
-            this.sort == Constants.SERVER_API_LINK_PARAM_SORT_METADATA_MODIFIED 
-                ? this.sort = '-' + Constants.SERVER_API_LINK_PARAM_SORT_METADATA_MODIFIED 
-                : this.sort = Constants.SERVER_API_LINK_PARAM_SORT_METADATA_MODIFIED;
+                this.sort == Constants.SERVER_API_LINK_PARAM_SORT_TITLE_STRING
+                    ? this.sort = '-' + Constants.SERVER_API_LINK_PARAM_SORT_TITLE_STRING
+                    : this.sort = Constants.SERVER_API_LINK_PARAM_SORT_TITLE_STRING;
+                break;
+            case Constants.DATASET_LIST_SORT_COLUMN_ACCESS:
+                this.sort == Constants.SERVER_API_LINK_PARAM_SORT_VIEWS_TOTAL
+                    ? this.sort = '-' + Constants.SERVER_API_LINK_PARAM_SORT_VIEWS_TOTAL
+                    : this.sort = Constants.SERVER_API_LINK_PARAM_SORT_VIEWS_TOTAL;
+                break;
+            case Constants.DATASET_LIST_SORT_COLUMN_LAST_UPDATE:
+                this.sort == Constants.SERVER_API_LINK_PARAM_SORT_METADATA_MODIFIED
+                    ? this.sort = '-' + Constants.SERVER_API_LINK_PARAM_SORT_METADATA_MODIFIED
+                    : this.sort = Constants.SERVER_API_LINK_PARAM_SORT_METADATA_MODIFIED;
                 break;
         }
         this.loadDatasets();
@@ -388,19 +405,19 @@ export class DatasetsListComponent implements OnInit {
         event.page = 0;
         switch (event.field) {
             case Constants.DATASET_LIST_HOMER_SORT_COLUMN_NAME:
-            this.sortHomer == Constants.SERVER_API_LINK_PARAM_SORT_HOMER_NAME 
-                ? this.sortHomer = '-' + Constants.SERVER_API_LINK_PARAM_SORT_HOMER_NAME 
-                : this.sortHomer = Constants.SERVER_API_LINK_PARAM_SORT_HOMER_NAME;
-            break;
-        case Constants.DATASET_LIST_HOMER_SORT_COLUMN_PORTAL:
-            this.sortHomer == Constants.SERVER_API_LINK_PARAM_SORT_HOMER_PORTAL 
-                ? this.sortHomer = '-' + Constants.SERVER_API_LINK_PARAM_SORT_HOMER_PORTAL 
-                : this.sortHomer = Constants.SERVER_API_LINK_PARAM_SORT_HOMER_PORTAL;
-            break;
+                this.sortHomer == Constants.SERVER_API_LINK_PARAM_SORT_HOMER_NAME
+                    ? this.sortHomer = '-' + Constants.SERVER_API_LINK_PARAM_SORT_HOMER_NAME
+                    : this.sortHomer = Constants.SERVER_API_LINK_PARAM_SORT_HOMER_NAME;
+                break;
+            case Constants.DATASET_LIST_HOMER_SORT_COLUMN_PORTAL:
+                this.sortHomer == Constants.SERVER_API_LINK_PARAM_SORT_HOMER_PORTAL
+                    ? this.sortHomer = '-' + Constants.SERVER_API_LINK_PARAM_SORT_HOMER_PORTAL
+                    : this.sortHomer = Constants.SERVER_API_LINK_PARAM_SORT_HOMER_PORTAL;
+                break;
             case Constants.DATASET_LIST_HOMER_SORT_COLUMN_LANGUAGE:
-            this.sortHomer == Constants.SERVER_API_LINK_PARAM_SORT_HOMER_LANGUAGE 
-                ? this.sortHomer = '-' + Constants.SERVER_API_LINK_PARAM_SORT_HOMER_LANGUAGE 
-                : this.sortHomer = Constants.SERVER_API_LINK_PARAM_SORT_HOMER_LANGUAGE;
+                this.sortHomer == Constants.SERVER_API_LINK_PARAM_SORT_HOMER_LANGUAGE
+                    ? this.sortHomer = '-' + Constants.SERVER_API_LINK_PARAM_SORT_HOMER_LANGUAGE
+                    : this.sortHomer = Constants.SERVER_API_LINK_PARAM_SORT_HOMER_LANGUAGE;
                 break;
         }
         this.loadDatasets();
@@ -415,11 +432,11 @@ export class DatasetsListComponent implements OnInit {
             try {
                 this.datasets = JSON.parse(datasets).result.results;
                 this.numDatasets = JSON.parse(datasets).result.count;
-                this.setPagination(pageNumber,this.numDatasets);
+                this.setPagination(pageNumber, this.numDatasets);
             } catch (error) {
-                console.error("Error: getDatasets() - datasets-list.component.ts");
-                this.errorTitle="Se ha producido un error";
-                this.errorMessage="Se ha producido un error en la carga de Datsets, vuelva a intentarlo y si el error persiste contacte con el administrador.";
+                console.error('Error: getDatasets() - datasets-list.component.ts');
+                this.errorTitle = this.datasetListErrorTitle;
+                this.errorMessage = this.datasetListErrorMessage;
             }
         });
     }
@@ -432,11 +449,29 @@ export class DatasetsListComponent implements OnInit {
             try {
                 this.datasets = JSON.parse(datasets).result.results;
                 this.numDatasets = JSON.parse(datasets).result.count;
-                this.setPagination(pageNumber,this.numDatasets);
+                this.setPagination(pageNumber, this.numDatasets);
             } catch (error) {
-                console.error("Error: getDatasetsBySearch() - datasets-list.component.ts");
-                this.errorTitle="Se ha producido un error";
-                this.errorMessage="Se ha producido un error en la carga de Datsets, vuelva a intentarlo y si el error persiste contacte con el administrador.";
+                console.error('Error: getDatasetsByTopic() - datasets-list.component.ts');
+                this.errorTitle = this.datasetListErrorTitle;
+                this.errorMessage = this.datasetListErrorMessage;
+            }
+        });
+    }
+
+    getDatasetsByStats(group: string, page: number, rows: number): void {
+        console.log('get Dataset by statistics');
+        this.datasets = [];
+        var pageNumber = (page != null ? page : 0);
+        var rowsNumber = (rows != null ? rows : this.pageRows);
+        this.datasetsService.getDatasetsByStats(this.sort, pageNumber, rowsNumber, group).subscribe(datasets => {
+            try {
+                this.datasets = JSON.parse(datasets).result.results;
+                this.numDatasets = JSON.parse(datasets).result.count;
+                this.setPagination(pageNumber, this.numDatasets);
+            } catch (error) {
+                console.error('Error: getDatasetsByStatistics() - datasets-list.component.ts');
+                this.errorTitle = this.datasetListErrorTitle;
+                this.errorMessage = this.datasetListErrorMessage;
             }
         });
     }
@@ -448,11 +483,11 @@ export class DatasetsListComponent implements OnInit {
             try {
                 this.datasets = JSON.parse(datasets).result.results;
                 this.numDatasets = JSON.parse(datasets).result.count;
-                this.setPagination(pageNumber,this.numDatasets);
+                this.setPagination(pageNumber, this.numDatasets);
             } catch (error) {
-                console.error("Error: getDatasetsBySearch() - datasets-list.component.ts");
-                this.errorTitle="Se ha producido un error";
-                this.errorMessage="Se ha producido un error en la carga de Datsets, vuelva a intentarlo y si el error persiste contacte con el administrador.";
+                console.error('Error: getDatasetsBySearch() - datasets-list.component.ts');
+                this.errorTitle = this.datasetListErrorTitle;
+                this.errorMessage = this.datasetListErrorMessage;
             }
         });
     }
@@ -465,11 +500,11 @@ export class DatasetsListComponent implements OnInit {
             try {
                 this.datasets = JSON.parse(datasets).result.results;
                 this.numDatasets = JSON.parse(datasets).result.count;
-                this.setPagination(pageNumber,this.numDatasets);
+                this.setPagination(pageNumber, this.numDatasets);
             } catch (error) {
-                console.error("Error: getDatasetsByOrg() - datasets-list.component.ts");
-                this.errorTitle="Se ha producido un error";
-                this.errorMessage="Se ha producido un error en la carga de Datsets, vuelva a intentarlo y si el error persiste contacte con el administrador.";
+                console.error('Error: getDatasetsByOrg() - datasets-list.component.ts');
+                this.errorTitle = this.datasetListErrorTitle;
+                this.errorMessage = this.datasetListErrorMessage;
             }
         });
     }
@@ -482,14 +517,14 @@ export class DatasetsListComponent implements OnInit {
             try {
                 this.datasets = JSON.parse(datasets).result.results;
                 this.numDatasets = JSON.parse(datasets).result.count;
-                this.setPagination(pageNumber,this.numDatasets);
+                this.setPagination(pageNumber, this.numDatasets);
             } catch (error) {
-                console.error("Error: getDatasetsByTags() - datasets-list.component.ts");
-                this.errorTitle="Se ha producido un error";
-                this.errorMessage="Se ha producido un error en la carga de Datsets, vuelva a intentarlo y si el error persiste contacte con el administrador.";
+                console.error('Error: getDatasetsByTags() - datasets-list.component.ts');
+                this.errorTitle = this.datasetListErrorTitle;
+                this.errorMessage = this.datasetListErrorMessage;
             }
         });
-        
+
     }
 
     getDatasetsByHomer(page: number, rows: number): void {
@@ -502,9 +537,9 @@ export class DatasetsListComponent implements OnInit {
                 this.numDatasetsHomer = JSON.parse(datasetsHomer).response.numFound;
                 this.setPagination(pageNumber, this.numDatasetsHomer);
             } catch (error) {
-                console.error("Error: getDatasetsByHomer() - datasets-list.component.ts");
-                this.errorTitle="Se ha producido un error";
-                this.errorMessage="Se ha producido un error en la carga de Datsets, vuelva a intentarlo y si el error persiste contacte con el administrador.";
+                console.error('Error: getDatasetsByHomer() - datasets-list.component.ts');
+                this.errorTitle = this.datasetListErrorTitle;
+                this.errorMessage = this.datasetListErrorMessage;
             }
         });
     }
@@ -518,14 +553,15 @@ export class DatasetsListComponent implements OnInit {
                 this.topics = JSON.parse(topics).result;
                 for (let top of this.topics) {
                     this.topicsSelect.push({ label: top.title, value: top.name });
-                } 
+                }
             } catch (error) {
-                console.error("Error: setTopicsDropdown() - datasets-list.component.ts");
-                this.errorTitle="Se ha producido un error";
-                this.errorMessage="Se ha producido un error en la carga de Datsets, vuelva a intentarlo y si el error persiste contacte con el administrador.";
+                console.error('Error: setTopicsDropdown() - datasets-list.component.ts');
+                this.errorTitle = 'Se ha producido un error';
+                this.errorMessage = 'Se ha producido un error en la carga de Datsets, vuelva a intentarlo y si el error persiste contacte con el administrador.';
             }
         });
     }
+
     setOrgsDropdown() {
         this.orgsSelect = [];
         this.orgsSelect.push({ label: 'Todas las organizaciones', value: undefined });
@@ -536,9 +572,9 @@ export class DatasetsListComponent implements OnInit {
                     this.orgsSelect.push({ label: org.title, value: org.name });
                 }
             } catch (error) {
-                console.error("Error: setOrgsDropdown() - datasets-list.component.ts");
-                this.errorTitle="Se ha producido un error";
-                this.errorMessage="Se ha producido un error al cargar la lista, vuelva a intentarlo y si el error persiste contacte con el administrador.";
+                console.error('Error: setOrgsDropdown() - datasets-list.component.ts');
+                this.errorTitle = 'Se ha producido un error';
+                this.errorMessage = 'Se ha producido un error al cargar la lista, vuelva a intentarlo y si el error persiste contacte con el administrador.';
             }
         });
     }
@@ -561,7 +597,6 @@ export class DatasetsListComponent implements OnInit {
         this.datasetTypes.push({ label: Constants.DATASET_LIST_DROPDOWN_TYPE_RECURSOS_WEB_LABEL, value: Constants.DATASET_LIST_DROPDOWN_TYPE_RECURSOS_WEB_VALUE });
         this.datasetTypes.push({ label: Constants.DATASET_LIST_DROPDOWN_TYPE_RSS_LABEL, value: Constants.DATASET_LIST_DROPDOWN_TYPE_RSS_VALUE });
         this.datasetTypes.push({ label: Constants.DATASET_LIST_DROPDOWN_TYPE_TEXTO_PLANO_LABEL, value: Constants.DATASET_LIST_DROPDOWN_TYPE_TEXTO_PLANO_VALUE });
-        
     }
 
     setSearchOptions() {
@@ -584,30 +619,29 @@ export class DatasetsListComponent implements OnInit {
         this.langsSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_LANG_EL_LABEL, value: Constants.DATASET_LIST_DROPDOWN_LANG_EL_VALUE });
         this.langsSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_LANG_SL_LABEL, value: Constants.DATASET_LIST_DROPDOWN_LANG_SL_VALUE });
         this.langsSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_LANG_SR_LABEL, value: Constants.DATASET_LIST_DROPDOWN_LANG_SR_VALUE });
-        
     }
 
     setGroupsDropdown() {
         this.groupSelect = [];
-        this.groupSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_GROUPS_ALL, value: undefined });
-        this.groupSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_GROUPS_TERRITORIO, value: Constants.DATASET_LIST_DROPDOWN_GROUPS_TERRITORIO });
-        this.groupSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_GROUPS_DEMOGRAFIA, value: Constants.DATASET_LIST_DROPDOWN_GROUPS_DEMOGRAFIA });
-        this.groupSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_GROUPS_EDUCACION, value: Constants.DATASET_LIST_DROPDOWN_GROUPS_EDUCACION });
-        this.groupSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_GROUPS_SALUD, value: Constants.DATASET_LIST_DROPDOWN_GROUPS_SALUD });
-        this.groupSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_GROUPS_NIVELCALIDADVIDA, value: Constants.DATASET_LIST_DROPDOWN_GROUPS_NIVELCALIDADVIDA });
-        this.groupSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_GROUPS_ANALISISSOCIALES, value: Constants.DATASET_LIST_DROPDOWN_GROUPS_ANALISISSOCIALES });
-        this.groupSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_GROUPS_TRABAJOSALARIOS, value: Constants.DATASET_LIST_DROPDOWN_GROUPS_TRABAJOSALARIOS });
-        this.groupSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_GROUPS_AGRICULTURA, value: Constants.DATASET_LIST_DROPDOWN_GROUPS_AGRICULTURA });
-        this.groupSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_GROUPS_SERVICIOS, value: Constants.DATASET_LIST_DROPDOWN_GROUPS_SERVICIOS });
-        this.groupSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_GROUPS_PRECIOS, value: Constants.DATASET_LIST_DROPDOWN_GROUPS_PRECIOS });
-        this.groupSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_GROUPS_PIB, value: Constants.DATASET_LIST_DROPDOWN_GROUPS_PIB });
-        this.groupSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_GROUPS_FINANCIERAS, value: Constants.DATASET_LIST_DROPDOWN_GROUPS_FINANCIERAS });
-        this.groupSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_GROUPS_IDITIC, value: Constants.DATASET_LIST_DROPDOWN_GROUPS_IDITIC });
-        this.groupSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_GROUPS_MEDIOAMBIENTE, value: Constants.DATASET_LIST_DROPDOWN_GROUPS_MEDIOAMBIENTE });
-        this.groupSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_GROUPS_SECTORPUBLICO, value: Constants.DATASET_LIST_DROPDOWN_GROUPS_SECTORPUBLICO });   
+        this.groupSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_GROUPS_ALL.label, value: Constants.DATASET_LIST_DROPDOWN_GROUPS_ALL.value });
+        this.groupSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_GROUPS_TERRITORIO.label, value: Constants.DATASET_LIST_DROPDOWN_GROUPS_TERRITORIO.value });
+        this.groupSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_GROUPS_DEMOGRAFIA.label, value: Constants.DATASET_LIST_DROPDOWN_GROUPS_DEMOGRAFIA.value });
+        this.groupSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_GROUPS_EDUCACION.label, value: Constants.DATASET_LIST_DROPDOWN_GROUPS_EDUCACION.value });
+        this.groupSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_GROUPS_SALUD.label, value: Constants.DATASET_LIST_DROPDOWN_GROUPS_SALUD.value });
+        this.groupSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_GROUPS_NIVELCALIDADVIDA.label, value: Constants.DATASET_LIST_DROPDOWN_GROUPS_NIVELCALIDADVIDA.value });
+        this.groupSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_GROUPS_ANALISISSOCIALES.label, value: Constants.DATASET_LIST_DROPDOWN_GROUPS_ANALISISSOCIALES.value });
+        this.groupSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_GROUPS_TRABAJOSALARIOS.label, value: Constants.DATASET_LIST_DROPDOWN_GROUPS_TRABAJOSALARIOS.value });
+        this.groupSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_GROUPS_AGRICULTURA.label, value: Constants.DATASET_LIST_DROPDOWN_GROUPS_AGRICULTURA.value });
+        this.groupSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_GROUPS_SERVICIOS.label, value: Constants.DATASET_LIST_DROPDOWN_GROUPS_SERVICIOS.value });
+        this.groupSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_GROUPS_PRECIOS.label, value: Constants.DATASET_LIST_DROPDOWN_GROUPS_PRECIOS.value });
+        this.groupSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_GROUPS_PIB.label, value: Constants.DATASET_LIST_DROPDOWN_GROUPS_PIB.value });
+        this.groupSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_GROUPS_FINANCIERAS.label, value: Constants.DATASET_LIST_DROPDOWN_GROUPS_FINANCIERAS.value });
+        this.groupSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_GROUPS_IDITIC.label, value: Constants.DATASET_LIST_DROPDOWN_GROUPS_IDITIC.value });
+        this.groupSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_GROUPS_MEDIOAMBIENTE.label, value: Constants.DATASET_LIST_DROPDOWN_GROUPS_MEDIOAMBIENTE.value });
+        this.groupSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_GROUPS_SECTORPUBLICO.label, value: Constants.DATASET_LIST_DROPDOWN_GROUPS_SECTORPUBLICO.value });
     }
 
-    setSubGroupsDropdown(){
+    setSubGroupsDropdown() {
         this.setSubGroupTerritorioDropdown();
         this.setSubGroupDemografiaDropdown();
         this.setSubGroupEducacionDropdown();
@@ -624,195 +658,190 @@ export class DatasetsListComponent implements OnInit {
         this.setSubGroupMedioAmbienteEnergiaDropdown();
         this.setSubGroupSectorPublicoEleccionesDropdown();
     }
-    
-    setSubGroupTerritorioDropdown(){
+
+    setSubGroupTerritorioDropdown() {
         this.subGroupTerritorioSelect = [];
-        this.subGroupTerritorioSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL, value: undefined });
-        this.subGroupTerritorioSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_ESPACIO_FISICO, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_ESPACIO_FISICO });
-        this.subGroupTerritorioSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_USOS_SUELO, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_USOS_SUELO });
-        this.subGroupTerritorioSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_NOMENCLATURAS, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_NOMENCLATURAS });
-        this.subGroupTerritorioSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_INFRAESTRUCTURAS, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_INFRAESTRUCTURAS });
-        this.subGroupTerritorioSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_MUNICIPIOS, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_MUNICIPIOS });
-        this.subGroupTerritorioSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_COMARCAS, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_COMARCAS });
-        this.subGroupTerritorioSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_ZONAS_SECTORIALES, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_ZONAS_SECTORIALES });
+        this.subGroupTerritorioSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL.value });
+        this.subGroupTerritorioSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_ESPACIO_FISICO.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_ESPACIO_FISICO.value });
+        this.subGroupTerritorioSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_USOS_SUELO.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_USOS_SUELO.value });
+        this.subGroupTerritorioSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_NOMENCLATURAS.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_NOMENCLATURAS.value });
+        this.subGroupTerritorioSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_INFRAESTRUCTURAS.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_INFRAESTRUCTURAS.value });
+        this.subGroupTerritorioSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_MUNICIPIOS.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_MUNICIPIOS.value });
+        this.subGroupTerritorioSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_COMARCAS.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_COMARCAS.value });
+        this.subGroupTerritorioSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_ZONAS_SECTORIALES.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TERRITORIO_ZONAS_SECTORIALES.value });
     }
 
-    setSubGroupDemografiaDropdown(){
+    setSubGroupDemografiaDropdown() {
         this.subGroupDemografiaSelect = [];
-        this.subGroupDemografiaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL, value: undefined });
-        this.subGroupDemografiaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_DEMOGRAFIA_CIFRAS_POBLACION, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_DEMOGRAFIA_CIFRAS_POBLACION });
-        this.subGroupDemografiaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_DEMOGRAFIA_INDICADORES_DEMOGRAFICOS, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_DEMOGRAFIA_INDICADORES_DEMOGRAFICOS });
-        this.subGroupDemografiaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_DEMOGRAFIA_ESTUDIOS_DEMOGRAFICOS, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_DEMOGRAFIA_ESTUDIOS_DEMOGRAFICOS });
-        this.subGroupDemografiaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_DEMOGRAFIA_MIGRACIONES, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_DEMOGRAFIA_MIGRACIONES });
-        this.subGroupDemografiaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_DEMOGRAFIA_MOVIMIENTO_NATURAL, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_DEMOGRAFIA_MOVIMIENTO_NATURAL });
-
+        this.subGroupDemografiaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL.value });
+        this.subGroupDemografiaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_DEMOGRAFIA_CIFRAS_POBLACION.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_DEMOGRAFIA_CIFRAS_POBLACION.value });
+        this.subGroupDemografiaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_DEMOGRAFIA_INDICADORES_DEMOGRAFICOS.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_DEMOGRAFIA_INDICADORES_DEMOGRAFICOS.value });
+        this.subGroupDemografiaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_DEMOGRAFIA_ESTUDIOS_DEMOGRAFICOS.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_DEMOGRAFIA_ESTUDIOS_DEMOGRAFICOS.value });
+        this.subGroupDemografiaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_DEMOGRAFIA_MIGRACIONES.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_DEMOGRAFIA_MIGRACIONES.value });
+        this.subGroupDemografiaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_DEMOGRAFIA_MOVIMIENTO_NATURAL.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_DEMOGRAFIA_MOVIMIENTO_NATURAL.value });
     }
 
-    setSubGroupEducacionDropdown(){
+    setSubGroupEducacionDropdown() {
         this.subGroupEducacionSelect = [];
-        this.subGroupEducacionSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL, value: undefined });
-        this.subGroupEducacionSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_ENSENANZA_NO_UNIVERSITARIA, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_ENSENANZA_NO_UNIVERSITARIA});
-        this.subGroupEducacionSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_ENSENANZA_UNIVERSITARIA, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_ENSENANZA_UNIVERSITARIA});
-        this.subGroupEducacionSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_GASTO_PUBLICO, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_GASTO_PUBLICO});
-        this.subGroupEducacionSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_BECAS, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_BECAS});
-        this.subGroupEducacionSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_TRANSICION, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_TRANSICION});
-        this.subGroupEducacionSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_ENCUESTA , value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_ENCUESTA });
-        this.subGroupEducacionSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_NIVEL , value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_NIVEL });
-
+        this.subGroupEducacionSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL.value });
+        this.subGroupEducacionSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_ENSENANZA_NO_UNIVERSITARIA.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_ENSENANZA_NO_UNIVERSITARIA.value });
+        this.subGroupEducacionSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_ENSENANZA_UNIVERSITARIA.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_ENSENANZA_UNIVERSITARIA.value });
+        this.subGroupEducacionSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_GASTO_PUBLICO.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_GASTO_PUBLICO.value });
+        this.subGroupEducacionSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_BECAS.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_BECAS.value });
+        this.subGroupEducacionSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_TRANSICION.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_TRANSICION.value });
+        this.subGroupEducacionSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_ENCUESTA.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_ENCUESTA.value });
+        this.subGroupEducacionSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_NIVEL.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_EDUCACION_NIVEL.value });
     }
-    setSubGroupSaludDropdown(){   
+
+    setSubGroupSaludDropdown() {
         this.subGroupSaludSelect = [];
-        this.subGroupSaludSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL, value: undefined });
-        this.subGroupSaludSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_ESPERANZA, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_ESPERANZA});
-        this.subGroupSaludSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_POBLACION, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_POBLACION});
-        this.subGroupSaludSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_TARJETAS, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_TARJETAS});
-        this.subGroupSaludSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_ENCUESTA, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_ENCUESTA});
-        this.subGroupSaludSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_SECTORES, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_SECTORES});
-        this.subGroupSaludSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_INFRAESTRUCTURA, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_INFRAESTRUCTURA});
-        this.subGroupSaludSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_DOTACION, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_DOTACION});
-        this.subGroupSaludSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_DISCAPACIDADES, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_DISCAPACIDADES});
-        this.subGroupSaludSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_MORBILIDAD, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_MORBILIDAD});
-        this.subGroupSaludSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_DEFUNCIONES, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_DEFUNCIONES});
-        this.subGroupSaludSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_ESTADISTICAS, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_ESTADISTICAS});
-        this.subGroupSaludSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_INTERRUPCION, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_INTERRUPCION});
-        this.subGroupSaludSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_OTRAS, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_OTRAS});
-
+        this.subGroupSaludSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL.value });
+        this.subGroupSaludSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_ESPERANZA.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_ESPERANZA.value });
+        this.subGroupSaludSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_POBLACION.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_POBLACION.value });
+        this.subGroupSaludSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_TARJETAS.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_TARJETAS.value });
+        this.subGroupSaludSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_ENCUESTA.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_ENCUESTA.value });
+        this.subGroupSaludSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_SECTORES.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_SECTORES.value });
+        this.subGroupSaludSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_INFRAESTRUCTURA.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_INFRAESTRUCTURA.value });
+        this.subGroupSaludSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_DOTACION.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_DOTACION.value });
+        this.subGroupSaludSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_DISCAPACIDADES.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_DISCAPACIDADES.value });
+        this.subGroupSaludSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_MORBILIDAD.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_MORBILIDAD.value });
+        this.subGroupSaludSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_DEFUNCIONES.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_DEFUNCIONES.value });
+        this.subGroupSaludSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_ESTADISTICAS.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_ESTADISTICAS.value });
+        this.subGroupSaludSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_INTERRUPCION.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_INTERRUPCION.value });
+        this.subGroupSaludSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_OTRAS.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SALUD_OTRAS.value });
     }
-    setSubGroupNivelCalidadCondicionesVidaDropdown(){   
+    
+    setSubGroupNivelCalidadCondicionesVidaDropdown() {
         this.subGroupNivelCalidadVidaSelect = [];
-        this.subGroupNivelCalidadVidaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL, value: undefined });
-        this.subGroupNivelCalidadVidaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_CONDICIONES, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_CONDICIONES});
-        this.subGroupNivelCalidadVidaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_PRESUPUESTOS, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_PRESUPUESTOS});
-        this.subGroupNivelCalidadVidaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_OTRAS, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_OTRAS});
-        this.subGroupNivelCalidadVidaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_INDICE, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_INDICE});
-        this.subGroupNivelCalidadVidaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_PENSIONES, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_PENSIONES});
-        this.subGroupNivelCalidadVidaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_VIVIENDA, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_VIVIENDA});
-
+        this.subGroupNivelCalidadVidaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL.value });
+        this.subGroupNivelCalidadVidaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_CONDICIONES.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_CONDICIONES.value });
+        this.subGroupNivelCalidadVidaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_PRESUPUESTOS.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_PRESUPUESTOS.value });
+        this.subGroupNivelCalidadVidaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_OTRAS.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_OTRAS.value });
+        this.subGroupNivelCalidadVidaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_INDICE.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_INDICE.value });
+        this.subGroupNivelCalidadVidaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_PENSIONES.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_PENSIONES.value });
+        this.subGroupNivelCalidadVidaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_VIVIENDA.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_NIVELCALIDADVIDA_VIVIENDA.value });
     }
-    setSubGroupNivelAnalisisSocialesJusticiaCulturaDeporteDropdown(){  
+
+    setSubGroupNivelAnalisisSocialesJusticiaCulturaDeporteDropdown() {
         this.subGroupAnalisisSocialesSelect = [];
-        this.subGroupAnalisisSocialesSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL, value: undefined });
-        this.subGroupAnalisisSocialesSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_ANALISIS, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_ANALISIS });
-        this.subGroupAnalisisSocialesSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_DEPENDENCIA, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_DEPENDENCIA });
-        this.subGroupAnalisisSocialesSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_COOPERACION, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_COOPERACION });
-        this.subGroupAnalisisSocialesSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_ENCUESTA, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_ENCUESTA });
-        this.subGroupAnalisisSocialesSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_SECTOR, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_SECTOR });
-        this.subGroupAnalisisSocialesSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_ESTADISTICA, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_ESTADISTICA });
-        this.subGroupAnalisisSocialesSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_JUSTICIA, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_JUSTICIA });
-        this.subGroupAnalisisSocialesSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_CULTURA, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_CULTURA });
-        this.subGroupAnalisisSocialesSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_DEPORTE, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_DEPORTE });
-
-
+        this.subGroupAnalisisSocialesSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL.value });
+        this.subGroupAnalisisSocialesSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_ANALISIS.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_ANALISIS.value });
+        this.subGroupAnalisisSocialesSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_DEPENDENCIA.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_DEPENDENCIA.value });
+        this.subGroupAnalisisSocialesSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_COOPERACION.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_COOPERACION.value });
+        this.subGroupAnalisisSocialesSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_ENCUESTA.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_ENCUESTA.value });
+        this.subGroupAnalisisSocialesSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_SECTOR.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_SECTOR.value });
+        this.subGroupAnalisisSocialesSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_ESTADISTICA.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_ESTADISTICA.value });
+        this.subGroupAnalisisSocialesSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_JUSTICIA.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_JUSTICIA.value });
+        this.subGroupAnalisisSocialesSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_CULTURA.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_CULTURA.value });
+        this.subGroupAnalisisSocialesSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_DEPORTE.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_ANALISISSOCIALES_DEPORTE.value });
     }
-    setSubGroupTrabajoSalariosRelacionesLaboralesDropdown(){  
+
+    setSubGroupTrabajoSalariosRelacionesLaboralesDropdown() {
         this.subGroupTrabajoSalariosSelect = [];
-        this.subGroupTrabajoSalariosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL, value: undefined });
-        this.subGroupTrabajoSalariosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_ENCUESTA, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_ENCUESTA });
-        this.subGroupTrabajoSalariosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_PARO, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_PARO });
-        this.subGroupTrabajoSalariosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_AFILIADOS, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_AFILIADOS });
-        this.subGroupTrabajoSalariosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_MOVIMIENTO, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_MOVIMIENTO });
-        this.subGroupTrabajoSalariosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_RELACIONES, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_RELACIONES });
-        this.subGroupTrabajoSalariosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_COSTES, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_COSTES });
-        this.subGroupTrabajoSalariosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_SALARIOS, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_SALARIOS });
-        this.subGroupTrabajoSalariosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_PRESTACIONES, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_PRESTACIONES });
-        this.subGroupTrabajoSalariosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_ACCIDENTES, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_ACCIDENTES });
-        this.subGroupTrabajoSalariosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_ACTIVIDAD, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_ACTIVIDAD });
-        this.subGroupTrabajoSalariosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_PRINCIPALES, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_PRINCIPALES });
-        this.subGroupTrabajoSalariosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_HERRAMIENTAS, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_HERRAMIENTAS });
-  
+        this.subGroupTrabajoSalariosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL.value });
+        this.subGroupTrabajoSalariosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_ENCUESTA.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_ENCUESTA.value });
+        this.subGroupTrabajoSalariosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_PARO.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_PARO.value });
+        this.subGroupTrabajoSalariosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_AFILIADOS.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_AFILIADOS.value });
+        this.subGroupTrabajoSalariosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_MOVIMIENTO.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_MOVIMIENTO.value });
+        this.subGroupTrabajoSalariosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_RELACIONES.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_RELACIONES.value });
+        this.subGroupTrabajoSalariosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_COSTES.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_COSTES.value });
+        this.subGroupTrabajoSalariosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_SALARIOS.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_SALARIOS.value });
+        this.subGroupTrabajoSalariosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_PRESTACIONES.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_PRESTACIONES.value });
+        this.subGroupTrabajoSalariosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_ACCIDENTES.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_ACCIDENTES.value });
+        this.subGroupTrabajoSalariosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_ACTIVIDAD.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_ACTIVIDAD.value });
+        this.subGroupTrabajoSalariosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_PRINCIPALES.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_PRINCIPALES.value });
+        this.subGroupTrabajoSalariosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_HERRAMIENTAS.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_TRABAJOSALARIOS_HERRAMIENTAS.value });
     }
-    setSubGroupAgriculturaIndustriaConstruccionDropdown(){   
+
+    setSubGroupAgriculturaIndustriaConstruccionDropdown() {
         this.subGroupAgriculturaSelect = [];
-        this.subGroupAgriculturaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL, value: undefined });
-        this.subGroupAgriculturaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_AGRICULTURA_AGRICULTURA, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_AGRICULTURA_AGRICULTURA });
-        this.subGroupAgriculturaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_AGRICULTURA_INDUSTRIA, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_AGRICULTURA_INDUSTRIA });
-        this.subGroupAgriculturaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_AGRICULTURA_CONSTRUCCION, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_AGRICULTURA_CONSTRUCCION });
-
+        this.subGroupAgriculturaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL.value });
+        this.subGroupAgriculturaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_AGRICULTURA_AGRICULTURA.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_AGRICULTURA_AGRICULTURA.value });
+        this.subGroupAgriculturaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_AGRICULTURA_INDUSTRIA.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_AGRICULTURA_INDUSTRIA.value });
+        this.subGroupAgriculturaSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_AGRICULTURA_CONSTRUCCION.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_AGRICULTURA_CONSTRUCCION.value });
     }
-    setSubGroupServiciosComercioTransporteTurismoDropdown(){   
+
+    setSubGroupServiciosComercioTransporteTurismoDropdown() {
         this.subGroupServiciosSelect = [];
-        this.subGroupServiciosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL, value: undefined });
-        this.subGroupServiciosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SERVICIOS_ENCUESTAS, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SERVICIOS_ENCUESTAS });
-        this.subGroupServiciosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SERVICIOS_COMERCIO, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SERVICIOS_COMERCIO });
-        this.subGroupServiciosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SERVICIOS_TRANSPORTE, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SERVICIOS_TRANSPORTE });
-        this.subGroupServiciosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SERVICIOS_TURISMO, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SERVICIOS_TURISMO });
-        this.subGroupServiciosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SERVICIOS_ACTIVIDAD, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SERVICIOS_ACTIVIDAD });
-
+        this.subGroupServiciosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL.value });
+        this.subGroupServiciosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SERVICIOS_ENCUESTAS.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SERVICIOS_ENCUESTAS.value });
+        this.subGroupServiciosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SERVICIOS_COMERCIO.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SERVICIOS_COMERCIO.value });
+        this.subGroupServiciosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SERVICIOS_TRANSPORTE.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SERVICIOS_TRANSPORTE.value });
+        this.subGroupServiciosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SERVICIOS_TURISMO.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SERVICIOS_TURISMO.value });
+        this.subGroupServiciosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SERVICIOS_ACTIVIDAD.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SERVICIOS_ACTIVIDAD.value });
     }
-    setSubGroupPreciosDropdown(){   
+
+    setSubGroupPreciosDropdown() {
         this.subGroupPreciosSelect = [];
-        this.subGroupPreciosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL, value: undefined });
-        this.subGroupPreciosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_INDICE, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_INDICE });
-        this.subGroupPreciosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_GASOLINAS, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_GASOLINAS });
-        this.subGroupPreciosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_VIVIENDA, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_VIVIENDA });
-        this.subGroupPreciosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_SUELO_URBANO, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_SUELO_URBANO });
-        this.subGroupPreciosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_SUELO_AGRARIO, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_SUELO_AGRARIO });
-        this.subGroupPreciosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_INDUSTRIA, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_INDUSTRIA });
-        this.subGroupPreciosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_HOSTELEROS, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_HOSTELEROS });
-        this.subGroupPreciosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_AGRARIOS, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_AGRARIOS });
-
+        this.subGroupPreciosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL.value });
+        this.subGroupPreciosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_INDICE.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_INDICE.value });
+        this.subGroupPreciosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_GASOLINAS.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_GASOLINAS.value });
+        this.subGroupPreciosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_VIVIENDA.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_VIVIENDA.value });
+        this.subGroupPreciosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_SUELO_URBANO.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_SUELO_URBANO.value });
+        this.subGroupPreciosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_SUELO_AGRARIO.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_SUELO_AGRARIO.value });
+        this.subGroupPreciosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_INDUSTRIA.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_INDUSTRIA.value });
+        this.subGroupPreciosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_HOSTELEROS.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_HOSTELEROS.value });
+        this.subGroupPreciosSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_AGRARIOS.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PRECIOS_AGRARIOS.value });
     }
-    setSubGroupPIBRentaComercioExteriorEmpresasDropdown(){  
+
+    setSubGroupPIBRentaComercioExteriorEmpresasDropdown() {
         this.subGroupPIBSelect = [];
-        this.subGroupPIBSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL, value: undefined });
-        this.subGroupPIBSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PIB_VALOR, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PIB_VALOR });
-        this.subGroupPIBSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PIB_COMERCIO, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PIB_COMERCIO });
-        this.subGroupPIBSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PIB_EMPRESAS, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PIB_EMPRESAS });
-        
-
+        this.subGroupPIBSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL.value });
+        this.subGroupPIBSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PIB_VALOR.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PIB_VALOR.value });
+        this.subGroupPIBSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PIB_COMERCIO.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PIB_COMERCIO.value });
+        this.subGroupPIBSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PIB_EMPRESAS.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_PIB_EMPRESAS.value });
     }
-    setSubGroupFinancierasMercantilesTributariasDropdown(){   
+    
+    setSubGroupFinancierasMercantilesTributariasDropdown() {
         this.subGroupFinancierasSelect = [];
-        this.subGroupFinancierasSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL, value: undefined });
-        this.subGroupFinancierasSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_ENTIDADES, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_ENTIDADES });
-        this.subGroupFinancierasSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_EFECTOS, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_EFECTOS });
-        this.subGroupFinancierasSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_HIPOTECAS, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_HIPOTECAS });
-        this.subGroupFinancierasSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_SOCIEDADES, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_SOCIEDADES });
-        this.subGroupFinancierasSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_ESTADOS, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_ESTADOS });
-        this.subGroupFinancierasSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_SUSPENSIONES, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_SUSPENSIONES });
-        this.subGroupFinancierasSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_ESTADISTICA, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_ESTADISTICA });
-        this.subGroupFinancierasSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_INFORMACION, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_INFORMACION });
+        this.subGroupFinancierasSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL.value });
+        this.subGroupFinancierasSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_ENTIDADES.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_ENTIDADES.value });
+        this.subGroupFinancierasSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_EFECTOS.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_EFECTOS.value });
+        this.subGroupFinancierasSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_HIPOTECAS.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_HIPOTECAS.value });
+        this.subGroupFinancierasSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_SOCIEDADES.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_SOCIEDADES.value });
+        this.subGroupFinancierasSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_ESTADOS.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_ESTADOS.value });
+        this.subGroupFinancierasSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_SUSPENSIONES.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_SUSPENSIONES.value });
+        this.subGroupFinancierasSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_ESTADISTICA.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_ESTADISTICA.value });
+        this.subGroupFinancierasSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_INFORMACION.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_FINANCIERAS_INFORMACION.value });
+    }
 
-    }
-    
-    setSubGroupIDITicDropdown(){   
+    setSubGroupIDITicDropdown() {
         this.subGroupIDITicSelect = [];
-        this.subGroupIDITicSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL, value: undefined });
-        this.subGroupIDITicSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_IDITIC_INVESTIGACION, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_IDITIC_INVESTIGACION });
-        this.subGroupIDITicSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_IDITIC_TECNOLOGIAS, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_IDITIC_TECNOLOGIAS });
+        this.subGroupIDITicSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL.value });
+        this.subGroupIDITicSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_IDITIC_INVESTIGACION.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_IDITIC_INVESTIGACION.value });
+        this.subGroupIDITicSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_IDITIC_TECNOLOGIAS.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_IDITIC_TECNOLOGIAS.value });
     }
-    
-    setSubGroupMedioAmbienteEnergiaDropdown(){  
+
+    setSubGroupMedioAmbienteEnergiaDropdown() {
         this.subGroupMedioAmbienteSelect = [];
-        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL, value: undefined });
-        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_SECTORES, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_SECTORES });
-        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_AGUA, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_AGUA });
-        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_CALIDAD_AIRE, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_CALIDAD_AIRE });
-        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_CAMBIO_CLIMATICO, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_CAMBIO_CLIMATICO });
-        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_CLIMA, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_CLIMA });
-        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_GASTO, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_GASTO });
-        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_HOGARES, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_HOGARES });
-        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_MEDIO_AMBIENTE, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_MEDIO_AMBIENTE });
-        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_NATURALEZA, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_NATURALEZA });
-        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_PREVENCION, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_PREVENCION });
-        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_RESIDUOS, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_RESIDUOS });
-        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_RIESGOS, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_RIESGOS });
-        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_SUELOS, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_SUELOS });
-        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_TRIBUTOS, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_TRIBUTOS });
-        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_UTILIZACION, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_UTILIZACION });
-        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_DESARROLLO, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_DESARROLLO });
-        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_DICCIONARIO, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_DICCIONARIO });
-        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_ENERGIA, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_ENERGIA });
-         
+        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL.value });
+        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_SECTORES.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_SECTORES.value });
+        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_AGUA.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_AGUA.value });
+        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_CALIDAD_AIRE.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_CALIDAD_AIRE.value });
+        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_CAMBIO_CLIMATICO.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_CAMBIO_CLIMATICO.value });
+        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_CLIMA.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_CLIMA.value });
+        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_GASTO.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_GASTO.value });
+        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_HOGARES.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_HOGARES.value });
+        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_MEDIO_AMBIENTE.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_MEDIO_AMBIENTE.value });
+        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_NATURALEZA.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_NATURALEZA.value });
+        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_PREVENCION.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_PREVENCION.value });
+        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_RESIDUOS.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_RESIDUOS.value });
+        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_RIESGOS.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_RIESGOS.value });
+        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_SUELOS.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_SUELOS.value });
+        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_TRIBUTOS.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_TRIBUTOS.value });
+        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_UTILIZACION.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_UTILIZACION.value });
+        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_DESARROLLO.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_DESARROLLO.value });
+        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_DICCIONARIO.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_DICCIONARIO.value });
+        this.subGroupMedioAmbienteSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_ENERGIA.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_MEDIOAMBIENTE_ENERGIA.value });
     }
-    
-    setSubGroupSectorPublicoEleccionesDropdown(){   
+
+    setSubGroupSectorPublicoEleccionesDropdown() {
         this.subGroupSectorPublicoSelect = [];
-        this.subGroupSectorPublicoSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL, value: undefined });
-        this.subGroupSectorPublicoSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SECTORPUBLICO_EMPLEO, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SECTORPUBLICO_EMPLEO });
-        this.subGroupSectorPublicoSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SECTORPUBLICO_PRESUPUESTOS, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SECTORPUBLICO_PRESUPUESTOS });
-        this.subGroupSectorPublicoSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SECTORPUBLICO_ACTIVIDADES, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SECTORPUBLICO_ACTIVIDADES });
-        this.subGroupSectorPublicoSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SECTORPUBLICO_ELECCIONES, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SECTORPUBLICO_ELECCIONES });
+        this.subGroupSectorPublicoSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUPS_ALL.value });
+        this.subGroupSectorPublicoSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SECTORPUBLICO_EMPLEO.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SECTORPUBLICO_EMPLEO.value });
+        this.subGroupSectorPublicoSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SECTORPUBLICO_PRESUPUESTOS.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SECTORPUBLICO_PRESUPUESTOS.value });
+        this.subGroupSectorPublicoSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SECTORPUBLICO_ACTIVIDADES.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SECTORPUBLICO_ACTIVIDADES.value });
+        this.subGroupSectorPublicoSelect.push({ label: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SECTORPUBLICO_ELECCIONES.label, value: Constants.DATASET_LIST_DROPDOWN_SUBGROUP_SECTORPUBLICO_ELECCIONES.value });
     }
 
     setInfoTables() {
@@ -820,18 +849,18 @@ export class DatasetsListComponent implements OnInit {
             try {
                 this.newestDatasets = JSON.parse(datasets).result.results;
             } catch (error) {
-                console.error("Error: setInfoTables() - datasets-list.component.ts");
-                this.errorTitle="Se ha producido un error";
-                this.errorMessage="Se ha producido un error al obtener los datasets recientes, vuelva a intentarlo y si el error persiste contacte con el administrador.";
+                console.error('Error: setInfoTables() - datasets-list.component.ts');
+                this.errorTitle = 'Se ha producido un error';
+                this.errorMessage = 'Se ha producido un error al obtener los datasets recientes, vuelva a intentarlo y si el error persiste contacte con el administrador.';
             }
         });
         this.datasetsService.getDownloadedDataset().subscribe(datasets => {
             try {
                 this.downloadedDatasets = JSON.parse(datasets).result.results;
             } catch (error) {
-                console.error("Error: setInfoTables() - datasets-list.component.ts");
-                this.errorTitle="Error";
-                this.errorMessage="Ha ocurrido un error en la carga de Datsets";
+                console.error('Error: setInfoTables() - datasets-list.component.ts');
+                this.errorTitle = 'Error';
+                this.errorMessage = 'Ha ocurrido un error en la carga de Datsets';
             }
         });
     }
@@ -852,46 +881,46 @@ export class DatasetsListComponent implements OnInit {
         this.getDatasetsByHomer(null, null);
     }
 
-
     setDatasetsStats() {
         this.datasetsService.getDatasetsNumber().subscribe(datasets => {
             try {
                 this.datasetCount = [];
-                let totalNumDatasets = '';            
+                let totalNumDatasets = '';
                 totalNumDatasets = JSON.parse(datasets).result.count + '';
                 while (totalNumDatasets.length < 8) totalNumDatasets = 'S' + totalNumDatasets;
                 for (var i = 0; i < totalNumDatasets.length; i++) {
-                    if(totalNumDatasets[i] == 'S'){
+                    if (totalNumDatasets[i] == 'S') {
                         this.datasetCount.push({ label: 'slim', value: '0' });
-                    }else{
-                        this.datasetCount.push({ label: 'normal', value: totalNumDatasets[i]});
+                    } else {
+                        this.datasetCount.push({ label: 'normal', value: totalNumDatasets[i] });
                     }
                 }
                 return this.datasetCount;
             } catch (error) {
-                console.error("Error: setDatasetsStats() - datasets-list.component.ts");
-                this.errorTitle="Se ha producido un error";
-                this.errorMessage="Se ha producido un error al cargar los datasets, vuelva a intentarlo y si el error persiste contacte con el administrador.";
+                console.error('Error: setDatasetsStats() - datasets-list.component.ts');
+                this.errorTitle = this.datasetListErrorTitle;
+                this.errorMessage = 'Se ha producido un error al cargar los datasets, vuelva a intentarlo y si el error persiste contacte con el administrador.';
             }
         });
+
         this.datasetsService.getResourcesNumber().subscribe(resources => {
             try {
                 this.resourceCount = [];
-                let totalNumResources = '';            
+                let totalNumResources = '';
                 totalNumResources = JSON.parse(resources).result.count + '';
                 while (totalNumResources.length < 8) totalNumResources = 'S' + totalNumResources;
                 for (var i = 0; i < totalNumResources.length; i++) {
-                    if(totalNumResources[i] == 'S'){
+                    if (totalNumResources[i] == 'S') {
                         this.resourceCount.push({ label: 'slim', value: '0' });
-                    }else{
-                        this.resourceCount.push({ label: 'normal', value: totalNumResources[i]});
+                    } else {
+                        this.resourceCount.push({ label: 'normal', value: totalNumResources[i] });
                     }
                 }
                 return this.resourceCount;
             } catch (error) {
-                console.error("Error: setDatasetsStats() - datasets-list.component.ts");
-                this.errorTitle="Se ha producido un error";
-                this.errorMessage="Se ha producido un error al cargar los datasets, vuelva a intentarlo y si el error persiste contacte con el administrador.";
+                console.error('Error: setDatasetsStats() - datasets-list.component.ts');
+                this.errorTitle = this.datasetListErrorTitle;
+                this.errorMessage = 'Se ha producido un error al cargar los datasets, vuelva a intentarlo y si el error persiste contacte con el administrador.';
             }
         });
     }
@@ -907,10 +936,10 @@ export class DatasetsListComponent implements OnInit {
                         this.filteredTagsMultiple.push({ name: tag, value: tag });
                     }
                 }
-             } catch (error) {
-                console.log("Error filterTagsMultiple() - datasets-list.component.ts");
-                this.errorTitle="Se ha producido un error";
-                this.errorMessage="Se ha producido un error con el filtrado por etiquetas, vuelva a intentarlo y si el error persiste contacte con el administrador.";
+            } catch (error) {
+                console.log('Error filterTagsMultiple() - datasets-list.component.ts');
+                this.errorTitle = 'Se ha producido un error';
+                this.errorMessage = 'Se ha producido un error con el filtrado por etiquetas, vuelva a intentarlo y si el error persiste contacte con el administrador.';
             }
         });
     }

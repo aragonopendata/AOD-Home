@@ -23,6 +23,7 @@ exports.API_URL_DATASETS_COUNT = '/datasets/countDatasets';
 exports.API_URL_RESOURCES_COUNT = '/datasets/countResources';
 exports.API_URL_DATASETS_TOPIC = '/datasets/topic';
 exports.API_URL_DATASETS_ORGANIZATION = '/datasets/organization';
+exports.API_URL_DATASETS_STATS_SEARCH = '/datasets/stats';
 exports.API_URL_DATASETS_RDF = '/datasets/rdf';
 exports.API_URL_ORGANIZATIONS = '/organizations';
 exports.API_URL_TOPICS = '/topics';

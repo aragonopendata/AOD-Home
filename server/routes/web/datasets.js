@@ -497,5 +497,47 @@ router.get(constants.API_URL_DATASETS_RDF + '/:datasetName', function (req, res,
     }
 });
 
+/** GET DATASETS BY STATS SEARCH  */
+router.get(constants.API_URL_DATASETS_STATS_SEARCH + '/:groupName', function (req, res, next) {
+    try {
+        logger.debug('Servicio: Listado de datasets por información estadistica');
+        let serviceBaseUrl = constants.CKAN_API_BASE_URL;
+        let serviceName = constants.DATASETS_SEARCH;
+        let serviceRequestUrl = serviceBaseUrl + serviceName + utils.getRequestCommonParams(req);
+        
+        if (req.params.groupName != 'undefined') {
+            serviceRequestUrl += '&q=(organization:instituto-aragones-estadistica AND 01_IAEST_Temaestadstico:'+req.params.groupName+'*) ';
+        }else{
+            serviceRequestUrl += '&q=(organization:instituto-aragones-estadistica) ';
+        }
+        
+        logger.notice('URL de petición: ' + serviceRequestUrl);
+        
+        //Proxy checking
+        let httpConf = null;
+        if (constants.REQUESTS_NEED_PROXY == true) {
+            logger.warning('Realizando petición a través de proxy');
+            let httpProxyConf = proxy.getproxyOptions(serviceRequestUrl);
+            httpConf = httpProxyConf;
+        } else {
+            httpConf = serviceRequestUrl;
+        }
+    
+        http.get(httpConf, function (results) {
+            var body = '';
+            results.on('data', function (chunk) {
+                body += chunk;
+            });
+            results.on('end', function () {
+                res.json(body);
+            });
+        }).on('error', function (err) {
+            utils.errorHandler(err,res,serviceName);
+        });   
+    } catch (error) {
+        logger.error('Error in route' + constants.API_URL_DATASETS_STATS_SEARCH);
+    }
+});
+
 
 module.exports = router;

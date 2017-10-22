@@ -81,6 +81,15 @@ export class DatasetsService {
 		return this.http.get(fullUrl).map(res => res.json());
 	}
 
+	public getDatasetsByStats(sort: string, page: number, rows: number, groupName: string) {
+		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS_STATS_SEARCH 
+						+ '/' + groupName 
+						+ '?' + Constants.SERVER_API_LINK_PARAM_SORT + '=' + sort 
+						+ '&' + Constants.SERVER_API_LINK_PARAM_PAGE + '=' + page.toString() 
+						+ '&' + Constants.SERVER_API_LINK_PARAM_ROWS + '=' + rows.toString() 
+		return this.http.get(fullUrl).map(res => res.json());
+	}
+
 	public getNewestDataset() {
 		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS_NEWEST;
 		return this.http.get(fullUrl).map(res => res.json());

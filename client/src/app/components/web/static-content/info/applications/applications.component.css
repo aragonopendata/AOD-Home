@@ -1,20 +1,58 @@
+@import url('http://fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,700italic,900,900italic,300italic,300,100italic,100');
+
 .container {
     padding-top: 15%;
 }
 
-h1, h2, h3, h4, h5 {
-    font-family: 'Roboto', sans-serif;
-    line-height: 1;
-    margin: 2px 0 20px;
-    letter-spacing: 0.1em;
-    color: #5ea2ba;
-    font-weight: 300;
+.card {
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+    border-radius: 0;
+    border-bottom: 2px solid rgba(94,162,186,0.28);
+}
+
+.app {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.textContent /deep/ .app_img {
+    float: left;
+}
+
+.textContent /deep/ .app_info {
+    padding-left: 130px;
 }
 
 p {
-    font-family: 'Roboto', sans-serif;
-    line-height: 1;
-    margin: 2px 0 20px;
-    letter-spacing: 0.1em;
-    font-weight: 300;
+    margin: 0 0 0.75em;
+}
+
+.textContent /deep/ img {
+    margin: 0;
+    max-width: 100%;
+}
+
+.textContent /deep/ a {
+    display: inline-block;
+    color: #5ea2ba;
+}
+.textContent /deep/ a:hover {
+    color:#000000;
+    text-decoration:none;
+}
+
+.textContent /deep/ a:after {
+    content: '';
+    display: block;
+    height: 1px;
+    width: 0;
+    transition: all .3s ease;
+    border-bottom: 1px solid #5ea2ba;
+    padding-top: 1px;
+}
+
+.textContent /deep/ a:hover:after {
+    width: 100%;
 }

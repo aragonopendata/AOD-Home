@@ -2,12 +2,13 @@
 	<h1>{{sectionTitle}}</h1>
 	<h3>{{sectionSubtitle}}</h3>
 	<h5 *ngIf="!sectionDescription != null">{{sectionDescription}}</h5>
-	<ul class="list-group">
-		<div class="ui-g-12" *ngFor="let content of contents">
-			<li class="list-group-item">
-				<p [innerHTML]="content.contentTitle"></p>
-				<p [innerHTML]="content.contentText"></p>
-			</li>
+	<div *ngFor="let content of contents">
+		<div class="card">
+			<div class="card-block">
+				<div class="app">
+					<p class="textContent" [innerHTML]="content.contentText"></p>
+				</div>
+			</div>
 		</div>
-	</ul>
+	</div>
 </div>

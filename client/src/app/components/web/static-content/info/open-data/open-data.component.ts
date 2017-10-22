@@ -1,5 +1,4 @@
 import { Component, OnInit, AfterViewChecked, ViewEncapsulation  } from '@angular/core';
-import { AccordionModule } from 'primeng/primeng';
 import { StaticContent } from '../../../../../models/StaticContent';
 import { StaticContentService } from '../../../../../services/web/static-content.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -58,7 +57,7 @@ export class OpenDataComponent implements OnInit, AfterViewChecked {
         if(this.targetUrl != this.url && this.targetUrl != null){
             this.url = this.targetUrl;
             var element = document.getElementById(this.url+'Link');
-            $("html, body").animate({ scrollTop: $(element).offset().top - ($('#header').height()+20)}, '500');
+            $("html, body").animate({ scrollTop: $(element).offset().top - ($('#header').height()+$('.card-header').height())}, '500');
             document.getElementById(this.url+'Link').setAttribute('aria-expanded','true');
             document.getElementById(this.url+'Link').setAttribute('class','headLink');
             document.getElementById(this.url).setAttribute('class','collapse show');
