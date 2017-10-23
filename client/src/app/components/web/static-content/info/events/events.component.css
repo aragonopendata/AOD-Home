@@ -40,30 +40,30 @@ a:focus {
     text-decoration: none;
 }
 
-[aria-expanded=true] i:before {
+[aria-expanded=true] i:before{
     content: "\f056";
 }
 
-.textContent {
+.textContent{
     margin: 15px;
 }
 
-.textContent /deep/ img {
+.textContent /deep/ img{
     margin: 0;
     max-width: 100%;
 }
 
 
-.textContent /deep/ a {
+.textContent /deep/ a{
     display: inline-block;
     color: #5ea2ba;
 }
-.textContent /deep/ a:hover {
+.textContent /deep/ a:hover{
     color:#000000;
     text-decoration:none;
 }
 
-.textContent /deep/ a:after {
+.textContent /deep/ a:after{
     content: '';
     display: block;
     height: 1px;
@@ -73,10 +73,87 @@ a:focus {
     padding-top: 1px;
 }
 
-.textContent /deep/ a:hover:after {
+.textContent /deep/ a:hover:after{
     width: 100%;
 }
 
-.textContent /deep/ .fotoFamilia {
+.textContent /deep/ .fotoFamilia{
     text-align: center;
 } 
+
+.textContent /deep/ .ganadores{
+    max-width: 100%; 
+    height: auto;
+} 
+.textContent /deep/ .ganadoresInline{
+    display: inline-table; 
+    width: 50%; 
+    padding: 20px; 
+}
+.textContent /deep/ .fotoGanadores{
+    max-width: 100%; 
+    height: auto; 
+    text-align: center;
+    margin-bottom: 10px;
+}  
+.textContent /deep/ .premio{
+    text-align: left; 
+    font-weight: bold;
+} 
+
+
+.textContent /deep/ .videoWrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 25px;
+    height: 0;
+}
+
+.textContent /deep/ .videoWrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.textContent /deep/ .seccionAplicaciones ul {
+    width: 100%;
+    clear: both;
+    border-bottom: solid 1px #76a1b8;
+    display: inline-block;
+    padding: 0;
+}
+
+.textContent /deep/ .seccionAplicacionesIconos li {
+    padding: 15px;
+    float: left;
+    display: inline-block;
+}
+.textContent /deep/ .seccionAplicacionesIconos li .cont {
+    width: 800px;
+}
+
+.textContent /deep/ .logoKampal {
+    display: inline-block;
+}
+
+.textContent /deep/ .logos {
+    max-width: 787px;
+    width: 100%;
+    height: auto;
+}
+
+.textContent /deep/ .tresLogosInlinePeque {
+    display: inline-block;
+    width: 25%;
+    padding: 1%;
+    vertical-align: middle;
+}
+
+.textContent /deep/ .dosLogosInline {
+    display: inline-block;
+    width: 47%;
+    padding: 1%;
+    vertical-align: middle;
+}
