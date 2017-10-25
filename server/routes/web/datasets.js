@@ -4,6 +4,7 @@ const http = require('http');
 const constants = require('../../util/constants');
 const proxy = require('../../conf/proxy-conf');
 const utils = require('../../util/utils');
+const querystring = require('querystring');
 //LOG SETTINGS
 const logConfig = require('../../conf/log-conf');
 const loggerSettings = logConfig.getLogSettings();
@@ -30,7 +31,7 @@ router.get(constants.API_URL_DATASETS, function (req, res, next) {
         } else {
             httpConf = serviceRequestUrl;
         }
-    
+
         http.get(httpConf, function (results) {
             var body = '';
             results.on('data', function (chunk) {
@@ -40,7 +41,7 @@ router.get(constants.API_URL_DATASETS, function (req, res, next) {
                 res.json(body);
             });
         }).on('error', function (err) {
-            utils.errorHandler(err,res,serviceName);
+            utils.errorHandler(err, res, serviceName);
         });
     } catch (error) {
         logger.error('Error in route' + constants.API_URL_DATASETS);
@@ -65,7 +66,7 @@ router.get(constants.API_URL_DATASETS_AUTOCOMPLETE, function (req, res, next) {
             serviceRequestUrl += '&limit=' + constants.DATASETS_AUTOCOMPLETE_LIMIT;
         }
         logger.notice('URL de petición: ' + serviceRequestUrl);
-    
+
         //Proxy checking
         let httpConf = null;
         if (constants.REQUESTS_NEED_PROXY == true) {
@@ -75,7 +76,7 @@ router.get(constants.API_URL_DATASETS_AUTOCOMPLETE, function (req, res, next) {
         } else {
             httpConf = serviceRequestUrl;
         }
-    
+
         http.get(httpConf, function (results) {
             var body = '';
             results.on('data', function (chunk) {
@@ -85,7 +86,7 @@ router.get(constants.API_URL_DATASETS_AUTOCOMPLETE, function (req, res, next) {
                 res.json(body);
             });
         }).on('error', function (err) {
-            utils.errorHandler(err,res,serviceName);
+            utils.errorHandler(err, res, serviceName);
         });
     } catch (error) {
         logger.error('Error in route' + constants.API_URL_DATASETS_AUTOCOMPLETE);
@@ -100,7 +101,7 @@ router.get(constants.API_URL_DATASETS_TAGS, function (req, res, next) {
         let serviceName = constants.DATASETS_SEARCH;
         let serviceRequestUrl = serviceBaseUrl + serviceName + utils.getRequestCommonParams(req) + utils.getRequestTags(req);
         logger.notice('URL de petición: ' + serviceRequestUrl);
-    
+
         //Proxy checking
         let httpConf = null;
         if (constants.REQUESTS_NEED_PROXY == true) {
@@ -110,9 +111,9 @@ router.get(constants.API_URL_DATASETS_TAGS, function (req, res, next) {
         } else {
             httpConf = serviceRequestUrl;
         }
-    
+
         http.get(httpConf, function (results) {
-            var body = '';       
+            var body = '';
             results.on('data', function (chunk) {
                 body += chunk;
             });
@@ -120,7 +121,7 @@ router.get(constants.API_URL_DATASETS_TAGS, function (req, res, next) {
                 res.json(body);
             });
         }).on('error', function (err) {
-            utils.errorHandler(err,res,serviceName);
+            utils.errorHandler(err, res, serviceName);
         });
     } catch (error) {
         logger.error('Error in route' + constants.API_URL_DATASETS_TAGS);
@@ -140,7 +141,7 @@ router.get(constants.API_URL_DATASETS_NEWEST, function (req, res, next) {
             serviceRequestUrl += '&rows=' + constants.DATASETS_SEARCH_NEWEST_ROWS_LIMIT;
         }
         logger.notice('URL de petición: ' + serviceRequestUrl);
-    
+
         //Proxy checking
         let httpConf = null;
         if (constants.REQUESTS_NEED_PROXY == true) {
@@ -150,7 +151,7 @@ router.get(constants.API_URL_DATASETS_NEWEST, function (req, res, next) {
         } else {
             httpConf = serviceRequestUrl;
         }
-    
+
         http.get(httpConf, function (results) {
             var body = '';
             results.on('data', function (chunk) {
@@ -160,7 +161,7 @@ router.get(constants.API_URL_DATASETS_NEWEST, function (req, res, next) {
                 res.json(body);
             });
         }).on('error', function (err) {
-            utils.errorHandler(err,res,serviceName);
+            utils.errorHandler(err, res, serviceName);
         });
     } catch (error) {
         logger.error('Error in route' + constants.API_URL_DATASETS_NEWEST);
@@ -180,7 +181,7 @@ router.get(constants.API_URL_DATASETS_DOWNLOADED, function (req, res, next) {
             serviceRequestUrl += '&rows=' + constants.DATASETS_SEARCH_MOST_DOWNLOADED_ROWS_LIMIT;
         }
         logger.notice('URL de petición: ' + serviceRequestUrl);
-    
+
         //Proxy checking
         let httpConf = null;
         if (constants.REQUESTS_NEED_PROXY == true) {
@@ -190,7 +191,7 @@ router.get(constants.API_URL_DATASETS_DOWNLOADED, function (req, res, next) {
         } else {
             httpConf = serviceRequestUrl;
         }
-    
+
         http.get(httpConf, function (results) {
             var body = '';
             results.on('data', function (chunk) {
@@ -200,12 +201,12 @@ router.get(constants.API_URL_DATASETS_DOWNLOADED, function (req, res, next) {
                 res.json(body);
             });
         }).on('error', function (err) {
-            utils.errorHandler(err,res,serviceName);
+            utils.errorHandler(err, res, serviceName);
         });
     } catch (error) {
         logger.error('Error in route' + constants.API_URL_DATASETS_DOWNLOADED);
     }
-    
+
 });
 
 /** GET NUMBER OF DATASETS AND RESOURCES */
@@ -216,7 +217,7 @@ router.get(constants.API_URL_DATASETS_COUNT, function (req, res, next) {
         let serviceName = constants.DATASETS_SEARCH_COUNT;
         let serviceRequestUrl = serviceBaseUrl + serviceName;
         logger.notice('URL de petición: ' + serviceRequestUrl);
-    
+
         //Proxy checking
         let httpConf = null;
         if (constants.REQUESTS_NEED_PROXY == true) {
@@ -226,7 +227,7 @@ router.get(constants.API_URL_DATASETS_COUNT, function (req, res, next) {
         } else {
             httpConf = serviceRequestUrl;
         }
-    
+
         http.get(httpConf, function (results) {
             var body = '';
             results.on('data', function (chunk) {
@@ -236,7 +237,7 @@ router.get(constants.API_URL_DATASETS_COUNT, function (req, res, next) {
                 res.json(body);
             });
         }).on('error', function (err) {
-            utils.errorHandler(err,res,serviceName);
+            utils.errorHandler(err, res, serviceName);
         });
     } catch (error) {
         logger.error('Error in route' + constants.API_URL_DATASETS_COUNT);
@@ -250,7 +251,7 @@ router.get(constants.API_URL_RESOURCES_COUNT, function (req, res, next) {
         let serviceName = constants.RESOURCES_SEARCH_COUNT;
         let serviceRequestUrl = serviceBaseUrl + serviceName;
         logger.notice('URL de petición: ' + serviceRequestUrl);
-    
+
         //Proxy checking
         let httpConf = null;
         if (constants.REQUESTS_NEED_PROXY == true) {
@@ -260,7 +261,7 @@ router.get(constants.API_URL_RESOURCES_COUNT, function (req, res, next) {
         } else {
             httpConf = serviceRequestUrl;
         }
-    
+
         http.get(httpConf, function (results) {
             var body = '';
             results.on('data', function (chunk) {
@@ -270,8 +271,8 @@ router.get(constants.API_URL_RESOURCES_COUNT, function (req, res, next) {
                 res.json(body);
             });
         }).on('error', function (err) {
-            utils.errorHandler(err,res,serviceName);
-        });   
+            utils.errorHandler(err, res, serviceName);
+        });
     } catch (error) {
         logger.error('Error in route' + constants.API_URL_RESOURCES_COUNT);
     }
@@ -291,7 +292,7 @@ router.get(constants.API_URL_DATASETS_TOPIC + '/:topicName', function (req, res,
             //TODO TYPES
         }
         logger.notice('URL de petición: ' + serviceRequestUrl);
-    
+
         //Proxy checking
         let httpConf = null;
         if (constants.REQUESTS_NEED_PROXY == true) {
@@ -301,7 +302,7 @@ router.get(constants.API_URL_DATASETS_TOPIC + '/:topicName', function (req, res,
         } else {
             httpConf = serviceRequestUrl;
         }
-    
+
         http.get(httpConf, function (results) {
             var body = '';
             results.on('data', function (chunk) {
@@ -311,8 +312,8 @@ router.get(constants.API_URL_DATASETS_TOPIC + '/:topicName', function (req, res,
                 res.json(body);
             });
         }).on('error', function (err) {
-            utils.errorHandler(err,res,serviceName);
-        });   
+            utils.errorHandler(err, res, serviceName);
+        });
     } catch (error) {
         logger.error('Error in route' + constants.API_URL_DATASETS_TOPIC);
     }
@@ -332,7 +333,7 @@ router.get(constants.API_URL_DATASETS_ORGANIZATION + '/:organizationName', funct
             //TODO TYPES
         }
         logger.notice('URL de petición: ' + serviceRequestUrl);
-    
+
         //Proxy checking
         let httpConf = null;
         if (constants.REQUESTS_NEED_PROXY == true) {
@@ -342,7 +343,7 @@ router.get(constants.API_URL_DATASETS_ORGANIZATION + '/:organizationName', funct
         } else {
             httpConf = serviceRequestUrl;
         }
-    
+
         http.get(httpConf, function (results) {
             var body = '';
             results.on('data', function (chunk) {
@@ -352,12 +353,12 @@ router.get(constants.API_URL_DATASETS_ORGANIZATION + '/:organizationName', funct
                 res.json(body);
             });
         }).on('error', function (err) {
-            utils.errorHandler(err,res,serviceName);
+            utils.errorHandler(err, res, serviceName);
         });
     } catch (error) {
         logger.error('Error in route' + constants.API_URL_DATASETS_ORGANIZATION);
     }
-    
+
 });
 
 /** GET DATASET BY NAME */
@@ -368,7 +369,7 @@ router.get(constants.API_URL_DATASETS + '/:datasetName', function (req, res, nex
         let serviceName = constants.DATASET_SHOW;
         let serviceRequestUrl = serviceBaseUrl + serviceName + '?id=' + req.params.datasetName;
         logger.notice('URL de petición: ' + serviceRequestUrl);
-    
+
         //Proxy checking
         let httpConf = null;
         if (constants.REQUESTS_NEED_PROXY == true) {
@@ -378,7 +379,7 @@ router.get(constants.API_URL_DATASETS + '/:datasetName', function (req, res, nex
         } else {
             httpConf = serviceRequestUrl;
         }
-    
+
         http.get(httpConf, function (results) {
             var body = '';
             results.on('data', function (chunk) {
@@ -388,8 +389,45 @@ router.get(constants.API_URL_DATASETS + '/:datasetName', function (req, res, nex
                 res.json(body);
             });
         }).on('error', function (err) {
-            utils.errorHandler(err,res,serviceName);
+            utils.errorHandler(err, res, serviceName);
         });
+
+        //CKAN TRACKING REGISTERING
+        //CKAN doesn't increment the tracking throught API calls
+        logger.debug('Tracking datasets...');
+        var post_data = querystring.stringify({
+            'url': constants.TRACKING_CKAN_URL_DATASET + req.params.datasetName,
+            'type': constants.TRACKING_CKAN_TYPE_PARAM_PAGE
+        });
+        logger.debug('Param URL:' + post_data);
+
+        var post_option = {
+            host: constants.TRACKING_CKAN_BASE_URL,//TODO Pasar por propiedades
+            port: constants.TRACKING_CKAN_BASE_URL_PORT,             //TODO Pasar por propiedades
+            path: constants.TRACKING_CKAN_URL_PATH,
+            method: constants.TRACKING_CKAN_METHOD_POST,
+            headers: {
+                'Content-Type': constants.TRACKING_CKAN_HEADER_CONTENT_TYPE_FORM_URLENCODED,
+                'Content-Length': Buffer.byteLength(post_data),
+                'User-Agent': constants.TRACKING_CKAN_HEADER_USER_AGENT_NODE_SERVER_REQUEST
+            }
+        }
+        logger.debug('POST Option:' + post_option);
+
+        var post_request = http.request(post_option, function (results) {
+            results.setEncoding(constants.TRACKING_CKAN_ENCODING);
+            results.on('data', function (chunk) {
+                logger.debug('Request on data OK');
+            });
+        }).on('error', function (err) {
+            //No hacemos
+            logger.debug('Error en tracking:' + err);
+        });
+
+        logger.debug('Writing Post');
+        post_request.write(post_data);
+        logger.debug('Ending Tracking');
+        post_request.end();
     } catch (error) {
         logger.error('Error in route' + constants.API_URL_DATASETS);
     }
@@ -402,7 +440,7 @@ router.get(constants.API_URL_DATASETS_HOMER, function (req, res, next) {
         let serviceBaseUrl = constants.HOMER_API_BASE_URL;
         let serviceRequestUrl = serviceBaseUrl + utils.getRequestHomerCommonParams(req);
         logger.notice('URL de petición: ' + serviceRequestUrl);
-    
+
         //Proxy checking
         let httpConf = null;
         if (constants.REQUESTS_NEED_PROXY == true) {
@@ -411,9 +449,9 @@ router.get(constants.API_URL_DATASETS_HOMER, function (req, res, next) {
             httpConf = httpProxyConf;
         } else {
             httpConf = serviceRequestUrl;
-        }        
+        }
         http.get(httpConf, function (results) {
-            var body = '';       
+            var body = '';
             results.on('data', function (chunk) {
                 body += chunk;
             });
@@ -421,7 +459,7 @@ router.get(constants.API_URL_DATASETS_HOMER, function (req, res, next) {
                 res.json(body);
             });
         }).on('error', function (err) {
-            utils.errorHandler(err,res,serviceName);
+            utils.errorHandler(err, res, serviceName);
         });
     } catch (error) {
         logger.error('Error in route' + constants.API_URL_DATASETS_HOMER);
@@ -433,9 +471,9 @@ router.get(constants.API_URL_DATASETS_HOMER + '/:datasetHomerName', function (re
     try {
         logger.debug('Servicio: Obtener dataset homer por identificador');
         let serviceBaseUrl = constants.HOMER_API_BASE_URL;
-        let serviceRequestUrl = serviceBaseUrl + '?q=package_id:'+ req.params.datasetHomerName + '&wt=json';
+        let serviceRequestUrl = serviceBaseUrl + '?q=package_id:' + req.params.datasetHomerName + '&wt=json';
         logger.notice('URL de petición: ' + serviceRequestUrl);
-    
+
         //Proxy checking
         let httpConf = null;
         if (constants.REQUESTS_NEED_PROXY == true) {
@@ -445,7 +483,7 @@ router.get(constants.API_URL_DATASETS_HOMER + '/:datasetHomerName', function (re
         } else {
             httpConf = serviceRequestUrl;
         }
-    
+
         http.get(httpConf, function (results) {
             var body = '';
             results.on('data', function (chunk) {
@@ -455,7 +493,7 @@ router.get(constants.API_URL_DATASETS_HOMER + '/:datasetHomerName', function (re
                 res.json(body);
             });
         }).on('error', function (err) {
-            utils.errorHandler(err,res,serviceName);
+            utils.errorHandler(err, res, serviceName);
         });
     } catch (error) {
         logger.error('Error in route' + constants.API_URL_DATASETS_HOMER);
@@ -468,9 +506,9 @@ router.get(constants.API_URL_DATASETS_RDF + '/:datasetName', function (req, res,
         logger.debug('Servicio: Obtener RDF del dataset por nombre');
         let serviceBaseUrl = constants.CKAN_BASE_URL;
         let serviceName = constants.DATASET_RDF_DATASET;
-        let serviceRequestUrl = serviceBaseUrl + serviceName + '/'+ req.params.datasetName + constants.DATASET_RDF_EXTENSION;
+        let serviceRequestUrl = serviceBaseUrl + serviceName + '/' + req.params.datasetName + constants.DATASET_RDF_EXTENSION;
         logger.notice('URL de petición: ' + serviceRequestUrl);
-        
+
         //Proxy checking
         let httpConf = null;
         if (constants.REQUESTS_NEED_PROXY == true) {
@@ -490,7 +528,7 @@ router.get(constants.API_URL_DATASETS_RDF + '/:datasetName', function (req, res,
                 res.json(body);
             });
         }).on('error', function (err) {
-            utils.errorHandler(err,res,serviceName);
+            utils.errorHandler(err, res, serviceName);
         });
     } catch (error) {
         logger.error('Error in route' + constants.API_URL_DATASETS_RDF);
@@ -504,15 +542,15 @@ router.get(constants.API_URL_DATASETS_STATS_SEARCH + '/:groupName', function (re
         let serviceBaseUrl = constants.CKAN_API_BASE_URL;
         let serviceName = constants.DATASETS_SEARCH;
         let serviceRequestUrl = serviceBaseUrl + serviceName + utils.getRequestCommonParams(req);
-        
+
         if (req.params.groupName != 'undefined') {
-            serviceRequestUrl += '&q=(organization:instituto-aragones-estadistica AND 01_IAEST_Temaestadstico:'+req.params.groupName+'*) ';
-        }else{
+            serviceRequestUrl += '&q=(organization:instituto-aragones-estadistica AND 01_IAEST_Temaestadstico:' + req.params.groupName + '*) ';
+        } else {
             serviceRequestUrl += '&q=(organization:instituto-aragones-estadistica) ';
         }
-        
+
         logger.notice('URL de petición: ' + serviceRequestUrl);
-        
+
         //Proxy checking
         let httpConf = null;
         if (constants.REQUESTS_NEED_PROXY == true) {
@@ -522,7 +560,7 @@ router.get(constants.API_URL_DATASETS_STATS_SEARCH + '/:groupName', function (re
         } else {
             httpConf = serviceRequestUrl;
         }
-    
+
         http.get(httpConf, function (results) {
             var body = '';
             results.on('data', function (chunk) {
@@ -532,8 +570,8 @@ router.get(constants.API_URL_DATASETS_STATS_SEARCH + '/:groupName', function (re
                 res.json(body);
             });
         }).on('error', function (err) {
-            utils.errorHandler(err,res,serviceName);
-        });   
+            utils.errorHandler(err, res, serviceName);
+        });
     } catch (error) {
         logger.error('Error in route' + constants.API_URL_DATASETS_STATS_SEARCH);
     }

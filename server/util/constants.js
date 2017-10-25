@@ -37,6 +37,17 @@ exports.API_URL_STATIC_CONTENT_TOOLS_APIS = '/static-content/tools/apis';
 exports.API_URL_STATIC_CONTENT_TOOLS_SPARQL = '/static-content/tools/sparql';
 exports.API_URL_STATIC_CONTENT_TOOLS_SPARQL_CLIENT = '/static-content/tools/sparql-client';
 exports.API_URL_STATIC_CONTENT_TOOLS_SPARQL_GRAPHS = '/static-content/tools/sparql-client/graphs';
+/* DATASETS ACCESS TRACKING REGISTRY */
+exports.TRACKING_CKAN_URL_DATASET = '/dataset';
+exports.TRACKING_CKAN_URL_PATH = '/_tracking';
+exports.TRACKING_CKAN_TYPE_PARAM_PAGE = 'page';
+exports.TRACKING_CKAN_METHOD_POST = 'POST';
+exports.TRACKING_CKAN_BASE_URL = 'http://miv-aodfront-01.aragon.local';
+exports.TRACKING_CKAN_BASE_URL_PORT = '5000';
+exports.TRACKING_CKAN_HEADER_CONTENT_TYPE_FORM_URLENCODED = 'application/x-www-form-urlencoded';
+exports.TRACKING_CKAN_HEADER_USER_AGENT_NODE_SERVER_REQUEST = 'Node.js Server Request';
+exports.TRACKING_CKAN_ENCODING = 'utf8';
+/* STATIC CONTENT DATABASE SECTION TITLES */
 exports.STATIC_CONTENT_SECTION_TITLE_INFO = 'INFORMACIÓN';
 exports.STATIC_CONTENT_SECTION_TITLE_TOOLS = 'HERRAMIENTAS';
 exports.STATIC_CONTENT_SUBSECTION_TITLE_OPEN_DATA = 'OPEN DATA';
