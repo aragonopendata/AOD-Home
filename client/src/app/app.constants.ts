@@ -28,9 +28,31 @@ export class Constants {
     public static SHARE_TWITTER = 'https://twitter.com/share?url=';
     public static SHARE_GOOGLE_PLUS = 'https://plus.google.com/share?url=';
 
+    public static CAMPUS_CONTENT_PLATFORM_ARAGONOPENDATA = 'Aragón Open Data';
+    public static CAMPUS_CONTENT_PLATFORM_BOSTOCKSORG = 'bost.ocks.org';
+    public static CAMPUS_CONTENT_PLATFORM_GITHUB = 'GitHub';
+    public static CAMPUS_CONTENT_PLATFORM_PODCAST = 'Podcast';
+    public static CAMPUS_CONTENT_PLATFORM_SLIDESHARE = 'Slideshare';
+    public static CAMPUS_CONTENT_PLATFORM_VIMEO = 'Vimeo';
+    public static CAMPUS_CONTENT_PLATFORM_YOUTUBE = 'Youtube';
+
     //ERROR CONSTANTS
     public static DATASET_LIST_ERROR_TITLE = 'Se ha producido un error';
     public static DATASET_LIST_ERROR_MESSAGE = 'Se ha producido un error en la carga de datos, vuelva a intentarlo y si el error persiste contacte con el administrador.';
+    public static CAMPUS_EVENTS_ERROR_TITLE = 'Se ha producido un error';
+    public static CAMPUS_EVENTS_ERROR_MESSAGE = 'Se ha producido un error en la carga de datos, vuelva a intentarlo y si el error persiste contacte con el administrador.';
+    public static OPEN_DATA_STATIC_CONTENT_ERROR_TITLE = 'Se ha producido un error';
+    public static OPEN_DATA_STATIC_CONTENT_ERROR_MESSAGE = 'Se ha producido un error en la carga de datos, vuelva a intentarlo y si el error persiste contacte con el administrador.';
+    public static APPLICATIONS_STATIC_CONTENT_ERROR_TITLE = 'Se ha producido un error';
+    public static APPLICATIONS_STATIC_CONTENT_ERROR_MESSAGE = 'Se ha producido un error en la carga de datos, vuelva a intentarlo y si el error persiste contacte con el administrador.';
+    public static EVENTS_STATIC_CONTENT_ERROR_TITLE = 'Se ha producido un error';
+    public static EVENTS_STATIC_CONTENT_ERROR_MESSAGE = 'Se ha producido un error en la carga de datos, vuelva a intentarlo y si el error persiste contacte con el administrador.';
+    public static DEVELOPERS_STATIC_CONTENT_ERROR_TITLE = 'Se ha producido un error';
+    public static DEVELOPERS_STATIC_CONTENT_ERROR_MESSAGE = 'Se ha producido un error en la carga de datos, vuelva a intentarlo y si el error persiste contacte con el administrador.';
+    public static APIS_STATIC_CONTENT_ERROR_TITLE = 'Se ha producido un error';
+    public static APIS_STATIC_CONTENT_ERROR_MESSAGE = 'Se ha producido un error en la carga de datos, vuelva a intentarlo y si el error persiste contacte con el administrador.';
+    public static SPARQL_STATIC_CONTENT_ERROR_TITLE = 'Se ha producido un error';
+    public static SPARQL_STATIC_CONTENT_ERROR_MESSAGE = 'Se ha producido un error en la carga de datos, vuelva a intentarlo y si el error persiste contacte con el administrador.';
 
     //COMMON CONSTANTS
     public static DATASET_LIST_ROWS_PER_PAGE = 20;
@@ -41,6 +63,8 @@ export class Constants {
     public static DATASET_LIST_HOMER_SORT_COLUMN_NAME = 'name';
     public static DATASET_LIST_HOMER_SORT_COLUMN_LANGUAGE = 'language';
     public static DATASET_LIST_HOMER_SORT_COLUMN_PORTAL = 'portal';
+    public static CAMPUS_EVENTS_PER_PAGE = 10;
+    public static CAMPUS_EVENTS_TYPES_ALL = 'Todos los tipos';
 
     public static DATASET_LIST_DROPDOWN_TYPE_ALL = 'Todos los tipos';
     public static DATASET_LIST_DROPDOWN_TYPE_CALENDARIO_LABEL = 'Calendario';
@@ -289,6 +313,7 @@ export class Constants {
     public static ROUTER_LINK_TOOLS = 'herramientas';
     public static ROUTER_LINK_TOOLS_DEVELOPERS = 'herramientas/desarrolladores';
     public static ROUTER_LINK_TOOLS_CAMPUS = 'herramientas/campus';
+    public static ROUTER_LINK_TOOLS_CAMPUS_CONTENT = 'herramientas/campus/content';
     public static ROUTER_LINK_TOOLS_APIS = 'herramientas/apis';
     public static ROUTER_LINK_TOOLS_SPARQL = 'herramientas/sparql';
     public static ROUTER_LINK_TOOLS_SPARQL_CLIENT = 'herramientas/sparql/client';
@@ -351,6 +376,9 @@ export class Constants {
     public static ROUTER_LINK_DATA_PARAM_LANG = 'lang';
     public static ROUTER_LINK_DATA_PARAM_TEXT_HOMER = 'text';
     public static ROUTER_LINK_TERMS_FRAGMENT = 'terminos-licencias';
+    public static ROUTER_LINK_DATA_CAMPUS_PARAM_TYPE = 'type';
+    public static ROUTER_LINK_DATA_CAMPUS_PARAM_TEXT = 'text';
+    public static ROUTER_LINK_TOOLS_CAMPUS_EVENT_NAME = 'eventName';
 
     //SERVER API URLS
     public static SERVER_API_LINK_DATASETS = '/datasets';
@@ -364,6 +392,7 @@ export class Constants {
     public static SERVER_API_LINK_RESOURCES_COUNT = '/datasets/countResources';
     public static SERVER_API_LINK_DATASETS_RDF = '/datasets/rdf';
     public static SERVER_API_LINK_DATASETS_STATS_SEARCH = '/datasets/stats';
+    public static SERVER_API_URL_DATASETS_RESOURCE_VIEW = '/resourceView';
     public static SERVER_API_LINK_DATASETS_HOMER = '/homer';
     public static SERVER_API_LINK_TOPICS = '/topics';
     public static SERVER_API_LINK_TAGS = '/tags';
@@ -378,6 +407,14 @@ export class Constants {
     public static SERVER_API_LINK_STATIC_CONTENT_TOOLS_SPARQL = '/sparql';
     public static SERVER_API_LINK_STATIC_CONTENT_TOOLS_SPARQL_CLIENT = '/sparql-client';
     public static SERVER_API_LINK_STATIC_CONTENT_TOOLS_SPARQL_GRAPHS = '/sparql-client/graphs';
+    public static SERVER_API_LINK_CAMPUS = '/campus';
+    public static SERVER_API_LINK_CAMPUS_EVENTS = '/campus/events';
+    public static SERVER_API_LINK_CAMPUS_EVENT = '/campus/event';
+    public static SERVER_API_LINK_CAMPUS_CONTENTS = '/campus/contents';
+    public static SERVER_API_URL_CAMPUS_CONTENT= '/campus/content';
+    public static SERVER_API_LINK_CAMPUS_TYPES = '/campus/types';
+    public static SERVER_API_LINK_CAMPUS_SPEAKERS = '/campus/speakers';
+    public static SERVER_API_LINK_CAMPUS_TOPICS = '/campus/topics';
     public static SERVER_API_LINK_PARAM_SORT = 'sort';
     public static SERVER_API_LINK_PARAM_PAGE = 'page';
     public static SERVER_API_LINK_PARAM_ROWS = 'rows';
@@ -386,6 +423,7 @@ export class Constants {
     public static SERVER_API_LINK_PARAM_TEXT = 'text';
     public static SERVER_API_LINK_PARAM_LANG = 'lang';
     public static SERVER_API_LINK_PARAM_LIMIT = 'limit';
+    public static SERVER_API_LINK_PARAM_RESOURCE_ID = 'resId';
     public static SERVER_API_LINK_PARAM_SORT_DEFAULT_VALUE = 'relevance,-metadata_modified';
     public static SERVER_API_LINK_PARAM_SORT_HOMER_DEFAULT_VALUE = 'title';
     public static SERVER_API_LINK_PARAM_SORT_TITLE_STRING = 'title_string';

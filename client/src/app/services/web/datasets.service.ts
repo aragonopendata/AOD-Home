@@ -90,6 +90,12 @@ export class DatasetsService {
 		return this.http.get(fullUrl).map(res => res.json());
 	}
 
+	public getDatasetResourceView(resoruce_id:string) {
+		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_URL_DATASETS_RESOURCE_VIEW 
+						+ '?' + Constants.SERVER_API_LINK_PARAM_RESOURCE_ID + '=' + resoruce_id 
+		return this.http.get(fullUrl).map(res => res.json());
+	}
+
 	public getNewestDataset() {
 		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS_NEWEST;
 		return this.http.get(fullUrl).map(res => res.json());

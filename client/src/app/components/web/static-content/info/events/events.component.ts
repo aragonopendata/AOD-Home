@@ -3,6 +3,7 @@ import { StaticContent } from '../../../../../models/StaticContent';
 import { StaticContentService } from '../../../../../services/web/static-content.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import $ from 'jquery';
+import { Constants } from "app/app.constants";
 
 @Component({
     selector: 'app-events',
@@ -19,9 +20,16 @@ export class EventsComponent implements OnInit {
     targetUrl: string;
     url: string = null;
 
+    errorTitle: string;
+    errorMessage: string;
+    eventsErrorTitle: string;
+    eventsErrorMessage: string;
+
     constructor(private staticContentService: StaticContentService, private activatedRoute: ActivatedRoute) { }
 
     ngOnInit() {
+        this.eventsErrorTitle = Constants.EVENTS_STATIC_CONTENT_ERROR_TITLE;
+        this.eventsErrorMessage = Constants.EVENTS_STATIC_CONTENT_ERROR_MESSAGE;
         this.getStaticContentInfo();
     }
 
@@ -33,11 +41,18 @@ export class EventsComponent implements OnInit {
 
     getStaticContentInfo() {
         this.staticContentService.getEventsInfoStaticContent().subscribe(staticContent => {
-            this.contents = staticContent;
-            this.sectionTitle = this.contents[0].sectionTitle;
-            this.sectionSubtitle = this.contents[0].sectionSubtitle;
-            this.sectionDescription = this.contents[0].sectionDescription;
-            this.getUrlFragment();
+            try {
+                this.contents = staticContent;
+                this.sectionTitle = this.contents[0].sectionTitle;
+                this.sectionSubtitle = this.contents[0].sectionSubtitle;
+                this.sectionDescription = this.contents[0].sectionDescription;
+                this.getUrlFragment();
+            } catch (error) {
+                console.error('Error: getStaticContentInfo() - events.component.ts');
+                this.errorTitle = this.eventsErrorTitle;
+                this.errorMessage = this.eventsErrorMessage;
+            }
+            
         });
     }
 

@@ -24,6 +24,7 @@ exports.API_URL_RESOURCES_COUNT = '/datasets/countResources';
 exports.API_URL_DATASETS_TOPIC = '/datasets/topic';
 exports.API_URL_DATASETS_ORGANIZATION = '/datasets/organization';
 exports.API_URL_DATASETS_STATS_SEARCH = '/datasets/stats';
+exports.API_URL_DATASETS_RESOURCE_VIEW = '/resourceView';
 exports.API_URL_DATASETS_RDF = '/datasets/rdf';
 exports.API_URL_ORGANIZATIONS = '/organizations';
 exports.API_URL_TOPICS = '/topics';
@@ -48,6 +49,13 @@ exports.TRACKING_CKAN_HEADER_CONTENT_TYPE_FORM_URLENCODED = 'application/x-www-f
 exports.TRACKING_CKAN_HEADER_USER_AGENT_NODE_SERVER_REQUEST = 'Node.js Server Request';
 exports.TRACKING_CKAN_ENCODING = 'utf8';
 /* STATIC CONTENT DATABASE SECTION TITLES */
+exports.API_URL_CAMPUS_EVENTS = '/campus/events';
+exports.API_URL_CAMPUS_EVENT = '/campus/event';
+exports.API_URL_CAMPUS_CONTENTS_OF_EVENT = '/campus/contents';
+exports.API_URL_CAMPUS_CONTENT = '/campus/content';
+exports.API_URL_CAMPUS_SPEAKERS = '/campus/speakers';
+exports.API_URL_CAMPUS_TOPICS = '/campus/topics';
+exports.API_URL_CAMPUS_TYPES = '/campus/types';
 exports.STATIC_CONTENT_SECTION_TITLE_INFO = 'INFORMACIÓN';
 exports.STATIC_CONTENT_SECTION_TITLE_TOOLS = 'HERRAMIENTAS';
 exports.STATIC_CONTENT_SUBSECTION_TITLE_OPEN_DATA = 'OPEN DATA';
@@ -91,6 +99,8 @@ exports.DATASET_SHOW = 'package_show';
 //Get dataset rdf by name
 exports.DATASET_RDF_DATASET = '/dataset';
 exports.DATASET_RDF_EXTENSION = '.rdf';
+//Get resource view id by resource id
+exports.DATASETS_RESOURCE_VIEW = 'resource_view_list'
 
 /* TOPICS */
 //List all topics
@@ -122,6 +132,7 @@ exports.SERVER_API_LINK_PARAM_TEXT = 'text';
 exports.SERVER_API_LINK_PARAM_LANG = 'lang';
 exports.SERVER_API_LINK_PARAM_LIMIT = 'limit';
 exports.SERVER_API_LINK_PARAM_HOMER_RESPONSE_FORMAT = '&wt=json';
+exports.SERVER_API_LINK_PARAM_RESOURCE_ID = 'resId';
 
 exports.SERVER_API_SORT_DESC = 'desc';
 exports.SERVER_API_SORT_ASC = 'asc';
@@ -143,6 +154,9 @@ exports.SERVER_API_LINK_PARAM_TYPE_EDUCATION_RESOURCES_QUERY = '&q=(name:(recurs
 exports.SERVER_API_LINK_PARAM_TYPE_WEB_RESOURCES_QUERY = '&q=(res_format:(html OR HTML OR url OR URL))AND dataset_type:dataset AND entity_type:package AND state:active AND capacity:public';
 exports.SERVER_API_LINK_PARAM_TYPE_RSS_QUERY = '&q=(res_format:(rss OR RSS))AND dataset_type:dataset AND entity_type:package AND state:active AND capacity:public';
 exports.SERVER_API_LINK_PARAM_TYPE_PLAIN_TEXT_QUERY = '&q=(((res_format:XLS OR res_format:xls ) AND (res_url:http*.xls )) OR res_format:json OR res_format:JSON OR res_format:xml OR res_format:XML OR res_format:csv OR res_format:CSV OR res_format:px OR res_format:PX OR res_format:url OR res_format:URL) AND dataset_type:dataset AND entity_type:package AND state:active AND capacity:public';
+
+//Results per page in campus
+exports.CAMPUS_EVENTS_PER_PAGE = 10;
 
 /*  SPARQL */
 exports.SPARQL_API_BASE_URL = 'http://miv-aodfront-01.aragon.local:7030/sparql';

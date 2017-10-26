@@ -38,6 +38,7 @@ export class DatasetsDetailComponent implements OnInit {
 	extraIAESTFuente: string;
 	extraIAESTTratamientoEstadistico: string;
 	extraIAESTLegislacionUE: string;
+	resourceView: string[];
 
 	resourcesAux: ResourceAux[] = new Array();
 	datasetsRecommended: Dataset[] = new Array();
@@ -50,10 +51,17 @@ export class DatasetsDetailComponent implements OnInit {
 	routerLinkFacebookShare: string;
 	routerLinkTwitterShare: string;
 	routerLinkGooglePlusShare: string;
+	//Error Params
+	errorTitle: string;
+	errorMessage: string;
+	datasetListErrorTitle: string;
+	datasetListErrorMessage: string;
 
 	hovers: any[] = [];
 
 	constructor(private datasetsService: DatasetsService, private activatedRoute: ActivatedRoute) {
+		this.datasetListErrorTitle = Constants.DATASET_LIST_ERROR_TITLE;
+        this.datasetListErrorMessage = Constants.DATASET_LIST_ERROR_MESSAGE;
 		this.routerLinkDataCatalogDataset = Constants.ROUTER_LINK_DATA_CATALOG_DATASET;
 		this.routerLinkDataCatalogTopics = Constants.ROUTER_LINK_DATA_CATALOG_TOPICS;
 		this.routerLinkDataCatalogTags = Constants.ROUTER_LINK_DATA_CATALOG_TAGS;
@@ -71,6 +79,8 @@ export class DatasetsDetailComponent implements OnInit {
 				this.datasetHomer.package_id =  params[Constants.ROUTER_LINK_DATA_PARAM_DATASET_HOMER_NAME];
 			} catch (error) {
 				console.error("Error: ngOnInit() params - datasets-detail.component.ts");
+				this.errorTitle = this.datasetListErrorTitle;
+                this.errorMessage = this.datasetListErrorMessage;
 			}
 		});
 
@@ -93,12 +103,15 @@ export class DatasetsDetailComponent implements OnInit {
 		this.datasetsService.getDatasetByName(dataset.name).subscribe(dataResult => {
 			try {
 				this.dataset = JSON.parse(dataResult).result;
+				this.getResourceView();
 				this.getExtras();
 				//this.getExtrasIAEST();
 				this.getDatasetsRecommended();
 				this.makeFileSourceList();
 			} catch (error) {
 				console.error("Error: loadDataset() - datasets-detail.component.ts");
+				this.errorTitle = this.datasetListErrorTitle;
+                this.errorMessage = this.datasetListErrorMessage;
 			}
 		});
 	}
@@ -110,8 +123,27 @@ export class DatasetsDetailComponent implements OnInit {
 				this.datasetHomer = JSON.parse(dataResult).response.docs[0];
 			} catch (error) {
 				console.error("Error: loadDatasetHomer() - datasets-detail.component.ts");
+				this.errorTitle = this.datasetListErrorTitle;
+                this.errorMessage = this.datasetListErrorMessage;
 			}
 		});
+	}
+
+	getResourceView(){
+		
+		for (var i = 0; i < this.dataset.resources.length; i++) {
+			this.datasetsService.getDatasetResourceView(this.dataset.resources[i].id).subscribe(result => {
+				try {
+					//TODO
+
+				} catch (error) {
+					console.error("Error: getResourceView() - datasets-detail.component.ts");
+					this.errorTitle = this.datasetListErrorTitle;
+					this.errorMessage = this.datasetListErrorMessage;
+				}
+			});
+
+		}
 	}
 
 	getExtras() {
@@ -212,6 +244,8 @@ export class DatasetsDetailComponent implements OnInit {
 				}
 			} catch (error) {
 				console.error("Error: getDatasetsRecommended() - datasets-detail.component.ts");
+				this.errorTitle = this.datasetListErrorTitle;
+                this.errorMessage = this.datasetListErrorMessage;
 			}
 		});
 		this.datasetsService.getDatasetsByOrganization(this.dataset.organization.name, null, 1, 1, this.dataset.type).subscribe(orgDataResult => {
@@ -229,6 +263,8 @@ export class DatasetsDetailComponent implements OnInit {
 				}
 			} catch (error) {
 				console.error("Error: getDatasetsRecommended() - datasets-detail.component.ts");
+				this.errorTitle = this.datasetListErrorTitle;
+                this.errorMessage = this.datasetListErrorMessage;
 			}
 		});
 
@@ -250,6 +286,8 @@ export class DatasetsDetailComponent implements OnInit {
 				this.setHovers();
 			} catch (error) {
 				console.error("Error: getDatasetsRecommended() - datasets-detail.component.ts");
+				this.errorTitle = this.datasetListErrorTitle;
+                this.errorMessage = this.datasetListErrorMessage;
 			}
 		});
 	}

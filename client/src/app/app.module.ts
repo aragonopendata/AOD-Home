@@ -34,6 +34,7 @@ import { ApplicationsComponent } from './components/web/static-content/info/appl
 import { EventsComponent } from './components/web/static-content/info/events/events.component';
 import { CollaborationComponent } from './components/web/static-content/info/collaboration/collaboration.component';
 import { CampusComponent } from './components/web/static-content/tools/campus/campus.component';
+import { CampusDetailComponent } from './components/web/static-content/tools/campus/campus-detail/campus-detail.component';
 import { DevelopersComponent } from './components/web/static-content/tools/developers/developers.component';
 import { ApisComponent } from './components/web/static-content/tools/apis/apis.component';
 import { SparqlComponent } from './components/web/static-content/tools/sparql/sparql.component';
@@ -98,6 +99,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 		EventsComponent,
 		CollaborationComponent,
 		CampusComponent,
+		CampusDetailComponent,
 		DevelopersComponent,
 		ApisComponent,
 		SparqlComponent,

@@ -577,5 +577,44 @@ router.get(constants.API_URL_DATASETS_STATS_SEARCH + '/:groupName', function (re
     }
 });
 
+/** GET DATASETS RESOURCE_VIEW */
+router.get(constants.API_URL_DATASETS_RESOURCE_VIEW, function (req, res, next) {
+    try {
+        
+        logger.debug('Servicio: Obtener vistas de los recursos');
+        let serviceBaseUrl = constants.CKAN_API_BASE_URL;
+        let serviceName = constants.DATASETS_RESOURCE_VIEW;
+        let serviceRequestUrl = serviceBaseUrl + serviceName + '?id=' + req.query.resId;
+            
+        var query = '';
+        let resParams = [];
+        
+        logger.notice('URL de petición: ' + serviceRequestUrl);
+        
+        //Proxy checking
+        let httpConf = null;
+        if (constants.REQUESTS_NEED_PROXY == true) {
+            logger.warning('Realizando petición a través de proxy');
+            let httpProxyConf = proxy.getproxyOptions(serviceRequestUrl);
+            httpConf = httpProxyConf;
+        } else {
+            httpConf = serviceRequestUrl;
+        }
+    
+        http.get(httpConf, function (results) {
+            var body = '';
+            results.on('data', function (chunk) {
+                body += chunk;
+            });
+            results.on('end', function () {
+                res.json(body);
+            });
+        }).on('error', function (err) {
+            utils.errorHandler(err,res,serviceName);
+        });   
+    } catch (error) {
+        logger.error('Error in route' + constants.API_URL_DATASETS_RESOURCE_VIEW);
+    }
+});
 
 module.exports = router;

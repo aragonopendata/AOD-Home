@@ -1,4 +1,22 @@
-<div *ngIf="dataset.name != undefined" class="container">
+<div class="container" *ngIf="errorTitle">
+		<div class="alert alert-info" role="alert">
+			<div class="row">
+				<div class="col-xs-3">
+					<i class="fa fa-exclamation-triangle fa-5x" style="margin:15px;color: #5ea2ba;"></i>
+				</div>
+				<div class="col-xs-9">
+					<h1>{{errorTitle}}</h1>
+					<h2>{{errorMessage}}</h2>
+	
+					<a class="mail" href="mailto:opendata@aragon.es">
+						<h2> <i class="fa fa-envelope-o"></i> Contactar con el Administrador</h2>
+					</a>
+	
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container" *ngIf="!errorTitle">
 	<div class="dtHeader row">
 		<h1 class="globaltitle col-10">{{dataset.title}}</h1>
 		<div class="social col-2">
@@ -12,9 +30,9 @@
 			  <img src="../../../../../assets/social/googlePlusIcon.png" alt="Google Plus">
 			</a>
 		</div>
-	</div>
+	</div>	
 	<div class="content row">
-		<div class="dtsetPreview col-12">
+		 <div class="dtsetPreview col-12">
 			<div id="accordion" role="tablist" aria-multiselectable="true">
 				<div class="card">
 					<div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true"
@@ -25,14 +43,15 @@
 					</div>
 					<div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
 						<div class="card-block">
-							<p>
-								No se ha encontrado previsualización del conjunto de datos seleccionado.
-							</p>
+							<div *ngFor="let resource of dataset.resources; let i = index">
+								{{resource.idView}}
+							</div>
+
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> 
 		<div class="infodtset col-sm-12 col-md-8">
 			<div class="title">
 				<h5>Información del conjunto de datos</h5>
@@ -86,7 +105,7 @@
 					<h6>Calidad del dato</h6>
 					<p>{{extraDataQuality}}</p>
 				</div>
-				<div class="section" *ngIf="extraDictionaryURL.length != 0">
+				<div class="section" *ngIf="extraDictionaryURL && extraDictionaryURL.length != 0">
 					<h6>Diccionario de datos</h6>
 					<a *ngFor="let dic of extraDictionaryURL; let i = index" class="tags" href="{{dic}}" target="_blank" target="_blank"
 					pButton type="button" label="[{{i+1}}] Documento de diccionario de datos"

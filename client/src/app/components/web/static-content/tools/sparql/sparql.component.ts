@@ -3,6 +3,7 @@ import { StaticContent } from '../../../../../models/StaticContent';
 import { StaticContentService } from '../../../../../services/web/static-content.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import $ from 'jquery';
+import { Constants } from "app/app.constants";
 
 @Component({
     selector: 'app-sparql',
@@ -18,9 +19,16 @@ export class SparqlComponent implements OnInit {
     targetUrl: string;
     url: string = null;
 
+    errorTitle: string;
+    errorMessage: string;
+    sparqlErrorTitle: string;
+    sparqlErrorMessage: string;
+
     constructor(private staticContentService: StaticContentService, private activatedRoute: ActivatedRoute) { }
 
     ngOnInit() {
+        this.sparqlErrorTitle = Constants.SPARQL_STATIC_CONTENT_ERROR_TITLE;
+        this.sparqlErrorMessage = Constants.SPARQL_STATIC_CONTENT_ERROR_MESSAGE;
         this.getStaticContentInfo();
     }
 
@@ -31,18 +39,24 @@ export class SparqlComponent implements OnInit {
     }
 
     getStaticContentInfo() {
-        this.staticContentService.getSparqlToolsStaticContent().subscribe(staticContent => {            
-            this.contents = staticContent;
-            this.sectionTitle = this.contents[0].sectionTitle;
-            this.sectionSubtitle = this.contents[0].sectionSubtitle;
-            this.sectionDescription = this.contents[0].sectionDescription;
-            this.getUrlFragment();
-            if (this.targetUrl && this.targetUrl != null && this.targetUrl != '') {
-                this.contents.forEach(content => {
-                    if (this.targetUrl === content.targetUrl) {
-                        this.index = (content.contentOrder - 1);
-                    }
-                });
+        this.staticContentService.getSparqlToolsStaticContent().subscribe(staticContent => {
+            try {
+                this.contents = staticContent;
+                this.sectionTitle = this.contents[0].sectionTitle;
+                this.sectionSubtitle = this.contents[0].sectionSubtitle;
+                this.sectionDescription = this.contents[0].sectionDescription;
+                this.getUrlFragment();
+                if (this.targetUrl && this.targetUrl != null && this.targetUrl != '') {
+                    this.contents.forEach(content => {
+                        if (this.targetUrl === content.targetUrl) {
+                            this.index = (content.contentOrder - 1);
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Error: getStaticContentInfo() - developers.component.ts');
+                this.errorTitle = this.sparqlErrorTitle;
+                this.errorMessage = this.sparqlErrorMessage;
             }
         });
     }

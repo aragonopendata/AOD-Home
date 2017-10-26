@@ -4,6 +4,7 @@ import { StaticContent } from '../../../../../models/StaticContent';
 import { StaticContentService } from '../../../../../services/web/static-content.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import $ from 'jquery';
+import { Constants } from "app/app.constants";
 
 @Component({
     selector: 'app-apis',
@@ -20,9 +21,16 @@ export class ApisComponent implements OnInit, AfterViewChecked {
     targetUrl: string;
     url: string = null;
 
+    errorTitle: string;
+    errorMessage: string;
+    apisErrorTitle: string;
+    apisErrorMessage: string;
+
     constructor(private staticContentService: StaticContentService, private activatedRoute: ActivatedRoute) { }
 
     ngOnInit() {
+        this.apisErrorTitle = Constants.APIS_STATIC_CONTENT_ERROR_TITLE;
+        this.apisErrorTitle = Constants.APIS_STATIC_CONTENT_ERROR_MESSAGE;
         this.getStaticContentInfo();
         
     }
@@ -35,18 +43,25 @@ export class ApisComponent implements OnInit, AfterViewChecked {
 
     getStaticContentInfo() {
         this.staticContentService.getApisToolsStaticContent().subscribe(staticContent => {
-            this.contents = staticContent;
-            this.sectionTitle = this.contents[0].sectionTitle;
-            this.sectionSubtitle = this.contents[0].sectionSubtitle;
-            this.sectionDescription = this.contents[0].sectionDescription;
-            this.getUrlFragment();
-            if (this.targetUrl && this.targetUrl != null && this.targetUrl != '') {
-                this.contents.forEach(content => {
-                    if (this.targetUrl === content.targetUrl) {
-                        this.index = (content.contentOrder - 1);
-                    }
-                });
+            try {
+                this.contents = staticContent;
+                this.sectionTitle = this.contents[0].sectionTitle;
+                this.sectionSubtitle = this.contents[0].sectionSubtitle;
+                this.sectionDescription = this.contents[0].sectionDescription;
+                this.getUrlFragment();
+                if (this.targetUrl && this.targetUrl != null && this.targetUrl != '') {
+                    this.contents.forEach(content => {
+                        if (this.targetUrl === content.targetUrl) {
+                            this.index = (content.contentOrder - 1);
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Error: getStaticContentInfo() - developers.component.ts');
+                this.errorTitle = this.apisErrorTitle;
+                this.errorMessage = this.apisErrorMessage;
             }
+            
         });
     }
 

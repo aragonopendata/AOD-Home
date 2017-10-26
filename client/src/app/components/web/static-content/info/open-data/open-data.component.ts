@@ -3,6 +3,7 @@ import { StaticContent } from '../../../../../models/StaticContent';
 import { StaticContentService } from '../../../../../services/web/static-content.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import $ from 'jquery';
+import { Constants } from "app/app.constants";
 
 @Component({
     selector: 'app-open-data',
@@ -19,11 +20,17 @@ export class OpenDataComponent implements OnInit, AfterViewChecked {
     targetUrl: string;
     url: string = null;
 
+    errorTitle: string;
+    errorMessage: string;
+    openDataErrorTitle: string;
+    openDataErrorMessage: string;
+
     constructor(private staticContentService: StaticContentService, private activatedRoute: ActivatedRoute) { }
 
     ngOnInit() {
+        this.openDataErrorTitle = Constants.OPEN_DATA_STATIC_CONTENT_ERROR_TITLE;
+        this.openDataErrorMessage = Constants.OPEN_DATA_STATIC_CONTENT_ERROR_MESSAGE;
         this.getStaticContentInfo();
-        
     }
 
     getUrlFragment() {
@@ -34,18 +41,25 @@ export class OpenDataComponent implements OnInit, AfterViewChecked {
 
     getStaticContentInfo() {
         this.staticContentService.getOpenDataInfoStaticContent().subscribe(staticContent => {
-            this.contents = staticContent;
-            this.sectionTitle = this.contents[0].sectionTitle;
-            this.sectionSubtitle = this.contents[0].sectionSubtitle;
-            this.sectionDescription = this.contents[0].sectionDescription;
-            this.getUrlFragment();
-            if (this.targetUrl && this.targetUrl != null && this.targetUrl != '') {
-                this.contents.forEach(content => {
-                    if (this.targetUrl === content.targetUrl) {
-                        this.index = (content.contentOrder - 1);
-                    }
-                });
+            try {
+                this.contents = staticContent;
+                this.sectionTitle = this.contents[0].sectionTitle;
+                this.sectionSubtitle = this.contents[0].sectionSubtitle;
+                this.sectionDescription = this.contents[0].sectionDescription;
+                this.getUrlFragment();
+                if (this.targetUrl && this.targetUrl != null && this.targetUrl != '') {
+                    this.contents.forEach(content => {
+                        if (this.targetUrl === content.targetUrl) {
+                            this.index = (content.contentOrder - 1);
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Error: getStaticContentInfo() - open-data.component.ts');
+                this.errorTitle = this.openDataErrorTitle;
+                this.errorMessage = this.openDataErrorMessage;
             }
+
         });
     }
 

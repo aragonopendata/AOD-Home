@@ -4,6 +4,7 @@ import { StaticContent } from '../../../../../models/StaticContent';
 import { StaticContentService } from '../../../../../services/web/static-content.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import $ from 'jquery';
+import { Constants } from "app/app.constants";
 
 @Component({
     selector: 'app-developers',
@@ -19,11 +20,17 @@ export class DevelopersComponent implements OnInit, AfterViewChecked {
     targetUrl: string;
     url: string = null;
 
+    errorTitle: string;
+    errorMessage: string;
+    developersErrorTitle: string;
+    developersErrorMessage: string;
+
     constructor(private staticContentService: StaticContentService, private activatedRoute: ActivatedRoute) { }
 
     ngOnInit() {
+        this.developersErrorTitle = Constants.DEVELOPERS_STATIC_CONTENT_ERROR_TITLE;
+        this.developersErrorMessage = Constants.DEVELOPERS_STATIC_CONTENT_ERROR_MESSAGE;
         this.getStaticContentInfo();
-        
     }
 
     getUrlFragment() {
@@ -34,17 +41,23 @@ export class DevelopersComponent implements OnInit, AfterViewChecked {
 
     getStaticContentInfo() {
         this.staticContentService.getDevelopersToolsStaticContent().subscribe(staticContent => {
-            this.contents = staticContent;
-            this.sectionTitle = this.contents[0].sectionTitle;
-            this.sectionSubtitle = this.contents[0].sectionSubtitle;
-            this.sectionDescription = this.contents[0].sectionDescription;
-            this.getUrlFragment();
-            if (this.targetUrl && this.targetUrl != null && this.targetUrl != '') {
-                this.contents.forEach(content => {
-                    if (this.targetUrl === content.targetUrl) {
-                        this.index = (content.contentOrder - 1);
-                    }
-                });
+            try {
+                this.contents = staticContent;
+                this.sectionTitle = this.contents[0].sectionTitle;
+                this.sectionSubtitle = this.contents[0].sectionSubtitle;
+                this.sectionDescription = this.contents[0].sectionDescription;
+                this.getUrlFragment();
+                if (this.targetUrl && this.targetUrl != null && this.targetUrl != '') {
+                    this.contents.forEach(content => {
+                        if (this.targetUrl === content.targetUrl) {
+                            this.index = (content.contentOrder - 1);
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Error: getStaticContentInfo() - developers.component.ts');
+                this.errorTitle = this.developersErrorTitle;
+                this.errorMessage = this.developersErrorMessage;
             }
         });
     }

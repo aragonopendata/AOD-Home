@@ -1,0 +1,27 @@
+.marginsup{
+    margin-top: 12%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1;
+    margin: 20px 0 0 0;
+    margin-top: 20px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    letter-spacing: 0.1em;
+    color: #5ea2ba;
+    font-weight: 300;
+}
+
+.tags {
+    border: 1px solid #7391a5;
+	padding: 10px;
+	color: #3b515c !important;
+	background-color: #FFFFFF;
+	text-decoration: none  !important;
+    font-weight: bold;
+    border-radius: 2px;
+    margin: 2px;
+}

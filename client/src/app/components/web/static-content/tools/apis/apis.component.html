@@ -1,4 +1,20 @@
-<div class="container">
+<div class="container" *ngIf="errorTitle">
+	<div class="alert alert-info" role="alert">
+		<div class="row">
+			<div class="col-xs-3">
+				<i class="fa fa-exclamation-triangle fa-5x" style="margin:15px;color: #5ea2ba;"></i>
+			</div>
+			<div class="col-xs-9">
+				<h1>{{errorTitle}}</h1>
+				<h2>{{errorMessage}}</h2>
+				<a class="mail" href="mailto:opendata@aragon.es">
+					<h2> <i class="fa fa-envelope-o"></i> Contactar con el Administrador</h2>
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container" *ngIf="!errorTitle">
 	<h1>{{sectionTitle}}</h1>
 	<h3>{{sectionSubtitle}}</h3>
 	<h5 *ngIf="!sectionDescription != null">{{sectionDescription}}</h5>

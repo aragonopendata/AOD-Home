@@ -317,8 +317,6 @@ export class DatasetsListComponent implements OnInit {
     }
 
     changeStats() {
-        console.log(this.selectedGroup);
-        console.log(this.selectedSubGroup);
         if (this.selectedSubGroup != undefined) {
             this.getDatasetsByStats(this.selectedSubGroup, null, null);
         } else {
@@ -556,8 +554,8 @@ export class DatasetsListComponent implements OnInit {
                 }
             } catch (error) {
                 console.error('Error: setTopicsDropdown() - datasets-list.component.ts');
-                this.errorTitle = 'Se ha producido un error';
-                this.errorMessage = 'Se ha producido un error en la carga de Datsets, vuelva a intentarlo y si el error persiste contacte con el administrador.';
+                this.errorTitle = this.datasetListErrorTitle;
+                this.errorMessage = this.datasetListErrorMessage;
             }
         });
     }
@@ -573,8 +571,8 @@ export class DatasetsListComponent implements OnInit {
                 }
             } catch (error) {
                 console.error('Error: setOrgsDropdown() - datasets-list.component.ts');
-                this.errorTitle = 'Se ha producido un error';
-                this.errorMessage = 'Se ha producido un error al cargar la lista, vuelva a intentarlo y si el error persiste contacte con el administrador.';
+                this.errorTitle = this.datasetListErrorTitle;
+                this.errorMessage = this.datasetListErrorMessage;
             }
         });
     }
@@ -850,8 +848,8 @@ export class DatasetsListComponent implements OnInit {
                 this.newestDatasets = JSON.parse(datasets).result.results;
             } catch (error) {
                 console.error('Error: setInfoTables() - datasets-list.component.ts');
-                this.errorTitle = 'Se ha producido un error';
-                this.errorMessage = 'Se ha producido un error al obtener los datasets recientes, vuelva a intentarlo y si el error persiste contacte con el administrador.';
+                this.errorTitle = this.datasetListErrorTitle;
+                this.errorMessage = this.datasetListErrorMessage;
             }
         });
         this.datasetsService.getDownloadedDataset().subscribe(datasets => {
@@ -859,8 +857,8 @@ export class DatasetsListComponent implements OnInit {
                 this.downloadedDatasets = JSON.parse(datasets).result.results;
             } catch (error) {
                 console.error('Error: setInfoTables() - datasets-list.component.ts');
-                this.errorTitle = 'Error';
-                this.errorMessage = 'Ha ocurrido un error en la carga de Datsets';
+                this.errorTitle = this.datasetListErrorTitle;
+                this.errorMessage = this.datasetListErrorMessage;
             }
         });
     }
@@ -899,7 +897,7 @@ export class DatasetsListComponent implements OnInit {
             } catch (error) {
                 console.error('Error: setDatasetsStats() - datasets-list.component.ts');
                 this.errorTitle = this.datasetListErrorTitle;
-                this.errorMessage = 'Se ha producido un error al cargar los datasets, vuelva a intentarlo y si el error persiste contacte con el administrador.';
+                this.errorMessage = this.datasetListErrorMessage;
             }
         });
 
@@ -920,7 +918,7 @@ export class DatasetsListComponent implements OnInit {
             } catch (error) {
                 console.error('Error: setDatasetsStats() - datasets-list.component.ts');
                 this.errorTitle = this.datasetListErrorTitle;
-                this.errorMessage = 'Se ha producido un error al cargar los datasets, vuelva a intentarlo y si el error persiste contacte con el administrador.';
+                this.errorMessage = this.datasetListErrorMessage;
             }
         });
     }
@@ -937,9 +935,9 @@ export class DatasetsListComponent implements OnInit {
                     }
                 }
             } catch (error) {
-                console.log('Error filterTagsMultiple() - datasets-list.component.ts');
-                this.errorTitle = 'Se ha producido un error';
-                this.errorMessage = 'Se ha producido un error con el filtrado por etiquetas, vuelva a intentarlo y si el error persiste contacte con el administrador.';
+                console.error('Error filterTagsMultiple() - datasets-list.component.ts');
+                this.errorTitle = this.datasetListErrorTitle;
+                this.errorMessage = this.datasetListErrorMessage;
             }
         });
     }

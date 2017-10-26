@@ -14,6 +14,7 @@ import { ApplicationsComponent } from './components/web/static-content/info/appl
 import { EventsComponent } from './components/web/static-content/info/events/events.component';
 import { CollaborationComponent } from './components/web/static-content/info/collaboration/collaboration.component';
 import { CampusComponent } from './components/web/static-content/tools/campus/campus.component';
+import { CampusDetailComponent } from './components/web/static-content/tools/campus/campus-detail/campus-detail.component';
 import { DevelopersComponent } from './components/web/static-content/tools/developers/developers.component';
 import { ApisComponent } from './components/web/static-content/tools/apis/apis.component';
 import { SparqlComponent } from './components/web/static-content/tools/sparql/sparql.component';
@@ -66,6 +67,7 @@ const routes: Routes = [
     { path: Constants.ROUTER_LINK_TOOLS, redirectTo: Constants.ROUTER_LINK_TOOLS_DEVELOPERS, pathMatch: 'full' },
     { path: Constants.ROUTER_LINK_TOOLS_DEVELOPERS, component: DevelopersComponent, pathMatch: 'full' },
     { path: Constants.ROUTER_LINK_TOOLS_CAMPUS, component: CampusComponent, pathMatch: 'full' },
+    { path: Constants.ROUTER_LINK_TOOLS_CAMPUS_CONTENT + '/:' + Constants.ROUTER_LINK_TOOLS_CAMPUS_EVENT_NAME, component: CampusDetailComponent, pathMatch: 'full' },
     { path: Constants.ROUTER_LINK_TOOLS_APIS, component: ApisComponent, pathMatch: 'full' },
     { path: Constants.ROUTER_LINK_TOOLS_SPARQL, component: SparqlComponent, pathMatch: 'full' },
     { path: Constants.ROUTER_LINK_TOOLS_SPARQL_CLIENT, component: SparqlClientComponent, pathMatch: 'full' },

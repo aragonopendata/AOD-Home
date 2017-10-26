@@ -5,7 +5,7 @@ export class Resource {
     cache_last_updated: Date;
     revision_timestamp: Date;
     webstore_last_updated: Date;
-    id: Date;
+    id: string;
     size: null;
     state: string;
     type: string;
@@ -24,6 +24,7 @@ export class Resource {
     position: number;
     revision_id: string;
     resource_type: string;
+    idView: string;
 
     constructor() {
         

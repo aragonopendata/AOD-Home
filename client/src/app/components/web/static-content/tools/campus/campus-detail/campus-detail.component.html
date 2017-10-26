@@ -1,0 +1,67 @@
+<!-- Page Content -->
+<div class="container-fluid marginsup">
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class=" col-md-10">
+      <h1 class="">AOD CAMPUS</h1>
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class=" col-md-10">
+      <h2 class="">{{content?.event_name}}</h2>
+      <p class="">{{content?.description}}</p>
+      <h2 class="" style="font-size: 1.1rem;text-align: justify;">Etiquetas y palabras clave</h2>
+      <div class="row" style="padding:10px">
+        <span *ngFor="let top of topics" class="tags">{{top.name}}</span>
+      </div>
+      <h2 class="" style="font-size: 1.1rem;text-align: justify;">Ponente</h2>
+      <p class="" *ngFor="let speaker of speakers">
+        {{speaker?.name}}
+      </p>
+
+      <h2 class="" style="font-size: 1.1rem;text-align: justify;">{{content?.platform}}</h2>
+      <img *ngIf="content.platform == contentPlatformAragonOpenData" class="img-fluid" src='{{content?.url}}'>
+
+      <div *ngIf="content.platform == contentPlatformBostOcksOrg" class="col-md-8 embed-responsive embed-responsive-16by9">
+        <iframe class="embed-responsive-item" [src]='sanitizer.bypassSecurityTrustResourceUrl(content?.url)'></iframe>
+      </div>
+
+      <div *ngIf="content.platform == contentPlatformGitHub" class="col-md-8 embed-responsive embed-responsive-16by9">
+        <iframe class="embed-responsive-item" [src]='sanitizer.bypassSecurityTrustResourceUrl(content?.url)'></iframe>
+      </div>
+
+      <div *ngIf="content.platform == contentPlatformPodcast" class=" col-md-8">
+        <audio src="{{content?.url}}" title="{{content?.event_name}}" preload="auto" controls="controls"></audio>
+      </div>
+
+      <div *ngIf="content.platform == contentPlatformSlideShare" class="col-md-8 embed-responsive embed-responsive-16by9">
+        <iframe class="embed-responsive-item" [src]='sanitizer.bypassSecurityTrustResourceUrl(content?.url)'></iframe>
+      </div>
+
+      <div *ngIf="content.platform == contentPlatformVimeo" class="col-md-8 embed-responsive embed-responsive-16by9">
+        <iframe class="embed-responsive-item" [src]='sanitizer.bypassSecurityTrustResourceUrl(content?.url)'></iframe>
+      </div>
+
+      <div *ngIf="content.platform == contentPlatformYoutube" class="col-md-8 embed-responsive embed-responsive-16by9">
+        <iframe class="embed-responsive-item" [src]='sanitizer.bypassSecurityTrustResourceUrl(content?.url)'></iframe>
+      </div>
+
+      <h2 class="">EVENTO</h2>
+      <h2 class="" style="font-size: 1.5rem;text-align: justify;">{{event?.name}}</h2>
+      <p class="">{{event?.description}}</p>
+      <h2 class="" style="font-size: 1.1rem;text-align: justify;">Fecha</h2>
+      <p class="">{{event?.date | date: 'dd/MM/yyyy'}}</p>
+      <h2 class="" style="font-size: 1.1rem;text-align: justify;">Lugar</h2>
+      <p class="">{{event?.site}}</p>
+
+
+    </div>
+
+  </div>
+
+  <!-- /.row -->
+
+</div>
+<!-- /.container -->
