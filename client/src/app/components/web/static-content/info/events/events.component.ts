@@ -49,7 +49,7 @@ export class EventsComponent implements OnInit {
         if(this.targetUrl != this.url && this.targetUrl != null){
             this.url = this.targetUrl;
             var element = document.getElementById(this.url+'Link');
-            $("html, body").animate({ scrollTop: $(element).offset().top - ($('#header').height()+$('.card-header').height())}, '500');
+            $("html, body").animate({ scrollTop: $(element).offset().top - ($('#header').height()+20)}, '500');
             document.getElementById(this.url+'Link').setAttribute('aria-expanded','true');
             document.getElementById(this.url+'Link').setAttribute('class','headLink');
             document.getElementById(this.url).setAttribute('class','collapse show');

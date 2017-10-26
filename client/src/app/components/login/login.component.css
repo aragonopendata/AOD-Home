@@ -131,3 +131,32 @@ body {
     font-weight: 400;
     cursor: pointer;
 }
+
+.btn{
+    margin-left: 15px;
+}
+
+a{
+    color: #5ea2ba;
+    position: relative;
+    cursor: pointer;
+}
+
+a:hover{
+    color: #000000;
+    text-decoration: none;
+}
+
+a:hover:after{
+    width: 100%;
+}
+
+a:after{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    border-bottom: 1px solid #5ea2ba;
+    transition: 0.3s;
+}

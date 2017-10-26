@@ -24,6 +24,24 @@ a:hover {
 	font-weight: bold;
 }
 
+.textContent /deep/ a{
+    text-align:left;
+	/*color:#4F7589 !important;*/
+	color:#3b515c !important;
+	text-decoration: none;
+	outline:0;
+	letter-spacing: 1px;
+	font-weight: bold;
+}
+
+.textContent /deep/ a:hover {
+    text-align:left;
+	color:#000000 !important;
+	text-decoration: none;
+	letter-spacing: 1px;
+	font-weight: bold;
+}
+
 .content {
     padding-bottom: 3%;
 }
@@ -169,4 +187,13 @@ a:hover {
     width: 100%;
     height: 100%;*/
     padding: 10px;
+}
+
+.back-value {
+    font-weight: bold;
+    color: #332F21;
+}
+
+.back-title{
+    font-weight: bold;
 }

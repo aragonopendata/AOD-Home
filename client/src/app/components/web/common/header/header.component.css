@@ -39,7 +39,7 @@ a:hover {
     z-index: 3; 
     top: 0;
     left: 0;
-    background-color: rgba(0,0,0, 0.82);
+    background-color: rgba(0,0,0, 0.82); 
     overflow: hidden;
     transition: 0.5s;
 }
@@ -98,6 +98,9 @@ a:hover {
     btnSearch {
         font-size: 20px;
     }
+}
+#nav {
+    background-color: rgba(255, 255, 255, 0.8);
 }
 
 .textBox {
@@ -165,10 +168,6 @@ a:hover {
 #logo {
     max-width: 100%;
     height: auto;
-}
-
-#nav {
-    background-color: rgba(255, 255, 255, 0.8);
 }
 
 .logo {
@@ -424,3 +423,6 @@ a:hover {
     }
 }
 
+.bg-light{
+    background-color: rgba(255, 255, 255, 0.8) !important;
+}

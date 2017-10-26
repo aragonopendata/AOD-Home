@@ -14,6 +14,7 @@ import { Constants } from '../../../../app.constants';
 
 export class DatasetsDetailComponent implements OnInit {
 
+	extrasIAESTNotEmpty: boolean = false;
 	dataset: Dataset = new Dataset();
 	datasetHomer: DatasetHomer = new DatasetHomer();
 	extraDictionary: string;
@@ -93,7 +94,7 @@ export class DatasetsDetailComponent implements OnInit {
 			try {
 				this.dataset = JSON.parse(dataResult).result;
 				this.getExtras();
-				this.getExtrasIAEST();
+				//this.getExtrasIAEST();
 				this.getDatasetsRecommended();
 				this.makeFileSourceList();
 			} catch (error) {
@@ -151,45 +152,44 @@ export class DatasetsDetailComponent implements OnInit {
 				case Constants.DATASET_EXTRA_URI_ARAGOPEDIA:
 					this.extraUriAragopedia = this.dataset.extras[index].value;
 					break;
+				case Constants.DATASET_EXTRA_IAEST_TEMA_ESTADISTICO:
+					this.extrasIAESTNotEmpty = true;
+					this.extraIAESTTemaEstadistico = this.dataset.extras[index].value;
+					break;
+				case Constants.DATASET_EXTRA_IAEST_UNIDAD_ESTADISTICA:
+					this.extrasIAESTNotEmpty = true;
+					this.extraIAESTUnidadEstadistica = this.dataset.extras[index].value;
+					break;
+				case Constants.DATASET_EXTRA_IAEST_POBLACION_ESTADISTICA:
+					this.extrasIAESTNotEmpty = true;
+					this.extraIAESTPoblacionEstadistica = this.dataset.extras[index].value;
+					break;
+				case Constants.DATASET_EXTRA_IAEST_UNIDAD_MEDIDA:
+					this.extrasIAESTNotEmpty = true;
+					this.extraIAESTUnidadMedida = this.dataset.extras[index].value;
+					break;
+				case Constants.DATASET_EXTRA_IAEST_TIPO_OPERACION:
+					this.extrasIAESTNotEmpty = true;
+					this.extraIAESTTipoOperacion = this.dataset.extras[index].value;
+					break;
+				case Constants.DATASET_EXTRA_IAEST_TIPOLOGIA_DATOS_ORIGEN:
+					this.extrasIAESTNotEmpty = true;
+					this.extraIAESTTipologiaDatosOrigen = this.dataset.extras[index].value;	
+					break;
+				case Constants.DATASET_EXTRA_IAEST_FUENTE:
+					this.extrasIAESTNotEmpty = true;
+					this.extraIAESTFuente = this.dataset.extras[index].value;
+					break;
+				case Constants.DATASET_EXTRA_IAEST_TRATAMIENTO_ESTADISTICO:
+					this.extrasIAESTNotEmpty = true;
+					this.extraIAESTTratamientoEstadistico = this.dataset.extras[index].value;
+					break;
+				case Constants.DATASET_EXTRA_IAEST_LEGISLACION_UE:
+					this.extrasIAESTNotEmpty = true;
+					this.extraIAESTLegislacionUE = this.dataset.extras[index].value;
+				break;
 			}
 		}
-	}
-
-	getExtrasIAEST() {
-		if(this.dataset.extrasIAEST){
-			console.log('Obteniendo extras IAEST del dataset');
-			for (var index = 0; index < this.dataset.extrasIAEST.length; index++) {
-				switch (this.dataset.extrasIAEST[index].key) {
-					case Constants.DATASET_EXTRA_IAEST_TEMA_ESTADISTICO:
-						this.extraIAESTTemaEstadistico = this.dataset.extrasIAEST[index].value;
-					break;
-					case Constants.DATASET_EXTRA_IAEST_UNIDAD_ESTADISTICA:
-						this.extraIAESTUnidadEstadistica = this.dataset.extrasIAEST[index].value;
-					break;
-					case Constants.DATASET_EXTRA_IAEST_POBLACION_ESTADISTICA:
-						this.extraIAESTPoblacionEstadistica = this.dataset.extrasIAEST[index].value;
-					break;
-					case Constants.DATASET_EXTRA_IAEST_UNIDAD_MEDIDA:
-						this.extraIAESTUnidadMedida = this.dataset.extrasIAEST[index].value;
-					break;
-					case Constants.DATASET_EXTRA_IAEST_TIPO_OPERACION:
-						this.extraIAESTTipoOperacion = this.dataset.extrasIAEST[index].value;
-					break;
-					case Constants.DATASET_EXTRA_IAEST_TIPOLOGIA_DATOS_ORIGEN:
-						this.extraIAESTTipologiaDatosOrigen = this.dataset.extrasIAEST[index].value;	
-					break;
-					case Constants.DATASET_EXTRA_IAEST_FUENTE:
-						this.extraIAESTFuente = this.dataset.extrasIAEST[index].value;
-					break;
-					case Constants.DATASET_EXTRA_IAEST_TRATAMIENTO_ESTADISTICO:
-						this.extraIAESTTratamientoEstadistico = this.dataset.extrasIAEST[index].value;
-					break;
-					case Constants.DATASET_EXTRA_IAEST_LEGISLACION_UE:
-						this.extraIAESTLegislacionUE = this.dataset.extrasIAEST[index].value;
-					break;
-				}
-			}
-		}	
 	}
 
 	getDatasetsRecommended() {
