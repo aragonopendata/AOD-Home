@@ -191,14 +191,14 @@
 						<div class="recommendedCard" routerLink="/datos/catalogo/dataset/{{dsRecommended.name}}" (click)="showDataset(dsRecommended)">
 							<div *ngFor="let topic of dsRecommended.groups">
 								
-								<div *ngIf="!hovers[i]?.hover">
+								<div class="cardSize" *ngIf="!hovers[i]?.hover">
 									<img class="card-img-top" src="{{assetsUrl}}/{{topic.image_url}}" alt="{{topic.title | uppercase}}" width="fit-content" height="fit-content">
 									<p>{{topic.title}}</p>
 									<div class="recommended-card-block">
 										<p>{{dsRecommended.title}}</p>
 									</div>
 								</div>
-								<div *ngIf="hovers[i]?.hover" class="detail bg-faded" style="width: 100%; height: 100%; padding: 10px; background-color: rgba(235,241,244, 0.95); opacity: 80%; ">
+								<div *ngIf="hovers[i]?.hover" class="detail bg-faded" style="width: 354px; height: 258px; padding: 10px; background-color: rgba(235,241,244, 0.95); ">
 										<h6 class="back-title">TÍTULO</h6>
 										<h6 class="back-value">{{dsRecommended.title}}</h6>
 										<h6 class="back-title">CATEGORÍA</h6>

@@ -3,7 +3,7 @@ export class Constants {
     public static AOD_BASE_URL = 'http://miv-aodfront-01.aragon.local:7030';
     public static PRESUPUESTOS_BASE_URL = 'http://miv-aodfront-01.aragon.local:7031';
     //public static AOD_ASSETS_BASE_URL = 'http://localhost:3000/assets';
-    public static AOD_ASSETS_BASE_URL = 'http://miv-aodfront-01.aragon.local:7030/static/ckan';
+    public static AOD_ASSETS_BASE_URL = 'http://miv-aodfront-01.aragon.local:7030/static/public/contenido-general';
     //public static AOD_API_WEB_BASE_URL = 'http://localhost:4200/aod/services/web';
     public static AOD_API_WEB_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/web';
     //public static AOD_API_ADMIN_BASE_URL = 'http://localhost:4200/aod/services/admin';

@@ -1,7 +1,11 @@
-@import url('http://fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,700italic,900,900italic,300italic,300,100italic,100');
+@font-face {
+    font-family: RobotoLight;
+     src: url('./../../../assets/fonts/Roboto-Light.ttf'); 
+}
+
 
 h1, h2, h3, h4, h5 {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'RobotoLight', sans-serif;
     line-height: 1;
     margin: 2px 0 20px;
     letter-spacing: 0.1em;
