@@ -1,3 +1,4 @@
+import { ResourceView } from './../../../../models/ResourceView';
 import { Component, OnInit } from '@angular/core';
 import { DatasetsService } from '../../../../services/web/datasets.service';
 import { Dataset } from '../../../../models/Dataset';
@@ -5,6 +6,7 @@ import { DatasetHomer } from '../../../../models/DatasetHomer';
 import { ResourceAux } from '../../../../models/ResourceAux';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../../../../app.constants';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
 	selector: 'app-datasets-detail',
@@ -38,7 +40,8 @@ export class DatasetsDetailComponent implements OnInit {
 	extraIAESTFuente: string;
 	extraIAESTTratamientoEstadistico: string;
 	extraIAESTLegislacionUE: string;
-	resourceView: string[];
+	resourceView: ResourceView[];
+	iframeRes:string;
 
 	resourcesAux: ResourceAux[] = new Array();
 	datasetsRecommended: Dataset[] = new Array();
@@ -59,7 +62,7 @@ export class DatasetsDetailComponent implements OnInit {
 
 	hovers: any[] = [];
 
-	constructor(private datasetsService: DatasetsService, private activatedRoute: ActivatedRoute) {
+	constructor(private datasetsService: DatasetsService, private activatedRoute: ActivatedRoute, public sanitizer: DomSanitizer) {
 		this.datasetListErrorTitle = Constants.DATASET_LIST_ERROR_TITLE;
         this.datasetListErrorMessage = Constants.DATASET_LIST_ERROR_MESSAGE;
 		this.routerLinkDataCatalogDataset = Constants.ROUTER_LINK_DATA_CATALOG_DATASET;
@@ -130,12 +133,15 @@ export class DatasetsDetailComponent implements OnInit {
 	}
 
 	getResourceView(){
-		
+		this.resourceView = [];
 		for (var i = 0; i < this.dataset.resources.length; i++) {
 			this.datasetsService.getDatasetResourceView(this.dataset.resources[i].id).subscribe(result => {
 				try {
-					//TODO
-
+					if(JSON.parse(result).result[0]){
+						this.resourceView.push(JSON.parse(result).result[0]);
+					}else{
+						this.resourceView.push(null);
+					}
 				} catch (error) {
 					console.error("Error: getResourceView() - datasets-detail.component.ts");
 					this.errorTitle = this.datasetListErrorTitle;
@@ -295,23 +301,23 @@ export class DatasetsDetailComponent implements OnInit {
 	makeFileSourceList() {
 		console.log('Obteniendo los recursos para mostrarlos en el dataset');
 		for (let newRes of this.dataset.resources) {
-			this.keepDataResource(newRes.name, newRes.url, newRes.format);
+			this.keepDataResource(newRes.id, newRes.name, newRes.url, newRes.format);
 		}
 	}
 
-	keepDataResource (name: string, url: string, format: string) {
+	keepDataResource (id:string, name: string, url: string, format: string) {
 		var i: number;
 		var existsSource: boolean;
 		existsSource = false;
 		for (i = 0; i < this.resourcesAux.length; i++) {
 			if (this.existsResourceWithSameName(this.resourcesAux[i].name, name)) {
-				this.insertSourceWithOtherFormat(i,url,format);
+				this.insertSourceWithOtherFormat(id, i,url,format);
 				existsSource = true;
 			}
 		}
 
 		if (!existsSource) {
-			this.insertNewResource(name, url, format);
+			this.insertNewResource(id, name, url, format);
 		}
 	}
 
@@ -323,18 +329,21 @@ export class DatasetsDetailComponent implements OnInit {
 		}
 	}
 
-	insertSourceWithOtherFormat(position: number, url: string, format: string) {
+	insertSourceWithOtherFormat(id:string, position: number, url: string, format: string) {
 		this.resourcesAux[position].sources.push(url);
 		this.resourcesAux[position].formats.push(format);
+		this.resourcesAux[position].sources_ids.push(id);		
 	}
 
-	insertNewResource(name: string, url: string, format: string) {
+	insertNewResource(id: string, name: string, url: string, format: string) {
 		var newResourceAux: ResourceAux = new ResourceAux();
 		newResourceAux.name = name;
 		newResourceAux.sources = new Array();
 		newResourceAux.sources.push(url);
 		newResourceAux.formats = new Array();
 		newResourceAux.formats.push(format);
+		newResourceAux.sources_ids = new Array();
+		newResourceAux.sources_ids.push(id);
 		this.resourcesAux.push(newResourceAux);
 	}
 
@@ -407,5 +416,21 @@ export class DatasetsDetailComponent implements OnInit {
 			dwldLink.click();
 			document.body.removeChild(dwldLink);		
 		});
+	}
+
+	loadResourceIframe(resource: any){
+		try {
+			for (var i = 0; i < this.resourceView.length; i++) {
+				if (this.resourceView[i] && this.resourceView[i].resource_id  && this.resourceView[i].resource_id == resource) {
+					this.iframeRes = Constants.AOD_API_CKAN_BASE_URL+'/dataset/'+this.dataset.name+'/resource/'+this.resourceView[i].resource_id+'/view/'+this.resourceView[i].id;
+				}
+			}
+		} catch (error) {
+			console.error("Error: loadResourceIframe() - datasets-detail.component.ts");
+		}	
+	}
+
+	removeResourceIframe(){
+		this.iframeRes = undefined;
 	}
 }

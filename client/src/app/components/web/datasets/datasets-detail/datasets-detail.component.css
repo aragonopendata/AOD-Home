@@ -202,3 +202,19 @@ a:hover {
     width: 354px;
     height: 258px;
 }
+
+.btn-primary {
+    margin-bottom: 5px;
+    color: #5ea1b9 !important;
+    background-color: #ffffff !important;
+    border-color: #86b9cb !important;
+    margin-right: 5px;
+}
+
+.btn-primary.active {
+    margin-bottom: 5px;
+    color: #fff !important;
+    background-color: #5ea1b9 !important; 
+    border-color: #86b9cb !important;
+    margin-right: 5px; 
+}

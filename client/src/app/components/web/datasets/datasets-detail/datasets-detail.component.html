@@ -32,26 +32,24 @@
 		</div>
 	</div>	
 	<div class="content row">
-		 <div class="dtsetPreview col-12">
-			<div id="accordion" role="tablist" aria-multiselectable="true">
-				<div class="card">
-					<div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true"
-					 aria-controls="collapseOne" role="tab" id="headingOne">
-						<h5 class="mb-0" style="font-weight: 500;">
-							Previsualización del conjunto de datos
-						</h5>
-					</div>
-					<div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
-						<div class="card-block">
-							<div *ngFor="let resource of dataset.resources; let i = index">
-								{{resource.idView}}
-							</div>
-
-						</div>
-					</div>
-				</div>
+		<div class="dtsetPreview col-12" style='margin-bottom: 10px'>
+			<div class="title">
+				<h5>Previsualización del conjunto de datos</h5>
 			</div>
-		</div> 
+			<div class="container-fluid">
+				 <ul class="nav nav-tabs" role="tablist">
+					<li class="nav-item" *ngFor="let resource of resourcesAux; let resInd = index">
+						<a class="nav-link" href="#resource{{resInd}}" (click)="removeResourceIframe()" role="tab" data-toggle="tab">{{resource.name}}</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+					<div role="tabpanel" class="tab-pane" *ngFor="let resource of resourcesAux ; let i2 = index" id="resource{{i2}}">		
+						<button *ngFor="let url of resource.sources; let i3 = index" class="tags" pButton type="button" label="{{resource.formats[i3]}}" style="margin: 2px;" (click)="removeResourceIframe();loadResourceIframe(resource.sources_ids[i3])"></button>
+						<iframe *ngIf="iframeRes" height="650px" class="col-12 embed-responsive-item" [src]='sanitizer.bypassSecurityTrustResourceUrl(iframeRes)' frameBorder="0"></iframe>
+					</div>
+				</div> 
+			</div>
+		</div>
 		<div class="infodtset col-sm-12 col-md-8">
 			<div class="title">
 				<h5>Información del conjunto de datos</h5>
