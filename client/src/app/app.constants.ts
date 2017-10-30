@@ -40,6 +40,7 @@ export class Constants {
     //ERROR CONSTANTS
     public static DATASET_LIST_ERROR_TITLE = 'Se ha producido un error';
     public static DATASET_LIST_ERROR_MESSAGE = 'Se ha producido un error en la carga de datos, vuelva a intentarlo y si el error persiste contacte con el administrador.';
+    public static DATASET_LIST_ERROR_IFRAME_MESSAGE = 'Previsualización del conjunto de datos no disponiblePrevisualización del conjunto de datos no disponible';
     public static CAMPUS_EVENTS_ERROR_TITLE = 'Se ha producido un error';
     public static CAMPUS_EVENTS_ERROR_MESSAGE = 'Se ha producido un error en la carga de datos, vuelva a intentarlo y si el error persiste contacte con el administrador.';
     public static OPEN_DATA_STATIC_CONTENT_ERROR_TITLE = 'Se ha producido un error';
