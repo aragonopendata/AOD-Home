@@ -424,6 +424,7 @@ export class DatasetsDetailComponent implements OnInit {
 			for (var i = 0; i < this.resourceView.length; i++) {
 				if (this.resourceView[i] && this.resourceView[i].resource_id  && this.resourceView[i].resource_id == resource) {
 					this.iframeRes = Constants.AOD_API_CKAN_BASE_URL+'/dataset/'+this.dataset.name+'/resource/'+this.resourceView[i].resource_id+'/view/'+this.resourceView[i].id;
+					this.iframeError = undefined;
 				}else{
 					this.iframeError = Constants.DATASET_LIST_ERROR_IFRAME_MESSAGE;
 				}
