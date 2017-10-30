@@ -244,7 +244,7 @@ export class DatasetsDetailComponent implements OnInit {
 						for (var i = 0; i < datasetRecommendedByTopic.groups.length; i++) {
 							let startIndex = +datasetRecommendedByTopic.groups[i].image_display_url.indexOf('ckan/temas/')+11;
 							let myFormatImageUrl = datasetRecommendedByTopic.groups[i].image_display_url.slice(startIndex, datasetRecommendedByTopic.groups[i].image_display_url.length);
-							datasetRecommendedByTopic.groups[i].image_url = 'public/i/temas/'+myFormatImageUrl;
+							datasetRecommendedByTopic.groups[i].image_url = Constants.DATASET_RECOMMENDED_IMAGE_URL + myFormatImageUrl;
 						}
 					}					
 					this.datasetsRecommended.push(datasetRecommendedByTopic);
@@ -263,7 +263,7 @@ export class DatasetsDetailComponent implements OnInit {
 						for (var i = 0; i < datasetRecommendedByOrganization.groups.length; i++) {
 							let startIndex = +datasetRecommendedByOrganization.groups[i].image_display_url.indexOf('ckan/temas/')+11;
 							let myFormatImageUrl = datasetRecommendedByOrganization.groups[i].image_display_url.slice(startIndex, datasetRecommendedByOrganization.groups[i].image_display_url.length);
-							datasetRecommendedByOrganization.groups[i].image_url = 'public/i/temas/'+myFormatImageUrl;
+							datasetRecommendedByOrganization.groups[i].image_url = Constants.DATASET_RECOMMENDED_IMAGE_URL + myFormatImageUrl;
 						}
 					}					
 					this.datasetsRecommended.push(datasetRecommendedByOrganization);
@@ -285,7 +285,7 @@ export class DatasetsDetailComponent implements OnInit {
 						for (var i = 0; i < datasetRecommendedByTag.groups.length; i++) {
 							let startIndex = +datasetRecommendedByTag.groups[i].image_display_url.indexOf('ckan/temas/')+11;
 							let myFormatImageUrl = datasetRecommendedByTag.groups[i].image_display_url.slice(startIndex, datasetRecommendedByTag.groups[i].image_display_url.length);
-							datasetRecommendedByTag.groups[i].image_url = 'public/i/temas/'+myFormatImageUrl;
+							datasetRecommendedByTag.groups[i].image_url = Constants.DATASET_RECOMMENDED_IMAGE_URL + myFormatImageUrl;
 						}
 					}		
 					this.datasetsRecommended.push(datasetRecommendedByTag);

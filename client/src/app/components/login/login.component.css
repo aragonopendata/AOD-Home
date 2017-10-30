@@ -1,35 +1,3 @@
-@import url('http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,700');
-@import url('http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600|Roboto Mono');
-
-@font-face {
-    font-family: 'Dosis';
-    font-style: normal;
-    font-weight: 300;
-    src: local('Dosis Light'), local('Dosis-Light'), url(http://fonts.gstatic.com/l/font?kit=RoNoOKoxvxVq4Mi9I4xIReCW9eLPAnScftSvRB4WBxg&skey=a88ea9d907460694) format('woff2');
-}
-
-@font-face {
-    font-family: 'Dosis';
-    font-style: normal;
-    font-weight: 500;
-    src: local('Dosis Medium'), local('Dosis-Medium'), url(http://fonts.gstatic.com/l/font?kit=Z1ETVwepOmEGkbaFPefd_-CW9eLPAnScftSvRB4WBxg&skey=21884fc543bb1165) format('woff2');
-}
-
-body {
-    background: #d2d6de;
-    font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif,  Open Sans;
-    font-size: 14px;
-    line-height: 1.42857;
-    height: 350px;
-    padding: 0;
-    margin: 0;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-weight: 400;
-    overflow-x: hidden;
-    overflow-y: auto;
-
-}
 
 .form-control {
     background-color: #ffffff;
@@ -142,21 +110,7 @@ a{
     cursor: pointer;
 }
 
-a:hover{
+a:hover {
     color: #000000;
     text-decoration: none;
-}
-
-a:hover:after{
-    width: 100%;
-}
-
-a:after{
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0%;
-    border-bottom: 1px solid #5ea2ba;
-    transition: 0.3s;
 }
