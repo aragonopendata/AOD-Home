@@ -9,12 +9,12 @@ const logConfig = require('../../conf/log-conf');
 const loggerSettings = logConfig.getLogSettings();
 const logger = require('js-logging').dailyFile([loggerSettings]);
 
-/** GET ALL ORGANIZATIONS */
-router.get(constants.API_URL_ORGANIZATIONS, function (req, res, next) {
+/** LIST ALL TOPICS */
+router.get(constants.API_URL_TOPICS, function (req, res, next) {
     try {
-        logger.debug('Servicio: Listado de organizaciones');
+        logger.debug('Servicio: Listado de temas');
         let serviceBaseUrl = constants.CKAN_API_BASE_URL;
-        let serviceName = constants.ORGANIZATIONS_LIST;
+        let serviceName = constants.TOPICS_LIST;
         let serviceParams = '?all_fields=true';
         let serviceRequestUrl = serviceBaseUrl + serviceName + serviceParams;
         logger.notice('URL de petición: ' + serviceRequestUrl);
@@ -41,9 +41,8 @@ router.get(constants.API_URL_ORGANIZATIONS, function (req, res, next) {
             utils.errorHandler(err,res,serviceName);
         });
     } catch (error) {
-        logger.error('Error in route' + constants.API_URL_ORGANIZATIONS);
+        logger.error('Error in route' + constants.API_URL_TOPICS);
     }
-    
 });
 
 module.exports = router;

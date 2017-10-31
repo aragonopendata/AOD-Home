@@ -97,8 +97,9 @@ const routes: Routes = [
             { path: Constants.ROUTER_LINK_DATASETS, component: DatasetsAdminComponent, children: [
                 { path: '', redirectTo: Constants.ROUTER_LINK_DATASETS_LIST, pathMatch: 'full' },
                 { path: Constants.ROUTER_LINK_DATASETS_LIST, component: DatasetsAdminListComponent, pathMatch: 'full' },
-                { path: Constants.ROUTER_LINK_DATASETS_SHOW, component: DatasetsAdminShowComponent, pathMatch: 'full' },
-                { path: Constants.ROUTER_LINK_DATASETS_EDIT, component: DatasetsAdminEditComponent, pathMatch: 'full' }
+                { path: Constants.ROUTER_LINK_DATASETS_SHOW + '/:' + Constants.ROUTER_LINK_DATA_PARAM_DATASET_NAME, component: DatasetsAdminShowComponent, pathMatch: 'full' },
+                { path: Constants.ROUTER_LINK_DATASETS_EDIT, component: DatasetsAdminEditComponent, pathMatch: 'full' },
+                { path: Constants.ROUTER_LINK_DATASETS_EDIT + '/:' + Constants.ROUTER_LINK_DATA_PARAM_DATASET_NAME, component: DatasetsAdminEditComponent, pathMatch: 'full' }
             ]},
             { path: Constants.ROUTER_LINK_ORGANIZATIONS, component: OrganizationsAdminComponent, pathMatch: 'full' }
         ]},

@@ -284,7 +284,7 @@
     </div>
     <div *ngIf="selectedSearchOption == datasetSearchOptionHomer">
         <p-dataTable [value]="datasetsHomer" emptyMessage="{{emptyMessage}}" [responsive]="true" (onSort)="setOrderHomer($event)" #dt>
-            <p-column field="name" header="ENCONTRADOS {{numDatasetsHomer}} RESULTADOS EN HOMER" sortable="custom" sortFunction="orderTableHomer($event)">
+            <p-column field="name" header="ENCONTRADOS {{numDatasetsHomer}} RESULTADOS EN HOMER" sortable="custom" [sortable]="true">
                 <ng-template pTemplate="body" let-datasetHomer="rowData">
                     <a routerLink='//{{routerLinkDataCatalogDatasetHomer}}/{{datasetHomer.package_id}}' (click)="showDatasetHomer(datasetHomer)">
                             {{datasetHomer.title}}

@@ -22,9 +22,10 @@ var campus = require('./server/routes/web/campus');
 var usersAdmin = require('./server/routes/admin/users');
 //var rolesAdmin = require('./server/routes/admin/roles');
 //var contentsAdmin = require('./server/routes/admin/contents');
-//var datasetsAdmin = require('./server/routes/admin/datasets');
+var datasetsAdmin = require('./server/routes/admin/datasets');
+var topicsAdmin = require('./server/routes/admin/topics');
 //var tagsAdmin = require('./server/routes/admin/datasets');
-//var organizationsAdmin = require('./server/routes/admin/organizations');
+var organizationsAdmin = require('./server/routes/admin/organizations');
 //var campusAdmin = require('./server/routes/admin/campus');
 
 // OTHER UTILITIES
@@ -55,9 +56,10 @@ app.use(constants.API_BASE_URL_WEB, campus);
 app.use(constants.API_BASE_URL_ADMIN, usersAdmin);
 //app.use('/api/admin', rolesAdmin);
 //app.use('/api/admin', contentsAdmin);
-//app.use('/api/admin', datasetsAdmin);
+app.use(constants.API_BASE_URL_ADMIN, datasetsAdmin);
 //app.use('/api/admin', tagsAdmin);
-//app.use('/api/admin', organizationsAdmin);
+app.use(constants.API_BASE_URL_ADMIN, topicsAdmin);
+app.use(constants.API_BASE_URL_ADMIN, organizationsAdmin);
 //app.use('/api/admin', campusAdmin);
 
 // PORT FROM ENVIRONMENT

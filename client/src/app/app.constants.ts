@@ -282,6 +282,9 @@ export class Constants {
     public static DATASET_EXTRA_SHORT_URI_ARAGOPEDIA = 'shortUriAragopedia';
     public static DATASET_EXTRA_TYPE_ARAGOPEDIA = 'typeAragopedia';
     public static DATASET_EXTRA_URI_ARAGOPEDIA = 'uriAragopedia';
+    public static DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_DATASET= '/dataset/';
+    public static DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_RESOURCE= '/resource/';
+    public static DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_VIEW= '/view/';
 
     public static DATASET_EXTRA_IAEST_TEMA_ESTADISTICO = '01_IAEST_Tema estadístico';
     public static DATASET_EXTRA_IAEST_UNIDAD_ESTADISTICA = '02_IAEST_Unidad Estadística';
@@ -297,6 +300,15 @@ export class Constants {
     public static DATASET_RDF_FILE_EXTENSION_RDF = '.rdf'
 
     public static DATASET_RECOMMENDED_IMAGE_URL = 'public/ckan/temas/';
+    //ADMIN COMMON PARAMS
+    public static DATASET_ADMIN_LIST_ROWS_PER_PAGE = 20;
+    public static ADMIN_SERVER_API_LINK_PARAM_SORT_DEFAULT_VALUE = 'relevance,-metadata_modified';
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FREQUENCY_ANUAL = { label: 'Anual', value: 'Anual' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FREQUENCY_SEMESTRAL = { label: 'Semestral', value: 'Semestral' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FREQUENCY_CUATRIMESTRAL = { label: 'Cuatrimestral', value: 'Cuatrimestral' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FREQUENCY_TRIMESTRAL = { label: 'Trimestral', value: 'Trimestral' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FREQUENCY_MENSUAL = { label: 'Mensual', value: 'Mensual' };
+
     //ROUTING
     public static ROUTER_LINK_DATA = 'datos';
     public static ROUTER_LINK_DATA_CATALOG = 'datos/catalogo';
