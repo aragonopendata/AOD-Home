@@ -207,7 +207,7 @@ router.get(constants.API_URL_CAMPUS_EVENT + '/:eventName', function (req, res, n
     const query = {
         text: 'SELECT evn.id AS "id", evn.name AS "name", evn.description AS "description", evn.date AS "date", sit.name as "site" '
         +'FROM campus.events evn '
-        +'join campus.event_sites evnsit on evn.id = evnsit.id_event '
+        +'join campus.events_sites evnsit on evn.id = evnsit.id_event '
         +'join campus.sites sit on evnsit.id_site = sit.id   '
         +'where evn.id = $1',
         values: [req.params.eventName],
@@ -289,7 +289,7 @@ router.get(constants.API_URL_CAMPUS_SPEAKERS + '/:contentName', function (req, r
     const query = {
         text: 'SELECT spk.id AS "id", spk.name AS "name" '
         + 'FROM campus.speakers spk '
-        + 'join campus.content_speakers cnsp '
+        + 'join campus.contents_speakers cnsp '
         + 'on spk.id = cnsp.id_speaker '
         + 'where cnsp.id_content = $1 ',
         values: [req.params.contentName],
@@ -326,7 +326,7 @@ router.get(constants.API_URL_CAMPUS_TOPICS + '/:contentName', function (req, res
     const query = {
         text: 'SELECT top.id AS "id", top.name AS "name" '
         + 'FROM campus.topics top '
-        + 'join campus.content_topics cntop '
+        + 'join campus.contents_topics cntop '
         + 'on top.id = cntop.id_topic '
         + 'where cntop.id_content = $1 ',
         values: [req.params.contentName],

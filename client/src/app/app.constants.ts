@@ -36,6 +36,7 @@ export class Constants {
     public static CAMPUS_CONTENT_PLATFORM_SLIDESHARE = 'Slideshare';
     public static CAMPUS_CONTENT_PLATFORM_VIMEO = 'Vimeo';
     public static CAMPUS_CONTENT_PLATFORM_YOUTUBE = 'Youtube';
+    public static CAMPUS_CURSO_INICIACION = 'http://opendata.aragon.es/portal/campus/static/html/index.html';
 
     //ERROR CONSTANTS
     public static DATASET_LIST_ERROR_TITLE = 'Se ha producido un error';
