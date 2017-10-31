@@ -21,7 +21,6 @@ export class CampusDetailComponent implements OnInit {
   speakers: Speaker[];
   topics: Topic[];
 
-  
   contentPlatformAragonOpenData: string;
   contentPlatformBostOcksOrg: string;
   contentPlatformGitHub: string;
@@ -29,6 +28,7 @@ export class CampusDetailComponent implements OnInit {
   contentPlatformSlideShare: string;
   contentPlatformVimeo: string;
   contentPlatformYoutube: string;
+  contentAssetsBaseURL: string;
 
   errorTitle: string;
   errorMessage: string;
@@ -45,6 +45,7 @@ export class CampusDetailComponent implements OnInit {
     this.contentPlatformSlideShare = Constants.CAMPUS_CONTENT_PLATFORM_SLIDESHARE;
     this.contentPlatformVimeo = Constants.CAMPUS_CONTENT_PLATFORM_VIMEO;
     this.contentPlatformYoutube = Constants.CAMPUS_CONTENT_PLATFORM_YOUTUBE;
+    this.contentAssetsBaseURL = Constants.AOD_ASSETS_BASE_URL;
   }
 
   ngOnInit() {
@@ -70,7 +71,6 @@ export class CampusDetailComponent implements OnInit {
 		this.campusService.getCampusContentByID(content.id).subscribe(contentResult => {
 			try {
         this.content = contentResult[0];
-        console.log(contentResult);
         this.loadSpeakers(this.content.id);
         this.loadTopics(this.content.id);
         this.loadEvent(this.content.event_id);

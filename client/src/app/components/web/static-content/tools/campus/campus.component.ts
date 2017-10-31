@@ -35,12 +35,14 @@ export class CampusComponent implements OnInit {
     campusErrorTitle: string;
     campusErrorMessage: string;
     routerLinkCampusDetail: string;
+    cursoIniciacionLink: string;
 
 	constructor(private campusService: CampusService, private activatedRoute: ActivatedRoute, public sanitizer: DomSanitizer) {
         this.routerLinkCampusDetail = Constants.ROUTER_LINK_TOOLS_CAMPUS_CONTENT;
         this.pageRows = Constants.CAMPUS_EVENTS_PER_PAGE;
         this.campusErrorTitle = Constants.CAMPUS_EVENTS_ERROR_TITLE;
         this.campusErrorMessage = Constants.CAMPUS_EVENTS_ERROR_MESSAGE;
+        this.cursoIniciacionLink = Constants.AOD_ASSETS_BASE_URL + Constants.CAMPUS_CURSO_INICIACION;
 	 }
 
 	ngOnInit() {

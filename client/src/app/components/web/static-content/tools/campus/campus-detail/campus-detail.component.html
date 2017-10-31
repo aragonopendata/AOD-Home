@@ -22,7 +22,7 @@
       </p>
 
       <h2 class="" style="font-size: 1.1rem;text-align: justify;">{{content?.platform}}</h2>
-      <img *ngIf="content.platform == contentPlatformAragonOpenData" class="img-fluid" src='{{content?.url}}'>
+      <img *ngIf="content.platform == contentPlatformAragonOpenData" class="img-fluid" src='{{contentAssetsBaseURL}}{{content?.url}}'>
 
       <div *ngIf="content.platform == contentPlatformBostOcksOrg" class="col-md-8 embed-responsive embed-responsive-16by9">
         <iframe class="embed-responsive-item" [src]='sanitizer.bypassSecurityTrustResourceUrl(content?.url)'></iframe>
