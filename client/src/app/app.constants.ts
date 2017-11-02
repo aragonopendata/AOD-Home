@@ -8,6 +8,8 @@ export class Constants {
     public static AOD_API_WEB_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/web';
     //public static AOD_API_ADMIN_BASE_URL = 'http://localhost:4200/aod/services/admin';
     public static AOD_API_ADMIN_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/admin';
+    //public static AOD_API_SECURITY_BASE_URL = 'http://localhost:4200/aod/services/security';
+    public static AOD_API_SECURITY_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/security';
     public static AOD_API_CKAN_BASE_URL = 'http://miv-aodfront-01.aragon.local:5000';
     public static AOD_COLLABORATION_URL = 'https://aragon.uservoice.com/forums/192552-datos-que-me-gustar%C3%ADa-reutilizar';
     public static AOD_GITHUB_URL = 'http://github.com/aragonopendata';
@@ -300,6 +302,14 @@ export class Constants {
     public static DATASET_RDF_FORMAT_OPTIONS_RDF = 'application/rdf+xml;charset=utf-8;'
     public static DATASET_RDF_FILE_EXTENSION_RDF = '.rdf'
 
+    //OPEN DATA ADMIN
+    public static ADMIN_USERS_LIST_ROWS_PER_PAGE = 10;
+    public static ADMIN_USERS_LIST_SORT_COLUMN_NAME = 'name';
+    public static ADMIN_USERS_LIST_SORT_COLUMN_EMAIL = 'email';
+    public static ADMIN_USERS_LIST_SORT_COLUMN_ROLE = 'role';
+    public static ADMIN_USERS_LIST_SORT_COLUMN_SIGNUP_DATE = 'creation_date';
+    public static ADMIN_USERS_LIST_SORT_COLUMN_ACTIVE = 'active';
+
     public static DATASET_RECOMMENDED_IMAGE_URL = 'public/ckan/temas/';
     //ADMIN COMMON PARAMS
     public static DATASET_ADMIN_LIST_ROWS_PER_PAGE = 20;
@@ -398,6 +408,7 @@ export class Constants {
     public static ROUTER_LINK_TOOLS_CAMPUS_EVENT_NAME = 'eventName';
 
     //SERVER API URLS
+    public static SERVER_API_LINK_AUTHENTICATE = '/authenticate';
     public static SERVER_API_LINK_DATASETS = '/datasets';
     public static SERVER_API_LINK_DATASETS_TOPIC = '/datasets/topic';
     public static SERVER_API_LINK_DATASETS_ORGANIZATION = '/datasets/organization';
@@ -432,6 +443,9 @@ export class Constants {
     public static SERVER_API_LINK_CAMPUS_TYPES = '/campus/types';
     public static SERVER_API_LINK_CAMPUS_SPEAKERS = '/campus/speakers';
     public static SERVER_API_LINK_CAMPUS_TOPICS = '/campus/topics';
+    public static SERVER_API_LINK_ADMIN_USERS_LIST = '/users';
+    public static SERVER_API_LINK_ADMIN_USER_CUD_OPERATIONS = '/user';
+    public static SERVER_API_LINK_ADMIN_ROLES_LIST = '/roles';
     public static SERVER_API_LINK_PARAM_SORT = 'sort';
     public static SERVER_API_LINK_PARAM_PAGE = 'page';
     public static SERVER_API_LINK_PARAM_ROWS = 'rows';

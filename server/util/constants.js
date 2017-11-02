@@ -2,7 +2,11 @@
 /* COMMON CONSTANTS */
 exports.EXPRESS_NODE_REDIRECT_ROUTING_URL = 'http://miv-aodfront-01.aragon.local:7030';
 exports.EXPRESS_NODE_STARTING_PORT = 4200;
-exports.REQUEST_ERROR_STATUS_500 = 500;
+exports.REQUEST_REQUEST_OK = 200;
+exports.REQUEST_ERROR_INTERNAL_ERROR = 500;
+exports.REQUEST_ERROR_BAD_DATA = 400;
+exports.REQUEST_ERROR_FORBIDDEN = 403;
+exports.REQUEST_ERROR_FORBIDDEN_MESSAGE = 'Not authorized';
 /* CORS */
 exports.CORS_HEADERS_ALLOW_ORIGIN_HEADER = 'Access-Control-Allow-Origin';
 exports.CORS_HEADERS_ALLOW_ORIGIN_VALUE = '*';
@@ -10,9 +14,16 @@ exports.CORS_HEADERS_ALLOW_HEADERS_HEADER = 'Access-Control-Allow-Headers';
 exports.CORS_HEADERS_ALLOW_HEADERS_VALUE = 'Access-Control-Allow-Headers, Access-Control-Allow-Methods, Access-Control-Allow-Origin, Content-Type, Origin, X-Requested-With, Accept, Authorization';
 exports.CORS_HEADERS_ALLOW_METHODS_HEADER = 'Access-Control-Allow-Methods';
 exports.CORS_HEADERS_ALLOW_METHODS_VALUE = 'GET, POST, PUT, DELETE, PATCH, OPTIONS';
+exports.HTTP_REQUEST_METHOD_POST = 'POST';
+exports.HTTP_REQUEST_HEADER_CONTENT_TYPE_FORM_URLENCODED = 'application/x-www-form-urlencoded';
+exports.HTTP_REQUEST_HEADER_CONTENT_TYPE_JSON = 'application/json';
+exports.HTTP_REQUEST_HEADER_USER_AGENT_NODE_SERVER_REQUEST = 'Node.js Server Request';
+exports.HTTP_RESPONSE_DATA_ENCODING = 'utf8';
+
 /* API URLS AND CONSTANTS */
 exports.API_BASE_URL_WEB = '/aod/services/web';
 exports.API_BASE_URL_ADMIN = '/aod/services/admin';
+exports.API_BASE_URL_SECURITY = '/aod/services/security';
 exports.API_URL_DATASETS = '/datasets';
 exports.API_URL_DATASETS_HOMER = '/homer';
 exports.API_URL_DATASETS_AUTOCOMPLETE = '/datasets/autocomplete';
@@ -38,16 +49,8 @@ exports.API_URL_STATIC_CONTENT_TOOLS_APIS = '/static-content/tools/apis';
 exports.API_URL_STATIC_CONTENT_TOOLS_SPARQL = '/static-content/tools/sparql';
 exports.API_URL_STATIC_CONTENT_TOOLS_SPARQL_CLIENT = '/static-content/tools/sparql-client';
 exports.API_URL_STATIC_CONTENT_TOOLS_SPARQL_GRAPHS = '/static-content/tools/sparql-client/graphs';
-/* DATASETS ACCESS TRACKING REGISTRY */
-exports.TRACKING_CKAN_URL_DATASET = '/dataset';
-exports.TRACKING_CKAN_URL_PATH = '/_tracking';
-exports.TRACKING_CKAN_TYPE_PARAM_PAGE = 'page';
-exports.TRACKING_CKAN_METHOD_POST = 'POST';
-exports.TRACKING_CKAN_BASE_URL = 'http://miv-aodfront-01.aragon.local';
-exports.TRACKING_CKAN_BASE_URL_PORT = '5000';
-exports.TRACKING_CKAN_HEADER_CONTENT_TYPE_FORM_URLENCODED = 'application/x-www-form-urlencoded';
-exports.TRACKING_CKAN_HEADER_USER_AGENT_NODE_SERVER_REQUEST = 'Node.js Server Request';
-exports.TRACKING_CKAN_ENCODING = 'utf8';
+exports.API_URL_AUTHENTICATE = '/authenticate';
+
 /* STATIC CONTENT DATABASE SECTION TITLES */
 exports.API_URL_CAMPUS_EVENTS = '/campus/events';
 exports.API_URL_CAMPUS_EVENT = '/campus/event';
@@ -65,15 +68,24 @@ exports.STATIC_CONTENT_SUBSECTION_TITLE_COLLABORATION = 'COLABORA';
 exports.STATIC_CONTENT_SUBSECTION_TITLE_DEVELOPERS = 'DESARROLLADORES';
 exports.STATIC_CONTENT_SUBSECTION_TITLE_APIS = 'APIS';
 exports.STATIC_CONTENT_SUBSECTION_TITLE_SPARQL = 'SPARQL';
+/* ADMIN CONSTANTS */
+exports.APPLICATION_NAME_CKAN = 'CKAN';
 /* SQL CONSTANTS */
-exports.SQL_RESULSET_FORMAT = 'json';
+exports.SQL_RESULSET_FORMAT_JSON = 'json';
 
 /* *************** */
 /* CKAN PROPERTIES */
 exports.CKAN_API_BASE_URL = 'http://miv-aodfront-01.aragon.local:5000/api/action/';
 //exports.CKAN_API_BASE_URL = 'http://localhost:14500/api/action/';
-exports.CKAN_BASE_URL = 'http://miv-aodfront-01.aragon.local:5000';
+exports.CKAN_BASE_URL = 'http://miv-aodfront-01.aragon.local';
 //exports.CKAN_BASE_URL = 'http://localhost:14500';
+exports.CKAN_BASE_PORT = '5000';
+/* DATASETS ACCESS TRACKING REGISTRY */
+exports.CKAN_URL_PATH_TRACKING_DATASET = '/dataset';
+exports.CKAN_URL_PATH_TRACKING = '/_tracking';
+exports.CKAN_TRACKING_TYPE_PARAM_PAGE = 'page';
+/* CKAN ADMIN - USERS */
+exports.CKAN_URL_PATH_USER_CREATE = '/user_create';
 
 /* DATASETS */
 //Results per page in lists

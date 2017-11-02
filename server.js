@@ -20,16 +20,17 @@ var organizations = require('./server/routes/web/organizations');
 var contents = require('./server/routes/web/contents');
 var campus = require('./server/routes/web/campus');
 var usersAdmin = require('./server/routes/admin/users');
-//var rolesAdmin = require('./server/routes/admin/roles');
+var rolesAdmin = require('./server/routes/admin/roles');
 //var contentsAdmin = require('./server/routes/admin/contents');
 var datasetsAdmin = require('./server/routes/admin/datasets');
 var topicsAdmin = require('./server/routes/admin/topics');
-//var tagsAdmin = require('./server/routes/admin/datasets');
+//var tagsAdmin = require('./server/routes/admin/tags');
 var organizationsAdmin = require('./server/routes/admin/organizations');
 //var campusAdmin = require('./server/routes/admin/campus');
 
-// OTHER UTILITIES
-var login = require('./server/routes/login');
+// API ROUTES 
+var authenticate = require('./server/routes/authenticate'); 
+var verifyToken = require('./server/util/verifyToken'); 
 
 // EXPRESS APP
 const app = express();
@@ -47,6 +48,7 @@ app.get('/', function (req, res) {
 });
 
 // Set our api routes
+app.use(constants.API_BASE_URL_SECURITY, authenticate);
 app.use(constants.API_BASE_URL_WEB, datasets);
 app.use(constants.API_BASE_URL_WEB, tags);
 app.use(constants.API_BASE_URL_WEB, topics);
@@ -54,7 +56,7 @@ app.use(constants.API_BASE_URL_WEB, organizations);
 app.use(constants.API_BASE_URL_WEB, contents);
 app.use(constants.API_BASE_URL_WEB, campus);
 app.use(constants.API_BASE_URL_ADMIN, usersAdmin);
-//app.use('/api/admin', rolesAdmin);
+app.use(constants.API_BASE_URL_ADMIN, rolesAdmin);
 //app.use('/api/admin', contentsAdmin);
 app.use(constants.API_BASE_URL_ADMIN, datasetsAdmin);
 //app.use('/api/admin', tagsAdmin);

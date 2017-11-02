@@ -24,14 +24,10 @@ psql -h localhost -U aod_admin -d aod
 -- MANAGER SCHEMA CREATION
 CREATE SCHEMA manager AUTHORIZATION aod_admin;
 COMMENT ON SCHEMA manager IS 'Schema for the AOD applications global administration';
+-- MANAGER GRANTS
+GRANT ALL ON SCHEMA manager TO aod_admin;
 -- CAMPUS SCHEMA CREATION
 CREATE SCHEMA campus AUTHORIZATION aod_admin;
 COMMENT ON SCHEMA campus IS 'Schema for the AOD campus data storage';
--- MANAGER GRANTS
--- GRANT ALL ON SCHEMA manager TO postgres;
-GRANT ALL ON SCHEMA manager TO aod_admin;
 -- CAMPUS GRANTS
--- GRANT ALL ON SCHEMA campus TO postgres;
 GRANT ALL ON SCHEMA campus TO aod_admin;
-
-COMMIT;

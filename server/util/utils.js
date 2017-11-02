@@ -12,7 +12,7 @@ module.exports = {
         let sorting = '';
         sorting = req.query.sort;
 
-        if (sorting != null && sorting != 'null') {     
+        if (sorting != null && sorting != 'null') {
             sortParams = sorting.replace(' ', '').split(',');
             for (var key in sortParams) {
                 sortParams[key].charAt(0) == '-' ? sortOrders.push(constants.SERVER_API_SORT_DESC) : sortOrders.push(constants.SERVER_API_SORT_ASC);
@@ -20,7 +20,7 @@ module.exports = {
                     sortParams[key] = sortParams[key].slice(1);
                 }
             }
-    
+
             query = '?' + constants.SERVER_API_LINK_PARAM_SORT + '=';
             if (sortParams.length > 0 && sortOrders.length > 0) {
                 for (var key in sortParams) {
@@ -29,7 +29,7 @@ module.exports = {
             } else {
                 query += constants.SERVER_API_LINK_DEFAULT_SORT;
             }
-        }else{
+        } else {
             query = '?' + constants.SERVER_API_LINK_PARAM_SORT + '=' + constants.SERVER_API_LINK_DEFAULT_SORT;
         }
         if (req.query.rows && req.query.page) {
@@ -89,7 +89,7 @@ module.exports = {
         let sorting = '';
 
         sorting = req.query.sort;
-        if (sorting) {            
+        if (sorting) {
             sortParams = sorting.replace(' ', '').split(',');
         }
         for (var key in sortParams) {
@@ -126,13 +126,13 @@ module.exports = {
         return query;
     },
 
-    errorHandler: function (err,res,serviceName) {
-    logger.error('Error '+err.code+' in request '+serviceName);
-    var bodyerr = '';
-    bodyerr = {
-        status: constants.REQUEST_ERROR_STATUS_500,
-        message: 'Error: '+err.code+' in request '+serviceName
-    };
-    res.json(bodyerr)
+    errorHandler: function (err, res, serviceName) {
+        logger.error('Error ' + err.code + ' in request ' + serviceName);
+        var bodyerr = '';
+        bodyerr = {
+            status: constants.REQUEST_ERROR_INTERNAL_ERROR,
+            message: 'Error: ' + err.code + ' in request ' + serviceName
+        };
+        res.json(bodyerr)
     }
 };

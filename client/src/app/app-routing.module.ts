@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { Constants } from './app.constants';
+import { AuthGuard } from "./_guards/auth.guard";
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 import { HomeComponent } from './components/web/home.component';
 import { DatasetsListComponent } from './components/web/datasets/datasets-list/datasets-list.component';
@@ -74,36 +76,36 @@ const routes: Routes = [
     { path: Constants.ROUTER_LINK_LOGIN, component: LoginComponent, pathMatch: 'full' },
     { path: Constants.ROUTER_LINK_LOGIN_FORGOT_PASSWORD, component: ForgottenPasswordComponent, pathMatch: 'full' },
     { path: Constants.ROUTER_LINK_LOGIN_FORGOT_PASSWORD, component: RestorePasswordComponent, pathMatch: 'full' },
-    { path: Constants.ROUTER_LINK_ADMIN, component: HomeAdminComponent, children: [
+    { path: Constants.ROUTER_LINK_ADMIN, component: HomeAdminComponent, canActivate: [AuthGuard], children: [
         { path: '',redirectTo: Constants.ROUTER_LINK_GLOBAL, pathMatch: 'full' },
-        { path: Constants.ROUTER_LINK_GLOBAL, component: GlobalComponent, children: [
+        { path: Constants.ROUTER_LINK_GLOBAL, component: GlobalComponent, canActivate: [AuthGuard], children: [
             { path: '', redirectTo: Constants.ROUTER_LINK_DASHBOARD, pathMatch: 'full' },
-            { path: Constants.ROUTER_LINK_DASHBOARD, component: DashboardGlobalComponent, pathMatch: 'full' },
-            { path: Constants.ROUTER_LINK_USERS, component: UsersAdminComponent, pathMatch: 'full' },
-            { path: Constants.ROUTER_LINK_ROLES, component: RolesAdminComponent, pathMatch: 'full' },
-            { path: Constants.ROUTER_LINK_CONTENT, children: [
-                { path: Constants.ROUTER_LINK_INFO, component: OpenDataAdminComponent, pathMatch: 'full' },
-                { path: Constants.ROUTER_LINK_APPS, component: ApplicationsAdminComponent, pathMatch: 'full' },
-                { path: Constants.ROUTER_LINK_EVENTS, component: EventsAdminComponent, pathMatch: 'full' },
-                { path: Constants.ROUTER_LINK_COLLABORATION, component: CollaborationAdminComponent, pathMatch: 'full' },
-                { path: Constants.ROUTER_LINK_DEVELOPERS, component: DevelopersAdminComponent, pathMatch: 'full' },
-                { path: Constants.ROUTER_LINK_APIS, component: ApisAdminComponent, pathMatch: 'full' },
-                { path: Constants.ROUTER_LINK_SPARQL, component: SparqlAdminComponent, pathMatch: 'full' }
+            { path: Constants.ROUTER_LINK_DASHBOARD, component: DashboardGlobalComponent, canActivate: [AuthGuard], pathMatch: 'full' },
+            { path: Constants.ROUTER_LINK_USERS, component: UsersAdminComponent, canActivate: [AuthGuard], pathMatch: 'full' },
+            { path: Constants.ROUTER_LINK_ROLES, component: RolesAdminComponent, canActivate: [AuthGuard], pathMatch: 'full' },
+            { path: Constants.ROUTER_LINK_CONTENT, canActivate: [AuthGuard], children: [
+                { path: Constants.ROUTER_LINK_INFO, component: OpenDataAdminComponent, canActivate: [AuthGuard], pathMatch: 'full' },
+                { path: Constants.ROUTER_LINK_APPS, component: ApplicationsAdminComponent, canActivate: [AuthGuard], pathMatch: 'full' },
+                { path: Constants.ROUTER_LINK_EVENTS, component: EventsAdminComponent, canActivate: [AuthGuard], pathMatch: 'full' },
+                { path: Constants.ROUTER_LINK_COLLABORATION, component: CollaborationAdminComponent, canActivate: [AuthGuard], pathMatch: 'full' },
+                { path: Constants.ROUTER_LINK_DEVELOPERS, component: DevelopersAdminComponent, canActivate: [AuthGuard], pathMatch: 'full' },
+                { path: Constants.ROUTER_LINK_APIS, component: ApisAdminComponent, canActivate: [AuthGuard], pathMatch: 'full' },
+                { path: Constants.ROUTER_LINK_SPARQL, component: SparqlAdminComponent, canActivate: [AuthGuard], pathMatch: 'full' }
             ]},
         ]},
-        { path: Constants.ROUTER_LINK_DATACENTER, component: DatacenterComponent, children: [
+        { path: Constants.ROUTER_LINK_DATACENTER, component: DatacenterComponent, canActivate: [AuthGuard], children: [
             { path: '', redirectTo: Constants.ROUTER_LINK_DASHBOARD, pathMatch: 'full' },
-            { path: Constants.ROUTER_LINK_DASHBOARD, component: DashboardDatacenterComponent, pathMatch: 'full' },
-            { path: Constants.ROUTER_LINK_DATASETS, component: DatasetsAdminComponent, children: [
-                { path: '', redirectTo: Constants.ROUTER_LINK_DATASETS_LIST, pathMatch: 'full' },
-                { path: Constants.ROUTER_LINK_DATASETS_LIST, component: DatasetsAdminListComponent, pathMatch: 'full' },
-                { path: Constants.ROUTER_LINK_DATASETS_SHOW + '/:' + Constants.ROUTER_LINK_DATA_PARAM_DATASET_NAME, component: DatasetsAdminShowComponent, pathMatch: 'full' },
-                { path: Constants.ROUTER_LINK_DATASETS_EDIT, component: DatasetsAdminEditComponent, pathMatch: 'full' },
-                { path: Constants.ROUTER_LINK_DATASETS_EDIT + '/:' + Constants.ROUTER_LINK_DATA_PARAM_DATASET_NAME, component: DatasetsAdminEditComponent, pathMatch: 'full' }
+            { path: Constants.ROUTER_LINK_DASHBOARD, component: DashboardDatacenterComponent, canActivate: [AuthGuard], pathMatch: 'full' },
+            { path: Constants.ROUTER_LINK_DATASETS, component: DatasetsAdminComponent, canActivate: [AuthGuard], children: [
+                { path: '', redirectTo: Constants.ROUTER_LINK_DATASETS_LIST, canActivate: [AuthGuard], pathMatch: 'full' },
+                { path: Constants.ROUTER_LINK_DATASETS_LIST, component: DatasetsAdminListComponent, canActivate: [AuthGuard], pathMatch: 'full' },
+                { path: Constants.ROUTER_LINK_DATASETS_SHOW + '/:' + Constants.ROUTER_LINK_DATA_PARAM_DATASET_NAME, component: DatasetsAdminShowComponent, canActivate: [AuthGuard], pathMatch: 'full' },
+                { path: Constants.ROUTER_LINK_DATASETS_EDIT, component: DatasetsAdminEditComponent, canActivate: [AuthGuard], pathMatch: 'full' },
+                { path: Constants.ROUTER_LINK_DATASETS_EDIT + '/:' + Constants.ROUTER_LINK_DATA_PARAM_DATASET_NAME, component: DatasetsAdminEditComponent, canActivate: [AuthGuard], pathMatch: 'full' }
             ]},
-            { path: Constants.ROUTER_LINK_ORGANIZATIONS, component: OrganizationsAdminComponent, pathMatch: 'full' }
+            { path: Constants.ROUTER_LINK_ORGANIZATIONS, component: OrganizationsAdminComponent, canActivate: [AuthGuard], pathMatch: 'full' }
         ]},
-        { path: Constants.ROUTER_LINK_CAMPUS, component: CampusAdminComponent, pathMatch: 'full' }
+        { path: Constants.ROUTER_LINK_CAMPUS, component: CampusAdminComponent, canActivate: [AuthGuard], pathMatch: 'full' }
     ]},
     { path: Constants.ROUTER_LINK_404, component: PageNotFoundComponent, pathMatch: 'full' },
     { path: '**', redirectTo: '/' + Constants.ROUTER_LINK_404 }
@@ -112,6 +114,6 @@ const routes: Routes = [
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule],
-    providers: []
+    providers: [AuthGuard, {provide: LocationStrategy, useClass: HashLocationStrategy}]
 })
 export class AppRoutingModule { }

@@ -329,9 +329,6 @@ router.get(constants.API_URL_DATASETS_ORGANIZATION + '/:organizationName', funct
         if (req.params.organizationName) {
             serviceRequestUrl += '&fq=organization:' + req.params.organizationName;
         }
-        if (req.query.type) {
-            //TODO TYPES
-        }
         logger.notice('URL de petición: ' + serviceRequestUrl);
 
         //Proxy checking
@@ -396,26 +393,26 @@ router.get(constants.API_URL_DATASETS + '/:datasetName', function (req, res, nex
         //CKAN doesn't increment the tracking throught API calls
         logger.debug('Tracking datasets...');
         var post_data = querystring.stringify({
-            'url': constants.TRACKING_CKAN_URL_DATASET + req.params.datasetName,
-            'type': constants.TRACKING_CKAN_TYPE_PARAM_PAGE
+            'url': constants.CKAN_URL_PATH_TRACKING_DATASET + req.params.datasetName,
+            'type': constants.CKAN_TRACKING_TYPE_PARAM_PAGE
         });
         logger.debug('Param URL:' + post_data);
 
         var post_option = {
-            host: constants.TRACKING_CKAN_BASE_URL,//TODO Pasar por propiedades
-            port: constants.TRACKING_CKAN_BASE_URL_PORT,             //TODO Pasar por propiedades
-            path: constants.TRACKING_CKAN_URL_PATH,
-            method: constants.TRACKING_CKAN_METHOD_POST,
+            host: constants.CKAN_BASE_URL,
+            port: constants.CKAN_BASE_PORT,
+            path: constants.CKAN_URL_PATH_TRACKING,
+            method: constants.HTTP_REQUEST_METHOD_POST,
             headers: {
-                'Content-Type': constants.TRACKING_CKAN_HEADER_CONTENT_TYPE_FORM_URLENCODED,
+                'Content-Type': constants.HTTP_REQUEST_HEADER_CONTENT_TYPE_FORM_URLENCODED,
                 'Content-Length': Buffer.byteLength(post_data),
-                'User-Agent': constants.TRACKING_CKAN_HEADER_USER_AGENT_NODE_SERVER_REQUEST
+                'User-Agent': constants.HTTP_REQUEST_HEADER_USER_AGENT_NODE_SERVER_REQUEST
             }
         }
         logger.debug('POST Option:' + post_option);
 
         var post_request = http.request(post_option, function (results) {
-            results.setEncoding(constants.TRACKING_CKAN_ENCODING);
+            results.setEncoding(constants.HTTP_RESPONSE_DATA_ENCODING);
             results.on('data', function (chunk) {
                 logger.debug('Request on data OK');
             });
@@ -580,17 +577,17 @@ router.get(constants.API_URL_DATASETS_STATS_SEARCH + '/:groupName', function (re
 /** GET DATASETS RESOURCE_VIEW */
 router.get(constants.API_URL_DATASETS_RESOURCE_VIEW, function (req, res, next) {
     try {
-        
+
         logger.debug('Servicio: Obtener vistas de los recursos');
         let serviceBaseUrl = constants.CKAN_API_BASE_URL;
         let serviceName = constants.DATASETS_RESOURCE_VIEW;
         let serviceRequestUrl = serviceBaseUrl + serviceName + '?id=' + req.query.resId;
-            
+
         var query = '';
         let resParams = [];
-        
+
         logger.notice('URL de petición: ' + serviceRequestUrl);
-        
+
         //Proxy checking
         let httpConf = null;
         if (constants.REQUESTS_NEED_PROXY == true) {
@@ -600,7 +597,7 @@ router.get(constants.API_URL_DATASETS_RESOURCE_VIEW, function (req, res, next) {
         } else {
             httpConf = serviceRequestUrl;
         }
-    
+
         http.get(httpConf, function (results) {
             var body = '';
             results.on('data', function (chunk) {
@@ -610,8 +607,8 @@ router.get(constants.API_URL_DATASETS_RESOURCE_VIEW, function (req, res, next) {
                 res.json(body);
             });
         }).on('error', function (err) {
-            utils.errorHandler(err,res,serviceName);
-        });   
+            utils.errorHandler(err, res, serviceName);
+        });
     } catch (error) {
         logger.error('Error in route' + constants.API_URL_DATASETS_RESOURCE_VIEW);
     }

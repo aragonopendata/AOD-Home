@@ -18,16 +18,16 @@ router.get(constants.API_URL_STATIC_CONTENT_INFO_OPEN_DATA, function (req, res, 
     let sectionTitle = constants.STATIC_CONTENT_SECTION_TITLE_INFO;
     let sectionSubtitle = constants.STATIC_CONTENT_SUBSECTION_TITLE_OPEN_DATA;
     const query = {
-        text: 'SELECT sec.id AS "sectionId", sec.title AS "sectionTitle", sec.subtitle AS "sectionSubtitle" '
-                 + ', sec.description AS "sectionDescription", cnt.content_order AS "contentOrder" ' 
-                 + ', cnt.title AS "contentTitle", cnt.content AS "contentText", cnt.target_url AS "targetUrl" ' 
-              + 'FROM manager.sections sec '
-              + 'JOIN manager.static_contents cnt '
-                + 'ON sec.id = cnt.id_section '
-             + 'WHERE sec.title = $1 AND sec.subtitle = $2 '
-             + 'ORDER BY cnt.content_order ASC',
-        values: [sectionTitle, sectionSubtitle],
-        rowMode: constants.SQL_RESULSET_FORMAT
+        text: 'SELECT usr.id, usr.name, usr.email, usr.description, usr.active '
+        + ', usr.creation_date AS "signupDate", rls.id, rls.name'
+        + ', rls.description, rls.active '
+        + 'FROM manager.users usr '
+        + 'JOIN manager.users_roles url '
+        + 'ON usr.id = url.id_user '
+        + 'JOIN manager.roles rls '
+        + 'ON rls.id = url.id_role '
+        + 'ORDER BY usr.name ASC',
+        rowMode: constants.SQL_RESULSET_FORMAT_JSON
     };
 
     pool.on('error', (err, client) => {
@@ -38,18 +38,17 @@ router.get(constants.API_URL_STATIC_CONTENT_INFO_OPEN_DATA, function (req, res, 
     pool.connect((err, client, done) => {
         if (err) {
             logger.error(err.stack);
-            res.json({ status: 500, 'error': err});
+            res.json({ status: 500, 'error': err });
             return;
         }
         pool.query(query, (err, result) => {
             done();
             if (err) {
                 logger.error(err.stack);
-                res.json({ status: 500, 'error': err});
+                res.json({ status: 500, 'error': err });
                 return;
             } else {
-                var json = JSON.stringify(result.rows);
-                logger.info(json);
+                logger.info('Filas devueltas: ' + result.rows.length);
                 res.json(result.rows);
             }
         });
@@ -61,15 +60,15 @@ router.get(constants.API_URL_STATIC_CONTENT_INFO_APPS, function (req, res, next)
     let sectionSubtitle = constants.STATIC_CONTENT_SUBSECTION_TITLE_APPS;
     const query = {
         text: 'SELECT sec.id AS "sectionId", sec.title AS "sectionTitle", sec.subtitle AS "sectionSubtitle" '
-                 + ', sec.description AS "sectionDescription", cnt.content_order AS "contentOrder" ' 
-                 + ', cnt.title AS "contentTitle", cnt.content AS "contentText" ' 
-              + 'FROM manager.sections sec '
-              + 'JOIN manager.static_contents cnt '
-                + 'ON sec.id = cnt.id_section '
-             + 'WHERE sec.title = $1 AND sec.subtitle = $2 '
-             + 'ORDER BY cnt.content_order ASC',
+        + ', sec.description AS "sectionDescription", cnt.content_order AS "contentOrder" '
+        + ', cnt.title AS "contentTitle", cnt.content AS "contentText" '
+        + 'FROM manager.sections sec '
+        + 'JOIN manager.static_contents cnt '
+        + 'ON sec.id = cnt.id_section '
+        + 'WHERE sec.title = $1 AND sec.subtitle = $2 '
+        + 'ORDER BY cnt.content_order ASC',
         values: [sectionTitle, sectionSubtitle],
-        rowMode: constants.SQL_RESULSET_FORMAT
+        rowMode: constants.SQL_RESULSET_FORMAT_JSON
     };
 
     pool.on('error', (err, client) => {
@@ -80,18 +79,17 @@ router.get(constants.API_URL_STATIC_CONTENT_INFO_APPS, function (req, res, next)
     pool.connect((err, client, done) => {
         if (err) {
             logger.error(err.stack);
-            res.json({ status: 500, 'error': err});
+            res.json({ status: 500, 'error': err });
             return;
         }
         pool.query(query, (err, result) => {
             done();
             if (err) {
                 logger.error(err.stack);
-                res.json({ status: 500, 'error': err});
+                res.json({ status: 500, 'error': err });
                 return;
             } else {
-                var json = JSON.stringify(result.rows);
-                logger.info(json);
+                logger.info('Filas devueltas: ' + result.rows.length);
                 res.json(result.rows);
             }
         });
@@ -103,15 +101,15 @@ router.get(constants.API_URL_STATIC_CONTENT_INFO_EVENTS, function (req, res, nex
     let sectionSubtitle = constants.STATIC_CONTENT_SUBSECTION_TITLE_EVENTS;
     const query = {
         text: 'SELECT sec.id AS "sectionId", sec.title AS "sectionTitle", sec.subtitle AS "sectionSubtitle" '
-                 + ', sec.description AS "sectionDescription", cnt.content_order AS "contentOrder" ' 
-                 + ', cnt.title AS "contentTitle", cnt.content AS "contentText", cnt.target_url AS "targetUrl" ' 
-              + 'FROM manager.sections sec '
-              + 'JOIN manager.static_contents cnt '
-                + 'ON sec.id = cnt.id_section '
-             + 'WHERE sec.title = $1 AND sec.subtitle = $2 '
-             + 'ORDER BY cnt.content_order ASC',
+        + ', sec.description AS "sectionDescription", cnt.content_order AS "contentOrder" '
+        + ', cnt.title AS "contentTitle", cnt.content AS "contentText", cnt.target_url AS "targetUrl" '
+        + 'FROM manager.sections sec '
+        + 'JOIN manager.static_contents cnt '
+        + 'ON sec.id = cnt.id_section '
+        + 'WHERE sec.title = $1 AND sec.subtitle = $2 '
+        + 'ORDER BY cnt.content_order ASC',
         values: [sectionTitle, sectionSubtitle],
-        rowMode: constants.SQL_RESULSET_FORMAT
+        rowMode: constants.SQL_RESULSET_FORMAT_JSON
     };
 
     pool.on('error', (err, client) => {
@@ -122,18 +120,17 @@ router.get(constants.API_URL_STATIC_CONTENT_INFO_EVENTS, function (req, res, nex
     pool.connect((err, client, done) => {
         if (err) {
             logger.error(err.stack);
-            res.json({ status: 500, 'error': err});
+            res.json({ status: 500, 'error': err });
             return;
         }
         pool.query(query, (err, result) => {
             done();
             if (err) {
                 logger.error(err.stack);
-                res.json({ status: 500, 'error': err});
+                res.json({ status: 500, 'error': err });
                 return;
             } else {
-                var json = JSON.stringify(result.rows);
-                logger.info(json);
+                logger.info('Filas devueltas: ' + result.rows.length);
                 res.json(result.rows);
             }
         });
@@ -141,7 +138,7 @@ router.get(constants.API_URL_STATIC_CONTENT_INFO_EVENTS, function (req, res, nex
 });
 
 router.get(constants.API_URL_STATIC_CONTENT_INFO_COLLABORATION, function (req, res, next) {
-    
+
 });
 
 router.get(constants.API_URL_STATIC_CONTENT_TOOLS_DEVELOPERS, function (req, res, next) {
@@ -149,15 +146,15 @@ router.get(constants.API_URL_STATIC_CONTENT_TOOLS_DEVELOPERS, function (req, res
     let sectionSubtitle = constants.STATIC_CONTENT_SUBSECTION_TITLE_DEVELOPERS;
     const query = {
         text: 'SELECT sec.id AS "sectionId", sec.title AS "sectionTitle", sec.subtitle AS "sectionSubtitle" '
-                 + ', sec.description AS "sectionDescription", cnt.content_order AS "contentOrder" ' 
-                 + ', cnt.title AS "contentTitle", cnt.content AS "contentText", cnt.target_url AS "targetUrl" '
-              + 'FROM manager.sections sec '
-              + 'JOIN manager.static_contents cnt '
-                + 'ON sec.id = cnt.id_section '
-             + 'WHERE sec.title = $1 AND sec.subtitle = $2 '
-             + 'ORDER BY cnt.content_order ASC',
+        + ', sec.description AS "sectionDescription", cnt.content_order AS "contentOrder" '
+        + ', cnt.title AS "contentTitle", cnt.content AS "contentText", cnt.target_url AS "targetUrl" '
+        + 'FROM manager.sections sec '
+        + 'JOIN manager.static_contents cnt '
+        + 'ON sec.id = cnt.id_section '
+        + 'WHERE sec.title = $1 AND sec.subtitle = $2 '
+        + 'ORDER BY cnt.content_order ASC',
         values: [sectionTitle, sectionSubtitle],
-        rowMode: constants.SQL_RESULSET_FORMAT
+        rowMode: constants.SQL_RESULSET_FORMAT_JSON
     };
 
     pool.on('error', (err, client) => {
@@ -168,18 +165,17 @@ router.get(constants.API_URL_STATIC_CONTENT_TOOLS_DEVELOPERS, function (req, res
     pool.connect((err, client, done) => {
         if (err) {
             logger.error(err.stack);
-            res.json({ status: 500, 'error': err});
+            res.json({ status: 500, 'error': err });
             return;
         }
         pool.query(query, (err, result) => {
             done();
             if (err) {
                 logger.error(err.stack);
-                res.json({ status: 500, 'error': err});
+                res.json({ status: 500, 'error': err });
                 return;
             } else {
-                var json = JSON.stringify(result.rows);
-                logger.info(json);
+                logger.info('Filas devueltas: ' + result.rows.length);
                 res.json(result.rows);
             }
         });
@@ -191,15 +187,15 @@ router.get(constants.API_URL_STATIC_CONTENT_TOOLS_APIS, function (req, res, next
     let sectionSubtitle = constants.STATIC_CONTENT_SUBSECTION_TITLE_APIS;
     const query = {
         text: 'SELECT sec.id AS "sectionId", sec.title AS "sectionTitle", sec.subtitle AS "sectionSubtitle" '
-                 + ', sec.description AS "sectionDescription", cnt.content_order AS "contentOrder" ' 
-                 + ', cnt.title AS "contentTitle", cnt.content AS "contentText", cnt.target_url AS "targetUrl" '
-              + 'FROM manager.sections sec '
-              + 'JOIN manager.static_contents cnt '
-                + 'ON sec.id = cnt.id_section '
-             + 'WHERE sec.title = $1 AND sec.subtitle = $2 '
-             + 'ORDER BY cnt.content_order ASC',
+        + ', sec.description AS "sectionDescription", cnt.content_order AS "contentOrder" '
+        + ', cnt.title AS "contentTitle", cnt.content AS "contentText", cnt.target_url AS "targetUrl" '
+        + 'FROM manager.sections sec '
+        + 'JOIN manager.static_contents cnt '
+        + 'ON sec.id = cnt.id_section '
+        + 'WHERE sec.title = $1 AND sec.subtitle = $2 '
+        + 'ORDER BY cnt.content_order ASC',
         values: [sectionTitle, sectionSubtitle],
-        rowMode: constants.SQL_RESULSET_FORMAT
+        rowMode: constants.SQL_RESULSET_FORMAT_JSON
     };
 
     pool.on('error', (err, client) => {
@@ -210,18 +206,17 @@ router.get(constants.API_URL_STATIC_CONTENT_TOOLS_APIS, function (req, res, next
     pool.connect((err, client, done) => {
         if (err) {
             logger.error(err.stack);
-            res.json({ status: 500, 'error': err});
+            res.json({ status: 500, 'error': err });
             return;
         }
         pool.query(query, (err, result) => {
             done();
             if (err) {
                 logger.error(err.stack);
-                res.json({ status: 500, 'error': err});
+                res.json({ status: 500, 'error': err });
                 return;
             } else {
-                var json = JSON.stringify(result.rows);
-                logger.info(json);
+                logger.info('Filas devueltas: ' + result.rows.length);
                 res.json(result.rows);
             }
         });
@@ -233,15 +228,15 @@ router.get(constants.API_URL_STATIC_CONTENT_TOOLS_SPARQL, function (req, res, ne
     let sectionSubtitle = constants.STATIC_CONTENT_SUBSECTION_TITLE_SPARQL;
     const query = {
         text: 'SELECT sec.id AS "sectionId", sec.title AS "sectionTitle", sec.subtitle AS "sectionSubtitle" '
-                 + ', sec.description AS "sectionDescription", cnt.content_order AS "contentOrder" ' 
-                 + ', cnt.title AS "contentTitle", cnt.content AS "contentText", cnt.target_url AS "targetUrl" ' 
-              + 'FROM manager.sections sec '
-              + 'JOIN manager.static_contents cnt '
-                + 'ON sec.id = cnt.id_section '
-             + 'WHERE sec.title = $1 AND sec.subtitle = $2 '
-             + 'ORDER BY cnt.content_order ASC',
+        + ', sec.description AS "sectionDescription", cnt.content_order AS "contentOrder" '
+        + ', cnt.title AS "contentTitle", cnt.content AS "contentText", cnt.target_url AS "targetUrl" '
+        + 'FROM manager.sections sec '
+        + 'JOIN manager.static_contents cnt '
+        + 'ON sec.id = cnt.id_section '
+        + 'WHERE sec.title = $1 AND sec.subtitle = $2 '
+        + 'ORDER BY cnt.content_order ASC',
         values: [sectionTitle, sectionSubtitle],
-        rowMode: constants.SQL_RESULSET_FORMAT
+        rowMode: constants.SQL_RESULSET_FORMAT_JSON
     };
 
     pool.on('error', (err, client) => {
@@ -252,18 +247,17 @@ router.get(constants.API_URL_STATIC_CONTENT_TOOLS_SPARQL, function (req, res, ne
     pool.connect((err, client, done) => {
         if (err) {
             logger.error(err.stack);
-            res.json({ status: 500, 'error': err});
+            res.json({ status: 500, 'error': err });
             return;
         }
         pool.query(query, (err, result) => {
             done();
             if (err) {
                 logger.error(err.stack);
-                res.json({ status: 500, 'error': err});
+                res.json({ status: 500, 'error': err });
                 return;
             } else {
-                var json = JSON.stringify(result.rows);
-                logger.info(json);
+                logger.info('Filas devueltas: ' + result.rows.length);
                 res.json(result.rows);
             }
         });
@@ -278,23 +272,23 @@ router.get(constants.API_URL_STATIC_CONTENT_TOOLS_SPARQL_CLIENT, function (req, 
         if (req.query.graph) {
             serviceRequestUrl += constants.SPARQL_API_LINK_PARAM_GRAPH + encodeURIComponent(req.query.graph);
         }
-    
+
         if (req.query.query) {
             serviceRequestUrl += constants.SPARQL_API_LINK_PARAM_QUERY + encodeURIComponent(req.query.query);
         }
-    
+
         if (req.query.format) {
             serviceRequestUrl += constants.SPARQL_API_LINK_PARAM_FORMAT + encodeURIComponent(req.query.format);
         }
-    
+
         if (req.query.timeout) {
             serviceRequestUrl += constants.SPARQL_API_LINK_PARAM_TIMEOUT + encodeURIComponent(req.query.timeout);
         }
-    
+
         if (req.query.debug) {
             serviceRequestUrl += constants.SPARQL_API_LINK_PARAM_DEBUG + encodeURIComponent(req.query.debug);
         }
-    
+
         logger.notice('URL de petición: ' + serviceRequestUrl);
 
         //Proxy checking
@@ -306,7 +300,7 @@ router.get(constants.API_URL_STATIC_CONTENT_TOOLS_SPARQL_CLIENT, function (req, 
         } else {
             httpConf = serviceRequestUrl;
         }
-    
+
         http.get(httpConf, function (results) {
             var body = '';
             results.on('data', function (chunk) {
@@ -316,13 +310,12 @@ router.get(constants.API_URL_STATIC_CONTENT_TOOLS_SPARQL_CLIENT, function (req, 
                 res.json(body);
             });
         }).on('error', function (err) {
-            utils.errorHandler(err,res,serviceName);
-        });   
+            utils.errorHandler(err, res, serviceName);
+        });
 
     } catch (error) {
         logger.error(error);
     }
-
 });
 
 router.get(constants.API_URL_STATIC_CONTENT_TOOLS_SPARQL_GRAPHS, function (req, res, next) {
@@ -330,9 +323,9 @@ router.get(constants.API_URL_STATIC_CONTENT_TOOLS_SPARQL_GRAPHS, function (req, 
         logger.debug('Servicio: Petición SPARQL Obtener Grafos');
         let serviceBaseUrl = constants.SPARQL_API_BASE_URL;
         let serviceRequestUrl = serviceBaseUrl;
-  
+
         serviceRequestUrl += constants.SPARQL_API_QUERY_URL_ALL_GRAPHS;
-    
+
         logger.notice('URL de petición: ' + serviceRequestUrl);
 
         //Proxy checking
@@ -344,7 +337,7 @@ router.get(constants.API_URL_STATIC_CONTENT_TOOLS_SPARQL_GRAPHS, function (req, 
         } else {
             httpConf = serviceRequestUrl;
         }
-    
+
         http.get(httpConf, function (results) {
             var body = '';
             results.on('data', function (chunk) {
@@ -354,15 +347,11 @@ router.get(constants.API_URL_STATIC_CONTENT_TOOLS_SPARQL_GRAPHS, function (req, 
                 res.json(body);
             });
         }).on('error', function (err) {
-            utils.errorHandler(err,res,serviceName);
-        });   
-
+            utils.errorHandler(err, res, serviceName);
+        });
     } catch (error) {
         logger.error(error);
     }
-
 });
-
-
 
 module.exports = router;

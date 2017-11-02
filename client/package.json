@@ -30,6 +30,7 @@
     "@ngx-translate/core": "^7.1.0",
     "@ngx-translate/http-loader": "^1.0.1",
     "angular-in-memory-web-api": "~0.3.2",
+    "angular2-jwt": "^0.2.3",
     "angular2-logger": "^0.6.0",
     "bootstrap": "^4.0.0-alpha.6",
     "chart.js": "^2.6.0",

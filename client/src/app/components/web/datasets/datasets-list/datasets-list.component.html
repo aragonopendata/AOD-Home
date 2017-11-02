@@ -7,7 +7,6 @@
             <div class="col-xs-9">
                 <h1>{{errorTitle}}</h1>
                 <h2>{{errorMessage}}</h2>
-
                 <a class="mail" href="mailto:opendata@aragon.es">
                     <h2> <i class="fa fa-envelope-o"></i> Contactar con el Administrador</h2>
                 </a>
@@ -18,20 +17,20 @@
 </div>
 <div class="container" *ngIf="!errorTitle">
     <h1 translate>TITLE_DATACENTER</h1>
-<!-- Search -->
-<div class="row">
-        <div class="col-9" *ngIf="selectedSearchOption == datasetSearchOptionFreeSearch" >
+    <!-- Search -->
+    <div class="row">
+        <div class="col-9" *ngIf="selectedSearchOption == datasetSearchOptionFreeSearch">
             <div class="form-group">
                 <label for="exampleSelect1">Datos Sobre:</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Buscar por..." [value]="searchValue" (keyup.enter)="searchDatasetsByText(searchInput.value)" #searchInput>
-                        <span class="input-group-btn">
-                            <button class="btn btn-secondary" type="button" (click)="searchDatasetsByText(searchInput.value)" ><i class="fa fa-search" aria-hidden="true"></i></button>
-                        </span>
-                    </div>                
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Buscar por..." [value]="searchValue" (keyup.enter)="searchDatasetsByText(searchInput.value)"
+                        #searchInput>
+                    <span class="input-group-btn">
+                        <button class="btn btn-secondary" type="button" (click)="searchDatasetsByText(searchInput.value)" ><i class="fa fa-search" aria-hidden="true"></i></button>
+                    </span>
+                </div>
             </div>
         </div>
-      
         <div class="col-5" *ngIf="selectedSearchOption == datasetSearchOptionTopics">
             <div class="form-group">
                 <label>Datos sobre:</label>
@@ -48,42 +47,40 @@
                 </select>
             </div>
         </div>
-
         <div class="col-4" *ngIf="selectedSearchOption == datasetSearchOptionOrganizations || selectedSearchOption == datasetSearchOptionTopics">
             <div class="form-group">
-                <label >Del tipo:</label>
+                <label>Del tipo:</label>
                 <select class="form-control" [(ngModel)]="selectedType" (change)="changeType()">
                     <option *ngFor="let types of datasetTypes" [ngValue]="types.value">{{types.label}}</option>
                 </select>
             </div>
         </div>
 
-        <div class="col-9" *ngIf="selectedSearchOption == datasetSearchOptionTags" >
+        <div class="col-9" *ngIf="selectedSearchOption == datasetSearchOptionTags">
             <div class="form-group">
-                <label >Etiquetas:</label>
+                <label>Etiquetas:</label>
                 <div class="input-group">
-                        <p-autoComplete [style]="{'width':'100%'}" [inputStyle]="{'padding': '0 1.5em 0.25em'}" [(ngModel)]="tags" [suggestions]="filteredTagsMultiple" (completeMethod)="filterTagsMultiple($event)" [minLength]="1"
-                        placeholder="Etiquetas" value="#{tags}" field="name" [multiple]="true" >
+                    <p-autoComplete [style]="{'width':'100%'}" [inputStyle]="{'padding': '0 1.5em 0.25em'}" [(ngModel)]="tags" [suggestions]="filteredTagsMultiple"
+                        (completeMethod)="filterTagsMultiple($event)" [minLength]="1" placeholder="Etiquetas" value="#{tags}"
+                        field="name" [multiple]="true">
                     </p-autoComplete>
                     <span class="input-group-btn">
                         <button class="btn btn-secondary" type="button" (click)="changeTags()" ><i class="fa fa-search" aria-hidden="true"></i></button>
                     </span>
-                    <!-- <button pButton type="button" icon="fa-search" class="ui-button-secondary"></button> -->
-                </div>   
-            </div> 
+                </div>
+            </div>
         </div>
         <div [ngClass]="selectedSearchOption == datasetSearchOptionStats && selectedGroup == undefined ? 'col-9' : 'col-4'" *ngIf="selectedSearchOption == datasetSearchOptionStats">
             <div class="form-group">
-                <label >Del Grupo:</label>
+                <label>Del Grupo:</label>
                 <select class="form-control" [(ngModel)]="selectedGroup" (change)="resetSubGroupSearch();changeStats()">
                     <option *ngFor="let group of groupSelect" [ngValue]="group.value">{{group.label}}</option>
                 </select>
             </div>
         </div>
-        
         <div class="col-5" *ngIf="selectedGroup != undefined">
             <div class="form-group">
-                <label >Del Subgrupo:</label>
+                <label>Del Subgrupo:</label>
                 <select *ngIf="selectedGroup == groupsOptionTerritorio" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
                     <option *ngFor="let subGroup of subGroupTerritorioSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
@@ -127,7 +124,7 @@
                     <option *ngFor="let subGroup of subGroupMedioAmbienteSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
                 <select *ngIf="selectedGroup == groupsOptionSectorPublico" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
-                        <option *ngFor="let subGroup of subGroupSectorPublicoSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
+                    <option *ngFor="let subGroup of subGroupSectorPublicoSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
             </div>
         </div>
@@ -135,33 +132,32 @@
             <div class="form-group">
                 <label>Buscar:</label>
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Buscar por..." [value]="searchHomerValue" (keyup.enter)="searchDatasetsByText(searchHomerInput.value)" #searchHomerInput>
+                    <input type="text" class="form-control" placeholder="Buscar por..." [value]="searchHomerValue" (keyup.enter)="searchDatasetsByText(searchHomerInput.value)"
+                        #searchHomerInput>
                     <span class="input-group-btn">
                         <button class="btn btn-secondary" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
                     </span>
-                </div>                
+                </div>
             </div>
         </div>
         <div class="col-3" *ngIf="selectedSearchOption == datasetSearchOptionHomer">
             <div class="form-group">
-                <label >Idioma:</label>
+                <label>Idioma:</label>
                 <select class="form-control" [(ngModel)]="selectedLang">
                     <option *ngFor="let langSel of langsSelect" [ngValue]="langSel.value">{{langSel.label}}</option>
                 </select>
             </div>
         </div>
-
         <div class="col-3">
             <div class="form-group">
-                <label >Tipo de búsqueda</label>
+                <label>Tipo de búsqueda</label>
                 <select class="form-control" [(ngModel)]="selectedSearchOption" (change)="resetSearch()">
                     <option *ngFor="let search of searchOptions" [ngValue]="search.value">{{search.label}}</option>
                 </select>
             </div>
         </div>
-      </div>
-<!-- End Search -->
-
+    </div>
+    <!-- End Search -->
     <div *ngIf="selectedSearchOption != datasetSearchOptionHomer">
         <p-dataTable [value]="datasets" [responsive]="true" emptyMessage="{{emptyMessage}}" (onSort)="setOrder($event)" #dt>
             <p-column field="name" header="{{numDatasets}} conjuntos de datos encontrados" sortable="custom" sortFunction="orderTable($event)">
@@ -187,30 +183,29 @@
             <ul class="pagination justify-content-center">
                 <li [ngClass]="actualPage >= 1 ? 'page-item': 'page-item disabled'">
                     <a class="page-link" (click)="paginate(+pageFirst+1)" aria-label="Primero">
-                <i class="fa fa-fast-backward" ></i>
-                </a>
+                        <i class="fa fa-fast-backward" ></i>
+                    </a>
                 </li>
                 <li [ngClass]="actualPage >= 1 ? 'page-item': 'page-item disabled'">
                     <a class="page-link" (click)="paginate(+actualPage)" aria-label="Anterior">
-                <i class="fa fa-step-backward"></i>
-                </a>
+                        <i class="fa fa-step-backward"></i>
+                    </a>
                 </li>
                 <li *ngFor="let pageShow of pagesShow" [ngClass]="pageShow == '-' ? 'page-item disabled' : (pageShow == (+actualPage+1) ? 'page-item active': 'page-item')">
                     <a class="page-link" (click)="paginate(pageShow)">{{pageShow}}</a>
                 </li>
                 <li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
                     <a class="page-link" (click)="paginate(+actualPage+2)" aria-label="Siguiente">
-                    <i class="fa fa-step-forward"></i>
+                        <i class="fa fa-step-forward"></i>
                     </a>
                 </li>
                 <li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
                     <a class="page-link" (click)="paginate(pageLast)" aria-label="Ultimo">
-                    <i class="fa fa-fast-forward"></i>
+                        <i class="fa fa-fast-forward"></i>
                     </a>
                 </li>
             </ul>
         </nav>
-
         <div class="nota">
             <p>
                 <i class="fa fa-star" id="informacion_content_3_i" style="color: #5ea2ba;"></i> Se ha accedido al conjunto
@@ -287,8 +282,8 @@
             <p-column field="name" header="ENCONTRADOS {{numDatasetsHomer}} RESULTADOS EN HOMER" sortable="custom" [sortable]="true">
                 <ng-template pTemplate="body" let-datasetHomer="rowData">
                     <a routerLink='//{{routerLinkDataCatalogDatasetHomer}}/{{datasetHomer.package_id}}' (click)="showDatasetHomer(datasetHomer)">
-                            {{datasetHomer.title}}
-                        </a>
+                        {{datasetHomer.title}}
+                    </a>
                 </ng-template>
             </p-column>
             <p-column field="portal" header="PORTAL" [style]="{'width':'220px'}" sortable="custom" [sortable]="true">
@@ -306,12 +301,12 @@
             <ul class="pagination justify-content-center">
                 <li [ngClass]="actualPage >= 1 ? 'page-item': 'page-item disabled'">
                     <a class="page-link" (click)="paginate(+pageFirst+1)" aria-label="Primero">
-                    <i class="fa fa-fast-backward" ></i>
+                        <i class="fa fa-fast-backward" ></i>
                     </a>
                 </li>
                 <li [ngClass]="actualPage >= 1 ? 'page-item': 'page-item disabled'">
                     <a class="page-link" (click)="paginate(+actualPage)" aria-label="Anterior">
-                    <i class="fa fa-step-backward"></i>
+                        <i class="fa fa-step-backward"></i>
                     </a>
                 </li>
                 <li *ngFor="let pageShow of pagesShow" [ngClass]="pageShow == '-' ? 'page-item disabled' : (pageShow == (+actualPage+1) ? 'page-item active': 'page-item')">
@@ -321,12 +316,12 @@
                 <li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
                     <a class="page-link" (click)="paginate(+actualPage+2)" aria-label="Siguiente">
                         <i class="fa fa-step-forward"></i>
-                        </a>
+                    </a>
                 </li>
                 <li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
                     <a class="page-link" (click)="paginate(pageLast)" aria-label="Ultimo">
                         <i class="fa fa-fast-forward"></i>
-                        </a>
+                    </a>
                 </li>
             </ul>
         </nav>

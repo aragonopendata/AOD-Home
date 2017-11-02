@@ -62,6 +62,8 @@ import { DatasetsAdminShowComponent } from './components/admin/datacenter/datase
 import { DatasetsAdminEditComponent } from './components/admin/datacenter/datasets-admin/datasets-admin-edit/datasets-admin-edit.component';
 import { DatasetsAdminListComponent } from './components/admin/datacenter/datasets-admin/datasets-admin-list/datasets-admin-list.component';
 // Services
+import { AuthenticationService } from './services/security/authentication.service';
+import { LoginService } from './services/security/login.service';
 import { DatasetsService } from './services/web/datasets.service';
 import { TopicsService } from './services/web/topics.service';
 import { OrganizationsService } from './services/web/organizations.service';
@@ -175,6 +177,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 	providers: [
 		Logger,
 		Constants,
+		AuthenticationService,
+		LoginService,
 		DatasetsService,
 		TopicsService,
 		OrganizationsService,

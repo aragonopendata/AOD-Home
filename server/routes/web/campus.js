@@ -1,5 +1,3 @@
-'use strict'
-
 const express = require('express');
 const router = express.Router();
 const constants = require('../../util/constants');
@@ -22,39 +20,42 @@ router.get(constants.API_URL_CAMPUS_EVENTS, function (req, res, next) {
         rows = req.query.rows;
         start = (req.query.page * constants.CAMPUS_EVENTS_PER_PAGE);
     }
-    if (req.query.text){
-        text = '%'+req.query.text+'%';
+
+    if (req.query.text) {
+        text = '%' + req.query.text + '%';
     }
-    
-    if(req.query.type){
+
+    if (req.query.type) {
         var type = req.query.type;
-        var textQuery = 'SELECT distinct evn.id AS "id", evn.name AS "name", evn.description AS "description", evn.date AS "date", sit.name as "site", count(*) OVER() AS total_count '
-        + 'FROM campus.events evn '
-        + 'join campus.events_sites evnsit on evn.id = evnsit.id_event  '
-        + 'join campus.sites sit on evnsit.id_site = sit.id  '
-        + 'join campus.contents cnt on evn.id = cnt.event '
-        + 'where cnt."type" = $1 '
-        + 'group by evn.id, evnsit.id_event, sit.name '
-        + 'ORDER  BY evn."date" DESC '
-        + 'LIMIT  $2 '
-        + 'OFFSET $3 ';
-        var valuesQuery = [type,rows, start];
-    }else{
-        var textQuery = 'SELECT evn.id AS "id", evn.name AS "name", evn.description AS "description", evn.date AS "date", sit.name as "site", count(*) OVER() AS total_count '
-        + 'FROM campus.events evn '
-        + 'join campus.events_sites evnsit on evn.id = evnsit.id_event  '
-        + 'join campus.sites sit on evnsit.id_site = sit.id  '
-        + 'where evn.name like $3 '
-        + 'ORDER  BY evn."date" DESC '
-        + 'LIMIT  $1 '
-        + 'OFFSET $2 ';
+        var textQuery = 'SELECT distinct evn.id AS "id", evn.name AS "name", evn.description AS "description" '
+            + ', evn.date AS "date", sit.name AS "site", count(*) OVER() AS total_count '
+            + 'FROM campus.events evn '
+            + 'JOIN campus.events_sites evnsit ON evn.id = evnsit.id_event '
+            + 'JOIN campus.sites sit ON evnsit.id_site = sit.id '
+            + 'JOIN campus.contents cnt ON evn.id = cnt.event '
+            + 'WHERE cnt."type" = $1 '
+            + 'GROUP BY evn.id, evnsit.id_event, sit.name '
+            + 'ORDER BY evn."date" DESC '
+            + 'LIMIT $2 '
+            + 'OFFSET $3 ';
+        var valuesQuery = [type, rows, start];
+    } else {
+        var textQuery = 'SELECT evn.id AS "id", evn.name AS "name", evn.description AS "description" '
+            + ', evn.date AS "date", sit.name AS "site", count(*) OVER() AS total_count '
+            + 'FROM campus.events evn '
+            + 'JOIN campus.events_sites evnsit ON evn.id = evnsit.id_event  '
+            + 'JOIN campus.sites sit ON evnsit.id_site = sit.id  '
+            + 'WHERE evn.name like $3 '
+            + 'ORDER BY evn."date" DESC '
+            + 'LIMIT $1 '
+            + 'OFFSET $2 ';
         var valuesQuery = [rows, start, text];
     }
 
     const query = {
         text: textQuery,
         values: valuesQuery,
-        rowMode: constants.SQL_RESULSET_FORMAT
+        rowMode: constants.SQL_RESULSET_FORMAT_JSON
     };
 
     pool.on('error', (err, client) => {
@@ -65,18 +66,17 @@ router.get(constants.API_URL_CAMPUS_EVENTS, function (req, res, next) {
     pool.connect((err, client, done) => {
         if (err) {
             logger.error(err.stack);
-            res.json({ status: 500, 'error': err});
+            res.json({ status: 500, 'error': err });
             return;
         }
         pool.query(query, (err, result) => {
             done();
             if (err) {
                 logger.error(err.stack);
-                res.json({ status: 500, 'error': err});
+                res.json({ status: 500, 'error': err });
                 return;
             } else {
-                var json = JSON.stringify(result.rows);
-                logger.info(json);
+                logger.info('Filas devueltas: ' + result.rows.length);
                 res.json(result.rows);
             }
         });
@@ -85,16 +85,16 @@ router.get(constants.API_URL_CAMPUS_EVENTS, function (req, res, next) {
 
 router.get(constants.API_URL_CAMPUS_CONTENTS_OF_EVENT, function (req, res, next) {
     const query = {
-        text: 'select distinct cnt.id AS id, cnt.title AS title, cnt.description as description, cnt.url as url, encode(cnt.thumbnail, \'base64\') as thumbnail, '
-        +'fmt.name as format_content, cnt.event as content_event '
-                     +' FROM campus.contents cnt'
-                     +' join campus.formats fmt'
-                     +' on cnt.format = fmt.id'
-                     +' join campus.events evt'
-                     +' on cnt.format = fmt.id'
-                     +' where cnt.event = $1',
+        text: 'select distinct cnt.id AS id, cnt.title AS title, cnt.description AS description, cnt.url AS url, encode(cnt.thumbnail, \'base64\') AS thumbnail, '
+        + 'fmt.name AS format_content, cnt.event AS content_event '
+        + ' FROM campus.contents cnt'
+        + ' JOIN campus.formats fmt'
+        + ' ON cnt.format = fmt.id'
+        + ' JOIN campus.events evt'
+        + ' ON cnt.format = fmt.id'
+        + ' WHERE cnt.event = $1',
         values: [req.query.id],
-        rowMode: constants.SQL_RESULSET_FORMAT
+        rowMode: constants.SQL_RESULSET_FORMAT_JSON
     };
 
     pool.on('error', (err, client) => {
@@ -105,18 +105,17 @@ router.get(constants.API_URL_CAMPUS_CONTENTS_OF_EVENT, function (req, res, next)
     pool.connect((err, client, done) => {
         if (err) {
             logger.error(err.stack);
-            res.json({ status: 500, 'error': err});
+            res.json({ status: 500, 'error': err });
             return;
         }
         pool.query(query, (err, result) => {
             done();
             if (err) {
                 logger.error(err.stack);
-                res.json({ status: 500, 'error': err});
+                res.json({ status: 500, 'error': err });
                 return;
             } else {
-                var json = JSON.stringify(result.rows);
-                logger.info(json);
+                logger.info('Filas devueltas: ' + result.rows.length);
                 res.json(result.rows);
             }
         });
@@ -130,11 +129,11 @@ router.get(constants.API_URL_CAMPUS_TYPES, function (req, res, next) {
         rows = req.query.rows;
         start = req.query.page;
     }
-    
+
     const query = {
         text: 'SELECT typ.id AS "value", typ.name AS "label" '
-        +'from campus.types typ', 
-        rowMode: constants.SQL_RESULSET_FORMAT
+        + 'FROM campus.types typ',
+        rowMode: constants.SQL_RESULSET_FORMAT_JSON
     };
 
     pool.on('error', (err, client) => {
@@ -145,18 +144,17 @@ router.get(constants.API_URL_CAMPUS_TYPES, function (req, res, next) {
     pool.connect((err, client, done) => {
         if (err) {
             logger.error(err.stack);
-            res.json({ status: 500, 'error': err});
+            res.json({ status: 500, 'error': err });
             return;
         }
         pool.query(query, (err, result) => {
             done();
             if (err) {
                 logger.error(err.stack);
-                res.json({ status: 500, 'error': err});
+                res.json({ status: 500, 'error': err });
                 return;
             } else {
-                var json = JSON.stringify(result.rows);
-                logger.info(json);
+                logger.info('Filas devueltas: ' + result.rows.length);
                 res.json(result.rows);
             }
         });
@@ -165,16 +163,16 @@ router.get(constants.API_URL_CAMPUS_TYPES, function (req, res, next) {
 
 router.get(constants.API_URL_CAMPUS_CONTENTS_OF_EVENT, function (req, res, next) {
     const query = {
-        text: 'select distinct cnt.id AS id, cnt.title AS title, cnt.description as description, cnt.url as url, encode(cnt.thumbnail, \'base64\') as thumbnail, '
-        +'fmt.name as format_content, cnt.event as content_event '
-                     +' FROM campus.contents cnt'
-                     +' join campus.formats fmt'
-                     +' on cnt.format = fmt.id'
-                     +' join campus.events evt'
-                     +' on cnt.format = fmt.id'
-                     +' where cnt.event = $1',
+        text: 'select distinct cnt.id AS id, cnt.title AS title, cnt.description AS description, cnt.url AS url, encode(cnt.thumbnail, \'base64\') AS thumbnail, '
+        + 'fmt.name AS format_content, cnt.event AS content_event '
+        + ' FROM campus.contents cnt'
+        + ' JOIN campus.formats fmt'
+        + ' ON cnt.format = fmt.id'
+        + ' JOIN campus.events evt'
+        + ' ON cnt.format = fmt.id'
+        + ' WHERE cnt.event = $1',
         values: [req.query.id],
-        rowMode: constants.SQL_RESULSET_FORMAT
+        rowMode: constants.SQL_RESULSET_FORMAT_JSON
     };
 
     pool.on('error', (err, client) => {
@@ -185,18 +183,17 @@ router.get(constants.API_URL_CAMPUS_CONTENTS_OF_EVENT, function (req, res, next)
     pool.connect((err, client, done) => {
         if (err) {
             logger.error(err.stack);
-            res.json({ status: 500, 'error': err});
+            res.json({ status: 500, 'error': err });
             return;
         }
         pool.query(query, (err, result) => {
             done();
             if (err) {
                 logger.error(err.stack);
-                res.json({ status: 500, 'error': err});
+                res.json({ status: 500, 'error': err });
                 return;
             } else {
-                var json = JSON.stringify(result.rows);
-                logger.info(json);
+                logger.info('Filas devueltas: ' + result.rows.length);
                 res.json(result.rows);
             }
         });
@@ -205,13 +202,13 @@ router.get(constants.API_URL_CAMPUS_CONTENTS_OF_EVENT, function (req, res, next)
 
 router.get(constants.API_URL_CAMPUS_EVENT + '/:eventName', function (req, res, next) {
     const query = {
-        text: 'SELECT evn.id AS "id", evn.name AS "name", evn.description AS "description", evn.date AS "date", sit.name as "site" '
-        +'FROM campus.events evn '
-        +'join campus.events_sites evnsit on evn.id = evnsit.id_event '
-        +'join campus.sites sit on evnsit.id_site = sit.id   '
-        +'where evn.id = $1',
+        text: 'SELECT evn.id AS "id", evn.name AS "name", evn.description AS "description", evn.date AS "date", sit.name AS "site" '
+        + 'FROM campus.events evn '
+        + 'JOIN campus.events_sites evnsit ON evn.id = evnsit.id_event '
+        + 'JOIN campus.sites sit ON evnsit.id_site = sit.id   '
+        + 'WHERE evn.id = $1',
         values: [req.params.eventName],
-        rowMode: constants.SQL_RESULSET_FORMAT
+        rowMode: constants.SQL_RESULSET_FORMAT_JSON
     };
 
     pool.on('error', (err, client) => {
@@ -222,41 +219,39 @@ router.get(constants.API_URL_CAMPUS_EVENT + '/:eventName', function (req, res, n
     pool.connect((err, client, done) => {
         if (err) {
             logger.error(err.stack);
-            res.json({ status: 500, 'error': err});
+            res.json({ status: 500, 'error': err });
             return;
         }
         pool.query(query, (err, result) => {
             done();
             if (err) {
                 logger.error(err.stack);
-                res.json({ status: 500, 'error': err});
+                res.json({ status: 500, 'error': err });
                 return;
             } else {
-                var json = JSON.stringify(result.rows);
-                logger.info(json);
+                logger.info('Filas devueltas: ' + result.rows.length);
                 res.json(result.rows);
             }
         });
     });
 });
 
-
 router.get(constants.API_URL_CAMPUS_CONTENT + '/:contentName', function (req, res, next) {
     const query = {
-        text: 'select cnt.id AS id, cnt.title AS title, cnt.description as description, cnt.url as url, '
-        +'fmt.name as format, typ.name as "type", plt.name as platform, evn.id as "event_id", evn.name as "event_name" '
-        +'FROM campus.contents cnt '
-        +'join campus.formats fmt '
-        +'on cnt.format = fmt.id '
-        +'join campus.types typ '
-        +'on cnt.type = typ.id '
-        +'join campus.platforms plt '
-        +'on cnt.platform = plt.id '
-        +'join campus.events evn '
-        +'on cnt.event = evn.id '
-        +'where cnt.id = $1 ',
+        text: 'select cnt.id AS id, cnt.title AS title, cnt.description AS description, cnt.url AS url, '
+        + 'fmt.name AS format, typ.name AS "type", plt.name AS platform, evn.id AS "event_id", evn.name AS "event_name" '
+        + 'FROM campus.contents cnt '
+        + 'JOIN campus.formats fmt '
+        + 'ON cnt.format = fmt.id '
+        + 'JOIN campus.types typ '
+        + 'ON cnt.type = typ.id '
+        + 'JOIN campus.platforms plt '
+        + 'ON cnt.platform = plt.id '
+        + 'JOIN campus.events evn '
+        + 'ON cnt.event = evn.id '
+        + 'WHERE cnt.id = $1 ',
         values: [req.params.contentName],
-        rowMode: constants.SQL_RESULSET_FORMAT
+        rowMode: constants.SQL_RESULSET_FORMAT_JSON
     };
 
     pool.on('error', (err, client) => {
@@ -267,18 +262,17 @@ router.get(constants.API_URL_CAMPUS_CONTENT + '/:contentName', function (req, re
     pool.connect((err, client, done) => {
         if (err) {
             logger.error(err.stack);
-            res.json({ status: 500, 'error': err});
+            res.json({ status: 500, 'error': err });
             return;
         }
         pool.query(query, (err, result) => {
             done();
             if (err) {
                 logger.error(err.stack);
-                res.json({ status: 500, 'error': err});
+                res.json({ status: 500, 'error': err });
                 return;
             } else {
-                var json = JSON.stringify(result.rows);
-                logger.info(json);
+                logger.info('Filas devueltas: ' + result.rows.length);
                 res.json(result.rows);
             }
         });
@@ -289,11 +283,11 @@ router.get(constants.API_URL_CAMPUS_SPEAKERS + '/:contentName', function (req, r
     const query = {
         text: 'SELECT spk.id AS "id", spk.name AS "name" '
         + 'FROM campus.speakers spk '
-        + 'join campus.contents_speakers cnsp '
-        + 'on spk.id = cnsp.id_speaker '
-        + 'where cnsp.id_content = $1 ',
+        + 'JOIN campus.contents_speakers cnsp '
+        + 'ON spk.id = cnsp.id_speaker '
+        + 'WHERE cnsp.id_content = $1 ',
         values: [req.params.contentName],
-        rowMode: constants.SQL_RESULSET_FORMAT
+        rowMode: constants.SQL_RESULSET_FORMAT_JSON
     };
 
     pool.on('error', (err, client) => {
@@ -304,18 +298,17 @@ router.get(constants.API_URL_CAMPUS_SPEAKERS + '/:contentName', function (req, r
     pool.connect((err, client, done) => {
         if (err) {
             logger.error(err.stack);
-            res.json({ status: 500, 'error': err});
+            res.json({ status: 500, 'error': err });
             return;
         }
         pool.query(query, (err, result) => {
             done();
             if (err) {
                 logger.error(err.stack);
-                res.json({ status: 500, 'error': err});
+                res.json({ status: 500, 'error': err });
                 return;
             } else {
-                var json = JSON.stringify(result.rows);
-                logger.info(json);
+                logger.info('Filas devueltas: ' + result.rows.length);
                 res.json(result.rows);
             }
         });
@@ -326,11 +319,11 @@ router.get(constants.API_URL_CAMPUS_TOPICS + '/:contentName', function (req, res
     const query = {
         text: 'SELECT top.id AS "id", top.name AS "name" '
         + 'FROM campus.topics top '
-        + 'join campus.contents_topics cntop '
-        + 'on top.id = cntop.id_topic '
-        + 'where cntop.id_content = $1 ',
+        + 'JOIN campus.contents_topics cntop '
+        + 'ON top.id = cntop.id_topic '
+        + 'WHERE cntop.id_content = $1 ',
         values: [req.params.contentName],
-        rowMode: constants.SQL_RESULSET_FORMAT
+        rowMode: constants.SQL_RESULSET_FORMAT_JSON
     };
 
     pool.on('error', (err, client) => {
@@ -341,24 +334,21 @@ router.get(constants.API_URL_CAMPUS_TOPICS + '/:contentName', function (req, res
     pool.connect((err, client, done) => {
         if (err) {
             logger.error(err.stack);
-            res.json({ status: 500, 'error': err});
+            res.json({ status: 500, 'error': err });
             return;
         }
         pool.query(query, (err, result) => {
             done();
             if (err) {
                 logger.error(err.stack);
-                res.json({ status: 500, 'error': err});
+                res.json({ status: 500, 'error': err });
                 return;
             } else {
-                var json = JSON.stringify(result.rows);
-                logger.info(json);
+                logger.info('Filas devueltas: ' + result.rows.length);
                 res.json(result.rows);
             }
         });
     });
 });
-
-
 
 module.exports = router;

@@ -16,22 +16,11 @@ export class RolesAdminComponent implements OnInit {
 	users: User[] = [];
 	roles: Role[] = [];
 
-	role: Role = new Role('', '', null);
+	role: Role = new Role();
 
 	constructor() {
-		this.users = [
-			new User('username01', 'Administrador total', new Date, true, null, null, null, false),
-			new User('username02', 'Administrador total', new Date, false, null, null, null, false),
-			new User('username03', 'Administrador de organizacion', new Date, true, null, null, null, false),
-			new User('username04', 'Administrador de organización', new Date, false, null, null, null, false),
-			new User('username05', 'Watcher', new Date, true, null, null, null, false),
-			new User('username06', 'Watcher', new Date, false, null, null, null, false)
-		];
-		this.roles = [
-			new Role('Administrador total', 'Puede editar todo en el portal.', this.users),
-			new Role('Administrador de organizacion', 'Puede editar sólo datos de su organización.', this.users),
-			new Role('Watcher', 'Puede visualizar datos privados, pero no editarlos', this.users)
-		];
+		this.users = [];
+		this.roles = [];
 	}
 
 	ngOnInit() {
@@ -39,12 +28,12 @@ export class RolesAdminComponent implements OnInit {
 
 	showUsers(role) {
 		this.role = role;
-		console.log(this.role.assignedUsers);
+		console.log(this.role);
 		this.displayUsers = true;
 	}
 
 	showDialogToAdd() {
-		this.role = new Role('', '', null);
+		this.role = new Role();
 		this.displayDialogEdit = true;
 	}
 
@@ -58,7 +47,7 @@ export class RolesAdminComponent implements OnInit {
 	}
 
 	cloneRole(r: Role): Role {
-		let role = new Role('', '', null);
+		let role = new Role();
 		for (let prop in r) {
 			role[prop] = r[prop];
 		}

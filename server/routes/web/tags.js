@@ -20,7 +20,7 @@ router.get(constants.API_URL_TAGS, function (req, res, next) {
             serviceRequestUrl += '?q=' + req.query.q;
         }
         logger.notice('URL de petición: ' + serviceRequestUrl);
-    
+
         //Proxy checking
         let httpConf = null;
         if (constants.REQUESTS_NEED_PROXY == true) {
@@ -30,7 +30,7 @@ router.get(constants.API_URL_TAGS, function (req, res, next) {
         } else {
             httpConf = serviceRequestUrl;
         }
-    
+
         http.get(httpConf, function (results) {
             var body = '';
             results.on('data', function (chunk) {
@@ -40,7 +40,7 @@ router.get(constants.API_URL_TAGS, function (req, res, next) {
                 res.json(body);
             });
         }).on('error', function (err) {
-            utils.errorHandler(err,res,serviceName);
+            utils.errorHandler(err, res, serviceName);
         });
     } catch (error) {
         logger.error('Error in route' + constants.API_URL_TAGS);
