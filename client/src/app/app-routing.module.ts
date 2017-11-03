@@ -43,6 +43,9 @@ import { DatasetsAdminShowComponent } from './components/admin/datacenter/datase
 import { DatasetsAdminEditComponent } from './components/admin/datacenter/datasets-admin/datasets-admin-edit/datasets-admin-edit.component';
 import { DatasetsAdminListComponent } from './components/admin/datacenter/datasets-admin/datasets-admin-list/datasets-admin-list.component';
 import { OrganizationsAdminComponent } from './components/admin/datacenter/organizations-admin/organizations-admin.component';
+import { OrganizationsAdminListComponent } from './components/admin/datacenter/organizations-admin/organizations-admin-list/organizations-admin-list.component';
+import { OrganizationsAdminShowComponent } from './components/admin/datacenter/organizations-admin/organizations-admin-show/organizations-admin-show.component';
+import { OrganizationsAdminEditComponent } from './components/admin/datacenter/organizations-admin/organizations-admin-edit/organizations-admin-edit.component';
 import { CampusAdminComponent } from './components/admin/campus-admin/campus-admin.component';
 import { PageNotFoundComponent } from './components/error/page-not-found/page-not-found.component';
 
@@ -103,7 +106,12 @@ const routes: Routes = [
                 { path: Constants.ROUTER_LINK_DATASETS_EDIT, component: DatasetsAdminEditComponent, canActivate: [AuthGuard], pathMatch: 'full' },
                 { path: Constants.ROUTER_LINK_DATASETS_EDIT + '/:' + Constants.ROUTER_LINK_DATA_PARAM_DATASET_NAME, component: DatasetsAdminEditComponent, canActivate: [AuthGuard], pathMatch: 'full' }
             ]},
-            { path: Constants.ROUTER_LINK_ORGANIZATIONS, component: OrganizationsAdminComponent, canActivate: [AuthGuard], pathMatch: 'full' }
+            { path: Constants.ROUTER_LINK_ORGANIZATIONS, component: OrganizationsAdminComponent, canActivate: [AuthGuard], children:[
+                { path: '', redirectTo: Constants.ROUTER_LINK_ORGANIZATIONS_LIST, pathMatch: 'full' },
+                { path: Constants.ROUTER_LINK_ORGANIZATIONS_LIST, component: OrganizationsAdminListComponent, pathMatch: 'full' },
+                { path: Constants.ROUTER_LINK_ORGANIZATIONS_EDIT, component: OrganizationsAdminEditComponent, pathMatch: 'full' },
+                { path: Constants.ROUTER_LINK_ORGANIZATIONS_EDIT + '/:' + Constants.ROUTER_LINK_DATA_PARAM_ORGANIZATION_NAME, component: OrganizationsAdminEditComponent, pathMatch: 'full' }
+            ]}
         ]},
         { path: Constants.ROUTER_LINK_CAMPUS, component: CampusAdminComponent, canActivate: [AuthGuard], pathMatch: 'full' }
     ]},

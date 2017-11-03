@@ -57,6 +57,9 @@ import { SparqlAdminComponent } from './components/admin/global/static-content-a
 import { DashboardDatacenterComponent } from './components/admin/datacenter/dashboard-datacenter/dashboard-datacenter.component';
 import { DatacenterComponent } from './components/admin/datacenter/datacenter.component';
 import { OrganizationsAdminComponent } from './components/admin/datacenter/organizations-admin/organizations-admin.component';
+import { OrganizationsAdminListComponent } from './components/admin/datacenter/organizations-admin/organizations-admin-list/organizations-admin-list.component';
+import { OrganizationsAdminShowComponent } from './components/admin/datacenter/organizations-admin/organizations-admin-show/organizations-admin-show.component';
+import { OrganizationsAdminEditComponent } from './components/admin/datacenter/organizations-admin/organizations-admin-edit/organizations-admin-edit.component';
 import { DatasetsAdminComponent } from './components/admin/datacenter/datasets-admin/datasets-admin.component';
 import { DatasetsAdminShowComponent } from './components/admin/datacenter/datasets-admin/datasets-admin-show/datasets-admin-show.component';
 import { DatasetsAdminEditComponent } from './components/admin/datacenter/datasets-admin/datasets-admin-edit/datasets-admin-edit.component';
@@ -129,6 +132,9 @@ export function HttpLoaderFactory(http: HttpClient) {
 		SparqlAdminComponent,
 		DashboardDatacenterComponent,
 		OrganizationsAdminComponent,
+		OrganizationsAdminListComponent,
+		OrganizationsAdminShowComponent,
+		OrganizationsAdminEditComponent,
 		DatasetsAdminComponent,
 		DatasetsAdminShowComponent,
 		DatasetsAdminEditComponent,

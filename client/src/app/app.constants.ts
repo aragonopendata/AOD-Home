@@ -385,6 +385,8 @@ export class Constants {
     public static ROUTER_LINK_DATASETS_EDIT = 'edit';
     public static ROUTER_LINK_ADMIN_DATACENTER_DATASETS_EDIT = 'admin/datacenter/datasets/edit';
     public static ROUTER_LINK_ORGANIZATIONS = 'organizations';
+    public static ROUTER_LINK_ORGANIZATIONS_LIST = 'list';
+    public static ROUTER_LINK_ORGANIZATIONS_EDIT = 'edit';
     public static ROUTER_LINK_ADMIN_DATACENTER_ORGANIZATIONS = 'admin/datacenter/organizations';
     public static ROUTER_LINK_CAMPUS = 'campus';
     public static ROUTER_LINK_ADMIN_DATACENTER_CAMPUS = 'admin/campus';
