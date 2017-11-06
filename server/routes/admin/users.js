@@ -122,6 +122,18 @@ router.post('/user', function (req, res, next) {
     }
 });
 
+router.put('/user', function(req, res, next) {
+    try {
+        //user_update
+
+    } catch (error) {
+        logger.error('EDICIÓN DE USUARIOS - Error editando usuario');
+        res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'ALTA DE USUARIOS - Error editando usuario' });
+    }
+});
+
+//user_delete
+
 var getUserPermissions = function checkUserPermissions(userId, userName) {
     return new Promise((resolve, reject) => {
         try {

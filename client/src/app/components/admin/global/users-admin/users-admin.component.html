@@ -6,7 +6,7 @@
 		<p-column field="email" header="Email" sortable="custom" [sortable]="true"></p-column>
 		<p-column field="role" header="Rol" sortable="custom" [sortable]="true">
 			<ng-template pTemplate="body" let-user="rowData">
-				{{user.role[0].description}}
+				{{user?.role?[0].description}}
 			</ng-template>
 		</p-column>
 		<p-column field="signupDate" header="Fecha alta" sortable="custom">
