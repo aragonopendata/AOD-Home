@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { SelectItem } from 'primeng/primeng';
+import { SelectItem, MessagesModule, GrowlModule, Message } from 'primeng/primeng';
 import { User } from '../../../../models/User';
 import { Role } from '../../../../models/Role';
 import { UsersAdminService } from '../../../../services/admin/users-admin.service';
@@ -13,6 +13,8 @@ import { Constants } from '../../../../app.constants';
 })
 
 export class UsersAdminComponent implements OnInit {
+	userAdminMessages: Message[] = [];
+
 	displayViewDialog: boolean;
 	displayEditDialog: boolean;
 
@@ -36,6 +38,7 @@ export class UsersAdminComponent implements OnInit {
 
 	constructor(private usersAdminService: UsersAdminService, private rolesAdminService: RolesAdminService, private changeDetectorRef: ChangeDetectorRef) {
 		this.pageRows = Constants.ADMIN_USERS_LIST_ROWS_PER_PAGE;
+		this.sort = Constants.ADMIN_USERS_LIST_SORT_COLUMN_NAME;
 	}
 
 	ngOnInit() {
@@ -112,9 +115,15 @@ export class UsersAdminComponent implements OnInit {
 			this.usersAdminService.createUser(this.user).subscribe(result => {
 				console.log('response: ' + JSON.stringify(result));
 				if (result.id) {
+					this.userAdminMessages = [];
+					this.userAdminMessages.push({severity:'success', summary:'Alta de usuario', detail:'Usuario ' + this.user.name + ' insertado correctamente'});
 					this.user.id = result.id;
-					this.users = [...this.users, this.user];
+					console.log('Usuario insertado: ' + this.user);
 					this.user = new User();
+					this.getUsers(null, null);
+				} else {
+					this.userAdminMessages = [];
+					this.userAdminMessages.push({severity:'error', summary:'Alta de usuario', detail:'Error al insertar el usuario: ' + result.error + (result.message ? result.message + '.' : '.')});
 				}
 			});
 			this.displayEditDialog = false;

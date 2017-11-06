@@ -303,7 +303,7 @@ export class Constants {
     public static DATASET_RDF_FILE_EXTENSION_RDF = '.rdf'
 
     //OPEN DATA ADMIN
-    public static ADMIN_USERS_LIST_ROWS_PER_PAGE = 10;
+    public static ADMIN_USERS_LIST_ROWS_PER_PAGE = 20;
     public static ADMIN_USERS_LIST_SORT_COLUMN_NAME = 'name';
     public static ADMIN_USERS_LIST_SORT_COLUMN_EMAIL = 'email';
     public static ADMIN_USERS_LIST_SORT_COLUMN_ROLE = 'role';
@@ -448,6 +448,7 @@ export class Constants {
     public static SERVER_API_LINK_ADMIN_USERS_LIST = '/users';
     public static SERVER_API_LINK_ADMIN_USER_CUD_OPERATIONS = '/user';
     public static SERVER_API_LINK_ADMIN_ROLES_LIST = '/roles';
+    public static SERVER_API_LINK_ADMIN_GET_ROLE = '/role';
     public static SERVER_API_LINK_PARAM_SORT = 'sort';
     public static SERVER_API_LINK_PARAM_PAGE = 'page';
     public static SERVER_API_LINK_PARAM_ROWS = 'rows';

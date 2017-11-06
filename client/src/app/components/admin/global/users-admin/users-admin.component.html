@@ -1,10 +1,12 @@
 <div>
+	<p-messages closable="true" label="Administración de usuarios" [(value)]="userAdminMessages"></p-messages>
+	<p-growl sticky="true" life="2000" [(value)]="userAdminMessages"></p-growl>
 	<p-dataTable [loading]="loading" [value]="users" [responsive]="true" emptyMessage="No se han encontrado registros." (onSort)="setOrder($event)">
 		<p-column field="fullname" header="Nombre" sortable="custom" [sortable]="true"></p-column>
 		<p-column field="email" header="Email" sortable="custom" [sortable]="true"></p-column>
 		<p-column field="role" header="Rol" sortable="custom" [sortable]="true">
 			<ng-template pTemplate="body" let-user="rowData">
-				{{user.role[0].name}}
+				{{user.role[0].description}}
 			</ng-template>
 		</p-column>
 		<p-column field="signupDate" header="Fecha alta" sortable="custom">

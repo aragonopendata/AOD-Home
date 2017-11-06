@@ -14,6 +14,15 @@ export class RolesAdminService {
 		headers.append('Authorization', this.currentUser && this.currentUser.token);
 	}
 
+	public getRole(roleId: number) {
+		let headers = new Headers();
+		this.createAuthorizationHeader(headers);
+		let options = new RequestOptions({ headers: headers });
+		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_GET_ROLE
+						+ '/' + roleId;
+		return this.http.get(fullUrl, options).map(res => res.json());
+	}
+
 	public getRoles() {
 		let headers = new Headers();
 		this.createAuthorizationHeader(headers);

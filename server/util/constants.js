@@ -85,7 +85,7 @@ exports.CKAN_URL_PATH_TRACKING_DATASET = '/dataset';
 exports.CKAN_URL_PATH_TRACKING = '/_tracking';
 exports.CKAN_TRACKING_TYPE_PARAM_PAGE = 'page';
 /* CKAN ADMIN - USERS */
-exports.CKAN_URL_PATH_USER_CREATE = '/user_create';
+exports.CKAN_URL_PATH_USER_CREATE = 'user_create';
 
 /* DATASETS */
 //Results per page in lists

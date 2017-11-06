@@ -1,0 +1,13 @@
+.ui-messages-error {
+    color: #a70909;
+    background-color: #f7a49d;
+    border-color: #a70909;
+}
+
+.ui-messages .ui-messages-close {
+    color: #3E3939;
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}

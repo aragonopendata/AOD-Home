@@ -35,12 +35,21 @@ exports.DB_ADMIN_GET_USER_APP_PERMISSIONS = 'SELECT manager.users.id AS "userId"
 
 exports.DB_ADMIN_INSERT_USER = 'INSERT INTO manager.users (name, password, email, active, description, fullname, creation_date, last_edition_date) '
 								  + 'VALUES ($1, $2, $3, $4, $5, $6, now(), now()) '
-							   + 'RETURNING manager.users.id AS "createdUserId"';
+							   + 'RETURNING manager.users.id';
 												 
 exports.DB_ADMIN_INSERT_USER_APP_PERMISSION = 'INSERT INTO manager.users_applications_permissions (id_user, id_application, access_key) '
 												 + 'VALUES ($1, $2, $3) ' 
-											  + 'RETURNING manager.users_applications_permissions.id_user AS "createdUserId"';
+											  + 'RETURNING manager.users_applications_permissions.id_user';
+
+exports.DB_ADMIN_INSERT_USERS_ROLES = 'INSERT INTO manager.users_roles (id_user, id_role) '
+										 + 'VALUES ($1, $2) '
+									  + 'RETURNING manager.users_roles.id_user';
 
 exports.DB_ADMIN_GET_ROLES = 'SELECT manager.roles.id, manager.roles.name ' 
 								+ ', manager.roles.description, manager.roles.active '
 							 + 'FROM manager.roles';
+
+exports.DB_ADMIN_GET_ROLE = 'SELECT manager.roles.id, manager.roles.name ' 
+    						   + ', manager.roles.description, manager.roles.active '
+							+ 'FROM manager.roles '
+						   + 'WHERE manager.roles.id = $1';

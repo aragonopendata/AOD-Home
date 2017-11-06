@@ -10,7 +10,7 @@ import {
 	InputTextareaModule, ButtonModule, SharedModule, DataTableModule, DialogModule, 
 	CalendarModule, InputSwitchModule, EditorModule, DataListModule, TooltipModule, 
 	AutoCompleteModule, ProgressBarModule, RadioButtonModule, CheckboxModule, FileUploadModule, 
-	ToolbarModule, TabViewModule, PaginatorModule, AccordionModule } from 'primeng/primeng';
+	ToolbarModule, TabViewModule, PaginatorModule, AccordionModule, MessagesModule, GrowlModule } from 'primeng/primeng';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { Logger, Options } from 'angular2-logger/core';
@@ -172,6 +172,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 		HttpClientModule,
 		PaginatorModule,
 		AccordionModule,
+		MessagesModule,
+		GrowlModule,
 		TranslateModule.forRoot({
 			loader: {
 				provide: TranslateLoader,
