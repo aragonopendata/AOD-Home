@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const http = require('http');
 const constants = require('../../util/constants');
 const dbQueries = require('../../db/db-queries');
 const CryptoJS = require("crypto-js");
@@ -88,14 +89,14 @@ router.post('/user', function (req, res, next) {
                                     });
                             } else {
                                 logger.error('ALTA DE USUARIOS - Error al insertar al usuario en CKAN: ' + JSON.stringify(insertCkanResponse));
-                                var errorJson = { 
-                                    'status': constants.REQUEST_ERROR_BAD_DATA, 
+                                var errorJson = {
+                                    'status': constants.REQUEST_ERROR_BAD_DATA,
                                     'error': 'ALTA DE USUARIOS - Error al insertar al usuario en CKAN',
-                                    
+
                                 };
-                                if (insertCkanResponse && insertCkanResponse != null 
-                                        && insertCkanResponse.error && insertCkanResponse.error != null 
-                                        && insertCkanResponse.error.name && insertCkanResponse.error.name != null) {
+                                if (insertCkanResponse && insertCkanResponse != null
+                                    && insertCkanResponse.error && insertCkanResponse.error != null
+                                    && insertCkanResponse.error.name && insertCkanResponse.error.name != null) {
                                     errorJson.message = insertCkanResponse.error.name;
                                 }
                                 res.json(errorJson);
@@ -215,7 +216,7 @@ var insertUserInCkan = function insertUserInCkan(userAccessInfo, user) {
                     }
                 } else {
                     reject('Respuesta nula');
-                }                
+                }
             });
         } catch (error) {
             reject(error);
@@ -302,5 +303,130 @@ var insertUserInManager = function insertUserInManager(user, userAccessInfo, cka
         }
     });
 }
+
+var getUserAPIKey = function getUserAPIKey(userID) {
+    return new Promise((resolve, reject) => {
+        try {
+            const query = {
+                text: dbQueries.DB_ADMIN_GET_USER_APIKEY_BY_USER_ID,
+                values: [userID, constants.APPLICATION_NAME_CKAN],
+                rowMode: constants.SQL_RESULSET_FORMAT_JSON
+            };
+
+            // pool.on('error', (error, client) => {
+            //     process.exit(-1);
+            //     reject(error);
+            // });
+
+            pool.connect((connError, client, release) => {
+                if (connError) {
+                  return console.error('Error acquiring client', connError.stack)
+                }
+                client.query(query, (err, queryResult) => {
+                  release()
+                  if (err) {
+                    return console.error('Error executing query', err.stack)
+                  }else{
+                    resolve(queryResult.rows[0]);
+                  }
+
+                })
+              })
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
+
+var getOrganizationsOfUser = function getOrganizationsOfUser(userAPIKey) {
+    return new Promise((resolve, reject) => {
+        try {
+            logger.debug('Obteniendo organizaciones');
+            //Mandatory fields
+            var httpRequestOptions = {
+                host: 'miv-aodfront-01.aragon.local',
+                port: 5000,
+                path: '/api/action/organization_list_for_user',
+                method: constants.HTTP_REQUEST_METHOD_GET,
+                headers: {
+                    'Authorization': userAPIKey.accessKey
+                }
+            };
+
+            http.get(httpRequestOptions, function (results) {
+                    var body = '';
+                    results.on('data', function (chunk) {
+                        body += chunk;
+                    });
+                    results.on('end', function () {
+                        // res.json(body);
+                        resolve(body);
+                    });
+                }).on('error', function (err) {
+                    logger.error(err);
+                    reject(err);
+
+                });
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
+
+
+/** GET ORGANIZATIONS BY USER */
+router.get('/user/:userID/organizations', function (req, res, next) {
+    try {
+        logger.debug('Servicio: Listado de organizaciones para el usuario');
+        let serviceBaseUrl = constants.CKAN_API_BASE_URL;
+        let serviceName = constants.ORGANIZATIONS_LIST_FOR_USER;
+        let serviceRequestUrl = serviceBaseUrl + serviceName;
+
+        logger.notice('URL de petición: ' + serviceRequestUrl);
+        if (req.params.userID != '') {
+            getUserAPIKey(req.params.userID)
+            .then(userAPIKey => {
+                logger.info('API KEY del usuario recuperada');
+                getOrganizationsOfUser(userAPIKey)
+                    .then(getOrganizationResponse => {
+                        logger.info('Respuesta de CKAN: ' + JSON.stringify(getOrganizationResponse));
+                        logger.info('Respuesta de CKAN success: ' + getOrganizationResponse.success);
+                        if (getOrganizationResponse) {
+                            res.json(getOrganizationResponse);
+                        } else {
+                            logger.error('OBTENER Organizaciones - Error al obtener las organizaciones de CKAN: ' + JSON.stringify(getOrganizationResponse));
+                            var errorJson = {
+                                'status': constants.REQUEST_ERROR_BAD_DATA,
+                                'error': 'OBTENER Organizaciones - Error al obtener las organizaciones de CKAN',
+                            };
+                            if (getOrganizationResponse && getOrganizationResponse != null
+                                && getOrganizationResponse.error && getOrganizationResponse.error != null
+                                && getOrganizationResponse.error.name && getOrganizationResponse.error.name != null) {
+                                errorJson.message = getOrganizationResponse.error.name;
+                            }
+                            res.json(errorJson);
+                            return;
+                        }
+                    }).catch(error => {
+                        console.log(error);
+                        logger.error('ALTA DE USUARIOS - Error al insertar al usuario en base de datos: ' + error);
+                        res.json({ 'status': constants.REQUEST_ERROR_BAD_DATA, 'error': 'ALTA DE USUARIOS - Error al insertar al usuario en base de datos' });
+                        return;
+                    });
+            }).catch(error => {
+                logger.error('OBTENER ORGANIZACIONES POR USUARIO - Usuario no autorizado: ', error);
+                res.json({ 'status': constants.REQUEST_ERROR_FORBIDDEN, 'error': 'OBTENER ORGANIZACIONES POR USUARIO - Usuario no autorizado' });
+                return;
+            });
+        } else {
+            logger.error('OBTENER ORGANIZACIONES POR USUARIO - Parámetros incorrectos');
+            res.json({ 'status': constants.REQUEST_ERROR_BAD_DATA, 'error': 'OBTENER ORGANIZACIONES POR USUARIO - Parámetros incorrectos' });
+            return;
+        }
+    } catch (error) {
+        logger.error('Error in route /user/:userName/organizations');
+        console.log(error);
+    }
+});
 
 module.exports = router;

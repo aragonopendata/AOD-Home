@@ -82,6 +82,31 @@ module.exports = {
         return query;
     },
 
+    getRequestOrgs: function (req) {
+        var query = '';
+        let orgsParams = [];
+        let orgs = '';
+        orgs = req.query.orgs;
+        if (orgs) {
+            orgsParams = orgs.replace(' ', '').split(',');
+            query = '&fq=' + constants.SERVER_API_LINK_PARAM_ORGANIZATION + ':';
+            if (orgsParams.length > 1) {
+                query += '(';
+                for (var i = 0; i < orgsParams.length; i++) {
+                    if (i == (orgsParams.length-1)) {
+                        query += encodeURI(orgsParams[i]);
+                    } else {
+                        query += encodeURI(orgsParams[i]) + ' OR ';
+                    }
+                }
+                query += ')';
+            } else {
+                query += orgsParams[0];
+            }
+        }
+        return query;
+    },
+
     getRequestHomerCommonParams: function (req) {
         var query = '';
         let sortParams = [];

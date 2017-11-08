@@ -8,8 +8,17 @@ import { Constants } from '../../app.constants';
 export class OrganizationsAdminService {
 
 	organizations: OrganizationAdmin[];
+	organization: OrganizationAdmin;
 
 	constructor(private http: Http) {}
+
+	public getOrganization(){
+		return this.organization;
+	}
+
+	public setOrganization(organization: OrganizationAdmin){
+		this.organization = organization;
+	}
 
 	public getOrganizations() {
 		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_ORGANIZATIONS;

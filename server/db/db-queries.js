@@ -33,6 +33,17 @@ exports.DB_ADMIN_GET_USER_APP_PERMISSIONS = 'SELECT manager.users.id AS "userId"
 											 + 'AND manager.applications.appplication_name = $3 '
 											 + 'AND manager.applications.active = true';
 
+exports.DB_ADMIN_GET_USER_APIKEY_BY_USER_ID = 'SELECT manager.users_applications_permissions.access_key AS "accessKey" '
+												+ 'FROM manager.users '
+												+ 'JOIN manager.users_applications_permissions '
+												+ 'ON manager.users_applications_permissions.id_user = manager.users.id '
+												+ 'JOIN manager.applications '
+												+ 'ON manager.users_applications_permissions.id_application = manager.applications.id '
+												+ 'WHERE manager.users.id = $1 '
+												+ 'AND manager.users.active = true '
+												+ 'AND manager.applications.appplication_name = $2 '
+												+ 'AND manager.applications.active = true';
+
 exports.DB_ADMIN_INSERT_USER = 'INSERT INTO manager.users (name, password, email, active, description, fullname, creation_date, last_edition_date) '
 								  + 'VALUES ($1, $2, $3, $4, $5, $6, now(), now()) '
 							   + 'RETURNING manager.users.id';

@@ -1,10 +1,11 @@
 /* **************** */
 /* COMMON CONSTANTS */
 exports.EXPRESS_NODE_REDIRECT_ROUTING_URL = 'http://miv-aodfront-01.aragon.local:7030';
-exports.EXPRESS_NODE_STARTING_PORT = 4200;
+exports.EXPRESS_NODE_STARTING_PORT = 4288;
 exports.REQUEST_REQUEST_OK = 200;
 exports.REQUEST_ERROR_INTERNAL_ERROR = 500;
 exports.REQUEST_ERROR_BAD_DATA = 400;
+exports.REQUEST_ERROR_CONFLICT = 409;
 exports.REQUEST_ERROR_FORBIDDEN = 403;
 exports.REQUEST_ERROR_FORBIDDEN_MESSAGE = 'Not authorized';
 /* CORS */
@@ -15,6 +16,7 @@ exports.CORS_HEADERS_ALLOW_HEADERS_VALUE = 'Access-Control-Allow-Headers, Access
 exports.CORS_HEADERS_ALLOW_METHODS_HEADER = 'Access-Control-Allow-Methods';
 exports.CORS_HEADERS_ALLOW_METHODS_VALUE = 'GET, POST, PUT, DELETE, PATCH, OPTIONS';
 exports.HTTP_REQUEST_METHOD_POST = 'POST';
+exports.HTTP_REQUEST_METHOD_GET = 'GET';
 exports.HTTP_REQUEST_HEADER_CONTENT_TYPE_FORM_URLENCODED = 'application/x-www-form-urlencoded';
 exports.HTTP_REQUEST_HEADER_CONTENT_TYPE_JSON = 'application/json';
 exports.HTTP_REQUEST_HEADER_USER_AGENT_NODE_SERVER_REQUEST = 'Node.js Server Request';
@@ -87,6 +89,10 @@ exports.CKAN_TRACKING_TYPE_PARAM_PAGE = 'page';
 /* CKAN ADMIN - USERS */
 exports.CKAN_URL_PATH_USER_CREATE = 'user_create';
 
+/* CKAN ADMIN - DATASETS */
+exports.CKAN_URL_PATH_DATASET_CREATE = 'package_create';
+exports.CKAN_URL_PATH_DATASET_DELETE = 'package_delete';
+
 /* DATASETS */
 //Results per page in lists
 exports.DATASETS_SEARCH_ROWS_PER_PAGE = 20;
@@ -117,9 +123,13 @@ exports.DATASETS_RESOURCE_VIEW = 'resource_view_list'
 /* TOPICS */
 //List all topics
 exports.TOPICS_LIST = 'group_list';
+//Get topic by name
+exports.TOPIC_SHOW = 'group_show';
 /* ORGANIZATIONS */
 //List all organizations
 exports.ORGANIZATIONS_LIST = 'organization_list';
+//List all organizations
+exports.ORGANIZATIONS_LIST_FOR_USER = 'organization_list_for_user';
 //Show organization detail
 exports.ORGANIZATION_DETAIL = 'organization_show';
 /* TAGS */
@@ -143,6 +153,7 @@ exports.SERVER_API_LINK_PARAM_TAGS = 'tags';
 exports.SERVER_API_LINK_PARAM_TEXT = 'text';
 exports.SERVER_API_LINK_PARAM_LANG = 'lang';
 exports.SERVER_API_LINK_PARAM_LIMIT = 'limit';
+exports.SERVER_API_LINK_PARAM_ORGANIZATION = 'organization';
 exports.SERVER_API_LINK_PARAM_HOMER_RESPONSE_FORMAT = '&wt=json';
 exports.SERVER_API_LINK_PARAM_RESOURCE_ID = 'resId';
 

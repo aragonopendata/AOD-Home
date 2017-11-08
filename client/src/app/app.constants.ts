@@ -312,14 +312,84 @@ export class Constants {
     public static ADMIN_USERS_LIST_SORT_COLUMN_ACTIVE = 'active';
 
     public static DATASET_RECOMMENDED_IMAGE_URL = 'public/ckan/temas/';
+
     //ADMIN COMMON PARAMS
     public static DATASET_ADMIN_LIST_ROWS_PER_PAGE = 20;
     public static ADMIN_SERVER_API_LINK_PARAM_SORT_DEFAULT_VALUE = 'relevance,-metadata_modified';
+    public static ADMIN_DATASET_EDIT_LICENSE_ID_DEFAULT = 'CC-BY-4.0';
+    public static ADMIN_DATASET_EDIT_LICENSE_TITLE_DEFAULT = 'Creative Commons Attribution 4.0';
+    public static ADMIN_DATASET_EDIT_LICENSE_URL_DEFAULT = 'https://creativecommons.org/licenses/by/4.0/';
+
+    //ADMIN DROPDOWNS
     public static ADMIN_DATASET_EDIT_DROPDOWN_FREQUENCY_ANUAL = { label: 'Anual', value: 'Anual' };
     public static ADMIN_DATASET_EDIT_DROPDOWN_FREQUENCY_SEMESTRAL = { label: 'Semestral', value: 'Semestral' };
     public static ADMIN_DATASET_EDIT_DROPDOWN_FREQUENCY_CUATRIMESTRAL = { label: 'Cuatrimestral', value: 'Cuatrimestral' };
     public static ADMIN_DATASET_EDIT_DROPDOWN_FREQUENCY_TRIMESTRAL = { label: 'Trimestral', value: 'Trimestral' };
     public static ADMIN_DATASET_EDIT_DROPDOWN_FREQUENCY_MENSUAL = { label: 'Mensual', value: 'Mensual' };
+
+    public static ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_LINK = { label: 'Enlace a un archivo público', value: '0' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_DB_VIEW = { label: 'Vista de basede datos', value: '1' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_FILE = { label: 'Sube fichero a AOD', value: '2' };
+
+    public static ADMIN_DATASET_EDIT_DROPDOWN_VIEWS_ELECCIONES = { label: 'Elecciones', value: '0' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_VIEWS_SIMBOLOS = { label: 'Símbolos', value: '1' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_VIEWS_PLENO_MUNICIPIO = { label: 'Pleno municipio', value: '2' };
+
+    
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_CSV = { label: 'CSV', value: '1' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_DGN = { label: 'DGN', value: '2' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_DWG = { label: 'DWG', value: '3' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_DXF = { label: 'DXF', value: '4' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_ELP = { label: 'ELP', value: '5' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_GEOJSON = { label: 'GEOJSON', value: '6' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_GML = { label: 'GML', value: '7' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_HTML = { label: 'HTML', value: '8' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_ICS = { label: 'ICS', value: '9' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_JPG = { label: 'JPG', value: '10' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_JSON = { label: 'JSON', value: '11' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_KMZ = { label: 'KMZ', value: '12' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_ODS = { label: 'ODS', value: '13' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_PNG = { label: 'PNG', value: '14' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_PS = { label: 'PS', value: '15' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_RDF = { label: 'RDF', value: '16' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_RSS = { label: 'RSS', value: '17' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_SCORM = { label: 'SCORM', value: '18' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_SHP = { label: 'SHP', value: '19' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_SIG = { label: 'SIG', value: '20' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_TXT = { label: 'TXT', value: '21' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_URL = { label: 'URL', value: '22' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_XLS = { label: 'XLS', value: '23' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_XLSX = { label: 'XLSX', value: '24' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_XML = { label: 'XML', value: '25' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_ZIP = { label: 'ZIP', value: '26' };
+    
+
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_CSV = { label: 'CSV', value: '1' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_DGN = { label: 'DGN', value: '2' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_DWG = { label: 'DWG', value: '3' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_DXF = { label: 'DXF', value: '4' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_ELP = { label: 'ELP', value: '5' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_GEOJSON = { label: 'GEOJSON', value: '6' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_GML = { label: 'GML', value: '7' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_HTML = { label: 'HTML', value: '8' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_ICS = { label: 'ICS', value: '9' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_JPG = { label: 'JPG', value: '10' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_JSON = { label: 'JSON', value: '11' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_KMZ = { label: 'KMZ', value: '12' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_ODS = { label: 'ODS', value: '13' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_PNG = { label: 'PNG', value: '14' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_PS = { label: 'PS', value: '15' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_RDF = { label: 'RDF', value: '16' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_RSS = { label: 'RSS', value: '17' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_SCORM = { label: 'SCORM', value: '18' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_SHP = { label: 'SHP', value: '19' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_SIG = { label: 'SIG', value: '20' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_TXT = { label: 'TXT', value: '21' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_URL = { label: 'URL', value: '22' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_XLS = { label: 'XLS', value: '23' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_XLSX = { label: 'XLSX', value: '24' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_XML = { label: 'XML', value: '25' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_ZIP = { label: 'ZIP', value: '26' };
 
     //ROUTING
     public static ROUTER_LINK_DATA = 'datos';
@@ -450,6 +520,9 @@ export class Constants {
     public static SERVER_API_LINK_ADMIN_USER_CUD_OPERATIONS = '/user';
     public static SERVER_API_LINK_ADMIN_ROLES_LIST = '/roles';
     public static SERVER_API_LINK_ADMIN_GET_ROLE = '/role';
+    public static SERVER_API_LINK_ADMIN_USER_ORGANIZATIONS_START = '/user/';
+    public static SERVER_API_LINK_ADMIN_USER_ORGANIZATIONS_END = '/organizations';
+    public static SERVER_API_LINK_ADMIN_DATASET_CUD_OPERATIONS = '/dataset';
     public static SERVER_API_LINK_PARAM_SORT = 'sort';
     public static SERVER_API_LINK_PARAM_PAGE = 'page';
     public static SERVER_API_LINK_PARAM_ROWS = 'rows';
@@ -458,6 +531,7 @@ export class Constants {
     public static SERVER_API_LINK_PARAM_TEXT = 'text';
     public static SERVER_API_LINK_PARAM_LANG = 'lang';
     public static SERVER_API_LINK_PARAM_LIMIT = 'limit';
+    public static SERVER_API_LINK_PARAM_ORGS = 'orgs';
     public static SERVER_API_LINK_PARAM_RESOURCE_ID = 'resId';
     public static SERVER_API_LINK_PARAM_SORT_DEFAULT_VALUE = 'relevance,-metadata_modified';
     public static SERVER_API_LINK_PARAM_SORT_HOMER_DEFAULT_VALUE = 'title';

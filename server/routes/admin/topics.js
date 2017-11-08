@@ -45,4 +45,40 @@ router.get(constants.API_URL_TOPICS, function (req, res, next) {
     }
 });
 
+/** GET TOPIC BY NAME */
+router.get(constants.API_URL_TOPICS + '/:topicName', function (req, res, next) {
+    try {
+        logger.debug('Servicio: Obtener topics por nombre');
+        let serviceBaseUrl = constants.CKAN_API_BASE_URL;
+        let serviceName = constants.TOPIC_SHOW;
+        let serviceParams = '?all_fields=true&id='+ req.params.topicName;
+        let serviceRequestUrl = serviceBaseUrl + serviceName + serviceParams;
+        logger.notice('URL de petición: ' + serviceRequestUrl);
+
+        //Proxy checking
+        let httpConf = null;
+        if (constants.REQUESTS_NEED_PROXY == true) {
+            logger.warning('Realizando petición a través de proxy');
+            let httpProxyConf = proxy.getproxyOptions(serviceRequestUrl);
+            httpConf = httpProxyConf;
+        } else {
+            httpConf = serviceRequestUrl;
+        }
+
+        http.get(httpConf, function (results) {
+            var body = '';
+            results.on('data', function (chunk) {
+                body += chunk;
+            });
+            results.on('end', function () {
+                res.json(body);
+            });
+        }).on('error', function (err) {
+            utils.errorHandler(err, res, serviceName);
+        });
+    } catch (error) {
+        logger.error('Error in route' + constants.API_URL_TOPICS);
+    }
+});
+
 module.exports = router;

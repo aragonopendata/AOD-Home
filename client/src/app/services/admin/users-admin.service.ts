@@ -37,4 +37,10 @@ export class UsersAdminService {
 		requestBodyParams.requestUserName = this.currentUser && this.currentUser.username;
 		return this.http.post(fullUrl, JSON.stringify(requestBodyParams), {headers: headers}).map(res => res.json());
 	}
+
+	public getOrganitationsByCurrentUser(){
+		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_USER_ORGANIZATIONS_START + this.currentUser.id
+		+ Constants.SERVER_API_LINK_ADMIN_USER_ORGANIZATIONS_END;
+		return this.http.get(fullUrl).map(res => res.json());
+	}
 }
