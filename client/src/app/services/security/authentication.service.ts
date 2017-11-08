@@ -25,11 +25,12 @@ export class AuthenticationService {
 			let userId = res.json() && res.json().id;
 			let userName = res.json() && res.json().name;
 			let fullName = res.json() && res.json().fullname;
+			let userRol = res.json() && res.json().rol;
 			if (userToken) {
 				// set token property
 				this.token = userToken;
 				// store username and jwt token in local storage to keep user logged in between page refreshes
-				localStorage.setItem('currentUser', JSON.stringify({ id: userId, username: userName, fullname: fullName, token: userToken }));
+				localStorage.setItem('currentUser', JSON.stringify({ id: userId, username: userName, fullname: fullName, token: userToken, rol: userRol }));
 				// return true to indicate successful login
 				return true;
 			} else {
