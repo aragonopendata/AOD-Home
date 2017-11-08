@@ -45,7 +45,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 	ngOnInit() {
 		this.dataset = this.datasetsAdminService.getDataset();
 		this.dataset.untilDate = new Date;
-		this.setTopics(this.topicsAdminService.getTopics());
+		//this.setTopics(this.topicsAdminService.getTopics());
 		this.selectedTopic = this.dataset.topic.name;
 		this.files = [];
 		this.languajes = ['Español', 'Inglés', 'Francés', 'Lenguas aragonesas', 'Otro'];
