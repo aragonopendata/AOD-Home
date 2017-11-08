@@ -1,7 +1,7 @@
 /* **************** */
 /* COMMON CONSTANTS */
 exports.EXPRESS_NODE_REDIRECT_ROUTING_URL = 'http://miv-aodfront-01.aragon.local:7030';
-exports.EXPRESS_NODE_STARTING_PORT = 4288;
+exports.EXPRESS_NODE_STARTING_PORT = 4200;
 exports.REQUEST_REQUEST_OK = 200;
 exports.REQUEST_ERROR_INTERNAL_ERROR = 500;
 exports.REQUEST_ERROR_BAD_DATA = 400;
