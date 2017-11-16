@@ -20,7 +20,7 @@ export class Dataset {
     metadata_modified: Date;
     author: string;
     author_email: string;
-    state: boolean;
+    state: string;
     version: string;
     license_id: string;
     type: string;

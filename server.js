@@ -24,7 +24,7 @@ var rolesAdmin = require('./server/routes/admin/roles');
 //var contentsAdmin = require('./server/routes/admin/contents');
 var datasetsAdmin = require('./server/routes/admin/datasets');
 var topicsAdmin = require('./server/routes/admin/topics');
-//var tagsAdmin = require('./server/routes/admin/tags');
+var tagsAdmin = require('./server/routes/admin/tags');
 var organizationsAdmin = require('./server/routes/admin/organizations');
 //var campusAdmin = require('./server/routes/admin/campus');
 
@@ -59,7 +59,7 @@ app.use(constants.API_BASE_URL_ADMIN, usersAdmin);
 app.use(constants.API_BASE_URL_ADMIN, rolesAdmin);
 //app.use('/api/admin', contentsAdmin);
 app.use(constants.API_BASE_URL_ADMIN, datasetsAdmin);
-//app.use('/api/admin', tagsAdmin);
+app.use(constants.API_BASE_URL_ADMIN, tagsAdmin);
 app.use(constants.API_BASE_URL_ADMIN, topicsAdmin);
 app.use(constants.API_BASE_URL_ADMIN, organizationsAdmin);
 //app.use('/api/admin', campusAdmin);

@@ -286,6 +286,7 @@ export class Constants {
     public static DATASET_EXTRA_SHORT_URI_ARAGOPEDIA = 'shortUriAragopedia';
     public static DATASET_EXTRA_TYPE_ARAGOPEDIA = 'typeAragopedia';
     public static DATASET_EXTRA_URI_ARAGOPEDIA = 'uriAragopedia';
+    public static DATASET_EXTRA_SPATIAL = 'Spatial';
     public static DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_DATASET= '/dataset/';
     public static DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_RESOURCE= '/resource/';
     public static DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_VIEW= '/view/';
@@ -304,7 +305,7 @@ export class Constants {
     public static DATASET_RDF_FILE_EXTENSION_RDF = '.rdf'
 
     //OPEN DATA ADMIN
-    public static ADMIN_USERS_LIST_ROWS_PER_PAGE = 20;
+    public static ADMIN_USERS_LIST_ROWS_PER_PAGE = 10;
     public static ADMIN_USERS_LIST_SORT_COLUMN_NAME = 'name';
     public static ADMIN_USERS_LIST_SORT_COLUMN_EMAIL = 'email';
     public static ADMIN_USERS_LIST_SORT_COLUMN_ROLE = 'role';
@@ -363,7 +364,7 @@ export class Constants {
     public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_XML = { label: 'XML', value: '25' };
     public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_ZIP = { label: 'ZIP', value: '26' };
     
-
+    
     public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_CSV = { label: 'CSV', value: '1' };
     public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_DGN = { label: 'DGN', value: '2' };
     public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_DWG = { label: 'DWG', value: '3' };
@@ -390,7 +391,7 @@ export class Constants {
     public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_XLSX = { label: 'XLSX', value: '24' };
     public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_XML = { label: 'XML', value: '25' };
     public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_ZIP = { label: 'ZIP', value: '26' };
-
+    
     //ROUTING
     public static ROUTER_LINK_DATA = 'datos';
     public static ROUTER_LINK_DATA_CATALOG = 'datos/catalogo';
@@ -523,6 +524,7 @@ export class Constants {
     public static SERVER_API_LINK_ADMIN_USER_ORGANIZATIONS_START = '/user/';
     public static SERVER_API_LINK_ADMIN_USER_ORGANIZATIONS_END = '/organizations';
     public static SERVER_API_LINK_ADMIN_DATASET_CUD_OPERATIONS = '/dataset';
+    public static SERVER_API_LINK_ADMIN_DATASET_CUD_OPERATIONS_UPDATE = '/dataset_update';
     public static SERVER_API_LINK_PARAM_SORT = 'sort';
     public static SERVER_API_LINK_PARAM_PAGE = 'page';
     public static SERVER_API_LINK_PARAM_ROWS = 'rows';

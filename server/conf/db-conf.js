@@ -10,7 +10,7 @@ var dbConfig = {
     port: constants.DB_PORT,
     max: constants.DB_MAX_CONNECTIONS,
     idleTimeoutMillis: constants.DB_IDLE_TIMEOUT_MILLIS,
-    connectionTimeoutMillis: constants.DB_CONNECTION_TIMEOUT_MILLIS
+    connectionTimeoutMillis: constants.DB_CONNECTION_TIMEOUT_MILLIS 
 };
 
 module.exports = {

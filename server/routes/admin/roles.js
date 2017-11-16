@@ -14,36 +14,25 @@ const logger = require('js-logging').dailyFile([loggerSettings]);
 
 router.get('/roles', function (req, res, next) {
     try {
-        const query = {
-            text: dbQueries.DB_ADMIN_GET_ROLES,
-            rowMode: constants.SQL_RESULSET_FORMAT_JSON
-        };
-
-        pool.on('error', (error, client) => {
-            logger.error('Error en la conexión con base de datos', error);
-            process.exit(-1);
-            res.json({ status: 500, 'error': error});
-            return;
-        });
-
-        pool.connect((connError, client, done) => {
-            done();
-            if (connError) {
-                logger.error(connError.stack);
-                res.json({ status: 500, 'error': err});
-                return;
-            }
-            client.query(query, (queryError, queryResult) => {
-                done();
-                if (queryError) {
-                    logger.error(queryError.stack);
-                    res.json({ status: 500, 'error': queryError});
-                    return;
-                } else {
-                    res.json(queryResult.rows);
+        pool.connect(function(err,client,done) {
+            const queryDb = {
+                text: dbQueries.DB_ADMIN_GET_ROLES,
+                rowMode: constants.SQL_RESULSET_FORMAT_JSON
+            };
+            client.query(queryDb, function (err, result) {
+                done()
+                if (err) {
+                  // pass the error to the express error handler
+                  return next(err)
                 }
-            });
-        });
+                res.json(result.rows)
+              })
+
+        }).catch(connError => {            
+            logger.error('Error en la conexión con base de datos', connError);
+            console.error('connectionError', connError.message, connError.stack)
+        })
+
     } catch (error) {
         logger.error('Error in roles admin');
     }

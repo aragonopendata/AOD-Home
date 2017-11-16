@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { UsersAdminService } from 'app/services/admin/users-admin.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthenticationService } from 'app/services/security/authentication.service';
+import { Constants } from 'app/app.constants';
+import { LoginService } from 'app/services/security/login.service';
 
 @Component({
 	selector: 'app-home-admin',
@@ -7,9 +12,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeAdminComponent implements OnInit {
 
-	constructor() { }
+	currentUserName: string;
+	routerLinkLogin: string;
+
+	constructor(private usersAdminService: UsersAdminService, private authenticationService: AuthenticationService, private loginService: LoginService, private router: Router) {
+		this.routerLinkLogin = Constants.ROUTER_LINK_LOGIN;
+		
+	 }
 
 	ngOnInit() {
+		console.log(this.usersAdminService.currentUser);
+		this.currentUserName = this.usersAdminService.currentUser.fullname;
+	}
+
+	logout(){
+		this.loginService.announceLogout();
+		this.authenticationService.logout();
+		window.location.reload();
 	}
 
 }

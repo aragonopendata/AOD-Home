@@ -49,13 +49,24 @@ exports.DB_ADMIN_INSERT_USER = 'INSERT INTO manager.users (name, password, email
 							   + 'RETURNING manager.users.id';
 												 
 exports.DB_ADMIN_INSERT_USER_APP_PERMISSION = 'INSERT INTO manager.users_applications_permissions (id_user, id_application, access_key) '
-												 + 'VALUES ($1, $2, $3) ' 
-											  + 'RETURNING manager.users_applications_permissions.id_user';
+											+ 'VALUES ($1, $2, $3) ' 
+											+ 'RETURNING manager.users_applications_permissions.id_user';
 
 exports.DB_ADMIN_INSERT_USERS_ROLES = 'INSERT INTO manager.users_roles (id_user, id_role) '
-										 + 'VALUES ($1, $2) '
-									  + 'RETURNING manager.users_roles.id_user';
+									+ 'VALUES ($1, $2) '
+									+ 'RETURNING manager.users_roles.id_user';
 
+
+exports.DB_ADMIN_DELETE_USERS_ROLES = 'DELETE FROM manager.users_roles usrrol WHERE usrrol.id_user = $1';
+exports.DB_ADMIN_DELETE_USER_APP_PERMISSION = 'DELETE FROM manager.users_applications_permissions apusr WHERE apusr.id_user = $1';
+exports.DB_ADMIN_DELETE_USER = 'DELETE FROM manager.users usr where usr.id = $1';
+
+exports.DB_ADMIN_UPDATE_USER = 'UPDATE manager.users '
+								+ 'SET  name = $1, fullname = $2, email = $3, description = $4, '
+								+ 'active = $5 WHERE id = $6';
+
+exports.DB_ADMIN_UPDATE_USER_ROLES = 'UPDATE manager.users_roles set id_role = $1 where id_user = $2';
+													 
 exports.DB_ADMIN_GET_ROLES = 'SELECT manager.roles.id, manager.roles.name ' 
 								+ ', manager.roles.description, manager.roles.active '
 							 + 'FROM manager.roles';

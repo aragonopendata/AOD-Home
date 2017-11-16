@@ -1,18 +1,18 @@
 <div class="ui-g-12" style="padding-bottom: 5%;">
-    <h2>{{dataset.name}}</h2>
+    <h2>{{dataset.title}}</h2>
     <p>
         Previsualización del conjunto de datos no disponible.
     </p>
     <div class="ui-g-8" style="text-align: justify;">
         <h3>Información del conjunto de datos</h3>
         <h5>Título</h5>
-        <p><span>{{dataset.name}}</span></p>
+        <p><span>{{dataset?.title}}</span></p>
 
         <h5>Descripción</h5>
-        <p><span>{{dataset.description}}</span></p>
+        <p><span>{{dataset?.notes}}</span></p>
 
         <h5>Categoría</h5>
-        <p><span>{{dataset.topic.name}}</span></p>
+        <p><span>{{dataset?.title}}</span></p>
 
         <h5>Etiquetas y palabras clave</h5>
         <span>
@@ -31,7 +31,7 @@
       </span>
         <h5>Organización responsable de la publicación</h5>
         <p>
-            <span>{{dataset.publicador.name}}</span>
+            <span>{{dataset?.organization?.title}}</span>
         </p>
 
         <h5>Territorio en el que existen datos</h5>
@@ -67,7 +67,7 @@
         <p>
             *Si la cantidad de datos es muy grande puede ayudarse de la paginación en la API que proporcionamos en el enlace.
         </p>
-        <div><span>{{dataset.name}}</span></div>
+        <div><span>{{dataset?.name}}</span></div>
         <div>
             <div class="ui-g-3">
                 <button type="button" class="btn btn-default">XML</button>

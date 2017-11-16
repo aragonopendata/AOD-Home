@@ -1,61 +1,36 @@
 <div>
 	<p-messages closable="true" label="Administración de usuarios" [(value)]="userAdminMessages"></p-messages>
 	<p-growl sticky="true" life="2000" [(value)]="userAdminMessages"></p-growl>
-	<p-dataTable [loading]="loading" [value]="users" [responsive]="true" emptyMessage="No se han encontrado registros." (onSort)="setOrder($event)">
-		<p-column field="fullname" header="Nombre" sortable="custom" [sortable]="true"></p-column>
-		<p-column field="email" header="Email" sortable="custom" [sortable]="true"></p-column>
-		<p-column field="role" header="Rol" sortable="custom" [sortable]="true">
+	
+	<p-dataTable [loading]="loading" [value]="users" [responsive]="true" emptyMessage="No se han encontrado registros." (onSort)="setOrder($event)" [rows]="pageRows" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]">
+		<p-column field="fullname" [style]="{'width':'25%'}" header="Nombre" sortable="custom" [sortable]="true"></p-column>
+		<p-column field="email" [style]="{'width':'25%'}" header="Email" sortable="custom" [sortable]="true"></p-column>
+		<p-column field="role" [style]="{'width':'15%'}" header="Rol" sortable="custom" [sortable]="true">
 			<ng-template pTemplate="body" let-user="rowData">
-
-				{{user?.role[0].description}}
+				<p *ngFor="let rol of user.role">
+					{{rol?.description}}
+				</p>
 			</ng-template>
 		</p-column>
-		<p-column field="signupDate" header="Fecha alta" sortable="custom">
+		<p-column field="signupDate" [style]="{'width':'14%'}" header="Fecha alta" sortable="custom">
 			<ng-template pTemplate="body" let-user="rowData">
 					{{user.signupDate | date:'dd/MM/yyyy HH:mm:ss'}}
 			</ng-template>
 		</p-column>
-		<p-column field="active" header="Activo" sortable="custom">
+		<p-column field="active" [style]="{'width':'9%'}" header="Activo" sortable="custom">
 			<ng-template pTemplate="body" let-usuario="rowData">
 				<span *ngIf="user.active">Sí</span>
 				<span *ngIf="!user.active">No</span>
 			</ng-template>
 		</p-column>
-		<p-column header="Edición">
+		<p-column header="Edición" [style]="{'width':'12%'}">
 			<ng-template pTemplate="body" let-user="rowData">
 				<button pButton type="button" icon="fa-search" (click)="showDialog(user, false, false)"></button>
 				<button pButton type="button" icon="fa-edit" (click)="showDialog(user, true, false)"></button>
-				<button pButton type="button" icon="fa-trash"></button>
+				<button pButton type="button" icon="fa-trash" (click)="showDeleteDialog(user)"></button>
 			</ng-template>
 		</p-column>
 		<p-footer>
-			<nav aria-label="Pagination">
-				<ul class="pagination justify-content-center">
-					<li [ngClass]="actualPage >= 1 ? 'page-item': 'page-item disabled'">
-						<a class="page-link" (click)="paginate(+pageFirst+1)" aria-label="Primero">
-							<i class="fa fa-fast-backward" ></i>
-						</a>
-					</li>
-					<li [ngClass]="actualPage >= 1 ? 'page-item': 'page-item disabled'">
-						<a class="page-link" (click)="paginate(+actualPage)" aria-label="Anterior">
-							<i class="fa fa-step-backward"></i>
-						</a>
-					</li>
-					<li *ngFor="let pageShow of pagesShow" [ngClass]="pageShow == '-' ? 'page-item disabled' : (pageShow == (+actualPage+1) ? 'page-item active': 'page-item')">
-						<a class="page-link" (click)="paginate(pageShow)">{{pageShow}}</a>
-					</li>
-					<li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
-						<a class="page-link" (click)="paginate(+actualPage+2)" aria-label="Siguiente">
-							<i class="fa fa-step-forward"></i>
-						</a>
-					</li>
-					<li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
-						<a class="page-link" (click)="paginate(pageLast)" aria-label="Ultimo">
-							<i class="fa fa-fast-forward"></i>
-						</a>
-					</li>
-				</ul>
-			</nav>
 			<div class="ui-helper-clearfix" style="width:100%">
 				<button type="button" pButton icon="fa-plus" style="float:left" (click)="showDialog(null, false, true)" label="Nuevo usuario"></button>
 			</div>
@@ -66,19 +41,23 @@
 		<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="user" style="font-size:16px; padding:20px;">
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-5"><b>Nombre completo: </b></div>
-				<div class="ui-grid-col-7">{{user.fullname}}</div>
+				<div class="ui-grid-col-7"><p>{{user?.fullname}}</p></div>
 			</div>
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-5"><b>Usuario: </b></div>
-				<div class="ui-grid-col-7">{{user.name}}</div>
+				<div class="ui-grid-col-7"><p>{{user?.name}}</p></div>
 			</div>
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-5"><b>Email: </b></div>
-				<div class="ui-grid-col-7">{{user.email}}</div>
+				<div class="ui-grid-col-7"><p>{{user?.email}}</p></div>
 			</div>
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-5"><b>Rol: </b></div>
-				<div class="ui-grid-col-7">{{user.role[0].description}}</div>
+				<!-- <div class="ui-grid-col-7">
+					<p *ngFor="let rol of user.role">
+						{{rol?.description}}
+					</p>
+				</div> -->
 			</div>
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-5"><b>Fecha de alta: </b></div>
@@ -93,7 +72,7 @@
 			</div>
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-5"><b>Descripción: </b></div>
-				<div class="ui-grid-col-7">{{user.description}}</div>
+				<div class="ui-grid-col-7"><p>{{user?.description}}</p></div>
 			</div>
 		</div>
 		<p-footer>
@@ -124,7 +103,10 @@
 			<div class="ui-grid-row" style="padding: 5px;">
 				<div class="ui-grid-col-3"><label>Rol:</label></div>
 				<div class="ui-grid-col-9">
-					<p-dropdown [style]="{'width':'220px'}" appendTo="body" [options]="selectRoles" [(ngModel)]="selectedRole"></p-dropdown>
+					<select class="form-control" [(ngModel)]="selectedRole">
+						<option disabled hidden [value]="undefined">Seleccione un rol</option>
+						<option *ngFor="let rol of roles" [ngValue]="rol.id">{{rol.description}}</option>
+					</select>
 				</div>
 			</div>
 			<div class="ui-grid-row" style="padding: 5px;">
@@ -145,5 +127,14 @@
 				<button type="button" pButton icon="fa-check" label="Guardar" (click)="saveUser()"></button>
 			</div>
 		</p-footer>
+	</p-dialog>
+	<!-- DELETE USER DIALOG -->
+	<p-dialog header="¿Está seguro de que deasea borrar el usuario?" [(visible)]="displayDeleteDialog">
+		<p>Se va a proceder a borrar el usuario <b>{{user?.fullname}}</b></p>
+		<p>¿Desea continuar?</p>
+			 <p-footer>
+				 <button type="button" pButton icon="fa-check" (click)="deleteUser()" label="Sí"></button>
+				 <button type="button" pButton icon="fa-close" (click)="undoDeleteUser()" label="No"></button>
+			 </p-footer>
 	</p-dialog>
 </div>

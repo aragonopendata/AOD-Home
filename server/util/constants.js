@@ -88,10 +88,18 @@ exports.CKAN_URL_PATH_TRACKING = '/_tracking';
 exports.CKAN_TRACKING_TYPE_PARAM_PAGE = 'page';
 /* CKAN ADMIN - USERS */
 exports.CKAN_URL_PATH_USER_CREATE = 'user_create';
+exports.CKAN_URL_PATH_USER_UPDATE = 'user_update';
+exports.CKAN_URL_PATH_USER_DELETE = 'user_delete';
+exports.CKAN_URL_PATH_USER_SHOW = 'user_show';
+
+exports.CKAN_URL_PATH_GROUP_LIST = 'group_list';
+exports.CKAN_URL_PATH_GROUP_MEMBER_CREATE = 'group_member_create';
 
 /* CKAN ADMIN - DATASETS */
 exports.CKAN_URL_PATH_DATASET_CREATE = 'package_create';
+exports.CKAN_URL_PATH_DATASET_UPDATE = 'package_update';
 exports.CKAN_URL_PATH_DATASET_DELETE = 'package_delete';
+exports.CKAN_URL_PATH_RESOURCE_CREATE = 'resource_create';
 
 /* DATASETS */
 //Results per page in lists
@@ -199,8 +207,8 @@ exports.DB_PORT = 0;
 exports.DB_USER = '';
 exports.DB_PASSWORD = '';
 exports.DB_MAX_CONNECTIONS = 10; //default 10
-exports.DB_IDLE_TIMEOUT_MILLIS = 10000; // default 10000 (10 seconds)
-exports.DB_CONNECTION_TIMEOUT_MILLIS = 1000;
+exports.DB_IDLE_TIMEOUT_MILLIS = 30000; // default 10000 (10 seconds)
+exports.DB_CONNECTION_TIMEOUT_MILLIS = 5000;
 
 /* **************** */
 /* PROXY PROPERTIES */
