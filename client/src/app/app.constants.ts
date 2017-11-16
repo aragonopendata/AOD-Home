@@ -10,7 +10,6 @@ export class Constants {
     public static AOD_API_ADMIN_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/admin';
     //public static AOD_API_SECURITY_BASE_URL = 'http://localhost:4200/aod/services/security';
     public static AOD_API_SECURITY_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/security';
-    /* USED FOR IFRAMES */
     public static AOD_API_CKAN_BASE_URL = 'http://miv-aodfront-01.aragon.local:5000';
     public static AOD_COLLABORATION_URL = 'https://aragon.uservoice.com/forums/192552-datos-que-me-gustar%C3%ADa-reutilizar';
     public static AOD_GITHUB_URL = 'http://github.com/aragonopendata';
@@ -392,6 +391,30 @@ export class Constants {
     public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_XML = { label: 'XML', value: '25' };
     public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_ZIP = { label: 'ZIP', value: '26' };
     
+    //ADMIN USER
+    public static ADMIN_USER_ROL_GLOBAL_ADMIN = 'global_adm';
+    public static ADMIN_USER_ROL_ORGANIZATION_ADMIN = 'org_adm';
+    public static ADMIN_USER_ROL_ORGANIZATION_EDITOR = 'org_editor';
+
+    //ADMIN ORGANIZATION
+    public static GROWL_SEVERITY_SUCCESS = 'success';
+    public static GROWL_SEVERITY_INFO = 'info';
+    public static GROWL_SEVERITY_ERROR = 'error';
+    public static GROWL_DELETE_ORGANIZATION_SUMMARY = 'Borrado de organización';
+    public static GROWL_CREATE_ORGANIZATION_SUMMARY = 'Alta de organización';
+    public static GROWL_UPDATE_ORGANIZATION_SUMMARY = 'Edición de organización';
+    public static GROWL_CREATE_ORGANIZATION_SUCCESS_DETAIL = 'Organización insertada correctamente';
+    public static GROWL_DELETE_ORGANIZATION_SUCCESS_DETAIL = 'Organización borrada correctamente';
+    public static GROWL_ORGANIZATION_EMPTY_NAME_DETAIL = 'Nombre de organización vacío';
+    public static CONFIRMDIALOG_HEADER = 'Confirmación';
+    public static CONFIRMDIALOG_MESSAGE_START = '¿Estás seguro de que deseas borrar ';
+    public static CONFIRMDIALOG_MESSAGE_END = '?';
+    public static ERROR_ORGANIZATION_GET_ORGS_BY_USER = 'Error: getOrgsByUser() - organizations-list.component.ts';
+    public static ERROR_ORGANIZATION_GET_EMAIL = 'Error: getEmail() - organizations-admin-edit.component.ts';
+    public static ERROR_ORGANIZATION_GET_ORG = 'Error: loadOrganization() - organizations-admin-edit.component.ts';
+
+
+
     //ROUTING
     public static ROUTER_LINK_DATA = 'datos';
     public static ROUTER_LINK_DATA_CATALOG = 'datos/catalogo';
@@ -457,9 +480,13 @@ export class Constants {
     public static ROUTER_LINK_DATASETS_EDIT = 'edit';
     public static ROUTER_LINK_ADMIN_DATACENTER_DATASETS_EDIT = 'admin/datacenter/datasets/edit';
     public static ROUTER_LINK_ORGANIZATIONS = 'organizations';
-    public static ROUTER_LINK_ORGANIZATIONS_LIST = 'list';
-    public static ROUTER_LINK_ORGANIZATIONS_EDIT = 'edit';
     public static ROUTER_LINK_ADMIN_DATACENTER_ORGANIZATIONS = 'admin/datacenter/organizations';
+    public static ROUTER_LINK_ORGANIZATIONS_LIST = 'list';
+    public static ROUTER_LINK_ADMIN_DATACENTER_ORGANIZATIONS_LIST = 'admin/datacenter/organizations/list';
+    public static ROUTER_LINK_ORGANIZATIONS_SHOW = 'show';
+    public static ROUTER_LINK_ADMIN_DATACENTER_ORGANIZATIONS_SHOW = 'admin/datacenter/organizations/show';
+    public static ROUTER_LINK_ORGANIZATIONS_EDIT = 'edit';
+    public static ROUTER_LINK_ADMIN_DATACENTER_ORGANIZATIONS_EDIT = 'admin/datacenter/organizations/edit';
     public static ROUTER_LINK_CAMPUS = 'campus';
     public static ROUTER_LINK_ADMIN_DATACENTER_CAMPUS = 'admin/campus';
     public static ROUTER_LINK_404 = 'pagenotfound';
@@ -523,6 +550,7 @@ export class Constants {
     public static SERVER_API_LINK_ADMIN_GET_ROLE = '/role';
     public static SERVER_API_LINK_ADMIN_USER_ORGANIZATIONS_START = '/user/';
     public static SERVER_API_LINK_ADMIN_USER_ORGANIZATIONS_END = '/organizations';
+    public static SERVER_API_LINK_ADMIN_ORGANIZATION_CUD_OPERATIONS = '/organization';
     public static SERVER_API_LINK_ADMIN_DATASET_CUD_OPERATIONS = '/dataset';
     public static SERVER_API_LINK_ADMIN_DATASET_CUD_OPERATIONS_UPDATE = '/dataset_update';
     public static SERVER_API_LINK_PARAM_SORT = 'sort';

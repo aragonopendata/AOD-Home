@@ -1,51 +1,43 @@
+<p-growl [(value)]="organizationAdminMessages"></p-growl>
+<p-confirmDialog>
+    <!-- <p-footer>
+        <button type="button" pButton icon="fa-close" style="background-color: red; border-color:red;" label="No"></button>
+        <button type="button" pButton icon="fa-check" label="Si"></button>
+    </p-footer> -->
+</p-confirmDialog>
 <div class="container" style="padding: 2%;">
-    <div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
-      <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-      <p-autoComplete [(ngModel)]="selectedOrg" [suggestions]="results" field="orgName" (completeMethod)="search($event)"></p-autoComplete>
-    </div>
-    <p-dataTable [value]="orgs" [paginator]="true" rows="15" [responsive]="true" [globalFilter]="gb" #dt>
-      <p-column field="display_name" header="Nombre" [sortable]="true" [style]="{'width':'50%'}"></p-column>
-      <p-column field="state" header="Estado" [sortable]="true" [style]="{'width':'20%'}"></p-column>
-      <p-column field="package_count" header="Nº datos" [sortable]="true" [style]="{'width':'18%'}"></p-column>
-      <p-column header="Edición" [style]="{'width':'12%'}">
-        <ng-template pTemplate="body" let-org="rowData">
-          <button pButton type="button" icon="fa-search" routerLink="../showorganization"></button>
-          <button pButton type="button" icon="fa-edit" routerLink="../edit/{{org.name}}"></button>
-          <button pButton type="button" icon="fa-trash"></button>
-        </ng-template>
-      </p-column>
-      <p-footer>
-        <!-- Cambiar por organizaciones -->
-        <div class="ui-helper-clearfix" style="width:100%">
-          <button type="button" pButton icon="fa-plus" style="float:left" routerLink="../edit" label="Añade una nueva organización"></button>
-        </div>
-      </p-footer>
-    </p-dataTable>
-    <nav aria-label="Pagination">
-      <ul class="pagination justify-content-center">
-        <li [ngClass]="actualPage >= 1 ? 'page-item': 'page-item disabled'">
-          <a class="page-link" (click)="paginate(+pageFirst+1)" aria-label="Primero">
-        <i class="fa fa-fast-backward" ></i>
-        </a>
-        </li>
-        <li [ngClass]="actualPage >= 1 ? 'page-item': 'page-item disabled'">
-          <a class="page-link" (click)="paginate(+actualPage)" aria-label="Anterior">
-        <i class="fa fa-step-backward"></i>
-        </a>
-        </li>
-        <li *ngFor="let pageShow of pagesShow" [ngClass]="pageShow == '-' ? 'page-item disabled' : (pageShow == (+actualPage+1) ? 'page-item active': 'page-item')">
-          <a class="page-link" (click)="paginate(pageShow)">{{pageShow}}</a>
-        </li>
-        <li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
-          <a class="page-link" (click)="paginate(+actualPage+2)" aria-label="Siguiente">
-          <i class="fa fa-step-forward"></i>
-          </a>
-        </li>
-        <li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
-          <a class="page-link" (click)="paginate(pageLast)" aria-label="Ultimo">
-          <i class="fa fa-fast-forward"></i>
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </div>
+   <!--If the user have permissions to delete-->
+  <p-dataTable *ngIf="showEditButtons" [value]="orgs" [paginator]="true" [rows]="15" [responsive]="true" [globalFilter]="gb" [rowsPerPageOptions]="[5,10,15]" #dt>
+    <p-column field="display_name" header="Nombre" [sortable]="true" [style]="{'width':'50%'}"></p-column>
+    <p-column field="state" header="Estado" [sortable]="true" [style]="{'width':'20%'}"></p-column>
+    <p-column field="package_count" header="Nº datos" [sortable]="true" [style]="{'width':'18%'}"></p-column>
+    <p-column header="Edición"  [style]="{'width':'12%'}">
+      <ng-template pTemplate="body" let-org="rowData">
+        <button pButton type="button" icon="fa-search" routerLink="../show/{{org.name}}"></button>
+        <button pButton type="button" icon="fa-edit" routerLink="../edit/{{org.name}}"></button>
+        <button pButton type="button" icon="fa-trash" (click)="confirm(org)"></button>
+      </ng-template>
+    </p-column>
+    <p-footer *ngIf="showSaveButton">
+      <div class="ui-helper-clearfix" style="width:100%">
+        <button type="button" pButton icon="fa-plus" style="float:left" routerLink="../edit" label="Añade una nueva organización"></button>
+      </div>
+    </p-footer>
+  </p-dataTable>
+    <!--If the user have no permissions to delete-->
+  <p-dataTable *ngIf="!showEditButtons" [value]="orgs" [paginator]="true" [rows]="15" [responsive]="true" [globalFilter]="gb" [rowsPerPageOptions]="[5,10,15]" #dt>
+    <p-column field="display_name" header="Nombre" [sortable]="true" [style]="{'width':'54%'}"></p-column>
+    <p-column field="state" header="Estado" [sortable]="true" [style]="{'width':'20%'}"></p-column>
+    <p-column field="package_count" header="Nº datos" [sortable]="true" [style]="{'width':'18%'}"></p-column>
+    <p-column header="Edición"  [style]="{'width':'8%'}">
+      <ng-template pTemplate="body" let-org="rowData">
+        <button pButton type="button" icon="fa-search" routerLink="../show/{{org.name}}"></button>
+      </ng-template>
+    </p-column>
+    <p-footer *ngIf="showSaveButton">
+      <div class="ui-helper-clearfix" style="width:100%">
+        <button type="button" pButton icon="fa-plus" style="float:left" routerLink="../edit" label="Añade una nueva organización"></button>
+      </div>
+    </p-footer>
+  </p-dataTable>
+</div>

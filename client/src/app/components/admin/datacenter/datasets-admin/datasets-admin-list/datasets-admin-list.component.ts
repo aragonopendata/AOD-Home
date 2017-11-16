@@ -75,7 +75,7 @@ export class DatasetsAdminListComponent implements OnInit {
     }
     
     loadUserOrgs(){
-        this.usersAdminService.getOrganitationsByCurrentUser().subscribe(orgs => {
+        this.usersAdminService.getOrganizationsByCurrentUser().subscribe(orgs => {
             try {
                 this.userOrgs = JSON.parse(orgs).result;
                 this.loadDatasets();

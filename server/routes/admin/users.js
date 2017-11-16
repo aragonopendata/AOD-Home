@@ -41,6 +41,57 @@ router.get('/users', function (req, res, next) {
     }
 });
 
+router.post('/user/:userName', function (req, res, next) {
+    try {
+        var user = req.body;
+        logger.notice('Usuario que llega desde request: ' + JSON.stringify(user));
+        //0. CHECKING REQUEST PARAMETERS
+        if (user.requestUserId != '' && req.params.userName != '') {
+            var requestUserId = user.requestUserId;
+        getUserAPIKey(requestUserId)
+        .then(userAPIKey => {
+            logger.info('API KEY del usuario recuperada');
+            getUserDetails(userAPIKey, req.params.userName)
+                .then(getUserResponse => {
+                    logger.info('Respuesta de CKAN: ' + JSON.stringify(getUserResponse));
+                    logger.info('Respuesta de CKAN success: ' + getUserResponse.success);
+                    if (getUserResponse) {
+                        res.json(getUserResponse);
+                    } else {
+                        logger.error('OBTENER Organizaciones - Error al obtener las organizaciones de CKAN: ' + JSON.stringify(getOrganizationResponse));
+                        var errorJson = {
+                            'status': constants.REQUEST_ERROR_BAD_DATA,
+                            'error': 'OBTENER Usuario - Error al obtener el usuario en CKAN',
+                        };
+                        if (getUserResponse && getUserResponse != null
+                            && getUserResponse.error && getUserResponse.error != null
+                            && getUserResponse.error.name && getUserResponse.error.name != null) {
+                            errorJson.message = getUserResponse.error.name;
+                        }
+                        res.json(errorJson);
+                        return;
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    logger.error('ALTA DE USUARIOS - Error al insertar al usuario en base de datos: ' + error);
+                    res.json({ 'status': constants.REQUEST_ERROR_BAD_DATA, 'error': 'ALTA DE USUARIOS - Error al insertar al usuario en base de datos' });
+                    return;
+                });
+        }).catch(error => {
+            logger.error('OBTENER ORGANIZACIONES POR USUARIO - Usuario no autorizado: ', error);
+            res.json({ 'status': constants.REQUEST_ERROR_FORBIDDEN, 'error': 'OBTENER ORGANIZACIONES POR USUARIO - Usuario no autorizado' });
+            return;
+        });
+    } else {
+        logger.error('OBTENER ORGANIZACIONES POR USUARIO - Parámetros incorrectos');
+        res.json({ 'status': constants.REQUEST_ERROR_BAD_DATA, 'error': 'OBTENER ORGANIZACIONES POR USUARIO - Parámetros incorrectos' });
+        return;
+    }
+    } catch (error) {
+        logger.error('Error obteniendo el usuario');
+    }
+});
+
 router.post('/user', function (req, res, next) {
     try {
         var user = req.body;
@@ -979,5 +1030,40 @@ router.get('/user/:userID/organizations', function (req, res, next) {
         console.log(error);
     }
 });
+
+var getUserDetails = function getUserDetails(userAPIKey, userName) {
+    return new Promise((resolve, reject) => {
+        try {
+            logger.debug('Obteniendo detalles usuario');
+            //Mandatory fields
+            var httpRequestOptions = {
+                host: 'miv-aodfront-01.aragon.local',
+                port: 5000,
+                path: '/api/action/user_show?id=' + userName,
+                method: constants.HTTP_REQUEST_METHOD_GET,
+                headers: {
+                    'Authorization': userAPIKey.accessKey
+                }
+            };
+
+            http.get(httpRequestOptions, function (results) {
+                    var body = '';
+                    results.on('data', function (chunk) {
+                        body += chunk;
+                    });
+                    results.on('end', function () {
+                        // res.json(body);
+                        resolve(body);
+                    });
+                }).on('error', function (err) {
+                    logger.error(err);
+                    reject(err);
+
+                });
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
 
 module.exports = router;

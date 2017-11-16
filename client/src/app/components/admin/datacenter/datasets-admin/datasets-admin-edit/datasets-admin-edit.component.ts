@@ -317,7 +317,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 		this.getSelectedOrg();
 		this.orgsSelect = [];
 		this.orgsSelect.push({ label: 'Seleccione una organización', value: undefined });
-		this.usersAdminService.getOrganitationsByCurrentUser().subscribe(organizations => {
+		this.usersAdminService.getOrganizationsByCurrentUser().subscribe(organizations => {
 		// this.organizationsAdminService.getOrganizations().subscribe(organizations => {
 			try {
 				this.orgs = JSON.parse(organizations).result;

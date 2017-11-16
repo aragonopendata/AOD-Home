@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { OrganizationAdmin } from '../../models/OrganizationAdmin';
 import { Observable } from 'rxjs/Rx';
-import { Http, Response, Headers, URLSearchParams } from '@angular/http';
+import { Http, Response, Headers, URLSearchParams, RequestOptions } from '@angular/http';
 import { Constants } from '../../app.constants';
 
 @Injectable()
@@ -31,16 +31,58 @@ export class OrganizationsAdminService {
 		return this.http.get(fullUrl).map(res => res.json());
 	}
 
-	//private orgs: Org[];
-	//private publicadores: Publicador[];
-	//private publicador: Publicador;
+	public createOrganization(organization: OrganizationAdmin, webpage: string, address: string, person: string) {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_ORGANIZATION_CUD_OPERATIONS;
+        let requestBodyParams = {
+			requestUserId: organization.requestUserId,
+			requestUserName: organization.requestUserName,
+			name: organization.name,
+			title: organization.title,
+			description: organization.description,
+			extras: []
+		};
+		if(webpage != undefined){
+			var webpageNotEmpty = {
+				key: Constants.ORGANIZATION_EXTRA_WEBPAGE,
+				value: webpage
+			}
+			requestBodyParams.extras.push(webpageNotEmpty);
+		}
+		if(address != undefined){
+			var addressNotEmpty = {
+				key: Constants.ORGANIZATION_EXTRA_ADDRESS,
+				value: address
+			}
+			requestBodyParams.extras.push(addressNotEmpty);
+		}
+		if(person != undefined){
+			var personNotEmpty = {
+				key: Constants.ORGANIZATION_EXTRA_PERSON,
+				value: person
+			}
+			requestBodyParams.extras.push(personNotEmpty);
+		}
+        return this.http.post(fullUrl, JSON.stringify(requestBodyParams), {headers: headers}).map(res => res.json());
+    }
 
-	//constructor(private publicadoresService: PublicadorService) {
-	//this.publicadores = publicadoresService.getPublicadores();
-	//this.orgs = [];
-	//for(let pub of this.publicadores){
-	//this.orgs.push(new Org(pub.name, 'http://www.org'+this.publicadores.indexOf(pub)+'.es', 'Descripción '+this.publicadores.indexOf(pub), 'Dirección '+this.publicadores.indexOf(pub), 'Responsable '+this.publicadores.indexOf(pub), 'Contacto '+this.publicadores.indexOf(pub), 25))
-	//}
-	//}
+	 public removeOrganization(organization_name: string, user_id: number,  user_name:string) {
+        let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_ORGANIZATION_CUD_OPERATIONS;
+        let requestBodyParams = {
+            requestUserId: user_id,
+            requestUserName: user_name,
+            name:organization_name
+        };
+		let headers = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
+        let options = new RequestOptions({ headers: headers, body: JSON.stringify(requestBodyParams)}); // Create a request option
+        return this.http.delete(fullUrl, options).map((res:Response) => res.json());
+    } 
 
+	public updateOrganization(organization: OrganizationAdmin){
+		let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_ORGANIZATION_CUD_OPERATIONS;
+        return this.http.put(fullUrl, JSON.stringify(organization), {headers: headers}).map(res => res.json());
+	}
 }

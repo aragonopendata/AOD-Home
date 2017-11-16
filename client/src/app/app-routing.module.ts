@@ -107,10 +107,11 @@ const routes: Routes = [
                 { path: Constants.ROUTER_LINK_DATASETS_EDIT + '/:' + Constants.ROUTER_LINK_DATA_PARAM_DATASET_NAME, component: DatasetsAdminEditComponent, canActivate: [AuthGuard], pathMatch: 'full' }
             ]},
             { path: Constants.ROUTER_LINK_ORGANIZATIONS, component: OrganizationsAdminComponent, canActivate: [AuthGuard], children:[
-                { path: '', redirectTo: Constants.ROUTER_LINK_ORGANIZATIONS_LIST, pathMatch: 'full' },
-                { path: Constants.ROUTER_LINK_ORGANIZATIONS_LIST, component: OrganizationsAdminListComponent, pathMatch: 'full' },
-                { path: Constants.ROUTER_LINK_ORGANIZATIONS_EDIT, component: OrganizationsAdminEditComponent, pathMatch: 'full' },
-                { path: Constants.ROUTER_LINK_ORGANIZATIONS_EDIT + '/:' + Constants.ROUTER_LINK_DATA_PARAM_ORGANIZATION_NAME, component: OrganizationsAdminEditComponent, pathMatch: 'full' }
+                { path: '', redirectTo: Constants.ROUTER_LINK_ORGANIZATIONS_LIST, canActivate: [AuthGuard], pathMatch: 'full' },
+                { path: Constants.ROUTER_LINK_ORGANIZATIONS_LIST, component: OrganizationsAdminListComponent, canActivate: [AuthGuard], pathMatch: 'full' },
+                { path: Constants.ROUTER_LINK_ORGANIZATIONS_SHOW + '/:' + Constants.ROUTER_LINK_DATA_PARAM_ORGANIZATION_NAME, component: OrganizationsAdminShowComponent, canActivate: [AuthGuard], pathMatch: 'full' },
+                { path: Constants.ROUTER_LINK_ORGANIZATIONS_EDIT, component: OrganizationsAdminEditComponent, canActivate: [AuthGuard], pathMatch: 'full' },
+                { path: Constants.ROUTER_LINK_ORGANIZATIONS_EDIT + '/:' + Constants.ROUTER_LINK_DATA_PARAM_ORGANIZATION_NAME, component: OrganizationsAdminEditComponent, canActivate: [AuthGuard], pathMatch: 'full' }
             ]}
         ]},
         { path: Constants.ROUTER_LINK_CAMPUS, component: CampusAdminComponent, canActivate: [AuthGuard], pathMatch: 'full' }

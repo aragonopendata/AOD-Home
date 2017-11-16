@@ -78,9 +78,9 @@ exports.SQL_RESULSET_FORMAT_JSON = 'json';
 /* *************** */
 /* CKAN PROPERTIES */
 exports.CKAN_API_BASE_URL = 'http://miv-aodfront-01.aragon.local:5000/api/action/';
-//exports.CKAN_API_BASE_URL = 'http://localhost:14500/api/action/';
+//exports.CKAN_API_BASE_URL = 'http://localhost:5000/api/action/';
 exports.CKAN_BASE_URL = 'http://miv-aodfront-01.aragon.local';
-//exports.CKAN_BASE_URL = 'http://localhost:14500';
+//exports.CKAN_BASE_URL = 'http://localhost';
 exports.CKAN_BASE_PORT = '5000';
 /* DATASETS ACCESS TRACKING REGISTRY */
 exports.CKAN_URL_PATH_TRACKING_DATASET = '/dataset';
@@ -100,6 +100,11 @@ exports.CKAN_URL_PATH_DATASET_CREATE = 'package_create';
 exports.CKAN_URL_PATH_DATASET_UPDATE = 'package_update';
 exports.CKAN_URL_PATH_DATASET_DELETE = 'package_delete';
 exports.CKAN_URL_PATH_RESOURCE_CREATE = 'resource_create';
+
+/* CKAN ADMIN - ORGANIZATIONS */
+exports.CKAN_URL_PATH_ORGANIZATION_CREATE = 'organization_create';
+exports.CKAN_URL_PATH_ORGANIZATION_DELETE = 'organization_delete';
+exports.CKAN_URL_PATH_ORGANIZATION_UPDATE = 'organization_update';
 
 /* DATASETS */
 //Results per page in lists

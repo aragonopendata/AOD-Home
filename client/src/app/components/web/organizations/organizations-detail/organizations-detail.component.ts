@@ -60,6 +60,7 @@ export class OrganizationsDetailComponent implements OnInit {
 				this.sort = Constants.SERVER_API_LINK_PARAM_SORT_DEFAULT_VALUE;
 				this.org = JSON.parse(org).result;
 				this.getExtras();
+				//this.getEmail();
 				this.getDatasets(null, null);
 			} catch (error) {
 				console.error("Error: ngOnInit() - organizations-detail.component.ts");
@@ -116,6 +117,18 @@ export class OrganizationsDetailComponent implements OnInit {
 			}
 		}
 	}
+
+	// getEmail(): void {
+	// 	//person from users
+	// 	if (this.org.users !== undefined) {
+	// 		for (let user of this.org.users) {
+	// 			if (!user.sysadmin) {
+	// 				this.email = user.email;
+	// 				break;
+	// 			}
+	// 		}
+	// 	}
+	// }
 
 	getDatasets(page: number, rows: number): void {
 		var pageNumber = (page != null ? page : 0);

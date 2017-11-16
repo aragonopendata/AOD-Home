@@ -1,38 +1,48 @@
+<p-growl [(value)]="organizationAdminMessages"></p-growl>
 <div class="container">
   <div class="form-group row">
-    <label for="example-text-input" class="col-4 col-form-label">NOMBRE DE ORGANIZACIÓN</label>
+    <label for="name-input" class="col-4 col-form-label">NOMBRE DE ORGANIZACIÓN *</label>
     <div class="col-8">
-      <input class="form-control" type="text" value="{{org.display_name}}" id="example-text-input">
+      <input class="form-control" type="text" value="{{org.display_title}}" id="title" [(ngModel)]="org.title">
     </div>
   </div>
   <div class="form-group row">
-    <label for="example-search-input" class="col-4 col-form-label">PÁGINA WEB DE LA ORGANIZACIÓN</label>
+    <label for="webPage-input" class="col-4 col-form-label">PÁGINA WEB DE LA ORGANIZACIÓN</label>
     <div class="col-8">
-      <input class="form-control" type="search" value="{{org.webpage}}" id="example-search-input">
+      <input class="form-control" type="text" value="{{webpage.value}}" id="webPage" [(ngModel)]="webpage.value">
     </div>
   </div>
   <div class="form-group row">
-    <label for="example-email-input" class="col-4 col-form-label">DESCRIPCIÓN DE LA ORGANIZACIÓN</label>
+    <label for="description-input" class="col-4 col-form-label">DESCRIPCIÓN DE LA ORGANIZACIÓN</label>
     <div class="col-8">
-      <textarea class="form-control" rows="5" placeholder="Descripción de la organización" value={{org.description}} id="descriptionTextArea"></textarea>
+      <textarea class="form-control" rows="5" value={{org.description}} id="description" [(ngModel)]="org.description"></textarea>
     </div>
   </div>
   <div class="form-group row">
-    <label for="example-url-input" class="col-4 col-form-label">DIRECCIÓN DE LA ORGANIZACIÓN</label>
+    <label for="adress-input" class="col-4 col-form-label">DIRECCIÓN DE LA ORGANIZACIÓN</label>
     <div class="col-8">
-      <input class="form-control" type="url" value="" id="example-url-input">
+      <input class="form-control" type="text" value="{{address.value}}" id="address" [(ngModel)]="address.value">
     </div>
   </div>
   <div class="form-group row">
-    <label for="example-tel-input" class="col-4 col-form-label">PERSONA RESPONSABLE DENTRO DE LA ORGANIZACIÓN</label>
+    <label for="orgPerson-input" class="col-4 col-form-label">PERSONA RESPONSABLE DENTRO DE LA ORGANIZACIÓN</label>
     <div class="col-8">
-      <input class="form-control" type="tel" value="" id="example-tel-input">
+      <input class="form-control" type="text" value="{{person.value}}" id="orgPerson" [(ngModel)]="person.value">
     </div>
   </div>
   <div class="form-group row">
-    <label for="example-password-input" class="col-4 col-form-label">EMAIL DE CONTACTO</label>
+    <label for="email-input" class="col-4 col-form-label">EMAIL DE CONTACTO</label>
     <div class="col-8">
-      <input class="form-control" type="password" value="" id="example-password-input">
+      <input readonly="readonly" class="form-control" type="text" value="{{email}}" id="email" [(ngModel)]="email">
     </div>
+  </div>
+  <br/>
+  <div *ngIf="organizationEmpty" class="ui-helper-clearfix" style="width:100%">
+    <button type="button" pButton icon="fa-floppy-o" style="float:right" (click)="saveOrganization();" label="Guardar"></button>
+    <button type="button" pButton icon="fa-times" style="float:right; background-color: red; border-color: red;" (click)="cancel();" label="Cancelar"></button>
+  </div>
+  <div *ngIf="!organizationEmpty" class="ui-helper-clearfix" style="width:100%">
+    <button type="button" pButton icon="fa-floppy-o" style="float:right" (click)="updateOrganization();" label="Actualizar"></button>
+    <button type="button" pButton icon="fa-times" style="float:right; background-color: red; border-color: red;" (click)="cancel();" label="Cancelar"></button>
   </div>
 </div>

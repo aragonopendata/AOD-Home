@@ -27,6 +27,16 @@ export class UsersAdminService {
 		return this.http.get(fullUrl, {headers: headers}).map(res => res.json());
 	}
 
+	public getUser(userName: string, reqUserId: string) {
+		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + '/user/' + userName;
+        let requestBodyParams = {
+            requestUserId: reqUserId
+        };
+		let headers = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
+        let options = new RequestOptions({ headers: headers, body: JSON.stringify(requestBodyParams)}); // Create a request option
+        return this.http.post(fullUrl, JSON.stringify(requestBodyParams), {headers: headers}).map(res => res.json());
+	}
+
 	public createUser(newUser: User) {
 		let headers = new Headers();
 		headers.append('Content-Type', ' application/json');
@@ -39,7 +49,7 @@ export class UsersAdminService {
 		return this.http.post(fullUrl, JSON.stringify(requestBodyParams), {headers: headers}).map(res => res.json());
 	}
 
-	public getOrganitationsByCurrentUser(){
+	public getOrganizationsByCurrentUser(){
 		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_USER_ORGANIZATIONS_START + this.currentUser.id
 		+ Constants.SERVER_API_LINK_ADMIN_USER_ORGANIZATIONS_END;
 		return this.http.get(fullUrl).map(res => res.json());
@@ -64,5 +74,8 @@ export class UsersAdminService {
 		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_USER_CUD_OPERATIONS;
 		let requestBodyParams: any = updatedUser;
 		return this.http.put(fullUrl, JSON.stringify(requestBodyParams), {headers: headers}).map(res => res.json());
+	}
+	public getCurrentUser(){
+		return this.currentUser;
 	}
 }

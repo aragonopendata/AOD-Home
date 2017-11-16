@@ -10,7 +10,8 @@ import {
 	InputTextareaModule, ButtonModule, SharedModule, DataTableModule, DialogModule, 
 	CalendarModule, InputSwitchModule, EditorModule, DataListModule, TooltipModule, 
 	AutoCompleteModule, ProgressBarModule, RadioButtonModule, CheckboxModule, FileUploadModule, 
-	ToolbarModule, TabViewModule, PaginatorModule, AccordionModule, MessagesModule, GrowlModule } from 'primeng/primeng';
+	ToolbarModule, TabViewModule, PaginatorModule, AccordionModule, MessagesModule, GrowlModule,
+	ConfirmDialogModule, ConfirmationService } from 'primeng/primeng';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { Logger, Options } from 'angular2-logger/core';
@@ -157,6 +158,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 		ButtonModule,
 		DataTableModule,
 		SharedModule,
+		ConfirmDialogModule,
 		DialogModule,
 		CalendarModule,
 		InputSwitchModule,
@@ -198,7 +200,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 		DatasetsAdminService,
 		TopicsAdminService,
 		OrganizationsAdminService,
-		CampusAdminService
+		CampusAdminService,
+		ConfirmationService
 	],
 	bootstrap: [AppComponent]
 })
