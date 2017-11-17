@@ -4,7 +4,9 @@ import { Organization } from '../../../../models/Organization';
 import { OrganizationsService } from '../../../../services/web/organizations.service';
 import { DatasetsService } from '../../../../services/web/datasets.service';
 import { Dataset } from '../../../../models/Dataset';
+import { UsersAdminService } from 'app/services/admin/users-admin.service';
 import { Constants } from '../../../../app.constants';
+import { User } from 'app/models/User';
 
 @Component({
 	selector: 'app-organizations-detail',
@@ -40,9 +42,14 @@ export class OrganizationsDetailComponent implements OnInit {
 	 errorTitle: string;
 	 errorMessage: string;
 
+	 user: any;
+	 userAdminOrg: User;
+
 	constructor(private organizationsService: OrganizationsService
 			, private datasetsService: DatasetsService
-			, private activatedRoute: ActivatedRoute) {
+			, private activatedRoute: ActivatedRoute
+			, private usersAdminService: UsersAdminService
+			, private router: Router) {
 		this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
 		this.routerLinkDataCatalogDataset = '/' + Constants.ROUTER_LINK_DATA_CATALOG_DATASET;
 		this.pageRows = Constants.ORGANIZATION_DATASET_LIST_ROWS_PER_PAGE;
@@ -60,7 +67,7 @@ export class OrganizationsDetailComponent implements OnInit {
 				this.sort = Constants.SERVER_API_LINK_PARAM_SORT_DEFAULT_VALUE;
 				this.org = JSON.parse(org).result;
 				this.getExtras();
-				//this.getEmail();
+				this.getPermissions();
 				this.getDatasets(null, null);
 			} catch (error) {
 				console.error("Error: ngOnInit() - organizations-detail.component.ts");
@@ -118,17 +125,20 @@ export class OrganizationsDetailComponent implements OnInit {
 		}
 	}
 
-	// getEmail(): void {
-	// 	//person from users
-	// 	if (this.org.users !== undefined) {
-	// 		for (let user of this.org.users) {
-	// 			if (!user.sysadmin) {
-	// 				this.email = user.email;
-	// 				break;
-	// 			}
-	// 		}
-	// 	}
-	// }
+	getEmail(): void {
+		if(this.org.users.length > 0){
+		  this.usersAdminService.getUser(this.org.users[0].name, this.user.id).subscribe( user => {
+			try{
+			  if(user != undefined){
+				this.userAdminOrg = JSON.parse(user).result;
+				this.email = this.userAdminOrg.email;
+			  }
+			}catch(error){
+			  console.error("Error: ngOnInit() - organizations-edit.component.ts");
+			}
+		  });
+		}
+	  }
 
 	getDatasets(page: number, rows: number): void {
 		var pageNumber = (page != null ? page : 0);
@@ -179,5 +189,14 @@ export class OrganizationsDetailComponent implements OnInit {
 		}
 		this.datasets = [];
         this.getDatasets(null, null);
+	}
+
+	getPermissions(): void{
+		if(this.usersAdminService.getCurrentUser() != undefined){
+			this.user = this.usersAdminService.getCurrentUser();
+			if(this.user.rol == Constants.ADMIN_USER_ROL_GLOBAL_ADMIN){
+				this.getEmail();
+			}
+		}
 	}
 }

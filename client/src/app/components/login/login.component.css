@@ -21,7 +21,9 @@
 
 .login-box, .register-box {
     width: fit-content;
-    margin: 7% auto;
+    margin-top: 7%;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .login-box-body {
@@ -100,10 +102,6 @@
     cursor: pointer;
 }
 
-.btn{
-    margin-left: 15px;
-}
-
 a{
     color: #5ea2ba;
     position: relative;
@@ -113,4 +111,8 @@ a{
 a:hover {
     color: #000000;
     text-decoration: none;
+}
+
+.text{
+    margin-bottom: 7%;
 }

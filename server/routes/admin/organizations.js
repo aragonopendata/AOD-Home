@@ -48,14 +48,13 @@ router.get(constants.API_URL_ORGANIZATIONS, function (req, res, next) {
     } catch (error) {
         logger.error('Error in route' + constants.API_URL_ORGANIZATIONS);
     }
-    
 });
 
 
 router.post('/organization', function (req, res, next) {
     try {
         var organization = req.body;
-        logger.notice('Organización que llega desde request: ' + JSON.stringify(organization));
+        logger.notice('Organización que llega desde request: ' + organization.name);
         //0. CHECKING REQUEST PARAMETERS
         if (organization.requestUserId != '' && organization.requestUserName != '' && organization.name != '') {
              var requestUserId = organization.requestUserId;
@@ -63,12 +62,9 @@ router.post('/organization', function (req, res, next) {
             //1. CHEKING PERMISSIONS OF THE USER WHO MAKES THE REQUEST
             getUserPermissions(requestUserId, requestUserName)
                 .then(accessInfo => {
-                    console.log(accessInfo);
-                    logger.info('Permiso recuperado para usuario ' + requestUserName);
                     //2. INSERTING ORGANIZATION IN CKAN
                     insertOrganizationInCkan(accessInfo, organization)
                         .then(insertCkanResponse => {
-                            logger.info('Respuesta de CKAN: ' + JSON.stringify(insertCkanResponse));
                             logger.info('Respuesta de CKAN success: ' + insertCkanResponse.success);
                             if (insertCkanResponse && insertCkanResponse != null && insertCkanResponse.success) {
                                 logger.info('Organización insertada ' + insertCkanResponse.result.name);
@@ -117,7 +113,7 @@ router.post('/organization', function (req, res, next) {
 router.put('/organization', function (req, res, next) {
     try {
         var organization = req.body;
-        logger.notice('Organización que llega desde request: ' + JSON.stringify(organization));
+        logger.notice('Organización que llega desde request: ' + organization.name);
         //0. CHECKING REQUEST PARAMETERS
         if (organization.requestUserId != '' && organization.requestUserName != '' && organization.name != '') {
              var requestUserId = organization.requestUserId;
@@ -125,12 +121,9 @@ router.put('/organization', function (req, res, next) {
             //1. CHEKING PERMISSIONS OF THE USER WHO MAKES THE REQUEST
             getUserPermissions(requestUserId, requestUserName)
                 .then(accessInfo => {
-                    console.log(accessInfo);
-                    logger.info('Permiso recuperado para usuario ' + requestUserName);
                     //2. UPDATING ORGANIZATION IN CKAN
                     updateOrganizationInCkan(accessInfo, organization)
                         .then(updateCkanResponse => {
-                            logger.info('Respuesta de CKAN: ' + JSON.stringify(updateCkanResponse));
                             logger.info('Respuesta de CKAN success: ' + updateCkanResponse.success);
                             if (updateCkanResponse && updateCkanResponse != null && updateCkanResponse.success) {
                                 logger.info('Organización actualizada ' + updateCkanResponse.result.name);
@@ -179,7 +172,7 @@ router.put('/organization', function (req, res, next) {
 router.delete('/organization', function (req, res, next) {
     try {
         var organization = req.body;
-        logger.notice('Organización a borrar que llega desde request: ' + JSON.stringify(organization));
+        logger.notice('Organización a borrar que llega desde request: ' + organization.name);
         //0. CHECKING REQUEST PARAMETERS
         if (organization.requestUserId != '' && organization.requestUserName != '' && organization.name != '') {
              var requestUserId = organization.requestUserId;
@@ -187,11 +180,9 @@ router.delete('/organization', function (req, res, next) {
             //1. CHEKING PERMISSIONS OF THE USER WHO MAKES THE REQUEST
             getUserPermissions(requestUserId, requestUserName)
                 .then(accessInfo => {
-                    logger.info('Permiso recuperado para usuario ' + requestUserName);
                     //2. DELETING ORGANIZATION IN CKAN
                     deleteOrganizationInCkan(accessInfo, organization)
                         .then(insertCkanResponse => {
-                            logger.info('Respuesta de CKAN: ' + JSON.stringify(insertCkanResponse));
                             logger.info('Respuesta de CKAN success: ' + insertCkanResponse.success);
                             if (insertCkanResponse && insertCkanResponse.result == null && insertCkanResponse.success) {
                                 logger.info('Organización borrada ' + organization.name);
@@ -277,10 +268,6 @@ var insertOrganizationInCkan = function insertOrganizationInCkan(userAccessInfo,
                     'Authorization': userAccessInfo.accessKey
                 }
             };
-
-            logger.info('Datos a enviar: ' + JSON.stringify(create_organization_post_data));
-            logger.info('Configuración llamada POST: ' + JSON.stringify(httpRequestOptions));
-
             request(httpRequestOptions, function (err, res, body) {
                 if (err) {
                     reject(err);
@@ -288,7 +275,6 @@ var insertOrganizationInCkan = function insertOrganizationInCkan(userAccessInfo,
                 if (res) {
                     if (res.statusCode == 200) {
                         logger.info('Código de respuesta: : ' + JSON.stringify(res.statusCode));
-                        logger.info('Respuesta: ' + JSON.stringify(body));
                         resolve(body);
                     } else {
                         reject(JSON.stringify(res.statusCode) + ' - ' + JSON.stringify(res.statusMessage));
@@ -318,9 +304,6 @@ var updateOrganizationInCkan = function updateOrganizationInCkan(userAccessInfo,
                     'Authorization': userAccessInfo.accessKey
                 }
             };
-
-            logger.info('Datos a enviar: ' + JSON.stringify(organization));
-            logger.info('Configuración llamada POST: ' + JSON.stringify(httpRequestOptions));
 
             request(httpRequestOptions, function (err, res, body) {
                 if (err) {
@@ -363,10 +346,6 @@ var deleteOrganizationInCkan = function deleteOrganizationInCkan(userAccessInfo,
                     'Authorization': userAccessInfo.accessKey
                 }
             };
-
-            logger.info('Datos a enviar: ' + JSON.stringify(delete_organization_post_data));
-            logger.info('Configuraćión llamada POST: ' + JSON.stringify(httpRequestOptions));
-
             request(httpRequestOptions, function (err, res, body) {
                 if (err) {
                     reject(err);
@@ -374,7 +353,6 @@ var deleteOrganizationInCkan = function deleteOrganizationInCkan(userAccessInfo,
                 if (res) {
                     if (res.statusCode == 200) {
                         logger.info('Código de respuesta: : ' + JSON.stringify(res.statusCode));
-                        logger.info('Respuesta: ' + JSON.stringify(body));
                         resolve(body);
                     } else {
                         reject(JSON.stringify(res.statusCode) + ' - ' + JSON.stringify(res.statusMessage));
@@ -398,11 +376,6 @@ var getUserPermissions = function checkUserPermissions(userId, userName) {
                 values: [userId, userName, constants.APPLICATION_NAME_CKAN],
                 rowMode: constants.SQL_RESULSET_FORMAT_JSON
             };
-
-            // pool.on('error', (error, client) => {
-            //     process.exit(-1);
-            //     reject(error);
-            // });
             pool.connect((connError, client, release) => {
                 if (connError) {
                   return console.error('Error acquiring client', connError.stack)
@@ -422,42 +395,5 @@ var getUserPermissions = function checkUserPermissions(userId, userName) {
         }
    });
 }
-
-
-
-// var getUserPermissions = function checkUserPermissions(userId, userName) {
-//     return new Promise((resolve, reject) => {
-//         try {
-//             const query = {
-//                 text: dbQueries.DB_ADMIN_GET_USER_APP_PERMISSIONS,
-//                 values: [userId, userName, constants.APPLICATION_NAME_CKAN],
-//                 rowMode: constants.SQL_RESULSET_FORMAT_JSON
-//             };
-            
-
-//             pool.on('error', (error, client) => {
-//                 process.exit(-1);
-//                 reject(error);
-//             });
-
-//             pool.connect((connError, client, done) => {
-//                 done();
-//                 if (connError) {
-//                     reject(connError.stack);
-//                 }
-//                 client.query(query, (queryError, queryResult) => {
-//                     done();
-//                     if (queryError) {
-//                         reject(queryError.stack);
-//                     } else {
-//                         resolve(queryResult.rows[0]);
-//                     }
-//                 });
-//             });
-//         } catch (error) {
-//             reject(error);
-//         }
-//     });
-// }
 
 module.exports = router;

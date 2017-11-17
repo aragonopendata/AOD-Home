@@ -18,19 +18,22 @@
 	</div>
 <div class="container" *ngIf="!errorTitle">
 		<div class="dtHeader row">
-				<h1 class="globaltitle col-10">{{org.title}}</h1>
-				<div class="social col-2">
-					<a href="{{routerLinkFacebookShare}}" target="_blank" title="Compartir en Facebook">
-						<img src="../../../../../assets/social/facebookIcon.png" alt="Facebook">
-					</a>
-					<a href="{{routerLinkTwitterShare}}" target="_blank" title="Compartir en Twitter">
-						<img src="../../../../../assets/social/twitterIcon.png" alt="Twitter">
-					</a>
-					<a href="{{routerLinkGooglePlusShare}}" target="_blank" title="Compartir en Google Plus">
-						<img src="../../../../../assets/social/googlePlusIcon.png" alt="Google Plus">
-					</a>
-				</div>
+			<div class="globaltitle col-10">
+				<h1>{{org.title}}</h1>
+				<button class="tags" icon="fa-pencil" pButton type="button" label="Editar" style="margin-bottom: 5px;" routerLink="/login/{{org.name}}"></button>
 			</div>
+			<div class="social col-2">
+				<a href="{{routerLinkFacebookShare}}" target="_blank" title="Compartir en Facebook">
+					<img src="../../../../../assets/social/facebookIcon.png" alt="Facebook">
+				</a>
+				<a href="{{routerLinkTwitterShare}}" target="_blank" title="Compartir en Twitter">
+					<img src="../../../../../assets/social/twitterIcon.png" alt="Twitter">
+				</a>
+				<a href="{{routerLinkGooglePlusShare}}" target="_blank" title="Compartir en Google Plus">
+					<img src="../../../../../assets/social/googlePlusIcon.png" alt="Google Plus">
+				</a>
+			</div>
+		</div>
 	<div class="ui-g details">
 		<div class="ui-g-12">
 			<h6><b translate>ORGANIZATION_DETAIL.NAME</b></h6>

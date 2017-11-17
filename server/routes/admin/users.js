@@ -53,7 +53,6 @@ router.post('/user/:userName', function (req, res, next) {
             logger.info('API KEY del usuario recuperada');
             getUserDetails(userAPIKey, req.params.userName)
                 .then(getUserResponse => {
-                    logger.info('Respuesta de CKAN: ' + JSON.stringify(getUserResponse));
                     logger.info('Respuesta de CKAN success: ' + getUserResponse.success);
                     if (getUserResponse) {
                         res.json(getUserResponse);
@@ -213,7 +212,7 @@ router.put('/user', function (req, res, next) {
                                             });
                                         } else {
                                             logger.error('ACTUALIZACIÓN DE USUARIOS - Error al actualizar al usuario de la base de datos: ' + error);
-                                            res.json({ 'status': constants.REQUEST_ERROR_BAD_DATA, 'error': 'ACTUALIZACIÓN DE USUARIOS - Error al borrar al usuario en base de datos' });
+                                            res.json({ 'status': constants.REQUEST_ERROR_BAD_DATA, 'error': 'ACTUALIZACIÓN DE USUARIOS - Error al actualizar al usuario de la base de datos' });
                                         }
                                     })
 
@@ -230,8 +229,8 @@ router.put('/user', function (req, res, next) {
             //TODO ERROR HANDLING
         }
     } catch (error) {
-        logger.error('EDICIÓN DE USUARIOS - Error editando usuario');
-        res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'ALTA DE USUARIOS - Error editando usuario' });
+        logger.error('ACTUALIZACIÓN DE USUARIOS - Error editando usuario');
+        res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'ACTUALIZACIÓN DE USUARIOS - Error editando usuario' });
     }
 });
 
@@ -252,7 +251,6 @@ router.delete('/user', function (req, res, next) {
                     // 2. DELETE USER IN CKAN
                     deleteUserInCkan(accessInfo, user)
                         .then(deleteCkanResponse => {
-                            logger.info('Respuesta de CKAN: ');
                             if (deleteCkanResponse && deleteCkanResponse != null && deleteCkanResponse.success) {
                                 deleteUserInManager(user, accessInfo)
                                     .then(deleteUserInManagerResponse => {
@@ -369,9 +367,6 @@ var insertUserInCkan = function insertUserInCkan(userAccessInfo, user) {
                 }
             };
 
-            logger.info('Datos a enviar: ' + JSON.stringify(create_user_post_data));
-            logger.info('Configuraćión llamada POST: ' + JSON.stringify(httpRequestOptions));
-
             request(httpRequestOptions, function (err, res, body) {
                 if (err) {
                     reject(err);
@@ -379,7 +374,6 @@ var insertUserInCkan = function insertUserInCkan(userAccessInfo, user) {
                 if (res) {
                     if (res.statusCode == 200) {
                         logger.info('Código de respuesta: : ' + JSON.stringify(res.statusCode));
-                        logger.info('Respuesta: ' + JSON.stringify(body));
                         resolve(body);
                     } else {
                         reject(JSON.stringify(res.statusCode) + ' - ' + JSON.stringify(res.statusMessage));
@@ -984,14 +978,12 @@ router.get('/user/:userID/organizations', function (req, res, next) {
         let serviceName = constants.ORGANIZATIONS_LIST_FOR_USER;
         let serviceRequestUrl = serviceBaseUrl + serviceName;
 
-        logger.notice('URL de petición: ' + serviceRequestUrl);
         if (req.params.userID != '') {
             getUserAPIKey(req.params.userID)
                 .then(userAPIKey => {
                     logger.info('API KEY del usuario recuperada');
                     getOrganizationsOfUser(userAPIKey)
                         .then(getOrganizationResponse => {
-                            logger.info('Respuesta de CKAN: ' + JSON.stringify(getOrganizationResponse));
                             logger.info('Respuesta de CKAN success: ' + getOrganizationResponse.success);
                             if (getOrganizationResponse) {
                                 res.json(getOrganizationResponse);
