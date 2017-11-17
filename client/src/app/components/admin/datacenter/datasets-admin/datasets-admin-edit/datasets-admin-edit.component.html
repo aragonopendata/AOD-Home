@@ -1,5 +1,5 @@
 <!-- Page Content -->
-<div class="container-fluid marginsup">
+<div class="container">
 	<div class="row">
 		<div class=" col-md-12">
 			<h1>Editar conjunto de datos</h1>
@@ -8,169 +8,161 @@
 	</div>
 
 	<!-- Dialogs -->
-	<p-dialog header="¿Está seguro de que deasea borrar el dataset?" [(visible)]="displayDeleteDialog">
-		<p>Se va a proceder a borrar el dataset
+	<p-dialog header="¿Está seguro de que desea salir?" [(visible)]="displayDeleteDialog">
+		<p>Se va a proceder a volver al listado. Todos los cambios que no se hayan guardado se perderan.
 			<b>{{datasetTitleDelete}}</b>
 		</p>
 		<p>¿Desea continuar?</p>
 		<p-footer>
-			<button type="button" pButton icon="fa-check" (click)="deleteDataset()" label="Sí"></button>
-			<button type="button" pButton icon="fa-close" (click)="undoDeleteDataset()" label="No"></button>
+			<button type="button" pButton icon="fa-check" (click)="cancelDataset()" label="Sí"></button>
+			<button type="button" pButton icon="fa-close" (click)="undoCancelDataset()" label="No"></button>
 		</p-footer>
 	</p-dialog>
-	
-	<div class="modal fade modalAddResource" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title">Añadir Recurso</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				  <span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<form class="col-12 content-fluid">
-				<div class="form-group row">
-					<label for="inputUrl" class="col-sm-2 col-form-label">Url:</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="url" id="inputUrl" [(ngModel)]="newResourceUrl" placeholder="http://example.com/external-data.csv">
+
+	<div class="modal fade modalRemoveResource" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Eliminar Recurso</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
 					</div>
-				</div>
-				<div class="form-group row">
-					<label for="inputFile" class="col-sm-2 col-form-label">Dato</label>
-					<div class="col-sm-10">
-						<input type="File" class="form-control" name="dato" id="inputPassword3" placeholder="Dato">
-					</div>
-				</div>
-				<div class="form-group row">
-					<label for="inputName" class="col-sm-2 col-form-label">Nombre:</label>
-					<div class="col-sm-10">						
-						<input type="text" class="form-control" id="name" required [(ngModel)]="newResourceName" name="name">
-					</div>
-				</div>
-				<div class="form-group row">
-					<label for="inputDescription" class="col-sm-2 col-form-label">Descripción:</label>
-					<div class="col-sm-10">
-						<input type="area" class="form-control" name="description" id="inputDescription" [(ngModel)]="newResourceDescription" placeholder="Algunas notas útiles sobre los datos">
-					</div>
-				</div>
-				<div class="form-group row">
-					<label for="inputName" class="col-sm-2 col-form-label">Formato:</label>
-					<div class="col-sm-10">
-						<select class="form-control" name="format" [(ngModel)]="newResourceFormat" >
-							<option *ngFor="let format of formatos" [ngValue]="format.value">{{format.label}}</option>
-						</select>
-					</div>
-				</div>
-				<div class="form-group col-12">
-					<div class="row justify-content-end pb-5">
-						<div class="btn-group" role="group" aria-label="Action Buttons">
-							<button type="submit" class="btn btn-primary" (click)="addResource()">
-								<i class="fa fa-plus"></i> Añadir</button>
-							<button type="button" (click)="undoSaveResource()" class="btn btn-danger">
-								<i class="fa fa-close"></i> Borrar</button>
+					<form class="col-12 content-fluid">
+						<div class="form-group row">
+							<label class="col-sm-2 col-form-label">¿Esta seguro que desea borrar el recurso?</label>
 						</div>
-					</div>
+						<div class="form-group col-12">
+							<div class="row justify-content-end pb-5">
+								<div class="btn-group" role="group" aria-label="Action Buttons">
+									<button type="submit" class="btn btn-danger" (click)="addResource()">
+										<i class="fa fa-trash"></i> Eliminar</button>
+									<button type="button" (click)="undoSaveResource()" class="btn btn-primary">
+										<i class="fa fa-close"></i> Cancelar</button>
+								</div>
+							</div>
+						</div>
+					</form>
 				</div>
-			</form>
+			</div>
 		</div>
-	  </div>
-	</div>
-	
-	<p-dialog header="Añadir Recurso" [(visible)]="displayAddResourceDialog">
-		<form #userForm="ngForm" class="col-12 content-fluid" (ngSubmit)="onFormSubmit(userForm)">
-			<div class="form-group row">
-				<label for="inputUrl" class="col-sm-2 col-form-label">Url:</label>
-				<div class="col-sm-10">
-					<input type="text" class="form-control" id="inputUrl" placeholder="http://example.com/external-data.csv">
-				</div>
-			</div>
-			<div class="form-group row">
-				<label for="inputFile" class="col-sm-2 col-form-label">Dato</label>
-				<div class="col-sm-10">
-					<input type="File" class="form-control" id="inputPassword3" placeholder="Password">
-				</div>
-			</div>
-			<div class="form-group row">
-				<label for="inputName" class="col-sm-2 col-form-label">Nombre:</label>
-				<div class="col-sm-10">
-					<input type="text" class="form-control" id="inputName" placeholder="ej. Precios del Oro Enero 2011">
-				</div>
-			</div>
-			<div class="form-group row">
-				<label for="inputDescription" class="col-sm-2 col-form-label">Descripción:</label>
-				<div class="col-sm-10">
-					<input type="area" class="form-control" id="inputDescription" placeholder="Algunas notas útiles sobre los datos">
-				</div>
-			</div>
-			<div class="form-group row">
-				<label for="inputName" class="col-sm-2 col-form-label">Formato:</label>
-				<div class="col-sm-10">
-					<p-dropdown [options]="formatos" name="format" placeholder="Selecciona un formato" [(ngModel)]="newResourceFormat" [style]="{'width':'300px'}"></p-dropdown>
-				</div>
-			</div>
 
-			<div class="form-group row">
-				<div class="row justify-content-end pb-5">
-					<div class="btn-group" role="group" aria-label="Action Buttons">
-						<button type="submit" class="btn btn-primary">
-							<i class="fa fa-plus"></i> Añadir</button>
-						<button type="button" (click)="undoSaveResource()" class="btn btn-danger">
-							<i class="fa fa-close"></i> Borrar</button>
-					</div>
+	<div class="modal fade modalAddResource" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Añadir Recurso</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
 				</div>
-			</div>
-		
-
-			<!-- <div class="card col-12">
-				<div class="card-block">
-					<h3 class="card-title">Recurso</h3>
-				</div>
-				<ul class="list-group list-group-flush">
-					<li class="list-group-item">
-						<h4>Nombre del recurso</h4>
-						<input type="text" class="form-control" name="name" placeholder="Nombre" [(ngModel)]="newResourceName" pInputText>
-					</li>
-					<li class="list-group-item">
-						<h4>Formato de descarga</h4>
-						<p-dropdown [options]="formatos" name="format" placeholder="Selecciona un formato" [(ngModel)]="newResourceFormat" [style]="{'width':'300px'}"></p-dropdown>
-					</li>
-					<li class="list-group-item">
-						<h4>Modo de acceso</h4>
-						<p-dropdown [options]="accessModes" name="accessMode" placeholder="Selecciona un modo de acceso" [style]="{'width':'300px'}"></p-dropdown>
-					</li>
-					<li class="list-group-item">
-						<h4>Acceso al recurso</h4>
-						<p-dropdown [options]="accesoRecurso" name="access" placeholder="Selecciona un tipo de acceso" [(ngModel)]="accesoSelected"
-						 [style]="{'width':'300px'}"></p-dropdown>
-					</li>
-					<li class="list-group-item">
-						<div class="form-group">
-							<label for="exampleFormControlFile1">Contenido</label>
-							<input *ngIf="accesoSelected==='2'" type="file" name="file" class="form-control-file" id="exampleFormControlFile1">
+				<form class="col-12 content-fluid">
+					<div class="form-group row">
+						<label for="inputUrl" class="col-sm-2 col-form-label">Url:</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" name="url" id="inputUrl" [(ngModel)]="newResourceUrl" placeholder="http://example.com/external-data.csv">
 						</div>
-
-					</li>
-					<li class="list-group-item">
+					</div>
+					<div class="form-group row">
+						<label for="inputFile" class="col-sm-2 col-form-label">Dato</label>
+						<div class="col-sm-10">
+							<input type="file" class="form-control" (change)="fileChange($event)" placeholder="Subir fichero" accept=".pdf,.doc,.docx,.xls">
+							<!-- <input type="File" class="form-control" name="dato" id="inputPassword3" placeholder="Dato"> -->
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="inputName" class="col-sm-2 col-form-label">Nombre:</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="name" required [(ngModel)]="newResourceName" name="name">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="inputDescription" class="col-sm-2 col-form-label">Descripción:</label>
+						<div class="col-sm-10">
+							<input type="area" class="form-control" name="description" id="inputDescription" [(ngModel)]="newResourceDescription" placeholder="Algunas notas útiles sobre los datos">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="inputName" class="col-sm-2 col-form-label">Formato:</label>
+						<div class="col-sm-10">
+							<select class="form-control" name="format" [(ngModel)]="newResourceFormat">
+								<option *ngFor="let format of formatos" [ngValue]="format.value">{{format.label}}</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group col-12">
 						<div class="row justify-content-end pb-5">
 							<div class="btn-group" role="group" aria-label="Action Buttons">
-								<button type="submit" class="btn btn-primary">
+								<button type="submit" class="btn btn-primary" (click)="addResource()">
 									<i class="fa fa-plus"></i> Añadir</button>
 								<button type="button" (click)="undoSaveResource()" class="btn btn-danger">
 									<i class="fa fa-close"></i> Borrar</button>
 							</div>
 						</div>
-					</li>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 
-				</ul>
-			</div> -->
-		</form>
+	<div class="modal fade modalEditResource" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			<div *ngIf="resource != undefined" class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Añadir Recurso</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<form class="col-12 content-fluid">
+						<div class="form-group row">
+							<label for="inputUrl" class="col-sm-2 col-form-label">Url:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" name="url" id="inputUrl" [(ngModel)]="resource.url" placeholder="http://example.com/external-data.csv">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="inputFile" class="col-sm-2 col-form-label">Dato</label>
+							<div class="col-sm-10">
+								<p>resouce.file</p>
+								<!-- <input type="File" class="form-control" name="dato" id="inputPassword3" placeholder="Dato"> -->
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="inputName" class="col-sm-2 col-form-label">Nombre:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="name" required [(ngModel)]="resource.name" name="name">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="inputDescription" class="col-sm-2 col-form-label">Descripción:</label>
+							<div class="col-sm-10">
+								<input type="area" class="form-control" name="description" id="inputDescription" [(ngModel)]="resource.description" placeholder="Algunas notas útiles sobre los datos">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="inputName" class="col-sm-2 col-form-label">Formato:</label>
+							<div class="col-sm-10">
+								<select class="form-control" name="format" [(ngModel)]="resource.format">
+									<option *ngFor="let format of formatos" [ngValue]="format.value">{{format.label}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group col-12">
+							<div class="row justify-content-end pb-5">
+								<div class="btn-group" role="group" aria-label="Action Buttons">
+									<button type="submit" class="btn btn-primary" (click)="updateResource()">
+										<i class="fa fa-plus"></i> Actualizar</button>
+									<button type="button" (click)="undoUpdateResource()" class="btn btn-danger">
+										<i class="fa fa-close"></i> Cancelar</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
 
-		<!-- <p-footer class="col-12">
-			
-				 <button type="button" pButton icon="fa-plus" label="Añadir"></button>
-				 <button type="button" pButton icon="fa-close" label="Cancelar"></button> 
-			 </p-footer> -->
-	</p-dialog>
 	<p-growl [(value)]="msgs"></p-growl>
 
 
@@ -256,7 +248,8 @@
 						<div class="form-group">
 							<label for="" class="col-2 col-form-label">Etiquetas</label>
 							<div class="dropdown">
-								<input type="text" class="form-control" data-toggle="dropdown" placeholder="Escriba la etiqueta" (keyup)="filterTagsMultiple(tagInput.value)" #tagInput>
+								<input type="text" class="form-control" data-toggle="dropdown" placeholder="Escriba la etiqueta" (keyup)="filterTagsMultiple(tagInput.value)"
+								 #tagInput>
 								<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
 									<button *ngFor="let tag of filteredTagsMultiple" (click)="addTag(tag);tagInput.value=''" class="dropdown-item" type="button">{{tag.display_name}}</button>
 								</div>
@@ -281,41 +274,41 @@
 							</p>
 							<div class="form-group row">
 								<label class="form-check-label col-sm-2">
-									<input type="radio" class="form-check-input" name="coberturaGeo" id="aragonRadio" value="aragonRadioValue"> Aragón
+									<input type="radio" class="form-check-input" name="coberturaGeo" id="aragonRadio" [checked]="aragonRadioValue" (change)="changeRadioGeo('aragon')" > Aragón
 								</label>
 								<div class="col-sm-10">
 								</div>
 							</div>
 							<div class="form-group row">
 								<label class="form-check-label col-sm-2">
-									<input type="radio" class="form-check-input" name="coberturaGeo" id="provinciaRadio" value="provinciaRadioValue"> Provincia de:
+									<input type="radio" class="form-check-input" name="coberturaGeo" id="provinciaRadio" [checked]="provinciaRadioValue" (change)="changeRadioGeo('provincia')" > Provincia de:
 								</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" id="provinciaInput" placeholder="Provincia">
+									<input type="text" class="form-control" [(ngModel)]="provinciaInput" placeholder="Provincia">
 								</div>
 							</div>
 							<div class="form-group row">
 								<label class="form-check-label col-sm-2">
-									<input type="radio" class="form-check-input" name="coberturaGeo" id="comarcaRadio" value="comarcaRadioValue"> Comarca de:
+									<input type="radio" class="form-check-input" name="coberturaGeo" id="comarcaRadio" (change)="changeRadioGeo('comarca')" > Comarca de:
 								</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" id="comarcaInput" placeholder="Comarca">
+									<input type="text" class="form-control" [(ngModel)]="comarcaInput" placeholder="Comarca">
 								</div>
 							</div>
 							<div class="form-group row">
 								<label class="form-check-label col-sm-2">
-									<input type="radio" class="form-check-input" name="coberturaGeo" id="municipioRadio" value="municipioRadioValue"> Municipio de:
+									<input type="radio" class="form-check-input" name="coberturaGeo" id="municipioRadio" (change)="changeRadioGeo('municipio')" > Municipio de:
 								</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" id="municipioInput" placeholder="Municipio">
+									<input type="text" class="form-control" [(ngModel)]="municipioInput" placeholder="Municipio">
 								</div>
 							</div>
 							<div class="form-group row">
 								<label class="form-check-label col-sm-2">
-									<input type="radio" class="form-check-input" name="coberturaGeo" id="otroRadio" value="otroRadioValue"> Otro:
+									<input type="radio" class="form-check-input" name="coberturaGeo" id="otroRadio" (change)="changeRadioGeo('otro')" > Otro:
 								</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" id="otherInput" [(ngModel)]="extraSpatial" placeholder="Otro">
+									<input type="text" class="form-control" id="otherInputGeo" [(ngModel)]="otherInputGeo" placeholder="Otro">
 								</div>
 							</div>
 						</fieldset>
@@ -341,10 +334,10 @@
 						Por favor, indica la frecuencia con la que se actualiza la información del conjunto de datos:
 					</p>
 					<select class="form-control" [(ngModel)]="extraFrequency">
-							<option *ngFor="let fre of freq" [ngValue]="fre.value">{{fre.label}}</option>
+						<option *ngFor="let fre of freq" [ngValue]="fre.value">{{fre.label}}</option>
 					</select>
 					<!-- <p-dropdown [options]="freq" [style]="{'width':'300px'}"></p-dropdown> -->
-					
+
 					<h3 style="margin-top: 2%;">Cobertura temporal del conjunto de datos</h3>
 					<p>
 						Por favor, indica en este campo el periodo temporal del que contiene información tu conjunto de datos. Si tu conjunto de
@@ -357,7 +350,7 @@
 							<div class="form-group">
 								<label>Este conjunto de datos contiene información desde:</label>
 								<div class="input-group">
-									 <input class="form-control" [(ngModel)]="extraTemporalFrom" type="number" value="2014">
+									<input class="form-control" [(ngModel)]="extraTemporalFrom" type="number" value="2014">
 								</div>
 							</div>
 						</div>
@@ -377,11 +370,32 @@
 					<p>
 						Por favor, selecciona el idioma o idiomas en los que existe información en tu conjunto de datos.
 					</p>
-					<div class="ui-g" style="width:250px;margin-bottom:10px">
-						<div class="ui-g-12" *ngFor="let languaje of languajes">
-							<p-checkbox value="{{languaje}}" label="{{languaje}}"></p-checkbox>
+					<div class="col-12">
+
+						<div class="form-check">
+							<label class="custom-control custom-checkbox col-12" *ngFor="let languaje of languajes">
+									<input *ngIf="languaje != 'Otro'"type="checkbox" class="custom-control-input" (change)="changeCheckBoxLang(languaje,null)" >
+									<input *ngIf="languaje == 'Otro'" type="checkbox" class="custom-control-input" value="checkLangBoolOther" (change)="changeCheckBoxLang(languaje,otherLangInput.value)" >
+									
+									<span class="custom-control-indicator"></span>
+									<span class="custom-control-description">{{languaje}}</span>
+							</label>
 						</div>
-						<input type="text" size="50" pInputText>
+						<input type="text" class="form-control" [(ngModel)]="checkLangOther" placeholder="Otro" (keydown)="changeCheckBoxLang('Otro',otherLangInput.value)" #otherLangInput>
+							<!-- <p-checkbox value="{{languaje}}" label="{{languaje}}"></p-checkbox> -->
+							<!-- <label *ngFor="let languaje of languajes" class="custom-control custom-checkbox col-12">
+									<input type="checkbox" class="custom-control-input" value="{{languaje}}">
+									<span class="custom-control-indicator"></span>
+									<span class="custom-control-description">{{languaje}}</span>
+							</label>
+							<label class="custom-control custom-checkbox col-12">
+									<input type="checkbox" class="custom-control-input" value="other">
+									<span class="custom-control-indicator"></span>
+									<span class="custom-control-description">Otro</span>
+									<input type="text" size="50" pInputText>
+							</label> -->
+
+
 					</div>
 				</div>
 				<div class="tab-pane" id="extra" role="tabpanel">
@@ -399,12 +413,12 @@
 					<p>
 						Escribe la primera letra de cada nivel de detalle en mayúscula y el resto en minúscula.
 					</p>
-					<input placeholder="Nivel de detalle" type="text" size="50" pInputText>
+					<input type="text" class="form-control" [(ngModel)]="extraSpatial" placeholder="Nivel de detalle">
 					<h3 style="margin-top: 2%;">Calidad del dato</h3>
 					<p>
 						Si has utilizado alguna metodología para controlar la calidad de los datos este es el lugar para explicarla.
 					</p>
-					<textarea rows="10" placeholder="Calidad del dato" cols="150" class="col-12" pInputTextarea></textarea>
+					<textarea class="col-12" rows="10" [(ngModel)]="extraDataQuality" placeholder="Calidad del dato" cols="150" pInputTextarea></textarea>
 					<p>
 						Si tus metodologías de control de calidad están explicadas en un enlace externo copia aquí la dirección o direcciones.
 					</p>
@@ -424,21 +438,25 @@
 					</p>
 					<ul class="list-group">
 						<li class="list-group-item justify-content-between col-12" *ngFor="let urlDic of extraDictionaryURL; let i of index">
-							<div class="form-group row">	
+							<div class="form-group row">
 								<label for="inputFile" class="col-sm-1 col-form-label">URL :</label>
 								<div class="col-sm-9">
 									<p>{{urlDic}}</p>
 								</div>
-								<button class="col-sm-2 btn btn-danger" type="button" (click)="removeUrl()">Quitar <i class="fa fa-close"></i></button>
+								<button class="col-sm-2 btn btn-danger" type="button" (click)="removeUrl()">Quitar
+									<i class="fa fa-close"></i>
+								</button>
 							</div>
 						</li>
 						<li class="list-group-item active">
-							<div class="form-group row">	
+							<div class="form-group row">
 								<label for="inputFile" class="col-sm-1 col-form-label">URL:</label>
 								<div class="col-sm-9">
 									<input type="text" class="form-control" placeholder="Introduzca URL" #inputUrl>
 								</div>
-								<button type="button" (click)="addUrl(inputUrl.value);inputUrl.value=''" class="col-sm-2 btn btn-primary" >Añadir <i class="fa fa-plus"></i></button>
+								<button type="button" (click)="addUrl(inputUrl.value);inputUrl.value=''" class="col-sm-2 btn btn-primary">Añadir
+									<i class="fa fa-plus"></i>
+								</button>
 							</div>
 						</li>
 					</ul>
@@ -506,8 +524,27 @@
 							servidor (este último caso lo desaconsejamos y sólo se realizará si no existe otra forma de suministrar la información).
 						</li>
 					</ul>
+					<p-dataTable [loading]="loading" [value]="resources" [responsive]="true" emptyMessage="No se han encontrado recursos." (onSort)="setOrder($event)" [rows]="10" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]">
+							<p-column field="name" header="Nombre" sortable="custom" [sortable]="true"></p-column>
+							<p-column field="format" header="Formato" sortable="custom" [sortable]="true"></p-column>
+							<p-column header="Edición" [style]="{'width':'15%'}">
+								<ng-template pTemplate="body" let-resource="rowData">
+									<button type="button" class="btn btn-primary" data-toggle="modal" (click)="openEditResource(resource)" data-target=".modalAddResource"><i class="fa fa-search"></i></button>
+									<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".modalEditResource"><i class="fa fa-edit"></i></button>
+									<button type="button" class="btn btn-primary" data-toggle="modal" (click)="openRemoveResource(resource)" data-target=".modalRemoveResource"><i class="fa fa-trash"></i></button>
+									<!-- <button pButton type="button" icon="fa-search" (click)="showDialog(user, false, false)"></button>
+									<button pButton type="button" icon="fa-edit" (click)="showDialog(user, true, false)"></button>
+									<button pButton type="button" icon="fa-trash" (click)="showDeleteDialog(user)"></button> -->
+								</ng-template>
+							</p-column>
+						</p-dataTable>
+						<div class="col-12">
+							<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".modalAddResource">
+								<i class="fa fa-plus"></i> Añadir</button>
+						</div>
+					
 
-					<div class="col-12" *ngFor="let file of dataset.resources; let i = index">
+					<!-- <div class="col-12" *ngFor="let file of dataset.resources; let i = index">
 						<div class="card">
 							<div class="card-block">
 								<h3 class="card-title">Recurso {{+i+1}}</h3>
@@ -544,11 +581,9 @@
 								</li>
 							</ul>
 						</div>
-					</div>
+					</div> -->
 					<!-- End  File Card-->
-					<div class="col-12">
-						<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".modalAddResource"><i class="fa fa-plus"></i> Añadir</button>
-					</div>
+					
 					<p>
 						Importante:
 					</p>
@@ -573,9 +608,7 @@
 				<div class="btn-group" role="group" aria-label="Action Buttons">
 					<button type="button" (click)="saveDataset()" class="btn btn-primary">Guarda y sigue</button>
 					<button type="button" (click)="saveDatasetEnd()" class="btn btn-primary">Guarda y finaliza</button>
-					<button type="button" (click)="showDeleteDialog(dataset.title,dataset.name)" class="btn btn-danger">Borrar
-						<i class="fa fa-trash"></i>
-					</button>
+					<button type="button" (click)="showDeleteDialog(dataset.title,dataset.name)" class="btn btn-danger">Cancelar</button>
 				</div>
 			</div>
 		</div>

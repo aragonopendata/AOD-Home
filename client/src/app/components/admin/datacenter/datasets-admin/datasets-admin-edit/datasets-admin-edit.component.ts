@@ -12,6 +12,7 @@ import { Organization } from '../../../../../models/Organization';
 import { Constants } from 'app/app.constants';
 import { UsersAdminService } from 'app/services/admin/users-admin.service';
 import { Extra } from 'app/models/Extra';
+import { Resource } from 'app/models/Resource';
 
 @Component({
 	selector: 'app-datasets-admin-edit',
@@ -28,12 +29,16 @@ export class DatasetsAdminEditComponent implements OnInit {
 	datasetNameToDelete: string;
 	displayDeleteDialog: boolean = false;
 
+	resource: Resource;
+	resources: Resource [] = [];
+
 	//Add Resource params
 	displayAddResourceDialog: boolean = false;
 	newResourceName: string;
 	newResourceFormat: string;
 	newResourceUrl: string;
 	newResourceDescription: string;
+	fileList: FileList;
 
 	extraDictionary: string;
 	extraDictionaryURL: string[];
@@ -48,6 +53,25 @@ export class DatasetsAdminEditComponent implements OnInit {
 	extraShortUriAragopedia: string;
 	extraNameAragopedia: string;
 
+	//LANGUAGES
+	checkLangEs: string;
+	checkLangEn: string;
+	checkLangFr: string;
+	checkLangArg_Lng: string;
+	checkLangOther: string;
+
+	checkLangBoolOther: boolean = false;
+
+	aragonRadioValue: boolean = false;
+	provinciaRadioValue: boolean = false;
+	comarcaRadioValue: boolean = false;
+	municipioRadioValue: boolean = false;
+	otherRadioValue: boolean = false;
+
+	provinciaInput: string;
+	comarcaInput: string;
+	municipioInput: string;
+	otherInputGeo: string;
 	
 	topic: Topic;
 	topics: Topic[];
@@ -142,7 +166,14 @@ export class DatasetsAdminEditComponent implements OnInit {
 		this.setOrganizations();
 		
 		this.files = [];
-		this.languajes = ['Español', 'Inglés', 'Francés', 'Lenguas aragonesas', 'Otro'];
+		this.languajes = [
+			Constants.ADMIN_DATASET_EDIT_DROPDOWN_LANG_ES,
+			Constants.ADMIN_DATASET_EDIT_DROPDOWN_LANG_EN,
+			Constants.ADMIN_DATASET_EDIT_DROPDOWN_LANG_FR,
+			Constants.ADMIN_DATASET_EDIT_DROPDOWN_LANG_ARG_LNG,
+			Constants.ADMIN_DATASET_EDIT_DROPDOWN_LANG_OTHER
+		];
+		
 		this.freq = [
 			{ label: Constants.ADMIN_DATASET_EDIT_DROPDOWN_FREQUENCY_ANUAL.label, value: Constants.ADMIN_DATASET_EDIT_DROPDOWN_FREQUENCY_ANUAL.value },
 			{ label: Constants.ADMIN_DATASET_EDIT_DROPDOWN_FREQUENCY_SEMESTRAL.label, value: Constants.ADMIN_DATASET_EDIT_DROPDOWN_FREQUENCY_SEMESTRAL.value },
@@ -225,12 +256,45 @@ export class DatasetsAdminEditComponent implements OnInit {
 		this.datasetsAdminService.getDatasetByName(dataset.name).subscribe(dataResult => {
 			try {
 				this.dataset = JSON.parse(dataResult).result;
+				
 				console.log(this.dataset);
 				this.inputDatasetTitle = this.dataset.title;
 				this.inputDatasetUrl = this.dataset.url;
 				this.inputDatasetDescription = this.dataset.notes
 				this.getExtras();
-				// this.selectedTopic = this.dataset.groups[0].name;
+				//GET GEO 
+				if(this.dataset.groups[0] != undefined){
+					this.selectedTopic = this.dataset.groups[0].name;
+				}
+				if (this.extraTypeAragopedia == 'Aragón') {
+					this.aragonRadioValue = true;
+				}
+				if (this.extraTypeAragopedia == 'Provincia') {
+					this.provinciaRadioValue = true;
+					if (this.extraNameAragopedia != undefined){
+						this.provinciaInput = this.extraNameAragopedia;
+					}
+				}
+				if (this.extraTypeAragopedia == 'Comarca') {
+					this.comarcaRadioValue = true;
+					if (this.extraNameAragopedia != undefined){
+						this.comarcaInput = this.extraNameAragopedia;
+					}
+				}
+				if (this.extraTypeAragopedia == 'Municipio') {
+					this.municipioRadioValue = true;
+					if (this.extraNameAragopedia != undefined){
+						this.municipioInput = this.extraNameAragopedia;
+					}
+				}
+				if (this.extraTypeAragopedia == 'Otro') {
+					this.otherRadioValue = true;
+					if (this.extraNameAragopedia != undefined){
+						this.otherInputGeo = this.extraNameAragopedia;
+					}
+				}
+
+				
 				// this.selectedOrg = this.dataset.organization[0].name;
 				this.tags = this.dataset.tags;
 				
@@ -239,6 +303,9 @@ export class DatasetsAdminEditComponent implements OnInit {
 				//this.getExtrasIAEST();
 				//this.getDatasetsRecommended();
 				//this.makeFileSourceList();
+				this.loadResouces();
+				
+				console.log(this.resources);
 				this.loadDropdowns();
 			} catch (error) {
 				console.log(error);
@@ -255,6 +322,15 @@ export class DatasetsAdminEditComponent implements OnInit {
 	// save() {
 	// 	this.editEnable = !this.editEnable;
 	// }
+
+	loadResouces(){
+		for (var index = 0; index < this.dataset.resources.length; index++) {
+			this.resource = new Resource();
+			this.resource = this.dataset.resources[index];
+			this.resources = [...this.resources, this.resource];
+		}
+	}
+	
 
 	createUrl(){
 		if (this.inputDatasetTitle != undefined) {
@@ -279,7 +355,6 @@ export class DatasetsAdminEditComponent implements OnInit {
     }
 
 	setTopics() {
-		this.getSelectedTopic();
 		this.topicsSelect = [];
 		this.topicsSelect.push({ label: 'Seleccione un tema', value: undefined });
 		this.topicsAdminService.getTopics().subscribe(topics => {
@@ -294,18 +369,6 @@ export class DatasetsAdminEditComponent implements OnInit {
 			}
 		});
 	}
-
-	setDatasetTopicByName(topicName: string){
-		this.topicsAdminService.getTopicByName(topicName).subscribe(topic =>{
-			try {
-				this.dataset.groups.push(JSON.parse(topic).result);
-			} catch (error) {
-				console.error('Error: setDatasetTopicByName() - datasets-admin-edit.component.ts');
-			}
-
-		});
-		
-	}
 	
 	getSelectedOrg() {
 		if (this.dataset.name){
@@ -318,7 +381,6 @@ export class DatasetsAdminEditComponent implements OnInit {
 		this.orgsSelect = [];
 		this.orgsSelect.push({ label: 'Seleccione una organización', value: undefined });
 		this.usersAdminService.getOrganizationsByCurrentUser().subscribe(organizations => {
-		// this.organizationsAdminService.getOrganizations().subscribe(organizations => {
 			try {
 				this.orgs = JSON.parse(organizations).result;
 				for (let org of this.orgs) {
@@ -394,13 +456,16 @@ export class DatasetsAdminEditComponent implements OnInit {
 		}
 	}
 
-	replaceExtra(extra_key: string, extra_value: string){
+	replaceExtra(extra_key: string, extra_value: string, create: boolean){
 		let obj = this.dataset.extras.find((extra, i) => {
 			if (extra.key === extra_key) {
 				this.dataset.extras[i] = { key: extra_key, value: extra_value };
 				return true; // stop searching
 			}
 		});
+		if ( create && obj == undefined){
+			this.addExtra(extra_key, extra_value);
+		}
 	}
 
 	addExtra(extra_key: string, extra_value: string){
@@ -410,6 +475,142 @@ export class DatasetsAdminEditComponent implements OnInit {
 	addTag(tag: Tag){
 		this.tags.push(tag);
 		console.log(this.tags);
+	}
+
+	changeCheckBoxLang(lang: string, other: string){
+		
+		switch (lang) {
+			case Constants.ADMIN_DATASET_EDIT_DROPDOWN_LANG_ES:
+				
+				if (this.checkLangEs == undefined){
+					this.checkLangEs = lang;
+				}else{
+					this.checkLangEs = undefined;
+				}
+				break;
+			case Constants.ADMIN_DATASET_EDIT_DROPDOWN_LANG_EN:
+				if (this.checkLangEn == undefined){
+					this.checkLangEn = lang;
+				}else{
+					this.checkLangEn = undefined;
+				}
+				break;
+			case Constants.ADMIN_DATASET_EDIT_DROPDOWN_LANG_FR:
+				if (this.checkLangFr == undefined){
+					this.checkLangFr = lang;
+				}else{
+					this.checkLangFr = undefined;
+				}
+				break;
+			case Constants.ADMIN_DATASET_EDIT_DROPDOWN_LANG_ARG_LNG:
+				if (this.checkLangArg_Lng == undefined){
+					this.checkLangArg_Lng = lang;
+				}else{
+					this.checkLangArg_Lng = undefined;
+				}
+				break;
+			case Constants.ADMIN_DATASET_EDIT_DROPDOWN_LANG_OTHER:
+				if (other != null && other != '') {
+					this.checkLangOther = other;
+				} else {
+					this.checkLangBoolOther = false;
+					this.checkLangOther = undefined;
+				}
+				
+				
+				break;
+			
+		}
+	
+	}
+
+	changeRadioGeo(type: string){
+		this.aragonRadioValue = false;
+		this.provinciaRadioValue = false;
+		this.comarcaRadioValue = false;
+		this.municipioRadioValue = false;
+		this.otherRadioValue = false;
+
+		this.provinciaInput = undefined;
+		this.comarcaInput = undefined;
+		this.municipioInput = undefined;
+		this.otherInputGeo = undefined;
+
+		switch (type) {
+			case 'aragon':
+				this.aragonRadioValue = true;
+				this.extraTypeAragopedia = 'Aragón';
+				this.extraNameAragopedia = 'Aragón';
+				this.extraShortUriAragopedia = 'Aragón';
+				
+				this.extraUriAragopedia = 'http://opendata.aragon.es/recurso/territorio/ComunidadAutonoma/Aragón';
+				break;
+			case 'provincia':
+				this.provinciaRadioValue = true;
+				this.extraTypeAragopedia = 'Provincia';
+				this.extraNameAragopedia = this.provinciaInput;
+				this.extraShortUriAragopedia = this.provinciaInput;
+				this.extraUriAragopedia = 'http://opendata.aragon.es/recurso/territorio/Provincia/'+this.provinciaInput;
+				break;
+			case 'comarca':
+				this.comarcaRadioValue = true;
+				this.extraTypeAragopedia = 'Comarca';
+				this.extraNameAragopedia = this.comarcaInput;
+				this.extraShortUriAragopedia = this.comarcaInput;
+				this.extraUriAragopedia = 'http://opendata.aragon.es/recurso/territorio/Comarca/'+this.comarcaInput;
+				break;
+			case 'municipio':
+				this.municipioRadioValue = true;
+				this.extraTypeAragopedia = 'Municipio';
+				this.extraNameAragopedia = this.municipioInput;
+				this.extraShortUriAragopedia = this.municipioInput;
+				this.extraUriAragopedia = 'http://opendata.aragon.es/recurso/territorio/Municipio/'+this.municipioInput;
+				break;
+			case 'otro':
+				this.otherRadioValue = true;
+				this.extraTypeAragopedia = 'Otro';
+				this.extraNameAragopedia = this.otherInputGeo;
+				this.extraShortUriAragopedia = this.otherInputGeo;
+				this.extraUriAragopedia = undefined;
+				break;
+		
+			default:
+				break;
+		}
+	}
+
+	updateGeoExtras(){
+		if(this.aragonRadioValue){
+			this.extraTypeAragopedia = 'Aragón';
+			this.extraNameAragopedia = 'Aragón';
+			this.extraShortUriAragopedia = 'Aragón';
+			this.extraUriAragopedia = 'http://opendata.aragon.es/recurso/territorio/ComunidadAutonoma/Aragón';
+		}
+		if(this.provinciaRadioValue){
+			this.extraTypeAragopedia = 'Provincia';
+			this.extraNameAragopedia = this.provinciaInput;
+			this.extraShortUriAragopedia = this.provinciaInput;
+			this.extraUriAragopedia = 'http://opendata.aragon.es/recurso/territorio/Provincia/'+this.provinciaInput;
+		}
+		if(this.comarcaRadioValue){
+			this.extraTypeAragopedia = 'Comarca';
+			this.extraNameAragopedia = this.comarcaInput;
+			this.extraShortUriAragopedia = this.comarcaInput;
+			this.extraUriAragopedia = 'http://opendata.aragon.es/recurso/territorio/Comarca/'+this.comarcaInput;
+		}
+		if(this.municipioRadioValue){
+			this.extraTypeAragopedia = 'Municipio';
+			this.extraNameAragopedia = this.municipioInput;
+			this.extraShortUriAragopedia = this.municipioInput;
+			this.extraUriAragopedia = 'http://opendata.aragon.es/recurso/territorio/Municipio/'+this.municipioInput;
+		}
+		if(this.otherRadioValue){
+			this.extraTypeAragopedia = 'Otro';
+			this.extraNameAragopedia = this.otherInputGeo;
+			this.extraShortUriAragopedia = this.otherInputGeo;
+			this.extraUriAragopedia = undefined;
+		}
+
 	}
 
 	delTag(tag_name: string){
@@ -440,12 +641,50 @@ export class DatasetsAdminEditComponent implements OnInit {
 		this.files.push('');
 	}
 
-	addResource(){
-		console.log(this.newResourceUrl);
-		console.log(this.newResourceName);
-		console.log(this.newResourceDescription);
-		console.log(this.newResourceFormat);
+	fileChange(event) {
+		this.fileList = event.target.files;
+	}
 
+	addResource(){
+		if(this.dataset != undefined && this.dataset.id != undefined){
+			if(this.fileList.length > 0) {
+				let file: File = this.fileList[0];
+				let requestUserId = this.usersAdminService.currentUser.id;
+				let requestUserName = this.usersAdminService.currentUser.username;
+				
+				let resource = {
+					file: file,
+					url: this.newResourceUrl,
+					package_id: this.dataset.id,
+					format: this.formatos[this.newResourceFormat].label,
+					description: this.newResourceDescription,
+					name: this.newResourceName,
+					requestUserId: requestUserId,
+					requestUserName: requestUserName
+				}
+				//CALL TO POST METHOD ON SERVICE
+				this.datasetsAdminService.createResource(file,resource).subscribe( response => {
+					console.log(response);
+					if( response.success){
+						this.msgs.push({severity:'success', summary:'Recurso Creado', detail:'Se ha creado el Recurso con exito'});
+						this.loadResouces();
+					}
+				});
+			}
+		}else{
+			this.msgs.push({severity:'warn', summary:'No se puede crear el recurso', detail:'El dataset aun no se ha guardado. Pulse guardar y seguir, y despues añada el recurso'});
+		}
+		
+		
+
+	}
+
+	openEditResource(resource: any){
+		console.log(resource);
+	}
+
+	openRemoveResource(resource: any){
+		console.log(resource);
 	}
 	
 	checkInsertparams(){
@@ -504,12 +743,22 @@ export class DatasetsAdminEditComponent implements OnInit {
 				this.dataset.url = 'http:opendata.com/'+this.inputDatasetUrl;
 				this.dataset.name = this.inputDatasetUrl;
 				//Groups And Tags TAB
-				this.setDatasetTopicByName(this.selectedTopic)
-				
 				this.dataset.tags = this.tags;
 
+				this.updateGeoExtras();
 				//Geographic coverage TAB
-					//TODO
+				if (this.extraNameAragopedia != undefined ){
+					this.addExtra(Constants.DATASET_EXTRA_NAME_ARAGOPEDIA, this.extraNameAragopedia);
+				}
+				if (this.extraShortUriAragopedia != undefined ){
+					this.addExtra(Constants.DATASET_EXTRA_SHORT_URI_ARAGOPEDIA, this.extraShortUriAragopedia);
+				}
+				if (this.extraTypeAragopedia != undefined ){
+					this.addExtra(Constants.DATASET_EXTRA_TYPE_ARAGOPEDIA, this.extraTypeAragopedia);
+				}
+				if (this.extraUriAragopedia != undefined ){
+					this.addExtra(Constants.DATASET_EXTRA_URI_ARAGOPEDIA, this.extraUriAragopedia);
+				}
 
 				//Temporal coverage TAB
 				if (this.extraFrequency != undefined) {
@@ -523,10 +772,29 @@ export class DatasetsAdminEditComponent implements OnInit {
 				}
 				
 				//LANGUAGES TAB
-					//TODO
+				if (this.checkLangEs != undefined) {
+					this.addExtra(Constants.DATASET_EXTRA_LANG_ES, this.checkLangEs);
+				}
+				if (this.checkLangEn != undefined) {
+					this.addExtra(Constants.DATASET_EXTRA_LANG_EN, this.checkLangEn);
+				}
+				if (this.checkLangFr != undefined) {
+					this.addExtra(Constants.DATASET_EXTRA_LANG_FR, this.checkLangFr);
+				}
+				if (this.checkLangArg_Lng != undefined) {
+					this.addExtra(Constants.DATASET_EXTRA_LANG_ARG, this.checkLangArg_Lng);
+				}
+				if (this.checkLangOther != undefined) {
+					this.addExtra(Constants.DATASET_EXTRA_LANG_OTHER, this.checkLangOther);
+				}
+
 				//EXTRAS TAB
-					//TODO DETAIL LEVEL
-					//TODO DATA QUALITY
+				if (this.extraSpatial != undefined){
+					this.addExtra(Constants.DATASET_EXTRA_SPATIAL, this.extraSpatial);
+				}
+				if (this.extraDataQuality != undefined){
+					this.addExtra(Constants.DATASET_EXTRA_DATA_QUALITY, this.extraDataQuality);
+				}
 					//TODO DATA QUALITY EXTERNAL LINK??
 				if (this.extraDictionary != undefined){
 					this.addExtra(Constants.DATASET_EXTRA_DATA_DICTIONARY, this.extraDictionary);
@@ -552,6 +820,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 	
 				//Add User Info
 				let datasetNew: any = this.dataset;
+				datasetNew.groups.push({name: this.selectedTopic})
 				datasetNew.requestUserId = this.usersAdminService.currentUser.id;
 				datasetNew.requestUserName = this.usersAdminService.currentUser.username;
 				console.log(datasetNew)
@@ -599,15 +868,57 @@ export class DatasetsAdminEditComponent implements OnInit {
 		this.dataset.owner_org = this.selectedOrg;
 
 		if(this.extraFrequency){
-			this.replaceExtra(Constants.DATASET_EXTRA_FREQUENCY,this.extraFrequency)
+			this.replaceExtra(Constants.DATASET_EXTRA_FREQUENCY,this.extraFrequency, true)
 		}
+		if (this.extraTemporalUntil != undefined) {
+			this.replaceExtra(Constants.DATASET_EXTRA_TEMPORAL_UNTIL, this.extraTemporalUntil, true)
+		}
+		if (this.extraTemporalFrom != undefined) {
+			this.replaceExtra(Constants.DATASET_EXTRA_TEMPORAL_FROM, this.extraTemporalFrom, true)
+		}
+
+		this.updateGeoExtras();
+		//Geographic coverage TAB
+		if (this.extraNameAragopedia != undefined ){
+			this.replaceExtra(Constants.DATASET_EXTRA_NAME_ARAGOPEDIA, this.extraNameAragopedia, true);
+		}
+		if (this.extraShortUriAragopedia != undefined ){
+			this.replaceExtra(Constants.DATASET_EXTRA_SHORT_URI_ARAGOPEDIA, this.extraShortUriAragopedia, true);
+		}
+		if (this.extraTypeAragopedia != undefined ){
+			this.replaceExtra(Constants.DATASET_EXTRA_TYPE_ARAGOPEDIA, this.extraTypeAragopedia, true);
+		}
+		if (this.extraUriAragopedia != undefined ){
+			this.replaceExtra(Constants.DATASET_EXTRA_URI_ARAGOPEDIA, this.extraUriAragopedia, true);
+		}
+
+	
+
+		//EXTRAS TAB
+		if (this.extraSpatial != undefined){
+			this.replaceExtra(Constants.DATASET_EXTRA_SPATIAL, this.extraSpatial, true);
+		}
+		if (this.extraDataQuality != undefined){
+			this.replaceExtra(Constants.DATASET_EXTRA_DATA_QUALITY, this.extraDataQuality, true);
+		}
+		//TODO DATA QUALITY EXTERNAL LINK??
+		if (this.extraDictionary != undefined){
+			this.replaceExtra(Constants.DATASET_EXTRA_DATA_DICTIONARY, this.extraDictionary, true);
+		}
+		if (this.extraDictionaryURL.length > 0) {
+			for (var i = 0; i < this.extraDictionaryURL.length; i++) {
+				this.replaceExtra(Constants.DATASET_EXTRA_DATA_DICTIONARY_URL+i, this.extraDictionaryURL[i], true);
+			}
+		}
+
+
 		
 
 
 		let datasetUpdated: any = this.dataset;
 		datasetUpdated.requestUserId = this.usersAdminService.currentUser.id;
 		datasetUpdated.requestUserName = this.usersAdminService.currentUser.username;
-
+		datasetUpdated.groups.push({name: this.selectedTopic})
 		this.datasetsAdminService.updateDataset(datasetUpdated).subscribe( response => {
 			console.log(response);
 			this.msgs = [];
@@ -644,16 +955,12 @@ export class DatasetsAdminEditComponent implements OnInit {
         this.datasetNameToDelete = datasetName;
     }
 
-    deleteDataset(){
-        this.displayDeleteDialog=false;
-        let user_id = this.usersAdminService.currentUser.id;
-        let user_name = this.usersAdminService.currentUser.username;
-        this.datasetsAdminService.removeDataset(this.datasetNameToDelete,user_name, user_id).subscribe( response => {
-            this.router.navigate(['/' + this.routerLinkDatasetList]); 
-        });
+    cancelDataset(){
+		this.displayDeleteDialog=false;
+		this.router.navigate(['/' + this.routerLinkDatasetList]); 
     }
 
-    undoDeleteDataset(){
+    undoCancelDataset(){
         this.displayDeleteDialog=false;
         this.datasetNameToDelete = undefined;
     }

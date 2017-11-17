@@ -100,6 +100,7 @@ exports.CKAN_URL_PATH_DATASET_CREATE = 'package_create';
 exports.CKAN_URL_PATH_DATASET_UPDATE = 'package_update';
 exports.CKAN_URL_PATH_DATASET_DELETE = 'package_delete';
 exports.CKAN_URL_PATH_RESOURCE_CREATE = 'resource_create';
+exports.CKAN_URL_PATH_RESOURCE_DELETE = 'resource_delete';
 
 /* CKAN ADMIN - ORGANIZATIONS */
 exports.CKAN_URL_PATH_ORGANIZATION_CREATE = 'organization_create';

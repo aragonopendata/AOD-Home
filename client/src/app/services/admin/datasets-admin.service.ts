@@ -84,5 +84,20 @@ export class DatasetsAdminService {
 		return this.http.put(fullUrl, JSON.stringify(requestBodyParams), {headers: headers}).map(res => res.json());
 	}
 
+	public createResource(file: any,newResource: any) {
+		console.log(newResource);
+		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_RESOURCE_CUD_OPERATIONS;
+
+		let formData:FormData = new FormData();  
+		formData.append('file', file, file.name);
+		formData.append('package_id', newResource.package_id);
+		formData.append('name', newResource.name);
+		formData.append('format', newResource.format);
+		formData.append('description', newResource.description);
+		formData.append('requestUserId', newResource.requestUserId);
+		formData.append('requestUserName', newResource.requestUserName);
+		return this.http.post(fullUrl, formData).map(res => res.json())
+		
+	}
 	
 }

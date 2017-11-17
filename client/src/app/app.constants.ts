@@ -2,14 +2,14 @@ export class Constants {
     //URLS
     public static AOD_BASE_URL = 'http://miv-aodfront-01.aragon.local:7030';
     public static PRESUPUESTOS_BASE_URL = 'http://miv-aodfront-01.aragon.local:7031';
-    //public static AOD_ASSETS_BASE_URL = 'http://localhost:3000/assets';
-    public static AOD_ASSETS_BASE_URL = 'http://miv-aodfront-01.aragon.local:7030/static';
-    //public static AOD_API_WEB_BASE_URL = 'http://localhost:4200/aod/services/web';
-    public static AOD_API_WEB_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/web';
-    //public static AOD_API_ADMIN_BASE_URL = 'http://localhost:4200/aod/services/admin';
-    public static AOD_API_ADMIN_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/admin';
-    //public static AOD_API_SECURITY_BASE_URL = 'http://localhost:4200/aod/services/security';
-    public static AOD_API_SECURITY_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/security';
+     //public static AOD_ASSETS_BASE_URL = 'http://localhost:3000/assets';
+     public static AOD_ASSETS_BASE_URL = 'http://miv-aodfront-01.aragon.local:7030/static';
+     //public static AOD_API_WEB_BASE_URL = 'http://localhost:4200/aod/services/web';
+     public static AOD_API_WEB_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/web';
+     //public static AOD_API_ADMIN_BASE_URL = 'http://localhost:4200/aod/services/admin';
+     public static AOD_API_ADMIN_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/admin';
+     //public static AOD_API_SECURITY_BASE_URL = 'http://localhost:4200/aod/services/security';
+     public static AOD_API_SECURITY_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/security';
     public static AOD_API_CKAN_BASE_URL = 'http://miv-aodfront-01.aragon.local:5000';
     public static AOD_COLLABORATION_URL = 'https://aragon.uservoice.com/forums/192552-datos-que-me-gustar%C3%ADa-reutilizar';
     public static AOD_GITHUB_URL = 'http://github.com/aragonopendata';
@@ -286,6 +286,11 @@ export class Constants {
     public static DATASET_EXTRA_TYPE_ARAGOPEDIA = 'typeAragopedia';
     public static DATASET_EXTRA_URI_ARAGOPEDIA = 'uriAragopedia';
     public static DATASET_EXTRA_SPATIAL = 'Spatial';
+    public static DATASET_EXTRA_LANG_ES= 'langES';
+    public static DATASET_EXTRA_LANG_EN= 'langEN';
+    public static DATASET_EXTRA_LANG_FR= 'langFR';
+    public static DATASET_EXTRA_LANG_ARG= 'langARG';
+    public static DATASET_EXTRA_LANG_OTHER= 'langOtherValue';
     public static DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_DATASET= '/dataset/';
     public static DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_RESOURCE= '/resource/';
     public static DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_VIEW= '/view/';
@@ -326,6 +331,12 @@ export class Constants {
     public static ADMIN_DATASET_EDIT_DROPDOWN_FREQUENCY_CUATRIMESTRAL = { label: 'Cuatrimestral', value: 'Cuatrimestral' };
     public static ADMIN_DATASET_EDIT_DROPDOWN_FREQUENCY_TRIMESTRAL = { label: 'Trimestral', value: 'Trimestral' };
     public static ADMIN_DATASET_EDIT_DROPDOWN_FREQUENCY_MENSUAL = { label: 'Mensual', value: 'Mensual' };
+
+    public static ADMIN_DATASET_EDIT_DROPDOWN_LANG_ES = 'Español';
+    public static ADMIN_DATASET_EDIT_DROPDOWN_LANG_EN = 'Inglés';
+    public static ADMIN_DATASET_EDIT_DROPDOWN_LANG_FR = 'Francés';
+    public static ADMIN_DATASET_EDIT_DROPDOWN_LANG_ARG_LNG = 'Lenguas aragonesas';
+    public static ADMIN_DATASET_EDIT_DROPDOWN_LANG_OTHER = 'Otro';
 
     public static ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_LINK = { label: 'Enlace a un archivo público', value: '0' };
     public static ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_DB_VIEW = { label: 'Vista de basede datos', value: '1' };
@@ -553,6 +564,7 @@ export class Constants {
     public static SERVER_API_LINK_ADMIN_ORGANIZATION_CUD_OPERATIONS = '/organization';
     public static SERVER_API_LINK_ADMIN_DATASET_CUD_OPERATIONS = '/dataset';
     public static SERVER_API_LINK_ADMIN_DATASET_CUD_OPERATIONS_UPDATE = '/dataset_update';
+    public static SERVER_API_LINK_ADMIN_RESOURCE_CUD_OPERATIONS = '/resource';
     public static SERVER_API_LINK_PARAM_SORT = 'sort';
     public static SERVER_API_LINK_PARAM_PAGE = 'page';
     public static SERVER_API_LINK_PARAM_ROWS = 'rows';

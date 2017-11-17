@@ -296,9 +296,8 @@ router.delete('/dataset', function (req, res, next) {
 });
 
 /** CREATE RESOURCE */
-
 router.post('/resource', upload.single('file'), function (req, res, next) {
-    
+        console.log(req);
         var resource = req.body;
         var requestUserId = resource.requestUserId;
         var requestUserName = resource.requestUserName;
@@ -322,9 +321,35 @@ router.post('/resource', upload.single('file'), function (req, res, next) {
             res.json({ 'status': constants.REQUEST_ERROR_FORBIDDEN, 'error': 'BORRADO DE DATASETS - Usuario no autorizado' });
             return;
         });
-
-
   })
+
+/** DELETE RESOURCE */
+router.delete('/resource', function (req, res, next) {
+    var resourceId = req.body.id;
+    var requestUserId = resource.requestUserId;
+    var requestUserName = resource.requestUserName;
+    //1. CHEKING PERMISSIONS OF THE USER WHO MAKES THE REQUEST
+    getUserPermissions(requestUserId, requestUserName)
+    .then(accessInfo => {
+        if (accessInfo != undefined){
+            logger.info('Permiso recuperado para usuario ' + requestUserName);
+            //2. ADD RESOURCE IN CKAN
+            deleteResourceInCKAN(accessInfo, resourceId)
+            .then( insertCkanResponse => {
+                res.json(JSON.parse(insertCkanResponse));
+            });
+         
+        } else {
+            logger.error('BORRADO DE RECURSOS - Usuario no autorizado: ', error);
+            res.json({ 'status': constants.REQUEST_ERROR_FORBIDDEN, 'error': 'BORRADO DE RECURSOS - Usuario no autorizado' });
+        }
+    }).catch(error => {
+        logger.error('BORRADO DE RECURSOS - Error al obtener la información del usuario: ', error);
+        res.json({ 'status': constants.REQUEST_ERROR_FORBIDDEN, 'error': 'BORRADO DE RECURSOS - Usuario no autorizado' });
+        return;
+    });
+})
+
 
 
 
@@ -602,7 +627,27 @@ var deleteDatasetInCKAN = function deleteDatasetInCKAN(userAccessInfo, dataset) 
 var insertResourceInCKAN = function insertResourceInCKAN(userAccessInfo, clientRequest) {
     return new Promise((resolve, reject) => {
         try {
+            let resource = clientRequest.body;
+            let file = clientRequest.file;
+            console.log(clientRequest.body);
+
+            let form_data = {
+                package_id: resource.package_id,
+                name: resource.name,
+                format: clientRequest.body.format,
+                description: clientRequest.body.description } ;
+            
+            if (resource.url != undefined) {
+                form_data.url = clientRequest.body.url;
+            }
+
+            if ( file != undefined) {
+                form_data.upload = { value:clientRequest.file.buffer,
+                    options: { filename: clientRequest.file.originalname, contentType: null } };
+            }
+
             logger.debug('Insertando recurso en CKAN');
+
             var options = { 
             method: 'POST',
             url: 'http://localhost:5000/api/action/resource_create',
@@ -610,19 +655,13 @@ var insertResourceInCKAN = function insertResourceInCKAN(userAccessInfo, clientR
              { 'User-Agent': constants.HTTP_REQUEST_HEADER_USER_AGENT_NODE_SERVER_REQUEST,
                'Authorization': userAccessInfo.accessKey,
                'content-type': 'multipart/form-data'},
-            formData: {
-                FieldStorage: { value:clientRequest.file.buffer,
-                options: { filename: clientRequest.file.originalname, contentType: null } },
-                package_id: clientRequest.body.package_id,
-                name: clientRequest.body.name,
-                url: clientRequest.body.url,
-                format: clientRequest.body.format,
-                description: clientRequest.body.description } };
+            formData: form_data}
                
           request(options, function (error, response, body) {
             if (error) {
                 reject(error);
             }
+            console.log(body);
             resolve(body);
           });
         } catch (error) {
@@ -631,6 +670,54 @@ var insertResourceInCKAN = function insertResourceInCKAN(userAccessInfo, clientR
         }
     });
 }
+
+
+var deleteResourceInCKAN = function deleteResourceInCKAN(userAccessInfo, resource_id) {
+    return new Promise((resolve, reject) => {
+        try {
+            logger.debug('Borrando dataset en CKAN');
+            //Mandatory fields
+            var delete_resource_post_data = {
+                'id': resource_id
+            }; 
+            
+            var httpRequestOptions = {
+                url: 'http://127.0.0.1:5000/api/action/' + constants.CKAN_URL_PATH_RESOURCE_DELETE,
+                method: constants.HTTP_REQUEST_METHOD_POST,
+                body: delete_resource_post_data,
+                json: true,
+                headers: {
+                    'Content-Type': constants.HTTP_REQUEST_HEADER_CONTENT_TYPE_JSON,
+                    'User-Agent': constants.HTTP_REQUEST_HEADER_USER_AGENT_NODE_SERVER_REQUEST,
+                    'Authorization': userAccessInfo.accessKey
+                }
+            };
+
+            logger.info('Datos a enviar: ' + JSON.stringify(create_dataset_post_data));
+            logger.info('Configuración llamada POST: ' + JSON.stringify(httpRequestOptions));
+
+            request(httpRequestOptions, function (err, res, body) {
+                if (err) {
+                    reject(err);
+                }
+                if (res) {
+                    if (res.statusCode == 200) {
+                        logger.info('Código de respuesta: : ' + JSON.stringify(res.statusCode));
+                        logger.info('Respuesta: ' + JSON.stringify(body));
+                        resolve(body);
+                    } else {
+                        reject(JSON.stringify(res.statusCode) + ' - ' + JSON.stringify(res.statusMessage));
+                    }
+                } else {
+                    reject('Respuesta nula');
+                }                
+            });
+        } catch (error) {
+            //reject(error);
+        }
+    });
+}
+
 
 
 module.exports = router;
