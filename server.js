@@ -26,6 +26,7 @@ var datasetsAdmin = require('./server/routes/admin/datasets');
 var topicsAdmin = require('./server/routes/admin/topics');
 var tagsAdmin = require('./server/routes/admin/tags');
 var organizationsAdmin = require('./server/routes/admin/organizations');
+var aodCore = require('./server/routes/admin/aod-core')
 //var campusAdmin = require('./server/routes/admin/campus');
 
 // API ROUTES 
@@ -55,13 +56,14 @@ app.use(constants.API_BASE_URL_WEB, topics);
 app.use(constants.API_BASE_URL_WEB, organizations);
 app.use(constants.API_BASE_URL_WEB, contents);
 app.use(constants.API_BASE_URL_WEB, campus);
-app.use(constants.API_BASE_URL_ADMIN, usersAdmin);
+app.use(constants.API_BASE_URL_ADMIN, verifyToken, usersAdmin);
 app.use(constants.API_BASE_URL_ADMIN, rolesAdmin);
 //app.use('/api/admin', contentsAdmin);
-app.use(constants.API_BASE_URL_ADMIN, datasetsAdmin);
-app.use(constants.API_BASE_URL_ADMIN, tagsAdmin);
+app.use(constants.API_BASE_URL_ADMIN, verifyToken, datasetsAdmin);
+app.use(constants.API_BASE_URL_ADMIN, verifyToken, tagsAdmin);
 app.use(constants.API_BASE_URL_ADMIN, topicsAdmin);
 app.use(constants.API_BASE_URL_ADMIN, organizationsAdmin);
+app.use(constants.API_BASE_URL_ADMIN, aodCore);
 //app.use('/api/admin', campusAdmin);
 
 // PORT FROM ENVIRONMENT

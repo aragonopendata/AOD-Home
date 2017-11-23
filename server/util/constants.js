@@ -18,6 +18,7 @@ exports.CORS_HEADERS_ALLOW_METHODS_VALUE = 'GET, POST, PUT, DELETE, PATCH, OPTIO
 exports.HTTP_REQUEST_METHOD_POST = 'POST';
 exports.HTTP_REQUEST_METHOD_GET = 'GET';
 exports.HTTP_REQUEST_HEADER_CONTENT_TYPE_FORM_URLENCODED = 'application/x-www-form-urlencoded';
+exports.HTTP_REQUEST_HEADER_CONTENT_TYPE_MULTIPART_FORM_DATA = 'multipart/form-data';
 exports.HTTP_REQUEST_HEADER_CONTENT_TYPE_JSON = 'application/json';
 exports.HTTP_REQUEST_HEADER_USER_AGENT_NODE_SERVER_REQUEST = 'Node.js Server Request';
 exports.HTTP_RESPONSE_DATA_ENCODING = 'utf8';
@@ -42,6 +43,8 @@ exports.API_URL_DATASETS_RDF = '/datasets/rdf';
 exports.API_URL_ORGANIZATIONS = '/organizations';
 exports.API_URL_TOPICS = '/topics';
 exports.API_URL_TAGS = '/tags';
+exports.API_URL_GA_OD_CORE = '/core';
+exports.API_URL_GA_OD_CORE_VIEWS = '/views';
 exports.API_URL_STATIC_CONTENT_INFO_OPEN_DATA = '/static-content/info/open-data';
 exports.API_URL_STATIC_CONTENT_INFO_APPS = '/static-content/info/applications';
 exports.API_URL_STATIC_CONTENT_INFO_EVENTS = '/static-content/info/events';
@@ -52,6 +55,8 @@ exports.API_URL_STATIC_CONTENT_TOOLS_SPARQL = '/static-content/tools/sparql';
 exports.API_URL_STATIC_CONTENT_TOOLS_SPARQL_CLIENT = '/static-content/tools/sparql-client';
 exports.API_URL_STATIC_CONTENT_TOOLS_SPARQL_GRAPHS = '/static-content/tools/sparql-client/graphs';
 exports.API_URL_AUTHENTICATE = '/authenticate';
+exports.API_URL_ADMIN_DATASET = '/dataset';
+exports.API_URL_ADMIN_RESOURCE = '/resource';
 
 /* STATIC CONTENT DATABASE SECTION TITLES */
 exports.API_URL_CAMPUS_EVENTS = '/campus/events';
@@ -99,13 +104,17 @@ exports.CKAN_URL_PATH_GROUP_MEMBER_CREATE = 'group_member_create';
 exports.CKAN_URL_PATH_DATASET_CREATE = 'package_create';
 exports.CKAN_URL_PATH_DATASET_UPDATE = 'package_update';
 exports.CKAN_URL_PATH_DATASET_DELETE = 'package_delete';
+exports.CKAN_URL_PATH_DATASET_PURGE = 'dataset_purge';
 exports.CKAN_URL_PATH_RESOURCE_CREATE = 'resource_create';
+exports.CKAN_URL_PATH_RESOURCE_UPDATE = 'resource_update';
 exports.CKAN_URL_PATH_RESOURCE_DELETE = 'resource_delete';
 
 /* CKAN ADMIN - ORGANIZATIONS */
 exports.CKAN_URL_PATH_ORGANIZATION_CREATE = 'organization_create';
 exports.CKAN_URL_PATH_ORGANIZATION_DELETE = 'organization_delete';
 exports.CKAN_URL_PATH_ORGANIZATION_UPDATE = 'organization_update';
+exports.CKAN_URL_PATH_ORGANIZATION_PURGE = 'organization_purge';
+exports.CKAN_URL_PATH_ORGANIZATION_LIST_OF_USER = 'organization_list_for_user';
 
 /* DATASETS */
 //Results per page in lists
@@ -152,6 +161,10 @@ exports.TAGS_LIST = 'tag_list';
 /* RESOURCES */
 //List all resources
 exports.RESOURCES_SEARCH_COUNT = 'resource_search?query=hash:&limit=0';
+/* GA OD CORE VIEWS */
+exports.GA_OD_CORE_BASE_URL = 'http://miv-aodfront-01.aragon.local:7030/GA_OD_Core';
+//List all views
+exports.GA_OD_CORE_VIEWS_LIST = '/views';
 /* HOMER PROPERTIES */
 exports.HOMER_API_BASE_URL = 'http://opendata-federation.csi.it/fed-homer/documents/select';
 //Results per page in lists

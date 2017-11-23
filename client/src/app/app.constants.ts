@@ -2,14 +2,14 @@ export class Constants {
     //URLS
     public static AOD_BASE_URL = 'http://miv-aodfront-01.aragon.local:7030';
     public static PRESUPUESTOS_BASE_URL = 'http://miv-aodfront-01.aragon.local:7031';
-     //public static AOD_ASSETS_BASE_URL = 'http://localhost:3000/assets';
-     public static AOD_ASSETS_BASE_URL = 'http://miv-aodfront-01.aragon.local:7030/static';
-     //public static AOD_API_WEB_BASE_URL = 'http://localhost:4200/aod/services/web';
-     public static AOD_API_WEB_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/web';
-     //public static AOD_API_ADMIN_BASE_URL = 'http://localhost:4200/aod/services/admin';
-     public static AOD_API_ADMIN_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/admin';
-     //public static AOD_API_SECURITY_BASE_URL = 'http://localhost:4200/aod/services/security';
-     public static AOD_API_SECURITY_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/security';
+    //public static AOD_ASSETS_BASE_URL = 'http://localhost:3000/assets';
+    public static AOD_ASSETS_BASE_URL = 'http://miv-aodfront-01.aragon.local:7030/static';
+    //public static AOD_API_WEB_BASE_URL = 'http://localhost:4200/aod/services/web';
+    public static AOD_API_WEB_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/web';
+    //public static AOD_API_ADMIN_BASE_URL = 'http://localhost:4200/aod/services/admin';
+    public static AOD_API_ADMIN_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/admin';
+    //public static AOD_API_SECURITY_BASE_URL = 'http://localhost:4200/aod/services/security';
+    public static AOD_API_SECURITY_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/security';
     public static AOD_API_CKAN_BASE_URL = 'http://miv-aodfront-01.aragon.local:5000';
     public static AOD_COLLABORATION_URL = 'https://aragon.uservoice.com/forums/192552-datos-que-me-gustar%C3%ADa-reutilizar';
     public static AOD_GITHUB_URL = 'http://github.com/aragonopendata';
@@ -26,6 +26,7 @@ export class Constants {
     public static AOD_MAIL = 'opendata@aragon.es';
     public static ARAGON_PARTICIPA_WEB_URL = 'http://aragonparticipa.aragon.es';
     public static TRANSPARENCIA_WEB_URL = 'http://transparencia.aragon.es/';
+    public static OPENDATA_DATASET_URL = 'http://opendata.aragon.es/datos/';
 
     public static SHARE_FACEBOOK = 'https://www.facebook.com/sharer.php?u=';
     public static SHARE_TWITTER = 'https://twitter.com/share?url=';
@@ -326,6 +327,10 @@ export class Constants {
     public static ADMIN_DATASET_EDIT_LICENSE_URL_DEFAULT = 'https://creativecommons.org/licenses/by/4.0/';
 
     //ADMIN DROPDOWNS
+    public static ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_TYPES_URL_PUBLIC_FILE = { label: 'Enlace a archivo público', value: 'urlPublicFile' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_TYPES_DATABASE_VIEW = { label: 'Vista de base de datos', value: 'databaseView' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_TYPES_FILE = { label: 'Fichero', value: 'file' };
+
     public static ADMIN_DATASET_EDIT_DROPDOWN_FREQUENCY_ANUAL = { label: 'Anual', value: 'Anual' };
     public static ADMIN_DATASET_EDIT_DROPDOWN_FREQUENCY_SEMESTRAL = { label: 'Semestral', value: 'Semestral' };
     public static ADMIN_DATASET_EDIT_DROPDOWN_FREQUENCY_CUATRIMESTRAL = { label: 'Cuatrimestral', value: 'Cuatrimestral' };
@@ -406,6 +411,7 @@ export class Constants {
     public static ADMIN_USER_ROL_GLOBAL_ADMIN = 'global_adm';
     public static ADMIN_USER_ROL_ORGANIZATION_ADMIN = 'org_adm';
     public static ADMIN_USER_ROL_ORGANIZATION_EDITOR = 'org_editor';
+    public static ADMIN_USER_ROL_ORGANIZATION_MEMBER = 'org_member'; 
 
     //ADMIN ORGANIZATION
     public static GROWL_SEVERITY_SUCCESS = 'success';
@@ -424,6 +430,9 @@ export class Constants {
     public static ERROR_ORGANIZATION_GET_EMAIL = 'Error: getEmail() - organizations-admin-edit.component.ts';
     public static ERROR_ORGANIZATION_GET_ORG = 'Error: loadOrganization() - organizations-admin-edit.component.ts';
 
+    //ADMIN LOGIN
+    public static LOGIN_DATA_PARAM_TYPE_ORGANIZATION = 'org';
+    public static LOGIN_DATA_PARAM_TYPE_DATASET = 'dataset'; 
 
 
     //ROUTING
@@ -518,6 +527,8 @@ export class Constants {
     public static ROUTER_LINK_DATA_CAMPUS_PARAM_TYPE = 'type';
     public static ROUTER_LINK_DATA_CAMPUS_PARAM_TEXT = 'text';
     public static ROUTER_LINK_TOOLS_CAMPUS_EVENT_NAME = 'eventName';
+    public static ROUTER_LINK_DATA_PARAM_DATA_LOGIN = 'data';
+    public static ROUTER_LINK_DATA_PARAM_EDIT_DATA = 'dataName'; 
 
     //SERVER API URLS
     public static SERVER_API_LINK_AUTHENTICATE = '/authenticate';
@@ -537,6 +548,7 @@ export class Constants {
     public static SERVER_API_LINK_TOPICS = '/topics';
     public static SERVER_API_LINK_TAGS = '/tags';
     public static SERVER_API_LINK_ORGANIZATIONS = '/organizations';
+    public static SERVER_API_LINK_ORGANIZATION = '/organization'; 
     public static SERVER_API_LINK_STATIC_CONTENT_INFO = '/static-content/info';
     public static SERVER_API_LINK_STATIC_CONTENT_INFO_OPEN_DATA = '/open-data';
     public static SERVER_API_LINK_STATIC_CONTENT_INFO_APPLICATIONS = '/applications';
@@ -555,16 +567,17 @@ export class Constants {
     public static SERVER_API_LINK_CAMPUS_TYPES = '/campus/types';
     public static SERVER_API_LINK_CAMPUS_SPEAKERS = '/campus/speakers';
     public static SERVER_API_LINK_CAMPUS_TOPICS = '/campus/topics';
-    public static SERVER_API_LINK_ADMIN_USERS_LIST = '/users';
-    public static SERVER_API_LINK_ADMIN_USER_CUD_OPERATIONS = '/user';
+    public static SERVER_API_LINK_ADMIN_USERS = '/users';
     public static SERVER_API_LINK_ADMIN_ROLES_LIST = '/roles';
     public static SERVER_API_LINK_ADMIN_GET_ROLE = '/role';
-    public static SERVER_API_LINK_ADMIN_USER_ORGANIZATIONS_START = '/user/';
-    public static SERVER_API_LINK_ADMIN_USER_ORGANIZATIONS_END = '/organizations';
+    public static SERVER_API_LINK_ADMIN_USER_CUD_OPERATIONS = '/users';
+    public static SERVER_API_LINK_ADMIN_USER_ORGANIZATIONS = '/organizations';
     public static SERVER_API_LINK_ADMIN_ORGANIZATION_CUD_OPERATIONS = '/organization';
     public static SERVER_API_LINK_ADMIN_DATASET_CUD_OPERATIONS = '/dataset';
     public static SERVER_API_LINK_ADMIN_DATASET_CUD_OPERATIONS_UPDATE = '/dataset_update';
     public static SERVER_API_LINK_ADMIN_RESOURCE_CUD_OPERATIONS = '/resource';
+    public static SERVER_API_LINK_GA_OD_CORE = '/core';
+    public static SERVER_API_LINK_GA_OD_CORE_VIEWS = '/views';
     public static SERVER_API_LINK_PARAM_SORT = 'sort';
     public static SERVER_API_LINK_PARAM_PAGE = 'page';
     public static SERVER_API_LINK_PARAM_ROWS = 'rows';

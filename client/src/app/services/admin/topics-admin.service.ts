@@ -9,18 +9,42 @@ import { Constants } from '../../app.constants';
 export class TopicsAdminService {
 	private topics: Observable<Topic[]>;
 	private topic: Topic;
+	currentUser: any;
 
-	constructor(private http: Http) { }
+	constructor(private http: Http) {
+		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+	}
+
+	public getCurrentUser() {
+		return this.currentUser;
+	}
+
+	private createAuthorizationHeader(headers: Headers) {
+		if (this.currentUser && this.currentUser.token && this.currentUser.key) {
+			//Authorization header: API_KEY:JWT_Token
+			let authorizationHeaderValue = this.currentUser.token + ':' + this.currentUser.key;
+			headers.append('Authorization', authorizationHeaderValue);
+		}
+	}
+
+	private buildRequestHeaders() {
+		let headers = new Headers();
+		this.createAuthorizationHeader(headers);
+		headers.append('Content-Type', ' application/json');
+		return headers;
+	}
 
 	public getTopics() {
 		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_TOPICS;
-		return this.http.get(fullUrl).map(res => res.json());
+		let headers = this.buildRequestHeaders();
+		return this.http.get(fullUrl, { headers: headers }).map(res => res.json());
 	}
 
 	public getTopicByName(topicName: string) {
 		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_TOPICS 
 						+ '/' + topicName;
-		return this.http.get(fullUrl).map(res => res.json());
+		let headers = this.buildRequestHeaders();
+		return this.http.get(fullUrl, { headers: headers }).map(res => res.json());
 	}
 
 	public setTopic(topic: Topic) {

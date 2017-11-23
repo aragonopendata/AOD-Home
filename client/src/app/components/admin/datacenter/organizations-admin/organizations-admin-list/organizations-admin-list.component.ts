@@ -20,6 +20,7 @@ export class OrganizationsAdminListComponent implements OnInit {
 	user: any;
 	showSaveButton: boolean = false;
 	showEditButtons: boolean = false;
+	showDeleteButton: boolean = false;
 
 	constructor(private organizationsAdminService: OrganizationsAdminService
 			, private usersAdminService: UsersAdminService
@@ -35,6 +36,7 @@ export class OrganizationsAdminListComponent implements OnInit {
 		if(this.user.rol == Constants.ADMIN_USER_ROL_GLOBAL_ADMIN){
 			this.showSaveButton = true;
 			this.showEditButtons = true;
+			this.showDeleteButton = true;
 		}
 		if(this.user.rol == Constants.ADMIN_USER_ROL_ORGANIZATION_ADMIN){
 			this.showEditButtons = true;

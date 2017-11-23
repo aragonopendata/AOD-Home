@@ -127,7 +127,7 @@ export class OrganizationsDetailComponent implements OnInit {
 
 	getEmail(): void {
 		if(this.org.users.length > 0){
-		  this.usersAdminService.getUser(this.org.users[0].name, this.user.id).subscribe( user => {
+			this.usersAdminService.getUser(this.org.users[0].id).subscribe( user => {
 			try{
 			  if(user != undefined){
 				this.userAdminOrg = JSON.parse(user).result;

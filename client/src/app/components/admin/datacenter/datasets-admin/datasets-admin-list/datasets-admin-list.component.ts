@@ -57,7 +57,6 @@ export class DatasetsAdminListComponent implements OnInit {
 	 }
 
 	ngOnInit() {
-        console.log(this.usersAdminService.currentUser);
 		this.activatedRoute.queryParams.subscribe(params => {
             try {
                 this.textSearch = params[Constants.ROUTER_LINK_DATA_PARAM_TEXT];
@@ -66,8 +65,6 @@ export class DatasetsAdminListComponent implements OnInit {
             }
 		});
         this.sort = Constants.ADMIN_SERVER_API_LINK_PARAM_SORT_DEFAULT_VALUE;
-
-
 
         this.loadUserOrgs();
         

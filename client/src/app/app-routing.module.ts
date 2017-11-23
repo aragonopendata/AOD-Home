@@ -77,7 +77,7 @@ const routes: Routes = [
     { path: Constants.ROUTER_LINK_TOOLS_SPARQL, component: SparqlComponent, pathMatch: 'full' },
     { path: Constants.ROUTER_LINK_TOOLS_SPARQL_CLIENT, component: SparqlClientComponent, pathMatch: 'full' },
     { path: Constants.ROUTER_LINK_LOGIN, component: LoginComponent, pathMatch: 'full' },
-    { path: Constants.ROUTER_LINK_LOGIN + '/:' + Constants.ROUTER_LINK_DATA_PARAM_ORGANIZATION_NAME, component: LoginComponent, pathMatch: 'full' },
+    { path: Constants.ROUTER_LINK_LOGIN + '/:' + Constants.ROUTER_LINK_DATA_PARAM_DATA_LOGIN + '/:' + Constants.ROUTER_LINK_DATA_PARAM_EDIT_DATA, component: LoginComponent, pathMatch: 'full' },
     { path: Constants.ROUTER_LINK_LOGIN_FORGOT_PASSWORD, component: ForgottenPasswordComponent, pathMatch: 'full' },
     { path: Constants.ROUTER_LINK_LOGIN_FORGOT_PASSWORD, component: RestorePasswordComponent, pathMatch: 'full' },
     { path: Constants.ROUTER_LINK_ADMIN, component: HomeAdminComponent, canActivate: [AuthGuard], children: [

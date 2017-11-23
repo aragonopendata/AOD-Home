@@ -71,17 +71,18 @@ export class OrganizationsAdminEditComponent implements OnInit {
   }
 
   getEmail(): void {
-    if(this.org.users.length > 0){
-      this.usersAdminService.getUser(this.org.users[0].name, this.user.id).subscribe( user => {
-        try{
+    try {
+      if(this.org.users.length > 0){
+        this.usersAdminService.getUser(this.org.users[0].id).subscribe( user => {
           if(user != undefined){
-            this.userAdminOrg = JSON.parse(user).result;
+            this.userAdminOrg = user.result;
             this.email = this.userAdminOrg.email;
           }
-        }catch(error){
-          console.error("Error: ngOnInit() - organizations-admin-edit.component.ts");
-        }
-      });
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      console.error("Error: getEmail() - organizations-admin-edit.component.ts");
     }
   }
 
@@ -97,7 +98,8 @@ export class OrganizationsAdminEditComponent implements OnInit {
         this.getExtras();
         this.getEmail();
       }catch(error){
-        console.error("Error: ngOnInit() - organizations-admin-edit.component.ts");
+        console.log(error);
+        console.error("Error: loadOrganization() - organizations-admin-edit.component.ts");
       }
     });
   }

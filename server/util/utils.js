@@ -151,6 +151,39 @@ module.exports = {
         return query;
     },
 
+    getApiKey: function (authorizationHeader) {
+        if (authorizationHeader) {
+            logger.info('Cabecera Authorization a comprobar: ' + authorizationHeader);
+            var apiKey = authorizationHeader.split(':')[1];
+            if (apiKey) {
+                return apiKey;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    },
+
+    verifyToken: function (authorizationHeader) {
+        if (authorizationHeader) {
+            var token = authorizationHeader.split(':')[0];
+            if (token) {
+                logger.info('Token a comprobar: ' + token);
+                var cert = fs.readFileSync('server/keys/public.pem');  // get public key 
+                jwt.verify(token, cert, { algorithms: ['RS256'] }, function (err, decoded) {
+                    if (err) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                });
+            }
+        } else {
+            return false;
+        }
+    },
+
     errorHandler: function (err, res, serviceName) {
         logger.error('Error ' + err.code + ' in request ' + serviceName);
         var bodyerr = '';

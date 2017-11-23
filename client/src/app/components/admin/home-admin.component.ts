@@ -24,19 +24,19 @@ export class HomeAdminComponent implements OnInit {
 	 }
 
 	ngOnInit() {
-		console.log(this.usersAdminService.currentUser);
-		this.currentUserName = this.usersAdminService.currentUser.fullname;
 		this.getPermissions();
+		this.currentUserName = this.user.fullname;
 	}
 
 	getPermissions(): void{
-		this.user = this.usersAdminService.getCurrentUser();
+		this.user = this.authenticationService.getCurrentUser();
 		if(this.user.rol == Constants.ADMIN_USER_ROL_GLOBAL_ADMIN){
 			this.showUsersMenu = true;
 		}
 	}
 
 	logout(){
+		this.usersAdminService.currentUser = undefined;
 		this.loginService.announceLogout();
 		this.authenticationService.logout();
 		window.location.reload();

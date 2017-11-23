@@ -11,8 +11,10 @@ import { Topic } from '../../../../../models/Topic';
 import { Organization } from '../../../../../models/Organization';
 import { Constants } from 'app/app.constants';
 import { UsersAdminService } from 'app/services/admin/users-admin.service';
+import { AodCoreAdminService } from 'app/services/admin/aod-core-admin.service';
 import { Extra } from 'app/models/Extra';
 import { Resource } from 'app/models/Resource';
+declare var jQuery:any;
 
 @Component({
 	selector: 'app-datasets-admin-edit',
@@ -33,7 +35,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 	resources: Resource [] = [];
 
 	//Add Resource params
-	displayAddResourceDialog: boolean = false;
+	//BORRAMEdisplayAddResourceDialog: boolean = false;
 	newResourceName: string;
 	newResourceFormat: string;
 	newResourceUrl: string;
@@ -60,20 +62,33 @@ export class DatasetsAdminEditComponent implements OnInit {
 	checkLangArg_Lng: string;
 	checkLangOther: string;
 
+	checkLangBoolEs: boolean = false;
+	checkLangBoolEn: boolean = false;
+	checkLangBoolFr: boolean = false;
+	checkLangBoolArg_Lng: boolean = false;
 	checkLangBoolOther: boolean = false;
-
+	
 	aragonRadioValue: boolean = false;
 	provinciaRadioValue: boolean = false;
 	comarcaRadioValue: boolean = false;
 	municipioRadioValue: boolean = false;
 	otherRadioValue: boolean = false;
 
+	newResourceAccessType: string;
+	newResourceAccessTypes: SelectItem[];
+	newResourceAccessTypePublicFile: string;
+	newResourceAccessTypeDatabaseView: string;
+	newResourceAccessTypeFile: string;
+
+	coreViewsSelect: SelectItem[];
+	selectedCoreView: string;
+
 	provinciaInput: string;
 	comarcaInput: string;
 	municipioInput: string;
 	otherInputGeo: string;
 	
-	topic: Topic;
+	//BORRAMEtopic: Topic;
 	topics: Topic[];
 	topicsSelect: SelectItem[];
 	selectedTopic: string;
@@ -91,24 +106,13 @@ export class DatasetsAdminEditComponent implements OnInit {
 	tags: Tag[];
 	filteredTagsMultiple: Tag[];
 
-	value: number = 0;
-	checked: boolean = false;
-	editEnable: boolean = false;
-	splitted: string[];
-	baseUrl: string = '';
-	editableUrl: string = '';
-	languajes: string[];
 	freq: SelectItem[];
 	urlsCalidad: string[];
 	publicadores: SelectItem[] = [];
 	selectedPublicador: string;
 	accesoRecurso: SelectItem[];
-	vistas: SelectItem[];
 	formatos: SelectItem[];
 	accessModes: SelectItem[];
-	accesoSelected: SelectItem;
-	uploadedFiles: any[] = [];
-	files: string[];
 
 	routerLinkDatasetList: string;
 
@@ -119,8 +123,16 @@ export class DatasetsAdminEditComponent implements OnInit {
     datasetEditErrorMessage: string;
 
 	constructor(private datasetsAdminService: DatasetsAdminService, private topicsAdminService: TopicsAdminService, private organizationsAdminService: OrganizationsAdminService,
-		private usersAdminService: UsersAdminService, private activatedRoute: ActivatedRoute, private router: Router) {
+		private usersAdminService: UsersAdminService, private aodCoreAdminService: AodCoreAdminService, private activatedRoute: ActivatedRoute, private router: Router) {
 			this.routerLinkDatasetList = Constants.ROUTER_LINK_ADMIN_DATACENTER_DATASETS;
+			this.newResourceAccessTypePublicFile = Constants.ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_TYPES_URL_PUBLIC_FILE.value;
+			this.newResourceAccessTypeDatabaseView = Constants.ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_TYPES_DATABASE_VIEW.value;
+			this.newResourceAccessTypeFile = Constants.ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_TYPES_FILE.value;
+			this.checkLangEs = Constants.ADMIN_DATASET_EDIT_DROPDOWN_LANG_ES;
+			this.checkLangEn = Constants.ADMIN_DATASET_EDIT_DROPDOWN_LANG_EN;
+			this.checkLangFr = Constants.ADMIN_DATASET_EDIT_DROPDOWN_LANG_FR;
+			this.checkLangArg_Lng = Constants.ADMIN_DATASET_EDIT_DROPDOWN_LANG_ARG_LNG;
+			
 		 }
 
 	ngOnInit() {
@@ -132,24 +144,11 @@ export class DatasetsAdminEditComponent implements OnInit {
 			}
 		});
 
-		if(this.dataset.name){
+		if (this.dataset.name) {
 			this.loadDataset(this.dataset);
-		}else{
+		} else {
 			this.initializeDataset();
 		}
-
-		// this.dataset.untilDate = new Date;
-		//this.loadDropdowns();
-		
-		//this.setPublicadores(this.organizationsAdminService.getOrganizations());
-		//this.selectedPublicador = this.dataset.organization.name;
-
-		// this.urlsCalidad = [''];
-
-		// this.splitted = this.dataset.url.split('/');
-		// this.editableUrl = this.splitted[this.splitted.length - 1];
-		// this.splitted.splice(this.splitted.length - 1, 1);
-		// this.baseUrl = this.splitted.join('/') + '/';
 	}
 
 	initializeDataset() {
@@ -161,17 +160,16 @@ export class DatasetsAdminEditComponent implements OnInit {
 		this.loadDropdowns();
 	}
 
-	loadDropdowns(){
+	loadDropdowns() {
 		this.setTopics();
 		this.setOrganizations();
-		
-		this.files = [];
-		this.languajes = [
-			Constants.ADMIN_DATASET_EDIT_DROPDOWN_LANG_ES,
-			Constants.ADMIN_DATASET_EDIT_DROPDOWN_LANG_EN,
-			Constants.ADMIN_DATASET_EDIT_DROPDOWN_LANG_FR,
-			Constants.ADMIN_DATASET_EDIT_DROPDOWN_LANG_ARG_LNG,
-			Constants.ADMIN_DATASET_EDIT_DROPDOWN_LANG_OTHER
+		this.setCoreViews();
+
+		this.newResourceAccessTypes = [
+			{ label: 'Seleccione un tipo de acceso', value: undefined },
+			{ label: Constants.ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_TYPES_URL_PUBLIC_FILE.label, value: Constants.ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_TYPES_URL_PUBLIC_FILE.value },
+			{ label: Constants.ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_TYPES_DATABASE_VIEW.label, value: Constants.ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_TYPES_DATABASE_VIEW.value },
+			{ label: Constants.ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_TYPES_FILE.label, value: Constants.ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_TYPES_FILE.value }
 		];
 		
 		this.freq = [
@@ -185,11 +183,6 @@ export class DatasetsAdminEditComponent implements OnInit {
 			{ label: Constants.ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_LINK.label, value: Constants.ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_LINK.value },
 			{ label: Constants.ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_DB_VIEW.label, value: Constants.ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_DB_VIEW.value },
 			{ label: Constants.ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_FILE.label, value: Constants.ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_FILE.value }
-		];
-		this.vistas = [
-			{ label: Constants.ADMIN_DATASET_EDIT_DROPDOWN_VIEWS_ELECCIONES.label, value: Constants.ADMIN_DATASET_EDIT_DROPDOWN_VIEWS_ELECCIONES.value },
-			{ label: Constants.ADMIN_DATASET_EDIT_DROPDOWN_VIEWS_SIMBOLOS.label, value: Constants.ADMIN_DATASET_EDIT_DROPDOWN_VIEWS_SIMBOLOS.value },
-			{ label: Constants.ADMIN_DATASET_EDIT_DROPDOWN_VIEWS_PLENO_MUNICIPIO.label, value: Constants.ADMIN_DATASET_EDIT_DROPDOWN_VIEWS_PLENO_MUNICIPIO.value }
 		];
 		this.formatos = [
 			{ label: 'Seleccione formato', value: undefined},
@@ -252,18 +245,17 @@ export class DatasetsAdminEditComponent implements OnInit {
 	}
 	
 	loadDataset(dataset: Dataset) {
-		
+
 		this.datasetsAdminService.getDatasetByName(dataset.name).subscribe(dataResult => {
 			try {
+
 				this.dataset = JSON.parse(dataResult).result;
-				
-				console.log(this.dataset);
 				this.inputDatasetTitle = this.dataset.title;
 				this.inputDatasetUrl = this.dataset.url;
 				this.inputDatasetDescription = this.dataset.notes
 				this.getExtras();
 				//GET GEO 
-				if(this.dataset.groups[0] != undefined){
+				if (this.dataset.groups[0] != undefined) {
 					this.selectedTopic = this.dataset.groups[0].name;
 				}
 				if (this.extraTypeAragopedia == 'Aragón') {
@@ -271,59 +263,40 @@ export class DatasetsAdminEditComponent implements OnInit {
 				}
 				if (this.extraTypeAragopedia == 'Provincia') {
 					this.provinciaRadioValue = true;
-					if (this.extraNameAragopedia != undefined){
+					if (this.extraNameAragopedia != undefined) {
 						this.provinciaInput = this.extraNameAragopedia;
 					}
 				}
 				if (this.extraTypeAragopedia == 'Comarca') {
 					this.comarcaRadioValue = true;
-					if (this.extraNameAragopedia != undefined){
+					if (this.extraNameAragopedia != undefined) {
 						this.comarcaInput = this.extraNameAragopedia;
 					}
 				}
 				if (this.extraTypeAragopedia == 'Municipio') {
 					this.municipioRadioValue = true;
-					if (this.extraNameAragopedia != undefined){
+					if (this.extraNameAragopedia != undefined) {
 						this.municipioInput = this.extraNameAragopedia;
 					}
 				}
 				if (this.extraTypeAragopedia == 'Otro') {
 					this.otherRadioValue = true;
-					if (this.extraNameAragopedia != undefined){
+					if (this.extraNameAragopedia != undefined) {
 						this.otherInputGeo = this.extraNameAragopedia;
 					}
 				}
 
-				
-				// this.selectedOrg = this.dataset.organization[0].name;
 				this.tags = this.dataset.tags;
-				
-				//this.getResourceView();
-				
-				//this.getExtrasIAEST();
-				//this.getDatasetsRecommended();
-				//this.makeFileSourceList();
-				this.loadResouces();
-				
-				console.log(this.resources);
+				this.loadResources();
 				this.loadDropdowns();
 			} catch (error) {
-				console.log(error);
 				console.error("Error: loadDataset() - datasets-admin-edit.component.ts");
-				
 			}
 		});
 	}
 
-	// edit() {
-	// 	this.editEnable = !this.editEnable;
-	// }
-
-	// save() {
-	// 	this.editEnable = !this.editEnable;
-	// }
-
-	loadResouces(){
+	loadResources(){
+		this.resources = [];
 		for (var index = 0; index < this.dataset.resources.length; index++) {
 			this.resource = new Resource();
 			this.resource = this.dataset.resources[index];
@@ -331,7 +304,6 @@ export class DatasetsAdminEditComponent implements OnInit {
 		}
 	}
 	
-
 	createUrl(){
 		if (this.inputDatasetTitle != undefined) {
 			let url = this.inputDatasetTitle.toLocaleLowerCase().split(' ').join('-').split('ñ').join('n')
@@ -365,7 +337,6 @@ export class DatasetsAdminEditComponent implements OnInit {
 				}
 			} catch (error) {
 				console.error('Error: setTopics() - datasets-admin-edit.component.ts');
-				
 			}
 		});
 	}
@@ -387,19 +358,48 @@ export class DatasetsAdminEditComponent implements OnInit {
 					this.orgsSelect.push({ label: org.title, value: org.id });
 				}
 			} catch (error) {
-				console.error('Error: setOrganizations() - datasets-admin-edit.component.ts');
-				
+				console.error('Error: setOrganizations() - datasets-admin-edit.component.ts');	
+			}
+		});
+	}
+
+	setCoreViews() {
+		this.coreViewsSelect = [];
+		this.coreViewsSelect.push({ label: 'Seleccione una vista', value: undefined });
+		this.aodCoreAdminService.getViews().subscribe(views => {
+			try {
+				let coreView = views;
+				for (let view of coreView) {
+					this.coreViewsSelect.push({ label: view[1], value: view[0] });
+				}
+			} catch (error) {
+				console.error('Error: setCoreViews() - datasets-admin-edit.component.ts');
 			}
 		});
 	}
 
 	addUrl(url: string){
-		if (this.validateURL(url)) {
-			this.extraDictionaryURL.push(url);
-		} else {
-			this.msgs.push({severity:'error', summary:'URL no válida', detail: 'La URL introducida no es válida.'});
+		try {
+			if (this.validateURL(url)) {
+				this.extraDictionaryURL.push(url);
+			} else {
+				this.msgs.push({severity:'error', summary:'URL no válida', detail: 'La URL introducida no es válida.'});
+			}
+		} catch (error) {
+			console.error('Error: addUrl() - datasets-admin-edit.component.ts');
 		}
-		
+	}
+
+	removeUrl(originalUrl: string){
+		let orgUrl = '';
+		let delUrl = '';
+		for (var i = 0; i < this.extraDictionaryURL.length; i++) {
+			orgUrl = this.extraDictionaryURL[i];
+			delUrl = originalUrl;
+			if(delUrl == orgUrl){
+				this.extraDictionaryURL.splice(i,1);
+			}
+		}
 	}
 
 	validateURL(str) {
@@ -413,46 +413,75 @@ export class DatasetsAdminEditComponent implements OnInit {
 	}
 
 	getExtras() {
-		this.extraDictionaryURL = [];
-		for (var index = 0; index < this.dataset.extras.length; index++) {
-			if (this.dataset.extras[index].key.indexOf(Constants.DATASET_EXTRA_DATA_DICTIONARY_URL) == 0) {
-				this.extraDictionaryURL.push(this.dataset.extras[index].value);
+		try {
+			this.extraDictionaryURL = [];
+			for (var index = 0; index < this.dataset.extras.length; index++) {
+				if (this.dataset.extras[index].key.indexOf(Constants.DATASET_EXTRA_DATA_DICTIONARY_URL) == 0) {
+					this.extraDictionaryURL.push(this.dataset.extras[index].value);					
+				}
+				switch (this.dataset.extras[index].key) {
+					case Constants.DATASET_EXTRA_DATA_DICTIONARY:
+						this.extraDictionary = this.dataset.extras[index].value;
+						break;
+					case Constants.DATASET_EXTRA_DATA_QUALITY:
+						this.extraDataQuality = this.dataset.extras[index].value;
+						break;
+					case Constants.DATASET_EXTRA_FREQUENCY:
+						this.extraFrequency = this.dataset.extras[index].value;
+						break;
+					case Constants.DATASET_EXTRA_GRANULARITY:
+						this.extraGranularity = this.dataset.extras[index].value;
+						break;
+					case Constants.DATASET_EXTRA_TEMPORAL_FROM:
+						this.extraTemporalFrom = this.dataset.extras[index].value;
+						break;
+					case Constants.DATASET_EXTRA_TEMPORAL_UNTIL:
+						this.extraTemporalUntil = this.dataset.extras[index].value;
+						break;
+					case Constants.DATASET_EXTRA_SPATIAL:
+						this.extraSpatial = this.dataset.extras[index].value;
+						break;
+					case Constants.DATASET_EXTRA_NAME_ARAGOPEDIA:
+						this.extraNameAragopedia = this.dataset.extras[index].value;
+						break;
+					case Constants.DATASET_EXTRA_SHORT_URI_ARAGOPEDIA:
+						this.extraShortUriAragopedia = this.dataset.extras[index].value;
+						break;
+					case Constants.DATASET_EXTRA_TYPE_ARAGOPEDIA:
+						this.extraTypeAragopedia = this.dataset.extras[index].value;
+						break;
+					case Constants.DATASET_EXTRA_URI_ARAGOPEDIA:
+						this.extraUriAragopedia = this.dataset.extras[index].value;
+						break;
+					case Constants.DATASET_EXTRA_LANG_ES:
+						
+						this.checkLangBoolEs = true;
+						break;
+					case Constants.DATASET_EXTRA_LANG_EN:
+						
+						this.checkLangBoolEn = true;
+						break;
+					case Constants.DATASET_EXTRA_LANG_FR:
+						
+						this.checkLangBoolFr = true;
+						break;
+					case Constants.DATASET_EXTRA_LANG_ARG:
+						
+						this.checkLangBoolArg_Lng = true;
+						break;
+					case Constants.DATASET_EXTRA_LANG_OTHER:
+						this.checkLangOther = this.dataset.extras[index].value;
+						this.checkLangBoolOther = true;
+						break;
+					
+				}
 			}
-			switch (this.dataset.extras[index].key) {
-				case Constants.DATASET_EXTRA_DATA_DICTIONARY:
-					this.extraDictionary = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_DATA_QUALITY:
-					this.extraDataQuality = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_FREQUENCY:
-					this.extraFrequency = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_GRANULARITY:
-					this.extraGranularity = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_TEMPORAL_FROM:
-					this.extraTemporalFrom = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_TEMPORAL_UNTIL:
-					this.extraTemporalUntil = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_SPATIAL:
-					this.extraSpatial = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_NAME_ARAGOPEDIA:
-					this.extraNameAragopedia = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_SHORT_URI_ARAGOPEDIA:
-					this.extraShortUriAragopedia = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_TYPE_ARAGOPEDIA:
-					this.extraTypeAragopedia = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_URI_ARAGOPEDIA:
-					this.extraUriAragopedia = this.dataset.extras[index].value;
-					break;
+		
+			for (var index = 0; index < this.extraDictionaryURL.length; index++) {
+				this.deleteExtraByValue(this.extraDictionaryURL[index]);
 			}
+		} catch (error) {
+			console.error('Error: getExtras() - datasets-admin-edit.component.ts');
 		}
 	}
 
@@ -468,63 +497,77 @@ export class DatasetsAdminEditComponent implements OnInit {
 		}
 	}
 
+	deleteExtra(extra_key: string){
+		let obj = this.dataset.extras.find((extra, i) => {
+			if (extra.key === extra_key) {
+				this.dataset.extras.splice(i,1);
+				return true; // stop searching
+			}
+		});
+	}
+
+	deleteExtraByValue(extra_value: string){
+		let obj = this.dataset.extras.find((extra, i) => {
+			if (extra.value === extra_value) {
+				this.dataset.extras.splice(i,1);
+				return true; // stop searching
+			}
+		});
+	}
+
 	addExtra(extra_key: string, extra_value: string){
 		this.dataset.extras.push({ key: extra_key, value: extra_value });
 	}
 
 	addTag(tag: Tag){
 		this.tags.push(tag);
-		console.log(this.tags);
 	}
 
-	changeCheckBoxLang(lang: string, other: string){
-		
+	changeCheckBoxLang(lang: string){
+
 		switch (lang) {
 			case Constants.ADMIN_DATASET_EDIT_DROPDOWN_LANG_ES:
-				
-				if (this.checkLangEs == undefined){
-					this.checkLangEs = lang;
-				}else{
-					this.checkLangEs = undefined;
+				if (this.checkLangBoolEs){
+					this.checkLangBoolEs = false;
+				} else {
+					this.checkLangBoolEs = true;
 				}
 				break;
 			case Constants.ADMIN_DATASET_EDIT_DROPDOWN_LANG_EN:
-				if (this.checkLangEn == undefined){
-					this.checkLangEn = lang;
-				}else{
-					this.checkLangEn = undefined;
+				if (this.checkLangBoolEn){
+					this.checkLangBoolEn = false;
+				} else {
+					this.checkLangBoolEn = true;
 				}
 				break;
 			case Constants.ADMIN_DATASET_EDIT_DROPDOWN_LANG_FR:
-				if (this.checkLangFr == undefined){
-					this.checkLangFr = lang;
-				}else{
-					this.checkLangFr = undefined;
+				if (this.checkLangBoolFr){
+					this.checkLangBoolFr = false;
+				} else {
+					this.checkLangBoolFr = true;
 				}
 				break;
 			case Constants.ADMIN_DATASET_EDIT_DROPDOWN_LANG_ARG_LNG:
-				if (this.checkLangArg_Lng == undefined){
-					this.checkLangArg_Lng = lang;
-				}else{
-					this.checkLangArg_Lng = undefined;
+				if (this.checkLangBoolArg_Lng){
+					this.checkLangBoolArg_Lng = false;
+				} else {
+					this.checkLangBoolArg_Lng = true;
 				}
 				break;
 			case Constants.ADMIN_DATASET_EDIT_DROPDOWN_LANG_OTHER:
-				if (other != null && other != '') {
-					this.checkLangOther = other;
-				} else {
+				if (this.checkLangBoolOther){
 					this.checkLangBoolOther = false;
 					this.checkLangOther = undefined;
+				} else {
+					this.checkLangBoolOther = true;
 				}
-				
-				
 				break;
-			
 		}
-	
+
 	}
 
 	changeRadioGeo(type: string){
+
 		this.aragonRadioValue = false;
 		this.provinciaRadioValue = false;
 		this.comarcaRadioValue = false;
@@ -577,34 +620,36 @@ export class DatasetsAdminEditComponent implements OnInit {
 			default:
 				break;
 		}
+
 	}
 
-	updateGeoExtras(){
-		if(this.aragonRadioValue){
+	updateGeoExtras() {
+
+		if (this.aragonRadioValue) {
 			this.extraTypeAragopedia = 'Aragón';
 			this.extraNameAragopedia = 'Aragón';
 			this.extraShortUriAragopedia = 'Aragón';
 			this.extraUriAragopedia = 'http://opendata.aragon.es/recurso/territorio/ComunidadAutonoma/Aragón';
 		}
-		if(this.provinciaRadioValue){
+		if (this.provinciaRadioValue) {
 			this.extraTypeAragopedia = 'Provincia';
 			this.extraNameAragopedia = this.provinciaInput;
 			this.extraShortUriAragopedia = this.provinciaInput;
 			this.extraUriAragopedia = 'http://opendata.aragon.es/recurso/territorio/Provincia/'+this.provinciaInput;
 		}
-		if(this.comarcaRadioValue){
+		if (this.comarcaRadioValue) {
 			this.extraTypeAragopedia = 'Comarca';
 			this.extraNameAragopedia = this.comarcaInput;
 			this.extraShortUriAragopedia = this.comarcaInput;
 			this.extraUriAragopedia = 'http://opendata.aragon.es/recurso/territorio/Comarca/'+this.comarcaInput;
 		}
-		if(this.municipioRadioValue){
+		if (this.municipioRadioValue) {
 			this.extraTypeAragopedia = 'Municipio';
 			this.extraNameAragopedia = this.municipioInput;
 			this.extraShortUriAragopedia = this.municipioInput;
 			this.extraUriAragopedia = 'http://opendata.aragon.es/recurso/territorio/Municipio/'+this.municipioInput;
 		}
-		if(this.otherRadioValue){
+		if (this.otherRadioValue) {
 			this.extraTypeAragopedia = 'Otro';
 			this.extraNameAragopedia = this.otherInputGeo;
 			this.extraShortUriAragopedia = this.otherInputGeo;
@@ -613,7 +658,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 
 	}
 
-	delTag(tag_name: string){
+	delTag(tag_name: string) {
 		let orgTag = '';
 		let delTag = '';
 		for (var i = 0; i < this.tags.length; i++) {
@@ -626,73 +671,147 @@ export class DatasetsAdminEditComponent implements OnInit {
 		
 	}
 
-	onUpload(event) {
-		for (let file of event.files) {
-			this.uploadedFiles.push(file);
+	checkResource() {
+		let valid = true;
+
+		if (this.newResourceAccessType != undefined) {
+			switch (this.newResourceAccessType) {
+				case this.newResourceAccessTypePublicFile:
+					if ( this.newResourceUrl == undefined || this.newResourceUrl == '' || this.newResourceFormat == undefined || this.newResourceFormat == '' 
+						|| this.newResourceName == undefined  || this.newResourceName == '' || this.newResourceDescription == undefined || this.newResourceDescription == '' ) {
+						return false;
+					}
+				break;
+
+				case this.newResourceAccessTypeDatabaseView:
+					if ( this.selectedCoreView == undefined || this.selectedCoreView == '' || this.newResourceName == undefined  || this.newResourceName == '' 
+						|| this.newResourceDescription == undefined || this.newResourceDescription == '' ) {
+						return false;
+					} 
+				break;
+
+				case this.newResourceAccessTypeFile:
+					if ( !this.fileList || this.fileList.length == 0 || this.newResourceFormat == undefined || this.newResourceFormat == '' 
+						|| this.newResourceName == undefined || this.newResourceName == '' || this.newResourceDescription == undefined || this.newResourceDescription == '' ) {
+						return false;
+					}
+				break;
+			}
+		} else {
+			return false;
 		}
+		
+		return valid;
 	}
 
-	deleteFile(index) {
-		this.files.splice(index, 1);
-	}
-
-	addFile() {
-		this.displayAddResourceDialog = true;
-		this.files.push('');
+	resetAddResourceModal() {
+		this.newResourceAccessType = undefined;
+		this.newResourceUrl = undefined;
+		this.selectedCoreView = undefined;
+		this.newResourceDescription = undefined;
+		this.newResourceName = undefined;
+		this.newResourceFormat = undefined;
+		this.fileList = undefined;
+		this.msgs = [];
 	}
 
 	fileChange(event) {
 		this.fileList = event.target.files;
 	}
 
-	addResource(){
-		if(this.dataset != undefined && this.dataset.id != undefined){
-			if(this.fileList.length > 0) {
-				let file: File = this.fileList[0];
-				let requestUserId = this.usersAdminService.currentUser.id;
-				let requestUserName = this.usersAdminService.currentUser.username;
-				
-				let resource = {
-					file: file,
-					url: this.newResourceUrl,
-					package_id: this.dataset.id,
-					format: this.formatos[this.newResourceFormat].label,
-					description: this.newResourceDescription,
-					name: this.newResourceName,
-					requestUserId: requestUserId,
-					requestUserName: requestUserName
-				}
-				//CALL TO POST METHOD ON SERVICE
-				this.datasetsAdminService.createResource(file,resource).subscribe( response => {
-					console.log(response);
-					if( response.success){
-						this.msgs.push({severity:'success', summary:'Recurso Creado', detail:'Se ha creado el Recurso con exito'});
-						this.loadResouces();
+	addResource() {
+		try {
+			if (this.checkResource()){
+				if(this.dataset != undefined && this.dataset.id != undefined) {
+					switch (this.newResourceAccessType) {
+						case this.newResourceAccessTypePublicFile:
+							let resource = {
+								resource_type: 'url',
+								package_id: this.dataset.id,
+								format: this.formatos[this.newResourceFormat].label,
+								description: this.newResourceDescription,
+								name: this.newResourceName,
+								url: this.newResourceUrl
+							}
+	
+							//CALL TO POST METHOD ON SERVICE
+							this.datasetsAdminService.createResource(null,resource).subscribe( response => {
+								if( response.success) {
+									this.msgs.push({severity:'success', summary:'Recurso Creado', detail:'Se ha creado el Recurso con exito'});
+									jQuery('#modalAddResource').modal('hide')
+									this.loadDataset(this.dataset);
+									this.resetAddResourceModal();
+								}
+							});	
+						break;
+		
+						case this.newResourceAccessTypeDatabaseView:
+							let resourceView = {
+								resource_type: 'view',
+								package_id: this.dataset.id,
+								description: this.newResourceDescription,
+								name: this.newResourceName,
+								view_id: this.selectedCoreView
+							}
+	
+							//CALL TO POST METHOD ON SERVICE
+							this.datasetsAdminService.createResource(null,resourceView).subscribe( response => {
+								if( response.success) {
+									this.msgs.push({severity:'success', summary:'Recurso Creado', detail:'Se ha creado el Recurso con exito'});
+									jQuery('#modalAddResource').modal('hide')
+									this.loadDataset(this.dataset)
+									this.resetAddResourceModal();
+								}
+							});
+							 
+						break;
+		
+						case this.newResourceAccessTypeFile:
+							if(this.fileList.length > 0) {
+								let file: File = this.fileList[0];
+								let resource = {
+									file: file,
+									resource_type: 'file',
+									package_id: this.dataset.id,
+									format: this.formatos[this.newResourceFormat].label,
+									description: this.newResourceDescription,
+									name: this.newResourceName
+								}
+	
+								//CALL TO POST METHOD ON SERVICE
+								this.datasetsAdminService.createResource(file,resource).subscribe( response => {
+									if( response.success) {
+										this.msgs.push({severity:'success', summary:'Recurso Creado', detail:'Se ha creado el Recurso con exito'});
+										jQuery('#modalAddResource').modal('hide')
+										this.loadDataset(this.dataset)
+										this.resetAddResourceModal();
+									}
+								});
+							}	
+						break;
 					}
-				});
+				}else{
+					this.msgs.push({severity:'warn', summary:'No se puede crear el recurso', detail:'El dataset aun no se ha guardado. Pulse guardar y seguir, y despues añada el recurso'});
+				}
+			} else {
+				this.msgs.push({severity:'warn', summary:'No se puede crear el recurso', detail:'Faltan campos por rellenar para añadir el recurso'});
 			}
-		}else{
-			this.msgs.push({severity:'warn', summary:'No se puede crear el recurso', detail:'El dataset aun no se ha guardado. Pulse guardar y seguir, y despues añada el recurso'});
+		} catch (error) {
+			console.error('Error addResource() - datasets-admin-edit.component.ts');
 		}
-		
-		
-
 	}
 
-	openEditResource(resource: any){
-		console.log(resource);
-	}
-
-	openRemoveResource(resource: any){
-		console.log(resource);
+	openRemoveResource(resource: any) {
+		this.resource = resource;
 	}
 	
-	checkInsertparams(){
+	checkDatasetInsertparams () {
 		let valid = false;
 
-		if(this.inputDatasetTitle!=undefined && this.inputDatasetDescription != undefined && this.selectedOrg != undefined){
+		if (this.inputDatasetTitle != undefined && this.inputDatasetDescription != undefined && this.selectedOrg != undefined
+			&& this.selectedTopic != undefined ) {
 			valid = true;
-		}else{
+		} else {
 			this.msgs = [];
 			this.msgs.push({severity:'warn', summary:'¡Atención!', detail: 'Faltan por rellenar campos obligatorios'});
 		}
@@ -734,13 +853,12 @@ export class DatasetsAdminEditComponent implements OnInit {
 	}
 
 	saveDatasetAdd(option: string){
-		
 		try {
-			if (this.checkInsertparams()) {
+			if (this.checkDatasetInsertparams()) {
 				//Name and Description TAB
 				this.dataset.title = this.inputDatasetTitle;
 				this.dataset.notes = this.inputDatasetDescription;
-				this.dataset.url = 'http:opendata.com/'+this.inputDatasetUrl;
+				this.dataset.url = Constants.OPENDATA_DATASET_URL + this.inputDatasetUrl;
 				this.dataset.name = this.inputDatasetUrl;
 				//Groups And Tags TAB
 				this.dataset.tags = this.tags;
@@ -772,19 +890,19 @@ export class DatasetsAdminEditComponent implements OnInit {
 				}
 				
 				//LANGUAGES TAB
-				if (this.checkLangEs != undefined) {
+				if (this.checkLangBoolEs) {
 					this.addExtra(Constants.DATASET_EXTRA_LANG_ES, this.checkLangEs);
 				}
-				if (this.checkLangEn != undefined) {
+				if (this.checkLangBoolEn) {
 					this.addExtra(Constants.DATASET_EXTRA_LANG_EN, this.checkLangEn);
 				}
-				if (this.checkLangFr != undefined) {
+				if (this.checkLangBoolFr) {
 					this.addExtra(Constants.DATASET_EXTRA_LANG_FR, this.checkLangFr);
 				}
-				if (this.checkLangArg_Lng != undefined) {
+				if (this.checkLangBoolArg_Lng) {
 					this.addExtra(Constants.DATASET_EXTRA_LANG_ARG, this.checkLangArg_Lng);
 				}
-				if (this.checkLangOther != undefined) {
+				if (this.checkLangBoolOther) {
 					this.addExtra(Constants.DATASET_EXTRA_LANG_OTHER, this.checkLangOther);
 				}
 
@@ -809,25 +927,19 @@ export class DatasetsAdminEditComponent implements OnInit {
 				this.dataset.license_title = Constants.ADMIN_DATASET_EDIT_LICENSE_TITLE_DEFAULT;
 				this.dataset.license_url = Constants.ADMIN_DATASET_EDIT_LICENSE_URL_DEFAULT;
 				this.dataset.owner_org = this.selectedOrg;
-
-				//FILES TAB
-					//TODO all
 				
 				//OTHER PARAMS
 				this.dataset.private = false;
 				this.dataset.state = "active";
 
-	
 				//Add User Info
 				let datasetNew: any = this.dataset;
 				datasetNew.groups.push({name: this.selectedTopic})
 				datasetNew.requestUserId = this.usersAdminService.currentUser.id;
 				datasetNew.requestUserName = this.usersAdminService.currentUser.username;
-				console.log(datasetNew)
 				
 				//CALL TO POST METHOD ON SERVICE
 				this.datasetsAdminService.createDataset(datasetNew).subscribe( response => {
-					console.log(response);
 					this.msgs = [];
 					if(response.status == 409){
 						this.msgs.push({severity:'warn', summary:response.errorTitle, detail:response.errorDetail});
@@ -840,116 +952,128 @@ export class DatasetsAdminEditComponent implements OnInit {
 						if(option == "end"){
 							setTimeout(() => this.router.navigate(['/' + this.routerLinkDatasetList]), 1500)
 						}
-	
 					}
-	
 				});
 			}
 		} catch (error) {
-			//ERROR HANDLING
 			console.error(error);
 			console.error('Error saveDatasetAdd() - datasets-admin-edit.component.ts');
 		}
 	}
 
 	saveDatasetUpdate(option: string){
-		console.log("Actualizando dataset");
-		this.dataset.title = this.inputDatasetTitle;
-		this.dataset.notes = this.inputDatasetDescription;
-		if(this.selectedOrg!=undefined){
-			this.dataset.organization = this.orgs.find(x => x.id === this.selectedOrg);
-			this.dataset.owner_org = this.selectedOrg;
-		}
-		this.dataset.license_id = Constants.ADMIN_DATASET_EDIT_LICENSE_ID_DEFAULT;
-		this.dataset.license_title = Constants.ADMIN_DATASET_EDIT_LICENSE_TITLE_DEFAULT;
-		this.dataset.license_url = Constants.ADMIN_DATASET_EDIT_LICENSE_URL_DEFAULT;
-		this.dataset.private = false;
-		this.dataset.state = "active";
-		this.dataset.owner_org = this.selectedOrg;
-
-		if(this.extraFrequency){
-			this.replaceExtra(Constants.DATASET_EXTRA_FREQUENCY,this.extraFrequency, true)
-		}
-		if (this.extraTemporalUntil != undefined) {
-			this.replaceExtra(Constants.DATASET_EXTRA_TEMPORAL_UNTIL, this.extraTemporalUntil, true)
-		}
-		if (this.extraTemporalFrom != undefined) {
-			this.replaceExtra(Constants.DATASET_EXTRA_TEMPORAL_FROM, this.extraTemporalFrom, true)
-		}
-
-		this.updateGeoExtras();
-		//Geographic coverage TAB
-		if (this.extraNameAragopedia != undefined ){
-			this.replaceExtra(Constants.DATASET_EXTRA_NAME_ARAGOPEDIA, this.extraNameAragopedia, true);
-		}
-		if (this.extraShortUriAragopedia != undefined ){
-			this.replaceExtra(Constants.DATASET_EXTRA_SHORT_URI_ARAGOPEDIA, this.extraShortUriAragopedia, true);
-		}
-		if (this.extraTypeAragopedia != undefined ){
-			this.replaceExtra(Constants.DATASET_EXTRA_TYPE_ARAGOPEDIA, this.extraTypeAragopedia, true);
-		}
-		if (this.extraUriAragopedia != undefined ){
-			this.replaceExtra(Constants.DATASET_EXTRA_URI_ARAGOPEDIA, this.extraUriAragopedia, true);
-		}
-
-	
-
-		//EXTRAS TAB
-		if (this.extraSpatial != undefined){
-			this.replaceExtra(Constants.DATASET_EXTRA_SPATIAL, this.extraSpatial, true);
-		}
-		if (this.extraDataQuality != undefined){
-			this.replaceExtra(Constants.DATASET_EXTRA_DATA_QUALITY, this.extraDataQuality, true);
-		}
-		//TODO DATA QUALITY EXTERNAL LINK??
-		if (this.extraDictionary != undefined){
-			this.replaceExtra(Constants.DATASET_EXTRA_DATA_DICTIONARY, this.extraDictionary, true);
-		}
-		if (this.extraDictionaryURL.length > 0) {
-			for (var i = 0; i < this.extraDictionaryURL.length; i++) {
-				this.replaceExtra(Constants.DATASET_EXTRA_DATA_DICTIONARY_URL+i, this.extraDictionaryURL[i], true);
+		try {
+			this.dataset.title = this.inputDatasetTitle;
+			this.dataset.notes = this.inputDatasetDescription;
+			if(this.selectedOrg!=undefined){
+				this.dataset.organization = this.orgs.find(x => x.id === this.selectedOrg);
+				this.dataset.owner_org = this.selectedOrg;
 			}
-		}
-
-
-		
-
-
-		let datasetUpdated: any = this.dataset;
-		datasetUpdated.requestUserId = this.usersAdminService.currentUser.id;
-		datasetUpdated.requestUserName = this.usersAdminService.currentUser.username;
-		datasetUpdated.groups.push({name: this.selectedTopic})
-		this.datasetsAdminService.updateDataset(datasetUpdated).subscribe( response => {
-			console.log(response);
-			this.msgs = [];
-			
-			if(response.status == 200){
-				this.msgs.push({severity:'success', summary:'Dataset Actualizado', detail:'Se ha actualizado el Dataset con exito'});
-				if(option == "end"){
-					setTimeout(() => this.router.navigate(['/' + this.routerLinkDatasetList]), 1500)
+			this.dataset.license_id = Constants.ADMIN_DATASET_EDIT_LICENSE_ID_DEFAULT;
+			this.dataset.license_title = Constants.ADMIN_DATASET_EDIT_LICENSE_TITLE_DEFAULT;
+			this.dataset.license_url = Constants.ADMIN_DATASET_EDIT_LICENSE_URL_DEFAULT;
+			this.dataset.private = false;
+			this.dataset.state = "active";
+			this.dataset.owner_org = this.selectedOrg;
+	
+			if(this.extraFrequency){
+				this.replaceExtra(Constants.DATASET_EXTRA_FREQUENCY,this.extraFrequency, true)
+			}
+			if (this.extraTemporalUntil != undefined) {
+				this.replaceExtra(Constants.DATASET_EXTRA_TEMPORAL_UNTIL, this.extraTemporalUntil, true)
+			}
+			if (this.extraTemporalFrom != undefined) {
+				this.replaceExtra(Constants.DATASET_EXTRA_TEMPORAL_FROM, this.extraTemporalFrom, true)
+			}
+	
+			//LANGUAGES TAB
+			if (this.checkLangBoolEs) {
+				this.replaceExtra(Constants.DATASET_EXTRA_LANG_ES, this.checkLangEs, true);
+			} else {
+				this.deleteExtra(Constants.DATASET_EXTRA_LANG_ES);
+			}
+			if (this.checkLangBoolEn) {
+				this.replaceExtra(Constants.DATASET_EXTRA_LANG_EN, this.checkLangEn, true);
+			} else {
+				
+				this.deleteExtra(Constants.DATASET_EXTRA_LANG_EN);
+			}
+			if (this.checkLangBoolFr) {
+				this.replaceExtra(Constants.DATASET_EXTRA_LANG_FR, this.checkLangFr, true);
+			} else {
+				this.deleteExtra(Constants.DATASET_EXTRA_LANG_FR);
+			}
+			if (this.checkLangBoolArg_Lng) {
+				this.replaceExtra(Constants.DATASET_EXTRA_LANG_ARG, this.checkLangArg_Lng, true);
+			} else {
+				this.deleteExtra(Constants.DATASET_EXTRA_LANG_ARG);
+			}
+			if (this.checkLangBoolOther) {
+				this.replaceExtra(Constants.DATASET_EXTRA_LANG_OTHER, this.checkLangOther, true);
+			} else {
+				this.deleteExtra(Constants.DATASET_EXTRA_LANG_OTHER);
+			}
+	
+			this.updateGeoExtras();
+			//Geographic coverage TAB
+			if (this.extraNameAragopedia != undefined ){
+				this.replaceExtra(Constants.DATASET_EXTRA_NAME_ARAGOPEDIA, this.extraNameAragopedia, true);
+			}
+			if (this.extraShortUriAragopedia != undefined ){
+				this.replaceExtra(Constants.DATASET_EXTRA_SHORT_URI_ARAGOPEDIA, this.extraShortUriAragopedia, true);
+			}
+			if (this.extraTypeAragopedia != undefined ){
+				this.replaceExtra(Constants.DATASET_EXTRA_TYPE_ARAGOPEDIA, this.extraTypeAragopedia, true);
+			}
+			if (this.extraUriAragopedia != undefined ){
+				this.replaceExtra(Constants.DATASET_EXTRA_URI_ARAGOPEDIA, this.extraUriAragopedia, true);
+			}
+	
+			//EXTRAS TAB
+			if (this.extraSpatial != undefined){
+				this.replaceExtra(Constants.DATASET_EXTRA_SPATIAL, this.extraSpatial, true);
+			}
+			if (this.extraDataQuality != undefined){
+				this.replaceExtra(Constants.DATASET_EXTRA_DATA_QUALITY, this.extraDataQuality, true);
+			}
+			//TODO DATA QUALITY EXTERNAL LINK??
+			if (this.extraDictionary != undefined){
+				this.replaceExtra(Constants.DATASET_EXTRA_DATA_DICTIONARY, this.extraDictionary, true);
+			}
+			if (this.extraDictionaryURL.length > 0) {
+				for (var i = 0; i < this.extraDictionaryURL.length; i++) {
+					this.addExtra(Constants.DATASET_EXTRA_DATA_DICTIONARY_URL+i, this.extraDictionaryURL[i]);
 				}
 			}
-			if(response.status == 409){
-				this.msgs.push({severity:'warn', summary:response.errorTitle, detail:response.errorDetail});
-			} else if (response.status != 200) {
-				this.msgs.push({severity:'warn', summary:response.errorTitle, detail:response.errorDetail});
-			}
-		
-
-		});
-		
-		// this.setDatasetTopicByName(this.selectedTopic);
-		// this.dataset.tags = this.tags;
-		// this.dataset.license_id = Constants.ADMIN_DATASET_EDIT_LICENSE_ID_DEFAULT;
-		// this.dataset.license_title = Constants.ADMIN_DATASET_EDIT_LICENSE_TITLE_DEFAULT;
-		// this.dataset.license_url = Constants.ADMIN_DATASET_EDIT_LICENSE_URL_DEFAULT;
-		// console.log(this.updateDateInput);
-		// console.log(this.publishDateInput);
-		//console.log(this.dataset);
+			
+			let datasetUpdated: any = this.dataset;
+			datasetUpdated.requestUserId = this.usersAdminService.currentUser.id;
+			datasetUpdated.requestUserName = this.usersAdminService.currentUser.username;
+			datasetUpdated.groups.push({name: this.selectedTopic})
+			this.datasetsAdminService.updateDataset(datasetUpdated).subscribe( response => {
+				this.msgs = [];
+				
+				if(response.status == 200){
+					this.msgs.push({severity:'success', summary:'Dataset Actualizado', detail:'Se ha actualizado el Dataset con exito'});
+					if(option == "end"){
+						setTimeout(() => this.router.navigate(['/' + this.routerLinkDatasetList]), 1500)
+					}
+				}
+				if(response.status == 409){
+					this.msgs.push({severity:'warn', summary:response.errorTitle, detail:response.errorDetail});
+				} else if (response.status != 200) {
+					this.msgs.push({severity:'warn', summary:response.errorTitle, detail:response.errorDetail});
+				}
+			
+	
+			});
+			
+		} catch (error) {
+			console.error('Error saveDatasetUpdate() - datasets-admin-edit.component.ts');
+		}
 	}
 
-	showDeleteDialog(datasetTitle: string, datasetName: string){
-        console.log(datasetName);
+	showCancelDialog(datasetTitle: string, datasetName: string){
         this.datasetTitleDelete = datasetTitle;
         this.displayDeleteDialog = true;
         this.datasetNameToDelete = datasetName;
@@ -963,6 +1087,54 @@ export class DatasetsAdminEditComponent implements OnInit {
     undoCancelDataset(){
         this.displayDeleteDialog=false;
         this.datasetNameToDelete = undefined;
+	}
+	
+	deleteResource(){
+		try {
+			this.displayDeleteDialog=false;
+			this.datasetsAdminService.removeResource(this.resource.id).subscribe( response => {
+				if (response.status == 200) {
+					this.msgs = [];
+					this.loadDataset(this.dataset);
+					jQuery('#modalRemoveResource').modal('hide')
+					this.msgs.push({severity:'success', summary:'Recurso Borrado', detail:'Recurso borrado correctamente'});
+				}
+			});
+		} catch (error) {
+			console.error('Error deleteResource() - datasets-admin-edit.component.ts');
+			this.msgs.push({severity:'warn', summary:'Error al borrar', detail:'Ha ocurrido un error borrando el Recurso'});
+		}
     }
+
+    undoDeleteResource(){
+		this.resource = undefined;
+        this.displayDeleteDialog=false;
+        this.datasetNameToDelete = undefined;
+	}
+	
+	openEditResource(resource: any){
+		this.resource = resource;
+	}
+
+	openShowResource(resource: any){
+		this.resource = resource;
+	}
+
+	updateResource(){
+		try {
+			let resourceUpdated: any = this.resource;
+			this.datasetsAdminService.updateResource(resourceUpdated).subscribe( response => {
+				if( response.success){
+					this.msgs.push({severity:'success', summary:'Recurso Actualizado', detail:'Se ha actualizado el Recurso con exito'});
+					this.resource = undefined;
+					jQuery('#modalEditResource').modal('hide')
+					this.loadDataset(this.dataset);
+				}
+			});
+		} catch (error) {
+			console.error('Error updateResource() - datasets-admin-edit.component.ts');
+			this.msgs.push({severity:'warn', summary:'Error al actualizar', detail:'Ha ocurrido un error actualizado el Recurso'});
+		}
+	}
 
 }

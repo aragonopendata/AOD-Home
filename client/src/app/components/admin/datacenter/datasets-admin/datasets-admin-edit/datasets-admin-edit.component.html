@@ -19,35 +19,7 @@
 		</p-footer>
 	</p-dialog>
 
-	<div class="modal fade modalRemoveResource" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-lg">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title">Eliminar Recurso</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<form class="col-12 content-fluid">
-						<div class="form-group row">
-							<label class="col-sm-2 col-form-label">¿Esta seguro que desea borrar el recurso?</label>
-						</div>
-						<div class="form-group col-12">
-							<div class="row justify-content-end pb-5">
-								<div class="btn-group" role="group" aria-label="Action Buttons">
-									<button type="submit" class="btn btn-danger" (click)="addResource()">
-										<i class="fa fa-trash"></i> Eliminar</button>
-									<button type="button" (click)="undoSaveResource()" class="btn btn-primary">
-										<i class="fa fa-close"></i> Cancelar</button>
-								</div>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-
-	<div class="modal fade modalAddResource" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	<div class="modal fade modalAddResource" tabindex="-1" id="modalAddResource" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -56,24 +28,43 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form class="col-12 content-fluid">
+				<form class="col-12 content-fluid pt-1">
+					<div class="form-group">
+						<p-messages closable="true" label="Creacuón de Recurso" [(value)]="msgs"></p-messages>
+					</div>
 					<div class="form-group row">
+						<label for="inputUrl" class="col-sm-2 col-form-label">Acceso al recurso:</label>
+						<div class="col-sm-10">
+							<select class="form-control" name="accesTypeDropdown" [(ngModel)]="newResourceAccessType" placeholder="Seleccione el tipo de acceso">
+								<option *ngFor="let accessType of newResourceAccessTypes" [ngValue]="accessType.value">{{accessType.label}}</option>
+							</select>
+						</div>
+					</div>
+					<div *ngIf="newResourceAccessType == newResourceAccessTypePublicFile" class="form-group row">
 						<label for="inputUrl" class="col-sm-2 col-form-label">Url:</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" name="url" id="inputUrl" [(ngModel)]="newResourceUrl" placeholder="http://example.com/external-data.csv">
 						</div>
 					</div>
-					<div class="form-group row">
-						<label for="inputFile" class="col-sm-2 col-form-label">Dato</label>
+					<div *ngIf="newResourceAccessType == newResourceAccessTypeDatabaseView" class="form-group row">
+						<label for="inputFile" class="col-sm-2 col-form-label">Vista</label>
 						<div class="col-sm-10">
-							<input type="file" class="form-control" (change)="fileChange($event)" placeholder="Subir fichero" accept=".pdf,.doc,.docx,.xls">
-							<!-- <input type="File" class="form-control" name="dato" id="inputPassword3" placeholder="Dato"> -->
+							<select class="form-control" name="coreViewsDropdown"  placeholder="Seleccione vista" [(ngModel)]="selectedCoreView">
+								<option *ngFor="let coreView of coreViewsSelect" [ngValue]="coreView.value">{{coreView.label}}</option>
+							</select>
 						</div>
 					</div>
+					<div *ngIf="newResourceAccessType == newResourceAccessTypeFile" class="form-group row">
+							<label for="inputFile" class="col-sm-2 col-form-label">Fichero</label>
+							<div class="col-sm-10">
+								<input type="file" class="form-control" (change)="fileChange($event)" placeholder="Subir fichero" accept=".pdf,.doc,.docx,.xls">
+							</div>
+					</div>
+					
 					<div class="form-group row">
 						<label for="inputName" class="col-sm-2 col-form-label">Nombre:</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="name" required [(ngModel)]="newResourceName" name="name">
+							<input type="text" class="form-control" id="name" required [(ngModel)]="newResourceName" name="name" placeholder="Nombre">
 						</div>
 					</div>
 					<div class="form-group row">
@@ -82,7 +73,7 @@
 							<input type="area" class="form-control" name="description" id="inputDescription" [(ngModel)]="newResourceDescription" placeholder="Algunas notas útiles sobre los datos">
 						</div>
 					</div>
-					<div class="form-group row">
+					<div class="form-group row" *ngIf="newResourceAccessType != newResourceAccessTypeDatabaseView">
 						<label for="inputName" class="col-sm-2 col-form-label">Formato:</label>
 						<div class="col-sm-10">
 							<select class="form-control" name="format" [(ngModel)]="newResourceFormat">
@@ -91,12 +82,66 @@
 						</div>
 					</div>
 					<div class="form-group col-12">
-						<div class="row justify-content-end pb-5">
+						<div class="row justify-content-end">
 							<div class="btn-group" role="group" aria-label="Action Buttons">
 								<button type="submit" class="btn btn-primary" (click)="addResource()">
 									<i class="fa fa-plus"></i> Añadir</button>
-								<button type="button" (click)="undoSaveResource()" class="btn btn-danger">
-									<i class="fa fa-close"></i> Borrar</button>
+								<button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">
+										<i class="fa fa-close"></i> Cancelar
+								</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade modalShowResource" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		<div *ngIf="resource != undefined" class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2 class="modal-title">Información Recurso</h2>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form class="col-12 content-fluid">
+					<div class="form-group row">
+						<label for="inputUrl" class="col-sm-2 col-form-label">Url:</label>
+						<div class="col-sm-10">
+							<p>{{resource.url}}</p>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="inputFile" class="col-sm-2 col-form-label">Tipo</label>
+						<div class="col-sm-10">
+							<p *ngIf="resource.resource_type == 'view'"><i class="fa fa-database"></i> Vista BBDD</p>
+							<p *ngIf="resource.resource_type == 'file'"><i class="fa fa-file"></i> Fichero</p>
+							<p *ngIf="resource.resource_type == 'url'"><i class="fa fa-external-link"></i> Url Externa</p>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="inputName" class="col-sm-2 col-form-label">Nombre:</label>
+						<div class="col-sm-10">
+							<p>{{resource.name}}</p>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="inputDescription" class="col-sm-2 col-form-label">Descripción:</label>
+						<div class="col-sm-10">
+							<p>{{resource.description}}</p>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="inputName" class="col-sm-2 col-form-label">Formato:</label>
+						<div class="col-sm-10">
+							<p>{{resource.format}}</p>
+						</div>
+					</div>
+					<div class="form-group col-12">
+						<div class="row justify-content-end">
+							<div class="btn-group" role="group" aria-label="Action Buttons">
+								<button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">Volver</button>
 							</div>
 						</div>
 					</div>
@@ -106,62 +151,89 @@
 	</div>
 
 	<div class="modal fade modalEditResource" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-			<div *ngIf="resource != undefined" class="modal-dialog modal-lg">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title">Añadir Recurso</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<form class="col-12 content-fluid">
-						<div class="form-group row">
-							<label for="inputUrl" class="col-sm-2 col-form-label">Url:</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" name="url" id="inputUrl" [(ngModel)]="resource.url" placeholder="http://example.com/external-data.csv">
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="inputFile" class="col-sm-2 col-form-label">Dato</label>
-							<div class="col-sm-10">
-								<p>resouce.file</p>
-								<!-- <input type="File" class="form-control" name="dato" id="inputPassword3" placeholder="Dato"> -->
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="inputName" class="col-sm-2 col-form-label">Nombre:</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" id="name" required [(ngModel)]="resource.name" name="name">
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="inputDescription" class="col-sm-2 col-form-label">Descripción:</label>
-							<div class="col-sm-10">
-								<input type="area" class="form-control" name="description" id="inputDescription" [(ngModel)]="resource.description" placeholder="Algunas notas útiles sobre los datos">
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="inputName" class="col-sm-2 col-form-label">Formato:</label>
-							<div class="col-sm-10">
-								<select class="form-control" name="format" [(ngModel)]="resource.format">
-									<option *ngFor="let format of formatos" [ngValue]="format.value">{{format.label}}</option>
-								</select>
-							</div>
-						</div>
-						<div class="form-group col-12">
-							<div class="row justify-content-end pb-5">
-								<div class="btn-group" role="group" aria-label="Action Buttons">
-									<button type="submit" class="btn btn-primary" (click)="updateResource()">
-										<i class="fa fa-plus"></i> Actualizar</button>
-									<button type="button" (click)="undoUpdateResource()" class="btn btn-danger">
-										<i class="fa fa-close"></i> Cancelar</button>
-								</div>
-							</div>
-						</div>
-					</form>
+		<div *ngIf="resource != undefined" class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2 class="modal-title">Editar Recurso</h2>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
 				</div>
+				<form class="col-12 content-fluid pt-1">
+					<div class="form-group row">
+						<label for="inputUrl" class="col-sm-2 col-form-label">Url:</label>
+						<div class="col-sm-10">
+							<p>{{resource.url}}</p>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="inputFile" class="col-sm-2 col-form-label">Tipo</label>
+						<div class="col-sm-10">
+							<p *ngIf="resource.resource_type == 'view'">Vista BBDD</p>
+							<p *ngIf="resource.resource_type == 'file'">Fichero</p>
+							<p *ngIf="resource.resource_type == 'url'">Url Externa</p>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="inputName" class="col-sm-2 col-form-label">Nombre:</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="name" required [(ngModel)]="resource.name" name="name">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="inputDescription" class="col-sm-2 col-form-label">Descripción:</label>
+						<div class="col-sm-10">
+							<input type="area" class="form-control" name="description" id="inputDescription" [(ngModel)]="resource.description" placeholder="Algunas notas útiles sobre los datos">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="inputName" class="col-sm-2 col-form-label">Formato:</label>
+						<div class="col-sm-10">
+							<p>{{resource.format}}</p>
+						</div>
+					</div>
+					<div class="form-group col-12">
+						<div class="row justify-content-end">
+							<div class="btn-group" role="group" aria-label="Action Buttons">
+								<button type="submit" class="btn btn-primary" (click)="updateResource()" data-dismiss="modal" >
+									<i class="fa fa-plus"></i> Actualizar</button>
+								<button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">
+									<i class="fa fa-close"></i> Cancelar
+								</button>
+							</div>
+						</div>
+					</div>
+				</form>
 			</div>
 		</div>
+	</div>
+	<div class="modal fade modalRemoveResource" tabindex="-1" id="modalRemoveResource" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2 class="modal-title">Eliminar Recurso</h2>
+					<button type="button" class="close" data-dismiss="modal" (click)="undoDeleteResource()" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form class="col-12 content-fluid">
+					<div class="form-group">
+						<label class="col-form-label">¿Esta seguro que desea borrar el recurso?</label>
+					</div>
+					<div class="form-group col-12">
+						<div class="row justify-content-end">
+							<div class="btn-group" role="group" aria-label="Action Buttons">
+								<button type="submit" class="btn btn-danger" (click)="deleteResource()">
+									<i class="fa fa-trash"></i> Eliminar</button>
+								<button type="button" (click)="undoDeleteResource()" class="btn btn-primary">
+									<i class="fa fa-close"></i> Cancelar</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 
 	<p-growl [(value)]="msgs"></p-growl>
 
@@ -189,7 +261,7 @@
 					<a class="nav-link" data-toggle="tab" href="#extra" role="tab">Extras</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" data-toggle="tab" href="#pub_lic" role="tab">Publicador y licencia</a>
+					<a class="nav-link" data-toggle="tab" href="#pub_lic" role="tab">Publicador y licencia *</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" data-toggle="tab" href="#files" role="tab">Ficheros de datos *</a>
@@ -232,7 +304,7 @@
 						<p>
 							Por favor, escoge la temática que crees que se adapta mejor a la información que contiene tu conjunto de datos.
 						</p>
-						<!-- <p-dropdown [options]="topics" [(ngModel)]="selectedTopic" [style]="{'width':'300px'}"></p-dropdown> -->
+						
 						<select class="form-control" [(ngModel)]="selectedTopic">
 							<option *ngFor="let topSel of topicsSelect" [ngValue]="topSel.value">{{topSel.label}}</option>
 						</select>
@@ -244,7 +316,7 @@
 							<a href="http://eurovoc.europa.eu/drupal/?q=es">http://eurovoc.europa.eu/drupal/?q=es</a>) y su uso mejora mucho la interoperabilidad del conjunto de datos.
 						</p>
 						<p>Escribe la primera letra en mayúscula y el resto en minúscula.</p>
-						<!-- <input type="text" class="col-12" pInputText> -->
+						
 						<div class="form-group">
 							<label for="" class="col-2 col-form-label">Etiquetas</label>
 							<div class="dropdown">
@@ -320,15 +392,13 @@
 						Fecha de primera publicación del conjunto de datos (esta información la rellena automáticamente el sistema).
 					</p>
 					<b>{{dataset?.metadata_created | date: 'dd/MM/yyyy'}}</b>
-					<!-- <p-calendar showSeconds="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" [(ngModel)]="publishDateInput" 
-					 [showTime]="true"></p-calendar>-->
+					
 					<h3 style="margin-top: 2%;">Fecha de la última modificación del conjunto de datos</h3>
 					<p>
 						Fecha de última modificación del conjunto de datos (esta información la rellena automáticamente el sistema).
 					</p>
 					<b>{{dataset?.metadata_modified | date: 'dd/MM/yyyy'}}</b>
-					<!-- <p-calendar showSeconds="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2030" [(ngModel)]="updateDateInput"
-					 [showTime]="true"></p-calendar> -->
+
 					<h3 style="margin-top: 2%;">Frecuencia de actualización</h3>
 					<p>
 						Por favor, indica la frecuencia con la que se actualiza la información del conjunto de datos:
@@ -336,7 +406,6 @@
 					<select class="form-control" [(ngModel)]="extraFrequency">
 						<option *ngFor="let fre of freq" [ngValue]="fre.value">{{fre.label}}</option>
 					</select>
-					<!-- <p-dropdown [options]="freq" [style]="{'width':'300px'}"></p-dropdown> -->
 
 					<h3 style="margin-top: 2%;">Cobertura temporal del conjunto de datos</h3>
 					<p>
@@ -373,29 +442,33 @@
 					<div class="col-12">
 
 						<div class="form-check">
-							<label class="custom-control custom-checkbox col-12" *ngFor="let languaje of languajes">
-									<input *ngIf="languaje != 'Otro'"type="checkbox" class="custom-control-input" (change)="changeCheckBoxLang(languaje,null)" >
-									<input *ngIf="languaje == 'Otro'" type="checkbox" class="custom-control-input" value="checkLangBoolOther" (change)="changeCheckBoxLang(languaje,otherLangInput.value)" >
-									
-									<span class="custom-control-indicator"></span>
-									<span class="custom-control-description">{{languaje}}</span>
-							</label>
-						</div>
-						<input type="text" class="form-control" [(ngModel)]="checkLangOther" placeholder="Otro" (keydown)="changeCheckBoxLang('Otro',otherLangInput.value)" #otherLangInput>
-							<!-- <p-checkbox value="{{languaje}}" label="{{languaje}}"></p-checkbox> -->
-							<!-- <label *ngFor="let languaje of languajes" class="custom-control custom-checkbox col-12">
-									<input type="checkbox" class="custom-control-input" value="{{languaje}}">
-									<span class="custom-control-indicator"></span>
-									<span class="custom-control-description">{{languaje}}</span>
+							<label class="custom-control custom-checkbox col-12">
+								<input type="checkbox" class="custom-control-input" [checked]="checkLangBoolEs" (change)="changeCheckBoxLang('Español')">
+								<span class="custom-control-indicator"></span>
+								<span class="custom-control-description">Español</span>
 							</label>
 							<label class="custom-control custom-checkbox col-12">
-									<input type="checkbox" class="custom-control-input" value="other">
-									<span class="custom-control-indicator"></span>
-									<span class="custom-control-description">Otro</span>
-									<input type="text" size="50" pInputText>
-							</label> -->
-
-
+								<input type="checkbox" class="custom-control-input" [checked]="checkLangBoolEn" (change)="changeCheckBoxLang('Inglés')">
+								<span class="custom-control-indicator"></span>
+								<span class="custom-control-description">Inglés</span>
+							</label>
+							<label class="custom-control custom-checkbox col-12">
+								<input type="checkbox" class="custom-control-input" [checked]="checkLangBoolFr" (change)="changeCheckBoxLang('Francés')">
+								<span class="custom-control-indicator"></span>
+								<span class="custom-control-description">Francés</span>
+							</label>
+							<label class="custom-control custom-checkbox col-12">
+								<input type="checkbox" class="custom-control-input" [checked]="checkLangBoolArg_Lng" (change)="changeCheckBoxLang('Lenguas aragonesas')">
+								<span class="custom-control-indicator"></span>
+								<span class="custom-control-description">Lenguas aragonesas</span>
+							</label>
+							<label class="custom-control custom-checkbox col-12">
+								<input type="checkbox" class="custom-control-input" [checked]="checkLangBoolOther" (change)="changeCheckBoxLang('Otro')">
+								<span class="custom-control-indicator"></span>
+								<span class="custom-control-description">Otro</span>
+							</label>
+						</div>
+						<input type="text" class="form-control" [(ngModel)]="checkLangOther" placeholder="Otro" #otherLangInput>
 					</div>
 				</div>
 				<div class="tab-pane" id="extra" role="tabpanel">
@@ -443,7 +516,7 @@
 								<div class="col-sm-9">
 									<p>{{urlDic}}</p>
 								</div>
-								<button class="col-sm-2 btn btn-danger" type="button" (click)="removeUrl()">Quitar
+								<button class="col-sm-2 btn btn-danger" type="button" (click)="removeUrl(urlDic)">Quitar
 									<i class="fa fa-close"></i>
 								</button>
 							</div>
@@ -460,22 +533,15 @@
 							</div>
 						</li>
 					</ul>
-					<!-- <div class="col-12" *ngFor="let urlDic of extraDictionaryURL; let i of index">
-						<p class="col-10">{{urlDic}}</p>
-						
-						<button class="btn btn-primary" type="button" (click)="quitUrl()" ><i class="fa fa-close"></i> Quitar</button>
-					</div>
-					<button type="button" (click)="addUrl()" pButton label="Añadir"></button> -->
 				</div>
 				<div class="tab-pane" id="pub_lic" role="tabpanel">
-					<h3 style="margin-top: 2%;">Publicador</h3>
+					<h3 style="margin-top: 2%;">Publicador *</h3>
 					<p>
 						Seleccione una organización entre las disponibles:
 					</p>
 					<select class="form-control" [(ngModel)]="selectedOrg">
 						<option *ngFor="let orgSel of orgsSelect" [ngValue]="orgSel.value">{{orgSel.label}}</option>
 					</select>
-					<!-- <p-dropdown [options]="publicadores" [(ngModel)]="selectedPublicador" [style]="{'width':'300px'}"></p-dropdown> -->
 					<p>
 						En esta sección se muestran la organización encargada de la publicación de este conjunto de datos tal y cómo se facilitarán
 						a los usuarios.
@@ -492,7 +558,7 @@
 						<li>
 							Enlace a la pizarra de administración:
 							<span>
-								<button type="button" routerLink="../../datacenterhome" pButton label="Pizarra"></button>
+								<button type="button" routerLink="../../../organizations/list" pButton label="Pizarra"></button>
 							</span>
 						</li>
 					</ul>
@@ -524,66 +590,31 @@
 							servidor (este último caso lo desaconsejamos y sólo se realizará si no existe otra forma de suministrar la información).
 						</li>
 					</ul>
-					<p-dataTable [loading]="loading" [value]="resources" [responsive]="true" emptyMessage="No se han encontrado recursos." (onSort)="setOrder($event)" [rows]="10" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]">
-							<p-column field="name" header="Nombre" sortable="custom" [sortable]="true"></p-column>
-							<p-column field="format" header="Formato" sortable="custom" [sortable]="true"></p-column>
-							<p-column header="Edición" [style]="{'width':'15%'}">
-								<ng-template pTemplate="body" let-resource="rowData">
-									<button type="button" class="btn btn-primary" data-toggle="modal" (click)="openEditResource(resource)" data-target=".modalAddResource"><i class="fa fa-search"></i></button>
-									<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".modalEditResource"><i class="fa fa-edit"></i></button>
-									<button type="button" class="btn btn-primary" data-toggle="modal" (click)="openRemoveResource(resource)" data-target=".modalRemoveResource"><i class="fa fa-trash"></i></button>
-									<!-- <button pButton type="button" icon="fa-search" (click)="showDialog(user, false, false)"></button>
-									<button pButton type="button" icon="fa-edit" (click)="showDialog(user, true, false)"></button>
-									<button pButton type="button" icon="fa-trash" (click)="showDeleteDialog(user)"></button> -->
-								</ng-template>
-							</p-column>
-						</p-dataTable>
-						<div class="col-12">
-							<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".modalAddResource">
+					<p-dataTable [loading]="loading" [value]="resources" [responsive]="false" emptyMessage="No se han encontrado recursos." (onSort)="setOrder($event)" [rows]="10" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]">
+						<p-column field="name" header="Nombre" sortable="custom" [sortable]="false"></p-column>
+						<p-column field="resource_type" header="Tipo" sortable="custom" [sortable]="false">
+							<ng-template pTemplate="body" let-resource="rowData">
+								<div *ngIf="resource.resource_type == 'view'"><i class="fa fa-database"></i> Vista BBDD</div>
+								<div *ngIf="resource.resource_type == 'file'"><i class="fa fa-file"></i> Fichero</div>
+								<div *ngIf="resource.resource_type == 'url'"><i class="fa fa-external-link"></i> Url Externa</div>
+							</ng-template>
+						</p-column>
+						<p-column field="format" header="Formato" sortable="custom" [sortable]="false"></p-column>
+						<p-column header="Edición" [style]="{'width':'14%'}">
+							<ng-template pTemplate="body" let-resource="rowData">
+								<button type="button" class="btn btn-primary" data-toggle="modal" (click)="openShowResource(resource)" data-target=".modalShowResource"><i class="fa fa-search"></i></button>
+								<button type="button" class="btn btn-primary" data-toggle="modal" (click)="openEditResource(resource)" data-target=".modalEditResource"><i class="fa fa-edit"></i></button>
+								<button type="button" class="btn btn-primary" data-toggle="modal" (click)="openRemoveResource(resource)" data-target=".modalRemoveResource"><i class="fa fa-trash"></i></button>
+							</ng-template>
+						</p-column>
+						<p-footer>
+							<div class="ui-helper-clearfix" style="width:100%">
+								<button type="button" class="btn btn-primary" data-toggle="modal" style="float:left" data-target=".modalAddResource" (click)="resetAddResourceModal()">
 								<i class="fa fa-plus"></i> Añadir</button>
-						</div>
-					
-
-					<!-- <div class="col-12" *ngFor="let file of dataset.resources; let i = index">
-						<div class="card">
-							<div class="card-block">
-								<h3 class="card-title">Recurso {{+i+1}}</h3>
 							</div>
-							<ul class="list-group list-group-flush">
-								<li class="list-group-item">
-									<h4>Nombre del recurso</h4>
-									<input type="text" class="inpu" placeholder="Nombre" [(ngModel)]="file.name">
-								</li>
-								<li class="list-group-item">
-									<h4>Formato de descarga</h4>
-									<p-dropdown [options]="formatos" placeholder="Selecciona un formato" [(ngModel)]="file.format" [style]="{'width':'300px'}"></p-dropdown>
-								</li>
-								<li class="list-group-item">
-									<h4>Modo de acceso</h4>
-									<p-dropdown [options]="accessModes" placeholder="Selecciona un modo de acceso" [style]="{'width':'300px'}"></p-dropdown>
-								</li>
-								<li class="list-group-item">
-									<h4>Acceso al recurso</h4>
-									<p-dropdown [options]="accesoRecurso" placeholder="Selecciona un tipo de acceso" [(ngModel)]="accesoSelected" [style]="{'width':'300px'}"></p-dropdown>
-								</li>
-								<li class="list-group-item">
-									<h4>Contenido</h4>
-									<input *ngIf="accesoSelected==='0'" type="text" size="50" placeholder="http://..." pInputText>
-									<p-dropdown *ngIf="accesoSelected==='1'" placeholder="Selecciona una vista" [options]="vistas" [style]="{'width':'300px'}"></p-dropdown>
-									<p-fileUpload *ngIf="accesoSelected==='2'" name="demo[]" url="http://localhost:4200/upload" (onUpload)="onUpload($event)"
-									 multiple="multiple" accept="image/*" maxFileSize="1000000">
-										<ng-template pTemplate type="content">
-											<ul *ngIf="uploadedFiles.length">
-												<li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
-											</ul>
-										</ng-template>
-									</p-fileUpload>
-								</li>
-							</ul>
-						</div>
-					</div> -->
-					<!-- End  File Card-->
-					
+						</p-footer>
+						</p-dataTable>
+						
 					<p>
 						Importante:
 					</p>
@@ -608,7 +639,7 @@
 				<div class="btn-group" role="group" aria-label="Action Buttons">
 					<button type="button" (click)="saveDataset()" class="btn btn-primary">Guarda y sigue</button>
 					<button type="button" (click)="saveDatasetEnd()" class="btn btn-primary">Guarda y finaliza</button>
-					<button type="button" (click)="showDeleteDialog(dataset.title,dataset.name)" class="btn btn-danger">Cancelar</button>
+					<button type="button" (click)="showCancelDialog(dataset.title,dataset.name)" class="btn btn-danger">Cancelar</button>
 				</div>
 			</div>
 		</div>

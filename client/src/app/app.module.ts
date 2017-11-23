@@ -80,6 +80,7 @@ import { DatasetsAdminService } from './services/admin/datasets-admin.service';
 import { TopicsAdminService } from './services/admin/topics-admin.service';
 import { OrganizationsAdminService } from './services/admin/organizations-admin.service';
 import { CampusAdminService } from './services/admin/campus-admin.service';
+import { AodCoreAdminService} from './services/admin/aod-core-admin.service';
 
 export function HttpLoaderFactory(http: HttpClient) {
 	return new TranslateHttpLoader(http, '../assets/i18n/', '.json');
@@ -201,6 +202,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 		TopicsAdminService,
 		OrganizationsAdminService,
 		CampusAdminService,
+		AodCoreAdminService,
 		ConfirmationService
 	],
 	bootstrap: [AppComponent]

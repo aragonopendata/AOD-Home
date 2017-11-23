@@ -6,11 +6,34 @@ import { Constants } from '../../app.constants';
 
 @Injectable()
 export class OrganizationsAdminService {
+	currentUser: any;
 
 	organizations: OrganizationAdmin[];
 	organization: OrganizationAdmin;
 
-	constructor(private http: Http) {}
+	constructor(private http: Http) {
+		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+	}
+
+	public getCurrentUser() {
+		return this.currentUser;
+	}
+
+	private createAuthorizationHeader(headers: Headers) {
+		console.log(this.currentUser);
+		if (this.currentUser && this.currentUser.token && this.currentUser.key) {
+			//Authorization header: API_KEY:JWT_Token
+			let authorizationHeaderValue = this.currentUser.token + ':' + this.currentUser.key;
+			headers.append('Authorization', authorizationHeaderValue);
+		}
+	}
+
+	private buildRequestHeaders() {
+		let headers = new Headers();
+		this.createAuthorizationHeader(headers);
+		headers.append('Content-Type', ' application/json');
+		return headers;
+	}
 
 	public getOrganization(){
 		return this.organization;
@@ -22,17 +45,19 @@ export class OrganizationsAdminService {
 
 	public getOrganizations() {
 		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_ORGANIZATIONS;
-		return this.http.get(fullUrl).map(res => res.json());
+		let headers = this.buildRequestHeaders();
+		return this.http.get(fullUrl, { headers: headers }).map(res => res.json());
 	}
 
 	public getOrganizationByName(organizationName: string) {
 		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_ORGANIZATIONS 
 						+ '/' + organizationName;
-		return this.http.get(fullUrl).map(res => res.json());
+		let headers = this.buildRequestHeaders();
+		return this.http.get(fullUrl, { headers: headers }).map(res => res.json());
 	}
 
 	public createOrganization(organization: OrganizationAdmin, webpage: string, address: string, person: string) {
-        let headers = new Headers();
+		let headers = this.buildRequestHeaders();
         headers.append('Content-Type', 'application/json');
         let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_ORGANIZATION_CUD_OPERATIONS;
         let requestBodyParams = {
@@ -67,22 +92,23 @@ export class OrganizationsAdminService {
         return this.http.post(fullUrl, JSON.stringify(requestBodyParams), {headers: headers}).map(res => res.json());
     }
 
-	 public removeOrganization(organization_name: string, user_id: number,  user_name:string) {
-        let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_ORGANIZATION_CUD_OPERATIONS;
-        let requestBodyParams = {
-            requestUserId: user_id,
-            requestUserName: user_name,
-            name:organization_name
-        };
-		let headers = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
-        let options = new RequestOptions({ headers: headers, body: JSON.stringify(requestBodyParams)}); // Create a request option
-        return this.http.delete(fullUrl, options).map((res:Response) => res.json());
-    } 
-
 	public updateOrganization(organization: OrganizationAdmin){
-		let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_ORGANIZATION_CUD_OPERATIONS;
-        return this.http.put(fullUrl, JSON.stringify(organization), {headers: headers}).map(res => res.json());
+		let headers = this.buildRequestHeaders();
+	    let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_ORGANIZATION_CUD_OPERATIONS;
+	    return this.http.put(fullUrl, JSON.stringify(organization), {headers: headers}).map(res => res.json());
 	}
+
+	public removeOrganization(organization_name: string, user_id: number,  user_name:string) {
+		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_ORGANIZATION_CUD_OPERATIONS;
+		let requestBodyParams = {
+			requestUserId: user_id,
+			requestUserName: user_name,
+			name:organization_name
+		};
+		let headers = this.buildRequestHeaders();
+		let options = new RequestOptions({ headers: headers, body: JSON.stringify(requestBodyParams)});
+		return this.http.delete(fullUrl, options).map((res:Response) => res.json());
+	} 
+
+
 }

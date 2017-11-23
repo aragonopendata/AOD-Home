@@ -53,11 +53,6 @@
 			</div>
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-5"><b>Rol: </b></div>
-				<!-- <div class="ui-grid-col-7">
-					<p *ngFor="let rol of user.role">
-						{{rol?.description}}
-					</p>
-				</div> -->
 			</div>
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-5"><b>Fecha de alta: </b></div>
@@ -89,7 +84,8 @@
 			</div>
 			<div class="ui-grid-row" style="padding: 5px;">
 				<div class="ui-grid-col-3"><label for="name">Usuario:</label></div>
-				<div class="ui-grid-col-9"><input pInputText id="name" [(ngModel)]="user.name" /></div>
+				<div *ngIf="user.id == undefined" class="ui-grid-col-9"><input pInputText id="name" [(ngModel)]="user.name" /></div>
+				<div *ngIf="user.id != undefined" class="ui-grid-col-9"><label>{{user.name}}</label></div>
 			</div>
 			<div class="ui-grid-row" style="padding: 5px;" *ngIf="!user.id">
 				<div class="ui-grid-col-3"><label for="name">Contraseña:</label></div>
@@ -98,7 +94,7 @@
 			</div>
 			<div class="ui-grid-row" style="padding: 5px;">
 					<div class="ui-grid-col-3"><label for="email">Email:</label></div>
-					<div class="ui-grid-col-9"><input pInputText id="email" [(ngModel)]="user.email" /></div>
+					<div class="ui-grid-col-9"><input pInputText type="email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" id="email" [(ngModel)]="user.email" /></div>
 				</div>
 			<div class="ui-grid-row" style="padding: 5px;">
 				<div class="ui-grid-col-3"><label>Rol:</label></div>

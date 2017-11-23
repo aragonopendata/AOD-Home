@@ -49,7 +49,7 @@ exports.DB_ADMIN_INSERT_USER = 'INSERT INTO manager.users (name, password, email
 							   + 'RETURNING manager.users.id';
 												 
 exports.DB_ADMIN_INSERT_USER_APP_PERMISSION = 'INSERT INTO manager.users_applications_permissions (id_user, id_application, access_key) '
-											+ 'VALUES ($1, $2, $3) ' 
+											+ 'VALUES ($1,(SELECT  id FROM manager.applications apps WHERE apps.appplication_name = $2), $3) ' 
 											+ 'RETURNING manager.users_applications_permissions.id_user';
 
 exports.DB_ADMIN_INSERT_USERS_ROLES = 'INSERT INTO manager.users_roles (id_user, id_role) '

@@ -79,7 +79,9 @@
 		</p-column>
 		<p-footer>
 			<div class="ui-helper-clearfix" style="width:100%">
-				<button type="button" pButton icon="fa-plus" (click)="addDataset()" style="float:left" routerLink="/{{routerLinkAdminDatacenterDatasetsEdit}}" label="Añade un conjunto de datos"></button>
+				<button class="btn btn-primary" type="button" icon="fa-plus" (click)="addDataset()" style="float:left" routerLink="/{{routerLinkAdminDatacenterDatasetsEdit}}" >
+					<i class="fa fa-plus"></i> Añade un conjunto de datos
+				</button>
 			</div>
 		</p-footer>
 	</p-dataTable>
