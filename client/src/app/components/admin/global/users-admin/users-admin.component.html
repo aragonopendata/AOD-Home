@@ -53,6 +53,7 @@
 			</div>
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-5"><b>Rol: </b></div>
+				<!-- <div *ngIf="user && user?.role" class="ui-grid-col-7"><p *ngFor="let rol of user?.role">{{rol?.description}}</p></div>				 -->
 			</div>
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-5"><b>Fecha de alta: </b></div>
@@ -78,25 +79,25 @@
 	</p-dialog>
 	<p-dialog appendTo="body" header="Modificar usuario" [(visible)]="displayEditDialog" [responsive]="true" showEffect="fade" modal="true">
 		<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="user">
-			<div class="ui-grid-row" style="padding: 5px;">
+			<div *ngIf="!createOrg" class="ui-grid-row" style="padding: 5px;">
 				<div class="ui-grid-col-3"><label for="name">Nombre completo:</label></div>
 				<div class="ui-grid-col-9"><input pInputText id="fullname" [(ngModel)]="user.fullname" /></div>
 			</div>
-			<div class="ui-grid-row" style="padding: 5px;">
+			<div *ngIf="!createOrg" class="ui-grid-row" style="padding: 5px;">
 				<div class="ui-grid-col-3"><label for="name">Usuario:</label></div>
 				<div *ngIf="user.id == undefined" class="ui-grid-col-9"><input pInputText id="name" [(ngModel)]="user.name" /></div>
 				<div *ngIf="user.id != undefined" class="ui-grid-col-9"><label>{{user.name}}</label></div>
 			</div>
-			<div class="ui-grid-row" style="padding: 5px;" *ngIf="!user.id">
+			<div *ngIf="!user.id && !createOrg" class="ui-grid-row" style="padding: 5px;">
 				<div class="ui-grid-col-3"><label for="name">Contraseña:</label></div>
 				<div class="ui-grid-col-9"><input type="password" feedback="true" pPassword id="password" weakLabel="Seguridad débil" 
 					mediumLabel="Seguridad media" strongLabel="Seguridad fuerte" [(ngModel)]="user.password" /></div>
 			</div>
-			<div class="ui-grid-row" style="padding: 5px;">
+			<div *ngIf="!createOrg" class="ui-grid-row" style="padding: 5px;">
 					<div class="ui-grid-col-3"><label for="email">Email:</label></div>
 					<div class="ui-grid-col-9"><input pInputText type="email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" id="email" [(ngModel)]="user.email" /></div>
 				</div>
-			<div class="ui-grid-row" style="padding: 5px;">
+			<div *ngIf="!createOrg" class="ui-grid-row" style="padding: 5px;">
 				<div class="ui-grid-col-3"><label>Rol:</label></div>
 				<div class="ui-grid-col-9">
 					<select class="form-control" [(ngModel)]="selectedRole">
@@ -105,13 +106,55 @@
 					</select>
 				</div>
 			</div>
-			<div class="ui-grid-row" style="padding: 5px;">
+			<div *ngIf="!createOrg" class="ui-grid-row" style="padding: 5px;">
+				<div class="ui-grid-col-3"><label>Organización: </label></div>
+				<div class="ui-grid-col-9">
+					<select class="form-control" [(ngModel)]="selectedOrg">
+						<option *ngFor="let orgSel of orgsSelect" [ngValue]="orgSel.value">{{orgSel.label}}</option>
+					</select>
+					<button class="btn btn-primary mt-2" (click)="changeCreateOrg()">Crear Organización</button>
+				</div>
+			</div>			
+			<div *ngIf="createOrg" class="ui-grid-row" style="padding: 5px;">
+				<div class="ui-grid-col-12"><label>Creación de Organización: </label></div>
+			</div>
+			<div *ngIf="createOrg" class="ui-grid-row" style="padding: 5px;">
+				<div class="ui-grid-col-3"><label>Nombre Organización: </label></div>
+				<div class="ui-grid-col-9">
+					<input class="form-control" type="text" id="title" [(ngModel)]="organizationTitle" placeholder="Nombre">
+				</div>
+			</div>			
+			<div *ngIf="createOrg" class="ui-grid-row" style="padding: 5px;">
+				<div class="ui-grid-col-3"><label>Web Organización: </label></div>
+				<div class="ui-grid-col-9">
+					<input class="form-control" type="text" id="title" [(ngModel)]="organizationWeb" placeholder="Web">
+				</div>
+			</div>			
+			<div *ngIf="createOrg" class="ui-grid-row" style="padding: 5px;">
+				<div class="ui-grid-col-3"><label>Descripción Organización: </label></div>
+				<div class="ui-grid-col-9">
+					<input class="form-control" type="text" id="title" [(ngModel)]="organizationDescription" placeholder="Nombre">
+				</div>
+			</div>			
+			<div *ngIf="createOrg" class="ui-grid-row" style="padding: 5px;">
+				<div class="ui-grid-col-3"><label>Dirección Organización: </label></div>
+				<div class="ui-grid-col-9">
+					<input class="form-control" type="text" id="title" [(ngModel)]="organizationAdress" placeholder="Dirección">
+				</div>
+			</div>			
+			<div *ngIf="createOrg" class="ui-grid-row" style="padding: 5px;">
+				<div class="ui-grid-col-3"><label>Persona Responsable: </label></div>
+				<div class="ui-grid-col-9">
+					<input class="form-control" type="text" id="title" [(ngModel)]="organizationPerson" placeholder="Persona Responsable">
+				</div>
+			</div>							
+			<div *ngIf="!createOrg" class="ui-grid-row" style="padding: 5px;">
 				<div class="ui-grid-col-3"><label>Activo: </label></div>
 				<div class="ui-grid-col-9">
 					<p-inputSwitch onLabel="Sí" offLabel="No" [(ngModel)]="activatedUser"></p-inputSwitch>
 				</div>
 			</div>
-			<div class="ui-grid-row" style="padding: 5px;">
+			<div *ngIf="!createOrg" class="ui-grid-row" style="padding: 5px;">
 				<div class="ui-grid-col-3"><label for="description">Descripción: </label></div>
 				<div class="ui-grid-col-9">
 					<textarea pInputTextarea id="description" [(ngModel)]="user.description"></textarea>
@@ -119,8 +162,11 @@
 			</div>
 		</div>
 		<p-footer>
-			<div class="ui-dialog-buttonpane ui-helper-clearfix">
+			<div *ngIf="!createOrg" class="ui-dialog-buttonpane ui-helper-clearfix">
 				<button type="button" pButton icon="fa-check" label="Guardar" (click)="saveUser()"></button>
+			</div>
+			<div *ngIf="createOrg" class="ui-dialog-buttonpane ui-helper-clearfix">
+				<button type="button" pButton icon="fa-check" label="Crear Organización" (click)="saveOrg()"></button>
 			</div>
 		</p-footer>
 	</p-dialog>

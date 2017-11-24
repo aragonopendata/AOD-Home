@@ -105,7 +105,7 @@ router.get('/users/:userId/organizations', function (req, res, next) {
             if (apiKey) {
                 logger.info('API KEY del usuario recuperada: ' + apiKey);
                 getUserOrganizations(apiKey).then(getOrganizationResponse => {
-                    logger.info('Respuesta de CKAN: ' + getOrganizationResponse.success);
+                    logger.info('Respuesta de CKAN: ' + getOrganizationResponse);
                     if (getOrganizationResponse) {
                         res.json(getOrganizationResponse);
                     } else {
@@ -150,7 +150,9 @@ router.post('/users', function (req, res, next) {
         var user = req.body;
         logger.notice('Usuario que llega desde request: ' + JSON.stringify(user));
         //0. CHECKING REQUEST PARAMETERS
-        if (user.name != '' && user.email != '' && user.password != '' && user.role != '') {
+        if (user.name != '' && user.email != '' && user.password != '' && user.role != '' && user.organization != '') {
+            let userOrganization = user.organization;
+            delete user.organization;
             //1. CHEKING PERMISSIONS OF THE USER WHO MAKES THE REQUEST
             let apiKey = utils.getApiKey(req.get('Authorization'));
             if (apiKey) {
@@ -168,12 +170,20 @@ router.post('/users', function (req, res, next) {
                                 if (groupsResponse) {
                                     setGroupsToUser(apiKey, user, groupsResponse).then(setGroupsToUserResponse => {
                                         if (setGroupsToUserResponse) {
-                                            res.json({
-                                                'status': constants.REQUEST_REQUEST_OK,
-                                                'success': true,
-                                                'result': 'ALTA DE USUARIOS - Usuario dado de alta correctamente'
-                                            });
-                                            logger.info('ALTA DE USUARIOS - Usuario dado de alta correctamente')
+                                            setOrganizationToUser(apiKey, user, userOrganization).then(setOrganizationToUserResponse => {
+                                                if(setOrganizationToUserResponse){
+                                                    res.json({
+                                                        'status': constants.REQUEST_REQUEST_OK,
+                                                        'success': true,
+                                                        'result': 'ALTA DE USUARIOS - Usuario dado de alta correctamente'
+                                                    });
+                                                    logger.info('ALTA DE USUARIOS - Usuario dado de alta correctamente')
+                                                }else{
+                                                    logger.error('ALTA DE USUARIOS - No se ha podido asociar el usuario a la organización');
+                                                    res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'ALTA DE USUARIOS - No se ha podido insertar el usuario en base de datos' });
+                                                    return;
+                                                }
+                                            })
                                         } else {
                                             logger.error('ALTA DE USUARIOS - No se ha podido insertar el usuario en base de datos');
                                             res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'ALTA DE USUARIOS - No se ha podido insertar el usuario en base de datos' });
@@ -590,6 +600,59 @@ var getCkanGroups = function getCkanGroups(userApiKey) {
         } catch (error) {
             console.log(error);
             logger.error('Error obteniendo grupos de CKAN:', error);
+            reject(error);
+        }
+    });
+}
+var setOrganizationToUser = function setOrganizationToUser(apiKey, user, userOrganization) {
+    return new Promise((resolve, reject) => {
+        try {
+            let userRole = '';
+
+            if (user.role == 2 || user.role == 1) {
+                userRole = 'admin'
+            }
+            if (user.role == 3) {
+                userRole = 'editor'
+            }
+            if (user.role == 4) {
+                userRole = 'member'
+            }
+                //Mandatory fields
+                var create_group_post_data = {
+                    'id': userOrganization,
+                    'username': user.name,
+                    'role': userRole
+                };
+
+                var httpRequestOptions = {
+                    url: constants.CKAN_API_BASE_URL + constants.CKAN_URL_PATH_ORGANIZATION_MEMBER_CREATE,
+                    method: constants.HTTP_REQUEST_METHOD_POST,
+                    body: create_group_post_data,
+                    json: true,
+                    headers: {
+                        'Content-Type': constants.HTTP_REQUEST_HEADER_CONTENT_TYPE_JSON,
+                        'User-Agent': constants.HTTP_REQUEST_HEADER_USER_AGENT_NODE_SERVER_REQUEST,
+                        'Authorization': apiKey
+                    }
+                };
+                logger.info('Configuraćión llamada POST: ' + JSON.stringify(httpRequestOptions));
+                request(httpRequestOptions, function (err, res, body) {
+                    if (err) {
+                        reject(err);
+                    }
+                    if (res) {
+                        if (res.body.success) {
+                            resolve(res.body.success);
+                        } else {
+                            reject(JSON.stringify(res.statusCode) + ' - ' + JSON.stringify(res.statusMessage));
+                        }
+                    } else {
+                        reject('Respuesta nula');
+                    }
+                });
+        } catch (error) {
+            logger.error('Error insertando usuario en los grupos de CKAN:', error);
             reject(error);
         }
     });

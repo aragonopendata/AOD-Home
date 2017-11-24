@@ -115,6 +115,7 @@ exports.CKAN_URL_PATH_ORGANIZATION_DELETE = 'organization_delete';
 exports.CKAN_URL_PATH_ORGANIZATION_UPDATE = 'organization_update';
 exports.CKAN_URL_PATH_ORGANIZATION_PURGE = 'organization_purge';
 exports.CKAN_URL_PATH_ORGANIZATION_LIST_OF_USER = 'organization_list_for_user';
+exports.CKAN_URL_PATH_ORGANIZATION_MEMBER_CREATE = 'organization_member_create';
 
 /* DATASETS */
 //Results per page in lists

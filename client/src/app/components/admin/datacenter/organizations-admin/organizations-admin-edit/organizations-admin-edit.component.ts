@@ -24,6 +24,10 @@ export class OrganizationsAdminEditComponent implements OnInit {
   address: Extra = new Extra();
   person: Extra = new Extra();
 
+  extraWebpageExist: boolean = false;
+  extraAddressExist: boolean = false;
+  extraPersonExist: boolean = false;
+
   //Boolean to know if we update or save an organization.
   organizationEmpty: boolean;
 
@@ -143,18 +147,28 @@ export class OrganizationsAdminEditComponent implements OnInit {
       this.organizationAdminMessages.push({severity:Constants.GROWL_SEVERITY_INFO, summary:Constants.GROWL_UPDATE_ORGANIZATION_SUMMARY
           , detail:'Nombre de organización vacío'});
     }else{
-      this.org.requestUserId = this.user.id;
-      this.org.requestUserName = this.user.username;
       for(let index=0; index < this.org.extras.length; index++){
         if(this.org.extras[index].key == Constants.ORGANIZATION_EXTRA_WEBPAGE){
           this.org.extras[index].value = this.webpage.value;
+          this.extraWebpageExist = true;
         }
         if(this.org.extras[index].key == Constants.ORGANIZATION_EXTRA_ADDRESS){
           this.org.extras[index].value = this.address.value;
+          this.extraAddressExist = true;
         }
         if(this.org.extras[index].key == Constants.ORGANIZATION_EXTRA_PERSON){
           this.org.extras[index].value = this.person.value;
+          this.extraPersonExist = true;
         }
+      }
+      if(!this.extraWebpageExist && this.webpage.value != undefined){
+        this.org.extras.push(this.webpage);
+      }
+      if(!this.extraAddressExist && this.address.value != undefined){
+        this.org.extras.push(this.address);
+      }
+      if(!this.extraPersonExist && this.person.value != undefined){
+        this.org.extras.push(this.person);
       }
       this.organizationsAdminService.updateOrganization(this.org).subscribe(result => {
           if (result.success) {

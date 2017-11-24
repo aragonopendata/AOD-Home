@@ -26,6 +26,7 @@ export class HomeAdminComponent implements OnInit {
 	ngOnInit() {
 		this.getPermissions();
 		this.currentUserName = this.user.fullname;
+		this.usersAdminService.refreshUser();
 	}
 
 	getPermissions(): void{

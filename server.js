@@ -62,7 +62,7 @@ app.use(constants.API_BASE_URL_ADMIN, rolesAdmin);
 app.use(constants.API_BASE_URL_ADMIN, verifyToken, datasetsAdmin);
 app.use(constants.API_BASE_URL_ADMIN, verifyToken, tagsAdmin);
 app.use(constants.API_BASE_URL_ADMIN, topicsAdmin);
-app.use(constants.API_BASE_URL_ADMIN, organizationsAdmin);
+app.use(constants.API_BASE_URL_ADMIN, verifyToken, organizationsAdmin);
 app.use(constants.API_BASE_URL_ADMIN, aodCore);
 //app.use('/api/admin', campusAdmin);
 

@@ -13,6 +13,9 @@ export class UsersAdminService {
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	}
 
+	public refreshUser() {
+		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+	}
 	public getCurrentUser() {
 		return this.currentUser;
 	}
@@ -49,15 +52,18 @@ export class UsersAdminService {
 	}
 
 	public getOrganizationsByCurrentUser() {
-		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_USERS 
+		this.refreshUser();
+		if (this.currentUser != undefined){
+			let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_USERS 
 			+ '/' + this.currentUser.id + Constants.SERVER_API_LINK_ADMIN_USER_ORGANIZATIONS;
-		let headers = this.buildRequestHeaders();
-		return this.http.get(fullUrl, { headers: headers }).map(res => res.json());
+			let headers = this.buildRequestHeaders();
+			return this.http.get(fullUrl, { headers: headers }).map(res => res.json());
+		}
 	}
 
-	public createUser(user: User) {
+	public createUser(user: any) {
 		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_USERS;
-		let requestBodyParams: any = user;
+		let requestBodyParams = user;
 		requestBodyParams.role = user.role[0].id;
 		let headers = this.buildRequestHeaders();
 		return this.http.post(fullUrl, JSON.stringify(requestBodyParams), { headers: headers }).map(res => res.json());

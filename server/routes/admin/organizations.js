@@ -56,10 +56,7 @@ router.post('/organization', function (req, res, next) {
         var organization = req.body;
         logger.notice('Organización que llega desde request: ' + organization.name);
         //0. CHECKING REQUEST PARAMETERS
-        if (organization.requestUserId != '' && organization.requestUserName != '' && organization.name != '') {
-            var requestUserId = organization.requestUserId;
-            var requestUserName = organization.requestUserName;
-            let apiKey = getApiKey(req.get('Authorization'));
+            let apiKey = utils.getApiKey(req.get('Authorization'));
             if (apiKey) {
                  logger.info('API KEY del usuario recuperada: ' + apiKey);
                 //2. INSERTING ORGANIZATION IN CKAN
@@ -70,8 +67,8 @@ router.post('/organization', function (req, res, next) {
                             logger.info('Organización insertada ' + insertCkanResponse.result.name);
                             res.json({
                                 'status': constants.REQUEST_REQUEST_OK,
-                                'success': 'true',
-                                'message': 'Organización insertada correctamente.'                             
+                                'success': true,
+                                'message': 'Organización insertada correctamente.'                   
                             });
                             return;
                         } else {
@@ -98,12 +95,8 @@ router.post('/organization', function (req, res, next) {
                 res.json({ 'status': constants.REQUEST_ERROR_FORBIDDEN, 'error': 'OBTENER USUARIO - API KEY incorrecta' });
                 return;
             }
-        } else {
-            logger.error('ALTA DE ORGANIZACIONES - Parámetros incorrectos');
-            res.json({ 'status': constants.REQUEST_ERROR_BAD_DATA, 'error': 'ALTA DE ORGANIZACIONES - Parámetros incorrectos' });
-            return;
-        }
     } catch (error) {
+        console.log(error);
         logger.error('ALTA DE ORGANIZACIONES - Error creando organización');
         res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'ALTA DE ORGANIZACIONES - Error creando organización' });
     }
@@ -115,9 +108,7 @@ router.put('/organization', function (req, res, next) {
         var organization = req.body;
         logger.notice('Organización que llega desde request: ' + organization.name);
         //0. CHECKING REQUEST PARAMETERS
-        if (organization.requestUserId != '' && organization.requestUserName != '' && organization.name != '') {
-             var requestUserId = organization.requestUserId;
-             var requestUserName = organization.requestUserName;
+        if ( organization.name != '') {
              let apiKey = utils.getApiKey(req.get('Authorization'));
              if (apiKey) {
                 logger.info('API KEY del usuario recuperada: ' + apiKey);
@@ -130,7 +121,7 @@ router.put('/organization', function (req, res, next) {
                             res.json({
                                 'status': constants.REQUEST_REQUEST_OK,
                                 'success': 'true',
-                                'message': 'Organización actualizada correctamente.'                             
+                                'message': 'Organización actualizada correctamente.'
                             });
                             return;
                         } else {
@@ -174,9 +165,7 @@ router.delete('/organization', function (req, res, next) {
         var organization = req.body;
         logger.notice('Organización a borrar que llega desde request: ' + organization.name);
         //0. CHECKING REQUEST PARAMETERS
-        if (organization.requestUserId != '' && organization.requestUserName != '' && organization.name != '') {
-             var requestUserId = organization.requestUserId;
-             var requestUserName = organization.requestUserName;
+        if ( organization.name != '') {
             //1. CHEKING PERMISSIONS OF THE USER WHO MAKES THE REQUEST
             let apiKey = utils.getApiKey(req.get('Authorization'));
             if (apiKey) {

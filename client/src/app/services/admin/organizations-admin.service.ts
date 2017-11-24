@@ -56,12 +56,8 @@ export class OrganizationsAdminService {
 	}
 
 	public createOrganization(organization: OrganizationAdmin, webpage: string, address: string, person: string) {
-		let headers = this.buildRequestHeaders();
-        headers.append('Content-Type', 'application/json');
-        let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_ORGANIZATION_CUD_OPERATIONS;
+		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_ORGANIZATION_CUD_OPERATIONS;
         let requestBodyParams = {
-			requestUserId: organization.requestUserId,
-			requestUserName: organization.requestUserName,
 			name: organization.name,
 			title: organization.title,
 			description: organization.description,
@@ -88,7 +84,9 @@ export class OrganizationsAdminService {
 			}
 			requestBodyParams.extras.push(personNotEmpty);
 		}
-        return this.http.post(fullUrl, JSON.stringify(requestBodyParams), {headers: headers}).map(res => res.json());
+		let headers = this.buildRequestHeaders();
+		let options = new RequestOptions({ headers: headers}); // Create a request option
+		return this.http.post(fullUrl, JSON.stringify(requestBodyParams), options).map((res:Response) => res.json());
     }
 
 	public updateOrganization(organization: OrganizationAdmin){
@@ -100,8 +98,6 @@ export class OrganizationsAdminService {
 	public removeOrganization(organization_name: string, user_id: number,  user_name:string) {
 		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_ORGANIZATION_CUD_OPERATIONS;
 		let requestBodyParams = {
-			requestUserId: user_id,
-			requestUserName: user_name,
 			name:organization_name
 		};
 		let headers = this.buildRequestHeaders();

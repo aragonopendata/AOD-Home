@@ -73,9 +73,15 @@ export class DatasetsAdminListComponent implements OnInit {
         this.usersAdminService.getOrganizationsByCurrentUser().subscribe(orgs => {
             try {
                 this.userOrgs = JSON.parse(orgs).result;
-                this.loadDatasets();
-            } catch (error) {
+                if (this.userOrgs != undefined) {
+                    this.loadDatasets();
+                } else {
+                    this.msgs.push({severity:'info', summary:'Aviso', detail:'No hay organizaciones asociadas a este usuario'});
+                    this.datasets = [];
+                }
                 
+            } catch (error) {
+                console.error('Error: loadUserOrgs() - datasets-list.component.ts');
             }
         });
     }
@@ -86,7 +92,7 @@ export class DatasetsAdminListComponent implements OnInit {
             this.searchDatasetsByText(this.textSearch);
             this.searchValue = this.textSearch;
         } else{
-			this.getDatasets(null,null)
+            this.getDatasets(null,null)
 		}
 		
 	}
@@ -221,7 +227,6 @@ export class DatasetsAdminListComponent implements OnInit {
     }
     
     showDeleteDialog(datasetTitle: string, datasetName: string){
-        console.log(datasetName);
         this.datasetTitleDelete = datasetTitle;
         this.displayDeleteDialog = true;
         this.datasetNameToDelete = datasetName;
