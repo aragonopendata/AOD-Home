@@ -154,7 +154,6 @@ export class DatasetsDetailComponent implements OnInit {
 	}
 
 	getExtras() {
-		console.log('Obteniendo extras del dataset');
 		this.extraDictionaryURL = [];
 		for (var index = 0; index < this.dataset.extras.length; index++) {
 			if (this.dataset.extras[index].key.indexOf(Constants.DATASET_EXTRA_DATA_DICTIONARY_URL) == 0) {
@@ -300,7 +299,6 @@ export class DatasetsDetailComponent implements OnInit {
 	}
 
 	makeFileSourceList() {
-		console.log('Obteniendo los recursos para mostrarlos en el dataset');
 		for (let newRes of this.dataset.resources) {
 			this.keepDataResource(newRes.id, newRes.name, newRes.url, newRes.format);
 		}

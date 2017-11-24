@@ -79,6 +79,18 @@ export class DatasetsAdminService {
 		this.datasets.push(dataset);*/
 	}
 
+	public getDatasetResourceView(resoruce_id:string) {
+		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_URL_DATASETS_RESOURCE_VIEW 
+						+ '?' + Constants.SERVER_API_LINK_PARAM_RESOURCE_ID + '=' + resoruce_id 
+		return this.http.get(fullUrl).map(res => res.json());
+	}
+
+	public getDatasetRDF(datasetName: string) {
+		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS_RDF 
+						+ '/' + datasetName;
+		return this.http.get(fullUrl).map(res => res.json());
+	}
+
 	public getTags(query: string) {
 		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_TAGS;
 		if (query) {

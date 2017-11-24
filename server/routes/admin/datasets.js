@@ -484,7 +484,6 @@ var insertDatasetInCkan = function insertDatasetInCkan(apiKey, dataset) {
     return new Promise((resolve, reject) => {
         try {
             logger.debug('Insertando dataset en CKAN');
-            console.log(dataset);
             //Mandatory fields
             var create_dataset_post_data = {
                 'name': dataset.name,

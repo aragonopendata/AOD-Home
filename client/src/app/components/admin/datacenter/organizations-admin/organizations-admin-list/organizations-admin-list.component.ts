@@ -53,7 +53,7 @@ export class OrganizationsAdminListComponent implements OnInit {
 		});
 	}
 
-	 removeOrg(org: OrganizationAdmin){	
+	removeOrg(org: OrganizationAdmin){	
 		this.organizationsAdminService.removeOrganization(org.name, this.user.id, this.user.username).subscribe( result => {
 			if (result.success) {
 				this.organizationAdminMessages = [];

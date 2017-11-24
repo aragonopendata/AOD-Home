@@ -76,7 +76,6 @@ export class OrganizationsAdminShowComponent implements OnInit {
         });
       }
     } catch (error) {
-      console.log(error);
       console.error("Error: getEmail() - organizations-admin-edit.component.ts");
     }
   }

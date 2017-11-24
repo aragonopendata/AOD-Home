@@ -120,6 +120,7 @@ export class UsersAdminComponent implements OnInit {
 		} else if (create) {
 			this.user = new User();
 			this.user.role = [new Role()];
+			this.selectedRole = undefined;
 			this.displayEditDialog = true;
 		} else {
 			this.user = this.cloneUser(user);

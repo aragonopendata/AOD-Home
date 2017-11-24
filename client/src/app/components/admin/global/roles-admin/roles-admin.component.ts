@@ -28,7 +28,6 @@ export class RolesAdminComponent implements OnInit {
 
 	showUsers(role) {
 		this.role = role;
-		console.log(this.role);
 		this.displayUsers = true;
 	}
 

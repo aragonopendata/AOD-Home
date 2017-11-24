@@ -169,7 +169,6 @@ export class OrganizationsDetailComponent implements OnInit {
 	}
 
 	setOrder(event) {
-		console.log("order");
 		switch (event.field) {
             case Constants.DATASET_LIST_SORT_COLUMN_NAME:
             this.sort == Constants.SERVER_API_LINK_PARAM_SORT_TITLE_STRING 

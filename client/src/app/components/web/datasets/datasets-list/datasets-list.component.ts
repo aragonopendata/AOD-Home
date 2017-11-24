@@ -457,7 +457,6 @@ export class DatasetsListComponent implements OnInit {
     }
 
     getDatasetsByStats(group: string, page: number, rows: number): void {
-        console.log('get Dataset by statistics');
         this.datasets = [];
         var pageNumber = (page != null ? page : 0);
         var rowsNumber = (rows != null ? rows : this.pageRows);

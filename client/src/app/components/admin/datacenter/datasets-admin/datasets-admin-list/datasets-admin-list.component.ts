@@ -67,8 +67,6 @@ export class DatasetsAdminListComponent implements OnInit {
         this.sort = Constants.ADMIN_SERVER_API_LINK_PARAM_SORT_DEFAULT_VALUE;
 
         this.loadUserOrgs();
-        
-		//this.loadDatasets();
     }
     
     loadUserOrgs(){
@@ -94,7 +92,6 @@ export class DatasetsAdminListComponent implements OnInit {
 	}
 
 	getDatasets(page: number, rows: number): void {
-        console.log(this.userOrgs);
         var orgQuery = '';
         if(this.userOrgs){
             if (this.userOrgs.length > 1) {

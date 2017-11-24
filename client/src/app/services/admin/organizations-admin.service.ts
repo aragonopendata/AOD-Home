@@ -20,7 +20,6 @@ export class OrganizationsAdminService {
 	}
 
 	private createAuthorizationHeader(headers: Headers) {
-		console.log(this.currentUser);
 		if (this.currentUser && this.currentUser.token && this.currentUser.key) {
 			//Authorization header: API_KEY:JWT_Token
 			let authorizationHeaderValue = this.currentUser.token + ':' + this.currentUser.key;
