@@ -16,6 +16,7 @@ export class UsersAdminService {
 	public refreshUser() {
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	}
+	
 	public getCurrentUser() {
 		return this.currentUser;
 	}

@@ -12,6 +12,10 @@ export class DatasetsAdminService {
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	}
 
+	public refreshUser() {
+		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+	}
+
 	public getCurrentUser() {
 		return this.currentUser;
 	}
@@ -53,6 +57,7 @@ export class DatasetsAdminService {
 	}
 
 	public getDatasets(sort: string, page: number, rows: number, orgs: string) {
+		this.refreshUser();
 		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_DATASETS 
 						+ '?' + Constants.SERVER_API_LINK_PARAM_SORT + '=' + sort 
 						+ '&' + Constants.SERVER_API_LINK_PARAM_PAGE + '=' + page.toString()

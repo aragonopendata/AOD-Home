@@ -90,9 +90,10 @@ export class OrganizationsAdminService {
     }
 
 	public updateOrganization(organization: OrganizationAdmin){
-		let headers = this.buildRequestHeaders();
 	    let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_ORGANIZATION_CUD_OPERATIONS;
-	    return this.http.put(fullUrl, JSON.stringify(organization), {headers: headers}).map(res => res.json());
+		let headers = this.buildRequestHeaders();
+		let requestBodyParams: any = organization;
+		return this.http.put(fullUrl, JSON.stringify(requestBodyParams), { headers: headers }).map(res => res.json());
 	}
 
 	public removeOrganization(organization_name: string, user_id: number,  user_name:string) {

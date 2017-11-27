@@ -417,7 +417,7 @@ var getUserOrganizations = function getUserOrganizations(userApiKey) {
         try {
             logger.debug('Obteniendo organizaciones');
             var httpRequestOptions = {
-                url: constants.CKAN_API_BASE_URL + constants.CKAN_URL_PATH_ORGANIZATION_LIST_OF_USER,
+                url: constants.CKAN_API_BASE_URL + constants.CKAN_URL_PATH_ORGANIZATION_LIST_OF_USER + '?permission=manage_group',
                 method: constants.HTTP_REQUEST_METHOD_GET,
                 headers: {
                     'Authorization': userApiKey

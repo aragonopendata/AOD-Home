@@ -164,7 +164,6 @@ export class UsersAdminComponent implements OnInit {
 			this.selectedRole = undefined;
 			this.displayEditDialog = true;
 		} else {
-			console.log(user);
 			this.user = this.cloneUser(user);
 			this.displayViewDialog = true;
 		}
@@ -231,7 +230,6 @@ export class UsersAdminComponent implements OnInit {
 			}
 			try {
 				this.organizationsAdminService.createOrganization(this.newOrg, this.organizationWeb, this.organizationAdress, this.organizationPerson).subscribe(result => {
-					console.log(result);
 					if (result.status == 200 && result.success == true){
 						this.userAdminMessages = [];
 						this.userAdminMessages.push({ severity: 'success', summary: 'Alta de organización', detail: 'Organización creada correctamente' });
