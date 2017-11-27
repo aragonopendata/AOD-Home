@@ -37,8 +37,8 @@
     </div>
   </div>
   <br/>
-  <div *ngIf="showEditButton" class="ui-helper-clearfix" style="width:100%">
-    <button type="button" pButton icon="fa-plus" style="float:right" routerLink="../../edit/{{org.name}}" label="Editar"></button>
+  <div class="ui-helper-clearfix" style="width:100%">
     <button type="button" pButton icon="fa-arrow-left" style="float:right; background-color: red; border-color: red;" (click)="cancel();" label="Volver"></button>
+    <button *ngIf="showEditButton" type="button" pButton icon="fa-plus" style="float:right" routerLink="../../edit/{{org.name}}" label="Editar"></button>
   </div>
 </div>
