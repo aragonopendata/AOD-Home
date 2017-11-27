@@ -65,7 +65,6 @@ export class DatasetsAdminListComponent implements OnInit {
             }
 		});
         this.sort = Constants.ADMIN_SERVER_API_LINK_PARAM_SORT_DEFAULT_VALUE;
-
         this.loadUserOrgs();
     }
     
@@ -92,7 +91,7 @@ export class DatasetsAdminListComponent implements OnInit {
             this.searchDatasetsByText(this.textSearch);
             this.searchValue = this.textSearch;
         } else{
-            this.getDatasets(null,null)
+            this.getDatasets(null,null);
 		}
 		
 	}
