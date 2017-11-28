@@ -61,7 +61,7 @@ export class DatasetsDetailComponent implements OnInit {
 	datasetListErrorTitle: string;
 	datasetListErrorMessage: string;
 
-	hovers: any[] = [];
+	//hovers: any[] = [];
 
 	constructor(private datasetsService: DatasetsService, private activatedRoute: ActivatedRoute, public sanitizer: DomSanitizer) {
 		this.datasetListErrorTitle = Constants.DATASET_LIST_ERROR_TITLE;
@@ -289,7 +289,6 @@ export class DatasetsDetailComponent implements OnInit {
 					}		
 					this.datasetsRecommended.push(datasetRecommendedByTag);
 				}
-				this.setHovers();
 			} catch (error) {
 				console.error("Error: getDatasetsRecommended() - datasets-detail.component.ts");
 				this.errorTitle = this.datasetListErrorTitle;
@@ -372,27 +371,6 @@ export class DatasetsDetailComponent implements OnInit {
 		return exists;
 	}
 
-	setHovers() {
-		for (let ds of this.datasetsRecommended) {
-			this.hovers.push({ label: ds.name, hover: false });
-		}	
-	}
-
-	setHover(name, index) {
-		for (let hover of this.hovers) {
-			if (hover.label === name) {
-				hover.hover = !hover.hover;
-			}
-		}
-	}
-
-	unsetHover(name, index) {
-		for (let hover of this.hovers) {
-			if (hover.label === name) {
-				hover.hover = !hover.hover;
-			}
-		}
-	}
 
 	showDataset(dataset: Dataset) {
 		this.datasetsService.setDataset(dataset);

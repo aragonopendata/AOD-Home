@@ -58,7 +58,6 @@ export class DatasetsAdminShowComponent implements OnInit {
 	datasetListErrorTitle: string;
 	datasetListErrorMessage: string;
 
-	hovers: any[] = [];
 
 	constructor(private datasetsService: DatasetsService, private activatedRoute: ActivatedRoute, public sanitizer: DomSanitizer, public router: Router) {
 		this.datasetListErrorTitle = Constants.DATASET_LIST_ERROR_TITLE;
@@ -104,7 +103,7 @@ export class DatasetsAdminShowComponent implements OnInit {
 				this.getExtras();
 				this.makeFileSourceList();
 			} catch (error) {
-				console.error("Error: loadDataset() - datasets-detail.component.ts");
+				console.error("Error: loadDataset() - datasets-admin-show.component.ts");
 				this.errorTitle = this.datasetListErrorTitle;
                 this.errorMessage = this.datasetListErrorMessage;
 			}
@@ -113,21 +112,23 @@ export class DatasetsAdminShowComponent implements OnInit {
 
 	getResourceView(){
 		this.resourceView = [];
-		for (var i = 0; i < this.dataset.resources.length; i++) {
-			this.datasetsService.getDatasetResourceView(this.dataset.resources[i].id).subscribe(result => {
-				try {
-					if(JSON.parse(result).result[0]){
-						this.resourceView.push(JSON.parse(result).result[0]);
-					}else{
-						this.resourceView.push(null);
+		if (this.dataset.resources != undefined ){
+			for (var i = 0; i < this.dataset.resources.length; i++) {
+				this.datasetsService.getDatasetResourceView(this.dataset.resources[i].id).subscribe(result => {
+					try {
+						if(JSON.parse(result).result[0]){
+							this.resourceView.push(JSON.parse(result).result[0]);
+						}else{
+							this.resourceView.push(null);
+						}
+					} catch (error) {
+						console.error("Error: getResourceView() - datasets-admin-show.component.ts");
+						this.errorTitle = this.datasetListErrorTitle;
+						this.errorMessage = this.datasetListErrorMessage;
 					}
-				} catch (error) {
-					console.error("Error: getResourceView() - datasets-detail.component.ts");
-					this.errorTitle = this.datasetListErrorTitle;
-					this.errorMessage = this.datasetListErrorMessage;
-				}
-			});
-
+				});
+	
+			}
 		}
 	}
 
@@ -309,7 +310,7 @@ export class DatasetsAdminShowComponent implements OnInit {
 				}
 			}
 		} catch (error) {
-			console.error("Error: loadResourceIframe() - datasets-detail.component.ts");
+			console.error("Error: loadResourceIframe() - datasets-admin-show.component.ts");
 		}	
 	}
 

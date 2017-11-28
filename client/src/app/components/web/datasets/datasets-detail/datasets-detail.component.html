@@ -187,18 +187,17 @@
 		<h4>También te pueden interesar estos datos</h4>
 
 		 <div class="ui-g">
-				<div class="ui-sm-12 ui-md-6 ui-lg-4 tarjetaContainer" *ngFor="let dsRecommended of datasetsRecommended; let i = index" (mouseenter)="setHover(dsRecommended.name, i)" (mouseleave)="unsetHover(dsRecommended.name, i)">
+				<div class="ui-sm-12 ui-md-6 ui-lg-4 tarjetaContainer" *ngFor="let dsRecommended of datasetsRecommended; let i = index">
 					<div class="recommendedCard" routerLink="/datos/catalogo/dataset/{{dsRecommended.name}}" (click)="showDataset(dsRecommended)">
-						<div *ngFor="let topic of dsRecommended.groups">
-							
-							<div class="cardSize" *ngIf="!hovers[i]?.hover">
+						<div class="wrapper" *ngFor="let topic of dsRecommended.groups">							
+							<div class="cardSize">
 								<img class="card-img-top" src="{{assetsUrl}}/{{topic.image_url}}" alt="{{topic.title | uppercase}}" width="fit-content" height="fit-content">
 								<p>{{topic.title}}</p>
 								<div class="recommended-card-block">
 									<p>{{dsRecommended.title}}</p>
 								</div>
 							</div>
-							<div *ngIf="hovers[i]?.hover" class="detail bg-faded" style="width: 354px; height: 258px; padding: 10px; background-color: rgba(235,241,244, 0.95); ">
+							<div class="detail bg-faded">
 									<h6 class="back-title">TÍTULO</h6>
 									<h6 class="back-value">{{dsRecommended.title}}</h6>
 									<h6 class="back-title">CATEGORÍA</h6>
