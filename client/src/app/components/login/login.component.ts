@@ -43,12 +43,10 @@ export class LoginComponent implements OnInit {
             if(this.dataParam === Constants.LOGIN_DATA_PARAM_TYPE_ORGANIZATION){
                 this.dataNameParam = params[Constants.ROUTER_LINK_DATA_PARAM_EDIT_DATA];
                 this.isOrg = true;
-                this.getOrganization(this.dataNameParam);
             }
             if(this.dataParam === Constants.LOGIN_DATA_PARAM_TYPE_DATASET){
                 this.dataNameParam = params[Constants.ROUTER_LINK_DATA_PARAM_EDIT_DATA];
                 this.isDataset = true;
-                this.getDataset(this.dataNameParam);
             }
           });
         
@@ -63,7 +61,7 @@ export class LoginComponent implements OnInit {
             if (result === true) {
                 // login successful
                 this.announce();
-                this.user = this.usersAdminService.getCurrentUser();
+                this.user = this.authenticationService.getCurrentUser();
                 if(this.isOrg){
                     this.editOrganization();
                 }else if(this.isDataset){
@@ -86,64 +84,67 @@ export class LoginComponent implements OnInit {
         }
     }
 
-    getOrganization(name: string): void{
-        this.organizationsAdminService.getOrganizationByName(name).subscribe(org => {
-            try{
-              this.organization = JSON.parse(org).result;
-            }catch(error){
-              console.error("Error getOrganization() - login.component.ts");
-            }
-          }); 
-    }
-
-    getDataset(name: string): void{
-        this.datasetAdminService.getDatasetByName(name).subscribe( dataResult => {
+    editDataset(){
+        this.datasetAdminService.getDatasetByName(this.dataNameParam).subscribe( dataResult => {
             try {
-				this.dataset = JSON.parse(dataResult).result;
-                this.getOrganization(this.dataset.owner_org);
+        		this.dataset = JSON.parse(dataResult).result;
+                this.organizationsAdminService.getOrganizationByName(this.dataset.owner_org).subscribe(org => {
+                    try{
+                        this.organization = JSON.parse(org).result;
+                        if(this.user.rol != Constants.ADMIN_USER_ROL_ORGANIZATION_MEMBER){
+                            if(this.isMember()){
+                                this.router.navigate(['/' + Constants.ROUTER_LINK_ADMIN_DATACENTER_DATASETS_EDIT + '/' + this.dataset.name]);
+                            }else{
+                                this.router.navigate(['/' + Constants.ROUTER_LINK_ADMIN]);
+                            }
+                            //Have no permissions, redirecto to main admin page
+                        }else{
+                            this.router.navigate(['/' + Constants.ROUTER_LINK_ADMIN]);
+                        }
+
+                    }catch(error){
+                        console.error("Error editDataset() - login.component.ts");
+                    }
+                }); 
             }catch(error){
-				console.error("Error: getDataset() - login.component.ts");
+        		console.error("Error: editDataset() - login.component.ts");
             }
         });
     }
 
     editOrganization(): void{
-        
-        //Check if the user have permissions to edit
-		if(this.user.rol === Constants.ADMIN_USER_ROL_GLOBAL_ADMIN || this.user.rol === Constants.ADMIN_USER_ROL_ORGANIZATION_ADMIN){
-            if(this.isMember()){
-                this.router.navigate(['/' + Constants.ROUTER_LINK_ADMIN_DATACENTER_ORGANIZATIONS_EDIT + '/' + this.organization.name]);
-            }else{
-                this.router.navigate(['/' + Constants.ROUTER_LINK_ADMIN]);
+        this.organizationsAdminService.getOrganizationByName(this.dataNameParam).subscribe(org => {
+            try{
+                this.organization = JSON.parse(org).result;
+                if(this.user.rol != Constants.ADMIN_USER_ROL_ORGANIZATION_MEMBER){
+                    if(this.isMember()){
+                        this.router.navigate(['/' + Constants.ROUTER_LINK_ADMIN_DATACENTER_ORGANIZATIONS_EDIT + '/' + this.organization.name]);
+                    }else{
+                        this.router.navigate(['/' + Constants.ROUTER_LINK_ADMIN]);
+                    }
+                    //Have no permissions, redirecto to main admin page
+                }else{
+                    this.router.navigate(['/' + Constants.ROUTER_LINK_ADMIN]);
+                }
+
+            }catch(error){
+                console.error("Error editDataset() - login.component.ts");
             }
-            //Have no permissions, redirecto to main admin page
-		}else{
-            this.router.navigate(['/' + Constants.ROUTER_LINK_ADMIN]);
-        }
-    }
-    
-    editDataset(): void{
-         
-        //Check if the user have permissions to edit
-         if(this.user.rol != Constants.ADMIN_USER_ROL_ORGANIZATION_MEMBER){
-            if(this.isMember()){
-                this.router.navigate(['/' + Constants.ROUTER_LINK_ADMIN_DATACENTER_DATASETS_EDIT + '/' + this.dataset.name]);
-            }else{
-                this.router.navigate(['/' + Constants.ROUTER_LINK_ADMIN]);
-            }
-            //Have no permissions, redirecto to main admin page
-		}else{
-            this.router.navigate(['/' + Constants.ROUTER_LINK_ADMIN]);
-        }
+        });
     }
 
     //Check if the user belongs to the organization
     isMember(): boolean{
-        for(let user of this.organization.users){
-            if(this.user.username == user.name){
-                this.userIsMember = true;
+        try {
+            for(let user of this.organization.users){
+                if(this.user.username == user.name){
+                    this.userIsMember = true;
+                }
             }
+            return this.userIsMember;
+        } catch (error) {
+            console.log(error);
         }
-        return this.userIsMember;
+        
     }
 }

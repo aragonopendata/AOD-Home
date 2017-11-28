@@ -45,7 +45,7 @@
 			</ul>
 			<div class="tab-content">
 				<div role="tabpanel" class="tab-pane" *ngFor="let resource of resourcesAux ; let i2 = index" id="resource{{i2}}">		
-					<button *ngFor="let url of resource.sources; let i3 = index" class="tags" pButton type="button" label="{{resource.formats[i3]}}" style="margin: 2px;" (click)="removeResourceIframe();loadResourceIframe(resource.sources_ids[i3])"></button>
+					<button *ngFor="let url of resource.sources; let i3 = index" class="tags" pButton type="button" label="{{resource.formats[i3]}}" style="margin: 2px;" (click)="removeResourceIframe();loadResourceIframe(resource, i3)"></button>
 					<iframe *ngIf="iframeRes" height="650px" class="col-12 embed-responsive-item" [src]='sanitizer.bypassSecurityTrustResourceUrl(iframeRes)' frameBorder="0"></iframe>
 					<h5 *ngIf="iframeError && !iframeRes">{{iframeError}}</h5>
 				</div>

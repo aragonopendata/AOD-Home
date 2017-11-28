@@ -36,10 +36,12 @@ export class UsersAdminComponent implements OnInit {
 	displayViewDialog: boolean;
 	displayEditDialog: boolean;
 
+	editDialogTitle: string;
 	users: User[];
 	user: User;
 	activatedUser: boolean = true;
 
+	userRole: Role;
 	role: Role;
 	roles: Role[];
 	selectedRole: number;
@@ -68,9 +70,9 @@ export class UsersAdminComponent implements OnInit {
 		this.usersAdminService.getUsers(this.sort, pageNumber, rowsNumber).subscribe(users => {
 			try {
 				for (var index = 0; index < users.length; index++) {
-					this.user = new User();
+					this.user = new User();					
 					this.user = users[index].user;
-					this.users = [...this.users, this.user];
+					this.users = [...this.users, this.user];	
 				}
 			} catch (error) {
 				console.error('Error: getUsers() - users-admin.component.ts');
@@ -155,10 +157,13 @@ export class UsersAdminComponent implements OnInit {
 
 	showDialog(user, edit, create) {
 		if (edit) {
+			this.editDialogTitle = 'Modificar Usuario';
 			this.user = this.cloneUser(user);
 			this.selectedRole = this.user.role[0].id;
+			this.userRole = this.user.role[0];
 			this.displayEditDialog = true;
 		} else if (create) {
+			this.editDialogTitle = 'Crear Usuario';
 			this.user = new User();
 			this.user.role = [new Role()];
 			this.selectedRole = undefined;

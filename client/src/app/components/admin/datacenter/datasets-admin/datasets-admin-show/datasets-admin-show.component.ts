@@ -44,6 +44,7 @@ export class DatasetsAdminShowComponent implements OnInit {
 	resourcesAux: ResourceAux[] = new Array();
 	//Dynamic URL build parameters
 	assetsUrl: string;
+	routerLinkDatasetList: string;
 	routerLinkDataCatalogDataset: string;
 	routerLinkDataCatalogTopics: string;
 	routerLinkDataCatalogTags: string;
@@ -59,9 +60,10 @@ export class DatasetsAdminShowComponent implements OnInit {
 
 	hovers: any[] = [];
 
-	constructor(private datasetsService: DatasetsService, private activatedRoute: ActivatedRoute, public sanitizer: DomSanitizer) {
+	constructor(private datasetsService: DatasetsService, private activatedRoute: ActivatedRoute, public sanitizer: DomSanitizer, public router: Router) {
 		this.datasetListErrorTitle = Constants.DATASET_LIST_ERROR_TITLE;
-        this.datasetListErrorMessage = Constants.DATASET_LIST_ERROR_MESSAGE;
+		this.datasetListErrorMessage = Constants.DATASET_LIST_ERROR_MESSAGE;
+		this.routerLinkDatasetList = Constants.ROUTER_LINK_ADMIN_DATACENTER_DATASETS;
 		this.routerLinkDataCatalogDataset = Constants.ROUTER_LINK_DATA_CATALOG_DATASET;
 		this.routerLinkDataCatalogTopics = Constants.ROUTER_LINK_DATA_CATALOG_TOPICS;
 		this.routerLinkDataCatalogTags = Constants.ROUTER_LINK_DATA_CATALOG_TAGS;
@@ -289,11 +291,18 @@ export class DatasetsAdminShowComponent implements OnInit {
 		});
 	}
 
-	loadResourceIframe(resource: any){
+	loadResourceIframe(resource: any, index: number){
+		let res = resource.sources_ids[index];
+		let format = resource.formats[index];
+		let source = resource.sources[index];
 		try {
 			for (var i = 0; i < this.resourceView.length; i++) {
-				if (this.resourceView[i] && this.resourceView[i].resource_id  && this.resourceView[i].resource_id == resource) {
-					this.iframeRes = Constants.AOD_API_CKAN_BASE_URL+Constants.DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_DATASET+this.dataset.name+Constants.DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_RESOURCE+this.resourceView[i].resource_id+Constants.DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_VIEW+this.resourceView[i].id;
+				if (this.resourceView[i] && this.resourceView[i].resource_id  && this.resourceView[i].resource_id == res) {
+					if (format != 'HTML'){
+						this.iframeRes = Constants.AOD_API_CKAN_BASE_URL+Constants.DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_DATASET+this.dataset.name+Constants.DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_RESOURCE+this.resourceView[i].resource_id+Constants.DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_VIEW+this.resourceView[i].id;
+					} else {
+						this.iframeRes = source;
+					}
 					this.iframeError = undefined;
 				}else{
 					this.iframeError = Constants.DATASET_LIST_ERROR_IFRAME_MESSAGE;
@@ -307,4 +316,9 @@ export class DatasetsAdminShowComponent implements OnInit {
 	removeResourceIframe(){
 		this.iframeRes = undefined;
 	}
+
+	goToDatasetList(){
+		this.router.navigate(['/' + this.routerLinkDatasetList]); 
+	}
+	
 }

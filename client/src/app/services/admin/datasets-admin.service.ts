@@ -50,6 +50,7 @@ export class DatasetsAdminService {
 	}
 
 	public getDatasetByName(datasetName: string) {
+		this.refreshUser();
 		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_DATASETS 
 						+ '/' + datasetName;
 		let headers = this.buildRequestHeaders();

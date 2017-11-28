@@ -31,7 +31,7 @@
 		</a>
 	</div>
 </div>
-<button class="tags" icon="fa-pencil" pButton type="button" label="Editar" style="margin-bottom: 10px;" routerLink="/login/dataset/{{dataset.name}}"></button>	
+<button type="button" class="btn btn-primary" routerLink="/login/dataset/{{dataset.name}}"><i class="fa fa-pencil"></i> Editar</button>
 <div class="content row">
 	<div class="dtsetPreview col-12" style='margin-bottom: 10px'>
 		<div class="title">
@@ -45,7 +45,7 @@
 			</ul>
 			<div class="tab-content">
 				<div role="tabpanel" class="tab-pane" *ngFor="let resource of resourcesAux ; let i2 = index" id="resource{{i2}}">		
-					<button *ngFor="let url of resource.sources; let i3 = index" class="tags" pButton type="button" label="{{resource.formats[i3]}}" style="margin: 2px;" (click)="removeResourceIframe();loadResourceIframe(resource.sources_ids[i3])"></button>
+					<button *ngFor="let url of resource.sources; let i3 = index" type="button" class="btn btn-primary m-1" (click)="removeResourceIframe();loadResourceIframe(resource, i3)">{{resource.formats[i3]}}</button>
 					<iframe *ngIf="iframeRes" height="650px" class="col-12 embed-responsive-item" [src]='sanitizer.bypassSecurityTrustResourceUrl(iframeRes)' frameBorder="0"></iframe>
 					<h5 *ngIf="iframeError && !iframeRes">{{iframeError}}</h5>
 				</div>
@@ -53,60 +53,71 @@
 		</div>
 	</div>
 	<div class="infodtset col-sm-12 col-md-8">
-		<div class="title">
-			<h5>Información del conjunto de datos</h5>
-		</div>
-		<div class="container-fluid">
-			<div class="section" *ngIf="dataset.title">
-				<h6>Título</h6>
-				<p>{{dataset.title}}</p>
+		<div class="card p-2">
+			<h3 class="card-header">Información del conjunto de datos</h3>
+			<div class="card-block mb-2">
+			  <h4 class="card-title" *ngIf="dataset.title">Titulo</h4>
+			  <p class="card-text">{{dataset.title}}</p>
 			</div>
-			<div class="section" *ngIf="dataset.notes">
-				<h6>Descripción</h6>
-				<p>{{dataset.notes}}</p>
+			<div class="card-block mb-2" *ngIf="dataset.notes">
+				<h4 class="card-title">Descripción</h4>
+				<p class="card-text">
+					{{dataset.notes}}
+				</p>
 			</div>
-			<div class="section" *ngIf="dataset.groups">
-				<h6>Categoría</h6>
+			<div class="card-block mb-2" *ngIf="dataset.groups">
+				<h4 class="card-title">Categoría</h4>
 				<p *ngFor="let group of dataset.groups">
 					<a routerLink='/{{routerLinkDataCatalogTopics}}/{{group.name}}'>{{group.title}}</a>
 				</p>
 			</div>
-			<div class="section" *ngIf="dataset.tags">
-				<h6>Etiquetas y palabras clave</h6>
-				<button *ngFor="let tag of dataset.tags" class="tags" pButton type="button" routerLink="/{{routerLinkDataCatalogTags}}" [queryParams]="{etq:tag.name}"
-				 pButton label="{{tag.name}}" style="margin: 2px;"></button>
+			<div class="card-block mb-2" *ngIf="dataset.tags">
+				<h4 class="card-title">Etiquetas y palabras clave</h4>
+				<h3>
+					<span *ngFor="let tag of dataset.tags" class="badge badge-pill badge-secondary m-1" routerLink="/{{routerLinkDataCatalogTags}}" [queryParams]="{etq:tag.name}">{{tag.display_name}}</span>
+				</h3>
 			</div>
-			<div class="section" *ngIf="dataset.organization">
-				<h6>Organización responsable de la publicación</h6>
+			<div class="card-block mb-2" *ngIf="dataset.organization">
+				<h4 class="card-title">Organización responsable de la publicación</h4>
 				<a routerLink='/{{routerLinkDataOrgs}}/{{dataset.organization?.name}}'>{{dataset.organization?.title}}</a>
 			</div>
-			<div class="section">
-				<h6>Territorio en el que existen los datos</h6>
-				<p>Este conjunto de datos contiene datos en el territorio de {{extraTypeAragopedia}}</p>
-				<p>Esta es la <a href="{{extraUriAragopedia}}"> URI del recurso {{extraShortUriAragopedia}}</a></p>
+			<div class="card-block mb-2">
+				<h4 class="card-title">Territorio en el que existen los datos</h4>
+				<p class="card-text">Este conjunto de datos contiene datos en el territorio de {{extraTypeAragopedia}}</p>
+				<p class="card-text">Esta es la <a href="{{extraUriAragopedia}}"> URI del recurso {{extraShortUriAragopedia}}</a></p>
 			</div>
-			<div class="section" *ngIf="extraFrequency">
-				<h6>Frecuencia de actualización</h6>
-				<p>{{extraFrequency}}</p>
+			<div class="card-block mb-2" *ngIf="extraFrequency">
+				<h4 class="card-title">Frecuencia de actualización</h4>
+				<p class="card-text">
+					{{extraFrequency}}
+				</p>
 			</div>
-			<div class="section" *ngIf="extraTemporalFrom && extraTemporalUntil">
-				<h6>Periodo de tiempo en el que existen datos</h6>
-				<p>De {{extraTemporalFrom}} a {{extraTemporalUntil}}</p>
+			<div class="card-block mb-2" *ngIf="extraTemporalFrom && extraTemporalUntil">
+				<h4 class="card-title">Periodo de tiempo en el que existen datos</h4>
+				<p class="card-text">
+					De {{extraTemporalFrom}} a {{extraTemporalUntil}}
+				</p>
 			</div>
-			<div class="section" *ngIf="dataset.license_title">
-				<h6>Licencia</h6>
-				<p><a href="{{dataset.license_url}}" target="_blank">{{dataset.license_title}}</a></p>
+			<div class="card-block mb-2" *ngIf="dataset.license_title">
+				<h4 class="card-title">Licencia</h4>
+				<p class="card-text">
+					<a href="{{dataset.license_url}}" target="_blank">{{dataset.license_title}}</a>
+				</p>
 			</div>
-			<div class="section" *ngIf="extraGranularity">
-				<h6>Nivel de detalle</h6>
-				<p>{{extraGranularity}}</p>
+			<div class="card-block mb-2" *ngIf="extraGranularity">
+				<h4 class="card-title">Nivel de detalle</h4>
+				<p class="card-text">
+					{{extraGranularity}}
+				</p>
 			</div>
-			<div class="section" *ngIf="extraDataQuality">
-				<h6>Calidad del dato</h6>
-				<p>{{extraDataQuality}}</p>
+			<div class="card-block mb-2" *ngIf="extraDataQuality">
+				<h4 class="card-title">Calidad del dato</h4>
+				<p class="card-text">
+					{{extraDataQuality}}
+				</p>
 			</div>
-			<div class="section" *ngIf="extraDictionaryURL && extraDictionaryURL.length != 0">
-				<h6>Diccionario de datos</h6>
+			<div class="card-block mb-2" *ngIf="extraDictionaryURL && extraDictionaryURL.length != 0">
+				<h4 class="card-title">Diccionario de datos</h4>
 				<a *ngFor="let dic of extraDictionaryURL; let i = index" class="tags" href="{{dic}}" target="_blank" target="_blank"
 				pButton type="button" label="[{{i+1}}] Documento de diccionario de datos"
 				style="margin: 2px;"></a>
@@ -115,25 +126,22 @@
 	</div>
 	
 	<div class="download col-sm-12 col-md-4">
-		<div class="title">
-			<h5>Descargas</h5>
-		</div>
-		<div class="container-fluid horizontalFormat">
-			<div class="section">
-				<h6>Metadatos de la colección</h6>
-				<button class="tags" pButton type="button" pButton label="RDF" (click)="downloadRDF(dataset.name)"
-				style="margin: 2px;"></button>
+		<div class="card p-2">
+			<h3 class="card-header">Descargas</h3>
+			<div class="card-block">
+			  <h4 class="card-title">Metadatos de la colección</h4>
+			  <button class="btn btn-secondary m-1" type="button" (click)="downloadRDF(dataset.name)">RDF</button>
 			</div>
-			<div class="section" *ngIf="resourcesAux.length != 0">
-				<h6>Archivos con los datos</h6>
+			<div class="card-block" *ngIf="resourcesAux">
+				<h4 class="card-title">Archivos con los datos</h4>
 				<div *ngFor="let resource of resourcesAux">
-					<p>{{resource.name}}</p>
+					<p class="card-text">{{resource.name}}</p>
 					<div *ngFor="let url of resource.sources; let i = index">
 						<div class="horizontalFormat" *ngIf="resource.getSourcesSize() != i+1">
-							<button class="tags" pButton type="button" label="{{resource.formats[i]}}" style="margin: 2px;" (click)="downloadFile(url)"></button>
+							<button class="btn btn-secondary m-1" type="button" (click)="downloadFile(url)">{{resource.formats[i]}}</button>
 						</div>
 						<div *ngIf="resource.getSourcesSize() == i+1">
-							<button class="tags" pButton type="button" label="{{resource.formats[i]}}" style="margin: 2px;" (click)="downloadFile(url)"></button>
+							<button class="btn btn-secondary m-1" type="button" (click)="downloadFile(url)">{{resource.formats[i]}}</button>
 						</div>
 					</div>
 				</div>
@@ -141,47 +149,52 @@
 		</div>
 	</div>
 	<div *ngIf="extrasIAESTNotEmpty" class="infodtset col-sm-12 col-md-8" style="margin-top: 5px;">
-			<div class="title">
-				<h5>Propiedades adicionales de los metadatos</h5>
+		<div class="card p-2">
+			<h3 class="card-header">Propiedades adicionales de los metadatos</h3>
+			<div class="card-block mb-2" *ngIf="extraIAESTTemaEstadistico">
+				<h4 class="card-title" >Tema estadístico</h4>
+				<p class="card-text">{{extraIAESTTemaEstadistico}}</p>
 			</div>
-			<div class="container-fluid">
-				<div class="section" *ngIf="extraIAESTTemaEstadistico">
-					<h6>Tema estadístico</h6>
-					<p>{{extraIAESTTemaEstadistico}}</p>
-				</div>
-				<div class="section" *ngIf="extraIAESTUnidadEstadistica">
-					<h6>Unidad Estadística</h6>
-					<p>{{extraIAESTUnidadEstadistica}}</p>
-				</div>
-				<div class="section" *ngIf="extraIAESTPoblacionEstadistica">
-					<h6>Población estadística</h6>
-					<p>{{extraIAESTPoblacionEstadistica}}</p>
-				</div>
-				<div class="section" *ngIf="extraIAESTUnidadMedida">
-					<h6>Unidad de medida</h6>
-					<p>{{extraIAESTUnidadMedida}}</p>
-				</div>
-				<div class="section" *ngIf="extraIAESTTipoOperacion">
-					<h6>Tipo de operación</h6>
-					<p>{{extraIAESTTipoOperacion}}</p>
-				</div>
-				<div class="section" *ngIf="extraIAESTTipologiaDatosOrigen">
-					<h6>Tipología de datos de origen</h6>
-					<p>{{extraIAESTTipologiaDatosOrigen}}</p>
-				</div>
-				<div class="section" *ngIf="extraIAESTFuente">
-					<h6>Fuente</h6>
-					<p>{{extraIAESTFuente}}</p>
-				</div>
-				<div class="section" *ngIf="extraIAESTTratamientoEstadistico">
-					<h6>Tratamiento estadístico</h6>
-					<p>{{extraIAESTTratamientoEstadistico}}</p>
-				</div>					
-				<div class="section" *ngIf="extraIAESTLegislacionUE">
-					<h6>Legislación UE</h6>
-					<p class="textContent" [innerHTML]="extraIAESTLegislacionUE"></p>
-				</div>					
+			<div class="card-block mb-2" *ngIf="extraIAESTUnidadEstadistica">
+				<h4 class="card-title" >Unidad Estadística</h4>
+				<p class="card-text">{{extraIAESTUnidadEstadistica}}</p>
 			</div>
+			<div class="card-block mb-2" *ngIf="extraIAESTPoblacionEstadistica">
+				<h4 class="card-title" >Población estadística</h4>
+				<p class="card-text">{{extraIAESTPoblacionEstadistica}}</p>
+			</div>
+			<div class="card-block mb-2" *ngIf="extraIAESTUnidadMedida">
+				<h4 class="card-title" >Unidad de medida</h4>
+				<p class="card-text">{{extraIAESTUnidadMedida}}</p>
+			</div>
+			<div class="card-block mb-2" *ngIf="extraIAESTTipoOperacion">
+				<h4 class="card-title" >Tipo de operación</h4>
+				<p class="card-text">{{extraIAESTTipoOperacion}}</p>
+			</div>
+			<div class="card-block mb-2" *ngIf="extraIAESTTipologiaDatosOrigen">
+				<h4 class="card-title" >Tipología de datos de origen</h4>
+				<p class="card-text">{{extraIAESTTipologiaDatosOrigen}}</p>
+			</div>
+			<div class="card-block mb-2" *ngIf="extraIAESTFuente">
+				<h4 class="card-title" >Fuente</h4>
+				<p class="card-text">{{extraIAESTFuente}}</p>
+			</div>
+			<div class="card-block mb-2" *ngIf="extraIAESTTratamientoEstadistico">
+				<h4 class="card-title" >Tratamiento estadístico</h4>
+				<p>{{extraIAESTTratamientoEstadistico}}</p>
+			</div>					
+			<div class="card-block mb-2" *ngIf="extraIAESTLegislacionUE">
+				<h4 class="card-title" >Legislación UE</h4>
+				<p class="card-text" [innerHTML]="extraIAESTLegislacionUE"></p>
+			</div>
+		</div>
 	</div>
+	<div class="col-12">
+		<div class="row justify-content-end p-5">
+			<div class="btn-group" role="group" aria-label="Action Buttons">
+				<button type="button" (click)="goToDatasetList()" class="btn btn-danger"><i class="fa fa-arrow-left" ></i> Volver</button>
+			</div>
+		</div>
+	</div>	
 </div>
 </div>

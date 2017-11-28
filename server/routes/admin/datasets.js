@@ -32,29 +32,39 @@ router.get(constants.API_URL_DATASETS, function (req, res, next) {
         if (req.query.text) {
             serviceRequestUrl += '&q=' + encodeURIComponent(req.query.text);
         }
+        serviceRequestUrl += '&include_private=true';
         logger.notice('URL de petición: ' + serviceRequestUrl);
-
-        //Proxy checking
-        let httpConf = null;
-        if (constants.REQUESTS_NEED_PROXY == true) {
-            logger.warning('Realizando petición a través de proxy');
-            let httpProxyConf = proxy.getproxyOptions(serviceRequestUrl);
-            httpConf = httpProxyConf;
-        } else {
-            httpConf = serviceRequestUrl;
+        let apiKey = utils.getApiKey(req.get('Authorization'));
+        if (apiKey) {
+            logger.info('API KEY del usuario recuperada: ' + apiKey);
+            var httpRequestOptions = {
+                url: serviceRequestUrl,
+                method: constants.HTTP_REQUEST_METHOD_GET,
+                headers: {
+                    'Content-Type': constants.HTTP_REQUEST_HEADER_CONTENT_TYPE_JSON,
+                    'User-Agent': constants.HTTP_REQUEST_HEADER_USER_AGENT_NODE_SERVER_REQUEST,
+                    'Authorization': apiKey
+                }
+            };
+            request(httpRequestOptions, function (err, response, body) {
+                if (err) {
+                    utils.errorHandler(err, res, serviceName);
+                }
+                if (response) {
+                    if (response.statusCode == 200) {
+                        res.json(body);
+                    } else {
+                        res.json(JSON.stringify(res.statusCode) + ' - ' + JSON.stringify(res.statusMessage));
+                    }
+                } else {
+                    res.json({ 'status': constants.REQUEST_ERROR_FORBIDDEN, 'error': 'OBTENER DATASETS - Error al obtener los datasets' });
+                }
+            });
+        }else {
+            logger.error('OBTENER DATASETS - Usuario no autorizado');
+            res.json({ 'status': constants.REQUEST_ERROR_FORBIDDEN, 'error': 'OBTENER DATASETS - API KEY incorrecta' });
+            return;
         }
-
-        http.get(httpConf, function (results) {
-            var body = '';
-            results.on('data', function (chunk) {
-                body += chunk;
-            });
-            results.on('end', function () {
-                res.json(body);
-            });
-        }).on('error', function (err) {
-            utils.errorHandler(err, res, serviceName);
-        });
     } catch (error) {
         console.log(error);
         logger.error('Error in route' + constants.API_URL_DATASETS);
@@ -69,29 +79,39 @@ router.get(constants.API_URL_DATASETS + '/:datasetName', function (req, res, nex
         let serviceName = constants.DATASET_SHOW;
         let serviceRequestUrl = serviceBaseUrl + serviceName + '?id=' + req.params.datasetName;
         logger.notice('URL de petición: ' + serviceRequestUrl);
-
-        //Proxy checking
-        let httpConf = null;
-        if (constants.REQUESTS_NEED_PROXY == true) {
-            logger.warning('Realizando petición a través de proxy');
-            let httpProxyConf = proxy.getproxyOptions(serviceRequestUrl);
-            httpConf = httpProxyConf;
-        } else {
-            httpConf = serviceRequestUrl;
+        let apiKey = utils.getApiKey(req.get('Authorization'));
+        if (apiKey) {
+            logger.info('API KEY del usuario recuperada: ' + apiKey);
+            var httpRequestOptions = {
+                url: serviceRequestUrl,
+                method: constants.HTTP_REQUEST_METHOD_GET,
+                headers: {
+                    'Content-Type': constants.HTTP_REQUEST_HEADER_CONTENT_TYPE_JSON,
+                    'User-Agent': constants.HTTP_REQUEST_HEADER_USER_AGENT_NODE_SERVER_REQUEST,
+                    'Authorization': apiKey
+                }
+            };
+            request(httpRequestOptions, function (err, response, body) {
+                if (err) {
+                    utils.errorHandler(err, res, serviceName);
+                }
+                if (response) {
+                    if (response.statusCode == 200) {
+                        res.json(body);
+                    } else {
+                        res.json(JSON.stringify(res.statusCode) + ' - ' + JSON.stringify(res.statusMessage));
+                    }
+                } else {
+                    res.json({ 'status': constants.REQUEST_ERROR_FORBIDDEN, 'error': 'OBTENER DATASET POR NOMBRE - Error al obtener el dataset' });
+                }
+            });
+        }else {
+            logger.error('OBTENER DATASET POR NOMBRE - Usuario no autorizado');
+            res.json({ 'status': constants.REQUEST_ERROR_FORBIDDEN, 'error': 'OBTENER DATASET POR NOMBRE - API KEY incorrecta' });
+            return;
         }
-
-        http.get(httpConf, function (results) {
-            var body = '';
-            results.on('data', function (chunk) {
-                body += chunk;
-            });
-            results.on('end', function () {
-                res.json(body);
-            });
-        }).on('error', function (err) {
-            utils.errorHandler(err, res, serviceName);
-        });
     } catch (error) {
+        console.log(error);
         logger.error('Error in route' + constants.API_URL_DATASETS);
     }
 });

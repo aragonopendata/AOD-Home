@@ -55,6 +55,8 @@ export class DatasetsAdminEditComponent implements OnInit {
 	extraShortUriAragopedia: string;
 	extraNameAragopedia: string;
 
+	selectedState: string = 'public';
+
 	//LANGUAGES
 	checkLangEs: string;
 	checkLangEn: string;
@@ -250,9 +252,15 @@ export class DatasetsAdminEditComponent implements OnInit {
 			try {
 
 				this.dataset = JSON.parse(dataResult).result;
+				console.log(this.dataset);
 				this.inputDatasetTitle = this.dataset.title;
 				this.inputDatasetUrl = this.dataset.url;
 				this.inputDatasetDescription = this.dataset.notes
+				if (this.dataset.private){
+					this.selectedState = 'private';
+				} else {
+					this.selectedState = 'public';
+				}
 				this.getExtras();
 				//GET GEO 
 				if (this.dataset.groups[0] != undefined) {
@@ -863,6 +871,10 @@ export class DatasetsAdminEditComponent implements OnInit {
 				//Groups And Tags TAB
 				this.dataset.tags = this.tags;
 
+				if (this.selectedState == 'private'){
+					this.dataset.private = true;
+				}
+
 				this.updateGeoExtras();
 				//Geographic coverage TAB
 				if (this.extraNameAragopedia != undefined ){
@@ -972,7 +984,11 @@ export class DatasetsAdminEditComponent implements OnInit {
 			this.dataset.license_id = Constants.ADMIN_DATASET_EDIT_LICENSE_ID_DEFAULT;
 			this.dataset.license_title = Constants.ADMIN_DATASET_EDIT_LICENSE_TITLE_DEFAULT;
 			this.dataset.license_url = Constants.ADMIN_DATASET_EDIT_LICENSE_URL_DEFAULT;
-			this.dataset.private = false;
+			if (this.selectedState == 'private'){
+				this.dataset.private = true;
+			} else {
+				this.dataset.private = false;
+			}
 			this.dataset.state = "active";
 			this.dataset.owner_org = this.selectedOrg;
 	
