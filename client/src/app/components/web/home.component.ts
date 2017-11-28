@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Constants } from '../../app.constants';
-import $ from 'jquery';
+declare var jQuery:any;
 
 @Component({
 	selector: 'app-home',
@@ -72,7 +72,7 @@ export class HomeComponent implements OnInit {
 	}
 
 	move(id) {
-		$('html, body').animate({ scrollTop: ($('.' + id).offset().top - $('#header').height()) }, '1000');
+		jQuery('html, body').animate({ scrollTop: (jQuery('.' + id).offset().top - jQuery('#header').height()) }, '1000');
 	}
 
 	hover(id, src) {
@@ -81,9 +81,9 @@ export class HomeComponent implements OnInit {
 				hover.hover = !hover.hover;
 			}
 		}
-		$(id).fadeOut(350, function () {
-			$(id).attr('src', src);
-			$(id).fadeIn(350);
+		jQuery(id).fadeOut(350, function () {
+			jQuery(id).attr('src', src);
+			jQuery(id).fadeIn(350);
 		});
 	}
 
@@ -93,9 +93,9 @@ export class HomeComponent implements OnInit {
 				hover.hover = !hover.hover;
 			}
 		}
-		$(id).fadeOut(350, function () {
-			$(id).attr('src', src);
-			$(id).fadeIn(350);
+		jQuery(id).fadeOut(350, function () {
+			jQuery(id).attr('src', src);
+			jQuery(id).fadeIn(350);
 		});
 	}
 

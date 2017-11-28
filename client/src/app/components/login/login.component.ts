@@ -49,10 +49,17 @@ export class LoginComponent implements OnInit {
                 this.isDataset = true;
             }
           });
-        
-        // reset login status
-         this.loginService.announceLogout();
-         this.authenticationService.logout();
+          if (this.authenticationService.currentUser != null){
+            this.announce();
+            this.user = this.authenticationService.getCurrentUser();
+            if(this.isOrg){
+                this.editOrganization();
+            }else if(this.isDataset){
+                this.editDataset();
+            }else{
+                this.router.navigate(['/' + Constants.ROUTER_LINK_ADMIN]);
+            }
+          }
     }
 
     login() {
