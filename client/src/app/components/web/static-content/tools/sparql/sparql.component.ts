@@ -2,8 +2,8 @@ import { Component, OnInit, AfterViewChecked, ViewEncapsulation  } from '@angula
 import { StaticContent } from '../../../../../models/StaticContent';
 import { StaticContentService } from '../../../../../services/web/static-content.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import $ from 'jquery';
 import { Constants } from "app/app.constants";
+declare var jQuery:any;
 
 @Component({
     selector: 'app-sparql',
@@ -69,7 +69,7 @@ export class SparqlComponent implements OnInit {
         if(this.targetUrl != this.url && this.targetUrl != null){
             this.url = this.targetUrl;
             var element = document.getElementById(this.url+'Link');
-            $("html, body").animate({ scrollTop: $(element).offset().top - ($('#header').height()+20)}, '500');
+            jQuery("html, body").animate({ scrollTop: jQuery(element).offset().top - (jQuery('#header').height()+20)}, '500');
             document.getElementById(this.url+'Link').setAttribute('aria-expanded','true');
             document.getElementById(this.url+'Link').setAttribute('class','headLink');
             document.getElementById(this.url).setAttribute('class','collapse show');

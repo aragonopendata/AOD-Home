@@ -82,15 +82,12 @@ export class UsersAdminComponent implements OnInit {
 
 	getRoles() {
 		this.roles = [];
-		// this.selectRoles = [];
-		// this.selectRoles.push({ label: 'Seleccione un rol', value: null });
 		this.rolesAdminService.getRoles().subscribe(roles => {
 			try {
 				for (var index = 0; index < roles.length; index++) {
 					this.role = new Role();
 					this.role = roles[index];
 					this.roles = [...this.roles, this.role];
-					// this.selectRoles.push({ label: this.role.description, value: index });
 				}
 			} catch (error) {
 				console.error('Error: getRoles() - users-admin.component.ts');
@@ -108,7 +105,7 @@ export class UsersAdminComponent implements OnInit {
 					this.orgsSelect.push({ label: org.title, value: org.name });
 				}
             } catch (error) {
-                console.error('Error: loadUserOrgs() - datasets-list.component.ts');
+				console.error('Error: getUserOrgs() - user-admin.component.ts');
             }
         });
 	}
@@ -170,6 +167,7 @@ export class UsersAdminComponent implements OnInit {
 			this.displayEditDialog = true;
 		} else {
 			this.user = this.cloneUser(user);
+			this.userRole = this.user.role[0];
 			this.displayViewDialog = true;
 		}
 	}
@@ -248,7 +246,7 @@ export class UsersAdminComponent implements OnInit {
 
 				});
 			} catch (error) {
-				
+				console.error('Error: saveOrg() - user-admin.component.ts');
 			}
 			
 			

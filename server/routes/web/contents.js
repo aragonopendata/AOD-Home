@@ -18,16 +18,16 @@ router.get(constants.API_URL_STATIC_CONTENT_INFO_OPEN_DATA, function (req, res, 
     let sectionTitle = constants.STATIC_CONTENT_SECTION_TITLE_INFO;
     let sectionSubtitle = constants.STATIC_CONTENT_SUBSECTION_TITLE_OPEN_DATA;
     const query = {
-        text: 'SELECT usr.id, usr.name, usr.email, usr.description, usr.active '
-        + ', usr.creation_date AS "signupDate", rls.id, rls.name'
-        + ', rls.description, rls.active '
-        + 'FROM manager.users usr '
-        + 'JOIN manager.users_roles url '
-        + 'ON usr.id = url.id_user '
-        + 'JOIN manager.roles rls '
-        + 'ON rls.id = url.id_role '
-        + 'ORDER BY usr.name ASC',
-        rowMode: constants.SQL_RESULSET_FORMAT_JSON
+        text: 'SELECT sec.id AS "sectionId", sec.title AS "sectionTitle", sec.subtitle AS "sectionSubtitle" '
+        + ', sec.description AS "sectionDescription", cnt.content_order AS "contentOrder" ' 
+        + ', cnt.title AS "contentTitle", cnt.content AS "contentText", cnt.target_url AS "targetUrl" ' 
+        + 'FROM manager.sections sec '
+        + 'JOIN manager.static_contents cnt '
+        + 'ON sec.id = cnt.id_section '
+        + 'WHERE sec.title = $1 AND sec.subtitle = $2 '
+        + 'ORDER BY cnt.content_order ASC',
+        values: [sectionTitle, sectionSubtitle],
+        rowMode: constants.SQL_RESULSET_FORMAT
     };
 
     pool.on('error', (err, client) => {

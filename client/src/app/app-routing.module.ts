@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, PathLocationStrategy, LocationStrategy } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { Constants } from './app.constants';
 import { AuthGuard } from "./_guards/auth.guard";
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 import { HomeComponent } from './components/web/home.component';
 import { DatasetsListComponent } from './components/web/datasets/datasets-list/datasets-list.component';
@@ -124,6 +123,6 @@ const routes: Routes = [
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule],
-    providers: [AuthGuard, {provide: LocationStrategy, useClass: HashLocationStrategy}]
+    providers: [AuthGuard, {provide: LocationStrategy, useClass: PathLocationStrategy}]
 })
 export class AppRoutingModule { }
