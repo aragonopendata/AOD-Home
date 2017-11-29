@@ -147,7 +147,7 @@ export class HeaderComponent implements OnInit {
 				? this.datasetService.getDatasetsAutocomplete(title, this.resultsLimit)
 				: Observable.of<Autocomplete[]>([]))
 			.catch(error => {
-				console.log(error);
+				console.error(error);
 				return Observable.of<Autocomplete[]>([]);
 			}).subscribe(data =>
 				this.datasetAutocomplete = JSON.parse(data).result);

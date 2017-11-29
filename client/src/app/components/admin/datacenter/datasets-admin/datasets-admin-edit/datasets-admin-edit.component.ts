@@ -252,7 +252,6 @@ export class DatasetsAdminEditComponent implements OnInit {
 			try {
 
 				this.dataset = JSON.parse(dataResult).result;
-				console.log(this.dataset);
 				this.inputDatasetTitle = this.dataset.title;
 				this.inputDatasetUrl = this.dataset.url;
 				this.inputDatasetDescription = this.dataset.notes
