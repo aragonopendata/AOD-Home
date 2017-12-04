@@ -28,6 +28,8 @@ export class OrganizationsAdminEditComponent implements OnInit {
   extraAddressExist: boolean = false;
   extraPersonExist: boolean = false;
 
+  fileList: FileList;
+
   //Boolean to know if we update or save an organization.
   organizationEmpty: boolean;
 
@@ -122,9 +124,14 @@ export class OrganizationsAdminEditComponent implements OnInit {
           , detail:Constants.GROWL_ORGANIZATION_EMPTY_NAME_DETAIL});
     }else{
       this.createOrgNameFromTitle();
-      this.org.requestUserId = this.user.id;
-      this.org.requestUserName = this.user.username;
-      this.organizationsAdminService.createOrganization(this.org, this.webpage.value, this.address.value, this.person.value).subscribe(result => {
+      let file: File;
+      if( this.fileList && this.fileList.length > 0) {
+        file = this.fileList[0];
+      }else {
+        file = null;
+      }
+        //CALL TO POST METHOD ON SERVICE
+        this.organizationsAdminService.createOrganization(file, this.org, this.webpage.value, this.address.value, this.person.value).subscribe(result => {
           if (result.success) {
             this.organizationAdminMessages = [];
             this.organizationAdminMessages.push({severity:Constants.GROWL_SEVERITY_SUCCESS, summary:Constants.GROWL_CREATE_ORGANIZATION_SUMMARY
@@ -138,8 +145,13 @@ export class OrganizationsAdminEditComponent implements OnInit {
               , detail:'Error al insertar la organización ' + result.error + (result.message ? result.message + '.' : '.')});
         }
       });
+     
     }
   }
+
+  fileChange(event) {
+		this.fileList = event.target.files;
+	}
 
   updateOrganization(): void{
     if(this.org.title == '' || this.org.title == undefined){

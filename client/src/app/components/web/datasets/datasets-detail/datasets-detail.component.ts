@@ -275,26 +275,28 @@ export class DatasetsDetailComponent implements OnInit {
 		});
 
 		let tagsArray = [];
-		tagsArray.push({ name: this.dataset.tags[0].name, value: this.dataset.tags[0].name });
-		this.datasetsService.getDatasetsBytags(null, 1, 1, tagsArray).subscribe(tagDataResult => {
-			try {
-				datasetRecommendedByTag = JSON.parse(tagDataResult).result.results[0];
-				if(this.isDatasetDefined(datasetRecommendedByTag) && !this.existsDatasetRecommended(datasetRecommendedByTag)) {
-					if (datasetRecommendedByTag.groups) {
-						for (var i = 0; i < datasetRecommendedByTag.groups.length; i++) {
-							let startIndex = +datasetRecommendedByTag.groups[i].image_display_url.indexOf('ckan/temas/')+11;
-							let myFormatImageUrl = datasetRecommendedByTag.groups[i].image_display_url.slice(startIndex, datasetRecommendedByTag.groups[i].image_display_url.length);
-							datasetRecommendedByTag.groups[i].image_url = Constants.DATASET_RECOMMENDED_IMAGE_URL + myFormatImageUrl;
-						}
-					}		
-					this.datasetsRecommended.push(datasetRecommendedByTag);
+		if (this.dataset.tags[0] != undefined ){
+			tagsArray.push({ name: this.dataset.tags[0].name, value: this.dataset.tags[0].name });
+			this.datasetsService.getDatasetsBytags(null, 1, 1, tagsArray).subscribe(tagDataResult => {
+				try {
+					datasetRecommendedByTag = JSON.parse(tagDataResult).result.results[0];
+					if(this.isDatasetDefined(datasetRecommendedByTag) && !this.existsDatasetRecommended(datasetRecommendedByTag)) {
+						if (datasetRecommendedByTag.groups) {
+							for (var i = 0; i < datasetRecommendedByTag.groups.length; i++) {
+								let startIndex = +datasetRecommendedByTag.groups[i].image_display_url.indexOf('ckan/temas/')+11;
+								let myFormatImageUrl = datasetRecommendedByTag.groups[i].image_display_url.slice(startIndex, datasetRecommendedByTag.groups[i].image_display_url.length);
+								datasetRecommendedByTag.groups[i].image_url = Constants.DATASET_RECOMMENDED_IMAGE_URL + myFormatImageUrl;
+							}
+						}		
+						this.datasetsRecommended.push(datasetRecommendedByTag);
+					}
+				} catch (error) {
+					console.error("Error: getDatasetsRecommended() - datasets-detail.component.ts");
+					this.errorTitle = this.datasetListErrorTitle;
+					this.errorMessage = this.datasetListErrorMessage;
 				}
-			} catch (error) {
-				console.error("Error: getDatasetsRecommended() - datasets-detail.component.ts");
-				this.errorTitle = this.datasetListErrorTitle;
-                this.errorMessage = this.datasetListErrorMessage;
-			}
-		});
+			});
+		}
 	}
 
 	makeFileSourceList() {

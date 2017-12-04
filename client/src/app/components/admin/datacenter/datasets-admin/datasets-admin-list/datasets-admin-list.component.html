@@ -1,28 +1,4 @@
 <div class="container">
-	<!--<div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
-		<i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-		<input #gb type="text" pInputText size="50" placeholder="Global Filter">
-	</div>
-	<p-dataTable [value]="datasets" [paginator]="true" rows="15" [responsive]="true" [globalFilter]="gb" #dt>
-		<p-column field="title" header="Nombre" [sortable]="true"></p-column>
-		<p-column field="metadata_modified" header="Última actualización" [sortable]="true">
-			<ng-template pTemplate="body" let-dataset="rowData">
-				{{dataset?.metadata_modified | date: 'dd/MM/yyyy'}}
-			</ng-template>
-		</p-column>
-		<p-column header="Edición">
-			<ng-template pTemplate="body" let-dataset="rowData">
-				<button pButton type="button" icon="fa-search" routerLink="../showdataset" (click)="showDataset(dataset)"></button>
-				<button pButton type="button" icon="fa-edit" routerLink="../editdataset" (click)="showDataset(dataset)"></button>
-				<button pButton type="button" icon="fa-trash"></button>
-			</ng-template>
-		</p-column>
-		<p-footer>
-			<div class="ui-helper-clearfix" style="width:100%">
-				<button type="button" pButton icon="fa-plus" (click)="addDataset()" style="float:left" routerLink="../editdataset" label="Añade un conjunto de datos"></button>
-			</div>
-		</p-footer>
-	</p-dataTable> -->
 
 	<!-- Dialogs -->
 	<p-dialog header="¿Está seguro de que deasea borrar el dataset?" [(visible)]="displayDeleteDialog">
@@ -56,6 +32,7 @@
 	<p-dataTable *ngIf="datasets" [value]="datasets" [responsive]="true" emptyMessage="{{emptyMessage}}" (onSort)="setOrder($event)" #dt>
 		<p-column field="name" [style]="{'width':'55%'}" header="{{numDatasets}} conjuntos de datos encontrados" sortable="custom" sortFunction="orderTable($event)">
 			<ng-template pTemplate="body" let-dataset="rowData">
+				<i *ngIf="dataset.private" class="fa fa-lock"></i>
 					{{dataset.title}}
 				<i class="fa fa-star" id="informacion_content_3_i" style="color: #5ea2ba;" *ngIf="dataset.tracking_summary && (dataset.tracking_summary.recent > 10)"></i>
 			</ng-template>
@@ -72,20 +49,20 @@
 		</p-column>
 		<p-column header="edit" header="Edición" [style]="{'width':'12%'}">
 			<ng-template pTemplate="body" let-dataset="rowData">
-				<button pButton type="button" icon="fa-search" routerLink="/{{routerLinkAdminDatacenterDatasetsShow}}/{{dataset.name}}" (click)="showDataset(dataset)"></button>
-				<button pButton type="button" icon="fa-edit" routerLink="/{{routerLinkAdminDatacenterDatasetsEdit}}/{{dataset.name}}" (click)="showDataset(dataset)"></button>
-				<button pButton type="button" icon="fa-trash" (click)="showDeleteDialog(dataset.title,dataset.name)"></button>
+				<button class="btn btn-primary p-2" type="button" routerLink="/{{routerLinkAdminDatacenterDatasetsShow}}/{{dataset.name}}" (click)="showDataset(dataset)" data-toggle="tooltip" data-placement="top" title="Mostrar"><i class="fa fa-search"></i></button>
+				<button *ngIf="currentUser.rol != orgMemberRol" class="btn btn-primary p-2" type="button" routerLink="/{{routerLinkAdminDatacenterDatasetsEdit}}/{{dataset.name}}" (click)="showDataset(dataset)" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fa fa-edit"></i></button>
+				<button *ngIf="currentUser.rol != orgMemberRol" class="btn btn-primary p-2" type="button" (click)="showDeleteDialog(dataset.title,dataset.name)" data-toggle="tooltip" data-placement="top" title="Borrar"><i class="fa fa-trash"></i></button>
 			</ng-template>
 		</p-column>
 		<p-footer>
-			<div class="ui-helper-clearfix" style="width:100%">
+			<div *ngIf="currentUser.rol != orgMemberRol" class="ui-helper-clearfix" style="width:100%">
 				<button class="btn btn-primary" type="button" icon="fa-plus" (click)="addDataset()" style="float:left" routerLink="/{{routerLinkAdminDatacenterDatasetsEdit}}" >
 					<i class="fa fa-plus"></i> Añade un conjunto de datos
 				</button>
 			</div>
 		</p-footer>
 	</p-dataTable>
-	<nav aria-label="Pagination">
+	<nav aria-label="Pagination" class="m-2">
 		<ul class="pagination justify-content-center">
 			<li [ngClass]="actualPage >= 1 ? 'page-item': 'page-item disabled'">
 				<a class="page-link" (click)="paginate(+pageFirst+1)" aria-label="Primero">

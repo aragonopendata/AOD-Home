@@ -6,6 +6,7 @@ import { ResourceAux } from '../../../../../models/ResourceAux';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../../../../../app.constants';
 import { DomSanitizer } from '@angular/platform-browser';
+import { DatasetsAdminService } from 'app/services/admin/datasets-admin.service';
 
 @Component({
 	selector: 'app-datasets-admin-show',
@@ -59,7 +60,7 @@ export class DatasetsAdminShowComponent implements OnInit {
 	datasetListErrorMessage: string;
 
 
-	constructor(private datasetsService: DatasetsService, private activatedRoute: ActivatedRoute, public sanitizer: DomSanitizer, public router: Router) {
+	constructor(private datasetsAdminService: DatasetsAdminService, private activatedRoute: ActivatedRoute, public sanitizer: DomSanitizer, public router: Router) {
 		this.datasetListErrorTitle = Constants.DATASET_LIST_ERROR_TITLE;
 		this.datasetListErrorMessage = Constants.DATASET_LIST_ERROR_MESSAGE;
 		this.routerLinkDatasetList = Constants.ROUTER_LINK_ADMIN_DATACENTER_DATASETS;
@@ -96,7 +97,7 @@ export class DatasetsAdminShowComponent implements OnInit {
 	
 	loadDataset(dataset: Dataset) {
 		this.initializeDataset();
-		this.datasetsService.getDatasetByName(dataset.name).subscribe(dataResult => {
+		this.datasetsAdminService.getDatasetByName(dataset.name).subscribe(dataResult => {
 			try {
 				this.dataset = JSON.parse(dataResult).result;
 				this.getResourceView();
@@ -114,7 +115,7 @@ export class DatasetsAdminShowComponent implements OnInit {
 		this.resourceView = [];
 		if (this.dataset.resources != undefined ){
 			for (var i = 0; i < this.dataset.resources.length; i++) {
-				this.datasetsService.getDatasetResourceView(this.dataset.resources[i].id).subscribe(result => {
+				this.datasetsAdminService.getDatasetResourceView(this.dataset.resources[i].id).subscribe(result => {
 					try {
 						if(JSON.parse(result).result[0]){
 							this.resourceView.push(JSON.parse(result).result[0]);
@@ -270,12 +271,12 @@ export class DatasetsAdminShowComponent implements OnInit {
 	}
 
 	showDataset(dataset: Dataset) {
-		this.datasetsService.setDataset(dataset);
+		this.datasetsAdminService.setDataset(dataset);
 		this.loadDataset(dataset);
 	}
 
 	downloadRDF(datasetName: string){
-		this.datasetsService.getDatasetRDF(datasetName).subscribe(result => {
+		this.datasetsAdminService.getDatasetRDF(datasetName).subscribe(result => {
 			let blob = new Blob(['\ufeff' + result], { type: Constants.DATASET_RDF_FORMAT_OPTIONS_RDF });
 			let dwldLink = document.createElement("a");
 			let url = URL.createObjectURL(blob);
@@ -293,6 +294,7 @@ export class DatasetsAdminShowComponent implements OnInit {
 	}
 
 	loadResourceIframe(resource: any, index: number){
+		console.log(resource);
 		let res = resource.sources_ids[index];
 		let format = resource.formats[index];
 		let source = resource.sources[index];

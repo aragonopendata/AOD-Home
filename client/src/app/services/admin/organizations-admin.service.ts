@@ -27,6 +27,12 @@ export class OrganizationsAdminService {
 		}
 	}
 
+	private buildRequestHeadersforFormData() {
+		let headers = new Headers();
+		this.createAuthorizationHeader(headers);
+		return headers;
+	}
+
 	private buildRequestHeaders() {
 		let headers = new Headers();
 		this.createAuthorizationHeader(headers);
@@ -55,38 +61,48 @@ export class OrganizationsAdminService {
 		return this.http.get(fullUrl, { headers: headers }).map(res => res.json());
 	}
 
-	public createOrganization(organization: OrganizationAdmin, webpage: string, address: string, person: string) {
+	public createOrganization(image: any, organization: OrganizationAdmin, webpage: string, address: string, person: string) {
 		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_ORGANIZATION_CUD_OPERATIONS;
-        let requestBodyParams = {
-			name: organization.name,
-			title: organization.title,
-			description: organization.description,
-			extras: []
-		};
+
+		let formData:FormData = new FormData();  
+		let extras = [];
+		if (image != null) {
+			formData.append('file', image, image.name);
+		}
+
+		formData.append('name', organization.name);
+		formData.append('title', organization.title);
+		if (organization.description != undefined){
+			formData.append('description', organization.description);
+		}
+
 		if(webpage != undefined){
 			var webpageNotEmpty = {
 				key: Constants.ORGANIZATION_EXTRA_WEBPAGE,
 				value: webpage
 			}
-			requestBodyParams.extras.push(webpageNotEmpty);
+			extras.push(webpageNotEmpty);
+			
 		}
 		if(address != undefined){
 			var addressNotEmpty = {
 				key: Constants.ORGANIZATION_EXTRA_ADDRESS,
 				value: address
 			}
-			requestBodyParams.extras.push(addressNotEmpty);
+			extras.push(addressNotEmpty);
 		}
 		if(person != undefined){
 			var personNotEmpty = {
 				key: Constants.ORGANIZATION_EXTRA_PERSON,
 				value: person
 			}
-			requestBodyParams.extras.push(personNotEmpty);
+			extras.push(personNotEmpty);
 		}
-		let headers = this.buildRequestHeaders();
+
+		formData.append('extras', JSON.stringify(extras));
+		let headers = this.buildRequestHeadersforFormData();
 		let options = new RequestOptions({ headers: headers}); // Create a request option
-		return this.http.post(fullUrl, JSON.stringify(requestBodyParams), options).map((res:Response) => res.json());
+		return this.http.post(fullUrl, formData, options).map((res:Response) => res.json());
     }
 
 	public updateOrganization(organization: OrganizationAdmin){

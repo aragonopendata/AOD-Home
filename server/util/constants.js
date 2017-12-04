@@ -57,6 +57,7 @@ exports.API_URL_STATIC_CONTENT_TOOLS_SPARQL_GRAPHS = '/static-content/tools/spar
 exports.API_URL_AUTHENTICATE = '/authenticate';
 exports.API_URL_ADMIN_DATASET = '/dataset';
 exports.API_URL_ADMIN_RESOURCE = '/resource';
+exports.API_URL_ADMIN_ORGANIZATION = '/organization';
 
 /* STATIC CONTENT DATABASE SECTION TITLES */
 exports.API_URL_CAMPUS_EVENTS = '/campus/events';
@@ -116,6 +117,7 @@ exports.CKAN_URL_PATH_ORGANIZATION_UPDATE = 'organization_update';
 exports.CKAN_URL_PATH_ORGANIZATION_PURGE = 'organization_purge';
 exports.CKAN_URL_PATH_ORGANIZATION_LIST_OF_USER = 'organization_list_for_user';
 exports.CKAN_URL_PATH_ORGANIZATION_MEMBER_CREATE = 'organization_member_create';
+exports.CKAN_URL_PATH_ORGANIZATION_MEMBER_DELETE = 'organization_member_delete';
 
 /* DATASETS */
 //Results per page in lists

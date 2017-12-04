@@ -96,7 +96,7 @@ router.get('/users/:userId', function (req, res, next) {
     }
 });
 
-/** GET USER's ORGANIZATIONS */
+/** GET USER's ORGANIZATIONS FOR LOGGED USER */
 router.get('/users/:userId/organizations', function (req, res, next) {
     try {
         logger.debug('Servicio: Listado de organizaciones del usuario');
@@ -105,6 +105,54 @@ router.get('/users/:userId/organizations', function (req, res, next) {
             if (apiKey) {
                 logger.info('API KEY del usuario recuperada: ' + apiKey);
                 getUserOrganizations(apiKey).then(getOrganizationResponse => {
+                    logger.info('Respuesta de CKAN: ' + getOrganizationResponse);
+                    if (getOrganizationResponse) {
+                        res.json(getOrganizationResponse);
+                    } else {
+                        logger.error('OBTENER ORGANIZACIONES DE USUARIO - Error al obtener las organizaciones de CKAN: ' + JSON.stringify(getOrganizationResponse));
+                        var errorJson = {
+                            'status': constants.REQUEST_ERROR_INTERNAL_ERROR,
+                            'error': 'OBTENER ORGANIZACIONES DE USUARIO - Error al obtener las organizaciones de CKAN',
+                        };
+                        if (getOrganizationResponse && getOrganizationResponse != null
+                                && getOrganizationResponse.error && getOrganizationResponse.error != null
+                                && getOrganizationResponse.error.name && getOrganizationResponse.error.name != null) {
+                            errorJson.message = getOrganizationResponse.error.name;
+                        }
+                        res.json(errorJson);
+                        return;
+                    }
+                }).catch(error => {
+                    logger.error('OBTENER ORGANIZACIONES DE USUARIO - Error al obtener las organizaciones del usuario: ', error);
+                    res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'OBTENER ORGANIZACIONES DE USUARIO - Error al obtener las organizaciones del usuario' });
+                    return;
+                });
+            } else {
+                logger.error('OBTENER ORGANIZACIONES DE USUARIO - Usuario no autorizado: ', error);
+                res.json({ 'status': constants.REQUEST_ERROR_FORBIDDEN, 'error': 'OBTENER ORGANIZACIONES DE USUARIO - Usuario no autorizado' });
+                return;
+            }
+        } else {
+            logger.error('OBTENER ORGANIZACIONES DE USUARIO - Parámetros incorrectos');
+            res.json({ 'status': constants.REQUEST_ERROR_BAD_DATA, 'error': 'OBTENER ORGANIZACIONES DE USUARIO - Parámetros incorrectos' });
+            return;
+        }
+    } catch (error) {
+        logger.error('OBTENER ORGANIZACIONES DE USUARIO - Error al obtener las organizaciones del usuario: ', error);
+        res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'OBTENER ORGANIZACIONES DE USUARIO - Error al obtener las organizaciones del usuario' });
+        return;
+    }
+});
+
+/** GET USER's ORGANIZATIONS */
+router.post('/users/:userId/organizations', function (req, res, next) {
+    try {
+        logger.debug('Servicio: Listado de organizaciones del usuario');
+        if (req.params.userId && req.params.userId != '') {
+            let apiKey = utils.getApiKey(req.get('Authorization'));
+            if (apiKey) {
+                logger.info('API KEY del usuario recuperada: ' + req.body.apiKey);
+                getUserOrganizations(req.body.apikey).then(getOrganizationResponse => {
                     logger.info('Respuesta de CKAN: ' + getOrganizationResponse);
                     if (getOrganizationResponse) {
                         res.json(getOrganizationResponse);
@@ -253,6 +301,14 @@ router.put('/users/:userId', function (req, res, next) {
                 && user.role != '' && user.active != '' && user.role != '' 
                 && req.params.userId && req.params.userId != ''
                 && user.id == req.params.userId) {
+            let userOrganization = user.organization;
+
+            let userOrganizationOld = null;
+            if(user.organization_old != null){
+                userOrganizationOld = user.organization_old;
+                delete user.organization_old;
+            }
+            delete user.organization;
             //1. CHEKING PERMISSIONS OF THE USER WHO MAKES THE REQUEST
             let apiKey = utils.getApiKey(req.get('Authorization'));
             if (apiKey) {
@@ -263,12 +319,52 @@ router.put('/users/:userId', function (req, res, next) {
                             if (updateUserInCkanResponse && updateUserInCkanResponse != null) {
                                 updateUserInManager(user, updateUserInCkanResponse).then(updateUserInManager => {
                                     if (updateUserInManager) {
-                                        logger.info('Usuario actualizado en BBDD');
-                                        res.json({
-                                            'status': constants.REQUEST_REQUEST_OK,
-                                            'success': true,
-                                            'result': 'ACTUALIZACIÓN DE USUARIOS - Usuario actualizado correctamente'
-                                        });
+                                        if ( userOrganizationOld != null){
+                                            deleteOrganizationOfUser(apiKey, user, userOrganizationOld).then(deleteOrganizationOfUserResponse => {
+                                                if (deleteOrganizationOfUserResponse){
+                                                    setOrganizationToUser(apiKey, user, userOrganization).then(setOrganizationToUserResponse => {
+                                                        if(setOrganizationToUserResponse){
+                                                            logger.info('ACTUALIZACIÓN DE USUARIOS - Usuario actualizado correctamente')
+                                                            res.json({
+                                                                'status': constants.REQUEST_REQUEST_OK,
+                                                                'success': true,
+                                                                'result': 'ACTUALIZACIÓN DE USUARIOS - Usuario actualizado correctamente'
+                                                            });
+                                                        }else{
+                                                            logger.error('ACTUALIZACIÓN DE USUARIOS - No se ha podido asociar el usuario a la organización');
+                                                            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'ALTA DE USUARIOS - No se ha podido insertar el usuario en base de datos' });
+                                                            return;
+                                                        }
+                                                    })
+                                                } else {
+                                                    logger.error('ACTUALIZACIÓN DE USUARIOS - No se ha podido borrar el usuario de la organización');
+                                                    res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'ALTA DE USUARIOS - No se ha podido borrar el usuario de la organización' });
+                                                    return;
+                                                }
+                                            });
+                                        } else if (userOrganization != null && userOrganizationOld == null) {
+                                            setOrganizationToUser(apiKey, user, userOrganization).then(setOrganizationToUserResponse => {
+                                                if(setOrganizationToUserResponse){
+                                                    logger.info('ACTUALIZACIÓN DE USUARIOS - Usuario actualizado correctamente')
+                                                    res.json({
+                                                        'status': constants.REQUEST_REQUEST_OK,
+                                                        'success': true,
+                                                        'result': 'ACTUALIZACIÓN DE USUARIOS - Usuario actualizado correctamente'
+                                                    });
+                                                }else{
+                                                    logger.error('ACTUALIZACIÓN DE USUARIOS - No se ha podido asociar el usuario a la organización');
+                                                    res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'ALTA DE USUARIOS - No se ha podido insertar el usuario en base de datos' });
+                                                    return;
+                                                }
+                                            })
+                                        } else {
+                                            logger.info('ACTUALIZACIÓN DE USUARIOS - Usuario admin actualizado correctamente')
+                                            res.json({
+                                                'status': constants.REQUEST_REQUEST_OK,
+                                                'success': true,
+                                                'result': 'ACTUALIZACIÓN DE USUARIOS - Usuario admin actualizado correctamente'
+                                            });
+                                        }
                                     } else {
                                         logger.error('ACTUALIZACIÓN DE USUARIOS - Error al actualizar al usuario de la base de datos: ', error);
                                         res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'ACTUALIZACIÓN DE USUARIOS - Error al actualizar al usuario de la base de datos' });
@@ -637,6 +733,49 @@ var setOrganizationToUser = function setOrganizationToUser(apiKey, user, userOrg
                     }
                 };
                 logger.info('Configuraćión llamada POST: ' + JSON.stringify(httpRequestOptions));
+                request(httpRequestOptions, function (err, res, body) {
+                    if (err) {
+                        reject(err);
+                    }
+                    if (res) {
+                        if (res.body.success) {
+                            resolve(res.body.success);
+                        } else {
+                            reject(JSON.stringify(res.statusCode) + ' - ' + JSON.stringify(res.statusMessage));
+                        }
+                    } else {
+                        reject('Respuesta nula');
+                    }
+                });
+        } catch (error) {
+            logger.error('Error insertando usuario en los grupos de CKAN:', error);
+            reject(error);
+        }
+    });
+}
+
+var deleteOrganizationOfUser = function deleteOrganizationOfUser(apiKey, user, userOrganization) {
+    return new Promise((resolve, reject) => {
+        try {
+            
+                //Mandatory fields
+                var delete_group_post_data = {
+                    'id': userOrganization,
+                    'username': user.name
+                };
+
+                var httpRequestOptions = {
+                    url: constants.CKAN_API_BASE_URL + constants.CKAN_URL_PATH_ORGANIZATION_MEMBER_DELETE,
+                    method: constants.HTTP_REQUEST_METHOD_POST,
+                    body: delete_group_post_data,
+                    json: true,
+                    headers: {
+                        'Content-Type': constants.HTTP_REQUEST_HEADER_CONTENT_TYPE_JSON,
+                        'User-Agent': constants.HTTP_REQUEST_HEADER_USER_AGENT_NODE_SERVER_REQUEST,
+                        'Authorization': apiKey
+                    }
+                };
+                logger.info('Configuración llamada POST: ' + JSON.stringify(httpRequestOptions));
                 request(httpRequestOptions, function (err, res, body) {
                     if (err) {
                         reject(err);

@@ -7,6 +7,7 @@ import { Topic } from '../../../../../models/Topic';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../../../../../app.constants';
 import {DialogModule, GrowlModule, Message} from 'primeng/primeng';
+import { User } from 'app/models/User';
 
 @Component({
 	selector: 'app-datasets-admin-list',
@@ -20,6 +21,8 @@ export class DatasetsAdminListComponent implements OnInit {
     datasetTitleDelete: string;
     datasetNameToDelete: string;
     
+    currentUser: User;
+    orgMemberRol: string;
     userOrgs: OrganizationAdmin[];
 
     msgs: Message[] = [];
@@ -54,6 +57,8 @@ export class DatasetsAdminListComponent implements OnInit {
         this.pageRows = Constants.DATASET_ADMIN_LIST_ROWS_PER_PAGE;
         this.routerLinkAdminDatacenterDatasetsEdit = Constants.ROUTER_LINK_ADMIN_DATACENTER_DATASETS_EDIT;
         this.routerLinkAdminDatacenterDatasetsShow =  Constants.ROUTER_LINK_ADMIN_DATACENTER_DATASETS_SHOW;
+        this.currentUser = this.usersAdminService.currentUser;
+        this.orgMemberRol = Constants.ADMIN_USER_ROL_ORGANIZATION_MEMBER
 	 }
 
 	ngOnInit() {

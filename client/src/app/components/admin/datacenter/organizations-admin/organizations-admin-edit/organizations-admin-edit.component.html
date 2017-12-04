@@ -18,6 +18,12 @@
       <textarea class="form-control" rows="5" value={{org.description}} id="description" [(ngModel)]="org.description"></textarea>
     </div>
   </div>
+  <div *ngIf="organizationEmpty" class="form-group row">
+      <label for="inputFile" class="col-4 col-form-label">FICHERO</label>
+      <div class="col-8">
+        <input type="file" class="form-control" (change)="fileChange($event)" placeholder="Subir fichero" accept="image/x-png,image/gif,image/jpeg">
+      </div>
+  </div>
   <div class="form-group row">
     <label for="adress-input" class="col-4 col-form-label">DIRECCIÓN DE LA ORGANIZACIÓN</label>
     <div class="col-8">

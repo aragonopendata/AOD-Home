@@ -62,6 +62,17 @@ export class UsersAdminService {
 		}
 	}
 
+	public getOrganizationsForUserByID( user: any ) {
+		this.refreshUser();
+		if (this.currentUser != undefined){
+			let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_USERS 
+			+ '/' + user.id + Constants.SERVER_API_LINK_ADMIN_USER_ORGANIZATIONS;
+			let headers = this.buildRequestHeaders();
+			let requestBodyParams: any = user;
+			return this.http.post(fullUrl, JSON.stringify(requestBodyParams), { headers: headers }).map(res => res.json());
+		}
+	}
+
 	public createUser(user: any) {
 		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_USERS;
 		let requestBodyParams = user;

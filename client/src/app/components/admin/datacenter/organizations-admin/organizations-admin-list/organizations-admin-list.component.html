@@ -5,7 +5,13 @@
    <!--If the user have permissions to delete-->
   <p-dataTable *ngIf="showEditButtons" [value]="orgs" [paginator]="true" [rows]="15" [responsive]="true" [globalFilter]="gb" [rowsPerPageOptions]="[5,10,15]" #dt>
     <p-column field="display_name" header="Nombre" [sortable]="true" [style]="{'width':'50%'}"></p-column>
-    <p-column field="state" header="Estado" [sortable]="true" [style]="{'width':'20%'}"></p-column>
+    <p-column field="state" header="Estado" [sortable]="true" [style]="{'width':'20%'}">
+      <ng-template pTemplate="body" let-org="rowData">
+        <span *ngIf="org.state == 'active'"> Activo</span>
+        <span *ngIf="org.state == 'deleted'"> Borrado</span>
+        <span *ngIf="org.state != 'deleted' && org.state != 'active'"> {{org.state}}</span>
+			</ng-template>
+    </p-column>
     <p-column field="package_count" header="Nº datos" [sortable]="true" [style]="{'width':'18%'}"></p-column>
     <p-column header="Edición"  [style]="{'width':'12%'}">
       <ng-template pTemplate="body" let-org="rowData">

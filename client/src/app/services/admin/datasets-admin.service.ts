@@ -86,9 +86,11 @@ export class DatasetsAdminService {
 	}
 
 	public getDatasetResourceView(resoruce_id:string) {
-		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_URL_DATASETS_RESOURCE_VIEW 
+		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_URL_DATASETS_RESOURCE_VIEW 
 						+ '?' + Constants.SERVER_API_LINK_PARAM_RESOURCE_ID + '=' + resoruce_id 
-		return this.http.get(fullUrl).map(res => res.json());
+		// return this.http.get(fullUrl).map(res => res.json());
+		let headers = this.buildRequestHeaders();
+		return this.http.get(fullUrl, { headers: headers }).map(res => res.json());
 	}
 
 	public getDatasetRDF(datasetName: string) {

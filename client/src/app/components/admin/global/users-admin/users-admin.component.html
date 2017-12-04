@@ -7,9 +7,9 @@
 		<p-column field="email" [style]="{'width':'25%'}" header="Email" sortable="custom" [sortable]="true"></p-column>
 		<p-column field="role" [style]="{'width':'15%'}" header="Rol" sortable="custom" [sortable]="true">
 			<ng-template pTemplate="body" let-user="rowData">
-				<p *ngFor="let rol of user.role">
+				<span *ngFor="let rol of user.role">
 					{{rol?.description}}
-				</p>
+				</span>
 			</ng-template>
 		</p-column>
 		<p-column field="signupDate" [style]="{'width':'14%'}" header="Fecha alta" sortable="custom">
@@ -25,14 +25,17 @@
 		</p-column>
 		<p-column header="Edición" [style]="{'width':'12%'}">
 			<ng-template pTemplate="body" let-user="rowData">
-				<button pButton type="button" icon="fa-search" (click)="showDialog(user, false, false)"></button>
-				<button pButton type="button" icon="fa-edit" (click)="showDialog(user, true, false)"></button>
-				<button pButton type="button" icon="fa-trash" (click)="showDeleteDialog(user)"></button>
+				<button class="btn btn-primary p-2" type="button" (click)="showDialog(user, false, false)" data-toggle="tooltip" data-placement="top" title="Mostrar"><i class="fa fa-search"></i></button>
+				<button class="btn btn-primary p-2" type="button" (click)="showDialog(user, true, false)" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fa fa-edit"></i></button>
+				<button *ngIf="user.role[0].id != 1" class="btn btn-primary p-2" type="button" (click)="showDeleteDialog(user)" data-toggle="tooltip" data-placement="top" title="Borrar"><i class="fa fa-trash"></i></button>
 			</ng-template>
 		</p-column>
 		<p-footer>
+			
 			<div class="ui-helper-clearfix" style="width:100%">
-				<button type="button" pButton icon="fa-plus" style="float:left" (click)="showDialog(null, false, true)" label="Nuevo usuario"></button>
+					<button class="btn btn-primary" type="button" icon="fa-plus" (click)="showDialog(null, false, true)" style="float:left" >
+						<i class="fa fa-plus"></i> Nuevo Usuario
+					</button>
 			</div>
 		</p-footer>
 	</p-dataTable>
@@ -50,6 +53,10 @@
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-5"><b>Email: </b></div>
 				<div class="ui-grid-col-7"><p>{{user?.email}}</p></div>
+			</div>
+			<div class="ui-grid-row" *ngIf="displayOrg">
+				<div class="ui-grid-col-5"><b>Organización: </b></div>
+				<div *ngIf="userRole" class="ui-grid-col-7"><p>{{displayOrg}}</p></div>
 			</div>
 			<div class="ui-grid-row">
 				<div class="ui-grid-col-5"><b>Rol: </b></div>
@@ -73,7 +80,8 @@
 		</div>
 		<p-footer>
 			<div class="ui-dialog-buttonpane ui-helper-clearfix">
-				<button type="button" pButton icon="fa-edit" (click)="enableEdition()" label="Editar"></button>
+				<button type="button" class="btn btn-danger mt-2" (click)="displayViewDialog = false"><i class="fa fa-close"></i> Cancelar</button>
+				<button type="button" class="btn btn-primary mt-2" (click)="enableEdition()"><i class="fa fa-edit"></i> Editar</button>
 			</div>
 		</p-footer>
 	</p-dialog>
@@ -100,13 +108,13 @@
 			<div *ngIf="!createOrg" class="ui-grid-row" style="padding: 5px;">
 				<div class="ui-grid-col-3"><label>Rol:</label></div>
 				<div class="ui-grid-col-9">
-					<select class="form-control" [(ngModel)]="selectedRole">
+					<select class="form-control" [disabled]="isAdmin" [(ngModel)]="selectedRole">
 						<option disabled hidden [value]="undefined">Seleccione un rol</option>
-						<option *ngFor="let rol of roles" [ngValue]="rol.id">{{rol.description}}</option>
+						<option *ngFor="let rol of roles" [disabled]="rol.id==1" [ngValue]="rol.id">{{rol.description}}</option>
 					</select>
 				</div>
 			</div>
-			<div *ngIf="!createOrg" class="ui-grid-row" style="padding: 5px;">
+			<div *ngIf="!createOrg && !isAdmin" class="ui-grid-row" style="padding: 5px;">
 				<div class="ui-grid-col-3"><label>Organización: </label></div>
 				<div class="ui-grid-col-9">
 					<select class="form-control" [(ngModel)]="selectedOrg">
@@ -135,6 +143,12 @@
 				<div class="ui-grid-col-9">
 					<input class="form-control" type="text" id="title" [(ngModel)]="organizationDescription" placeholder="Nombre">
 				</div>
+			</div>	
+			<div *ngIf="createOrg" class="ui-grid-row" style="padding: 5px;">
+				<div class="ui-grid-col-3"><label>Imagen: </label></div>
+				<div class="ui-grid-col-9">
+					<input type="file" class="form-control" (change)="fileChange($event)" placeholder="Subir fichero" accept="image/x-png,image/gif,image/jpeg">
+				</div>
 			</div>			
 			<div *ngIf="createOrg" class="ui-grid-row" style="padding: 5px;">
 				<div class="ui-grid-col-3"><label>Dirección Organización: </label></div>
@@ -148,7 +162,7 @@
 					<input class="form-control" type="text" id="title" [(ngModel)]="organizationPerson" placeholder="Persona Responsable">
 				</div>
 			</div>							
-			<div *ngIf="!createOrg" class="ui-grid-row" style="padding: 5px;">
+			<div *ngIf="!createOrg && !isAdmin" class="ui-grid-row" style="padding: 5px;">
 				<div class="ui-grid-col-3"><label>Activo: </label></div>
 				<div class="ui-grid-col-9">
 					<p-inputSwitch onLabel="Sí" offLabel="No" [(ngModel)]="activatedUser"></p-inputSwitch>
@@ -163,10 +177,12 @@
 		</div>
 		<p-footer>
 			<div *ngIf="!createOrg" class="ui-dialog-buttonpane ui-helper-clearfix">
-				<button type="button" pButton icon="fa-check" label="Guardar" (click)="saveUser()"></button>
+				<button class="btn btn-danger mt-2" (click)="cancelSaveUser()"><i class="fa fa-close"></i> Cancelar</button>
+				<button class="btn btn-primary mt-2" (click)="saveUser()"><i class="fa fa-save"></i> Guardar</button>
 			</div>
 			<div *ngIf="createOrg" class="ui-dialog-buttonpane ui-helper-clearfix">
-				<button type="button" pButton icon="fa-check" label="Crear Organización" (click)="saveOrg()"></button>
+				<button class="btn btn-danger mt-2" (click)="createOrg = false"><i class="fa fa-close"></i> Cancelar</button>
+				<button class="btn btn-primary mt-2" (click)="saveOrg()"><i class="fa fa-plus"></i> Crear Organización</button>
 			</div>
 		</p-footer>
 	</p-dialog>

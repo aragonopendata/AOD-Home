@@ -24,6 +24,8 @@ export class UsersAdminComponent implements OnInit {
 	newOrg: OrganizationAdmin;
 	orgsSelect: SelectItem[];
 	selectedOrg: string;
+	originalSelectedOrg: string;
+	displayOrg: string;
 	createOrg: boolean = false;
 
 	organizationTitle: string;
@@ -32,6 +34,7 @@ export class UsersAdminComponent implements OnInit {
 	organizationAdress: string;
 	organizationPerson: string;
 	organizationEmail: string;
+	fileList: FileList;
 
 	displayViewDialog: boolean;
 	displayEditDialog: boolean;
@@ -46,6 +49,8 @@ export class UsersAdminComponent implements OnInit {
 	roles: Role[];
 	selectedRole: number;
 	selectRoles: SelectItem[] = [];
+
+	isAdmin: boolean = false;
 
 	//Pagination and ordering params
 	sort: string;
@@ -152,23 +157,63 @@ export class UsersAdminComponent implements OnInit {
 		this.user = new User;
 	}
 
-	showDialog(user, edit, create) {
-		if (edit) {
-			this.editDialogTitle = 'Modificar Usuario';
-			this.user = this.cloneUser(user);
-			this.selectedRole = this.user.role[0].id;
-			this.userRole = this.user.role[0];
-			this.displayEditDialog = true;
-		} else if (create) {
-			this.editDialogTitle = 'Crear Usuario';
-			this.user = new User();
-			this.user.role = [new Role()];
-			this.selectedRole = undefined;
-			this.displayEditDialog = true;
+	userEditDialog(user){
+		this.editDialogTitle = 'Modificar Usuario';
+		this.user = this.cloneUser(user);
+		this.selectedRole = this.user.role[0].id;
+		this.userRole = this.user.role[0];
+		this.displayEditDialog = true;
+
+		if ( this.isGlobalAdmin(user.role[0].name) ) {
+			this.selectedOrg = undefined;
+			this.isAdmin = true;
+		}else{
+			this.isAdmin = false;
+			this.usersAdminService.getOrganizationsForUserByID(user).subscribe(orgs => {
+				this.selectedOrg = JSON.parse(orgs).result[0].name;
+				this.originalSelectedOrg = this.selectedOrg;
+			});
+		}
+	}
+
+	userCreateDialog(){
+		this.editDialogTitle = 'Crear Usuario';
+		this.user = new User();
+		this.user.role = [new Role()];
+		this.selectedRole = undefined;
+		this.displayEditDialog = true;
+	}
+
+	userShowDialog(user){
+		this.user = this.cloneUser(user);
+		this.userRole = this.user.role[0];
+		this.displayViewDialog = true;
+		if ( !this.isGlobalAdmin(user.role[0].name) ) {
+			this.usersAdminService.getOrganizationsForUserByID(user).subscribe(orgs => {
+				this.selectedRole = this.user.role[0].id;
+				this.displayOrg = JSON.parse(orgs).result[0].display_name;
+				this.selectedOrg = JSON.parse(orgs).result[0].name;
+			});
+		}
+	}
+
+	isGlobalAdmin(roleName: string){
+		if(roleName == 'global_adm'){
+			return true;
 		} else {
-			this.user = this.cloneUser(user);
-			this.userRole = this.user.role[0];
-			this.displayViewDialog = true;
+			return false;
+		}
+	}
+
+	showDialog(user, edit, create) {
+		this.displayOrg = undefined;
+		this.createOrg = false;
+		if (edit) {
+			this.userEditDialog(user);
+		} else if (create) {
+			this.userCreateDialog();
+		} else {
+			this.userShowDialog(user);
 		}
 	}
 
@@ -197,15 +242,14 @@ export class UsersAdminComponent implements OnInit {
 				&& this.user.name != undefined && this.user.name != '' 
 				&& this.user.email != undefined && this.user.email != '' 
 				&& this.user.description != undefined && this.user.description != ''
-				&& this.selectedRole != undefined ) {
+				&& this.selectedRole != undefined && this.selectedOrg != undefined) {
 			this.userAdminMessages = [];
 			return true;
 		}
 	}
 
 	checkOrgForm(){
-		if( this.organizationTitle != undefined && this.organizationTitle != ''
-		){
+		if( this.organizationTitle != undefined && this.organizationTitle != ''){
 			return true;
 		} else {
 			this.userAdminMessages = [];
@@ -224,6 +268,12 @@ export class UsersAdminComponent implements OnInit {
 
 	saveOrg(){
 		if( this.checkOrgForm() ){
+			let file: File;
+			if( this.fileList && this.fileList.length > 0) {
+			  file = this.fileList[0];
+			}else {
+			  file = null;
+			}
 
 			this.newOrg = new OrganizationAdmin;
 			this.newOrg.title = this.organizationTitle;
@@ -232,7 +282,7 @@ export class UsersAdminComponent implements OnInit {
 				this.newOrg.description = this.organizationDescription;	
 			}
 			try {
-				this.organizationsAdminService.createOrganization(this.newOrg, this.organizationWeb, this.organizationAdress, this.organizationPerson).subscribe(result => {
+				this.organizationsAdminService.createOrganization(file, this.newOrg, this.organizationWeb, this.organizationAdress, this.organizationPerson).subscribe(result => {
 					if (result.status == 200 && result.success == true){
 						this.userAdminMessages = [];
 						this.userAdminMessages.push({ severity: 'success', summary: 'Alta de organización', detail: 'Organización creada correctamente' });
@@ -256,59 +306,86 @@ export class UsersAdminComponent implements OnInit {
 
 	saveUser() {
 		if (!this.user.id) {
-			this.user.active = this.activatedUser;
-			this.user.role = [new Role()];
-			this.user.role[0] = this.roles[this.selectedRole - 1];
-			let newUser: any;
-			newUser = this.user;
-			newUser.organization = this.selectedOrg;
-			if (this.valitadeUserForm()) {
-				this.usersAdminService.createUser(newUser).subscribe(result => {
-					if (result.status == 200 && result.success ) {
-						this.userAdminMessages = [];
-						this.userAdminMessages.push({ severity: 'success', summary: 'Alta de usuario', detail: 'Usuario insertado correctamente' });
-						this.displayEditDialog = false;
-						this.selectedRole = undefined;
-						this.user = new User();
-						this.users = [];
-						this.getUsers(null, null);
-					} else {
-						this.userAdminMessages = [];
-						this.userAdminMessages.push({ severity: 'error', summary: 'Alta de usuario', detail: 'Error al insertar el usuario: ' + result.error + (result.message ? result.message + '.' : '.') });
-					}
-				});
-			} else {
-				this.userAdminMessages = [];
-				this.userAdminMessages.push({ severity: 'warn', summary: 'Alta de usuario', detail: ' Faltan campos por rellenar del usuario' });
-			}
+			this.saveUserCreate();
 		} else {
-			if (this.valitadeUserFormEdit()) {
-				let userUpdated: any = this.user;
-				userUpdated.role = this.selectedRole;
-				this.usersAdminService.updateUser(userUpdated).subscribe(response => {
-					this.userAdminMessages = [];
-					if (response.status == 200) {
-						this.userAdminMessages.push({ severity: 'success', summary: 'Usuario Actualizado', detail: 'Se ha actualizado el usuario con exito' });
-						this.displayEditDialog = false;
-						this.selectedRole = undefined;
-						this.user = new User();
-						this.getUsers(null, null);
-					}
-					if (response.status == 409) {
-						this.userAdminMessages.push({ severity: 'warn', summary: response.errorTitle, detail: response.errorDetail });
-					} else if (response.status != 200) {
-						this.userAdminMessages.push({ severity: 'warn', summary: response.errorTitle, detail: response.errorDetail });
-					}
-				});
-			} else {
-				this.userAdminMessages = [];
-				this.userAdminMessages.push({ severity: 'warn', summary: 'Edición de usuario', detail: ' Faltan campos por rellenar del usuario' });
-			}
+			this.saveUserUpdate();			
 		}
+	}
+
+	saveUserCreate(){
+		this.user.active = this.activatedUser;
+		this.user.role = [new Role()];
+		this.user.role[0] = this.roles[this.selectedRole - 1];
+		let newUser: any;
+		newUser = this.user;
+		newUser.organization = this.selectedOrg;
+		if (this.valitadeUserForm()) {
+			this.usersAdminService.createUser(newUser).subscribe(result => {
+				if (result.status == 200 && result.success ) {
+					this.userAdminMessages = [];
+					this.userAdminMessages.push({ severity: 'success', summary: 'Alta de usuario', detail: 'Usuario insertado correctamente' });
+					this.displayEditDialog = false;
+					this.selectedRole = undefined;
+					this.user = new User();
+					this.users = [];
+					this.getUsers(null, null);
+				} else {
+					this.userAdminMessages = [];
+					this.userAdminMessages.push({ severity: 'error', summary: 'Alta de usuario', detail: 'Error al insertar el usuario: ' + result.error + (result.message ? result.message + '.' : '.') });
+				}
+			});
+		} else {
+			this.userAdminMessages = [];
+			this.userAdminMessages.push({ severity: 'warn', summary: 'Alta de usuario', detail: ' Faltan campos por rellenar del usuario' });
+		}
+	}
+
+	saveUserUpdate(){
+		if (this.valitadeUserFormEdit()) {
+
+			let userUpdated: any = this.user;
+			userUpdated.role = this.selectedRole;
+			if ( this.originalSelectedOrg == this.selectedOrg) {
+				userUpdated.organization = this.selectedOrg;
+
+				this.originalSelectedOrg = undefined;
+			} else {
+				userUpdated.organization_old = this.originalSelectedOrg;
+				userUpdated.organization = this.selectedOrg;
+			}
+			this.usersAdminService.updateUser(userUpdated).subscribe(response => {
+				this.userAdminMessages = [];
+				if (response.status == 200) {
+					this.userAdminMessages.push({ severity: 'success', summary: 'Usuario Actualizado', detail: 'Se ha actualizado el usuario con exito' });
+					this.displayEditDialog = false;
+					this.selectedRole = undefined;
+					this.user = new User();
+					this.getUsers(null, null);
+				}
+				if (response.status == 409) {
+					this.userAdminMessages.push({ severity: 'warn', summary: response.errorTitle, detail: response.errorDetail });
+				} else if (response.status != 200) {
+					this.userAdminMessages.push({ severity: 'warn', summary: response.errorTitle, detail: response.errorDetail });
+				}
+			});
+		} else {
+			this.userAdminMessages = [];
+			this.userAdminMessages.push({ severity: 'warn', summary: 'Edición de usuario', detail: ' Faltan campos por rellenar del usuario' });
+		}
+	}
+
+	cancelSaveUser(){
+		this.createOrg = false;
+		this.displayEditDialog = false;
+		this.selectedOrg = undefined;
 	}
 
 	blockUI() {
 
+	}
+
+	fileChange(event) {
+		this.fileList = event.target.files;
 	}
 
 	setOrder(event) {

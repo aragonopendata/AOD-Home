@@ -99,7 +99,7 @@ export class LoginComponent implements OnInit {
                     try{
                         this.organization = JSON.parse(org).result;
                         if(this.user.rol != Constants.ADMIN_USER_ROL_ORGANIZATION_MEMBER){
-                            if(this.isMember()){
+                            if( this.user.rol == Constants.ADMIN_USER_ROL_GLOBAL_ADMIN || this.isMember() ){
                                 this.router.navigate(['/' + Constants.ROUTER_LINK_ADMIN_DATACENTER_DATASETS_EDIT + '/' + this.dataset.name]);
                             }else{
                                 this.router.navigate(['/' + Constants.ROUTER_LINK_ADMIN]);
@@ -124,7 +124,7 @@ export class LoginComponent implements OnInit {
             try{
                 this.organization = JSON.parse(org).result;
                 if(this.user.rol != Constants.ADMIN_USER_ROL_ORGANIZATION_MEMBER){
-                    if(this.isMember()){
+                    if( this.user.rol == Constants.ADMIN_USER_ROL_GLOBAL_ADMIN || this.isMember() ){
                         this.router.navigate(['/' + Constants.ROUTER_LINK_ADMIN_DATACENTER_ORGANIZATIONS_EDIT + '/' + this.organization.name]);
                     }else{
                         this.router.navigate(['/' + Constants.ROUTER_LINK_ADMIN]);

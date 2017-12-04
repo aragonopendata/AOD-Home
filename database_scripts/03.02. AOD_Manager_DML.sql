@@ -9,7 +9,7 @@ INSERT INTO manager.LANGUAGES (name, locale) VALUES ('Español', 'es_ES');
 INSERT INTO manager.LANGUAGES (name, locale) VALUES ('English', 'en_EN');
 
 -- TABLE ROLES
-INSERT INTO manager.ROLES (name, description, active) VALUES ('global_adm', 'Administrador global de Open Data', TRUE);
+INSERT INTO manager.ROLES (name, description, active) VALUES ('ckan_admin', 'Administrador global de Open Data', TRUE);
 INSERT INTO manager.ROLES (name, description, active) VALUES ('org_adm', 'Administrador de organización', TRUE);
 INSERT INTO manager.ROLES (name, description, active) VALUES ('org_editor', 'Editor de organización', TRUE);
 INSERT INTO manager.ROLES (name, description, active) VALUES ('org_member', 'Miembro de organización', TRUE);

@@ -6,6 +6,26 @@ const dbQueries = require('../../db/db-queries');
 const proxy = require('../../conf/proxy-conf');
 const request = require('request');
 const utils = require('../../util/utils');
+//Multer for receive form-data
+const fs = require('fs-extra');
+const multer  = require('multer')
+const upload = multer({
+    storage: multer.diskStorage({
+      destination: (req, file, callback) => {
+        //let path = '../../../assets/public/ckan/organizaciones';
+        let path = '../../';
+        fs.mkdirsSync(path);
+        callback(null, path);
+      },
+      filename: (req, file, callback) => {
+        //originalname is the uploaded file's name with extn
+        callback(null, file.originalname);
+      }
+    })
+});
+
+// FormData for send form-data
+const formData = require('form-data');
 //DB SETTINGS
 const db = require('../../db/db-connection');
 const pool = db.getPool();
@@ -51,9 +71,17 @@ router.get(constants.API_URL_ORGANIZATIONS, function (req, res, next) {
 });
 
 /* CREATE ORGANIZATION */
-router.post('/organization', function (req, res, next) {
+router.post(constants.API_URL_ADMIN_ORGANIZATION, upload.single('file'), function (req, res, next) {
     try {
+        var file = req.file;
         var organization = req.body;
+        
+        if (file != undefined){
+            organization.image_url='public/ckan/organizaciones/'+file.originalname;
+        } else {
+            organization.image_url='public/ckan/organizaciones/logoDGA.gif';
+        }
+        
         logger.notice('Organización que llega desde request: ' + organization.name);
         //0. CHECKING REQUEST PARAMETERS
             let apiKey = utils.getApiKey(req.get('Authorization'));
@@ -103,7 +131,7 @@ router.post('/organization', function (req, res, next) {
 });
 
 /* UPDATE ORGANIZATION */
-router.put('/organization', function (req, res, next) {
+router.put(constants.API_URL_ADMIN_ORGANIZATION, function (req, res, next) {
     try {
         var organization = req.body;
         logger.notice('Organización que llega desde request: ' + organization.name);
@@ -160,7 +188,7 @@ router.put('/organization', function (req, res, next) {
 });
 
 /* DELETE ORGANIZATION */
-router.delete('/organization', function (req, res, next) {
+router.delete(constants.API_URL_ADMIN_ORGANIZATION, function (req, res, next) {
     try {
         var organization = req.body;
         logger.notice('Organización a borrar que llega desde request: ' + organization.name);
@@ -264,13 +292,14 @@ var insertOrganizationInCkan = function insertOrganizationInCkan(apiKey, organiz
             var create_organization_post_data = {
                 'name': organization.name,
                 'title': organization.title,
-                'description': organization.description,
+                'image_url': organization.image_url,
                 'extras': []
             };
             //Optional fields
-            if (organization.description != '') {
+            if (organization.description != undefined) {
                 create_organization_post_data.description = organization.description;
-             }
+            }
+
             if(organization.extras != undefined){
                 for(var index=0;index<organization.extras.length; index++){
                     if(organization.extras[index].key =='webpage'){

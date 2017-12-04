@@ -467,6 +467,58 @@ router.delete(constants.API_URL_ADMIN_RESOURCE, function (req, res, next) {
     }
 })
 
+/** GET DATASETS RESOURCE_VIEW */
+router.get(constants.API_URL_DATASETS_RESOURCE_VIEW, function (req, res, next) {
+    try {
+
+        logger.debug('Servicio: Obtener vistas de los recursos');
+        let serviceBaseUrl = constants.CKAN_API_BASE_URL;
+        let serviceName = constants.DATASETS_RESOURCE_VIEW;
+        let serviceRequestUrl = serviceBaseUrl + serviceName + '?id=' + req.query.resId;
+
+        var query = '';
+        let resParams = [];
+
+        logger.notice('URL de petición: ' + serviceRequestUrl);
+
+        let apiKey = utils.getApiKey(req.get('Authorization'));
+        if (apiKey) {
+            logger.info('API KEY del usuario recuperada: ' + apiKey);
+            var httpRequestOptions = {
+                url: serviceRequestUrl,
+                method: constants.HTTP_REQUEST_METHOD_GET,
+                headers: {
+                    'Content-Type': constants.HTTP_REQUEST_HEADER_CONTENT_TYPE_JSON,
+                    'User-Agent': constants.HTTP_REQUEST_HEADER_USER_AGENT_NODE_SERVER_REQUEST,
+                    'Authorization': apiKey
+                }
+            };
+            request(httpRequestOptions, function (err, response, body) {
+                if (err) {
+                    utils.errorHandler(err, res, serviceName);
+                }
+                if (response) {
+                    if (response.statusCode == 200) {
+                        res.json(body);
+                    } else {
+                        res.json(JSON.stringify(res.statusCode) + ' - ' + JSON.stringify(res.statusMessage));
+                    }
+                } else {
+                    res.json({ 'status': constants.REQUEST_ERROR_FORBIDDEN, 'error': 'OBTENER VISTAS DE RECURSO - Error al obtener las vistas de los recursos' });
+                }
+            }).on('error', function (err) {
+                utils.errorHandler(err, res, serviceName);
+            });
+        } else {
+            logger.error('OBTENER VISTAS DE RECURSO - Usuario no autorizado');
+            res.json({ 'status': constants.REQUEST_ERROR_FORBIDDEN, 'error': 'OBTENER VISTAS DE RECURSO - API KEY incorrecta' });
+            return;
+        }
+    } catch (error) {
+        logger.error('Error in route' + constants.API_URL_DATASETS_RESOURCE_VIEW);
+    }
+});
+
 /** GET USER PERMISSIONS FUNCTION */
 var getUserPermissions = function checkUserPermissions(userId, userName) {
     return new Promise((resolve, reject) => {
