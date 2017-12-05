@@ -15,6 +15,10 @@ export class OrganizationsAdminService {
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	}
 
+	public refreshUser() {
+		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+	}
+
 	public getCurrentUser() {
 		return this.currentUser;
 	}
@@ -49,12 +53,14 @@ export class OrganizationsAdminService {
 	}
 
 	public getOrganizations() {
+		this.refreshUser();
 		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_ORGANIZATIONS;
 		let headers = this.buildRequestHeaders();
 		return this.http.get(fullUrl, { headers: headers }).map(res => res.json());
 	}
 
 	public getOrganizationByName(organizationName: string) {
+		this.refreshUser();
 		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_ORGANIZATIONS 
 						+ '/' + organizationName;
 		let headers = this.buildRequestHeaders();
