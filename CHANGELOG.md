@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+## Added
+- Terminos page added
+- Dataset number in publicadores listview
+
+## [1.1.1] - 2017-12-05
+## Updated
+- Token Verification CROS fixed
+- Edit dataset and organization button working with login status
 
 ## [1.1.0] - 2017-12-04
 ## Updated
@@ -19,5 +27,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
 [Unreleased]: https://github.com/aragonopendata/AOD-Home/compare/master...develop
-[1.1.0]: https://github.com/aragonopendata/AOD-Home/releases/tag/v1.1.0
+[1.1.1]: https://github.com/aragonopendata/AOD-Home/compare/v1.1.0...v1.1.1
+[1.1.0]: https://github.com/aragonopendata/AOD-Home/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/aragonopendata/AOD-Home/releases/tag/v1.0.0
