@@ -63,7 +63,7 @@
 			</p-column>
 			<p-column field="numDatasets" [style]="{'width':'150px'}" styleClass="text-right" header="{{ 'ORGANIZATIONS.DATASETS_NUMBER' | translate }}">
 				<ng-template pTemplate="body" let-org="rowData">
-					{{org.packages}}
+					{{org.package_count}}
 				</ng-template>
 			</p-column>
 		</p-dataTable>
