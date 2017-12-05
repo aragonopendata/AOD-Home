@@ -7,6 +7,9 @@ import { ResourceAux } from '../../../../models/ResourceAux';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../../../../app.constants';
 import { DomSanitizer } from '@angular/platform-browser';
+import { AuthenticationService } from 'app/services/security/authentication.service';
+import { UsersAdminService } from 'app/services/admin/users-admin.service';
+import { Organization } from 'app/models/Organization';
 
 @Component({
 	selector: 'app-datasets-detail',
@@ -61,9 +64,11 @@ export class DatasetsDetailComponent implements OnInit {
 	datasetListErrorTitle: string;
 	datasetListErrorMessage: string;
 
-	//hovers: any[] = [];
+	currentUser: any;
+	userOrgs: Organization[];
+	showEdit: boolean = false;
 
-	constructor(private datasetsService: DatasetsService, private activatedRoute: ActivatedRoute, public sanitizer: DomSanitizer) {
+	constructor(private datasetsService: DatasetsService, private usersAdminService: UsersAdminService, private authenticationService: AuthenticationService, private activatedRoute: ActivatedRoute, public sanitizer: DomSanitizer) {
 		this.datasetListErrorTitle = Constants.DATASET_LIST_ERROR_TITLE;
         this.datasetListErrorMessage = Constants.DATASET_LIST_ERROR_MESSAGE;
 		this.routerLinkDataCatalogDataset = Constants.ROUTER_LINK_DATA_CATALOG_DATASET;
@@ -79,6 +84,7 @@ export class DatasetsDetailComponent implements OnInit {
 	ngOnInit() {
 		this.activatedRoute.params.subscribe(params => {
 			try {
+				this.showEditButton();
 				this.dataset.name =  params[Constants.ROUTER_LINK_DATA_PARAM_DATASET_NAME];
 				this.datasetHomer.package_id =  params[Constants.ROUTER_LINK_DATA_PARAM_DATASET_HOMER_NAME];
 			} catch (error) {
@@ -93,6 +99,31 @@ export class DatasetsDetailComponent implements OnInit {
 		}
 		if(this.datasetHomer.package_id){
 			this.loadDatasetHomer(this.datasetHomer);
+		}
+	}
+
+	showEditButton(){
+		this.showEdit = false;
+		this.currentUser = this.authenticationService.currentUser;
+		if (this.currentUser != undefined) {
+			if ( this.currentUser.rol != 'global_adm') {
+				this.usersAdminService.getOrganizationsByCurrentUser().subscribe(orgs => {
+					try {
+						this.userOrgs = JSON.parse(orgs).result;
+						let obj = this.userOrgs.find((org, i) => {
+							if (org.name === this.dataset.organization.name) {
+								this.showEdit = true;
+								return true; // stop searching
+							}
+						});
+					} catch (error) {
+						console.log(error);
+						console.error('Error: showEditButton() - datasets-detail.component.ts');
+					}
+				});
+			} else {
+				this.showEdit = true;
+			}
 		}
 	}
 

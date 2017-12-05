@@ -20,7 +20,7 @@
 	<div class="dtHeader row">
 		<div class="globaltitle col-10">
 			<h1>{{org.title}}</h1>
-			<button class="tags" icon="fa-pencil" pButton type="button" label="Editar" style="margin-bottom: 10px;" routerLink="/login/org/{{org.name}}"></button>
+			<button *ngIf="showEdit" class="tags" icon="fa-pencil" pButton type="button" label="Editar" style="margin-bottom: 10px;" routerLink="/login/org/{{org.name}}"></button>
 		</div>
 		<div class="social col-2">
 			<a href="{{routerLinkFacebookShare}}" target="_blank" title="Compartir en Facebook">

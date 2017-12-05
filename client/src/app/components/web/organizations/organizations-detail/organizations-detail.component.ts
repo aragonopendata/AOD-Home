@@ -45,6 +45,9 @@ export class OrganizationsDetailComponent implements OnInit {
 	 user: any;
 	 userAdminOrg: User;
 
+	 showEdit: boolean = false;
+	 userOrgs: Organization[];
+
 	constructor(private organizationsService: OrganizationsService
 			, private datasetsService: DatasetsService
 			, private activatedRoute: ActivatedRoute
@@ -69,12 +72,37 @@ export class OrganizationsDetailComponent implements OnInit {
 				this.getExtras();
 				this.getPermissions();
 				this.getDatasets(null, null);
+				this.showEditButton();
 			} catch (error) {
+				console.log(error);
 				console.error("Error: ngOnInit() - organizations-detail.component.ts");
 				this.errorTitle="Se ha producido un error";
                 this.errorMessage="Se ha producido un error en la carga de Publicadores, vuelva a intentarlo y si el error persiste contacte con el administrador.";
 			}
 		});
+	}
+
+	showEditButton(){
+		this.showEdit = false;
+		if (this.user != undefined) {
+			if ( this.user.rol != 'global_adm') {
+				this.usersAdminService.getOrganizationsByCurrentUser().subscribe(orgs => {
+					try {
+						this.userOrgs = JSON.parse(orgs).result;
+						let obj = this.userOrgs.find((org, i) => {
+							if (org.name === this.org.name) {
+								this.showEdit = true;
+								return true; // stop searching
+							}
+						});
+					} catch (error) {
+						console.error('Error: showEditButton() - organization-detail.component.ts');
+					}
+				});
+			} else {
+				this.showEdit = true;
+			}
+		}
 	}
 
 	setPagination(actual: number, total: number){
@@ -129,12 +157,12 @@ export class OrganizationsDetailComponent implements OnInit {
 		if(this.org.users.length > 0){
 			this.usersAdminService.getUser(this.org.users[0].id).subscribe( user => {
 			try{
-			  if(user != undefined){
-				this.userAdminOrg = JSON.parse(user).result;
-				this.email = this.userAdminOrg.email;
-			  }
+				if(user != undefined){
+					this.userAdminOrg = user.result;
+					this.email = this.userAdminOrg.email;
+				}
 			}catch(error){
-			  console.error("Error: ngOnInit() - organizations-edit.component.ts");
+				console.error("Error: getEmail() - organizations-edit.component.ts");
 			}
 		  });
 		}
