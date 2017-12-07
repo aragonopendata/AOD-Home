@@ -11,6 +11,7 @@ import { TopicsListComponent } from './components/web/topics/topics-list/topics-
 import { OrganizationsListComponent } from './components/web/organizations/organizations-list/organizations-list.component';
 import { OrganizationsDetailComponent } from './components/web/organizations/organizations-detail/organizations-detail.component';
 import { OpenDataComponent } from './components/web/static-content/info/open-data/open-data.component';
+import { TermsComponent } from './components/web/static-content/info/terms/terms.component';
 import { ApplicationsComponent } from './components/web/static-content/info/applications/applications.component';
 import { EventsComponent } from './components/web/static-content/info/events/events.component';
 import { CollaborationComponent } from './components/web/static-content/info/collaboration/collaboration.component';
@@ -65,6 +66,7 @@ const routes: Routes = [
     { path: Constants.ROUTER_LINK_DATA_ORGANIZATIONS + '/:' + Constants.ROUTER_LINK_DATA_PARAM_ORGANIZATION_NAME, component: OrganizationsDetailComponent, pathMatch: 'full' },
     { path: Constants.ROUTER_LINK_INFORMATION, redirectTo: Constants.ROUTER_LINK_INFORMATION_OPEN_DATA, pathMatch: 'full' },
     { path: Constants.ROUTER_LINK_INFORMATION_OPEN_DATA, component: OpenDataComponent, pathMatch: 'full' },
+    { path: Constants.ROUTER_LINK_INFORMATION_TERMS, component: TermsComponent, pathMatch: 'full' },
     { path: Constants.ROUTER_LINK_INFORMATION_APPS, component: ApplicationsComponent, pathMatch: 'full' },
     { path: Constants.ROUTER_LINK_INFORMATION_EVENTS, component: EventsComponent, pathMatch: 'full' },
     { path: Constants.ROUTER_LINK_INFORMATION_COLLABORATION, component: CollaborationComponent, pathMatch: 'full' },

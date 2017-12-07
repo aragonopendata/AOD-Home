@@ -1,0 +1,29 @@
+.marginsup{
+    margin-top: 12%;
+}
+
+.background{
+    background-color: #f1f1f1;
+}
+
+.container-fluid{
+    max-width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+:host ::ng-deep h2 { 
+    font-size: 60px;
+}
+
+:host ::ng-deep a { 
+    transition: color 150ms ease;
+    color: #5ea2ba !important;
+
+}
+
+:host ::ng-deep a:hover { 
+    color: #3b515c !important;
+    text-decoration: none;
+    
+}

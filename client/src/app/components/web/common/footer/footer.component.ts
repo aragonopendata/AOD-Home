@@ -10,12 +10,13 @@ export class FooterComponent implements OnInit {
 	aodBaseUrl: String
 	//Dynamic URL build parameters
 	routerLinkInfoOpenData: string;
+	routerLinkInfoTerms: string;
 	routerLinkDataCatalog: string;
 	routerLinkServicesAragopedia: string;
 	routerLinkServicesSocialData: string;
 	routerLinkInfoCollaboration: string;
 	routerLinkInfoApplications: string;
-	routerLinkTermsFragment: string;
+	
 	ckanUrl: string;
 	mediaWikiUrl: string;
 	virtuosoUrl: string;
@@ -36,7 +37,7 @@ export class FooterComponent implements OnInit {
 		this.routerLinkServicesSocialData = Constants.ROUTER_LINK_SERVICES_SOCIAL_DATA;
 		this.routerLinkInfoCollaboration = Constants.ROUTER_LINK_INFORMATION_COLLABORATION;
 		this.routerLinkInfoApplications = Constants.ROUTER_LINK_INFORMATION_APPS;
-		this.routerLinkTermsFragment = Constants.ROUTER_LINK_TERMS_FRAGMENT;
+		this.routerLinkInfoTerms = Constants.ROUTER_LINK_INFORMATION_TERMS;
 		this.ckanUrl = Constants.CKAN_URL;
 		this.mediaWikiUrl = Constants.MEDIA_WIKI_URL;
 		this.virtuosoUrl = Constants.VIRTUOSO_URL;

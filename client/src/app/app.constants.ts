@@ -449,6 +449,7 @@ export class Constants {
     public static ROUTER_LINK_DATA_ORGANIZATIONS = 'datos/publicadores';
     public static ROUTER_LINK_INFORMATION = 'informacion';
     public static ROUTER_LINK_INFORMATION_OPEN_DATA = 'informacion/open-data';
+    public static ROUTER_LINK_INFORMATION_TERMS = 'terminos';
     public static ROUTER_LINK_INFORMATION_APPS = 'informacion/aplicaciones';
     public static ROUTER_LINK_INFORMATION_EVENTS = 'informacion/eventos';
     public static ROUTER_LINK_INFORMATION_COLLABORATION = 'informacion/colabora';
@@ -523,7 +524,6 @@ export class Constants {
     public static ROUTER_LINK_DATA_PARAM_TAG = 'etq';
     public static ROUTER_LINK_DATA_PARAM_LANG = 'lang';
     public static ROUTER_LINK_DATA_PARAM_TEXT_HOMER = 'text';
-    public static ROUTER_LINK_TERMS_FRAGMENT = 'terminos-licencias';
     public static ROUTER_LINK_DATA_CAMPUS_PARAM_TYPE = 'type';
     public static ROUTER_LINK_DATA_CAMPUS_PARAM_TEXT = 'text';
     public static ROUTER_LINK_TOOLS_CAMPUS_EVENT_NAME = 'eventName';
