@@ -89,6 +89,12 @@ export class DatasetsAdminEditComponent implements OnInit {
 	comarcaInput: string;
 	municipioInput: string;
 	otherInputGeo: string;
+
+	//PARAMS FOR ROUTES EXTRA
+	currentAbsoluteUrl: string;
+	currentRelativeUrl: string;
+	index: number;
+	baseUrl: string;
 	
 	//BORRAMEtopic: Topic;
 	topics: Topic[];
@@ -134,6 +140,10 @@ export class DatasetsAdminEditComponent implements OnInit {
 			this.checkLangEn = Constants.ADMIN_DATASET_EDIT_DROPDOWN_LANG_EN;
 			this.checkLangFr = Constants.ADMIN_DATASET_EDIT_DROPDOWN_LANG_FR;
 			this.checkLangArg_Lng = Constants.ADMIN_DATASET_EDIT_DROPDOWN_LANG_ARG_LNG;
+			this.currentAbsoluteUrl = window.location.href;
+			this.currentRelativeUrl = this.router.url;
+			this.index = this.currentAbsoluteUrl.indexOf(this.currentRelativeUrl);
+			this.baseUrl = this.currentAbsoluteUrl.substring(0, this.index);
 			
 		 }
 
@@ -145,7 +155,6 @@ export class DatasetsAdminEditComponent implements OnInit {
 				console.error("Error: ngOnInit() params - datasets-admin-edit.component.ts");
 			}
 		});
-
 		if (this.dataset.name) {
 			this.loadDataset(this.dataset);
 		} else {
@@ -584,28 +593,28 @@ export class DatasetsAdminEditComponent implements OnInit {
 				this.extraTypeAragopedia = 'Aragón';
 				this.extraNameAragopedia = 'Aragón';
 				this.extraShortUriAragopedia = 'Aragón';
-				this.extraUriAragopedia = 'http://opendata.aragon.es/recurso/territorio/ComunidadAutonoma/Aragón';
+				this.extraUriAragopedia =  this.baseUrl+'/recurso/territorio/ComunidadAutonoma/Aragón';
 				break;
 			case 'provincia':
 				this.provinciaRadioValue = true;
 				this.extraTypeAragopedia = 'Provincia';
 				this.extraNameAragopedia = this.provinciaInput;
 				this.extraShortUriAragopedia = this.provinciaInput;
-				this.extraUriAragopedia = 'http://opendata.aragon.es/recurso/territorio/Provincia/'+this.provinciaInput;
+				this.extraUriAragopedia = this.baseUrl+'/recurso/territorio/Provincia/'+this.provinciaInput;
 				break;
 			case 'comarca':
 				this.comarcaRadioValue = true;
 				this.extraTypeAragopedia = 'Comarca';
 				this.extraNameAragopedia = this.comarcaInput;
 				this.extraShortUriAragopedia = this.comarcaInput;
-				this.extraUriAragopedia = 'http://opendata.aragon.es/recurso/territorio/Comarca/'+this.comarcaInput;
+				this.extraUriAragopedia = this.baseUrl+'/recurso/territorio/Comarca/'+this.comarcaInput;
 				break;
 			case 'municipio':
 				this.municipioRadioValue = true;
 				this.extraTypeAragopedia = 'Municipio';
 				this.extraNameAragopedia = this.municipioInput;
 				this.extraShortUriAragopedia = this.municipioInput;
-				this.extraUriAragopedia = 'http://opendata.aragon.es/recurso/territorio/Municipio/'+this.municipioInput;
+				this.extraUriAragopedia = this.baseUrl+'/recurso/territorio/Municipio/'+this.municipioInput;
 				break;
 			case 'otro':
 				this.otherRadioValue = true;
@@ -627,25 +636,25 @@ export class DatasetsAdminEditComponent implements OnInit {
 			this.extraTypeAragopedia = 'Aragón';
 			this.extraNameAragopedia = 'Aragón';
 			this.extraShortUriAragopedia = 'Aragón';
-			this.extraUriAragopedia = 'http://opendata.aragon.es/recurso/territorio/ComunidadAutonoma/Aragón';
+			this.extraUriAragopedia =  this.baseUrl+'/recurso/territorio/ComunidadAutonoma/Aragón';
 		}
 		if (this.provinciaRadioValue) {
 			this.extraTypeAragopedia = 'Provincia';
 			this.extraNameAragopedia = this.provinciaInput;
 			this.extraShortUriAragopedia = this.provinciaInput;
-			this.extraUriAragopedia = 'http://opendata.aragon.es/recurso/territorio/Provincia/'+this.provinciaInput;
+			this.extraUriAragopedia = this.baseUrl+'/recurso/territorio/Provincia/'+this.provinciaInput;
 		}
 		if (this.comarcaRadioValue) {
 			this.extraTypeAragopedia = 'Comarca';
 			this.extraNameAragopedia = this.comarcaInput;
 			this.extraShortUriAragopedia = this.comarcaInput;
-			this.extraUriAragopedia = 'http://opendata.aragon.es/recurso/territorio/Comarca/'+this.comarcaInput;
+			this.extraUriAragopedia = this.baseUrl+'/recurso/territorio/Comarca/'+this.comarcaInput;
 		}
 		if (this.municipioRadioValue) {
 			this.extraTypeAragopedia = 'Municipio';
 			this.extraNameAragopedia = this.municipioInput;
 			this.extraShortUriAragopedia = this.municipioInput;
-			this.extraUriAragopedia = 'http://opendata.aragon.es/recurso/territorio/Municipio/'+this.municipioInput;
+			this.extraUriAragopedia = this.baseUrl+'/recurso/territorio/Municipio/'+this.municipioInput;
 		}
 		if (this.otherRadioValue) {
 			this.extraTypeAragopedia = 'Otro';
@@ -867,7 +876,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 				//Name and Description TAB
 				this.dataset.title = this.inputDatasetTitle;
 				this.dataset.notes = this.inputDatasetDescription;
-				this.dataset.url = Constants.OPENDATA_DATASET_URL + this.inputDatasetUrl;
+				this.dataset.url = this.baseUrl + '/' + Constants.ROUTER_LINK_DATA_CATALOG + '/' + this.inputDatasetUrl;
 				this.dataset.name = this.inputDatasetUrl;
 				//Groups And Tags TAB
 				this.dataset.tags = this.tags;
