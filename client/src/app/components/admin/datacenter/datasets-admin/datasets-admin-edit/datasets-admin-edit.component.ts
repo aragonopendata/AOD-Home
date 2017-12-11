@@ -876,7 +876,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 				//Name and Description TAB
 				this.dataset.title = this.inputDatasetTitle;
 				this.dataset.notes = this.inputDatasetDescription;
-				this.dataset.url = this.baseUrl + '/' + Constants.ROUTER_LINK_DATA_CATALOG + '/' + this.inputDatasetUrl;
+				this.dataset.url = this.baseUrl + '/' + Constants.ROUTER_LINK_DATA_CATALOG_DATASET + '/' + this.inputDatasetUrl;
 				this.dataset.name = this.inputDatasetUrl;
 				//Groups And Tags TAB
 				this.dataset.tags = this.tags;
