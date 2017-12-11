@@ -22,19 +22,20 @@ router.get('/roles', function (req, res, next) {
             client.query(queryDb, function (err, result) {
                 done()
                 if (err) {
-                  // pass the error to the express error handler
-                  return next(err)
+                    logger.error('LISTADO DE ROLES - Error obteniendo el listado: ', err);
+                    res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'OBTENER USUARIO - Error obteniendo el listado' });
                 }
                 res.json(result.rows)
               })
 
         }).catch(connError => {            
             logger.error('Error en la conexión con base de datos', connError);
-            console.error('connectionError', connError.message, connError.stack)
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'LISTADO DE USUARIOS - Error en la conexión con base de datos' });
+            return;
         })
 
     } catch (error) {
-        logger.error('Error in roles admin');
+        logger.error('LISTADO DE ROLES - Error obteniendo el listado: ', error);
     }
 });
 

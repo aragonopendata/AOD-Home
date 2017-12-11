@@ -461,19 +461,15 @@ export class DatasetsAdminEditComponent implements OnInit {
 						this.extraUriAragopedia = this.dataset.extras[index].value;
 						break;
 					case Constants.DATASET_EXTRA_LANG_ES:
-						
 						this.checkLangBoolEs = true;
 						break;
 					case Constants.DATASET_EXTRA_LANG_EN:
-						
 						this.checkLangBoolEn = true;
 						break;
 					case Constants.DATASET_EXTRA_LANG_FR:
-						
 						this.checkLangBoolFr = true;
 						break;
 					case Constants.DATASET_EXTRA_LANG_ARG:
-						
 						this.checkLangBoolArg_Lng = true;
 						break;
 					case Constants.DATASET_EXTRA_LANG_OTHER:
@@ -524,10 +520,6 @@ export class DatasetsAdminEditComponent implements OnInit {
 
 	addExtra(extra_key: string, extra_value: string){
 		this.dataset.extras.push({ key: extra_key, value: extra_value });
-	}
-
-	addTag(tag: Tag){
-		this.tags.push(tag);
 	}
 
 	changeCheckBoxLang(lang: string){
@@ -592,7 +584,6 @@ export class DatasetsAdminEditComponent implements OnInit {
 				this.extraTypeAragopedia = 'Aragón';
 				this.extraNameAragopedia = 'Aragón';
 				this.extraShortUriAragopedia = 'Aragón';
-				
 				this.extraUriAragopedia = 'http://opendata.aragon.es/recurso/territorio/ComunidadAutonoma/Aragón';
 				break;
 			case 'provincia':
@@ -825,12 +816,23 @@ export class DatasetsAdminEditComponent implements OnInit {
 		return valid;
 	}
 
+	addTag(tag: Tag){
+		this.tags.push(tag);
+	}
+
+	addNewTag(newTag: string){
+		let newTagObj = new Tag;
+		newTagObj.display_name = newTag;
+		newTagObj.name = newTag;
+		this.tags.push(newTagObj);
+	}
+
 	filterTagsMultiple(tag_query: string) {
+		this.filteredTagsMultiple = [];
 		let query = tag_query;
 		if(query != ''){
 			this.datasetsAdminService.getTags(query).subscribe(tags => {
 				try {
-					this.filteredTagsMultiple = [];
 					for (let i = 0; i < tags.result.length; i++) {
 						let tag = tags.result[i];
 						if (tag.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
