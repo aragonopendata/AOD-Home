@@ -15,6 +15,7 @@ import { TermsComponent } from './components/web/static-content/info/terms/terms
 import { ApplicationsComponent } from './components/web/static-content/info/applications/applications.component';
 import { EventsComponent } from './components/web/static-content/info/events/events.component';
 import { CollaborationComponent } from './components/web/static-content/info/collaboration/collaboration.component';
+import { AnalyticsComponent } from './components/web/static-content/services/analytics/analytics.component';
 import { CampusComponent } from './components/web/static-content/tools/campus/campus.component';
 import { CampusDetailComponent } from './components/web/static-content/tools/campus/campus-detail/campus-detail.component';
 import { DevelopersComponent } from './components/web/static-content/tools/developers/developers.component';
@@ -70,6 +71,7 @@ const routes: Routes = [
     { path: Constants.ROUTER_LINK_INFORMATION_APPS, component: ApplicationsComponent, pathMatch: 'full' },
     { path: Constants.ROUTER_LINK_INFORMATION_EVENTS, component: EventsComponent, pathMatch: 'full' },
     { path: Constants.ROUTER_LINK_INFORMATION_COLLABORATION, component: CollaborationComponent, pathMatch: 'full' },
+    { path: Constants.ROUTER_LINK_SERVICES_ANALYTICS, component: AnalyticsComponent, pathMatch: 'full' },
     { path: Constants.ROUTER_LINK_TOOLS, redirectTo: Constants.ROUTER_LINK_TOOLS_DEVELOPERS, pathMatch: 'full' },
     { path: Constants.ROUTER_LINK_TOOLS_DEVELOPERS, component: DevelopersComponent, pathMatch: 'full' },
     { path: Constants.ROUTER_LINK_TOOLS_CAMPUS, component: CampusComponent, pathMatch: 'full' },

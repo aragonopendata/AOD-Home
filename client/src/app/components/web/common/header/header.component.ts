@@ -33,7 +33,8 @@ export class HeaderComponent implements OnInit {
 	routerLinkServicesAragopedia: string;
 	routerLinkServicesPresupuestos: string;
 	routerLinkServicesCras: string;
-	routerLinkServicesSocialData: string;
+    routerLinkServicesSocialData: string;
+    routerLinkServicesAnalytics: string;
 	routerLinkInfoOpenData: string;
 	routerLinkInfoApplications: string;
 	routerLinkInfoEventos: string;
@@ -62,7 +63,8 @@ export class HeaderComponent implements OnInit {
 		this.routerLinkDataOrganizations = Constants.ROUTER_LINK_DATA_ORGANIZATIONS;
 		this.routerLinkServicesAragopedia = Constants.ROUTER_LINK_SERVICES_ARAGOPEDIA;
 		this.routerLinkServicesCras = Constants.ROUTER_LINK_SERVICES_CRAS;
-		this.routerLinkServicesSocialData = Constants.ROUTER_LINK_SERVICES_SOCIAL_DATA;
+        this.routerLinkServicesSocialData = Constants.ROUTER_LINK_SERVICES_SOCIAL_DATA;
+        this.routerLinkServicesAnalytics = Constants.ROUTER_LINK_SERVICES_ANALYTICS;
 		this.routerLinkInfoOpenData = Constants.ROUTER_LINK_INFORMATION_OPEN_DATA;
 		this.routerLinkInfoApplications = Constants.ROUTER_LINK_INFORMATION_APPS;
 		this.routerLinkInfoEventos = Constants.ROUTER_LINK_INFORMATION_EVENTS;

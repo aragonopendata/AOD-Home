@@ -87,6 +87,16 @@
 				</div>
 			</div>
 			<div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
+				<div class="card card-inverse" routerLink="/{{routerLinkServicesAnalytics}}" (mouseenter)="hover('#imgAna', '../../../../assets/cards/Card-18-Analytics-ON.jpg')"
+				 (mouseleave)="unhover('#imgAna', '../../../../assets/cards/Card-18-Analytics-OFF.jpg')">
+					<img class="card-img" id="imgAna" src="../../../../assets/cards/Card-18-Analytics-OFF.jpg" alt="Card image">
+					<div *ngIf="hovers[16].hover" class="card-img-overlay" style="text-align: center;">
+						<h2>Open Analytics Data</h2>
+						<p>Conoce los datos de uso y acceso a las webs más importantes del Gobierno de Aragón.</p>
+					</div>
+				</div>
+			</div>
+			<div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
 				<div class="card card-inverse" (click)="goToUrl(routerLinkServicesSocialData)" (mouseenter)="hover('#imgOSD', '../../../../assets/cards/Card-04-OpenSocialData-ON.jpg')"
 				 (mouseleave)="unhover('#imgOSD', '../../../../assets/cards/Card-04-OpenSocialData-OFF.jpg')">
 					<img class="card-img" id="imgOSD" src="../../../../assets/cards/Card-04-OpenSocialData-OFF.jpg" alt="Card image">

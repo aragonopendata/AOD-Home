@@ -35,6 +35,7 @@ import { OpenDataSafeHtmlPipe } from "./components/web/static-content/info/open-
 import { ApplicationsComponent } from './components/web/static-content/info/applications/applications.component';
 import { EventsComponent } from './components/web/static-content/info/events/events.component';
 import { CollaborationComponent } from './components/web/static-content/info/collaboration/collaboration.component';
+import { AnalyticsComponent } from './components/web/static-content/services/analytics/analytics.component';
 import { CampusComponent } from './components/web/static-content/tools/campus/campus.component';
 import { CampusDetailComponent } from './components/web/static-content/tools/campus/campus-detail/campus-detail.component';
 import { DevelopersComponent } from './components/web/static-content/tools/developers/developers.component';
@@ -107,6 +108,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 		ApplicationsComponent,
 		EventsComponent,
 		CollaborationComponent,
+		AnalyticsComponent,
 		CampusComponent,
 		CampusDetailComponent,
 		DevelopersComponent,
