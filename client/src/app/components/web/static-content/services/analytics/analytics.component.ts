@@ -19,7 +19,7 @@ export class AnalyticsComponent {
 
 	ngOnInit() {
 		var days = 90;
-		var portal = "";
+		var portal = "Todos";
 
 		jQuery("#analytics").attr('src', get_url(get_time(days), get_filter(portal)));
 
@@ -33,8 +33,7 @@ export class AnalyticsComponent {
 
 		jQuery(".portalAnalytics").click(function (event) {
 			event.preventDefault();
-			jQuery('#btng-portal-analytics button.active').removeClass('active');
-			jQuery(this).addClass('active')
+			jQuery('.portalAnalyticsPral').html(jQuery(this).val() + ' <span class="caret"></span>');			
 			portal = jQuery(this).val();
 			jQuery("#analytics").attr('src', get_url(get_time(days), get_filter(portal)));
 		});
@@ -45,7 +44,7 @@ export class AnalyticsComponent {
 		}
 
 		function get_filter(portal) {
-			if(portal == ""){
+			if(portal == "Todos"){
 				return "";
 			}
 			var filter = "('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'3c2d80f0-d5ed-11e7-a49d-f956d0989e2c',key:portal.keyword,negate:!f,params:(query:" + portal + ",type:phrase),type:phrase,value:" + portal + "),query:(match:(portal.keyword:(query:" + portal + ",type:phrase))))";

@@ -1,10 +1,37 @@
+<div class="headerSeparator"></div>
+<div class="pagina">
+	<h1>Open Analytics Data</h1>
+	<div>
+		Open Analytics Data ofrece algunas estadísticas de uso de los portales más importantes del Gobierno de Aragón. Este servicio
+		ofrece de manera pública los datos más útiles en cuanto a la interacción de la ciudadanía con las páginas webs institucionales
+		del Gobierno de Aragón y aporta de manera sencilla su uso, acceso e impacto, además también estos datos están disponibles
+		mediante todo el potencial de los datos abiertos,
+	</div>
+</div>
 <div class="iframeAnalytics">
 	<div class="btn-group float-left" id="btng-portal-analytics">
-		<button type="button" value="aragon.es" class="btn btn-primary portalAnalytics">Aragon</button>
-		<button type="button" value="opendata.aragon.es" class="btn btn-primary portalAnalytics">Opendata</button>
-		<button type="button" value="presupuesto.aragon.es" class="btn btn-primary portalAnalytics">Transtarencia</button>
-		<button type="button" value="transparencia.aragon.es" class="btn btn-primary portalAnalytics">Presupuestos</button>
-		<button type="button" value="" class="btn btn-primary portalAnalytics active">Todos</button>
+		<button type="button" class="btn btn-primary dropdown-toggle portalAnalyticsPral" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			Todos
+			<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			<li>
+				<button class="dropdown-item portalAnalytics" value="Todos">Todos</button>
+			</li>
+			<div class="dropdown-divider"></div>
+			<li>
+				<button class="dropdown-item portalAnalytics" value="aragon.es">aragon.es</button>
+			</li>
+			<li>
+				<button class="dropdown-item portalAnalytics" value="opendata.aragon.es">opendata.aragon.es</button>
+			</li>
+			<li>
+				<button class="dropdown-item portalAnalytics" value="transparencia.aragon.es">transparencia.aragon.es</button>
+			</li>
+			<li>
+				<button class="dropdown-item portalAnalytics" value="presupuesto.aragon.es">presupuesto.aragon.es</button>
+			</li>
+		</ul>
 	</div>
 	<div class="btn-group float-right" id="btng-time-analytics">
 		<button type="button" value="1" class="btn btn-primary timeAnalytics">Hoy</button>
