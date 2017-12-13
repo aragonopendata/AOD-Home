@@ -128,11 +128,7 @@
 	<div class="download col-sm-12 col-md-4">
 		<div class="card p-2">
 			<h3 class="card-header">Descargas</h3>
-			<div class="card-block">
-			  <h4 class="card-title">Metadatos de la colección</h4>
-			  <button class="btn btn-secondary m-1" type="button" (click)="downloadRDF(dataset.name)">RDF</button>
-			</div>
-			<div class="card-block" *ngIf="resourcesAux">
+			<div class="card-block" *ngIf="!resourcesEmpty">
 				<h4 class="card-title">Archivos con los datos</h4>
 				<div *ngFor="let resource of resourcesAux">
 					<p class="card-text">{{resource.name}}</p>
@@ -146,6 +142,10 @@
 					</div>
 				</div>
 			</div>
+			<div class="card-block">
+				<h4 class="card-title">Metadatos de la colección</h4>
+				<button class="btn btn-secondary m-1" type="button" (click)="downloadRDF(dataset.name)">RDF</button>
+			  </div>
 		</div>
 	</div>
 	<div *ngIf="extrasIAESTNotEmpty" class="infodtset col-sm-12 col-md-8" style="margin-top: 5px;">

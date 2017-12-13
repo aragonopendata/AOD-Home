@@ -45,6 +45,7 @@ export class DatasetsAdminShowComponent implements OnInit {
 	iframeError:string;
 
 	resourcesAux: ResourceAux[] = new Array();
+	resourcesEmpty: boolean = false;
 	//Dynamic URL build parameters
 	assetsUrl: string;
 	routerLinkDatasetList: string;
@@ -222,8 +223,12 @@ export class DatasetsAdminShowComponent implements OnInit {
 	}
 
 	makeFileSourceList() {
-		for (let newRes of this.dataset.resources) {
-			this.keepDataResource(newRes.id, newRes.name, newRes.url, newRes.format);
+		if(this.dataset.resources.length > 0){
+			for (let newRes of this.dataset.resources) {
+				this.keepDataResource(newRes.id, newRes.name, newRes.url, newRes.format);
+			}
+		}else{
+			this.resourcesEmpty = true;
 		}
 	}
 

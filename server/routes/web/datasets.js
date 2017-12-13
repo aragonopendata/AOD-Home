@@ -503,7 +503,7 @@ router.get(constants.API_URL_DATASETS_RDF + '/:datasetName', function (req, res,
         logger.debug('Servicio: Obtener RDF del dataset por nombre');
         let serviceBaseUrl = constants.CKAN_BASE_URL;
         let serviceName = constants.DATASET_RDF_DATASET;
-        let serviceRequestUrl = serviceBaseUrl + serviceName + '/' + req.params.datasetName + constants.DATASET_RDF_EXTENSION;
+        let serviceRequestUrl = serviceBaseUrl + ':' + constants.CKAN_BASE_PORT + serviceName + '/' + req.params.datasetName + constants.DATASET_RDF_EXTENSION;
         logger.notice('URL de petición: ' + serviceRequestUrl);
 
         //Proxy checking
