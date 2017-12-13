@@ -30,6 +30,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 	datasetTitleDelete: string;
 	datasetNameToDelete: string;
 	displayDeleteDialog: boolean = false;
+	datasetLoaded: boolean = false;
 
 	resource: Resource;
 	resources: Resource [] = [];
@@ -259,56 +260,65 @@ export class DatasetsAdminEditComponent implements OnInit {
 
 		this.datasetsAdminService.getDatasetByName(dataset.name).subscribe(dataResult => {
 			try {
-
-				this.dataset = JSON.parse(dataResult).result;
-				this.inputDatasetTitle = this.dataset.title;
-				this.inputDatasetUrl = this.dataset.url;
-				this.inputDatasetDescription = this.dataset.notes
-				if (this.dataset.private){
-					this.selectedState = 'private';
-				} else {
-					this.selectedState = 'public';
-				}
-				this.getExtras();
-				//GET GEO 
-				if (this.dataset.groups[0] != undefined) {
-					this.selectedTopic = this.dataset.groups[0].name;
-				}
-				if (this.extraTypeAragopedia == 'Aragón') {
-					this.aragonRadioValue = true;
-				}
-				if (this.extraTypeAragopedia == 'Provincia') {
-					this.provinciaRadioValue = true;
-					if (this.extraNameAragopedia != undefined) {
-						this.provinciaInput = this.extraNameAragopedia;
+				if(dataResult != Constants.ADMIN_DATASET_ERR_LOAD_DATASET){
+					this.datasetLoaded = true;
+					this.dataset = JSON.parse(dataResult).result;
+					this.inputDatasetTitle = this.dataset.title;
+					this.inputDatasetUrl = this.dataset.url;
+					this.inputDatasetDescription = this.dataset.notes
+					if (this.dataset.private){
+						this.selectedState = 'private';
+					} else {
+						this.selectedState = 'public';
 					}
-				}
-				if (this.extraTypeAragopedia == 'Comarca') {
-					this.comarcaRadioValue = true;
-					if (this.extraNameAragopedia != undefined) {
-						this.comarcaInput = this.extraNameAragopedia;
+					this.getExtras();
+					//GET GEO 
+					if (this.dataset.groups[0] != undefined) {
+						this.selectedTopic = this.dataset.groups[0].name;
 					}
-				}
-				if (this.extraTypeAragopedia == 'Municipio') {
-					this.municipioRadioValue = true;
-					if (this.extraNameAragopedia != undefined) {
-						this.municipioInput = this.extraNameAragopedia;
+					if (this.extraTypeAragopedia == 'Aragón') {
+						this.aragonRadioValue = true;
 					}
-				}
-				if (this.extraTypeAragopedia == 'Otro') {
-					this.otherRadioValue = true;
-					if (this.extraNameAragopedia != undefined) {
-						this.otherInputGeo = this.extraNameAragopedia;
+					if (this.extraTypeAragopedia == 'Provincia') {
+						this.provinciaRadioValue = true;
+						if (this.extraNameAragopedia != undefined) {
+							this.provinciaInput = this.extraNameAragopedia;
+						}
 					}
+					if (this.extraTypeAragopedia == 'Comarca') {
+						this.comarcaRadioValue = true;
+						if (this.extraNameAragopedia != undefined) {
+							this.comarcaInput = this.extraNameAragopedia;
+						}
+					}
+					if (this.extraTypeAragopedia == 'Municipio') {
+						this.municipioRadioValue = true;
+						if (this.extraNameAragopedia != undefined) {
+							this.municipioInput = this.extraNameAragopedia;
+						}
+					}
+					if (this.extraTypeAragopedia == 'Otro') {
+						this.otherRadioValue = true;
+						if (this.extraNameAragopedia != undefined) {
+							this.otherInputGeo = this.extraNameAragopedia;
+						}
+					}
+	
+					this.tags = this.dataset.tags;
+					this.loadResources();
+					this.loadDropdowns();
+				}else{
+					this.disableButtons();
 				}
-
-				this.tags = this.dataset.tags;
-				this.loadResources();
-				this.loadDropdowns();
 			} catch (error) {
 				console.error("Error: loadDataset() - datasets-admin-edit.component.ts");
 			}
 		});
+	}
+
+	disableButtons(){
+		jQuery("#saveAndContinueB").prop("disabled",true);
+		jQuery("#saveAndFinishB").prop("disabled",true);
 	}
 
 	loadResources(){
@@ -321,11 +331,13 @@ export class DatasetsAdminEditComponent implements OnInit {
 	}
 	
 	createUrl(){
-		if (this.inputDatasetTitle != undefined) {
-			let url = this.inputDatasetTitle.toLocaleLowerCase().split(' ').join('-').split('ñ').join('n')
-			.split('á').join('a').split('é').join('e').split('í').join('i').split('ó').join('o').split('ú').join('u')
-			.split('ä').join('a').split('ë').join('e').split('ï').join('i').split('ö').join('o').split('ü').join('u');
-			this.inputDatasetUrl = encodeURI(url);
+		if(!this.datasetLoaded){
+			if (this.inputDatasetTitle != undefined) {
+				let url = this.inputDatasetTitle.toLocaleLowerCase().split(' ').join('-').split('ñ').join('n')
+				.split('á').join('a').split('é').join('e').split('í').join('i').split('ó').join('o').split('ú').join('u')
+				.split('ä').join('a').split('ë').join('e').split('ï').join('i').split('ö').join('o').split('ü').join('u');
+				this.inputDatasetUrl = encodeURI(url);
+			}
 		}
 	}
 
@@ -836,7 +848,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 		this.tags.push(newTagObj);
 	}
 
-	filterTagsMultiple(tag_query: string) {
+		filterTagsMultiple(tag_query: string) {
 		this.filteredTagsMultiple = [];
 		let query = tag_query;
 		if(query != ''){

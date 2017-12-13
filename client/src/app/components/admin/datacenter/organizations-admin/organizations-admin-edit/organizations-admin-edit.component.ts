@@ -7,6 +7,7 @@ import { User } from '../../../../../models/User'
 import { OrganizationsAdminService } from '../../../../../services/admin/organizations-admin.service';
 import { UsersAdminService } from '../../../../../services/admin/users-admin.service';
 import { Extra } from 'app/models/Extra';
+declare var jQuery:any;
 
 @Component({
   selector: 'app-organizations-admin-edit',
@@ -99,16 +100,24 @@ export class OrganizationsAdminEditComponent implements OnInit {
   loadOrganization(): void{
     this.organizationsAdminService.getOrganizationByName(this.org.name).subscribe(org => {
       try{
-        this.sort = Constants.SERVER_API_LINK_PARAM_SORT_DEFAULT_VALUE;
-        this.org = JSON.parse(org).result;
-        this.getExtras();
-        this.getEmail();
+        if(JSON.parse(org).success == true){
+          this.sort = Constants.SERVER_API_LINK_PARAM_SORT_DEFAULT_VALUE;
+          this.org = JSON.parse(org).result;
+          this.getExtras();
+          this.getEmail();
+        }else{
+          this.disableButtons();
+        }
       }catch(error){
         console.log(error);
         console.error("Error: loadOrganization() - organizations-admin-edit.component.ts");
       }
     });
   }
+
+  disableButtons(){
+		jQuery("#updateButton").prop("disabled",true);
+	}
 
   createOrgNameFromTitle(): void{
     var orgName = this.org.title.toLowerCase();

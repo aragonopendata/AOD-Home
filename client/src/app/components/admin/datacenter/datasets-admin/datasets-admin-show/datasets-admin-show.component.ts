@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../../../../../app.constants';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DatasetsAdminService } from 'app/services/admin/datasets-admin.service';
+declare var jQuery:any;
 
 @Component({
 	selector: 'app-datasets-admin-show',
@@ -17,6 +18,7 @@ export class DatasetsAdminShowComponent implements OnInit {
 
 	extrasIAESTNotEmpty: boolean = false;
 	dataset: Dataset = new Dataset();
+	datasetLoaded: boolean = false;
 	extraDictionary: string;
 	extraDictionaryURL: string[];
 	extraDataQuality: string;
@@ -99,16 +101,25 @@ export class DatasetsAdminShowComponent implements OnInit {
 		this.initializeDataset();
 		this.datasetsAdminService.getDatasetByName(dataset.name).subscribe(dataResult => {
 			try {
-				this.dataset = JSON.parse(dataResult).result;
-				this.getResourceView();
-				this.getExtras();
-				this.makeFileSourceList();
+				if(dataResult != Constants.ADMIN_DATASET_ERR_LOAD_DATASET){
+					this.datasetLoaded = true;
+					this.dataset = JSON.parse(dataResult).result;
+					this.getResourceView();
+					this.getExtras();
+					this.makeFileSourceList();
+				}else{
+					this.disableButtons();
+				}
 			} catch (error) {
 				console.error("Error: loadDataset() - datasets-admin-show.component.ts");
 				this.errorTitle = this.datasetListErrorTitle;
                 this.errorMessage = this.datasetListErrorMessage;
 			}
 		});
+	}
+
+	disableButtons(){
+		jQuery("#editButton").prop("disabled",true);
 	}
 
 	getResourceView(){

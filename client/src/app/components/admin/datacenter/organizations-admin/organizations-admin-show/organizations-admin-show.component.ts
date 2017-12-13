@@ -6,6 +6,7 @@ import { OrganizationsAdminService } from '../../../../../services/admin/organiz
 import { UsersAdminService } from '../../../../../services/admin/users-admin.service';
 import { User } from 'app/models/User';
 import { Extra } from 'app/models/Extra';
+declare var jQuery:any;
 
 @Component({
   selector: 'app-organizations-admin-show',
@@ -90,15 +91,23 @@ export class OrganizationsAdminShowComponent implements OnInit {
   loadOrganization() {
     this.organizationsAdminService.getOrganizationByName(this.org.name).subscribe(org => {
       try {
-        this.sort = Constants.SERVER_API_LINK_PARAM_SORT_DEFAULT_VALUE;
-        this.org = JSON.parse(org).result;
-        this.getExtras();
-        this.getEmail();
+        if(JSON.parse(org).success == true){
+          this.sort = Constants.SERVER_API_LINK_PARAM_SORT_DEFAULT_VALUE;
+          this.org = JSON.parse(org).result;
+          this.getExtras();
+          this.getEmail();
+        }else{
+          this.disableButtons();
+        }
       } catch (error) {
         console.error(Constants.ERROR_ORGANIZATION_GET_ORG);
       }
     });
   }
+
+  disableButtons(){
+		jQuery("#editButton").prop("disabled",true);
+	}
 
   cancel(): void {
     this.router.navigate(['/' + this.routerLinkOrgList]);

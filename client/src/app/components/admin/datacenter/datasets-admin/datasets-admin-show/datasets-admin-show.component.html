@@ -19,7 +19,7 @@
 <div class="container" *ngIf="!errorTitle">
 <div class="dtHeader row">
 	<h1 class="globaltitle col-10">{{dataset.title}}</h1>
-	<div class="social col-2">
+	<div *ngIf="datasetLoaded" class="social col-2">
 		<a href="{{routerLinkFacebookShare}}" target="_blank" title="Compartir en Facebook">
 		  <img src="../../../../../assets/social/facebookIcon.png" alt="Facebook">
 		</a>
@@ -31,7 +31,7 @@
 		</a>
 	</div>
 </div>
-<button type="button" class="btn btn-primary" routerLink="/login/dataset/{{dataset.name}}"><i class="fa fa-pencil"></i> Editar</button>
+<button id="editButton" type="button" class="btn btn-primary" routerLink="/login/dataset/{{dataset.name}}"><i class="fa fa-pencil"></i> Editar</button>
 <div class="content row">
 	<div class="dtsetPreview col-12" style='margin-bottom: 10px'>
 		<div class="title">
