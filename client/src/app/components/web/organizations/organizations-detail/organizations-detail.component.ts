@@ -67,12 +67,17 @@ export class OrganizationsDetailComponent implements OnInit {
 		});
 		this.organizationsService.getOrganizationByName(this.org.name).subscribe(org => {
 			try {
-				this.sort = Constants.SERVER_API_LINK_PARAM_SORT_DEFAULT_VALUE;
-				this.org = JSON.parse(org).result;
-				this.getExtras();
-				this.getPermissions();
-				this.getDatasets(null, null);
-				this.showEditButton();
+				if(JSON.parse(org).success){
+					this.sort = Constants.SERVER_API_LINK_PARAM_SORT_DEFAULT_VALUE;
+					this.org = JSON.parse(org).result;
+					this.getExtras();
+					this.getPermissions();
+					this.getDatasets(null, null);
+					this.showEditButton();
+				}else{
+					this.errorTitle="Se ha producido un error";
+					this.errorMessage="Se ha producido un error en la carga de Publicadores, vuelva a intentarlo y si el error persiste contacte con el administrador.";
+				}
 			} catch (error) {
 				console.log(error);
 				console.error("Error: ngOnInit() - organizations-detail.component.ts");

@@ -137,12 +137,18 @@ export class DatasetsDetailComponent implements OnInit {
 		this.initializeDataset();
 		this.datasetsService.getDatasetByName(dataset.name).subscribe(dataResult => {
 			try {
-				this.dataset = JSON.parse(dataResult).result;
-				this.getResourceView();
-				this.getExtras();
-				//this.getExtrasIAEST();
-				this.getDatasetsRecommended();
-				this.makeFileSourceList();
+				let dataResultValid = JSON.parse(dataResult).success;
+				if(dataResultValid){
+					this.dataset = JSON.parse(dataResult).result;
+					this.getResourceView();
+					this.getExtras();
+					//this.getExtrasIAEST();
+					this.getDatasetsRecommended();
+					this.makeFileSourceList();
+				}else{
+					this.errorTitle = this.datasetListErrorTitle;
+					this.errorMessage = this.datasetListErrorMessage;
+				}
 			} catch (error) {
 				console.error("Error: loadDataset() - datasets-detail.component.ts");
 				this.errorTitle = this.datasetListErrorTitle;
