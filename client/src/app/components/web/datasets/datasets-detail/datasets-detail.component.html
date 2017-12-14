@@ -119,11 +119,6 @@
 			<h5>Descargas</h5>
 		</div>
 		<div class="container-fluid horizontalFormat">
-			<div class="section">
-				<h6>Metadatos de la colección</h6>
-				<button class="tags" pButton type="button" pButton label="RDF" (click)="downloadRDF(dataset.name)"
-				style="margin: 2px;"></button>
-			</div>
 			<div class="section" *ngIf="resourcesAux.length != 0">
 				<h6>Archivos con los datos</h6>
 				<div *ngFor="let resource of resourcesAux">
@@ -138,6 +133,11 @@
 					</div>
 				</div>
 			</div>
+			<div class="section">
+					<h6>Metadatos de la colección</h6>
+					<button class="tags" pButton type="button" pButton label="RDF" (click)="downloadRDF(dataset.name)"
+					style="margin: 2px;"></button>
+				</div>
 		</div>
 	</div>
 	<div *ngIf="extrasIAESTNotEmpty" class="infodtset col-sm-12 col-md-8" style="margin-top: 5px;">
