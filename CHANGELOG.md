@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Updated
 - Functionality bugs fixed (admin)
 
+## [1.1.3] - 2017-12-14
+## Updated
+- Eurovoc tags added
+- RDF download fixed
+- Dataset title modification fixed
+- Retrieve dataset/organization bug fixed
+
 ## [1.1.2] - 2017-12-07
 ## Updated
 - CSS Syles fixed
@@ -34,6 +41,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
 [Unreleased]: https://github.com/aragonopendata/AOD-Home/compare/master...develop
+[1.1.3]: https://github.com/aragonopendata/AOD-Home/compare/v1.1.2...v1.1.3
 [1.1.2]: https://github.com/aragonopendata/AOD-Home/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/aragonopendata/AOD-Home/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/aragonopendata/AOD-Home/compare/v1.0.0...v1.1.0
