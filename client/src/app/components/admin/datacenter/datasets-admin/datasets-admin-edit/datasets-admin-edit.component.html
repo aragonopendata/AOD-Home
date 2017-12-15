@@ -419,7 +419,7 @@
 							<div class="form-group">
 								<label>Este conjunto de datos contiene información desde:</label>
 								<div class="input-group">
-									<input class="form-control" [(ngModel)]="extraTemporalFrom" type="number" value="2014">
+									<p-calendar class="calendar" [(ngModel)]="extraTemporalFrom" [locale]="es" dateFormat="dd/mm/yy"></p-calendar>
 								</div>
 							</div>
 						</div>
@@ -427,12 +427,11 @@
 							<div class="form-group">
 								<label>hasta:</label>
 								<div class="input-group">
-									<input class="form-control" [(ngModel)]="extraTemporalUntil" type="number" value="2014">
+									<p-calendar class="calendar" [(ngModel)]="extraTemporalUntil" [locale]="es" dateFormat="dd/mm/yy"></p-calendar>
 								</div>
 							</div>
 						</div>
 					</div>
-
 				</div>
 				<div class="tab-pane" id="lang" role="tabpanel">
 					<h3 style="margin-top: 2%;">Idiomas</h3>
