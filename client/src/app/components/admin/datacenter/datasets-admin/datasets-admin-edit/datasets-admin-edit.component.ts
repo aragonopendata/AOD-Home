@@ -1043,6 +1043,8 @@ export class DatasetsAdminEditComponent implements OnInit {
 						this.msgs.push({severity:'success', summary:'Dataset Creado', detail:'Se ha creado el Dataset con exito'});
 						if(option == "end"){
 							setTimeout(() => this.router.navigate(['/' + this.routerLinkDatasetList]), 1500)
+						}else{
+							this.loadDataset(this.dataset);
 						}
 					}
 				});
@@ -1166,6 +1168,8 @@ export class DatasetsAdminEditComponent implements OnInit {
 					this.msgs.push({severity:'success', summary:'Dataset Actualizado', detail:'Se ha actualizado el Dataset con exito'});
 					if(option == "end"){
 						setTimeout(() => this.router.navigate(['/' + this.routerLinkDatasetList]), 1500)
+					}else{
+						this.loadDataset(this.dataset);
 					}
 				}
 				if(response.status == 409){
