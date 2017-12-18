@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Updated
 - Functionality bugs fixed (admin)
 
+
+## [1.1.4] - 2017-12-18
+## Updated
+- Use a calendar element to select extra temporalForm
+
 ## [1.1.3] - 2017-12-14
 ## Updated
 - Eurovoc tags added
@@ -41,6 +46,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
 [Unreleased]: https://github.com/aragonopendata/AOD-Home/compare/master...develop
+[1.1.4]: https://github.com/aragonopendata/AOD-Home/compare/v1.1.3...v1.1.4
 [1.1.3]: https://github.com/aragonopendata/AOD-Home/compare/v1.1.2...v1.1.3
 [1.1.2]: https://github.com/aragonopendata/AOD-Home/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/aragonopendata/AOD-Home/compare/v1.1.0...v1.1.1
