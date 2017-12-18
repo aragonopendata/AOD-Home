@@ -47,6 +47,7 @@ import { OrganizationsAdminListComponent } from './components/admin/datacenter/o
 import { OrganizationsAdminShowComponent } from './components/admin/datacenter/organizations-admin/organizations-admin-show/organizations-admin-show.component';
 import { OrganizationsAdminEditComponent } from './components/admin/datacenter/organizations-admin/organizations-admin-edit/organizations-admin-edit.component';
 import { CampusAdminComponent } from './components/admin/campus-admin/campus-admin.component';
+import { LogstashComponent } from './components/admin/logstash/logstash.component';
 import { PageNotFoundComponent } from './components/error/page-not-found/page-not-found.component';
 
 const routes: Routes = [
@@ -116,7 +117,8 @@ const routes: Routes = [
                 { path: Constants.ROUTER_LINK_ORGANIZATIONS_EDIT + '/:' + Constants.ROUTER_LINK_DATA_PARAM_ORGANIZATION_NAME, component: OrganizationsAdminEditComponent, canActivate: [AuthGuard], pathMatch: 'full' }
             ]}
         ]},
-        { path: Constants.ROUTER_LINK_CAMPUS, component: CampusAdminComponent, canActivate: [AuthGuard], pathMatch: 'full' }
+        { path: Constants.ROUTER_LINK_CAMPUS, component: CampusAdminComponent, canActivate: [AuthGuard], pathMatch: 'full' },
+        { path: Constants.ROUTER_LINK_LOGSTASH, component: LogstashComponent, canActivate: [AuthGuard], pathMatch: 'full' }
     ]},
     { path: Constants.ROUTER_LINK_404, component: PageNotFoundComponent, pathMatch: 'full' },
     { path: '**', redirectTo: '/' + Constants.ROUTER_LINK_404 }

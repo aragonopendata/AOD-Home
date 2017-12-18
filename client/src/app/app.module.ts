@@ -66,6 +66,7 @@ import { DatasetsAdminComponent } from './components/admin/datacenter/datasets-a
 import { DatasetsAdminShowComponent } from './components/admin/datacenter/datasets-admin/datasets-admin-show/datasets-admin-show.component';
 import { DatasetsAdminEditComponent } from './components/admin/datacenter/datasets-admin/datasets-admin-edit/datasets-admin-edit.component';
 import { DatasetsAdminListComponent } from './components/admin/datacenter/datasets-admin/datasets-admin-list/datasets-admin-list.component';
+import { LogstashComponent } from './components/admin/logstash/logstash.component';
 // Services
 import { AuthenticationService } from './services/security/authentication.service';
 import { LoginService } from './services/security/login.service';
@@ -81,6 +82,7 @@ import { DatasetsAdminService } from './services/admin/datasets-admin.service';
 import { TopicsAdminService } from './services/admin/topics-admin.service';
 import { OrganizationsAdminService } from './services/admin/organizations-admin.service';
 import { CampusAdminService } from './services/admin/campus-admin.service';
+import { LogstashService } from './services/admin/logstash.service';
 import { AodCoreAdminService} from './services/admin/aod-core-admin.service';
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -143,6 +145,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 		DatasetsAdminShowComponent,
 		DatasetsAdminEditComponent,
 		DatasetsAdminListComponent,
+		LogstashComponent,
 		DatacenterComponent,
 		GlobalComponent,
   	],
@@ -204,6 +207,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 		TopicsAdminService,
 		OrganizationsAdminService,
 		CampusAdminService,
+		LogstashService,
 		AodCoreAdminService,
 		ConfirmationService
 	],
