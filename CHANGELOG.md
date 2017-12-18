@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Updated
 - Functionality bugs fixed (admin)
 
+## [1.1.5] - 2017-12-18
+## Updated
+- Modified dataset's extras URL, modified css dataset admin show component
+- Fix "Save and continue" option in creation/edition of dataset.
 
 ## [1.1.4] - 2017-12-18
 ## Updated
@@ -46,6 +50,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
 [Unreleased]: https://github.com/aragonopendata/AOD-Home/compare/master...develop
+[1.1.5]: https://github.com/aragonopendata/AOD-Home/compare/v1.1.4...v1.1.5
 [1.1.4]: https://github.com/aragonopendata/AOD-Home/compare/v1.1.3...v1.1.4
 [1.1.3]: https://github.com/aragonopendata/AOD-Home/compare/v1.1.2...v1.1.3
 [1.1.2]: https://github.com/aragonopendata/AOD-Home/compare/v1.1.1...v1.1.2
