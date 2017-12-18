@@ -104,10 +104,14 @@
 			<div class="section" *ngIf="extraDataQuality">
 				<h6>Calidad del dato</h6>
 				<p>{{extraDataQuality}}</p>
+				<a *ngFor="let data of extraDataQualityURL; let i = index" class="tags" (click)="openUrl(data);"
+				pButton type="button" label="[{{i+1}}] Documento de calidad del dato"
+				style="margin: 2px;"></a>
 			</div>
-			<div class="section" *ngIf="extraDictionaryURL && extraDictionaryURL.length != 0">
+			<div class="section" *ngIf="extraDictionary">
 				<h6>Diccionario de datos</h6>
-				<a *ngFor="let dic of extraDictionaryURL; let i = index" class="tags" href="{{dic}}" target="_blank" target="_blank"
+				<p>{{extraDictionary}}</p>
+				<a *ngFor="let dic of extraDictionaryURL; let i = index" class="tags" (click)="openUrl(dic);"
 				pButton type="button" label="[{{i+1}}] Documento de diccionario de datos"
 				style="margin: 2px;"></a>
 			</div>

@@ -498,7 +498,30 @@
 						<input type="text" size="50" placeholder="URL de acceso" pInputText>
 						<button type="button" (click)="quitUrl()" pButton label="Quitar"></button>
 					</div>
-					<button type="button" (click)="addUrl()" pButton label="Añadir"></button>
+					<ul class="list-group">
+						<li class="list-group-item justify-content-between col-12" *ngFor="let urlDic of extraDataQualityURL; let i of index">
+							<div class="form-group row">
+								<label for="inputFile" class="col-sm-1 col-form-label">URL :</label>
+								<div class="col-sm-9">
+									<p>{{urlDic}}</p>
+								</div>
+								<button class="col-sm-2 btn btn-danger" type="button" (click)="removeUrl('quality', urlDic)">Quitar
+									<i class="fa fa-close"></i>
+								</button>
+							</div>
+						</li>
+						<li class="list-group-item active">
+							<div class="form-group row">
+								<label for="inputFile" class="col-sm-1 col-form-label">URL:</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" placeholder="Introduzca URL" #inputUrlQuality>
+								</div>
+								<button type="button" (click)="addUrl('quality', inputUrlQuality.value);inputUrlQuality.value=''" class="col-sm-2 btn btn-primary">Añadir
+									<i class="fa fa-plus"></i>
+								</button>
+							</div>
+						</li>
+					</ul>
 					<h3 style="margin-top: 2%;">Diccionario de datos</h3>
 					<p>
 						En este campo puedes comentar y añadir cualquier clase de información que ayude a la comprensión del conjunto de datos. De
@@ -515,7 +538,7 @@
 								<div class="col-sm-9">
 									<p>{{urlDic}}</p>
 								</div>
-								<button class="col-sm-2 btn btn-danger" type="button" (click)="removeUrl(urlDic)">Quitar
+								<button class="col-sm-2 btn btn-danger" type="button" (click)="removeUrl('dictionary', urlDic)">Quitar
 									<i class="fa fa-close"></i>
 								</button>
 							</div>
@@ -524,9 +547,9 @@
 							<div class="form-group row">
 								<label for="inputFile" class="col-sm-1 col-form-label">URL:</label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control" placeholder="Introduzca URL" #inputUrl>
+									<input type="text" class="form-control" placeholder="Introduzca URL" #inputUrlDictionary>
 								</div>
-								<button type="button" (click)="addUrl(inputUrl.value);inputUrl.value=''" class="col-sm-2 btn btn-primary">Añadir
+								<button type="button" (click)="addUrl('dictionary', inputUrlDictionary.value);inputUrlDictionary.value=''" class="col-sm-2 btn btn-primary">Añadir
 									<i class="fa fa-plus"></i>
 								</button>
 							</div>

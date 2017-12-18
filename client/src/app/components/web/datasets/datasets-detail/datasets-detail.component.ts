@@ -25,6 +25,7 @@ export class DatasetsDetailComponent implements OnInit {
 	extraDictionary: string;
 	extraDictionaryURL: string[];
 	extraDataQuality: string;
+	extraDataQualityURL: string[];
 	extraFrequency: string;
 	extraGranularity: string;
 	extraTemporalFrom: string;
@@ -192,9 +193,13 @@ export class DatasetsDetailComponent implements OnInit {
 
 	getExtras() {
 		this.extraDictionaryURL = [];
+		this.extraDataQualityURL = [];
 		for (var index = 0; index < this.dataset.extras.length; index++) {
 			if (this.dataset.extras[index].key.indexOf(Constants.DATASET_EXTRA_DATA_DICTIONARY_URL) == 0) {
 				this.extraDictionaryURL.push(this.dataset.extras[index].value);
+			}
+			if (this.dataset.extras[index].key.indexOf(Constants.DATASET_EXTRA_DATA_QUALITY_URL) == 0) {
+				this.extraDataQualityURL.push(this.dataset.extras[index].value);
 			}
 			switch (this.dataset.extras[index].key) {
 				case Constants.DATASET_EXTRA_DATA_DICTIONARY:
@@ -458,5 +463,14 @@ export class DatasetsDetailComponent implements OnInit {
 
 	removeResourceIframe(){
 		this.iframeRes = undefined;
+	}
+
+	openUrl(url: string){
+		if(url.substring(0,4)=='http'){
+			window.open(url,'_blank');
+		}else{
+			let urlAbsolute = 'http://'+url;
+			window.open(urlAbsolute,'_blank');
+		}
 	}
 }

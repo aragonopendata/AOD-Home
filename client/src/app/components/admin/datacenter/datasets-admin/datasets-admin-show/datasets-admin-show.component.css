@@ -10,3 +10,21 @@ a {
 a:hover {
     color: #77a2be !important;
 }
+
+.tags {
+	border: 1px solid #7391a5;
+	padding-top:5px; padding-bottom:5px; padding-left:5px; padding-right:5px;
+	color: #3b515c !important;
+	background-color: #FFFFFF;
+	text-decoration: none  !important;
+	font-weight: bold;
+}
+
+.tags:hover {
+	border: 1px solid #7391a5 !important;
+	padding-top:5px; padding-bottom:5px; padding-left:5px; padding-right:5px;
+	background-color: #3b515c !important;
+	color: #FFFFFF !important;
+	text-decoration: none  !important;
+	font-weight: bold;
+}

@@ -278,6 +278,7 @@ export class Constants {
     public static DATASET_EXTRA_DATA_DICTIONARY_URL = 'Data Dictionary URL';
     public static DATASET_EXTRA_DATA_DICTIONARY = 'Data Dictionary';
     public static DATASET_EXTRA_DATA_QUALITY = 'Data Quality';
+    public static DATASET_EXTRA_DATA_QUALITY_URL = 'Data Quality URL';
     public static DATASET_EXTRA_FREQUENCY = 'Frequency';
     public static DATASET_EXTRA_GRANULARITY = 'Granularity';
     public static DATASET_EXTRA_TEMPORAL_FROM = 'TemporalFrom';

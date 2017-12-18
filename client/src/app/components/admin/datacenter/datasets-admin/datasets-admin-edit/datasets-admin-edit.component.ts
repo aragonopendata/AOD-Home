@@ -49,6 +49,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 	extraDictionary: string;
 	extraDictionaryURL: string[];
 	extraDataQuality: string;
+	extraDataQualityURL: string[];
 	extraFrequency: string;
 	extraGranularity: string;
 	extraTemporalFrom: Date;
@@ -183,6 +184,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 		this.dataset.groups = new Array ();
 		this.tags = [];
 		this.extraDictionaryURL = [];
+		this.extraDataQualityURL = [];
 		this.loadDropdowns();
 	}
 
@@ -420,26 +422,44 @@ export class DatasetsAdminEditComponent implements OnInit {
 		});
 	}
 
-	addUrl(url: string){
+	addUrl(type: string, url: string){
 		try {
-			if (this.validateURL(url)) {
-				this.extraDictionaryURL.push(url);
-			} else {
-				this.msgs.push({severity:'error', summary:'URL no válida', detail: 'La URL introducida no es válida.'});
+			if(type === 'quality'){
+				if (this.validateURL(url)) {
+					this.extraDataQualityURL.push(url);
+				} else {
+					this.msgs.push({severity:'error', summary:'URL no válida', detail: 'La URL introducida no es válida.'});
+				}
+			}else{
+				if (this.validateURL(url)) {
+					this.extraDictionaryURL.push(url);
+				} else {
+					this.msgs.push({severity:'error', summary:'URL no válida', detail: 'La URL introducida no es válida.'});
+				}
 			}
 		} catch (error) {
 			console.error('Error: addUrl() - datasets-admin-edit.component.ts');
 		}
 	}
 
-	removeUrl(originalUrl: string){
+	removeUrl(type: string, originalUrl: string){
 		let orgUrl = '';
 		let delUrl = '';
-		for (var i = 0; i < this.extraDictionaryURL.length; i++) {
-			orgUrl = this.extraDictionaryURL[i];
-			delUrl = originalUrl;
-			if(delUrl == orgUrl){
-				this.extraDictionaryURL.splice(i,1);
+		if(type === 'quality'){
+			for (var i = 0; i < this.extraDataQualityURL.length; i++) {
+				orgUrl = this.extraDataQualityURL[i];
+				delUrl = originalUrl;
+				if(delUrl == orgUrl){
+					this.extraDataQualityURL.splice(i,1);
+				}
+			}
+		}else{
+			for (var i = 0; i < this.extraDictionaryURL.length; i++) {
+				orgUrl = this.extraDictionaryURL[i];
+				delUrl = originalUrl;
+				if(delUrl == orgUrl){
+					this.extraDictionaryURL.splice(i,1);
+				}
 			}
 		}
 	}
@@ -457,9 +477,13 @@ export class DatasetsAdminEditComponent implements OnInit {
 	getExtras() {
 		try {
 			this.extraDictionaryURL = [];
+			this.extraDataQualityURL = [];
 			for (var index = 0; index < this.dataset.extras.length; index++) {
 				if (this.dataset.extras[index].key.indexOf(Constants.DATASET_EXTRA_DATA_DICTIONARY_URL) == 0) {
 					this.extraDictionaryURL.push(this.dataset.extras[index].value);					
+				}
+				if (this.dataset.extras[index].key.indexOf(Constants.DATASET_EXTRA_DATA_QUALITY_URL) == 0) {
+					this.extraDataQualityURL.push(this.dataset.extras[index].value);					
 				}
 				switch (this.dataset.extras[index].key) {
 					case Constants.DATASET_EXTRA_DATA_DICTIONARY:
@@ -521,6 +545,9 @@ export class DatasetsAdminEditComponent implements OnInit {
 		
 			for (var index = 0; index < this.extraDictionaryURL.length; index++) {
 				this.deleteExtraByValue(this.extraDictionaryURL[index]);
+			}
+			for (var index = 0; index < this.extraDataQualityURL.length; index++) {
+				this.deleteExtraByValue(this.extraDataQualityURL[index]);
 			}
 		} catch (error) {
 			console.error('Error: getExtras() - datasets-admin-edit.component.ts');
@@ -982,6 +1009,11 @@ export class DatasetsAdminEditComponent implements OnInit {
 						this.addExtra(Constants.DATASET_EXTRA_DATA_DICTIONARY_URL+i, this.extraDictionaryURL[i]);
 					}
 				}
+				if (this.extraDataQualityURL.length > 0) {
+					for (var i = 0; i < this.extraDataQualityURL.length; i++) {
+						this.addExtra(Constants.DATASET_EXTRA_DATA_QUALITY_URL+i, this.extraDataQualityURL[i]);
+					}
+				}
 				//LICENSE AND ORGANIZATION TAB
 				this.dataset.license_id = Constants.ADMIN_DATASET_EDIT_LICENSE_ID_DEFAULT;
 				this.dataset.license_title = Constants.ADMIN_DATASET_EDIT_LICENSE_TITLE_DEFAULT;
@@ -1115,6 +1147,11 @@ export class DatasetsAdminEditComponent implements OnInit {
 			if (this.extraDictionaryURL.length > 0) {
 				for (var i = 0; i < this.extraDictionaryURL.length; i++) {
 					this.addExtra(Constants.DATASET_EXTRA_DATA_DICTIONARY_URL+i, this.extraDictionaryURL[i]);
+				}
+			}
+			if (this.extraDataQualityURL.length > 0) {
+				for (var i = 0; i < this.extraDataQualityURL.length; i++) {
+					this.addExtra(Constants.DATASET_EXTRA_DATA_QUALITY_URL+i, this.extraDataQualityURL[i]);
 				}
 			}
 			
