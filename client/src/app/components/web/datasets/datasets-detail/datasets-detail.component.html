@@ -129,18 +129,17 @@
 					<p>{{resource.name}}</p>
 					<div *ngFor="let url of resource.sources; let i = index">
 						<div class="horizontalFormat" *ngIf="resource.getSourcesSize() != i+1">
-							<button class="tags" pButton type="button" label="{{resource.formats[i]}}" style="margin: 2px;" (click)="downloadFile(url)"></button>
+							<a class="tags" href="{{url}}" target="_blank" title="{{resource.name}}" pButton type="button" label="{{resource.formats[i]}}" style="margin: 2px;"></a>
 						</div>
 						<div *ngIf="resource.getSourcesSize() == i+1">
-							<button class="tags" pButton type="button" label="{{resource.formats[i]}}" style="margin: 2px;" (click)="downloadFile(url)"></button>
+							<a class="tags" href="{{url}}" target="_blank" title="{{resource.name}}" pButton type="button" label="{{resource.formats[i]}}" style="margin: 2px;"></a>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="section">
 					<h6>Metadatos de la colección</h6>
-					<button class="tags" pButton type="button" pButton label="RDF" (click)="downloadRDF(dataset.name)"
-					style="margin: 2px;"></button>
+					<a class="tags" (click)="downloadRDF(dataset.name)" target="_blank" title="Metadato de la colección en RDF" pButton type="button" label="RDF" style="margin: 2px;"></a>
 				</div>
 		</div>
 	</div>

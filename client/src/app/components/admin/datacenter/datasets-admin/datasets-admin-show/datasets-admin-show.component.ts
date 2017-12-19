@@ -279,10 +279,6 @@ export class DatasetsAdminShowComponent implements OnInit {
 		this.resourcesAux.push(newResourceAux);
 	}
 
-	downloadFile(url: string) {
-		window.open(url, '_blank');
-	}
-
 	isDatasetDefined(dataset: Dataset) {
 		if(dataset && dataset != null && dataset != undefined) {
 			return true;
