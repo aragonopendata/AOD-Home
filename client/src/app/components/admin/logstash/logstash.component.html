@@ -1,7 +1,7 @@
 <div class="container">
   <p-messages closable="true" label="Administración de portales Kibana" [(value)]="userAdminMessages"></p-messages>
   <p-growl sticky="true" life="2000" [(value)]="userAdminMessages"></p-growl>
-  
+
   <p-dataTable [loading]="loading" [value]="logstashs" [responsive]="true" emptyMessage="No se han encontrado registros." [rows]="5"
     [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]">
     <p-column styleClass="text-center" field="portal_name" [style]="{'width':'15%'}" header="Portal"></p-column>
@@ -9,10 +9,10 @@
     <p-column styleClass="text-center" field="view" [style]="{'width':'10%'}" header="Vista"></p-column>
     <p-column styleClass="text-center" field="delay" [style]="{'width':'10%'}" header="Delay"></p-column>
     <p-column styleClass="text-center" field="status" [style]="{'width':'10%'}" header="Estado">
-        <ng-template pTemplate="body" let-logstash="rowData" >
-            <div *ngIf="logstash.status=='0'" class="circle-red"></div>
-            <div *ngIf="logstash.status!='0'" class="circle-green"></div>
-          </ng-template>
+      <ng-template pTemplate="body" let-logstash="rowData">
+        <div *ngIf="logstash.status=='0'" class="circle-red"></div>
+        <div *ngIf="logstash.status!='0'" class="circle-green"></div>
+      </ng-template>
     </p-column>
     <p-column styleClass="text-center" field="url" [style]="{'width':'37%'}" header="Url"></p-column>
     <p-column styleClass="text-center" header="Edición" [style]="{'width':'9%'}">
@@ -45,8 +45,11 @@
         <div class="ui-grid-col-3">
           <label for="portal_name">Portal:</label>
         </div>
-        <div class="ui-grid-col-9">
+        <div class="ui-grid-col-9" *ngIf="!editing">
           <input pInputText id="portal_name" [(ngModel)]="logstash.portal_name" />
+        </div>
+        <div class="ui-grid-col-9" *ngIf="editing">
+          <input pInputText id="portal_name" disabled [(ngModel)]="logstash.portal_name" />
         </div>
       </div>
       <div class="ui-grid-row" style="padding: 5px;">
@@ -54,10 +57,10 @@
           <label for="type">Tipo:</label>
         </div>
         <div class="ui-grid-col-9">
-            <select class="form-control" name="singleSelect" id="singleSelect" [(ngModel)]="logstash.type">
-                <option value="urchin">Urchin</option>
-                <option value="analytics">Google Analytics</option>
-              </select>
+          <select class="form-control" name="singleSelect" id="singleSelect" [(ngModel)]="logstash.type">
+            <option value="urchin">Urchin</option>
+            <option value="analytics">Google Analytics</option>
+          </select>
         </div>
       </div>
       <div class="ui-grid-row" style="padding: 5px;">

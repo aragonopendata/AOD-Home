@@ -104,6 +104,7 @@ router.get('/logstash/reload', function (req, res, next) {
             for(var i = 0; i < reloadLogstashResponse.length; i++) {
                 createPipeline(reloadLogstashResponse[i]);
             }
+            createPipelineConf(reloadLogstashResponse);
         }).catch(error => {
             logger.error(error);
             res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'Recarga errónea' });
@@ -143,9 +144,9 @@ router.delete('/logstash/delete/:logid', function (req, res, next) {
 
 var insertLogstash = function insertLogstash(logstash) {
     return new Promise((resolve, reject) => {
-        var portal_name = logstash.portal_name;
+        var portal_name = logstash.portal_name.toLowerCase();
         
-        var type = logstash.type;
+        var type = logstash.type.toLowerCase();
         var view = logstash.view;
         var delay = logstash.delay;
         var url = logstash.url;
@@ -170,9 +171,9 @@ var insertLogstash = function insertLogstash(logstash) {
 
 var updateLogstash = function updateLogstash(logstash, idlog) {
     return new Promise((resolve, reject) => {
-        var portal_name = logstash.portal_name;
+        var portal_name = logstash.portal_name.toLowerCase();
         
-        var type = logstash.type;
+        var type = logstash.type.toLowerCase();
         var view = logstash.view;
         var delay = logstash.delay;
         var url = logstash.url;
@@ -264,6 +265,25 @@ var createPipeline = function createPipeline(logstash){
     }
 
     fs.writeFile(logstashPath + '/LogstashPipelines/' + logstash.portal_name + '.conf', pipeline, (err) => {
+        if (err) throw err;
+    });
+}
+
+var createPipelineConf = function createPipelineConf(logstashs){
+    logger.info(JSON.stringify(logstashs));
+    var logstashPath = constants.ANALYTICS_LOGSTASH_PATH;
+    var templatePath = path.join(__dirname, '..', '..', 'conf', 'analytics_templates');
+
+    var pipelineTemplate = fs.readFileSync(String(templatePath) + '/pipelines_template.yml');        
+
+    var compiledTemplate = Handlebars.compile(String(pipelineTemplate));
+    var data = { 
+        "logstashs": logstashs
+    };
+    
+    var pipeline = compiledTemplate(data);
+
+    fs.writeFile(logstashPath + '/LogstashApp/config/pipelines.yml', pipeline, (err) => {
         if (err) throw err;
     });
 }
