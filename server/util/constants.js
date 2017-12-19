@@ -240,4 +240,4 @@ exports.PROXY_PORT = '';
 
 /* ******************* */
 /* ANALYTICS CONF */
-exports.ANALYTICS_LOGSTASH_PATH = '/home/dxd/Desktop/Logstash'
+exports.ANALYTICS_LOGSTASH_PATH = '/data/apps/LogStash'
