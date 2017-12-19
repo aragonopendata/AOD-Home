@@ -28,6 +28,7 @@ var tagsAdmin = require('./server/routes/admin/tags');
 var organizationsAdmin = require('./server/routes/admin/organizations');
 var aodCore = require('./server/routes/admin/aod-core')
 var logstash = require('./server/routes/admin/analytics')
+var analytics = require('./server/routes/web/analytics')
 //var campusAdmin = require('./server/routes/admin/campus');
 
 // API ROUTES 
@@ -57,6 +58,7 @@ app.use(constants.API_BASE_URL_WEB, topics);
 app.use(constants.API_BASE_URL_WEB, organizations);
 app.use(constants.API_BASE_URL_WEB, contents);
 app.use(constants.API_BASE_URL_WEB, campus);
+app.use(constants.API_BASE_URL_WEB, analytics);
 app.use(constants.API_BASE_URL_ADMIN, verifyToken, usersAdmin);
 app.use(constants.API_BASE_URL_ADMIN, rolesAdmin);
 //app.use('/api/admin', contentsAdmin);

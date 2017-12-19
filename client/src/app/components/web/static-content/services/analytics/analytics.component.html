@@ -19,17 +19,8 @@
 				<button class="dropdown-item portalAnalytics" value="Todos">Todos</button>
 			</li>
 			<div class="dropdown-divider"></div>
-			<li>
-				<button class="dropdown-item portalAnalytics" value="aragon.es">aragon.es</button>
-			</li>
-			<li>
-				<button class="dropdown-item portalAnalytics" value="opendata.aragon.es">opendata.aragon.es</button>
-			</li>
-			<li>
-				<button class="dropdown-item portalAnalytics" value="transparencia.aragon.es">transparencia.aragon.es</button>
-			</li>
-			<li>
-				<button class="dropdown-item portalAnalytics" value="presupuesto.aragon.es">presupuesto.aragon.es</button>
+			<li *ngFor="let logstash of logstashs">
+				<button class="dropdown-item portalAnalytics" value="{{ logstash.url }}">{{ logstash.url }}</button>
 			</li>
 		</ul>
 	</div>

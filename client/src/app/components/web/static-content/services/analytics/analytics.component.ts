@@ -1,6 +1,8 @@
 import { Constants } from './../../../../../app.constants';
 import { Component, NgModule } from '@angular/core'
 import { BrowserModule, DomSanitizer } from '@angular/platform-browser'
+import { AnalyticsService } from '../../../../../services/web/analytics.service';
+import { Logstash } from '../../../../../models/Logstash';
 declare var jQuery: any;
 
 @Component({
@@ -15,9 +17,12 @@ declare var jQuery: any;
 })
 export class AnalyticsComponent {
 
-	constructor() { }
+	logstashs: Logstash[];
+
+	constructor(private logstashService: AnalyticsService) { }
 
 	ngOnInit() {
+		this.getFiles();
 		var days = 90;
 		var portal = "Todos";
 
@@ -57,5 +62,17 @@ export class AnalyticsComponent {
 		}
 	}
 
+	getFiles() {
+		this.logstashs = [];
+		this.logstashService.getFiles().subscribe(logstashs => {
+		  try {
+			console.log(JSON.parse(logstashs));
+			this.logstashs = JSON.parse(logstashs);
+	
+		  } catch (error) {
+			console.error('Error: getFiles() - logstash.component.ts',error);
+		  }
+		});
+	  }
 
 }

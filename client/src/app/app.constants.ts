@@ -570,6 +570,7 @@ export class Constants {
     public static SERVER_API_LINK_CAMPUS_TYPES = '/campus/types';
     public static SERVER_API_LINK_CAMPUS_SPEAKERS = '/campus/speakers';
     public static SERVER_API_LINK_CAMPUS_TOPICS = '/campus/topics';
+    public static SERVER_API_LINK_WEB_ANALYTICS = '/analytics/files';
     public static SERVER_API_LINK_ADMIN_USERS = '/users';
     public static SERVER_API_LINK_ADMIN_ROLES_LIST = '/roles';
     public static SERVER_API_LINK_ADMIN_GET_ROLE = '/role';

@@ -71,6 +71,7 @@ router.put('/logstash/insert/:logid', function (req, res, next) {
                 'success': true,
                 'result': 'Actualización correcta'
             });
+        createPipeline(logstash);
         }).catch(error => {
             res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'Actualización errónea' });
             return;
@@ -97,6 +98,18 @@ router.get('/logstash/reload', function (req, res, next) {
             res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'Recarga errónea' });
             return;
         });
+
+        getAllFiles().then(reloadLogstashResponse => {
+            for(var i = 0; i < reloadLogstashResponse.length; i++) {
+                createPipeline(reloadLogstashResponse[i]);
+            }
+        }).catch(error => {
+            logger.error(error);
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'Recarga errónea' });
+            return;
+        });
+
+        
 
     } catch (error) {
         logger.error(error);
@@ -220,6 +233,62 @@ var reloadLogstash = function reloadLogstash() {
             })
         });
     });
+}
+
+var createPipeline = function createPipeline(logstash){
+    logger.info(logstash.type);
+    var templatePath = '/home/dxd/Desktop/AOD_HOME/AOD-Home/server/conf/analytics_templates';
+    var logstashPath = '/home/dxd/Desktop/Logstash';
+    
+    var pipelineTemplate;
+    if(logstash.type == 'urchin'){
+        pipelineTemplate = fs.readFileSync(templatePath + '/Urchin_template.conf');        
+    }
+    if(logstash.type == 'analytics'){
+        pipelineTemplate = fs.readFileSync(templatePath + '/Analytics_template.conf');        
+    }
+
+    var compiledTemplate = Handlebars.compile(String(pipelineTemplate));
+    var data = { 
+        "portal": logstash.portal_name, 
+        "delay": logstash.view,
+        "vista": logstash.delay, 
+        "url": logstash.url
+    };
+    
+    var pipeline = compiledTemplate(data);
+
+    if(!fs.existsSync(logstashPath + '/LogstashPipelines')){
+        fs.mkdirSync(logstashPath + '/LogstashPipelines');
+    }
+
+    fs.writeFile(logstashPath + '/LogstashPipelines/' + logstash.portal_name + '.conf', pipeline, (err) => {
+        if (err) throw err;
+    });
+}
+
+var getAllFiles = function getAllFiles(){
+    return new Promise((resolve, reject) => {
+        try {
+            pool.connect(function(err,client,done) {
+                const queryDb = {
+                    text: dbQueries.DB_ADMIN_GET_LOGSTASH_CONF_ALL,
+                    rowMode: constants.SQL_RESULSET_FORMAT_JSON
+                };
+                client.query(queryDb, (reloadLogstashQueryError, reloadLogstashQueryResponse) => {
+                    if (reloadLogstashQueryError) {
+                        reject(reloadLogstashQueryError);
+                    } else {
+                        resolve(reloadLogstashQueryResponse.rows);                    
+                    }
+                })
+    
+            })
+        } catch (error) {
+            logger.error('Error in route get Logstash', error);
+        }
+    })
+
 }
 
 module.exports = router;

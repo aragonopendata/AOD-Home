@@ -83,6 +83,7 @@ import { TopicsAdminService } from './services/admin/topics-admin.service';
 import { OrganizationsAdminService } from './services/admin/organizations-admin.service';
 import { CampusAdminService } from './services/admin/campus-admin.service';
 import { LogstashService } from './services/admin/logstash.service';
+import { AnalyticsService } from './services/web/analytics.service';
 import { AodCoreAdminService} from './services/admin/aod-core-admin.service';
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -208,6 +209,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 		OrganizationsAdminService,
 		CampusAdminService,
 		LogstashService,
+		AnalyticsService,
 		AodCoreAdminService,
 		ConfirmationService
 	],
