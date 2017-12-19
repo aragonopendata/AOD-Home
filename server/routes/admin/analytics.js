@@ -124,6 +124,22 @@ router.get('/logstash/reload', function (req, res, next) {
 router.delete('/logstash/delete/:logid', function (req, res, next) {
     try {
         var logstashid = req.params.logid;
+        let logstash;
+
+        getAllFiles().then(reloadLogstashResponse => {
+            for(var i = 0; i < reloadLogstashResponse.length; i++) {
+                if(reloadLogstashResponse[i].id_logstash == logstashid){
+                    logstash = reloadLogstashResponse[i];
+                    deletePipeline(logstash);
+                }                
+            }
+            reloadLogstashResponse.splice( reloadLogstashResponse.indexOf(logstash), 1 );
+            createPipelineConf(reloadLogstashResponse);
+        }).catch(error => {
+            logger.error(error);
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'Recarga errónea' });
+            return;
+        });
 
         deleteLogstash(logstashid).then(deleteLogstashResponse => {
             res.json({
@@ -238,7 +254,6 @@ var reloadLogstash = function reloadLogstash() {
 }
 
 var createPipeline = function createPipeline(logstash){
-    logger.info(logstash.type);
     var logstashPath = constants.ANALYTICS_LOGSTASH_PATH;
     var templatePath = path.join(__dirname, '..', '..', 'conf', 'analytics_templates');
 
@@ -269,8 +284,12 @@ var createPipeline = function createPipeline(logstash){
     });
 }
 
+var deletePipeline = function deletePipeline(logstash){
+    var logstashPath = constants.ANALYTICS_LOGSTASH_PATH;
+    fs.unlinkSync(logstashPath + '/LogstashPipelines/' + logstash.portal_name + '.conf')
+}
+
 var createPipelineConf = function createPipelineConf(logstashs){
-    logger.info(JSON.stringify(logstashs));
     var logstashPath = constants.ANALYTICS_LOGSTASH_PATH;
     var templatePath = path.join(__dirname, '..', '..', 'conf', 'analytics_templates');
 
