@@ -144,9 +144,9 @@ router.delete('/logstash/delete/:logid', function (req, res, next) {
 
 var insertLogstash = function insertLogstash(logstash) {
     return new Promise((resolve, reject) => {
-        var portal_name = logstash.portal_name.toLowerCase();
+        var portal_name = logstash.portal_name.toLowerCase().charAt(0).toUpperCase() + logstash.portal_name.toLowerCase().slice(1);
         
-        var type = logstash.type.toLowerCase();
+        var type = logstash.type;
         var view = logstash.view;
         var delay = logstash.delay;
         var url = logstash.url;
@@ -171,9 +171,9 @@ var insertLogstash = function insertLogstash(logstash) {
 
 var updateLogstash = function updateLogstash(logstash, idlog) {
     return new Promise((resolve, reject) => {
-        var portal_name = logstash.portal_name.toLowerCase();
+        var portal_name = logstash.portal_name.toLowerCase().charAt(0).toUpperCase() + logstash.portal_name.toLowerCase().slice(1);
         
-        var type = logstash.type.toLowerCase();
+        var type = logstash.type;
         var view = logstash.view;
         var delay = logstash.delay;
         var url = logstash.url;
