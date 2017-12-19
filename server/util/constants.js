@@ -237,3 +237,7 @@ exports.PROXY_USER = '';
 exports.PROXY_PASS = '';
 exports.PROXY_URL = '';
 exports.PROXY_PORT = '';
+
+/* ******************* */
+/* ANALYTICS CONF */
+exports.ANALYTICS_LOGSTASH_PATH = '/home/dxd/Desktop/Logstash'

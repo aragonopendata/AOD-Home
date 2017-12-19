@@ -5,6 +5,7 @@ const dbQueries = require('../../db/db-queries');
 const http = require('http');
 const proxy = require('../../conf/proxy-conf');
 const fs = require('fs');
+var path = require('path');
 const Handlebars = require('handlebars');
 //DB SETTINGS
 const db = require('../../db/db-connection');
@@ -237,15 +238,15 @@ var reloadLogstash = function reloadLogstash() {
 
 var createPipeline = function createPipeline(logstash){
     logger.info(logstash.type);
-    var templatePath = '/home/dxd/Desktop/AOD_HOME/AOD-Home/server/conf/analytics_templates';
-    var logstashPath = '/home/dxd/Desktop/Logstash';
-    
+    var logstashPath = constants.ANALYTICS_LOGSTASH_PATH;
+    var templatePath = path.join(__dirname, '..', '..', 'conf', 'analytics_templates');
+
     var pipelineTemplate;
     if(logstash.type == 'urchin'){
-        pipelineTemplate = fs.readFileSync(templatePath + '/Urchin_template.conf');        
+        pipelineTemplate = fs.readFileSync(String(templatePath) + '/Urchin_template.conf');        
     }
     if(logstash.type == 'analytics'){
-        pipelineTemplate = fs.readFileSync(templatePath + '/Analytics_template.conf');        
+        pipelineTemplate = fs.readFileSync(String(templatePath) + '/Analytics_template.conf');        
     }
 
     var compiledTemplate = Handlebars.compile(String(pipelineTemplate));
