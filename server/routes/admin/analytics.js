@@ -87,7 +87,6 @@ router.put('/logstash/insert/:logid', function (req, res, next) {
 /** RELOAD LOGSTASH */
 router.get('/logstash/reload', function (req, res, next) {
     try {
-
         reloadLogstash().then(reloadLogstashResponse => {
             res.json({
                 'status': constants.REQUEST_REQUEST_OK,
@@ -110,8 +109,6 @@ router.get('/logstash/reload', function (req, res, next) {
             res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'Recarga errónea' });
             return;
         });
-
-        
 
     } catch (error) {
         logger.error(error);
