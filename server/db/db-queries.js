@@ -79,3 +79,24 @@ exports.DB_ADMIN_GET_ROLE = 'SELECT manager.roles.id, manager.roles.name '
     						   + ', manager.roles.description, manager.roles.active '
 							+ 'FROM manager.roles '
 						   + 'WHERE manager.roles.id = $1';
+
+exports.DB_ADMIN_GET_LOGSTASH_CONF_ALL = 'SELECT manager.logstash_conf.id_logstash, manager.logstash_conf.portal_name, manager.logstash_conf.type'
+								+ ', manager.logstash_conf.view, manager.logstash_conf.delay, manager.logstash_conf.status, manager.logstash_conf.url ' 
+							+ 'FROM manager.logstash_conf';
+
+exports.DB_ADMIN_INSERT_LOGSTASH = 'INSERT INTO manager.logstash_conf('
+								+'portal_name, type, view, delay, url)'
+							+'VALUES ($1, $2, $3, $4, $5) '
+							+ 'RETURNING manager.logstash_conf.id_logstash;';
+
+exports.DB_ADMIN_UPDATE_LOGSTASH = 'UPDATE manager.logstash_conf '
+								+ 'SET portal_name=$1, type=$2, view=$3, delay=$4, url=$5 '
+							+ 'WHERE manager.logstash_conf.id_logstash=$6 ';
+
+exports.DB_ADMIN_DELETE_LOGSTASH = 'DELETE FROM manager.logstash_conf '
+								+ 'WHERE manager.logstash_conf.id_logstash=$1 ';
+
+exports.DB_ADMIN_RELOAD_LOGSTASH = 'UPDATE manager.logstash_conf '
+								+ 'SET status=\'1\' '
+							+ 'WHERE manager.logstash_conf.status=\'0\'';
+						   

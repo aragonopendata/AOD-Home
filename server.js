@@ -27,6 +27,8 @@ var topicsAdmin = require('./server/routes/admin/topics');
 var tagsAdmin = require('./server/routes/admin/tags');
 var organizationsAdmin = require('./server/routes/admin/organizations');
 var aodCore = require('./server/routes/admin/aod-core')
+var logstash = require('./server/routes/admin/analytics')
+var analytics = require('./server/routes/web/analytics')
 //var campusAdmin = require('./server/routes/admin/campus');
 
 // API ROUTES 
@@ -56,6 +58,7 @@ app.use(constants.API_BASE_URL_WEB, topics);
 app.use(constants.API_BASE_URL_WEB, organizations);
 app.use(constants.API_BASE_URL_WEB, contents);
 app.use(constants.API_BASE_URL_WEB, campus);
+app.use(constants.API_BASE_URL_WEB, analytics);
 app.use(constants.API_BASE_URL_ADMIN, verifyToken, usersAdmin);
 app.use(constants.API_BASE_URL_ADMIN, rolesAdmin);
 //app.use('/api/admin', contentsAdmin);
@@ -64,6 +67,7 @@ app.use(constants.API_BASE_URL_ADMIN, verifyToken, tagsAdmin);
 app.use(constants.API_BASE_URL_ADMIN, topicsAdmin);
 app.use(constants.API_BASE_URL_ADMIN, verifyToken, organizationsAdmin);
 app.use(constants.API_BASE_URL_ADMIN, aodCore);
+app.use(constants.API_BASE_URL_ADMIN, verifyToken, logstash);
 //app.use('/api/admin', campusAdmin);
 
 // PORT FROM ENVIRONMENT

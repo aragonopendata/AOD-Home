@@ -513,6 +513,8 @@ export class Constants {
     public static ROUTER_LINK_ADMIN_DATACENTER_ORGANIZATIONS_EDIT = 'admin/datacenter/organizations/edit';
     public static ROUTER_LINK_CAMPUS = 'campus';
     public static ROUTER_LINK_ADMIN_DATACENTER_CAMPUS = 'admin/campus';
+    public static ROUTER_LINK_LOGSTASH = 'logstash';
+    public static ROUTER_LINK_ADMIN_LOGSTASH = 'admin/logstash';
     public static ROUTER_LINK_404 = 'pagenotfound';
     public static ROUTER_LINK_SERVICES_ARAGOPEDIA = 'servicios/aragopedia';
     public static ROUTER_LINK_SERVICES_PRESUPUESTOS = 'servicios/presupuestos';
@@ -571,9 +573,14 @@ export class Constants {
     public static SERVER_API_LINK_CAMPUS_TYPES = '/campus/types';
     public static SERVER_API_LINK_CAMPUS_SPEAKERS = '/campus/speakers';
     public static SERVER_API_LINK_CAMPUS_TOPICS = '/campus/topics';
+    public static SERVER_API_LINK_WEB_ANALYTICS = '/analytics/files';
     public static SERVER_API_LINK_ADMIN_USERS = '/users';
     public static SERVER_API_LINK_ADMIN_ROLES_LIST = '/roles';
     public static SERVER_API_LINK_ADMIN_GET_ROLE = '/role';
+    public static SERVER_API_LINK_ADMIN_LOGSTASH_FILES = '/logstash/files';
+    public static SERVER_API_LINK_ADMIN_LOGSTASH_INSERT = '/logstash/insert';
+    public static SERVER_API_LINK_ADMIN_LOGSTASH_DELETE = '/logstash/delete';
+    public static SERVER_API_LINK_ADMIN_LOGSTASH_RELOAD = '/logstash/reload';
     public static SERVER_API_LINK_ADMIN_USER_CUD_OPERATIONS = '/users';
     public static SERVER_API_LINK_ADMIN_USER_ORGANIZATIONS = '/organizations';
     public static SERVER_API_LINK_ADMIN_ORGANIZATION_CUD_OPERATIONS = '/organization';
