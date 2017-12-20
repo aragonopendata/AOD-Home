@@ -272,18 +272,18 @@ var createPipeline = function createPipeline(logstash){
     
     var pipeline = compiledTemplate(data);
 
-    if(!fs.existsSync(logstashPath + '/LogstashPipelines')){
-        fs.mkdirSync(logstashPath + '/LogstashPipelines');
+    if(!fs.existsSync(logstashPath + '/LogStashPipelines')){
+        fs.mkdirSync(logstashPath + '/LogStashPipelines');
     }
 
-    fs.writeFile(logstashPath + '/LogstashPipelines/' + logstash.portal_name + '.conf', pipeline, (err) => {
+    fs.writeFile(logstashPath + '/LogStashPipelines/' + logstash.portal_name + '.conf', pipeline, (err) => {
         if (err) throw err;
     });
 }
 
 var deletePipeline = function deletePipeline(logstash){
     var logstashPath = constants.ANALYTICS_LOGSTASH_PATH;
-    fs.unlinkSync(logstashPath + '/LogstashPipelines/' + logstash.portal_name + '.conf')
+    fs.unlinkSync(logstashPath + '/LogStashPipelines/' + logstash.portal_name + '.conf')
 }
 
 var createPipelineConf = function createPipelineConf(logstashs){
