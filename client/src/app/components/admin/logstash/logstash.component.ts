@@ -42,7 +42,6 @@ export class LogstashComponent implements OnInit {
     if (edit) {
       this.editDialogTitle = 'Modificar Portal';
       this.logstash = this.cloneUser(logstash);
-      console.log(this.logstash);
       this.displayEditDialog = true;
       this.editing = true;
     } else if (create) {
