@@ -31,7 +31,7 @@
 		</a>
 	</div>
 </div>
-<button id="editButton" type="button" class="btn btn-primary" routerLink="/login/dataset/{{dataset.name}}"><i class="fa fa-pencil"></i> Editar</button>
+<button *ngIf="showEdit" id="editButton" type="button" class="btn btn-primary" routerLink="/admin/datacenter/datasets/edit/{{dataset.name}}"><i class="fa fa-pencil"></i> Editar</button>
 <div class="content row">
 	<div class="dtsetPreview col-12" style='margin-bottom: 10px'>
 		<div class="title">

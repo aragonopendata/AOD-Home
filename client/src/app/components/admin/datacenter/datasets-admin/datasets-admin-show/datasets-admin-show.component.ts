@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../../../../../app.constants';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DatasetsAdminService } from 'app/services/admin/datasets-admin.service';
+import { AuthenticationService } from 'app/services/security/authentication.service';
 declare var jQuery:any;
 
 @Component({
@@ -45,6 +46,8 @@ export class DatasetsAdminShowComponent implements OnInit {
 	iframeRes:string;
 	iframeError:string;
 
+	showEdit: boolean = false;
+
 	resourcesAux: ResourceAux[] = new Array();
 	resourcesEmpty: boolean = false;
 	//Dynamic URL build parameters
@@ -64,7 +67,8 @@ export class DatasetsAdminShowComponent implements OnInit {
 	datasetListErrorMessage: string;
 
 
-	constructor(private datasetsAdminService: DatasetsAdminService, private activatedRoute: ActivatedRoute, public sanitizer: DomSanitizer, public router: Router) {
+	constructor(private datasetsAdminService: DatasetsAdminService, private activatedRoute: ActivatedRoute
+		, public sanitizer: DomSanitizer, public router: Router, public autenticationService: AuthenticationService) {
 		this.datasetListErrorTitle = Constants.DATASET_LIST_ERROR_TITLE;
 		this.datasetListErrorMessage = Constants.DATASET_LIST_ERROR_MESSAGE;
 		this.routerLinkDatasetList = Constants.ROUTER_LINK_ADMIN_DATACENTER_DATASETS;
@@ -88,10 +92,10 @@ export class DatasetsAdminShowComponent implements OnInit {
                 this.errorMessage = this.datasetListErrorMessage;
 			}
 		});
-
 		if(this.dataset.name){
 			this.loadDataset(this.dataset);
 		}
+		this.showEditButton();
 	}
 
 	initializeDataset() {
@@ -352,6 +356,18 @@ export class DatasetsAdminShowComponent implements OnInit {
 		}else{
 			let urlAbsolute = 'http://'+url;
 			window.open(urlAbsolute,'_blank');
+		}
+	}
+
+	showEditButton(){
+		try {
+			let user = this.autenticationService.getCurrentUser();
+			if(user.rol != Constants.ADMIN_USER_ROL_ORGANIZATION_MEMBER){
+				this.showEdit = true;
+			}
+		} catch (error) {
+			console.log(error);
+			console.error('Error: showEditButton() - datasets-admin-show.component.ts');
 		}
 	}
 }

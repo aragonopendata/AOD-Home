@@ -77,11 +77,12 @@ export class DatasetsAdminListComponent implements OnInit {
         this.usersAdminService.getOrganizationsByCurrentUser().subscribe(orgs => {
             try {
                 this.userOrgs = JSON.parse(orgs).result;
-                if (this.userOrgs != undefined) {
+                if (this.userOrgs.length != 0) {
                     this.loadDatasets();
                 } else {
                     this.msgs.push({severity:'info', summary:'Aviso', detail:'No hay organizaciones asociadas a este usuario'});
                     this.datasets = [];
+                    this.showProgressBar = false;
                 }
                 
             } catch (error) {

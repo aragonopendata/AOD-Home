@@ -107,23 +107,27 @@ export class DatasetsDetailComponent implements OnInit {
 		this.showEdit = false;
 		this.currentUser = this.authenticationService.currentUser;
 		if (this.currentUser != undefined) {
-			if ( this.currentUser.rol != 'global_adm') {
-				this.usersAdminService.getOrganizationsByCurrentUser().subscribe(orgs => {
-					try {
-						this.userOrgs = JSON.parse(orgs).result;
-						let obj = this.userOrgs.find((org, i) => {
-							if (org.name === this.dataset.organization.name) {
-								this.showEdit = true;
-								return true; // stop searching
-							}
-						});
-					} catch (error) {
-						console.log(error);
-						console.error('Error: showEditButton() - datasets-detail.component.ts');
-					}
-				});
-			} else {
+			if ( this.currentUser.rol == Constants.ADMIN_USER_ROL_GLOBAL_ADMIN) {
 				this.showEdit = true;
+			}else{
+				if( this.currentUser.rol == Constants.ADMIN_USER_ROL_ORGANIZATION_MEMBER){
+					this.showEdit = false;
+				}else{
+					this.usersAdminService.getOrganizationsByCurrentUser().subscribe(orgs => {
+						try {
+							this.userOrgs = JSON.parse(orgs).result;
+							let obj = this.userOrgs.find((org, i) => {
+								if (org.name === this.dataset.organization.name) {
+									this.showEdit = true;
+									return true; // stop searching
+								}
+							});
+						} catch (error) {
+							console.log(error);
+							console.error('Error: showEditButton() - datasets-detail.component.ts');
+						}
+					});
+				}
 			}
 		}
 	}
