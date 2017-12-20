@@ -299,7 +299,7 @@ var createPipelineConf = function createPipelineConf(logstashs){
     
     var pipeline = compiledTemplate(data);
 
-    fs.writeFile(logstashPath + '/LogstashApp/config/pipelines.yml', pipeline, (err) => {
+    fs.writeFile(logstashPath + '/LogStashApp/config/pipelines.yml', pipeline, (err) => {
         if (err) throw err;
     });
 }
