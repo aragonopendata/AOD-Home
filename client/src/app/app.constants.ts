@@ -275,9 +275,11 @@ export class Constants {
     public static ORGANIZATION_EXTRA_WEBPAGE = 'webpage';
     public static ORGANIZATION_EXTRA_ADDRESS = 'address';
     public static ORGANIZATION_EXTRA_PERSON = 'person';
-    public static DATASET_EXTRA_DATA_DICTIONARY_URL = 'Data Dictionary URL';
     public static DATASET_EXTRA_DATA_DICTIONARY = 'Data Dictionary';
+    public static DATASET_EXTRA_DATA_DICTIONARY_DEFAULT = 'El diccionario del dato se encuentra en la siguiente url';
+    public static DATASET_EXTRA_DATA_DICTIONARY_URL = 'Data Dictionary URL';
     public static DATASET_EXTRA_DATA_QUALITY = 'Data Quality';
+    public static DATASET_EXTRA_DATA_QUALITY_DEFAULT = 'La calidad del dato se encuentra en la siguiente url';
     public static DATASET_EXTRA_DATA_QUALITY_URL = 'Data Quality URL';
     public static DATASET_EXTRA_FREQUENCY = 'Frequency';
     public static DATASET_EXTRA_GRANULARITY = 'Granularity';

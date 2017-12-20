@@ -270,6 +270,12 @@ export class DatasetsDetailComponent implements OnInit {
 				break;
 			}
 		}
+		if((this.extraDataQuality == undefined || this.extraDataQuality == '') && this.extraDataQualityURL.length != 0){
+			this.extraDataQuality = Constants.DATASET_EXTRA_DATA_QUALITY_DEFAULT;
+		}
+		if((this.extraDictionary == undefined || this.extraDictionary == '') && this.extraDictionaryURL.length != 0){
+			this.extraDictionary = Constants.DATASET_EXTRA_DATA_DICTIONARY_DEFAULT;
+		}
 	}
 
 	getDatasetsRecommended() {
