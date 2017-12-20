@@ -21,7 +21,7 @@ router.get('/logstash/files', function (req, res, next) {
         getAllFiles().then(reloadLogstashResponse => {
             res.json(JSON.stringify(reloadLogstashResponse));
         }).catch(error => {
-            throw error;
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': error });            
         });
     } catch (error) {
         res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': error });
@@ -32,7 +32,6 @@ router.get('/logstash/files', function (req, res, next) {
 router.post('/logstash/insert', function (req, res, next) {
     try {
         var logstash = req.body;
-
         insertLogstash(logstash).then(insertLogstashResponse => {
             res.json({
                 'status': constants.REQUEST_REQUEST_OK,
@@ -40,10 +39,14 @@ router.post('/logstash/insert', function (req, res, next) {
                 'result': 'Inserción correcta'
             });
         }).catch(error => {
-            throw error;
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': error });            
         });
     } catch (error) {
-        res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': error });
+        res.json({ 
+            'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 
+            'success': false,
+            'error': error 
+        });
     }
 });
 
@@ -61,7 +64,7 @@ router.put('/logstash/insert/:logid', function (req, res, next) {
                 'result': 'Actualización correcta'
             });
         }).catch(error => {
-            throw error;
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': error });            
         });
 
     } catch (error) {
@@ -79,7 +82,8 @@ router.get('/logstash/reload', function (req, res, next) {
                 'result': 'Recarga correcta'
             });
         }).catch(error => {
-            throw error;
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': error });            
+            return;
         });
 
         getAllFiles().then(reloadLogstashResponse => {
@@ -88,7 +92,7 @@ router.get('/logstash/reload', function (req, res, next) {
             }
             createPipelineConf(reloadLogstashResponse);
         }).catch(error => {
-            throw error;
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': error });            
         });
 
     } catch (error) {
@@ -111,8 +115,9 @@ router.delete('/logstash/delete/:logid', function (req, res, next) {
             }
             reloadLogstashResponse.splice(reloadLogstashResponse.indexOf(logstash), 1);
             createPipelineConf(reloadLogstashResponse);
-        }).catch(err => {
-            throw err;
+        }).catch(error => {
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': error });            
+            return;
         });
 
         deleteLogstash(logstashid).then(deleteLogstashResponse => {
@@ -176,6 +181,7 @@ var insertLogstash = function insertLogstash(logstash) {
                 };
 
                 client.query(queryDb, (insertLogstashQueryError, insertLogstashQueryResponse) => {
+                    done();
                     if (insertLogstashQueryError) {
                         reject(insertLogstashQueryError);
                     } else {
@@ -211,6 +217,7 @@ var updateLogstash = function updateLogstash(logstash, idlog) {
                 };
 
                 client.query(queryDb, (updateLostashQueryError, updateLogstashQueryResponse) => {
+                    done();
                     if (updateLostashQueryError) {
                         reject(updateLostashQueryError);
                     } else {
@@ -239,6 +246,7 @@ var deleteLogstash = function deleteLogstash(idlog) {
                 };
 
                 client.query(queryDb, (deleteLostashQueryError, deleteLogstashQueryResponse) => {
+                    done();
                     if (deleteLostashQueryError) {
                         reject(deleteLostashQueryError);
                     } else {
@@ -266,6 +274,7 @@ var reloadLogstash = function reloadLogstash() {
                 };
 
                 client.query(queryDb, (reloadLogstashQueryError, reloadLogstashQueryResponse) => {
+                    done();
                     if (reloadLogstashQueryError) {
                         reject(reloadLogstashQueryError);
                     } else {
@@ -343,6 +352,7 @@ var getAllFiles = function getAllFiles() {
                     rowMode: constants.SQL_RESULSET_FORMAT_JSON
                 };
                 client.query(queryDb, (reloadLogstashQueryError, reloadLogstashQueryResponse) => {
+                    done();
                     if (reloadLogstashQueryError) {
                         reject(reloadLogstashQueryError);
                     } else {
