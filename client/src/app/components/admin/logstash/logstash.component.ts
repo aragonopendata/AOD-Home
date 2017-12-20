@@ -77,7 +77,7 @@ export class LogstashComponent implements OnInit {
           this.getFiles();
         } else {
           this.userAdminMessages = [];
-          this.userAdminMessages.push({ severity: 'error', summary: 'Alta de Logstash', detail: 'Fallo al crear el registro' });
+          this.userAdminMessages.push({ severity: 'error', summary: 'Alta de Logstash', detail: result.error.detail });
           this.displayEditDialog = false;          
         }
       });
