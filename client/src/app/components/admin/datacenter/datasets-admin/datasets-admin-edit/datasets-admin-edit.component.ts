@@ -1,6 +1,7 @@
 import { Tag } from './../../../../../models/Tag';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit,  ViewEncapsulation} from '@angular/core';
+import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Rx';
 import { SelectItem, DialogModule, Message, CalendarModule } from 'primeng/primeng';
 import { DatasetsAdminService } from '../../../../../services/admin/datasets-admin.service';
@@ -32,6 +33,9 @@ export class DatasetsAdminEditComponent implements OnInit {
 	datasetNameToDelete: string;
 	displayDeleteDialog: boolean = false;
 	datasetLoaded: boolean = false;
+	datasetTags: Tag[];
+	tagTitle = new Subject<string>();
+	tagValue: string;
 
 	resource: Resource;
 	resources: Resource [] = [];
@@ -170,7 +174,7 @@ export class DatasetsAdminEditComponent implements OnInit {
             today: 'Hoy',
             clear: 'Borrar'
 		}
-
+		this.filterTagsMultiple();
 		if (this.dataset.name) {
 			this.loadDataset(this.dataset);
 		} else {
@@ -884,33 +888,50 @@ export class DatasetsAdminEditComponent implements OnInit {
 
 	addTag(tag: Tag){
 		this.tags.push(tag);
+		this.datasetTags = null;
 	}
 
 	addNewTag(newTag: string){
-		let newTagObj = new Tag;
-		newTagObj.display_name = newTag;
-		newTagObj.name = newTag;
-		this.tags.push(newTagObj);
+		let newTagObj = new Array<Tag>();
+		let auxTag = newTag.split(",");
+		for(let index = 0; index < auxTag.length; index++){
+			newTagObj[index] = new Tag;
+			newTagObj[index].display_name = auxTag[index].trim();
+			newTagObj[index].name = auxTag[index].trim();
+			this.tags.push(newTagObj[index]);
+		}
+		this.tagValue = "";
+		this.datasetTags = null;
 	}
 
-		filterTagsMultiple(tag_query: string) {
-		this.filteredTagsMultiple = [];
-		let query = tag_query;
-		if(query != ''){
-			this.datasetsAdminService.getTags(query).subscribe(tags => {
-				try {
-					for (let i = 0; i < tags.result.length; i++) {
-						let tag = tags.result[i];
-						if (tag.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-							this.filteredTagsMultiple.push(tag);
-						}
-				   }
-				} catch (error) {
-					console.error(error);
-					console.error('Error filterTagsMultiple() - datasets-admin-edit.component.ts');
-				}
-			});
+	search(title: string): void {
+		//Lectura cuando hay al menos 3 caracteres, (3 espacios produce error).
+		if (title.length >= Constants.DATASET_AUTOCOMPLETE_MIN_CHARS) {
+			this.tagTitle.next(title);
+		} else {
+			this.datasetTags = null;
 		}
+	}
+
+	filterTagsMultiple(): void {
+		//Funciona la busqueda, falla al poner un caracter especial
+		this.tagTitle
+			.debounceTime(Constants.DATASET_AUTOCOMPLETE_DEBOUNCE_TIME)
+			.distinctUntilChanged()
+			.switchMap(query => query
+				? this.datasetsAdminService.getTags(query)
+				: Observable.of<Tag[]>([]))
+			.catch(error => {
+				console.error(error);
+				return Observable.of<Tag[]>([]);
+			}).subscribe(tags => {
+				try {
+					this.datasetTags = <Tag[]>(tags).result;	
+				} catch (error) {
+					console.error("Error: filterTagsMultiple() - datasets-admin-edit.component.ts");
+				}
+				
+			});
 	}
 	
 	//Call when you click Save and End Button

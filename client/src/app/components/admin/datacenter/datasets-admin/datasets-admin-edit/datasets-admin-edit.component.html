@@ -320,10 +320,11 @@
 						<div class="form-group">
 							<label for="" class="col-2 col-form-label">Etiquetas</label>
 							<div class="dropdown">
-								<input type="text" class="form-control" data-toggle="dropdown" placeholder="Escriba la etiqueta" (keyup)="filterTagsMultiple(tagInput.value)" #tagInput>
+								<input type="text" class="form-control" data-toggle="dropdown" placeholder="Escriba la etiqueta" 
+								(keyup)="search(tagInput.value)" (keyup.enter)="addNewTag(tagInput.value)" [(ngModel)]="tagValue" #tagInput>
 								<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-									<button *ngFor="let tag of filteredTagsMultiple" (click)="addTag(tag);tagInput.value=''" class="dropdown-item" type="button">{{tag.display_name}}</button>
-									<button *ngIf="filteredTagsMultiple && filteredTagsMultiple.length == 0" class="btn btn-primary m-3" (click)="addNewTag(tagInput.value);tagInput.value=''" type="button" >Añadir Etiqueta</button>
+									<button *ngFor="let tag of datasetTags" (click)="addTag(tag);tagInput.value=''" class="dropdown-item" type="button">{{tag.display_name}}</button>
+									<button *ngIf="datasetTags && datasetTags.length == 0" class="btn btn-primary m-3" (click)="addNewTag(tagInput.value);tagInput.value=''" type="button" >Añadir Etiqueta</button>
 								</div>
 							</div>
 						</div>
