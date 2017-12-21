@@ -6,9 +6,14 @@
     margin-top: 5%;
 }
 
-.iframeAnalytics iframe{
+.iframeAnalytics #analytics{
     width: 100%;
     height: 2200px;
+}
+
+.iframeAnalytics #sevendays{
+    width: 100%;
+    height: 300px;
 }
 
 .pagina {

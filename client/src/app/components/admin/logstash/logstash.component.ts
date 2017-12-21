@@ -42,7 +42,6 @@ export class LogstashComponent implements OnInit {
     if (edit) {
       this.editDialogTitle = 'Modificar Portal';
       this.logstash = this.cloneUser(logstash);
-      console.log(this.logstash);
       this.displayEditDialog = true;
       this.editing = true;
     } else if (create) {
@@ -77,7 +76,7 @@ export class LogstashComponent implements OnInit {
           this.getFiles();
         } else {
           this.userAdminMessages = [];
-          this.userAdminMessages.push({ severity: 'error', summary: 'Alta de Logstash', detail: 'Fallo al crear el registro' });
+          this.userAdminMessages.push({ severity: 'error', summary: 'Alta de Logstash', detail: result.error.detail });
           this.displayEditDialog = false;          
         }
       });
@@ -98,14 +97,13 @@ export class LogstashComponent implements OnInit {
           this.getFiles();
         } else {
           this.userAdminMessages = [];
-          this.userAdminMessages.push({ severity: 'error', summary: 'Modificación de Logstash', detail: 'Fallo al modificar el registro' });
+          this.userAdminMessages.push({ severity: 'error', summary: 'Alta de Logstash', detail: result.error.detail });
           this.displayEditDialog = false;          
         }
       });
     } else {
       this.userAdminMessages = [];
       this.userAdminMessages.push({ severity: 'warn', summary: 'Modificación de Logstash', detail: 'Faltan campos por rellenar del formulario' });
-
     }
   }
 
@@ -123,7 +121,7 @@ export class LogstashComponent implements OnInit {
           this.getFiles();
         } else {
           this.userAdminMessages = [];
-          this.userAdminMessages.push({ severity: 'error', summary: 'Eliminación de Logstash', detail: 'Fallo al eliminar el registro' });
+          this.userAdminMessages.push({ severity: 'error', summary: 'Alta de Logstash', detail: result.error.detail });
           this.displayDeleteDialog = false;          
         }
       });
@@ -137,7 +135,7 @@ export class LogstashComponent implements OnInit {
         this.getFiles();
       } else {
         this.userAdminMessages = [];
-        this.userAdminMessages.push({ severity: 'error', summary: 'Recarga de Logstash', detail: 'Fallo al recargar' });
+        this.userAdminMessages.push({ severity: 'error', summary: 'Alta de Logstash', detail: result.error.detail });
       }
     });
 }
