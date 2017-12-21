@@ -8,6 +8,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Updated
 - Functionality bugs fixed (admin)
 
+## [1.2.0] - 2017-12-21
+## Updated
+- Fix tags searcher issues.
+- The "Edit" button in dataset-detail / dataset-show-admin now goes directly to edit page.
+- Fix Analytics functionality.
+## Added
+- New function to add many tags
+- Show a default text in extra dictionary/quality of dataset if exists urls without explain text.
+- Add Analytics templates.
+
 ## [1.1.5] - 2017-12-18
 ## Updated
 - Modified dataset's extras URL, modified css dataset admin show component
@@ -50,6 +60,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
 [Unreleased]: https://github.com/aragonopendata/AOD-Home/compare/master...develop
+[1.2.0]: https://github.com/aragonopendata/AOD-Home/compare/v1.1.5...v1.2.0
 [1.1.5]: https://github.com/aragonopendata/AOD-Home/compare/v1.1.4...v1.1.5
 [1.1.4]: https://github.com/aragonopendata/AOD-Home/compare/v1.1.3...v1.1.4
 [1.1.3]: https://github.com/aragonopendata/AOD-Home/compare/v1.1.2...v1.1.3
