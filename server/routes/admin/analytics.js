@@ -302,10 +302,11 @@ var createPipeline = function createPipeline(logstash) {
 
     var compiledTemplate = Handlebars.compile(String(pipelineTemplate));
     var data = {
-        "portal": logstash.portal_name,
-        "delay": logstash.delay,
-        "vista": logstash.view,
-        "url": logstash.url
+        "portal": String(logstash.portal_name),
+        "delay": String(logstash.delay),
+        "vista": String(logstash.view),
+        "url": String(logstash.url),
+        "pattern": String(logstash.portal_name).toLowerCase()
     };
 
     var pipeline = compiledTemplate(data);
