@@ -43,12 +43,10 @@ export class AnalyticsComponent {
 		});
 
 		function get_time(days) {
-			var time = 
-			"("
-				"from:now-" + days + "d,"
-				"mode:quick,"
-				"to:now"
-			")";
+			var time = "from:now-" + days + "d/d,"
+				+ "mode:quick,"
+				+ "to:now";
+
 			return time;
 		}
 
@@ -56,58 +54,56 @@ export class AnalyticsComponent {
 			if (portal == "Todos") {
 				return "";
 			}
-			var filter = 
-			"("
-				"'$state':("
-					"store:appState"
-				"),"
-				"meta:("
-					"alias:!n,"
-					"disabled:!f,"
-					"index:'3c2d80f0-d5ed-11e7-a49d-f956d0989e2c',"
-					"key:portal.keyword,"
-					"negate:!f,"
-					"params:("
-						"query:" + portal + ","
-						"type:phrase"
-					"),"
-					"type:phrase,"
-					"value:" + portal
-				"),query:("
-					"match:("
-						"portal.keyword:("
-							"query:" + portal + ","
-							"type:phrase"
-						")"
-					")"
-				")"
-			")"
+			var filter = "("
+				+ "'$state':("
+				+ "store:appState"
+				+ "),"
+				+ "meta:("
+				+ "alias:!n,"
+				+ "disabled:!f,"
+				+ "index:'3c2d80f0-d5ed-11e7-a49d-f956d0989e2c',"
+				+ "key:portal.keyword,"
+				+ "negate:!f,"
+				+ "params:("
+				+ "query:" + portal + ","
+				+ "type:phrase"
+				+ "),"
+				+ "type:phrase,"
+				+ "value:" + portal
+				+ "),query:("
+				+ "match:("
+				+ "portal.keyword:("
+				+ "query:" + portal + ","
+				+ "type:phrase"
+				+ ")"
+				+ ")"
+				+ ")"
+				+ ")";
+
 			return filter;
 		}
 
 		function get_url(time, filter) {
 			var url = "http://172.27.38.119:7030/elastic/app/kibana#/dashboard/e6433860-d68c-11e7-a49d-f956d0989e2c?embed=true";
-			url = url + 
-			"&_g=("
-				"refreshInterval:("
-					"display:Off,"
-					"pause:!f,"
-					"value:0"
-				"),"
-				"time:("
-					time
-				")"
-			")"
+			url = url + "&_g=("
+				+ "refreshInterval:("
+				+ "display:Off,"
+				+ "pause:!f,"
+				+ "value:0"
+				+ "),"
+				+ "time:("
+				+ time
+				+ ")"
+				+ ")";
 
-			url = url +
-			"&_a=("
-				"description:'',"
-				"filters:!("
-					filter
-				"),"
-				"viewMode:view"
-			")"
-			
+			url = url + "&_a=("
+				+ "description:'',"
+				+ "filters:!("
+				+ filter
+				+ "),"
+				+ "viewMode:view"
+				+ ")";
+
 			return url;
 		}
 

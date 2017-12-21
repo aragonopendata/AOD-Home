@@ -17,23 +17,45 @@ const logger = require('js-logging').dailyFile([loggerSettings]);
 /** GET ALL LOGSTASH CONFIG */
 router.get('/analytics/files', function (req, res, next) {
     try {
-        pool.connect(function (err, client, done) {
-            const queryDb = {
-                text: dbQueries.DB_ADMIN_GET_LOGSTASH_CONF_ALL,
-                rowMode: constants.SQL_RESULSET_FORMAT_JSON
-            };
-            client.query(queryDb, function (err, result) {
-                done()
-                if (err) {
-                    return next(err);
-                }
-                res.json(JSON.stringify(result.rows));
-            })
-
-        })
+        getAllFiles().then(reloadLogstashResponse => {
+            res.json(JSON.stringify(reloadLogstashResponse));
+        }).catch(error => {
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': error });
+        });
     } catch (error) {
-        logger.error('Error in route get Logstash', error);
+        res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': error });
     }
 });
+
+
+var getAllFiles = function getAllFiles() {
+    return new Promise((resolve, reject) => {
+        try {
+            pool.connect(function (err, client, done) {
+
+                if (err) {
+                    reject(err)
+                }
+
+                const queryDb = {
+                    text: dbQueries.DB_ADMIN_GET_LOGSTASH_CONF_ALL,
+                    rowMode: constants.SQL_RESULSET_FORMAT_JSON
+                };
+                client.query(queryDb, (reloadLogstashQueryError, reloadLogstashQueryResponse) => {
+                    done();
+                    if (reloadLogstashQueryError) {
+                        reject(reloadLogstashQueryError);
+                    } else {
+                        resolve(reloadLogstashQueryResponse.rows);
+                    }
+                })
+            })
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
 
 module.exports = router;
