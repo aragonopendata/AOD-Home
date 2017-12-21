@@ -31,7 +31,6 @@ export class LogstashComponent implements OnInit {
     this.logstashService.getFiles().subscribe(logstashs => {
       try {
         this.logstashs = JSON.parse(logstashs);
-
       } catch (error) {
         console.error('Error: getFiles() - logstash.component.ts');
       }
@@ -54,7 +53,6 @@ export class LogstashComponent implements OnInit {
 
   showDeleteDialog(logstash) {
     this.logstash = logstash;
-    console.log("show");
     this.displayDeleteDialog = true;
   }
 
@@ -77,7 +75,7 @@ export class LogstashComponent implements OnInit {
         } else {
           this.userAdminMessages = [];
           this.userAdminMessages.push({ severity: 'error', summary: 'Alta de Logstash', detail: result.error.detail });
-          this.displayEditDialog = false;          
+          this.displayEditDialog = false;
         }
       });
     } else {
@@ -98,7 +96,7 @@ export class LogstashComponent implements OnInit {
         } else {
           this.userAdminMessages = [];
           this.userAdminMessages.push({ severity: 'error', summary: 'Alta de Logstash', detail: result.error.detail });
-          this.displayEditDialog = false;          
+          this.displayEditDialog = false;
         }
       });
     } else {
@@ -108,23 +106,23 @@ export class LogstashComponent implements OnInit {
   }
 
   undoDeleteLogstash() {
-		this.displayDeleteDialog = false;
-		this.logstash = new Logstash;
-	}
+    this.displayDeleteDialog = false;
+    this.logstash = new Logstash;
+  }
 
   deleteLogstash() {
-      this.logstashService.deleteLogstash(this.logstash).subscribe(result => {
-        if (result.status == 200 && result.success) {
-          this.userAdminMessages = [];
-          this.userAdminMessages.push({ severity: 'success', summary: 'Eliminación de Logstash', detail: 'Registro eliminado correctamente' });
-          this.displayDeleteDialog = false;
-          this.getFiles();
-        } else {
-          this.userAdminMessages = [];
-          this.userAdminMessages.push({ severity: 'error', summary: 'Alta de Logstash', detail: result.error.detail });
-          this.displayDeleteDialog = false;          
-        }
-      });
+    this.logstashService.deleteLogstash(this.logstash).subscribe(result => {
+      if (result.status == 200 && result.success) {
+        this.userAdminMessages = [];
+        this.userAdminMessages.push({ severity: 'success', summary: 'Eliminación de Logstash', detail: 'Registro eliminado correctamente' });
+        this.displayDeleteDialog = false;
+        this.getFiles();
+      } else {
+        this.userAdminMessages = [];
+        this.userAdminMessages.push({ severity: 'error', summary: 'Alta de Logstash', detail: result.error.detail });
+        this.displayDeleteDialog = false;
+      }
+    });
   }
 
   reloadLogstash() {
@@ -138,7 +136,7 @@ export class LogstashComponent implements OnInit {
         this.userAdminMessages.push({ severity: 'error', summary: 'Alta de Logstash', detail: result.error.detail });
       }
     });
-}
+  }
 
   valitadeLogstashForm() {
     if (this.logstash.delay != undefined && this.logstash.delay != ''

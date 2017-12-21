@@ -26,8 +26,8 @@ export class AnalyticsComponent {
 		var portal = "Todos";
 
 		jQuery("#analytics").attr('src', get_url(get_time(days), get_filter(portal)));
-		
-		jQuery('.iframeAnalytics').on("click", ".timeAnalytics", function(event) {
+
+		jQuery('.iframeAnalytics').on("click", ".timeAnalytics", function (event) {
 			event.preventDefault();
 			jQuery('#btng-time-analytics button.active').removeClass('active');
 			jQuery(this).addClass('active')
@@ -35,23 +35,23 @@ export class AnalyticsComponent {
 			jQuery("#analytics").attr('src', get_url(get_time(days), get_filter(portal)));
 		});
 
-		jQuery('.iframeAnalytics').on("click", ".portalAnalytics", function(event) {
+		jQuery('.iframeAnalytics').on("click", ".portalAnalytics", function (event) {
 			event.preventDefault();
-			jQuery('.portalAnalyticsPral').html(jQuery(this).val() + ' <span class="caret"></span>');			
+			jQuery('.portalAnalyticsPral').html(jQuery(this).val() + ' <span class="caret"></span>');
 			portal = jQuery(this).val();
 			jQuery("#analytics").attr('src', get_url(get_time(days), get_filter(portal)));
 		});
 
 		function get_time(days) {
-			var time = "(from:now-" + days + "d,mode:quick,to:now)";
+			var time = "(from:now-" + days + "d/d,mode:quick,to:now)";
 			return time;
 		}
 
 		function get_filter(portal) {
-			if(portal == "Todos"){
+			if (portal == "Todos") {
 				return "";
 			}
-			var filter = "('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'3c2d80f0-d5ed-11e7-a49d-f956d0989e2c',key:portal.keyword,negate:!f,params:(query:" + portal + ",type:phrase,value:" + portal + "),query:(match:(portal.keyword:(query:" + portal + ",type:phrase))))";
+			var filter = "('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'3c2d80f0-d5ed-11e7-a49d-f956d0989e2c',key:portal.keyword,negate:!f,params:(query:" + portal + ",type:phrase,value:" + portal + "),query:(match:(portal.keyword:(query:" + portal + ",type:phrase)))))";
 			return filter;
 		}
 
@@ -66,14 +66,12 @@ export class AnalyticsComponent {
 	getFiles() {
 		this.logstashs = [];
 		this.logstashService.getFiles().subscribe(logstashs => {
-		  try {
-			console.log(JSON.parse(logstashs));
-			this.logstashs = JSON.parse(logstashs);
-	
-		  } catch (error) {
-			console.error('Error: getFiles() - logstash.component.ts',error);
-		  }
+			try {
+				this.logstashs = JSON.parse(logstashs);
+			} catch (error) {
+				console.error('Error: getFiles() - logstash.component.ts', error);
+			}
 		});
-	  }
+	}
 
 }

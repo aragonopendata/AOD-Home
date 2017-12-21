@@ -17,7 +17,7 @@ const logger = require('js-logging').dailyFile([loggerSettings]);
 /** GET ALL LOGSTASH CONFIG */
 router.get('/analytics/files', function (req, res, next) {
     try {
-        pool.connect(function(err,client,done) {
+        pool.connect(function (err, client, done) {
             const queryDb = {
                 text: dbQueries.DB_ADMIN_GET_LOGSTASH_CONF_ALL,
                 rowMode: constants.SQL_RESULSET_FORMAT_JSON
@@ -25,8 +25,7 @@ router.get('/analytics/files', function (req, res, next) {
             client.query(queryDb, function (err, result) {
                 done()
                 if (err) {
-                  // pass the error to the express error handler
-                  return next(err);
+                    return next(err);
                 }
                 res.json(JSON.stringify(result.rows));
             })

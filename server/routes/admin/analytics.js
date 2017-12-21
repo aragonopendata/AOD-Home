@@ -21,7 +21,7 @@ router.get('/logstash/files', function (req, res, next) {
         getAllFiles().then(reloadLogstashResponse => {
             res.json(JSON.stringify(reloadLogstashResponse));
         }).catch(error => {
-            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': error });            
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': error });
         });
     } catch (error) {
         res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': error });
@@ -39,13 +39,13 @@ router.post('/logstash/insert', function (req, res, next) {
                 'result': 'Inserción correcta'
             });
         }).catch(error => {
-            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': error });            
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': error });
         });
     } catch (error) {
-        res.json({ 
-            'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 
+        res.json({
+            'status': constants.REQUEST_ERROR_INTERNAL_ERROR,
             'success': false,
-            'error': error 
+            'error': error
         });
     }
 });
@@ -64,7 +64,7 @@ router.put('/logstash/insert/:logid', function (req, res, next) {
                 'result': 'Actualización correcta'
             });
         }).catch(error => {
-            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': error });            
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': error });
         });
 
     } catch (error) {
@@ -82,7 +82,7 @@ router.get('/logstash/reload', function (req, res, next) {
                 'result': 'Recarga correcta'
             });
         }).catch(error => {
-            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': error });            
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': error });
             return;
         });
 
@@ -92,7 +92,7 @@ router.get('/logstash/reload', function (req, res, next) {
             }
             createPipelineConf(reloadLogstashResponse);
         }).catch(error => {
-            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': error });            
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': error });
         });
 
     } catch (error) {
@@ -116,7 +116,7 @@ router.delete('/logstash/delete/:logid', function (req, res, next) {
             reloadLogstashResponse.splice(reloadLogstashResponse.indexOf(logstash), 1);
             createPipelineConf(reloadLogstashResponse);
         }).catch(error => {
-            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': error });            
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': error });
             return;
         });
 
