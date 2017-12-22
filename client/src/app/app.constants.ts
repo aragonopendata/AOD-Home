@@ -312,6 +312,32 @@ export class Constants {
     public static DATASET_RDF_FORMAT_OPTIONS_RDF = 'application/rdf+xml;charset=utf-8;'
     public static DATASET_RDF_FILE_EXTENSION_RDF = '.rdf'
 
+    public static STATIC_INFO_OPEN_DATA_SECTION_OPEN_DATA = 'open-data';
+    public static STATIC_INFO_OPEN_DATA_SECTION_REUTILIZATION = 'reutilizacion';
+    public static STATIC_INFO_OPEN_DATA_SECTION_GOOD_PRACTICES = 'buenas-practicas';
+    public static STATIC_INFO_OPEN_DATA_SECTION_LEGAL = 'marco-legal';
+    public static STATIC_INFO_OPEN_DATA_SECTION_EXPERIENCIES = 'experiencias';
+    public static STATIC_INFO_OPEN_DATA_SECTION_ARAGON_OPEN_DATA = 'aragon-open-data';
+    public static STATIC_INFO_OPEN_DATA_SECTION_OBJECTIVES = 'objetivos';
+    public static STATIC_INFO_OPEN_DATA_SECTION_PARTICIPATION = 'participacion';
+    public static STATIC_INFO_OPEN_DATA_SECTION_ARAGON_SERVICES = 'servicios-aragon-open-data';
+    public static STATIC_INFO_OPEN_DATA_SECTION_DOCUMENTATION = 'documentacion';
+    public static STATIC_INFO_OPEN_DATA_SECTION_TERMS = 'terminos-licencias'; 
+    public static STATIC_INFO_OPEN_DATA_SECTION_CONDITIONS = 'condiciones-social-data';
+    public static STATIC_INFO_EVENTS_SECTION_JACATHON = 'jacathon';
+    public static STATIC_INFO_DEVELOPERS_SECTION_INTEROPERABILITY = 'interoperabilidad';
+    public static STATIC_INFO_DEVELOPERS_SECTION_TECHNOLOGY = 'tecnologia-utilizada';
+    public static STATIC_INFO_DEVELOPERS_SECTION_DIRECT_DOWNLOAD = 'descarga-directa';
+    public static STATIC_INFO_DEVELOPERS_SECTION_METADATES = 'metadatos'; 
+    public static STATIC_INFO_DEVELOPERS_SECTION_TOOLS = 'herramientas';
+    public static STATIC_INFO_APIS_SECTION_CKAN = 'api-ckan';
+    public static STATIC_INFO_APIS_SECTION_SOCIAL_DATA = 'api-social-data';
+    public static STATIC_INFO_APIS_SECTION_ARAGOPEDIA = 'api-aragopedia'; 
+    public static STATIC_INFO_APIS_SECTION_ARAGODBPEDIA_1 = 'api-aragodbpedia-1';
+    public static STATIC_INFO_APIS_SECTION_ARAGODBPEDIA_2 = 'api-aragodbpedia-2';
+    public static STATIC_INFO_APIS_SECTION_GA_OD_CORE = 'api-ga-od-core';
+    public static STATIC_INFO_SPARQL_SECTION_CONTENT = 'contenidoSparql';
+
     //OPEN DATA ADMIN
     public static ADMIN_USERS_LIST_ROWS_PER_PAGE = 10;
     public static ADMIN_USERS_LIST_SORT_COLUMN_NAME = 'name';
@@ -537,6 +563,11 @@ export class Constants {
     public static ROUTER_LINK_TOOLS_CAMPUS_EVENT_NAME = 'eventName';
     public static ROUTER_LINK_DATA_PARAM_DATA_LOGIN = 'data';
     public static ROUTER_LINK_DATA_PARAM_EDIT_DATA = 'dataName'; 
+    public static ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT = '/informacion/open-data#';
+    public static ROUTER_LINK_STATIC_CONTENT_EVENTS_SECTION_REDIRECT = '/informacion/eventos#';
+    public static ROUTER_LINK_STATIC_CONTENT_DEVELOPERS_SECTION_REDIRECT = '/herramientas/desarrolladores#';
+    public static ROUTER_LINK_STATIC_CONTENT_APIS_SECTION_REDIRECT = '/herramientas/apis#';
+    public static ROUTER_LINK_STATIC_CONTENT_SPARQL_SECTION_REDIRECT = '/herramientas/sparql#';
 
     //SERVER API URLS
     public static SERVER_API_LINK_AUTHENTICATE = '/authenticate';

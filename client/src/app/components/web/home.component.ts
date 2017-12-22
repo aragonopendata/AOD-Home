@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Constants } from '../../app.constants';
+import { Router, ActivatedRoute } from '@angular/router';
 declare var jQuery:any;
 
 @Component({
@@ -11,6 +12,7 @@ declare var jQuery:any;
 export class HomeComponent implements OnInit {
 
 	hovers: any[] = [];
+	targetUrl: string;
 	//Dynamic URL build parameters
 	routerLinkPageNotFound: string;
 	routerLinkDataCatalog: string;
@@ -31,7 +33,7 @@ export class HomeComponent implements OnInit {
 	routerLinkToolsSparql: string;
 	routerLinkToolsGithub: string;
 
-	constructor() { 
+	constructor( private router: Router, private activatedRoute: ActivatedRoute ) { 
 		//Dynamic URL build to send to HTML template
 		this.routerLinkDataCatalog = Constants.ROUTER_LINK_DATA_CATALOG;
 		this.routerLinkDataTopics = Constants.ROUTER_LINK_DATA_TOPICS;
@@ -53,6 +55,7 @@ export class HomeComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.getUrlFragment();
 		this.hovers = [
 			{ id: '#imgBD', hover: false },
 			{ id: '#imgTem', hover: false },
@@ -127,4 +130,91 @@ export class HomeComponent implements OnInit {
 			return false;
 		}
 	}
+
+	getUrlFragment() {
+        this.activatedRoute.fragment.subscribe(fragment => {
+			switch(fragment){
+				//OPEN-DATA
+				case Constants.STATIC_INFO_OPEN_DATA_SECTION_OPEN_DATA:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT+fragment);
+				break;
+				case Constants.STATIC_INFO_OPEN_DATA_SECTION_REUTILIZATION:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT+fragment);
+				break;
+				case Constants.STATIC_INFO_OPEN_DATA_SECTION_GOOD_PRACTICES:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT+fragment);
+				break;
+				case Constants.STATIC_INFO_OPEN_DATA_SECTION_LEGAL:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT+fragment);
+				break;
+				case Constants.STATIC_INFO_OPEN_DATA_SECTION_EXPERIENCIES:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT+fragment);
+				break;
+				case Constants.STATIC_INFO_OPEN_DATA_SECTION_ARAGON_OPEN_DATA:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT+fragment);
+				break;
+				case Constants.STATIC_INFO_OPEN_DATA_SECTION_OBJECTIVES:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT+fragment);
+				break;
+				case Constants.STATIC_INFO_OPEN_DATA_SECTION_PARTICIPATION:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT+fragment);
+				break;
+				case Constants.STATIC_INFO_OPEN_DATA_SECTION_ARAGON_SERVICES:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT+fragment);
+				break;
+				case Constants.STATIC_INFO_OPEN_DATA_SECTION_DOCUMENTATION:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT+fragment);
+				break;
+				case Constants.STATIC_INFO_OPEN_DATA_SECTION_TERMS:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT+fragment);
+				break;
+				case Constants.STATIC_INFO_OPEN_DATA_SECTION_CONDITIONS:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT+fragment);
+				break;
+				//EVENTS
+				case Constants.STATIC_INFO_EVENTS_SECTION_JACATHON:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_EVENTS_SECTION_REDIRECT+fragment);
+				break;
+				//DEVELOPERS
+				case Constants.STATIC_INFO_DEVELOPERS_SECTION_INTEROPERABILITY:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_DEVELOPERS_SECTION_REDIRECT+fragment);
+				break;
+				case Constants.STATIC_INFO_DEVELOPERS_SECTION_TECHNOLOGY:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_DEVELOPERS_SECTION_REDIRECT+fragment);
+				break;
+				case Constants.STATIC_INFO_DEVELOPERS_SECTION_DIRECT_DOWNLOAD:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_DEVELOPERS_SECTION_REDIRECT+fragment);
+				break;
+				case Constants.STATIC_INFO_DEVELOPERS_SECTION_METADATES:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_DEVELOPERS_SECTION_REDIRECT+fragment);
+				break;
+				case Constants.STATIC_INFO_DEVELOPERS_SECTION_TOOLS:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_DEVELOPERS_SECTION_REDIRECT+fragment);
+				break;
+				//APIS
+				case Constants.STATIC_INFO_APIS_SECTION_CKAN:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_APIS_SECTION_REDIRECT+fragment);
+				break;
+				case Constants.STATIC_INFO_APIS_SECTION_SOCIAL_DATA:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_APIS_SECTION_REDIRECT+fragment);
+				break;
+				case Constants.STATIC_INFO_APIS_SECTION_ARAGOPEDIA:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_APIS_SECTION_REDIRECT+fragment);
+				break;
+				case Constants.STATIC_INFO_APIS_SECTION_ARAGODBPEDIA_1:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_APIS_SECTION_REDIRECT+fragment);
+				break;
+				case Constants.STATIC_INFO_APIS_SECTION_ARAGODBPEDIA_2:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_APIS_SECTION_REDIRECT+fragment);
+				break;
+				case Constants.STATIC_INFO_APIS_SECTION_GA_OD_CORE:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_APIS_SECTION_REDIRECT+fragment);
+				break;
+				//SPARQL
+				case Constants.STATIC_INFO_SPARQL_SECTION_CONTENT:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_SPARQL_SECTION_REDIRECT+fragment);
+				break;
+			}
+		});
+    }
 }
