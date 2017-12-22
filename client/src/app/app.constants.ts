@@ -637,4 +637,5 @@ export class Constants {
     public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_RDF = '.rdf';
     public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_CSV = '.csv';
 
+    public static KIBANA_URL = "http://172.27.38.119:7030/elastic/app/kibana#/dashboard/e6433860-d68c-11e7-a49d-f956d0989e2c";
 }
