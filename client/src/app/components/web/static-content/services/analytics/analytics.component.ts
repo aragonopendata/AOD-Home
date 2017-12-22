@@ -84,7 +84,8 @@ export class AnalyticsComponent {
 		}
 
 		function get_url(time, filter) {
-			var url = "http://172.27.38.119:7030/elastic/app/kibana#/dashboard/e6433860-d68c-11e7-a49d-f956d0989e2c?embed=true";
+			var url = Constants.KIBANA_URL;
+			url = url + "?embed=true";
 			url = url + "&_g=("
 				+ "refreshInterval:("
 				+ "display:Off,"
