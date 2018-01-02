@@ -637,6 +637,6 @@ export class Constants {
     public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_RDF = '.rdf';
     public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_CSV = '.csv';
 
-    public static KIBANA_URL = "http://miv-aodfront-01.aragon.local:7030/elastic/app/kibana#/dashboard/e6433860-d68c-11e7-a49d-f956d0989e2c";
-    public static KIBANA_URL_SEVEN = "http://miv-aodfront-01.aragon.local:7030/elastic/app/kibana#/dashboard/6b50d7f0-e589-11e7-bac3-69701294f3ab?embed=true&_g=(refreshInterval%3A('%24%24hashKey'%3A'object%3A1340'%2Cdisplay%3A'1%20day'%2Cpause%3A!f%2Csection%3A3%2Cvalue%3A86400000)%2Ctime%3A(from%3Anow-30d%2Cmode%3Aquick%2Cto%3Anow))";
+    public static KIBANA_URL = "http://miv-aodfront-01.aragon.local:14730/elastic/app/kibana#/dashboard/e6433860-d68c-11e7-a49d-f956d0989e2c";
+    public static KIBANA_URL_SEVEN = "http://miv-aodfront-01.aragon.local:14730/elastic/app/kibana#/dashboard/6b50d7f0-e589-11e7-bac3-69701294f3ab?embed=true&_g=(refreshInterval%3A('%24%24hashKey'%3A'object%3A1340'%2Cdisplay%3A'1%20day'%2Cpause%3A!f%2Csection%3A3%2Cvalue%3A86400000)%2Ctime%3A(from%3Anow-30d%2Cmode%3Aquick%2Cto%3Anow))";
 }
