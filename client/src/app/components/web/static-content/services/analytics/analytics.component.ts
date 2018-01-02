@@ -26,6 +26,7 @@ export class AnalyticsComponent {
 		var portal = "Todos";
 
 		jQuery("#analytics").attr('src', get_url(get_time(days), get_filter(portal)));
+		jQuery("#sevendays").attr('src', get_url_seven(get_time('30'), get_filter(portal)));
 
 		jQuery('.iframeAnalytics').on("click", ".timeAnalytics", function (event) {
 			event.preventDefault();
@@ -40,6 +41,7 @@ export class AnalyticsComponent {
 			jQuery('.portalAnalyticsPral').html(jQuery(this).val() + ' <span class="caret"></span>');
 			portal = jQuery(this).val();
 			jQuery("#analytics").attr('src', get_url(get_time(days), get_filter(portal)));
+			jQuery("#sevendays").attr('src', get_url_seven(get_time('30'), get_filter(portal)));
 		});
 
 		function get_time(days) {
@@ -108,7 +110,33 @@ export class AnalyticsComponent {
 			return url;
 		}
 
+		function get_url_seven(time, filter) {
+			var url = Constants.KIBANA_URL_SEVEN;
+			url = url + "?embed=true";
+			url = url + "&_g=("
+				+ "refreshInterval:("
+				+ "display:Off,"
+				+ "pause:!f,"
+				+ "value:0"
+				+ "),"
+				+ "time:("
+				+ time
+				+ ")"
+				+ ")";
+
+			url = url + "&_a=("
+				+ "description:'',"
+				+ "filters:!("
+				+ filter
+				+ "),"
+				+ "viewMode:view"
+				+ ")";
+
+			return url;
+		}
+
 		this.getFiles();
+
 	}
 
 	getFiles() {
