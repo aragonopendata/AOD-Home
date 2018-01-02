@@ -108,7 +108,10 @@ export class AnalyticsComponent {
 			return url;
 		}
 
+		jQuery("#analytics").attr('src', Constants.KIBANA_URL_SEVEN);
+
 		this.getFiles();
+
 	}
 
 	getFiles() {
