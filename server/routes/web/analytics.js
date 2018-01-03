@@ -32,7 +32,6 @@ var getAllFiles = function getAllFiles() {
     return new Promise((resolve, reject) => {
         try {
             pool.connect(function (err, client, done) {
-
                 if (err) {
                     reject(err)
                 }
@@ -41,14 +40,16 @@ var getAllFiles = function getAllFiles() {
                     text: dbQueries.DB_ADMIN_GET_LOGSTASH_CONF_ALL,
                     rowMode: constants.SQL_RESULSET_FORMAT_JSON
                 };
-                client.query(queryDb, (reloadLogstashQueryError, reloadLogstashQueryResponse) => {
-                    done();
-                    if (reloadLogstashQueryError) {
-                        reject(reloadLogstashQueryError);
-                    } else {
-                        resolve(reloadLogstashQueryResponse.rows);
-                    }
-                })
+                if (client) {
+                    client.query(queryDb, (reloadLogstashQueryError, reloadLogstashQueryResponse) => {
+                        done();
+                        if (reloadLogstashQueryError) {
+                            reject(reloadLogstashQueryError);
+                        } else {
+                            resolve(reloadLogstashQueryResponse.rows);
+                        }
+                    })
+                }
             })
         } catch (error) {
             reject(error)

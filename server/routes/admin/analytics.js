@@ -179,15 +179,16 @@ var insertLogstash = function insertLogstash(logstash) {
                     text: dbQueries.DB_ADMIN_INSERT_LOGSTASH,
                     values: [portal_name, type, view, delay, url]
                 };
-
-                client.query(queryDb, (insertLogstashQueryError, insertLogstashQueryResponse) => {
-                    done();
-                    if (insertLogstashQueryError) {
-                        reject(insertLogstashQueryError);
-                    } else {
-                        resolve(insertLogstashQueryResponse.rows[0].id_logstash);
-                    }
-                })
+                if (client) {
+                    client.query(queryDb, (insertLogstashQueryError, insertLogstashQueryResponse) => {
+                        done();
+                        if (insertLogstashQueryError) {
+                            reject(insertLogstashQueryError);
+                        } else {
+                            resolve(insertLogstashQueryResponse.rows[0].id_logstash);
+                        }
+                    })
+                }
             })
         } catch (error) {
             reject(error);
@@ -215,15 +216,16 @@ var updateLogstash = function updateLogstash(logstash, idlog) {
                     text: dbQueries.DB_ADMIN_UPDATE_LOGSTASH,
                     values: [portal_name, type, view, delay, url, idlog]
                 };
-
-                client.query(queryDb, (updateLostashQueryError, updateLogstashQueryResponse) => {
-                    done();
-                    if (updateLostashQueryError) {
-                        reject(updateLostashQueryError);
-                    } else {
-                        resolve(updateLogstashQueryResponse);
-                    }
-                })
+                if (client) {
+                    client.query(queryDb, (updateLostashQueryError, updateLogstashQueryResponse) => {
+                        done();
+                        if (updateLostashQueryError) {
+                            reject(updateLostashQueryError);
+                        } else {
+                            resolve(updateLogstashQueryResponse);
+                        }
+                    })
+                }
             });
         } catch (error) {
             reject(error);
@@ -244,15 +246,16 @@ var deleteLogstash = function deleteLogstash(idlog) {
                     text: dbQueries.DB_ADMIN_DELETE_LOGSTASH,
                     values: [idlog]
                 };
-
-                client.query(queryDb, (deleteLostashQueryError, deleteLogstashQueryResponse) => {
-                    done();
-                    if (deleteLostashQueryError) {
-                        reject(deleteLostashQueryError);
-                    } else {
-                        resolve(deleteLogstashQueryResponse);
-                    }
-                })
+                if (client) {
+                    client.query(queryDb, (deleteLostashQueryError, deleteLogstashQueryResponse) => {
+                        done();
+                        if (deleteLostashQueryError) {
+                            reject(deleteLostashQueryError);
+                        } else {
+                            resolve(deleteLogstashQueryResponse);
+                        }
+                    })
+                }
             });
         } catch (error) {
             reject(error);
@@ -272,15 +275,16 @@ var reloadLogstash = function reloadLogstash() {
                 const queryDb = {
                     text: dbQueries.DB_ADMIN_RELOAD_LOGSTASH,
                 };
-
-                client.query(queryDb, (reloadLogstashQueryError, reloadLogstashQueryResponse) => {
-                    done();
-                    if (reloadLogstashQueryError) {
-                        reject(reloadLogstashQueryError);
-                    } else {
-                        resolve(reloadLogstashQueryResponse);
-                    }
-                })
+                if (client) {
+                    client.query(queryDb, (reloadLogstashQueryError, reloadLogstashQueryResponse) => {
+                        done();
+                        if (reloadLogstashQueryError) {
+                            reject(reloadLogstashQueryError);
+                        } else {
+                            resolve(reloadLogstashQueryResponse);
+                        }
+                    })
+                }
             });
         } catch (error) {
             reject(error);
@@ -352,15 +356,16 @@ var getAllFiles = function getAllFiles() {
                     text: dbQueries.DB_ADMIN_GET_LOGSTASH_CONF_ALL,
                     rowMode: constants.SQL_RESULSET_FORMAT_JSON
                 };
-                client.query(queryDb, (reloadLogstashQueryError, reloadLogstashQueryResponse) => {
-                    done();
-                    if (reloadLogstashQueryError) {
-                        reject(reloadLogstashQueryError);
-                    } else {
-                        resolve(reloadLogstashQueryResponse.rows);
-                    }
-                })
-
+                if (client) {
+                    client.query(queryDb, (reloadLogstashQueryError, reloadLogstashQueryResponse) => {
+                        done();
+                        if (reloadLogstashQueryError) {
+                            reject(reloadLogstashQueryError);
+                        } else {
+                            resolve(reloadLogstashQueryResponse.rows);
+                        }
+                    })
+                }
             })
         } catch (error) {
             reject(error)
