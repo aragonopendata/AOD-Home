@@ -8,7 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Updated
 - Functionality bugs fixed (admin)
 
-## [1.2.1] - 2018-12-21
+## [1.2.2] - 2018-01-02
+## Updated
+- Fix configuration network (Analytics)
+- Fix 30 days chart dynamic
+
+## [1.2.1] - 2017-12-21
 ## Updated
 - Fix Analytics templates.
 - Fix organizations image path.
@@ -65,6 +70,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
 [Unreleased]: https://github.com/aragonopendata/AOD-Home/compare/master...develop
+[1.2.2]: https://github.com/aragonopendata/AOD-Home/compare/v1.2.1...v1.2.2
 [1.2.1]: https://github.com/aragonopendata/AOD-Home/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/aragonopendata/AOD-Home/compare/v1.1.5...v1.2.0
 [1.1.5]: https://github.com/aragonopendata/AOD-Home/compare/v1.1.4...v1.1.5

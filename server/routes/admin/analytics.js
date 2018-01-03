@@ -305,12 +305,13 @@ var createPipeline = function createPipeline(logstash) {
     }
 
     var compiledTemplate = Handlebars.compile(String(pipelineTemplate));
+    var name = String(logstash.portal_name).trim().split(" ").join("_");
     var data = {
-        "portal": String(logstash.portal_name),
+        "portal": String(name),
         "delay": String(logstash.delay),
         "vista": String(logstash.view),
         "url": String(logstash.url),
-        "pattern": String(logstash.portal_name).toLowerCase()
+        "pattern": String(name).toLowerCase()
     };
 
     var pipeline = compiledTemplate(data);
@@ -319,12 +320,13 @@ var createPipeline = function createPipeline(logstash) {
         fs.mkdirSync(logstashPath + '/LogStashPipelines');
     }
 
-    fs.writeFileSync(logstashPath + '/LogStashPipelines/' + logstash.portal_name + '.conf', pipeline);
+    fs.writeFileSync(logstashPath + '/LogStashPipelines/' + name + '.conf', pipeline);
 }
 
 var deletePipeline = function deletePipeline(logstash) {
     var logstashPath = constants.ANALYTICS_LOGSTASH_PATH;
-    fs.unlinkSync(logstashPath + '/LogStashPipelines/' + logstash.portal_name + '.conf')
+    var name = String(logstash.portal_name).trim().split(" ").join("_");
+    fs.unlinkSync(logstashPath + '/LogStashPipelines/' + name + '.conf')
 }
 
 var createPipelineConf = function createPipelineConf(logstashs) {
@@ -334,6 +336,12 @@ var createPipelineConf = function createPipelineConf(logstashs) {
     var pipelineTemplate = fs.readFileSync(String(templatePath) + '/pipelines_template.yml');
 
     var compiledTemplate = Handlebars.compile(String(pipelineTemplate));
+
+    logstashs.forEach(function (item) {
+        var name = String(item.portal_name).trim().split(" ").join("_");
+        item.portal_name = name;
+    });
+
     var data = {
         "logstashs": logstashs
     };
