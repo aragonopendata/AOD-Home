@@ -1,19 +1,10 @@
 .iframeAnalytics{
     padding:0px;
     margin:0 auto;
-    width: 80vw;
+    max-width: 80vw;
+    min-width: 320px;
     height:auto;
     margin-top: 5%;
-}
-
-.iframeAnalytics #analytics{
-    width: 100%;
-    height: 2200px;
-}
-
-.iframeAnalytics #sevendays{
-    width: 100%;
-    height: 300px;
 }
 
 .pagina {
