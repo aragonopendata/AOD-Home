@@ -25,6 +25,13 @@ export class AnalyticsComponent {
 		var days = 30;
 		var portal = "Todos";
 
+		function iframeLoad() {
+			var iframe = document.getElementById("analytics");
+			var x = 100; //This is padding of the iframe if thereâ€™s any
+			var height = iframe.contentWindow.document.body.scrollHeight + x;
+			iframe.style.height = height + "px";
+		}
+
 		jQuery("#analytics").attr('src', get_url(get_time(days), get_filter(portal)));
 		jQuery("#sevendays").attr('src', get_url_seven(get_time('30'), get_filter(portal)));
 
