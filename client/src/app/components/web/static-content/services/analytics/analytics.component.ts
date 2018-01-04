@@ -22,7 +22,7 @@ export class AnalyticsComponent {
 	constructor(private logstashService: AnalyticsService) { }
 
 	ngOnInit() {
-		var days = 90;
+		var days = 30;
 		var portal = "Todos";
 
 		jQuery("#analytics").attr('src', get_url(get_time(days), get_filter(portal)));
@@ -30,8 +30,7 @@ export class AnalyticsComponent {
 
 		jQuery('.iframeAnalytics').on("click", ".timeAnalytics", function (event) {
 			event.preventDefault();
-			jQuery('#btng-time-analytics button.active').removeClass('active');
-			jQuery(this).addClass('active')
+			jQuery('.timeAnalyticsPral').html(jQuery(this).text() + ' <span class="caret"></span>');
 			days = jQuery(this).val();
 			jQuery("#analytics").attr('src', get_url(get_time(days), get_filter(portal)));
 		});
