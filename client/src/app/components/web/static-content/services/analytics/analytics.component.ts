@@ -52,6 +52,8 @@ export class AnalyticsComponent {
 			days = jQuery(this).val();
 			jQuery("#analytics").attr('src', get_url(get_time(days), get_filter(portal)));
 
+			console.log(this.browsers_json + "&portal=" + portal + "&days=" + days);
+
 			jQuery(".browsers .json").attr('href', this.browsers_json + "&portal=" + portal + "&days=" + days);
 			jQuery(".browsers .csv").attr('href', this.browsers_csv + "&portal=" + portal + "&days=" + days);
 			jQuery(".pages .json").attr('href', this.pages_json + "&portal=" + portal + "&days=" + days);
@@ -68,6 +70,8 @@ export class AnalyticsComponent {
 			portal = jQuery(this).val();
 			jQuery("#analytics").attr('src', get_url(get_time(days), get_filter(portal)));
 			jQuery("#sevendays").attr('src', get_url_seven(get_time('30'), get_filter(portal)));
+
+			console.log(this.browsers_json + "&portal=" + portal + "&days=" + days);
 
 			jQuery(".browsers .json").attr('href', this.browsers_json + "&portal=" + portal + "&days=" + days);
 			jQuery(".browsers .csv").attr('href', this.browsers_csv + "&portal=" + portal + "&days=" + days);
