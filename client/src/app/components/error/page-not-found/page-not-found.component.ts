@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Constants } from '../../../app.constants';
 
 @Component({
 	selector: 'app-page-not-found',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PageNotFoundComponent implements OnInit {
 
-	constructor() { }
+	routerLinkDataCatalog: string;
+
+	constructor(private router: Router) {
+		this.routerLinkDataCatalog = Constants.ROUTER_LINK_DATA_CATALOG;
+	 }
 
 	ngOnInit() {
 	}
 
+	searchDatasetsByText(text: string){
+		this.router.navigate(['/' + this.routerLinkDataCatalog], { queryParams: { texto: text} });
+
+	}
 }
