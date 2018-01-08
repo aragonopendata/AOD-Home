@@ -637,6 +637,11 @@ export class Constants {
     public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_RDF = '.rdf';
     public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_CSV = '.csv';
 
-    public static KIBANA_URL = "http://miv-aodfront-01.aragon.local:7030/elastic/app/kibana#/dashboard/e6433860-d68c-11e7-a49d-f956d0989e2c";
-    public static KIBANA_URL_SEVEN = "http://miv-aodfront-01.aragon.local:7030/elastic/app/kibana#/dashboard/6b50d7f0-e589-11e7-bac3-69701294f3ab";
+    public static KIBANA_URL = Constants.AOD_BASE_URL + "/elastic/app/kibana#/dashboard/e6433860-d68c-11e7-a49d-f956d0989e2c";
+    public static KIBANA_URL_SEVEN = Constants.AOD_BASE_URL + "/elastic/app/kibana#/dashboard/6b50d7f0-e589-11e7-bac3-69701294f3ab";
+
+    public static ELASTIC_BROWSERS = Constants.AOD_BASE_URL + "/gapi/get_browsers_elastic";
+    public static ELASTIC_FILES = Constants.AOD_BASE_URL + "/gapi/get_files_elastic";
+    public static ELASTIC_PAGES = Constants.AOD_BASE_URL + "/gapi/get_pages_elastic";
+    public static ELASTIC_COUNTRIES = Constants.AOD_BASE_URL + "/gapi/get_countries_elastic";
 }

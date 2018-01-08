@@ -18,15 +18,33 @@ declare var jQuery: any;
 export class AnalyticsComponent {
 
 	logstashs: Logstash[];
+	browsers_json = Constants.ELASTIC_BROWSERS + "?format=json";
+	browsers_csv = Constants.ELASTIC_BROWSERS + "?format=csv";
+	pages_json = Constants.ELASTIC_PAGES + "?format=json";
+	pages_csv = Constants.ELASTIC_PAGES + "?format=csv";
+	files_json = Constants.ELASTIC_FILES + "?format=json";
+	files_csv = Constants.ELASTIC_FILES + "?format=csv";
+	countries_json = Constants.ELASTIC_COUNTRIES + "?format=json";
+	countries_csv = Constants.ELASTIC_COUNTRIES + "?format=csv";
 
 	constructor(private logstashService: AnalyticsService) { }
 
 	ngOnInit() {
 		var days = 90;
 		var portal = "Todos";
+		
 
 		jQuery("#analytics").attr('src', get_url(get_time(days), get_filter(portal)));
 		jQuery("#sevendays").attr('src', get_url_seven(get_time('30'), get_filter(portal)));
+
+		jQuery(".browsers .json").attr('href', this.browsers_json + "&portal=" + portal + "&days=" + days);
+		jQuery(".browsers .csv").attr('href', this.browsers_csv + "&portal=" + portal + "&days=" + days);
+		jQuery(".pages .json").attr('href', this.pages_json + "&portal=" + portal + "&days=" + days);
+		jQuery(".pages .csv").attr('href', this.pages_csv + "&portal=" + portal + "&days=" + days);
+		jQuery(".files .json").attr('href', this.files_json + "&portal=" + portal + "&days=" + days);
+		jQuery(".files .csv").attr('href', this.files_csv + "&portal=" + portal + "&days=" + days);
+		jQuery(".countries .json").attr('href', this.countries_json + "&portal=" + portal + "&days=" + days);
+		jQuery(".countries .csv").attr('href', this.countries_csv + "&portal=" + portal + "&days=" + days);
 
 		jQuery('.iframeAnalytics').on("click", ".timeAnalytics", function (event) {
 			event.preventDefault();
@@ -34,6 +52,15 @@ export class AnalyticsComponent {
 			jQuery(this).addClass('active')
 			days = jQuery(this).val();
 			jQuery("#analytics").attr('src', get_url(get_time(days), get_filter(portal)));
+
+			jQuery(".browsers .json").attr('href', this.browsers_json + "&portal=" + portal + "&days=" + days);
+			jQuery(".browsers .csv").attr('href', this.browsers_csv + "&portal=" + portal + "&days=" + days);
+			jQuery(".pages .json").attr('href', this.pages_json + "&portal=" + portal + "&days=" + days);
+			jQuery(".pages .csv").attr('href', this.pages_csv + "&portal=" + portal + "&days=" + days);
+			jQuery(".files .json").attr('href', this.files_json + "&portal=" + portal + "&days=" + days);
+			jQuery(".files .csv").attr('href', this.files_csv + "&portal=" + portal + "&days=" + days);
+			jQuery(".countries .json").attr('href', this.countries_json + "&portal=" + portal + "&days=" + days);
+			jQuery(".countries .csv").attr('href', this.countries_csv + "&portal=" + portal + "&days=" + days);
 		});
 
 		jQuery('.iframeAnalytics').on("click", ".portalAnalytics", function (event) {
@@ -42,6 +69,15 @@ export class AnalyticsComponent {
 			portal = jQuery(this).val();
 			jQuery("#analytics").attr('src', get_url(get_time(days), get_filter(portal)));
 			jQuery("#sevendays").attr('src', get_url_seven(get_time('30'), get_filter(portal)));
+
+			jQuery(".browsers .json").attr('href', this.browsers_json + "&portal=" + portal + "&days=" + days);
+			jQuery(".browsers .csv").attr('href', this.browsers_csv + "&portal=" + portal + "&days=" + days);
+			jQuery(".pages .json").attr('href', this.pages_json + "&portal=" + portal + "&days=" + days);
+			jQuery(".pages .csv").attr('href', this.pages_csv + "&portal=" + portal + "&days=" + days);
+			jQuery(".files .json").attr('href', this.files_json + "&portal=" + portal + "&days=" + days);
+			jQuery(".files .csv").attr('href', this.files_csv + "&portal=" + portal + "&days=" + days);
+			jQuery(".countries .json").attr('href', this.countries_json + "&portal=" + portal + "&days=" + days);
+			jQuery(".countries .csv").attr('href', this.countries_csv + "&portal=" + portal + "&days=" + days);
 		});
 
 		function get_time(days) {
