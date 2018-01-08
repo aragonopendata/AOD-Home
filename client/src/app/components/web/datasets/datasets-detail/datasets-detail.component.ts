@@ -123,7 +123,6 @@ export class DatasetsDetailComponent implements OnInit {
 								}
 							});
 						} catch (error) {
-							console.log(error);
 							console.error('Error: showEditButton() - datasets-detail.component.ts');
 						}
 					});
@@ -293,9 +292,9 @@ export class DatasetsDetailComponent implements OnInit {
 				if(this.isDatasetDefined(datasetRecommendedByTopic) && !this.existsDatasetRecommended(datasetRecommendedByTopic)) {
 					if (datasetRecommendedByTopic.groups) {
 						for (var i = 0; i < datasetRecommendedByTopic.groups.length; i++) {
-							let startIndex = +datasetRecommendedByTopic.groups[i].image_display_url.indexOf('ckan/temas/')+11;
+							let startIndex = +datasetRecommendedByTopic.groups[i].image_display_url.indexOf('static/');
 							let myFormatImageUrl = datasetRecommendedByTopic.groups[i].image_display_url.slice(startIndex, datasetRecommendedByTopic.groups[i].image_display_url.length);
-							datasetRecommendedByTopic.groups[i].image_url = Constants.DATASET_RECOMMENDED_IMAGE_URL + myFormatImageUrl;
+							datasetRecommendedByTopic.groups[i].image_url = myFormatImageUrl;
 						}
 					}					
 					this.datasetsRecommended.push(datasetRecommendedByTopic);
@@ -312,9 +311,9 @@ export class DatasetsDetailComponent implements OnInit {
 				if(this.isDatasetDefined(datasetRecommendedByOrganization) && !this.existsDatasetRecommended(datasetRecommendedByOrganization)) {					
 					if (datasetRecommendedByOrganization.groups) {
 						for (var i = 0; i < datasetRecommendedByOrganization.groups.length; i++) {
-							let startIndex = +datasetRecommendedByOrganization.groups[i].image_display_url.indexOf('ckan/temas/')+11;
+							let startIndex = +datasetRecommendedByOrganization.groups[i].image_display_url.indexOf('static/');
 							let myFormatImageUrl = datasetRecommendedByOrganization.groups[i].image_display_url.slice(startIndex, datasetRecommendedByOrganization.groups[i].image_display_url.length);
-							datasetRecommendedByOrganization.groups[i].image_url = Constants.DATASET_RECOMMENDED_IMAGE_URL + myFormatImageUrl;
+							datasetRecommendedByOrganization.groups[i].image_url = myFormatImageUrl;
 						}
 					}					
 					this.datasetsRecommended.push(datasetRecommendedByOrganization);
@@ -335,9 +334,9 @@ export class DatasetsDetailComponent implements OnInit {
 					if(this.isDatasetDefined(datasetRecommendedByTag) && !this.existsDatasetRecommended(datasetRecommendedByTag)) {
 						if (datasetRecommendedByTag.groups) {
 							for (var i = 0; i < datasetRecommendedByTag.groups.length; i++) {
-								let startIndex = +datasetRecommendedByTag.groups[i].image_display_url.indexOf('ckan/temas/')+11;
+								let startIndex = +datasetRecommendedByTag.groups[i].image_display_url.indexOf('static/');
 								let myFormatImageUrl = datasetRecommendedByTag.groups[i].image_display_url.slice(startIndex, datasetRecommendedByTag.groups[i].image_display_url.length);
-								datasetRecommendedByTag.groups[i].image_url = Constants.DATASET_RECOMMENDED_IMAGE_URL + myFormatImageUrl;
+								datasetRecommendedByTag.groups[i].image_url = myFormatImageUrl;
 							}
 						}		
 						this.datasetsRecommended.push(datasetRecommendedByTag);
