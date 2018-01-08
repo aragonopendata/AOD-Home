@@ -9,12 +9,22 @@
 
 .iframeAnalytics #analytics{
     width: 100%;
-    height: 2300px;
+    height: 2210px;
 }
 
 .iframeAnalytics #sevendays{
     width: 100%;
     height: 300px;
+}
+
+.iframeAnalytics .export{
+    width: 100%;
+    min-height: 25px;
+    margin-bottom: 5px;
+}
+
+.iframeAnalytics .csv{
+    margin-right: 10px;
 }
 
 .pagina {

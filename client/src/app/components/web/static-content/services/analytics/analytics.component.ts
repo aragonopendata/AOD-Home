@@ -25,6 +25,7 @@ export class AnalyticsComponent {
 		var days = 30;
 		var portal = "Todos";
 
+
 		jQuery("#analytics").attr('src', get_url(get_time(days), get_filter(portal)));
 		jQuery("#sevendays").attr('src', get_url_seven(get_time('30'), get_filter(portal)));
 
