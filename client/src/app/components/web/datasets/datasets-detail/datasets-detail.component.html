@@ -194,7 +194,7 @@
 					<div class="recommendedCard" routerLink="/datos/catalogo/dataset/{{dsRecommended.name}}" (click)="showDataset(dsRecommended)">
 						<div class="wrapper" *ngFor="let topic of dsRecommended.groups">							
 							<div class="cardSize">
-								<img class="card-img-top" src="{{assetsUrl}}/{{topic.image_url}}" alt="{{topic.title | uppercase}}" width="fit-content" height="fit-content">
+								<img class="card-img-top" src="{{topic.image_url}}" alt="{{topic.title | uppercase}}" width="fit-content" height="fit-content">
 								<p>{{topic.title}}</p>
 								<div class="recommended-card-block">
 									<p>{{dsRecommended.title}}</p>
