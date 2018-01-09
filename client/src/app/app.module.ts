@@ -86,6 +86,7 @@ import { CampusAdminService } from './services/admin/campus-admin.service';
 import { LogstashService } from './services/admin/logstash.service';
 import { AnalyticsService } from './services/web/analytics.service';
 import { AodCoreAdminService} from './services/admin/aod-core-admin.service';
+import {GoogleAnalyticsEventsService} from "./services/web/google-analytics-events.service";
 
 export function HttpLoaderFactory(http: HttpClient) {
 	return new TranslateHttpLoader(http, '../assets/i18n/', '.json');
@@ -213,7 +214,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 		LogstashService,
 		AnalyticsService,
 		AodCoreAdminService,
-		ConfirmationService
+		ConfirmationService,
+		GoogleAnalyticsEventsService
 	],
 	bootstrap: [AppComponent]
 })

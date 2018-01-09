@@ -24,6 +24,8 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         this.router.events.subscribe((event) => {
             if ((event instanceof NavigationEnd)) {
+                ga('set', 'page', event.urlAfterRedirects);
+                ga('send', 'pageview');
                 this.currentUrl = event.url;
                 this.isAdminSection = this.currentUrl.indexOf(this.adminPath) !== -1;
             } else {
