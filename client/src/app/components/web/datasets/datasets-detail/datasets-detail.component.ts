@@ -481,13 +481,19 @@ export class DatasetsDetailComponent implements OnInit {
 	}
 
 	submitEvent(event) {
-		var filetypes = /\.(rar|zip|exe|pdf|doc*|xls*|ppt*|mp3|mp4|txt|7z|bz2|tar|gz|tgz|avi|wma|flv|mpg|wmv|odt)$/;
-		var target = event.target || event.srcElement || event.currentTarget;
+		var filetypes = /\.(rar|zip|exe|pdf|doc*|xls*|ppt*|mp3|mp4|txt|7z|bz2|tar|gz|tgz|avi|wma|flv|mpg|wmv|odt|rdf)$/;
+		var target = event.target || event.currentTarget;
 		var href = target.attributes.href;
 		var extension = (/[.]/.exec(href)) ? /[^.]+$/.exec(href) : undefined;
-		var filePath = href;
 		if (href && href.match(filetypes)) {
-			this.googleAnalyticsEventsService.emitEvent('File Download', extension[0], filePath);
+			this.googleAnalyticsEventsService.emitEvent('File Download', extension[0], href);
+		}else{
+			var filetypes2 = /(rar|zip|exe|pdf|doc*|xls*|ppt*|mp3|mp4|txt|7z|bz2|tar|gz|tgz|avi|wma|flv|mpg|wmv|odt|rdf)$/;
+			var idAttr = target.attributes.id;
+			var value = idAttr.textContent.toLowerCase();
+			if(value.match(filetypes2)){
+				this.googleAnalyticsEventsService.emitEvent('File Download', value, href);
+			}
 		}
 	}
 }
