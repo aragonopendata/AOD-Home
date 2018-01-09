@@ -82,7 +82,7 @@ exports.DB_ADMIN_GET_ROLE = 'SELECT manager.roles.id, manager.roles.name '
 
 exports.DB_ADMIN_GET_LOGSTASH_CONF_ALL = 'SELECT manager.logstash_conf.id_logstash, manager.logstash_conf.portal_name, manager.logstash_conf.type'
 								+ ', manager.logstash_conf.view, manager.logstash_conf.delay, manager.logstash_conf.status, manager.logstash_conf.url ' 
-							+ 'FROM manager.logstash_conf';
+							+ 'FROM manager.logstash_conf ORDER BY manager.logstash_conf.portal_name ASC';
 
 exports.DB_ADMIN_INSERT_LOGSTASH = 'INSERT INTO manager.logstash_conf('
 								+'portal_name, type, view, delay, url)'
