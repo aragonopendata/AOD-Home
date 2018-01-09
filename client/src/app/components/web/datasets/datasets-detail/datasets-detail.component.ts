@@ -480,19 +480,40 @@ export class DatasetsDetailComponent implements OnInit {
 		}
 	}
 
-	submitEvent(event) {
-		var filetypes = /\.(rar|zip|exe|pdf|doc*|xls*|ppt*|mp3|mp4|txt|7z|bz2|tar|gz|tgz|avi|wma|flv|mpg|wmv|odt|rdf)$/;
-		var target = event.target || event.currentTarget;
-		var href = target.attributes.href;
-		var extension = (/[.]/.exec(href)) ? /[^.]+$/.exec(href) : undefined;
-		if (href && href.match(filetypes)) {
-			this.googleAnalyticsEventsService.emitEvent('File Download', extension[0], href);
-		}else{
-			var filetypes2 = /(rar|zip|exe|pdf|doc*|xls*|ppt*|mp3|mp4|txt|7z|bz2|tar|gz|tgz|avi|wma|flv|mpg|wmv|odt|rdf)$/;
-			var idAttr = target.attributes.id;
-			var value = idAttr.textContent.toLowerCase();
-			if(value.match(filetypes2)){
-				this.googleAnalyticsEventsService.emitEvent('File Download', value, href);
+	submitEvent(href, format) {
+
+		var path = href;
+
+		if (format == "RDF") {
+			path = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS_RDF + '/' + href;
+		}
+
+		if (path.substring(0, 4) != 'http') {
+			path = 'http://' + path;
+		}
+
+
+		var urlHack = document.createElement('a');
+		urlHack.href = path
+		path = urlHack.pathname;
+
+		var urlAux = document.createElement('a');
+		urlAux.href = Constants.AOD_BASE_URL;
+
+		if (urlHack.host == urlAux.host) {
+
+			var filetypes = /\.(rar|zip|exe|pdf|doc*|xls*|ppt*|mp3|mp4|txt|7z|bz2|tar|gz|tgz|avi|wma|flv|mpg|wmv|odt|rdf)$/;
+			var extension = (/[.]/.exec(path)) ? /[^.]+$/.exec(path) : undefined;
+			if (path && path.match(filetypes)) {
+				console.log("ENVIADO")
+				this.googleAnalyticsEventsService.emitEvent('File Download', extension[0], path);
+			} else {
+				var filetypes2 = /(rar|zip|exe|pdf|doc*|xls*|ppt*|mp3|mp4|txt|7z|bz2|tar|gz|tgz|avi|wma|flv|mpg|wmv|odt|rdf)$/;
+				var value = format.toLowerCase();
+				if (value.match(filetypes2)) {
+					console.log("ENVIADO")
+					this.googleAnalyticsEventsService.emitEvent('File Download', value, path);
+				}
 			}
 		}
 	}
