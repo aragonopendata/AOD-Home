@@ -482,6 +482,13 @@ export class DatasetsDetailComponent implements OnInit {
 
 	submitEvent(href, format) {
 
+		if (!String.prototype.startsWith) {
+			String.prototype.startsWith = function(searchString, position) {
+			  position = position || 0;
+			  return this.indexOf(searchString, position) === position;
+			};
+		}
+
 		var path = href;
 
 		if (format == "RDF") {
@@ -501,6 +508,10 @@ export class DatasetsDetailComponent implements OnInit {
 		urlAux.href = Constants.AOD_BASE_URL;
 
 		if (urlHack.host == urlAux.host) {
+
+			if(!path.startsWith('/')){
+				path = '/' + path;
+			}
 
 			var filetypes = /\.(rar|zip|exe|pdf|doc*|xls*|ppt*|mp3|mp4|txt|7z|bz2|tar|gz|tgz|avi|wma|flv|mpg|wmv|odt|rdf)$/;
 			var extension = (/[.]/.exec(path)) ? /[^.]+$/.exec(path) : undefined;
