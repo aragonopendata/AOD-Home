@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Updated
 - Functionality bugs fixed (admin)
 
+## [1.2.3] - 2018-01-15
+## Updated
+- Fix Kibana features
+- Fix AOD-Home features
+
 ## [1.2.2] - 2018-01-02
 ## Updated
 - Fix configuration network (Analytics)
@@ -70,6 +75,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
 [Unreleased]: https://github.com/aragonopendata/AOD-Home/compare/master...develop
+[1.2.3]: https://github.com/aragonopendata/AOD-Home/compare/v1.2.2...v1.2.3
 [1.2.2]: https://github.com/aragonopendata/AOD-Home/compare/v1.2.1...v1.2.2
 [1.2.1]: https://github.com/aragonopendata/AOD-Home/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/aragonopendata/AOD-Home/compare/v1.1.5...v1.2.0
