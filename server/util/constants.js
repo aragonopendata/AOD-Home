@@ -200,7 +200,7 @@ exports.SERVER_API_LINK_PARAM_TYPE_WEB_RESOURCES = 'recursos-web';
 exports.SERVER_API_LINK_PARAM_TYPE_RSS = 'rss';
 exports.SERVER_API_LINK_PARAM_TYPE_PLAIN_TEXT = 'texto-plano';
 
-exports.SERVER_API_LINK_PARAM_TYPE_CALENDAR_QUERY = '&q=(res_format:ics OR ICS)AND dataset_type:dataset AND entity_type:package AND state:active AND capacity:public';
+exports.SERVER_API_LINK_PARAM_TYPE_CALENDAR_QUERY = '&q=(res_format:(ics OR ICS)) AND dataset_type:dataset AND entity_type:package AND state:active AND capacity:public';
 exports.SERVER_API_LINK_PARAM_TYPE_PHOTO_QUERY = '&q=(res_format:(jpeg OR JPEG OR jpg OR JPG OR png OR PNG OR gif OR GIF))AND dataset_type:dataset AND entity_type:package AND state:active AND capacity:public';
 exports.SERVER_API_LINK_PARAM_TYPE_SPREADSHEET_QUERY = '&q=(res_format:(XLS OR xls OR ods OR ODS OR xlsx OR XLSX))AND dataset_type:dataset AND entity_type:package AND state:active AND capacity:public';
 exports.SERVER_API_LINK_PARAM_TYPE_MAPS_QUERY = '&q=(res_format:(dxf OR DXF OR gml OR GML OR geojson OR GEOJSON OR kmz OR KMZ OR shp OR SHP OR dgn OR DGN OR dwg OR DWG))AND dataset_type:dataset AND entity_type:package AND state:active AND capacity:public';
