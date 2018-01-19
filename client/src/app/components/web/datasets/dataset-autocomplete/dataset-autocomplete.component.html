@@ -3,8 +3,8 @@
 		<i aria-hidden="true" class="fa fa-search" style="display: table; vertical-align: middle;"></i>
 	</button>
 	<input autocomplete="off" #searchBox name="searchBox" id="searchBox" placeholder="BUSCA DATOS ABIERTOS" type="search" class="textBox"
-	 	(keyup)="search(searchBox.value)" (keyup.enter)="searchDatasetsByText(searchBox.value)" (focus)="show=true;"/>
-	<ng-container *ngIf="show">
+	 	(keyup)="search(searchBox.value)" (keyup.enter)="searchDatasetsByText(searchBox.value)"/>
+	<ng-container>
 		<div *ngFor="let autocomplete of datasetAutocomplete" class="search-result">
 			<a routerLink='/{{routerLinkDataCatalogDataset}}/{{autocomplete.name}}'>
 				{{autocomplete.title}}
