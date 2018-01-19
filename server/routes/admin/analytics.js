@@ -10,6 +10,7 @@ const Handlebars = require('handlebars');
 //DB SETTINGS
 const db = require('../../db/db-connection');
 const pool = db.getPool();
+const unidecode = require('unidecode');
 //LOG SETTINGS
 const logConfig = require('../../conf/log-conf');
 const loggerSettings = logConfig.getLogSettings();
@@ -305,7 +306,8 @@ var createPipeline = function createPipeline(logstash) {
     }
 
     var compiledTemplate = Handlebars.compile(String(pipelineTemplate));
-    var name = String(logstash.portal_name).trim().split(" ").join("_");
+    var name_a = String(logstash.portal_name).trim().split(" ").join("_");
+    var name = unidecode(name_a);
     var data = {
         "portal": String(name),
         "delay": String(logstash.delay),
@@ -325,7 +327,8 @@ var createPipeline = function createPipeline(logstash) {
 
 var deletePipeline = function deletePipeline(logstash) {
     var logstashPath = constants.ANALYTICS_LOGSTASH_PATH;
-    var name = String(logstash.portal_name).trim().split(" ").join("_");
+    var name_a = String(logstash.portal_name).trim().split(" ").join("_");
+    var name = unidecode(name_a);
     fs.unlinkSync(logstashPath + '/LogStashPipelines/' + name + '.conf')
 }
 
@@ -338,7 +341,8 @@ var createPipelineConf = function createPipelineConf(logstashs) {
     var compiledTemplate = Handlebars.compile(String(pipelineTemplate));
 
     logstashs.forEach(function (item) {
-        var name = String(item.portal_name).trim().split(" ").join("_");
+        var name_a = String(item.portal_name).trim().split(" ").join("_");
+        var name = unidecode(name_a);
         item.portal_name = name;
     });
 
