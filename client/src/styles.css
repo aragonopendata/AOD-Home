@@ -44,3 +44,7 @@ b {
     color: #8E8E8E;
 }
 /* Loading end*/
+
+.img {
+    max-height: 30px;
+}
