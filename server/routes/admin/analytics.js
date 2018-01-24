@@ -163,7 +163,8 @@ router.post('/kibana/insert', function (req, res, next) {
 var insertLogstash = function insertLogstash(logstash) {
     return new Promise((resolve, reject) => {
         try {
-            var portal_name = logstash.portal_name.toLowerCase().charAt(0).toUpperCase() + logstash.portal_name.toLowerCase().slice(1);
+            //var portal_name = logstash.portal_name.toLowerCase().charAt(0).toUpperCase() + logstash.portal_name.toLowerCase().slice(1);
+            var portal_name = logstash.portal_name;
 
             var type = logstash.type;
             var view = logstash.view;
@@ -307,7 +308,8 @@ var createPipeline = function createPipeline(logstash) {
 
     var compiledTemplate = Handlebars.compile(String(pipelineTemplate));
     var name_a = String(logstash.portal_name).trim().split(" ").join("_");
-    var name = unidecode(name_a);
+    var name_b = unidecode(name_a);
+    var name = name_b.replace(/\(|\)/g, "");
     var data = {
         "portal": String(name),
         "delay": String(logstash.delay),
@@ -328,7 +330,8 @@ var createPipeline = function createPipeline(logstash) {
 var deletePipeline = function deletePipeline(logstash) {
     var logstashPath = constants.ANALYTICS_LOGSTASH_PATH;
     var name_a = String(logstash.portal_name).trim().split(" ").join("_");
-    var name = unidecode(name_a);
+    var name_b = unidecode(name_a);
+    name = name_b.replace(/\(|\)/g, "");
     fs.unlinkSync(logstashPath + '/LogStashPipelines/' + name + '.conf')
 }
 
@@ -342,7 +345,8 @@ var createPipelineConf = function createPipelineConf(logstashs) {
 
     logstashs.forEach(function (item) {
         var name_a = String(item.portal_name).trim().split(" ").join("_");
-        var name = unidecode(name_a);
+        var name_b = unidecode(name_a);
+        name = name_b.replace(/\(|\)/g, "");
         item.portal_name = name;
     });
 
