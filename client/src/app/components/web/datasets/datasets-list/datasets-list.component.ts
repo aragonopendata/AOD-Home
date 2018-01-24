@@ -46,6 +46,8 @@ export class DatasetsListComponent implements OnInit {
     searchHomerValue: string = '';
     tags: string[];
     filteredTagsMultiple: any[];
+    hideLastUpdateColumn: boolean;
+    hideAccessNumberColumn: boolean;
 
     @Input() topics: Topic[];
     topic: Topic;
@@ -197,6 +199,7 @@ export class DatasetsListComponent implements OnInit {
         this.setGroupsDropdown();
         this.setSubGroupsDropdown();
         this.setInfoTables();
+        this.onResize(event);
     }
 
     loadDatasets() {
@@ -939,5 +942,20 @@ export class DatasetsListComponent implements OnInit {
                 this.errorMessage = this.datasetListErrorMessage;
             }
         });
+    }
+
+    onResize(event){
+        this.hideLastUpdateColumn = false;
+        this.hideAccessNumberColumn = false;
+        if(window.innerWidth<768){
+            this.hideAccessNumberColumn = true;
+        }else{
+            this.hideAccessNumberColumn = false;
+        }
+        if(window.innerWidth<576){
+            this.hideLastUpdateColumn = true;
+        }else{
+            this.hideLastUpdateColumn = false;
+        }
     }
 }

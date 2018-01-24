@@ -19,7 +19,7 @@
     <h1 translate>TITLE_DATACENTER</h1>
     <!-- Search -->
     <div class="row">
-        <div class="col-9" *ngIf="selectedSearchOption == datasetSearchOptionFreeSearch">
+        <div class="col-12 order-12 order-md-1 col-md-8" *ngIf="selectedSearchOption == datasetSearchOptionFreeSearch">
             <div class="form-group">
                 <label for="exampleSelect1">Datos Sobre:</label>
                 <div class="input-group">
@@ -31,7 +31,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-5" *ngIf="selectedSearchOption == datasetSearchOptionTopics">
+        <div class="col-12 col-md-4 order-md-1 order-12" *ngIf="selectedSearchOption == datasetSearchOptionTopics">
             <div class="form-group">
                 <label>Datos sobre:</label>
                 <select class="form-control" [(ngModel)]="selectedTopic" (change)="changeType()">
@@ -39,7 +39,7 @@
                 </select>
             </div>
         </div>
-        <div class="col-5" *ngIf="selectedSearchOption == datasetSearchOptionOrganizations">
+        <div class="col-12 col-md-4 order-12 order-md-1" *ngIf="selectedSearchOption == datasetSearchOptionOrganizations">
             <div class="form-group">
                 <label>Datos sobre:</label>
                 <select class="form-control" [(ngModel)]="selectedOrg" (change)="changeType()">
@@ -47,7 +47,7 @@
                 </select>
             </div>
         </div>
-        <div class="col-4" *ngIf="selectedSearchOption == datasetSearchOptionOrganizations || selectedSearchOption == datasetSearchOptionTopics">
+        <div class="col-12 col-md-4 order-12 order-md-4" *ngIf="selectedSearchOption == datasetSearchOptionOrganizations || selectedSearchOption == datasetSearchOptionTopics">
             <div class="form-group">
                 <label>Del tipo:</label>
                 <select class="form-control" [(ngModel)]="selectedType" (change)="changeType()">
@@ -56,7 +56,7 @@
             </div>
         </div>
 
-        <div class="col-9" *ngIf="selectedSearchOption == datasetSearchOptionTags">
+        <div class="col-12 order-12 order-md-1 col-md-8" *ngIf="selectedSearchOption == datasetSearchOptionTags">
             <div class="form-group">
                 <label>Etiquetas:</label>
                 <div class="input-group">
@@ -70,7 +70,7 @@
                 </div>
             </div>
         </div>
-        <div [ngClass]="selectedSearchOption == datasetSearchOptionStats && selectedGroup == undefined ? 'col-9' : 'col-4'" *ngIf="selectedSearchOption == datasetSearchOptionStats">
+        <div [ngClass]="selectedSearchOption == datasetSearchOptionStats && selectedGroup == undefined ? 'col-12 order-12 order-md-1 col-md-8' : 'col-12 col-md-4 order-12 order-md-1'" *ngIf="selectedSearchOption == datasetSearchOptionStats">
             <div class="form-group">
                 <label>Del Grupo:</label>
                 <select class="form-control" [(ngModel)]="selectedGroup" (change)="resetSubGroupSearch();changeStats()">
@@ -78,7 +78,7 @@
                 </select>
             </div>
         </div>
-        <div class="col-5" *ngIf="selectedGroup != undefined">
+        <div class="col-12 col-md-4 order-12 order-md-4" *ngIf="selectedGroup != undefined">
             <div class="form-group">
                 <label>Del Subgrupo:</label>
                 <select *ngIf="selectedGroup == groupsOptionTerritorio" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
@@ -128,7 +128,7 @@
                 </select>
             </div>
         </div>
-        <div class="col-6" *ngIf="selectedSearchOption == datasetSearchOptionHomer">
+        <div class="col-12 order-12 order-md-1 col-md-4" *ngIf="selectedSearchOption == datasetSearchOptionHomer">
             <div class="form-group">
                 <label>Buscar:</label>
                 <div class="input-group">
@@ -140,7 +140,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-3" *ngIf="selectedSearchOption == datasetSearchOptionHomer">
+        <div class="col-12 col-md-4 order-12 order-md-4" *ngIf="selectedSearchOption == datasetSearchOptionHomer">
             <div class="form-group">
                 <label>Idioma:</label>
                 <select class="form-control" [(ngModel)]="selectedLang">
@@ -148,7 +148,7 @@
                 </select>
             </div>
         </div>
-        <div class="col-3">
+        <div class="col-12 order-md-12 order-1 col-md-4">
             <div class="form-group">
                 <label>Tipo de búsqueda</label>
                 <select class="form-control" [(ngModel)]="selectedSearchOption" (change)="resetSearch()">
@@ -159,7 +159,7 @@
     </div>
     <!-- End Search -->
     <div *ngIf="selectedSearchOption != datasetSearchOptionHomer">
-        <p-dataTable [value]="datasets" [responsive]="true" emptyMessage="{{emptyMessage}}" (onSort)="setOrder($event)" #dt>
+        <p-dataTable [value]="datasets" emptyMessage="{{emptyMessage}}" (onSort)="setOrder($event)" #dt>
             <p-column field="name" header="{{numDatasets}} conjuntos de datos encontrados" sortable="custom" sortFunction="orderTable($event)">
                 <ng-template pTemplate="body" let-dataset="rowData">
                     <a routerLink='/{{routerLinkDataCatalogDataset}}/{{dataset.name}}' (click)="showDataset(dataset)">
@@ -168,12 +168,12 @@
                     <i class="fa fa-star" id="informacion_content_3_i" style="color: #5ea2ba;" *ngIf="dataset.tracking_summary && (dataset.tracking_summary.recent > 10)"></i>
                 </ng-template>
             </p-column>
-            <p-column field="accesos" header="Nº de accesos" [style]="{'width':'160px'}" sortable="custom" sortFunction="orderTable($event)">
+            <p-column field="accesos" header="Nº de accesos" [style]="{'width':'160px'}" sortable="custom" sortFunction="orderTable($event)" (window:resize)="onResize($event)" [hidden]="hideAccessNumberColumn">
                 <ng-template pTemplate="body" let-dataset="rowData">
                     {{dataset?.tracking_summary?.total || '0'}}
                 </ng-template>
             </p-column>
-            <p-column field="lastUpdate" header="Última actualización" [style]="{'width':'220px'}" sortable="custom" sortFunction="orderTable($event)">
+            <p-column field="lastUpdate" header="Última actualización" [style]="{'width':'220px'}" sortable="custom" sortFunction="orderTable($event)" (window:resize)="onResize($event)" [hidden]="hideLastUpdateColumn">
                 <ng-template pTemplate="body" let-dataset="rowData">
                     {{dataset.metadata_modified | date: 'dd/MM/yyyy'}}
                 </ng-template>
@@ -215,8 +215,8 @@
         <div class="destacado" style="width: 100%;">
             <h1>Datos destacados</h1>
             <h3 style="color: grey">Permítenos recomendarte algunos datos abiertos</h3>
-            <div class="ui-g ">
-                <div class="ui-sm-12 ui-lg-4">
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-4">
                     <div class="box">
                         <div class="boxTitle">
                             <h3>NUEVOS DATOS</h3>
@@ -234,7 +234,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="ui-sm-12 ui-lg-4">
+                <div class="col-12 col-md-6 col-lg-4">
                     <div class="box">
                         <div class="boxTitle">
                             <h3>MÁS DESCARGADOS</h3>
@@ -252,7 +252,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="ui-sm-12 ui-lg-4">
+                <div class="col-12 col-md-6 col-lg-4">
                     <div class="box">
                         <div class="boxTitle">
                             <h3>ESTADÍSTICAS</h3>

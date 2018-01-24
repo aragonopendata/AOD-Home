@@ -151,9 +151,19 @@ a:hover {
     background: linear-gradient(white, #e2e2dc);
 }
 
-.p-autocomplete{
+p-autocomplete{
     width: 100%;
-  }
+}
+
+>>>.ui-inputtext{
+    width: 100%;
+}
+
+>>>.ui-datatable-data > tr > td{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 .searchFilter{
     background: #ffffff;
