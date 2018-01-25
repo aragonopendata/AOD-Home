@@ -50,7 +50,6 @@ export class DatasetsListComponent implements OnInit {
     hideLastUpdateColumn: boolean;
     hideAccessNumberColumn: boolean;
     previousUrl: string;
-    backPressed: boolean;
 
     @Input() topics: Topic[];
     topic: Topic;
