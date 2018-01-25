@@ -311,7 +311,7 @@ var createPipeline = function createPipeline(logstash) {
     var name_b = unidecode(name_a);
     var name = name_b.replace(/\(|\)/g, "");
     var data = {
-        "portal": String(name),
+        "portal": String(name).toLowerCase().charAt(0).toUpperCase() + String(name).toLowerCase().slice(1),
         "delay": String(logstash.delay),
         "vista": String(logstash.view),
         "url": String(logstash.url),
