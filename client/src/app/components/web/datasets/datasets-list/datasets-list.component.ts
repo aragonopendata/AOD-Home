@@ -212,9 +212,6 @@ export class DatasetsListComponent implements OnInit {
     }
 
     checkSearch(){
-        window.onpopstate = (evt) => {
-            this.getSelectedTopic();
-        }
         if(!this.previousUrl.includes("temas")){
             this.resetSearch();
         }
