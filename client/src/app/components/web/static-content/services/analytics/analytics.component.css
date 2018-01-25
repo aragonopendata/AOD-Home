@@ -40,7 +40,7 @@
 }
 
 .headerSeparator {
-    margin-top: 15%;
+    margin-top: 20vh;
 }
 
 .panel-export-title {
@@ -76,4 +76,10 @@
 
 .export ul li{
     margin-top: 6px;
+}
+
+.scrollable-menu {
+    height: auto;
+    max-height: 350px;
+    overflow-x: hidden;
 }
