@@ -1,7 +1,7 @@
 import { OrganizationsService } from './../../../../services/web/organizations.service';
 import { Organization } from './../../../../models/Organization';
 import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
-import { Location } from '@angular/common';
+import { Location, PlatformLocation } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SelectItem, DropdownModule } from 'primeng/primeng';
 import { DatasetsService } from '../../../../services/web/datasets.service';
@@ -11,6 +11,7 @@ import { Dataset } from '../../../../models/Dataset';
 import { DatasetHomer } from '../../../../models/DatasetHomer';
 import { Topic } from '../../../../models/Topic';
 import { Constants } from '../../../../app.constants';
+import { NavigationEnd, Event } from '@angular/router';
 
 @Component({
     selector: 'app-datasets-list',
@@ -48,6 +49,8 @@ export class DatasetsListComponent implements OnInit {
     filteredTagsMultiple: any[];
     hideLastUpdateColumn: boolean;
     hideAccessNumberColumn: boolean;
+    previousUrl: string;
+    backPressed: boolean;
 
     @Input() topics: Topic[];
     topic: Topic;
@@ -120,7 +123,7 @@ export class DatasetsListComponent implements OnInit {
     constructor(private datasetsService: DatasetsService, private topicsService: TopicsService
             , private orgsService: OrganizationsService, private router: Router
             , private location: Location, private changeDetectorRef: ChangeDetectorRef
-            , private activatedRoute: ActivatedRoute) {
+            , private activatedRoute: ActivatedRoute, private loc: PlatformLocation) {
         this.datasetListErrorTitle = Constants.DATASET_LIST_ERROR_TITLE;
         this.datasetListErrorMessage = Constants.DATASET_LIST_ERROR_MESSAGE;
         this.pageRows = Constants.DATASET_LIST_ROWS_PER_PAGE;
@@ -155,6 +158,11 @@ export class DatasetsListComponent implements OnInit {
         this.groupsOptionIDITic = Constants.DATASET_LIST_DROPDOWN_GROUPS_IDITIC.value;
         this.groupsOptionMedioAmbiente = Constants.DATASET_LIST_DROPDOWN_GROUPS_MEDIOAMBIENTE.value;
         this.groupsOptionSectorPublico = Constants.DATASET_LIST_DROPDOWN_GROUPS_SECTORPUBLICO.value;
+        router.events.filter(event => event instanceof NavigationEnd).subscribe(e => {
+            if(e instanceof NavigationEnd){
+                this.previousUrl = e.url;
+            }
+        });
     }
 
     ngOnInit() {
@@ -200,6 +208,16 @@ export class DatasetsListComponent implements OnInit {
         this.setSubGroupsDropdown();
         this.setInfoTables();
         this.onResize(event);
+        this.checkSearch();
+    }
+
+    checkSearch(){
+        window.onpopstate = (evt) => {
+            this.getSelectedTopic();
+        }
+        if(!this.previousUrl.includes("temas")){
+            this.resetSearch();
+        }
     }
 
     loadDatasets() {
@@ -350,7 +368,9 @@ export class DatasetsListComponent implements OnInit {
     }
 
     resetSearch() {
+        console.log(this.selectedTopic);
         this.selectedTopic = undefined;
+        console.log(this.selectedTopic);
         this.selectedOrg = undefined;
         this.selectedType = undefined;
         this.selectedGroup = undefined;
@@ -367,6 +387,7 @@ export class DatasetsListComponent implements OnInit {
     }
 
     showDataset(dataset: Dataset) {
+        this.topicsService.setTopic(this.topic);
         this.datasetsService.setDataset(dataset);
     }
 
@@ -580,8 +601,7 @@ export class DatasetsListComponent implements OnInit {
     }
 
     getSelectedTopic() {
-        if (this.topicsService.getTopic() === undefined) {
-        } else {
+        if (this.topicsService.getTopic() !== undefined) {
             this.selectedTopic = this.topicsService.getTopic().name;
         }
     }
