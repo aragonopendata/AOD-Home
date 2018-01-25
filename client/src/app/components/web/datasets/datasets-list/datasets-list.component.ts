@@ -206,7 +206,7 @@ export class DatasetsListComponent implements OnInit {
         this.setGroupsDropdown();
         this.setSubGroupsDropdown();
         this.setInfoTables();
-        this.onResize(event);
+        this.onResize();
         this.checkSearch();
     }
 
@@ -960,7 +960,7 @@ export class DatasetsListComponent implements OnInit {
         });
     }
 
-    onResize(event){
+    onResize(){
         this.hideLastUpdateColumn = false;
         this.hideAccessNumberColumn = false;
         if(window.innerWidth<768){
