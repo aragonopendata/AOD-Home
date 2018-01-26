@@ -3,6 +3,12 @@
      src: url('./assets/fonts/Roboto-Light.ttf'); 
 }
 
+@media (max-width: 576px){
+    html{
+        margin-top: 13% !important;
+    }
+}
+
 h1, h2, h3, h4, h5, h6 {
     font-family: 'RobotoLight', sans-serif;
     line-height: 1;
