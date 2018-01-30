@@ -24,13 +24,13 @@
 				<div class="card-header"  role="tab"  id="{{content.contentOrder}}">
 					<div>
 						<a id="{{content.targetUrl}}Link"  class="collapsed headLink"  data-toggle="collapse"  data-parent="#accordion"  href="#{{content.targetUrl}}"
-						aria-expanded="false"  aria-controls="content.contentOrder">
+						aria-expanded="true"  aria-controls="content.contentOrder">
 							{{content.contentTitle}}
-							<i class="fa fa-plus-circle"  aria-hidden="true"></i>
+							<i class="fa fa-minus-circle"  aria-hidden="true"></i>
 						</a>
 					</div>
 				</div>
-				<div id="{{content.targetUrl}}"  class="collapse"  role="tabpanel"  aria-labelledby="content.contentOrder">
+				<div id="{{content.targetUrl}}"  class="collapse show"  role="tabpanel"  aria-labelledby="content.contentOrder">
 					<div class="card-block">
 						<p class="textContent" [innerHTML]="content.contentText | safeHtml"></p>
 					</div>

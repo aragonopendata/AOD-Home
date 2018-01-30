@@ -26,8 +26,8 @@ a:focus {
     text-decoration: none;
 }
 
-[aria-expanded=true] i:before{
-    content: "\f056";
+[aria-expanded=false] i:before{
+    content: "\f055";
 }
 
 .textContent{
