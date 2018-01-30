@@ -49,7 +49,6 @@ export class DatasetsListComponent implements OnInit {
     filteredTagsMultiple: any[];
     hideLastUpdateColumn: boolean;
     hideAccessNumberColumn: boolean;
-    previousUrl: string;
 
     @Input() topics: Topic[];
     topic: Topic;
@@ -157,11 +156,6 @@ export class DatasetsListComponent implements OnInit {
         this.groupsOptionIDITic = Constants.DATASET_LIST_DROPDOWN_GROUPS_IDITIC.value;
         this.groupsOptionMedioAmbiente = Constants.DATASET_LIST_DROPDOWN_GROUPS_MEDIOAMBIENTE.value;
         this.groupsOptionSectorPublico = Constants.DATASET_LIST_DROPDOWN_GROUPS_SECTORPUBLICO.value;
-        router.events.filter(event => event instanceof NavigationEnd).subscribe(e => {
-            if(e instanceof NavigationEnd){
-                this.previousUrl = e.url;
-            }
-        });
     }
 
     ngOnInit() {
@@ -207,13 +201,6 @@ export class DatasetsListComponent implements OnInit {
         this.setSubGroupsDropdown();
         this.setInfoTables();
         this.onResize();
-        this.checkSearch();
-    }
-
-    checkSearch(){
-        if(!this.previousUrl.includes("temas")){
-            this.resetSearch();
-        }
     }
 
     loadDatasets() {
@@ -361,19 +348,6 @@ export class DatasetsListComponent implements OnInit {
             this.location.go('/' + this.routerLinkDataCatalog);
             this.getDatasets(null, null);
         }
-    }
-
-    resetSearch() {
-        this.selectedTopic = undefined;
-        this.selectedOrg = undefined;
-        this.selectedType = undefined;
-        this.selectedGroup = undefined;
-        this.selectedSubGroup = undefined;
-        this.searchValue = '';
-        this.tags = undefined;
-        this.textSearch = undefined;
-        this.loadDatasets();
-        this.location.go('/' + this.routerLinkDataCatalog);
     }
 
     resetSubGroupSearch() {
