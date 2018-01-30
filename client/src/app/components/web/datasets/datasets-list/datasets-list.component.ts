@@ -364,9 +364,7 @@ export class DatasetsListComponent implements OnInit {
     }
 
     resetSearch() {
-        console.log(this.selectedTopic);
         this.selectedTopic = undefined;
-        console.log(this.selectedTopic);
         this.selectedOrg = undefined;
         this.selectedType = undefined;
         this.selectedGroup = undefined;
