@@ -3,9 +3,15 @@
      src: url('./assets/fonts/Roboto-Light.ttf'); 
 }
 
-@media (max-width: 576px){
+@media (max-width: 768px){
     html{
-        margin-top: 13% !important;
+        margin-top: 15% !important;
+    }
+}
+
+@media (min-width: 768px){
+    html{
+        margin-top: 5% !important;
     }
 }
 
