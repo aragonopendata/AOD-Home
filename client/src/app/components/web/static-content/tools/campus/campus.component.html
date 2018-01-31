@@ -43,7 +43,11 @@
 					</div>
 				
 		</div>
+		
 		<div *ngIf="!errorTitle" class="col-md-7">
+			<div *ngIf="campusNoRows">
+				No hay datos
+			</div>
 			<!-- Blog Post -->
 
 			<div *ngFor="let event of eventsList; let i = index" class="card mb-4">

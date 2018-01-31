@@ -34,6 +34,7 @@ export class CampusComponent implements OnInit {
     errorMessage: string;
     campusErrorTitle: string;
     campusErrorMessage: string;
+    campusNoRows: boolean;
     routerLinkCampusDetail: string;
     cursoIniciacionLink: string;
 
@@ -43,6 +44,7 @@ export class CampusComponent implements OnInit {
         this.campusErrorTitle = Constants.CAMPUS_EVENTS_ERROR_TITLE;
         this.campusErrorMessage = Constants.CAMPUS_EVENTS_ERROR_MESSAGE;
         this.cursoIniciacionLink = Constants.AOD_ASSETS_BASE_URL + Constants.CAMPUS_CURSO_INICIACION;
+        this.campusNoRows = false;
 	 }
 
 	ngOnInit() {
@@ -70,6 +72,7 @@ export class CampusComponent implements OnInit {
 	}
 
 	getCampusEvents(page: number, rows: number){
+        this.campusNoRows = false;
         this.eventsList = [];
         this.resourceContents = [];
 		var pageNumber = (page != null ? page : 0);
@@ -81,9 +84,14 @@ export class CampusComponent implements OnInit {
                 this.setPagination(pageNumber, this.numEvents);
                 this.getCampusContents();                
             } catch (error) {
-                console.error('Error: getCampusContents() - campus.component.ts');
-                this.errorTitle = this.campusErrorTitle;
-                this.errorMessage = this.campusErrorMessage;
+                if (events[0] == null) {
+                    this.setPagination(1, 1);
+                    this.campusNoRows = true;
+                } else {
+                    console.error('Error: getCampusContents() - campus.component.ts');
+                    this.errorTitle = this.campusErrorTitle;
+                    this.errorMessage = this.campusErrorMessage;
+                }
             }
         });
 	}
@@ -104,6 +112,7 @@ export class CampusComponent implements OnInit {
     }
 
     getCampusEventsBySearch(page: number, rows: number, searchParam: string): void {
+        this.campusNoRows = false;
         this.eventsList = [];
         this.resourceContents = [];
         var pageNumber = (page != null ? page : 0);
@@ -113,12 +122,18 @@ export class CampusComponent implements OnInit {
             try {
                 this.eventsList = events;
                 this.numEvents = events[0].total_count;
+                this.campusNoRows = false;
                 this.setPagination(pageNumber, this.numEvents);
                 this.getCampusContents();   
             } catch (error) {
-                console.error('Error: getCampusContents() - campus.component.ts');
-                this.errorTitle = this.campusErrorTitle;
-                this.errorMessage = this.campusErrorMessage;
+                if (events[0] == null) {
+                    this.setPagination(1, 1);
+                    this.campusNoRows = true;
+                } else {
+                    console.error('Error: getCampusContents() - campus.component.ts: ' + error);
+                    this.errorTitle = this.campusErrorTitle;
+                    this.errorMessage = this.campusErrorMessage;
+                }
             }
         });
     }

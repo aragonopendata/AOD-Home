@@ -45,7 +45,7 @@ router.get(constants.API_URL_CAMPUS_EVENTS, function (req, res, next) {
             + 'FROM campus.events evn '
             + 'JOIN campus.events_sites evnsit ON evn.id = evnsit.id_event  '
             + 'JOIN campus.sites sit ON evnsit.id_site = sit.id  '
-            + 'WHERE evn.name like $3 '
+            + 'WHERE LOWER(evn.name) like LOWER($3) '
             + 'ORDER BY evn."date" DESC '
             + 'LIMIT $1 '
             + 'OFFSET $2 ';
