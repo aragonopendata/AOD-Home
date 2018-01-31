@@ -41,8 +41,10 @@
 		</div>
 		
 		<div *ngIf="!errorTitle" class="col-md-7">
-			<div *ngIf="campusNoRows">
-				No hay datos
+			<div *ngIf="campusNoRows" class="alert alert-info">
+				<div class="col-xs-9">
+					{{campusNoRowsMessage}}
+				</div>
 			</div>
 			<!-- Blog Post -->
 

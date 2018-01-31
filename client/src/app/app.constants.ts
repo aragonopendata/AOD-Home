@@ -71,6 +71,7 @@ export class Constants {
     public static DATASET_LIST_HOMER_SORT_COLUMN_PORTAL = 'portal';
     public static CAMPUS_EVENTS_PER_PAGE = 10;
     public static CAMPUS_EVENTS_TYPES_ALL = 'Todos los tipos';
+    public static CAMPUS_EVENTS_EMPTY = 'No se han encontrado datos';
 
     public static DATASET_LIST_DROPDOWN_TYPE_ALL = 'Todos los tipos';
     public static DATASET_LIST_DROPDOWN_TYPE_CALENDARIO_LABEL = 'Calendario';

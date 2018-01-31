@@ -35,6 +35,7 @@ export class CampusComponent implements OnInit {
     campusErrorTitle: string;
     campusErrorMessage: string;
     campusNoRows: boolean;
+    campusNoRowsMessage: string;
     routerLinkCampusDetail: string;
     cursoIniciacionLink: string;
 
@@ -45,6 +46,7 @@ export class CampusComponent implements OnInit {
         this.campusErrorMessage = Constants.CAMPUS_EVENTS_ERROR_MESSAGE;
         this.cursoIniciacionLink = Constants.AOD_ASSETS_BASE_URL + Constants.CAMPUS_CURSO_INICIACION;
         this.campusNoRows = false;
+        this.campusNoRowsMessage = Constants.CAMPUS_EVENTS_EMPTY;
 	 }
 
 	ngOnInit() {
