@@ -309,7 +309,7 @@ var createPipeline = function createPipeline(logstash) {
     var compiledTemplate = Handlebars.compile(String(pipelineTemplate));
     var name_a = String(logstash.portal_name).trim().split(" ").join("_");
     var name_b = unidecode(name_a);
-    var name = name_b.replace(/\(|\)/g, "");
+    var name = name_b.replace(/\(|\)|\./g, "");
     var data = {
         "portal": String(name).toLowerCase().charAt(0).toUpperCase() + String(name).toLowerCase().slice(1),
         "delay": String(logstash.delay),
@@ -331,7 +331,7 @@ var deletePipeline = function deletePipeline(logstash) {
     var logstashPath = constants.ANALYTICS_LOGSTASH_PATH;
     var name_a = String(logstash.portal_name).trim().split(" ").join("_");
     var name_b = unidecode(name_a);
-    name = name_b.replace(/\(|\)/g, "");
+    var name = name_b.replace(/\(|\)|\./g, "");
     fs.unlinkSync(logstashPath + '/LogStashPipelines/' + name + '.conf')
 }
 
@@ -346,7 +346,7 @@ var createPipelineConf = function createPipelineConf(logstashs) {
     logstashs.forEach(function (item) {
         var name_a = String(item.portal_name).trim().split(" ").join("_");
         var name_b = unidecode(name_a);
-        name = name_b.replace(/\(|\)/g, "");
+        var name = name_b.replace(/\(|\)|\./g, "");
         item.portal_name = name;
     });
 
