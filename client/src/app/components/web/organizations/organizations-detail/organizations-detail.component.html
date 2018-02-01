@@ -36,33 +36,33 @@
 	</div>
 <div class="ui-g details">
 	<div class="ui-g-12">
-		<h6><b translate>ORGANIZATION_DETAIL.NAME</b></h6>
+		<h6><b>NOMBRE DE LA ORGANIZACIÓN:</b></h6>
 		<p>{{org.title}}</p>
 	</div>		
 	<div class="ui-g-12">
-		<h6><b translate>ORGANIZATION_DETAIL.WEBPAGE</b></h6>
+		<h6><b>PÁGINA WEB DE LA ORGANIZACIÓN:</b></h6>
 		<div *ngIf="webpage; else NOT_AVAILABLE">
 			<p><a href="{{webpage}}">{{webpage}}</a></p>
 		</div>
 		<div *ngIf="!webpage">
-			<p>{{('NOT_AVAILABLE' | translate)}}</p>
+			<p>No disponible</p>
 		</div>
 	</div>		
 	<div class="ui-g-12">
-		<h6><b translate>ORGANIZATION_DETAIL.DESCRIPTION</b></h6>
-		<p>{{org.description || ('NOT_AVAILABLE' | translate)}}</p>
+		<h6><b>DESCRIPCIÓN DE LA ORGANIZACIÓN:</b></h6>
+		<p>{{org.description || "No disponible"}}</p>
 	</div>		
 	<div class="ui-g-12">
-		<h6><b translate>ORGANIZATION_DETAIL.ADDRESS</b></h6>
-		<p>{{address || ('NOT_AVAILABLE' | translate)}}</p>
+		<h6><b>DIRECCIÓN DE LA ORGANIZACIÓN:</b></h6>
+		<p>{{address || "No disponible"}}</p>
 	</div>		
 	<div class="ui-g-12">
-		<h6><b translate>ORGANIZATION_DETAIL.PERSON</b></h6>
-		<p>{{person || ('NOT_AVAILABLE' | translate)}}</p>
+		<h6><b>PERSONA RESPONSABLE DENTRO DE LA ORGANIZACIÓN:</b></h6>
+		<p>{{person || "No disponible"}}</p>
 	</div>		
 	<div class="ui-g-12">
-		<h6><b translate>ORGANIZATION_DETAIL.EMAIL</b></h6>
-		<p>{{email || ('NOT_AVAILABLE' | translate)}}</p>
+		<h6><b>EMAIL DE CONTACTO:</b></h6>
+		<p>{{email || "No disponible"}}</p>
 	</div>
 	<div class="ui-g-12"></div>
 </div>
