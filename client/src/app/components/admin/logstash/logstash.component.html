@@ -1,8 +1,8 @@
 <div class="container">
   <p-messages closable="true" label="Administración de portales Kibana" [(value)]="userAdminMessages"></p-messages>
   <p-growl sticky="true" life="2000" [(value)]="userAdminMessages"></p-growl>
-
-  <p-dataTable [loading]="loading" [value]="logstashs" [responsive]="true" emptyMessage="No se han encontrado registros." [rows]="5"
+  
+  <p-dataTable [loading]="true" [value]="logstashs" [responsive]="true" emptyMessage="No se han encontrado registros." [rows]="5"
     [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]">
     <p-column styleClass="text-center" field="portal_name" [style]="{'width':'15%'}" header="Portal"></p-column>
     <p-column styleClass="text-center" field="type" [style]="{'width':'10%'}" header="Tipo"></p-column>

@@ -620,7 +620,7 @@
 							servidor (este último caso lo desaconsejamos y sólo se realizará si no existe otra forma de suministrar la información).
 						</li>
 					</ul>
-					<p-dataTable [loading]="loading" [value]="resources" [responsive]="false" emptyMessage="No se han encontrado recursos." (onSort)="setOrder($event)" [rows]="10" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]">
+					<p-dataTable [loading]="true" [value]="resources" [responsive]="false" emptyMessage="No se han encontrado recursos." [rows]="10" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]">
 						<p-column field="name" header="Nombre" sortable="custom" [sortable]="false"></p-column>
 						<p-column field="resource_type" header="Tipo" sortable="custom" [sortable]="false">
 							<ng-template pTemplate="body" let-resource="rowData">
@@ -667,7 +667,7 @@
 				cada metadato.</p>
 			<div class="row justify-content-end pb-5">
 				<div class="btn-group" role="group" aria-label="Action Buttons">
-					<button id="saveAndContinueB" type="button" (click)="saveDataset()" class="btn btn-primary">Guarda y sigue</button>
+					<button id="saveAndContinueB" type="button" (click)="saveDataset(false)" class="btn btn-primary">Guarda y sigue</button>
 					<button id="saveAndFinishB" type="button" (click)="saveDatasetEnd()" class="btn btn-primary">Guarda y finaliza</button>
 					<button type="button" (click)="showCancelDialog(dataset.title,dataset.name)" class="btn btn-danger">Cancelar</button>
 				</div>

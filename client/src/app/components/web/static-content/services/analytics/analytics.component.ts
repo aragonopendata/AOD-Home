@@ -10,11 +10,6 @@ declare var jQuery: any;
 	templateUrl: './analytics.component.html',
 	styleUrls: ['./analytics.component.css']
 })
-@NgModule({
-	imports: [BrowserModule],
-	declarations: [AnalyticsComponent],
-	bootstrap: [AnalyticsComponent]
-})
 export class AnalyticsComponent {
 
 	logstashs: Logstash[];

@@ -7,11 +7,6 @@ import {BrowserModule, DomSanitizer} from '@angular/platform-browser'
 	templateUrl: './collaboration.component.html',
 	styleUrls: ['./collaboration.component.css']
 })
-@NgModule({
-	imports: [ BrowserModule ],
-	declarations: [ CollaborationComponent ],
-	bootstrap: [ CollaborationComponent ]
-})
 
 export class CollaborationComponent {
   //Dynamic URL build parameters

@@ -936,11 +936,11 @@ export class DatasetsAdminEditComponent implements OnInit {
 	
 	//Call when you click Save and End Button
 	saveDatasetEnd(){
-		this.saveDataset("end");
+		this.saveDataset(true);
 	}
 	
 	//Call when you click Save Button
-	saveDataset(option: string){
+	saveDataset(option: boolean){
 		if(this.dataset.name){
 			this.saveDatasetUpdate(option);
 		}else{
@@ -948,7 +948,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 		}
 	}
 
-	saveDatasetAdd(option: string){
+	saveDatasetAdd(option: boolean){
 		try {
 			if (this.checkDatasetInsertparams()) {
 				//Name and Description TAB
@@ -1062,7 +1062,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 					}
 					if(response.status == 200){
 						this.msgs.push({severity:'success', summary:'Dataset Creado', detail:'Se ha creado el Dataset con exito'});
-						if(option == "end"){
+						if(option){
 							setTimeout(() => this.router.navigate(['/' + this.routerLinkDatasetList]), 1500)
 						}else{
 							this.loadDataset(this.dataset);
@@ -1076,7 +1076,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 		}
 	}
 
-	saveDatasetUpdate(option: string){
+	saveDatasetUpdate(option: boolean){
 		try {
 			this.dataset.title = this.inputDatasetTitle;
 			this.dataset.notes = this.inputDatasetDescription;
@@ -1187,7 +1187,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 				
 				if(response.status == 200){
 					this.msgs.push({severity:'success', summary:'Dataset Actualizado', detail:'Se ha actualizado el Dataset con exito'});
-					if(option == "end"){
+					if(option){
 						setTimeout(() => this.router.navigate(['/' + this.routerLinkDatasetList]), 1500)
 					}else{
 						this.loadDataset(this.dataset);

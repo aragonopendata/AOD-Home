@@ -16,6 +16,11 @@ export class CampusAdminComponent implements OnInit {
     formatos: SelectItem[];
     eventos: SelectItem[];
     ponentes: SelectItem[];
+    tipoSeleccionado: SelectItem;
+    etiquetaSeleccionada: SelectItem;
+    formatoSeleccionado: SelectItem;
+    eventoSeleccionado: SelectItem;
+    ponenteSeleccionado: SelectItem;
 
     elementos: any;
 

@@ -31,7 +31,6 @@ import { OrganizationsDetailComponent } from './components/web/organizations/org
 import { OrganizationsListComponent } from './components/web/organizations/organizations-list/organizations-list.component';
 import { OpenDataComponent } from './components/web/static-content/info/open-data/open-data.component';
 import { TermsComponent } from './components/web/static-content/info/terms/terms.component';
-import { OpenDataSafeHtmlPipe } from "./components/web/static-content/info/open-data/open-data-safeHTML.pipe";
 import { ApplicationsComponent } from './components/web/static-content/info/applications/applications.component';
 import { EventsComponent } from './components/web/static-content/info/events/events.component';
 import { CollaborationComponent } from './components/web/static-content/info/collaboration/collaboration.component';
@@ -68,6 +67,11 @@ import { DatasetsAdminShowComponent } from './components/admin/datacenter/datase
 import { DatasetsAdminEditComponent } from './components/admin/datacenter/datasets-admin/datasets-admin-edit/datasets-admin-edit.component';
 import { DatasetsAdminListComponent } from './components/admin/datacenter/datasets-admin/datasets-admin-list/datasets-admin-list.component';
 import { LogstashComponent } from './components/admin/logstash/logstash.component';
+// Pipes
+import { EventSafeHtmlPipe } from './components/web/static-content/info/events/events-safeHTML.pipe';
+import { OpenDataSafeHtmlPipe } from "./components/web/static-content/info/open-data/open-data-safeHTML.pipe";
+import { ApiSafeHtmlPipe } from "./components/web/static-content/tools/apis/apis-safeHTML.pipe";
+import { DeveloperSafeHtmlPipe } from "./components/web/static-content/tools/developers/developers-safeHTML.pipe";
 // Services
 import { AuthenticationService } from './services/security/authentication.service';
 import { LoginService } from './services/security/login.service';
@@ -89,7 +93,7 @@ import { AodCoreAdminService} from './services/admin/aod-core-admin.service';
 import {GoogleAnalyticsEventsService} from "./services/web/google-analytics-events.service";
 
 export function HttpLoaderFactory(http: HttpClient) {
-	return new TranslateHttpLoader(http, '../assets/i18n/', '.json');
+	return new TranslateHttpLoader(http, 'http://miv-aodfront-01.aragon.local:7030/static/public/i18n/', '.json');
 }
 
 @NgModule({
@@ -109,6 +113,9 @@ export function HttpLoaderFactory(http: HttpClient) {
 		OpenDataComponent,
 		TermsComponent,
 		OpenDataSafeHtmlPipe,
+		EventSafeHtmlPipe,
+		ApiSafeHtmlPipe,
+		DeveloperSafeHtmlPipe,
 		ApplicationsComponent,
 		EventsComponent,
 		CollaborationComponent,

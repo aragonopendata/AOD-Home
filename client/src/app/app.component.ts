@@ -10,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 export class AppComponent implements OnInit {
     private currentUrl = null;
-    private isAdminSection = true;
+    isAdminSection = true;
     private adminPath = '/admin';
 
     constructor(private router: Router, private translateService: TranslateService) {
