@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -13,13 +12,7 @@ export class AppComponent implements OnInit {
     isAdminSection = true;
     private adminPath = '/admin';
 
-    constructor(private router: Router, private translateService: TranslateService) {
-        translateService.setDefaultLang('es');
-    }
-
-    switchLanguage(language: string) {
-        this.translateService.use(language);
-    }
+    constructor(private router: Router) {}
 
     ngOnInit() {
         this.router.events.subscribe((event) => {
