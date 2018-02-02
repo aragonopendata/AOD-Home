@@ -45,7 +45,7 @@
 					<h6>{{org.title | uppercase}}</h6>
 					<p class="description">{{org.description}}</p>
 					<div class="numDatasets">
-						<b translate [translateParams]="{packages: org.package_count}">ORGANIZATIONS.PUBLISHED_DATASETS</b>
+						<b>{{org.package_count} conjuntos de datos publicados</b>
 					</div>
 				</div>
 			</div>
@@ -54,14 +54,14 @@
 
 	<div *ngIf="!selectedView" class="tabla"><br>
 		<p-dataTable [value]="orgs" (onRowSelect)="showOrg(rowData)">
-			<p-column field="orgName" header="{{ 'ORGANIZATIONS.TOTAL_ORGANIZATIONS_1' | translate }} {{orgs.length}} {{ 'ORGANIZATIONS.TOTAL_ORGANIZATIONS_2' | translate }}">
+			<p-column field="orgName" header="HAY {{orgs.length}} ORGANIZACIONES">
 				<ng-template pTemplate="body" let-org="rowData" let-i="rowIndex">
 					<a routerLink='/{{routerLinkDataOrganizations}}/{{org.name}}' (click)="showOrg(org)">
 					  {{org.title}}
 				  </a>
 				</ng-template>
 			</p-column>
-			<p-column field="numDatasets" [style]="{'width':'150px'}" styleClass="text-right" header="{{ 'ORGANIZATIONS.DATASETS_NUMBER' | translate }}">
+			<p-column field="numDatasets" [style]="{'width':'150px'}" styleClass="text-right" header="Nº DATASETS">
 				<ng-template pTemplate="body" let-org="rowData">
 					{{org.package_count}}
 				</ng-template>
