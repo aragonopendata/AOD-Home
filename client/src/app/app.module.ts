@@ -12,8 +12,6 @@ import {
 	AutoCompleteModule, ProgressBarModule, RadioButtonModule, CheckboxModule, FileUploadModule, 
 	ToolbarModule, TabViewModule, PaginatorModule, AccordionModule, MessagesModule, GrowlModule,
 	ConfirmDialogModule, ConfirmationService } from 'primeng/primeng';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { Logger, Options } from 'angular2-logger/core';
 import { Constants } from './app.constants';
 // Components
@@ -189,13 +187,6 @@ import {GoogleAnalyticsEventsService} from "./services/web/google-analytics-even
 		AccordionModule,
 		MessagesModule,
 		GrowlModule,
-		TranslateModule.forRoot({
-			loader: {
-				provide: TranslateLoader,
-				useFactory: HttpLoaderFactory,
-				deps: [HttpClient]
-			}
-		})
 	],
 	providers: [
 		Logger,
