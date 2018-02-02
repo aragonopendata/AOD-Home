@@ -620,7 +620,7 @@
 							servidor (este último caso lo desaconsejamos y sólo se realizará si no existe otra forma de suministrar la información).
 						</li>
 					</ul>
-					<p-dataTable [loading]="true" [value]="resources" [responsive]="false" emptyMessage="No se han encontrado recursos." [rows]="10" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]">
+					<p-dataTable [loading]="false" [value]="resources" [responsive]="false" emptyMessage="No se han encontrado recursos." [rows]="10" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]">
 						<p-column field="name" header="Nombre" sortable="custom" [sortable]="false"></p-column>
 						<p-column field="resource_type" header="Tipo" sortable="custom" [sortable]="false">
 							<ng-template pTemplate="body" let-resource="rowData">

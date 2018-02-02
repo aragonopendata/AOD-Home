@@ -92,10 +92,6 @@ import { AnalyticsService } from './services/web/analytics.service';
 import { AodCoreAdminService} from './services/admin/aod-core-admin.service';
 import {GoogleAnalyticsEventsService} from "./services/web/google-analytics-events.service";
 
-export function HttpLoaderFactory(http: HttpClient) {
-	return new TranslateHttpLoader(http, 'http://miv-aodfront-01.aragon.local:7030/static/public/i18n/', '.json');
-}
-
 @NgModule({
 	declarations: [
 		AppComponent,
