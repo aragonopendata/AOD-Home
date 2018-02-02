@@ -69,6 +69,7 @@ export class DatasetsDetailComponent implements OnInit {
 	currentUser: any;
 	userOrgs: Organization[];
 	showEdit: boolean = false;
+	dataPreview: boolean = false;
 
 	constructor(private datasetsService: DatasetsService, private usersAdminService: UsersAdminService, private authenticationService: AuthenticationService, private activatedRoute: ActivatedRoute, public sanitizer: DomSanitizer, public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
 		this.datasetListErrorTitle = Constants.DATASET_LIST_ERROR_TITLE;

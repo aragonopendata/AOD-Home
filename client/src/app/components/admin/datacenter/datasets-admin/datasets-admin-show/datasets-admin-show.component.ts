@@ -47,6 +47,7 @@ export class DatasetsAdminShowComponent implements OnInit {
 	iframeError:string;
 
 	showEdit: boolean = false;
+	dataPreview: boolean = false;
 
 	resourcesAux: ResourceAux[] = new Array();
 	resourcesEmpty: boolean = false;
