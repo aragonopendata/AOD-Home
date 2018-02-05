@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Updated
 - Functionality bugs fixed (admin)
 
+
+## [1.3.0] - 2018-02-05
+## Updated
+- Fix ckan functionality
+- Fix styles
+
 ## [1.2.3] - 2018-01-15
 ## Updated
 - Fix Kibana features
@@ -75,6 +81,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
 [Unreleased]: https://github.com/aragonopendata/AOD-Home/compare/master...develop
+[1.3.0]: https://github.com/aragonopendata/AOD-Home/compare/v1.2.3...v1.3.0
 [1.2.3]: https://github.com/aragonopendata/AOD-Home/compare/v1.2.2...v1.2.3
 [1.2.2]: https://github.com/aragonopendata/AOD-Home/compare/v1.2.1...v1.2.2
 [1.2.1]: https://github.com/aragonopendata/AOD-Home/compare/v1.2.0...v1.2.1
