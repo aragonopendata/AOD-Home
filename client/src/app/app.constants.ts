@@ -39,6 +39,7 @@ export class Constants {
     public static CAMPUS_CONTENT_PLATFORM_SLIDESHARE = 'Slideshare';
     public static CAMPUS_CONTENT_PLATFORM_VIMEO = 'Vimeo';
     public static CAMPUS_CONTENT_PLATFORM_YOUTUBE = 'Youtube';
+    public static CAMPUS_CONTENT_PLATFORM_LINK = 'Enlace';
     public static CAMPUS_CURSO_INICIACION = '/public/campus/curso/html/index.html';
 
     //ERROR CONSTANTS

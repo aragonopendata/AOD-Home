@@ -28,6 +28,7 @@ export class CampusDetailComponent implements OnInit {
   contentPlatformSlideShare: string;
   contentPlatformVimeo: string;
   contentPlatformYoutube: string;
+  contentPlatformLink: string;
   contentAssetsBaseURL: string;
 
   errorTitle: string;
@@ -45,6 +46,7 @@ export class CampusDetailComponent implements OnInit {
     this.contentPlatformSlideShare = Constants.CAMPUS_CONTENT_PLATFORM_SLIDESHARE;
     this.contentPlatformVimeo = Constants.CAMPUS_CONTENT_PLATFORM_VIMEO;
     this.contentPlatformYoutube = Constants.CAMPUS_CONTENT_PLATFORM_YOUTUBE;
+    this.contentPlatformLink = Constants.CAMPUS_CONTENT_PLATFORM_LINK;
     this.contentAssetsBaseURL = Constants.AOD_ASSETS_BASE_URL;
   }
 
