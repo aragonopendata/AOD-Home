@@ -55,7 +55,7 @@
 						{{event?.description}}
 
 					</div>
-					<div *ngFor="let content of resourceContents[i]" class="media">
+					<div *ngFor="let content of event.contents" class="media">
 						<a class="pull-left">
 							<img class="media-object" [src]='sanitizer.bypassSecurityTrustResourceUrl("data:image/png;base64,"+content?.thumbnail)' style="width: 150px;margin-right: 15px;">
 						</a>
@@ -63,7 +63,7 @@
 							<h4 class="media-heading">
 								<a routerLink='/{{routerLinkCampusDetail}}/{{content?.id}}'>
 									{{content?.title}}
-									</a>
+								</a>
 							</h4>
 							{{content?.description}}
 						</div>

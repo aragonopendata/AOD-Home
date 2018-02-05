@@ -6,6 +6,8 @@ import { Constants } from './../../../../../app.constants';
 import { CampusService } from './../../../../../services/web/campus.service';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { EventsAdminComponent } from 'app/components/admin/global/static-content-admin/info/events-admin/events-admin.component';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
 	selector: 'app-campus',
@@ -99,18 +101,17 @@ export class CampusComponent implements OnInit {
 	}
 
 	getCampusContents(){
-		for (var i = 0; i < this.eventsList.length; i++) {
-			this.campusService.getCampusContents(this.eventsList[i].id).subscribe(contents => {
+        this.eventsList.forEach(event => {
+            this.campusService.getCampusContents(event.id).subscribe(contents => {
                 try {
-                    this.resourceContents.push(contents);
+                    event.contents = contents;
                 } catch (error) {
                     console.error('Error: getCampusContents() - campus.component.ts');
                     this.errorTitle = this.campusErrorTitle;
                     this.errorMessage = this.campusErrorMessage;
                 }
-				
-			});
-		}
+            });
+        });
     }
 
     getCampusEventsBySearch(page: number, rows: number, searchParam: string): void {
