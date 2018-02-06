@@ -70,7 +70,7 @@
                 </div>
             </div>
         </div>
-        <div [ngClass]="selectedSearchOption == datasetSearchOptionStats && selectedGroup == undefined ? 'col-12 order-12 order-md-1 col-md-8' : 'col-12 col-md-4 order-12 order-md-1'" *ngIf="selectedSearchOption == datasetSearchOptionStats">
+        <div [ngClass]="selectedSearchOption == datasetSearchOptionStats && selectedGroup == undefined ? 'col-12 order-12 order-md-4 col-md-8' : 'col-12 col-md-4 order-12 order-md-1'" *ngIf="selectedSearchOption == datasetSearchOptionStats">
             <div class="form-group">
                 <label>Del Grupo:</label>
                 <select class="form-control" [(ngModel)]="selectedGroup" (change)="resetSubGroupSearch();changeStats()">
@@ -78,7 +78,7 @@
                 </select>
             </div>
         </div>
-        <div class="col-12 col-md-4 order-12 order-md-4" *ngIf="selectedGroup != undefined">
+        <div class="col-12 col-md-4 order-12 order-md-4" *ngIf="selectedGroup != undefined && selectedSearchOption == datasetSearchOptionStats">
             <div class="form-group">
                 <label>Del Subgrupo:</label>
                 <select *ngIf="selectedGroup == groupsOptionTerritorio" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
@@ -132,10 +132,10 @@
             <div class="form-group">
                 <label>Buscar:</label>
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Buscar por..." [value]="searchHomerValue" (keyup.enter)="searchDatasetsByText(searchHomerInput.value)"
+                    <input type="text" class="form-control" placeholder="Buscar por..." [value]="searchHomerValue" (keyup.enter)="searchDatasetsByHomer(searchHomerInput.value)"
                         #searchHomerInput>
                     <span class="input-group-btn">
-                        <button class="btn btn-secondary" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        <button class="btn btn-secondary" type="button" (click)="searchDatasetsByHomer(searchHomerInput.value)"><i class="fa fa-search" aria-hidden="true"></i></button>
                     </span>
                 </div>
             </div>
@@ -143,7 +143,7 @@
         <div class="col-12 col-md-4 order-12 order-md-4" *ngIf="selectedSearchOption == datasetSearchOptionHomer">
             <div class="form-group">
                 <label>Idioma:</label>
-                <select class="form-control" [(ngModel)]="selectedLang">
+                <select class="form-control" [(ngModel)]="selectedLang" (change)="getDatasetsByHomer(null,null)">
                     <option *ngFor="let langSel of langsSelect" [ngValue]="langSel.value">{{langSel.label}}</option>
                 </select>
             </div>
@@ -151,7 +151,7 @@
         <div class="col-12 order-md-12 order-1 col-md-4">
             <div class="form-group">
                 <label>Tipo de búsqueda</label>
-                <select class="form-control" [(ngModel)]="selectedSearchOption" (change)="resetSearch()">
+                <select class="form-control" [(ngModel)]="selectedSearchOption" (change)="loadDatasets()">
                     <option *ngFor="let search of searchOptions" [ngValue]="search.value">{{search.label}}</option>
                 </select>
             </div>

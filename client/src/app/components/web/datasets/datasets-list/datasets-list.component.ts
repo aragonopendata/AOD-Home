@@ -520,7 +520,12 @@ export class DatasetsListComponent implements OnInit {
         this.datasetsHomer = [];
         var pageNumber = (page != null ? page : 0);
         var rowsNumber = (rows != null ? rows : this.pageRows);
-        this.datasetsService.getDatasetsHomer(this.sortHomer, pageNumber, rowsNumber, this.searchHomerValue, this.selectedLang).subscribe(datasetsHomer => {
+        if(this.searchHomerValue == ''){
+            var lang = Constants.UNDEFINED;
+        }else{
+            lang = this.selectedLang;
+        }
+        this.datasetsService.getDatasetsHomer(this.sortHomer, pageNumber, rowsNumber, this.searchHomerValue, lang).subscribe(datasetsHomer => {
             try {
                 this.datasetsHomer = JSON.parse(datasetsHomer).response.docs;
                 this.numDatasetsHomer = JSON.parse(datasetsHomer).response.numFound;

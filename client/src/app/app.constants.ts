@@ -340,6 +340,8 @@ export class Constants {
     public static STATIC_INFO_APIS_SECTION_GA_OD_CORE = 'api-ga-od-core';
     public static STATIC_INFO_SPARQL_SECTION_CONTENT = 'contenidoSparql';
 
+    public static UNDEFINED = "undefined";
+
     //OPEN DATA ADMIN
     public static ADMIN_USERS_LIST_ROWS_PER_PAGE = 10;
     public static ADMIN_USERS_LIST_SORT_COLUMN_NAME = 'name';
