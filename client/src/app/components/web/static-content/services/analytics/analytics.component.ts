@@ -17,7 +17,7 @@ export class AnalyticsComponent {
 	constructor(private logstashService: AnalyticsService) { }
 
 	ngOnInit() {
-		var days = 30;
+		var days = "now/y";
 		var portal = "Todos";
 
 
@@ -76,7 +76,7 @@ export class AnalyticsComponent {
 		});
 
 		function get_time(days) {
-			var time = "from:now-" + days + "d/d,"
+			var time = "from:" + days + ","
 				+ "mode:quick,"
 				+ "to:now";
 
@@ -167,7 +167,7 @@ export class AnalyticsComponent {
 		}
 
 		function get_url_export(path, format, days, portal) {
-			var url_return = path + "?format=" + format + "&portal=" + portal + "&days=" + days;
+			var url_return = path + "?format=" + format + "&portal=" + portal + "&days=" + encodeURIComponent(days);
 			return url_return;
 		}
 
