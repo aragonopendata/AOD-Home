@@ -22,7 +22,7 @@ export class AnalyticsComponent {
 
 
 		jQuery("#analytics").attr('src', get_url(get_time(days), get_filter(portal)));
-		jQuery("#sevendays").attr('src', get_url_seven(get_time('30'), get_filter(portal)));
+		jQuery("#sevendays").attr('src', get_url_seven(get_time('now-30d/d'), get_filter(portal)));
 
 		jQuery(".browsers.json").attr('href', get_url_export(Constants.ELASTIC_BROWSERS, "json", days, portal));
 		jQuery(".browsers.csv").attr('href', get_url_export(Constants.ELASTIC_BROWSERS, "csv", days, portal));
@@ -60,7 +60,7 @@ export class AnalyticsComponent {
 			jQuery('.portalAnalyticsPral').html(jQuery(this).val() + ' <span class="caret"></span>');
 			portal = jQuery(this).val();
 			jQuery("#analytics").attr('src', get_url(get_time(days), get_filter(portal)));
-			jQuery("#sevendays").attr('src', get_url_seven(get_time('30'), get_filter(portal)));
+			jQuery("#sevendays").attr('src', get_url_seven(get_time('now-30d/d'), get_filter(portal)));
 
 			jQuery(".browsers.json").attr('href', get_url_export(Constants.ELASTIC_BROWSERS, "json", days, portal));
 			jQuery(".browsers.csv").attr('href', get_url_export(Constants.ELASTIC_BROWSERS, "csv", days, portal));
