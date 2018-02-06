@@ -290,16 +290,18 @@ export class DatasetsDetailComponent implements OnInit {
 
 		this.datasetsService.getDatasetsByTopic(this.dataset.groups[0].name, null, 1, 1, this.dataset.type).subscribe(topicDataResult => {
 			try {
-				datasetRecommendedByTopic = JSON.parse(topicDataResult).result.results[0];
-				if (this.isDatasetDefined(datasetRecommendedByTopic) && !this.existsDatasetRecommended(datasetRecommendedByTopic)) {
-					if (datasetRecommendedByTopic.groups) {
-						for (var i = 0; i < datasetRecommendedByTopic.groups.length; i++) {
-							let startIndex = +datasetRecommendedByTopic.groups[i].image_display_url.indexOf('static/');
-							let myFormatImageUrl = datasetRecommendedByTopic.groups[i].image_display_url.slice(startIndex, datasetRecommendedByTopic.groups[i].image_display_url.length);
-							datasetRecommendedByTopic.groups[i].image_url = myFormatImageUrl;
+				if (JSON.parse(topicDataResult).result != undefined) {
+					datasetRecommendedByTopic = JSON.parse(topicDataResult).result.results[0];
+					if (this.isDatasetDefined(datasetRecommendedByTopic) && !this.existsDatasetRecommended(datasetRecommendedByTopic)) {
+						if (datasetRecommendedByTopic.groups) {
+							for (var i = 0; i < datasetRecommendedByTopic.groups.length; i++) {
+								let startIndex = +datasetRecommendedByTopic.groups[i].image_display_url.indexOf('static/');
+								let myFormatImageUrl = datasetRecommendedByTopic.groups[i].image_display_url.slice(startIndex, datasetRecommendedByTopic.groups[i].image_display_url.length);
+								datasetRecommendedByTopic.groups[i].image_url = myFormatImageUrl;
+							}
 						}
+						this.datasetsRecommended.push(datasetRecommendedByTopic);
 					}
-					this.datasetsRecommended.push(datasetRecommendedByTopic);
 				}
 			} catch (error) {
 				console.error("Error: getDatasetsRecommended() - datasets-detail.component.ts");
@@ -309,16 +311,18 @@ export class DatasetsDetailComponent implements OnInit {
 		});
 		this.datasetsService.getDatasetsByOrganization(this.dataset.organization.name, null, 1, 1, this.dataset.type).subscribe(orgDataResult => {
 			try {
-				datasetRecommendedByOrganization = JSON.parse(orgDataResult).result.results[0];
-				if (this.isDatasetDefined(datasetRecommendedByOrganization) && !this.existsDatasetRecommended(datasetRecommendedByOrganization)) {
-					if (datasetRecommendedByOrganization.groups) {
-						for (var i = 0; i < datasetRecommendedByOrganization.groups.length; i++) {
-							let startIndex = +datasetRecommendedByOrganization.groups[i].image_display_url.indexOf('static/');
-							let myFormatImageUrl = datasetRecommendedByOrganization.groups[i].image_display_url.slice(startIndex, datasetRecommendedByOrganization.groups[i].image_display_url.length);
-							datasetRecommendedByOrganization.groups[i].image_url = myFormatImageUrl;
+				if (JSON.parse(orgDataResult).result != undefined) {
+					datasetRecommendedByOrganization = JSON.parse(orgDataResult).result.results[0];
+					if (this.isDatasetDefined(datasetRecommendedByOrganization) && !this.existsDatasetRecommended(datasetRecommendedByOrganization)) {
+						if (datasetRecommendedByOrganization.groups) {
+							for (var i = 0; i < datasetRecommendedByOrganization.groups.length; i++) {
+								let startIndex = +datasetRecommendedByOrganization.groups[i].image_display_url.indexOf('static/');
+								let myFormatImageUrl = datasetRecommendedByOrganization.groups[i].image_display_url.slice(startIndex, datasetRecommendedByOrganization.groups[i].image_display_url.length);
+								datasetRecommendedByOrganization.groups[i].image_url = myFormatImageUrl;
+							}
 						}
+						this.datasetsRecommended.push(datasetRecommendedByOrganization);
 					}
-					this.datasetsRecommended.push(datasetRecommendedByOrganization);
 				}
 			} catch (error) {
 				console.error("Error: getDatasetsRecommended() - datasets-detail.component.ts");
@@ -332,16 +336,18 @@ export class DatasetsDetailComponent implements OnInit {
 			tagsArray.push({ name: this.dataset.tags[0].name, value: this.dataset.tags[0].name });
 			this.datasetsService.getDatasetsBytags(null, 1, 1, tagsArray).subscribe(tagDataResult => {
 				try {
-					datasetRecommendedByTag = JSON.parse(tagDataResult).result.results[0];
-					if (this.isDatasetDefined(datasetRecommendedByTag) && !this.existsDatasetRecommended(datasetRecommendedByTag)) {
-						if (datasetRecommendedByTag.groups) {
-							for (var i = 0; i < datasetRecommendedByTag.groups.length; i++) {
-								let startIndex = +datasetRecommendedByTag.groups[i].image_display_url.indexOf('static/');
-								let myFormatImageUrl = datasetRecommendedByTag.groups[i].image_display_url.slice(startIndex, datasetRecommendedByTag.groups[i].image_display_url.length);
-								datasetRecommendedByTag.groups[i].image_url = myFormatImageUrl;
+					if (JSON.parse(tagDataResult).result != undefined) {
+						datasetRecommendedByTag = JSON.parse(tagDataResult).result.results[0];
+						if (this.isDatasetDefined(datasetRecommendedByTag) && !this.existsDatasetRecommended(datasetRecommendedByTag)) {
+							if (datasetRecommendedByTag.groups) {
+								for (var i = 0; i < datasetRecommendedByTag.groups.length; i++) {
+									let startIndex = +datasetRecommendedByTag.groups[i].image_display_url.indexOf('static/');
+									let myFormatImageUrl = datasetRecommendedByTag.groups[i].image_display_url.slice(startIndex, datasetRecommendedByTag.groups[i].image_display_url.length);
+									datasetRecommendedByTag.groups[i].image_url = myFormatImageUrl;
+								}
 							}
+							this.datasetsRecommended.push(datasetRecommendedByTag);
 						}
-						this.datasetsRecommended.push(datasetRecommendedByTag);
 					}
 				} catch (error) {
 					console.error("Error: getDatasetsRecommended() - datasets-detail.component.ts");
