@@ -132,7 +132,12 @@ a:hover {
 
 .relatedHeader {
     background-color:  #666359;
-    
+}
+
+@media screen and (max-width: 576px) {
+    .relatedHeader {
+        height: 12px !important;
+    }
 }
 
 .relatedHeader a {
@@ -189,6 +194,7 @@ a:hover {
 }
 .nav-link{
     float: right !important;
+    text-align: center;
     padding: 0.1rem 0.3rem !important;
 }
 .menu,.menuLogin {
@@ -319,7 +325,7 @@ a:hover {
 .active {
     color:#ffffff !important;
     font-weight:bold;
-    border-bottom: 3px solid #76a1b8;
+    border-bottom: 2px solid #76a1b8;
     text-align: center;
 }
   @include media-breakpoint-up(sm) {
