@@ -26,6 +26,10 @@ p ul {
     border-color: #5EA2BA;
 }
 
+.card img{
+    width: 100%;
+}
+
 .card-header{
     background-color: #ffffff;
 }
