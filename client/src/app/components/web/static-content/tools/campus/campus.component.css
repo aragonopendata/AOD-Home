@@ -27,10 +27,12 @@ a.btn.btn-primary{
 }
 .media{
 	margin-top: 10px;
-	text-align: justify;
+	/* text-align: justify; */
 }
+
 .card-title{
 	margin:10px 0px 20px 0px;
+	transition: font-size 1s;
 }
 .my-4 {
     margin-top: 0px !important;
@@ -45,5 +47,93 @@ a.btn.btn-primary{
 .page-item.disabled .page-link {
     background: #ddd !important;
     border-color: #cecccc;
+}
+
+.card-footer {
+	transition: font-size 1s;
+}
+
+.description {
+	transition: font-size 1s;
+}
+
+.media-heading {
+	transition: font-size 1s;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1209px) {
+	.columns {
+		-webkit-box-flex: 0 !important;
+		max-width: 100% !important;
+		flex: 0 0 100% !important;
+	}
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+	.card-title {
+		font-size: 24px;
+	}
+
+	.media-heading {
+		font-size: 20px;
+	}
+}
+
+@media screen and (min-width: 526px) and (max-width: 767px) {
+	.media-heading {
+		font-size: 18px;
+	}
+
+	.card-title {
+		font-size: 20px;
+	}
+
+	.description {
+		font-size: 14px;
+	}
+
+	.campusTitle {
+		text-align: left !important;
+	}
+
+	.card-footer {
+		font-size: 14px;
+	}
+}
+
+@media screen and (max-width: 525px) {
+	.media {
+		display: grid;
+	}
+
+	.pull-left {
+		margin-bottom: 20px;
+		text-align: center;
+	}
+
+	.media-object {
+		width: 70% !important;
+	}
+
+	.media-heading {
+		font-size: 15px;
+	}
+
+	.card-title {
+		font-size: 20px;
+	}
+
+	.description {
+		font-size: 12px;
+	}
+
+	.campusTitle {
+		text-align: left !important;
+	}
+
+	.card-footer {
+		font-size: 12px;
+	}
+
 }
 

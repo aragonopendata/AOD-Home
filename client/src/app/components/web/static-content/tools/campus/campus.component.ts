@@ -71,8 +71,7 @@ export class CampusComponent implements OnInit {
 
         
         this.getTypesDropdown();
-		this.getCampusEvents(null, null);
-		
+        this.getCampusEvents(null, null);
 	}
 
 	getCampusEvents(page: number, rows: number){
@@ -197,7 +196,4 @@ export class CampusComponent implements OnInit {
         }   
         document.body.scrollTop = 0;
     }
-
-
-
 }

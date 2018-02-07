@@ -9,8 +9,8 @@
 	</div>
 	<div class="row">
 		<div class="col-md-1"></div>
-		<div class=" col-md-7">
-			<h6 class="" style="font-size: 1.1rem;text-align: justify;">En Campus Open Data queremos que tengas a mano toda la información que hemos ido generando a lo largo del tiempo. Nuestra
+		<div class=" col-md-7 columns">
+			<h6 class="campusTitle" style="font-size: 1.1rem;text-align: justify;">En Campus Open Data queremos que tengas a mano toda la información que hemos ido generando a lo largo del tiempo. Nuestra
 				intención es que la información sirva para que te puedas formar y que los materiales sean tutoriales para entender qué
 				son los datos abiertos y cómo los datos abiertos sirven para fomentar la economía digital y mejorar la transparencia
 				del Gobierno. Tenemos materiales de todo tipo: vídeos, presentaciones, infografías y hasta un curso completo de iniciación
@@ -34,7 +34,7 @@
 			</div>
 		</div>
 		
-		<div *ngIf="!errorTitle" class="col-md-7">
+		<div *ngIf="!errorTitle" class="col-md-7 columns">
 			<div *ngIf="campusNoRows" class="alert alert-info">
 				<div class="col-xs-9">
 					{{campusNoRowsMessage}}
@@ -45,7 +45,7 @@
 			<div *ngFor="let event of eventsList; let i = index" class="card mb-4">
 				<div class="card-body">
 					<h2 class="card-title">{{event?.name}}</h2>
-					<div class="media">
+					<div class="media description">
 						{{event?.description}}
 
 					</div>
@@ -59,7 +59,9 @@
 									{{content?.title}}
 								</a>
 							</h4>
-							{{content?.description}}
+							<div class="description">
+								{{content?.description}}
+							</div>
 						</div>
 					</div>
 				</div>
@@ -96,7 +98,7 @@
 		</div>
 
 		<!-- Sidebar Widgets Column -->
-		<div class="col-md-3">
+		<div class="col-md-3 columns">
 
 			<!-- Search Widget -->
 			<div class="card my-4">
