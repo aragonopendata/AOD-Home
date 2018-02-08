@@ -195,6 +195,7 @@ a:hover {
 .nav-link{
     float: right !important;
     text-align: center;
+    width: fit-content;
     padding: 0.1rem 0.3rem !important;
 }
 .menu,.menuLogin {
