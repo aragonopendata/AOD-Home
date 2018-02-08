@@ -236,12 +236,16 @@ footer .social-nw span {
     #poweredByRow {
         margin-bottom: 0;
     }
-    .col-xs-4.col-md-3.logos {
-        max-width: none;
-        padding-top: 10px;
+    .margintop10 {
+        margin-top: 0px;
     }
-    .col-md-3.logos {
+    .logos {
+        padding-top: 10px;
         max-width: none;
+    }
+    .eur-logo {
+        max-width: 100%;
+        padding-bottom: 15px;
     }
 } 
 
@@ -252,35 +256,40 @@ footer .social-nw span {
     .margintop10 {
         margin-top: 0px;
     }
-    .col-xs-4.col-md-3.logos {
+    .logos {
         max-width: none;
         padding-top: 10px;
     }
-    .col-md-3.logos {
-        max-width: none;
-        padding-top: 10px;
+    .eur-logo {
+        max-width: 100%;
+        padding-bottom: 15px;
     }
-} 
+}
 
 @media screen and (min-width: 431px) and (max-width: 767px){ 
-    .col-xs-4.col-md-3.logos {
-        width: max-content;
+    .logos {
+        width: auto;
     }
-    .col-md-3.logos {
-        width: max-content;
+    .separator {
+        width: 100%;
+    }
+    .eur-logo {
+        padding-bottom: 15px;
     }
 }
 
 @media screen and (max-width: 430px){ 
-    .col-xs-4.col-md-3.logos {
+   .logos {
         padding-bottom: 15px;
-        width: max-content;
+        width: auto;
     }
     .margintop10{
         margin-top: 0px;
     }
-    .col-md-3.logos {
+    .paddingleft45 {
+        padding-bottom: 0;
+    }
+    .eur-logo {
         padding-bottom: 15px;
-        width: max-content;
     }
 }

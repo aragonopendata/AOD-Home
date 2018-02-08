@@ -24,6 +24,7 @@ export class FooterComponent implements OnInit {
 	swaggerUrl: string;
 	nodeJsUrl: string;
 	angularUrl: string;
+	kibanaUrl: string;
 	oasiFacebookUrl: string;
 	oasiTwitterUrl: string;
 	oasiYoutubeUrl: string;
@@ -45,6 +46,7 @@ export class FooterComponent implements OnInit {
 		this.swaggerUrl = Constants.SWAGGER_URL;
 		this.nodeJsUrl = Constants.NODE_JS_URL;
 		this.angularUrl = Constants.ANGULAR_URL;
+		this.kibanaUrl = Constants.KIBANAFOOTER_URL;
 		this.oasiFacebookUrl = Constants.OASI_FACEBOOK_URL;
 		this.oasiTwitterUrl = Constants.OASI_TWITTER_URL;
 		this.oasiYoutubeUrl = Constants.OASI_YOUTUBE_URL;

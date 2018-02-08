@@ -20,6 +20,7 @@ export class Constants {
     public static SWAGGER_URL = 'http://swagger.io/';
     public static NODE_JS_URL = 'https://nodejs.org/';
     public static ANGULAR_URL = 'https://angular.io/';
+    public static KIBANAFOOTER_URL = 'https://www.elastic.co/products/kibana/';
     public static OASI_FACEBOOK_URL = 'https://www.facebook.com/observatorio.aragones';
     public static OASI_TWITTER_URL = 'https://www.twitter.com/oasi';
     public static OASI_YOUTUBE_URL = 'https://www.youtube.com/watch?v=8d409yteTJM&amp;list=PLQ3k0vA0UZvhBVOz_mCq-9Wyn3VCB6QCe';
