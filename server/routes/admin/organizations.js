@@ -76,9 +76,9 @@ router.post(constants.API_URL_ADMIN_ORGANIZATION, upload.single('file'), functio
         var organization = req.body;
         
         if (file != undefined){
-            organization.image_url='public/ckan/organizaciones/'+file.originalname;
+            organization.image_url='/static/public/ckan/organizaciones/'+file.originalname;
         } else {
-            organization.image_url='public/ckan/organizaciones/logoDGA.gif';
+            organization.image_url='/static/public/ckan/organizaciones/logoDGA.gif';
         }
         
         logger.notice('Organización que llega desde request: ' + organization.name);
