@@ -176,8 +176,8 @@ a:hover {
 
 @media screen and (max-width: 1000px) and (min-width: 480px) {
     .logo {
-        height:60px;
-        width: 329px;
+        height: auto;
+        width: 50%;
         margin-top: 12px;
         margin-left: 5px;
     }
@@ -186,8 +186,8 @@ a:hover {
 
 @media screen and (max-width: 480px) {
     .logo {
-        height:33px;
-        width: 200px;
+        height:auto;
+        width: 50%;
         margin-top: 10px;
         margin-left: 5px;
     }
@@ -215,7 +215,6 @@ a:hover {
     .menu, .menuLogin {
         height:50px;
         width: 50px;
-        padding-right: 10%;
     }
 }
 
