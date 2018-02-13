@@ -192,7 +192,8 @@ a:hover {
 }
 
 .cardSize {
-  display: block;
+    height: 258px;
+    display: block;
 }
 
 .detail {
