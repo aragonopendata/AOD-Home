@@ -9,7 +9,8 @@
 }
 
 .container {
-    padding-top: 15%;
+    margin-top: 20vh;
+    max-width: 80vw;
 }
 
 a {

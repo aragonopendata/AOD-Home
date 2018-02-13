@@ -1,17 +1,18 @@
 .container{
-    margin-top: 13%;
+    margin-top: 20vh;
+    max-width: 80vw;
 }
 
 >>> html, body {
     font-family: 'Roboto', sans-serif;
     line-height: 1;
-    margin: 2px 0 20px;
+    margin: 2px 0;
     letter-spacing: 0.05em;
     font-weight: 300;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'RobotoLight', sans-serif;
     line-height: 1;
     margin: 2px 0 20px;
     letter-spacing: 0.1em;
@@ -210,4 +211,12 @@ p-autocomplete{
     letter-spacing: 0.1em;
     color: #5EA2BA;
     font-weight: 300;   
+}
+
+.destacado {
+    padding-bottom: 60px;
+}
+
+.boxTitle h3 {
+    font-size: 1.5rem;
 }

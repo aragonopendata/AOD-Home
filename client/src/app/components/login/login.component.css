@@ -15,19 +15,18 @@
     width: 100%;
 }
 
-.login-box{
-    padding-top: 80px;
-}
-
 .login-box, .register-box {
     width: fit-content;
-    margin-top: 7%;
     margin-right: auto;
     margin-left: auto;
 }
 
 .login-box-body {
     padding: 5%;
+}
+
+.container{
+    margin-top: 20vh;
 }
 
 .login-page, .register-page {

@@ -1,5 +1,6 @@
 .container{
-    margin-top: 15%;
+    margin-top: 20vh;
+    max-width: 80vw;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -9,6 +10,15 @@ h1, h2, h3, h4, h5, h6 {
     letter-spacing: 0.1em;
     color: #5ea2ba;
     font-weight: 300;
+}
+
+.globaltitle {
+    font-family: 'RobotoLight', sans-serif;
+}
+
+.topicTitle {
+    color: #212529;
+    font-weight: bold;
 }
 
 p {

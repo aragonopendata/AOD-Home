@@ -42,7 +42,7 @@
 					<p class="tittle"> {{org.title}}</p>
 				</div>
 				<div *ngIf="hovers[i].hover" class="detail bg-faded" style="position: absolute; width: 100%; height: 100%; padding: 10px; background-color: rgba(235,241,244, 0.95); opacity: 80%; ">
-					<h6>{{org.title | uppercase}}</h6>
+					<h6 class="topicTitle">{{org.title | uppercase}}</h6>
 					<p class="description">{{org.description}}</p>
 					<div class="numDatasets">
 						<b>{{org.package_count}} conjuntos de datos publicados</b>
@@ -54,14 +54,14 @@
 
 	<div *ngIf="!selectedView" class="tabla"><br>
 		<p-dataTable [value]="orgs" (onRowSelect)="showOrg(rowData)">
-			<p-column field="orgName" header="HAY {{orgs.length}} ORGANIZACIONES">
+			<p-column field="orgName" header="HAY {{orgs.length}} ORGANIZACIONES" styleClass="text-left">
 				<ng-template pTemplate="body" let-org="rowData" let-i="rowIndex">
 					<a routerLink='/{{routerLinkDataOrganizations}}/{{org.name}}' (click)="showOrg(org)">
 					  {{org.title}}
 				  </a>
 				</ng-template>
 			</p-column>
-			<p-column field="numDatasets" [style]="{'width':'150px'}" styleClass="text-right" header="Nº DATASETS">
+			<p-column field="numDatasets" [style]="{'width':'150px'}" styleClass="text-center" header="Nº DATASETS">
 				<ng-template pTemplate="body" let-org="rowData">
 					{{org.package_count}}
 				</ng-template>

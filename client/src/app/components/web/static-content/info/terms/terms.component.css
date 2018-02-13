@@ -1,5 +1,5 @@
 .marginsup{
-    margin-top: 13%;
+    margin-top: 20vh;
 }
 
 .background{
@@ -12,7 +12,7 @@
 }
 
 .container-fluid{
-    max-width: 85%;
+    max-width: 80vw;
     margin-left: auto;
     margin-right: auto;
 }
@@ -32,4 +32,9 @@
     color: #3b515c !important;
     text-decoration: none;
     
+}
+
+.container {
+    margin-top: 20vh;
+    max-width: 80vw;
 }

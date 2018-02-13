@@ -1,5 +1,6 @@
 .container{
-    margin-top: 13%;
+    margin-top: 20vh;
+    max-width: 80vw;
 }
 p {
     margin: 3px;
@@ -188,11 +189,6 @@ a:hover {
 
 .back-title{
     font-weight: bold;
-}
-
-.cardSize {
-    width: 354px;
-    height: 258px;
 }
 
 .cardSize {

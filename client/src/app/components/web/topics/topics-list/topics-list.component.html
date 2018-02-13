@@ -38,7 +38,7 @@
 					<p>{{topic.title}}</p>
 				</div>
 				<div *ngIf="hovers[i].hover" class="detail">
-					<h6>{{topic.title | uppercase}}</h6>
+					<h6 class="topicTitle">{{topic.title | uppercase}}</h6>
 					<p class="description">{{topic.description}}</p>
 					<div class="numDatasets">
 						<b>{{topic.package_count}} conjuntos de datos publicados</b>
