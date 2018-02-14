@@ -21,3 +21,6 @@ dist/
 
 # Visual Studio Code
 .vscode/*
+
+# Angular images (performance)
+client/src/assets/
