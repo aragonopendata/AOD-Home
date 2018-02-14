@@ -287,28 +287,29 @@ export class DatasetsDetailComponent implements OnInit {
 		let datasetRecommendedByTopic: Dataset = new Dataset();
 		let datasetRecommendedByOrganization: Dataset = new Dataset();
 		let datasetRecommendedByTag: Dataset = new Dataset();
-
-		this.datasetsService.getDatasetsByTopic(this.dataset.groups[0].name, null, 1, 1, this.dataset.type).subscribe(topicDataResult => {
-			try {
-				if (JSON.parse(topicDataResult).result != undefined) {
-					datasetRecommendedByTopic = JSON.parse(topicDataResult).result.results[0];
-					if (this.isDatasetDefined(datasetRecommendedByTopic) && !this.existsDatasetRecommended(datasetRecommendedByTopic)) {
-						if (datasetRecommendedByTopic.groups) {
-							for (var i = 0; i < datasetRecommendedByTopic.groups.length; i++) {
-								let startIndex = +datasetRecommendedByTopic.groups[i].image_display_url.indexOf('static/');
-								let myFormatImageUrl = datasetRecommendedByTopic.groups[i].image_display_url.slice(startIndex, datasetRecommendedByTopic.groups[i].image_display_url.length);
-								datasetRecommendedByTopic.groups[i].image_url = myFormatImageUrl;
+		if(this.dataset.groups.length != 0){
+			this.datasetsService.getDatasetsByTopic(this.dataset.groups[0].name, null, 1, 1, this.dataset.type).subscribe(topicDataResult => {
+				try {
+					if (JSON.parse(topicDataResult).result != undefined) {
+						datasetRecommendedByTopic = JSON.parse(topicDataResult).result.results[0];
+						if (this.isDatasetDefined(datasetRecommendedByTopic) && !this.existsDatasetRecommended(datasetRecommendedByTopic)) {
+							if (datasetRecommendedByTopic.groups) {
+								for (var i = 0; i < datasetRecommendedByTopic.groups.length; i++) {
+									let startIndex = +datasetRecommendedByTopic.groups[i].image_display_url.indexOf('static/');
+									let myFormatImageUrl = datasetRecommendedByTopic.groups[i].image_display_url.slice(startIndex, datasetRecommendedByTopic.groups[i].image_display_url.length);
+									datasetRecommendedByTopic.groups[i].image_url = myFormatImageUrl;
+								}
 							}
+							this.datasetsRecommended.push(datasetRecommendedByTopic);
 						}
-						this.datasetsRecommended.push(datasetRecommendedByTopic);
 					}
+				} catch (error) {
+					console.error("Error: getDatasetsRecommended() - datasets-detail.component.ts");
+					this.errorTitle = this.datasetListErrorTitle;
+					this.errorMessage = this.datasetListErrorMessage;
 				}
-			} catch (error) {
-				console.error("Error: getDatasetsRecommended() - datasets-detail.component.ts");
-				this.errorTitle = this.datasetListErrorTitle;
-				this.errorMessage = this.datasetListErrorMessage;
-			}
-		});
+			});
+		}
 		this.datasetsService.getDatasetsByOrganization(this.dataset.organization.name, null, 1, 1, this.dataset.type).subscribe(orgDataResult => {
 			try {
 				if (JSON.parse(orgDataResult).result != undefined) {
