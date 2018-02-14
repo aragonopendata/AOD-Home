@@ -68,8 +68,9 @@ export class OrganizationsAdminService {
 	}
 
 	public createOrganization(image: any, organization: OrganizationAdmin, webpage: string, address: string, person: string) {
+		this.refreshUser();
 		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_ORGANIZATION_CUD_OPERATIONS;
-
+		
 		let formData:FormData = new FormData();  
 		let extras = [];
 		if (image != null) {
