@@ -287,7 +287,7 @@ export class DatasetsDetailComponent implements OnInit {
 		let datasetRecommendedByTopic: Dataset = new Dataset();
 		let datasetRecommendedByOrganization: Dataset = new Dataset();
 		let datasetRecommendedByTag: Dataset = new Dataset();
-		if(this.dataset.groups.length != 0){
+		if(this.dataset.groups != undefined && this.dataset.groups.length != 0){
 			this.datasetsService.getDatasetsByTopic(this.dataset.groups[0].name, null, 1, 1, this.dataset.type).subscribe(topicDataResult => {
 				try {
 					if (JSON.parse(topicDataResult).result != undefined) {
