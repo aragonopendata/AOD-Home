@@ -12,7 +12,7 @@ const multer  = require('multer')
 const upload = multer({
     storage: multer.diskStorage({
       destination: (req, file, callback) => {
-        let path = '../../../assets/public/ckan/organizaciones';
+        let path = '/static/public/ckan/organizaciones';
         fs.mkdirsSync(path);
         callback(null, path);
       },

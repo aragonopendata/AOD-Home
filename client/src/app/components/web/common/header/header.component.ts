@@ -17,8 +17,8 @@ import { DatasetsService } from 'app/services/web/datasets.service';
 export class HeaderComponent implements OnInit {
     
     menuActive: boolean = false;
-    srcMenu: String = '../../../assets/Boton-Menu-Responsive-OFF.png';
-    srcLogin: String = '../../../assets/Boton-Acceso-Usuarios-OFF.png';
+    srcMenu: String = '/static/public/header/images/Boton-Menu-Responsive-OFF.png';
+    srcLogin: String = '/static/public/header/images/Boton-Acceso-Usuarios-OFF.png';
     dataset: Dataset;
 	datasetAutocomplete: Autocomplete[];
 	private datasetTitle = new Subject<string>();
@@ -80,21 +80,21 @@ export class HeaderComponent implements OnInit {
         if (!this.menuActive) {
             $('.overlay').css('top', $('#header').height());
             $('#myNav').height($(window).height() - $('#header').height());
-            $('#logo').attr('src', '../../../assets/AOD-Logo-Responsive.png');
+            $('#logo').attr('src', '/static/public/header/images/AOD-Logo-Responsive.png');
             this.menuActive = !this.menuActive;
             $('#nav').attr('class', 'navbar navbar-toggleable-md bg-inverse');
             $('#nav').css('background-color', 'rgba(0,0,0, 0.82)');
-            this.srcLogin = '../../../assets/Boton-Acceso-Usuarios-gris.png';
-            this.srcMenu = '../../../assets/Boton-Salir-Menu-Responsive-OFF.png';
+            this.srcLogin = '/static/public/header/images/Boton-Acceso-Usuarios-gris.png';
+            this.srcMenu = '/static/public/header/images/Boton-Salir-Menu-Responsive-OFF.png';
         } else {
             $('body,html').css('overflow-y', 'auto');
             $('#myNav').height('0%');
             $('#nav').attr('class', 'navbar navbar-toggleable-md bg-light');
-            $('#logo').attr('src', '../../../assets/AOD-Logo.png');
+            $('#logo').attr('src', '/static/public/header/images/AOD-Logo.png');
             $('#searchBox').val('');
             this.menuActive = !this.menuActive;
-            this.srcLogin = '../../../assets/Boton-Acceso-Usuarios-OFF.png';
-            this.srcMenu = '../../../assets/Boton-Menu-Responsive-OFF.png';
+            this.srcLogin = '/static/public/header/images/Boton-Acceso-Usuarios-OFF.png';
+            this.srcMenu = '/static/public/header/images/Boton-Menu-Responsive-OFF.png';
             this.datasetAutocomplete = [];
         }
     }
@@ -102,15 +102,15 @@ export class HeaderComponent implements OnInit {
     hover(id) {
         if (this.menuActive) {
             if (id === '#login') {
-                this.srcLogin = '../../../assets/Boton-Acceso-Usuarios-blanco.png';
+                this.srcLogin = '/static/public/header/images/Boton-Acceso-Usuarios-blanco.png';
             } else if (id === '#menu') {
-                this.srcMenu = '../../../assets/Boton-Salir-Menu-Responsive-ON.png';
+                this.srcMenu = '/static/public/header/images/Boton-Salir-Menu-Responsive-ON.png';
             }
         } else {
             if (id === '#login') {
-                this.srcLogin = '../../../assets/Boton-Acceso-Usuarios-ON.png';
+                this.srcLogin = '/static/public/header/images/Boton-Acceso-Usuarios-ON.png';
             } else if (id === '#menu') {
-                this.srcMenu = '../../../assets/Boton-Menu-Responsive-ON.jpg';
+                this.srcMenu = '/static/public/header/images/Boton-Menu-Responsive-ON.jpg';
             }
         }
     }
@@ -118,15 +118,15 @@ export class HeaderComponent implements OnInit {
     unhover(id) {
         if (this.menuActive) {
             if (id === '#login') {
-                this.srcLogin = '../../../assets/Boton-Acceso-Usuarios-gris.png';
+                this.srcLogin = '/static/public/header/images/Boton-Acceso-Usuarios-gris.png';
             } else if (id === '#menu') {
-                this.srcMenu = '../../../assets/Boton-Salir-Menu-Responsive-OFF.png';
+                this.srcMenu = '/static/public/header/images/Boton-Salir-Menu-Responsive-OFF.png';
             }
         } else {
             if (id === '#login') {
-                this.srcLogin = '../../../assets/Boton-Acceso-Usuarios-OFF.png';
+                this.srcLogin = '/static/public/header/images/Boton-Acceso-Usuarios-OFF.png';
             } else if (id === '#menu') {
-                this.srcMenu = '../../../assets/Boton-Menu-Responsive-OFF.png';
+                this.srcMenu = '/static/public/header/images/Boton-Menu-Responsive-OFF.png';
             }
         }
     }
