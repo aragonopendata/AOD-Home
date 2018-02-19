@@ -76,7 +76,7 @@
 	</p-column>
 	<p-column field="accesos" header="Nº de accesos" [style]="{'width':'160px'}" sortable="custom" sortFunction="setOrder($event)">
 		<ng-template pTemplate="body"  let-dataset="rowData">
-			{{dataset.tracking_summary.total}}
+			{{dataset?.tracking_summary?.total || '0'}}
 		</ng-template>
 	</p-column>
 	<p-column field="lastUpdate" header="Última actualización" [style]="{'width':'220px'}" sortable="custom" sortFunction="setOrder($event)">
