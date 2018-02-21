@@ -28,7 +28,8 @@ export class DatasetsAdminListComponent implements OnInit {
     msgs: Message[] = [];
     showProgressBar: boolean= true;
 	
-	searchValue: string = '';
+    searchValue: string = '';
+    textValueToSearch: string;
     textSearch: string;
 	sort: string;
 	pageRows: number;
@@ -152,6 +153,7 @@ export class DatasetsAdminListComponent implements OnInit {
 	
 	searchDatasetsByText(searchParam: string) {
         this.datasets = [];
+        this.textValueToSearch = searchParam;
         this.getDatasetsBySearch(null, null, searchParam);
 	}
 	
@@ -190,9 +192,8 @@ export class DatasetsAdminListComponent implements OnInit {
 	
 	paginate(page: number) {
         --page;
-        if (this.textSearch != undefined) {
-            this.searchDatasetsByText(this.textSearch);
-            this.searchValue = this.textSearch;
+        if (this.textValueToSearch) {
+            this.getDatasetsBySearch(page, this.pageRows, this.textValueToSearch);
         } else {
             this.getDatasets(page, this.pageRows);
         }

@@ -42,6 +42,7 @@ export class DatasetsListComponent implements OnInit {
     datasetCount: SelectItem[];
     resourceCount: SelectItem[];
     searchValue: string = '';
+    textValueToSearch: string;
     textSearch: string;
     textSearchHomer: string;
     searchHomerValue: string = '';
@@ -265,8 +266,8 @@ export class DatasetsListComponent implements OnInit {
 
     paginate(page: number) {
         --page;
-        if (this.searchValue) {
-            this.getDatasetsBySearch(page, this.pageRows, this.searchValue);
+        if (this.textValueToSearch) {
+            this.getDatasetsBySearch(page, this.pageRows, this.textValueToSearch);
         } else if (this.selectedTopic) {
             this.getDatasetsByTopic(this.selectedTopic, page, this.pageRows, this.selectedType);
             this.selectedSearchOption = this.datasetSearchOptionTopics;
@@ -859,6 +860,7 @@ export class DatasetsListComponent implements OnInit {
 
     searchDatasetsByText(searchParam: string) {
         this.datasets = [];
+        this.textValueToSearch = searchParam;
         this.getDatasetsBySearch(null, null, searchParam);
     }
 
