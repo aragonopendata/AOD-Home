@@ -186,6 +186,7 @@ p-autocomplete{
 
 .pagination {
     margin-top: 5px;
+    cursor: pointer;
 }
 
 .page-item.active .page-link {

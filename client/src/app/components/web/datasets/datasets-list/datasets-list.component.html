@@ -23,7 +23,7 @@
             <div class="form-group">
                 <label for="exampleSelect1">Datos Sobre:</label>
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Buscar por..." [value]="searchValue" (keyup.enter)="searchDatasetsByText(searchInput.value)"
+                    <input type="text" class="form-control" placeholder="Buscar por..." [(ngModel)]="searchValue" (keyup.enter)="searchDatasetsByText(searchInput.value)"
                         #searchInput>
                     <span class="input-group-btn">
                         <button class="btn btn-secondary" type="button" (click)="searchDatasetsByText(searchInput.value)" ><i class="fa fa-search" aria-hidden="true"></i></button>

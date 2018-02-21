@@ -265,9 +265,8 @@ export class DatasetsListComponent implements OnInit {
 
     paginate(page: number) {
         --page;
-        if (this.textSearch != undefined) {
-            this.searchDatasetsByText(this.textSearch);
-            this.searchValue = this.textSearch;
+        if (this.searchValue) {
+            this.getDatasetsBySearch(page, this.pageRows, this.searchValue);
         } else if (this.selectedTopic) {
             this.getDatasetsByTopic(this.selectedTopic, page, this.pageRows, this.selectedType);
             this.selectedSearchOption = this.datasetSearchOptionTopics;
