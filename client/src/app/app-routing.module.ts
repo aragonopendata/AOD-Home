@@ -121,8 +121,8 @@ const routes: Routes = [
         { path: Constants.ROUTER_LINK_CAMPUS, component: CampusAdminComponent, canActivate: [AuthGuard] },
         { path: Constants.ROUTER_LINK_LOGSTASH, component: LogstashComponent, canActivate: [AuthGuard] }
     ]},
-    { path: Constants.ROUTER_LINK_404, component: PageNotFoundComponent },
-    { path: '**', redirectTo: '/' + Constants.ROUTER_LINK_404 }
+    //{ path: Constants.ROUTER_LINK_404, component: PageNotFoundComponent },
+    { path: '**', redirectTo: '/'}
 ];
 
 @NgModule({
