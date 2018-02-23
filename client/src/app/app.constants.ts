@@ -473,6 +473,7 @@ export class Constants {
 
     //ROUTING
     public static ROUTER_LINK_DATA = 'datos';
+    public static ROUTER_LINK_DATA_CATALOG_OLD = 'catalogo';
     public static ROUTER_LINK_DATA_CATALOG = 'datos/catalogo';
     public static ROUTER_LINK_DATA_CATALOG_TOPICS = 'datos/catalogo/temas';
     public static ROUTER_LINK_DATA_CATALOG_ORGANIZATIONS = 'datos/catalogo/publicadores';

@@ -55,6 +55,7 @@ const routes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
     { path: Constants.ROUTER_LINK_DATA, redirectTo: Constants.ROUTER_LINK_DATA_CATALOG },
     { path: Constants.ROUTER_LINK_DATA_CATALOG, component: DatasetsListComponent },
+    { path: Constants.ROUTER_LINK_DATA_CATALOG_OLD + '/:' + Constants.ROUTER_LINK_DATA_PARAM_DATASET_NAME, component: DatasetsDetailComponent },
     { path: Constants.ROUTER_LINK_DATA_CATALOG_DATASET + '/:' + Constants.ROUTER_LINK_DATA_PARAM_DATASET_NAME, component: DatasetsDetailComponent },
     { path: Constants.ROUTER_LINK_DATA_CATALOG_TOPICS + '/:' + Constants.ROUTER_LINK_DATA_PARAM_TOPIC_NAME, component: DatasetsListComponent },
     { path: Constants.ROUTER_LINK_DATA_CATALOG_ORGANIZATIONS + '/:' + Constants.ROUTER_LINK_DATA_PARAM_ORGANIZATION_NAME, component: OrganizationsDetailComponent },
