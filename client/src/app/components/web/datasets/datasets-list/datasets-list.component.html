@@ -19,7 +19,7 @@
     <h1>BANCO DE DATOS</h1>
     <!-- Search -->
     <div class="row">
-        <div class="col-12 order-12 order-md-1" *ngIf="selectedSearchOption == datasetSearchOptionFreeSearch">
+        <div class="col-12 order-12 order-md-1 col-md-8" *ngIf="selectedSearchOption == datasetSearchOptionFreeSearch">
             <div class="form-group">
                 <label for="exampleSelect1">Datos Sobre:</label>
                 <div class="input-group">
@@ -148,14 +148,14 @@
                 </select>
             </div>
         </div>
-        <!--<div class="col-12 order-md-12 order-1 col-md-4">
+        <div class="col-12 order-md-12 order-1 col-md-4">
             <div class="form-group">
                 <label>Tipo de búsqueda</label>
                 <select class="form-control" [(ngModel)]="selectedSearchOption" (change)="loadDatasets()">
                     <option *ngFor="let search of searchOptions" [ngValue]="search.value">{{search.label}}</option>
                 </select>
             </div>
-        </div>-->
+        </div>
     </div>
     <!-- End Search -->
     <div *ngIf="selectedSearchOption != datasetSearchOptionHomer">
