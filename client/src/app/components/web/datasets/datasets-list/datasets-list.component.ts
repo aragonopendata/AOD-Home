@@ -139,7 +139,10 @@ export class DatasetsListComponent implements OnInit {
         this.datasetSearchOptionHomer = Constants.DATASET_LIST_SEARCH_OPTION_HOMER;
         this.routerLinkDataCatalogDatasetHomer = Constants.ROUTER_LINK_DATA_CATALOG_HOMER_DATASET;
         this.emptyMessage = Constants.DATASET_LIST_EMPTY;
-        if (this.selectedSearchOption === undefined) {
+
+        if (router.url.indexOf(Constants.DATA_TOPICS) > -1) {
+            this.selectedSearchOption = this.datasetSearchOptionTopics;
+        } else if (this.selectedSearchOption === undefined) {
             this.selectedSearchOption = this.datasetSearchOptionFreeSearch;
         }
         this.groupsOptionTerritorio = Constants.DATASET_LIST_DROPDOWN_GROUPS_TERRITORIO.value;
@@ -206,7 +209,10 @@ export class DatasetsListComponent implements OnInit {
 
     loadDatasets() {
         this.datasets = [];
-        if (this.textSearch != undefined) {
+        if (Constants.DATASET_LIST_SEARCH_OPTION_FREE_SEARCH === this.selectedSearchOption) {
+            this.router.navigate(['/' + this.routerLinkDataCatalog]);
+            this.getDatasets(null, null);
+        } else if (this.textSearch != undefined) {
             this.searchDatasetsByText(this.textSearch);
             this.searchValue = this.textSearch;
         } else if (this.selectedTopic) {
@@ -596,10 +602,10 @@ export class DatasetsListComponent implements OnInit {
         this.searchOptions = [];
         this.searchOptions.push({ label: Constants.DATASET_LIST_DROPDOWN_SEARCH_FREE_SEARCH_VALUE_LABEL, value: this.datasetSearchOptionFreeSearch });
         this.searchOptions.push({ label: Constants.DATASET_LIST_DROPDOWN_SEARCH_TOPICS_LABEL, value: this.datasetSearchOptionTopics });
-        this.searchOptions.push({ label: Constants.DATASET_LIST_DROPDOWN_SEARCH_ORGANIZATIONS_LABEL, value: this.datasetSearchOptionOrganizations });
-        this.searchOptions.push({ label: Constants.DATASET_LIST_DROPDOWN_SEARCH_TAGS_LABEL, value: this.datasetSearchOptionTags });
-        this.searchOptions.push({ label: Constants.DATASET_LIST_DROPDOWN_SEARCH_STATS_LABEL, value: this.datasetSearchOptionStats });
-        this.searchOptions.push({ label: Constants.DATASET_LIST_DROPDOWN_SEARCH_HOMER_LABEL, value: this.datasetSearchOptionHomer });
+        //this.searchOptions.push({ label: Constants.DATASET_LIST_DROPDOWN_SEARCH_ORGANIZATIONS_LABEL, value: this.datasetSearchOptionOrganizations });
+        //this.searchOptions.push({ label: Constants.DATASET_LIST_DROPDOWN_SEARCH_TAGS_LABEL, value: this.datasetSearchOptionTags });
+        //this.searchOptions.push({ label: Constants.DATASET_LIST_DROPDOWN_SEARCH_STATS_LABEL, value: this.datasetSearchOptionStats });
+        //this.searchOptions.push({ label: Constants.DATASET_LIST_DROPDOWN_SEARCH_HOMER_LABEL, value: this.datasetSearchOptionHomer });
     }
 
     setLanguagesDropdown() {

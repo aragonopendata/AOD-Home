@@ -75,6 +75,8 @@ export class Constants {
     public static CAMPUS_EVENTS_TYPES_ALL = 'Todos los tipos';
     public static CAMPUS_EVENTS_EMPTY = 'No se han encontrado datos';
 
+    public static DATA_TOPICS = 'temas';
+
     public static DATASET_LIST_DROPDOWN_TYPE_ALL = 'Todos los tipos';
     public static DATASET_LIST_DROPDOWN_TYPE_CALENDARIO_LABEL = 'Calendario';
     public static DATASET_LIST_DROPDOWN_TYPE_CALENDARIO_VALUE = 'calendario';
