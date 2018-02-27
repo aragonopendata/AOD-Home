@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Updated
 - Functionality bugs fixed (admin)
 
+## [1.3.3] - 2018-02-27
+## Updated
+- Fixed: Search data center.
+- Fixed: Static content links.
+- Fixed: SPARQL queries Aragopedia 1.0
+- Fixed: Only global admins can see and enter in Analytics portal admin section.
+
 ## [1.3.2] - 2018-02-26
 ## Updated
 - Fixed: Pagenotfount to home
@@ -92,6 +99,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
 [Unreleased]: https://github.com/aragonopendata/AOD-Home/compare/master...develop
+[1.3.3]: https://github.com/aragonopendata/AOD-Home/compare/v1.3.2...v1.3.3
 [1.3.2]: https://github.com/aragonopendata/AOD-Home/compare/v1.3.1...v1.3.2
 [1.3.1]: https://github.com/aragonopendata/AOD-Home/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/aragonopendata/AOD-Home/compare/v1.2.3...v1.3.0
