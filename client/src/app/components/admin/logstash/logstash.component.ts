@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { SelectItem, MessagesModule, GrowlModule, Message } from 'primeng/primeng';
 import { LogstashService } from '../../../services/admin/logstash.service';
 import { Logstash } from '../../../models/Logstash';
+import { Constants } from 'app/app.constants';
+import { AuthenticationService } from 'app/services/security/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-logstash',
@@ -20,11 +23,22 @@ export class LogstashComponent implements OnInit {
   editing: boolean = false;
   editDialogTitle: string;
 
-  constructor(private logstashService: LogstashService) { }
+  user: any;
+
+  constructor(private logstashService: LogstashService, private authenticationService: AuthenticationService, private router: Router) { }
 
   ngOnInit() {
-    this.getFiles();
+    this.getPermissions();
   }
+
+  getPermissions(): void{
+		this.user = this.authenticationService.getCurrentUser();
+		if(this.user.rol == Constants.ADMIN_USER_ROL_GLOBAL_ADMIN){
+      this.getFiles();
+		}else{
+      this.router.navigate(['/' + Constants.ROUTER_LINK_ADMIN_GLOBAL_DASHBOARD]);
+    }
+	}
 
   getFiles() {
     this.logstashs = [];
