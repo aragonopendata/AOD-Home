@@ -210,14 +210,27 @@ export class DatasetsListComponent implements OnInit {
     loadDatasets() {
         this.datasets = [];
         if (Constants.DATASET_LIST_SEARCH_OPTION_FREE_SEARCH === this.selectedSearchOption) {
-            this.router.navigate(['/' + this.routerLinkDataCatalog]);
+            this.selectedTopic = undefined;
+            this.selectedType = undefined;
+            this.location.go('/' + this.routerLinkDataCatalog);
             this.getDatasets(null, null);
         } else if (this.textSearch != undefined) {
             this.searchDatasetsByText(this.textSearch);
             this.searchValue = this.textSearch;
         } else if (this.selectedTopic) {
+            if(this.selectedType){
+                this.location.go('/' + this.routerLinkDataCatalogTopics + '/' + this.selectedTopic
+                    + '?' + Constants.ROUTER_LINK_DATA_PARAM_TYPE + '=' + this.selectedType);
+            } else {
+                this.location.go('/' + this.routerLinkDataCatalogTopics + '/' + this.selectedTopic);
+            }
             this.getDatasetsByTopic(this.selectedTopic, null, null, this.selectedType);
+            
             this.selectedSearchOption = this.datasetSearchOptionTopics;
+        }else if(this.selectedType){
+            this.changeType();
+            this.location.go('/' + this.routerLinkDataCatalog
+                + '?' + Constants.ROUTER_LINK_DATA_PARAM_TYPE + '=' + this.selectedType);
         } else if (this.selectedOrg) {
             this.getDatasetsByOrg(null, null, this.selectedOrg, this.selectedType);
             this.selectedSearchOption = this.datasetSearchOptionOrganizations;
