@@ -8,11 +8,11 @@ const request = require('request');
 const utils = require('../../util/utils');
 //Multer for receive form-data
 const fs = require('fs-extra');
-const multer  = require('multer')
+const multer  = require('multer');
 const upload = multer({
     storage: multer.diskStorage({
       destination: (req, file, callback) => {
-        let path = '/static/public/ckan/organizaciones';
+        let path = '/data/assets/public/ckan/organizaciones';
         fs.mkdirsSync(path);
         callback(null, path);
       },
@@ -74,7 +74,7 @@ router.post(constants.API_URL_ADMIN_ORGANIZATION, upload.single('file'), functio
     try {
         var file = req.file;
         var organization = req.body;
-        
+        console.log(file);
         if (file != undefined){
             organization.image_url='static/public/ckan/organizaciones/'+file.originalname;
         } else {
