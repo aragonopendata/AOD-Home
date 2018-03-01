@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Updated
 - Functionality bugs fixed (admin)
 
+## [1.3.4] - 2018-03-01
+## Updated
+- Fixed: Upload organization image.
+
 ## [1.3.3] - 2018-02-27
 ## Updated
 - Fixed: Search data center.
