@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Updated
 - Functionality bugs fixed (admin)
 
+## [1.3.5] - 2018-03-06
+## Updated
+- Fixed: Campus responsive style.
+- Fixed: Pagination datacenter.
+- Fixed: Dataset responsive style.
+- Fixed: Search engine based on title.
+
 ## [1.3.4] - 2018-03-01
 ## Updated
 - Fixed: Upload organization image.
@@ -103,6 +110,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
 [Unreleased]: https://github.com/aragonopendata/AOD-Home/compare/master...develop
+[1.3.5]: https://github.com/aragonopendata/AOD-Home/compare/v1.3.4...v1.3.5
+[1.3.4]: https://github.com/aragonopendata/AOD-Home/compare/v1.3.3...v1.3.4
 [1.3.3]: https://github.com/aragonopendata/AOD-Home/compare/v1.3.2...v1.3.3
 [1.3.2]: https://github.com/aragonopendata/AOD-Home/compare/v1.3.1...v1.3.2
 [1.3.1]: https://github.com/aragonopendata/AOD-Home/compare/v1.3.0...v1.3.1
