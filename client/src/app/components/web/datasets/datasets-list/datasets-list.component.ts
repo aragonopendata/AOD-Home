@@ -41,8 +41,6 @@ export class DatasetsListComponent implements OnInit {
     totalDataset: string[];
     datasetCount: SelectItem[];
     resourceCount: SelectItem[];
-    searchValue: string = '';
-    textValueToSearch: string;
     textSearch: string;
     textSearchHomer: string;
     searchHomerValue: string = '';
@@ -209,45 +207,49 @@ export class DatasetsListComponent implements OnInit {
 
     loadDatasets() {
         this.datasets = [];
-        if (Constants.DATASET_LIST_SEARCH_OPTION_FREE_SEARCH === this.selectedSearchOption) {
-            this.selectedTopic = undefined;
-            this.selectedType = undefined;
-            this.location.go('/' + this.routerLinkDataCatalog);
-            this.getDatasets(null, null);
-        } else if (this.textSearch != undefined) {
-            this.searchDatasetsByText(this.textSearch);
-            this.searchValue = this.textSearch;
-        } else if (this.selectedTopic) {
-            if(this.selectedType){
-                this.location.go('/' + this.routerLinkDataCatalogTopics + '/' + this.selectedTopic
-                    + '?' + Constants.ROUTER_LINK_DATA_PARAM_TYPE + '=' + this.selectedType);
-            } else {
-                this.location.go('/' + this.routerLinkDataCatalogTopics + '/' + this.selectedTopic);
-            }
-            this.getDatasetsByTopic(this.selectedTopic, null, null, this.selectedType);
-            
-            this.selectedSearchOption = this.datasetSearchOptionTopics;
-        }else if(this.selectedType){
-            this.changeType();
-            this.location.go('/' + this.routerLinkDataCatalog
-                + '?' + Constants.ROUTER_LINK_DATA_PARAM_TYPE + '=' + this.selectedType);
-        } else if (this.selectedOrg) {
-            this.getDatasetsByOrg(null, null, this.selectedOrg, this.selectedType);
-            this.selectedSearchOption = this.datasetSearchOptionOrganizations;
-        } else if (this.tags) {
-            this.getDatasetsByTags(null, null);
-            this.selectedSearchOption = this.datasetSearchOptionTags;
-        } else if (this.selectedSearchOption == this.datasetSearchOptionHomer) {
-            this.getDatasetsByHomer(null, null);
-        } else if (this.selectedSearchOption == this.datasetSearchOptionStats) {
-            this.getDatasetsByStats(this.selectedSubGroup, null, null);
-        } else if (this.textSearchHomer) {
-            this.selectedSearchOption = this.datasetSearchOptionHomer;
-            this.searchHomerValue = this.textSearchHomer;
-            this.getDatasetsByHomer(null, null);
+        if(this.textSearch != undefined && Constants.DATASET_LIST_SEARCH_OPTION_FREE_SEARCH === this.selectedSearchOption){
+            this.searchDatasetsByText();
         } else {
-            this.getDatasets(null, null);
+            this.location.go('/' + this.routerLinkDataCatalog);
+            this.textSearch = undefined;
+            if (Constants.DATASET_LIST_SEARCH_OPTION_FREE_SEARCH === this.selectedSearchOption) {
+                this.selectedTopic = undefined;
+                this.selectedType = undefined;
+                this.location.go('/' + this.routerLinkDataCatalog);
+                this.getDatasets(null, null);
+            } else if (this.selectedTopic) {
+                if(this.selectedType){
+                    this.location.go('/' + this.routerLinkDataCatalogTopics + '/' + this.selectedTopic
+                        + '?' + Constants.ROUTER_LINK_DATA_PARAM_TYPE + '=' + this.selectedType);
+                } else {
+                    this.location.go('/' + this.routerLinkDataCatalogTopics + '/' + this.selectedTopic);
+                }
+                this.getDatasetsByTopic(this.selectedTopic, null, null, this.selectedType);
+                
+                this.selectedSearchOption = this.datasetSearchOptionTopics;
+            }else if(this.selectedType){
+                this.changeType();
+                this.location.go('/' + this.routerLinkDataCatalog
+                    + '?' + Constants.ROUTER_LINK_DATA_PARAM_TYPE + '=' + this.selectedType);
+            } else if (this.selectedOrg) {
+                this.getDatasetsByOrg(null, null, this.selectedOrg, this.selectedType);
+                this.selectedSearchOption = this.datasetSearchOptionOrganizations;
+            } else if (this.tags) {
+                this.getDatasetsByTags(null, null);
+                this.selectedSearchOption = this.datasetSearchOptionTags;
+            } else if (this.selectedSearchOption == this.datasetSearchOptionHomer) {
+                this.getDatasetsByHomer(null, null);
+            } else if (this.selectedSearchOption == this.datasetSearchOptionStats) {
+                this.getDatasetsByStats(this.selectedSubGroup, null, null);
+            } else if (this.textSearchHomer) {
+                this.selectedSearchOption = this.datasetSearchOptionHomer;
+                this.searchHomerValue = this.textSearchHomer;
+                this.getDatasetsByHomer(null, null);
+            } else {
+                this.getDatasets(null, null);
+            }
         }
+        
     }
 
     setPagination(actual: number, total: number) {
@@ -285,8 +287,8 @@ export class DatasetsListComponent implements OnInit {
 
     paginate(page: number) {
         --page;
-        if (this.textValueToSearch) {
-            this.getDatasetsBySearch(page, this.pageRows, this.textValueToSearch);
+        if (this.textSearch) {
+            this.getDatasetsBySearch(page, this.pageRows, this.textSearch);
         } else if (this.selectedTopic) {
             this.getDatasetsByTopic(this.selectedTopic, page, this.pageRows, this.selectedType);
             this.selectedSearchOption = this.datasetSearchOptionTopics;
@@ -877,10 +879,14 @@ export class DatasetsListComponent implements OnInit {
         });
     }
 
-    searchDatasetsByText(searchParam: string) {
+    searchDatasetsByText() {
         this.datasets = [];
-        this.textValueToSearch = searchParam;
-        this.getDatasetsBySearch(null, null, searchParam);
+        if(this.textSearch.length > 0){
+            this.location.go('/' + this.routerLinkDataCatalog + '?texto=' + this.textSearch);
+        } else{
+            this.location.go('/' + this.routerLinkDataCatalog);
+        } 
+        this.getDatasetsBySearch(null, null, this.textSearch);
     }
 
     searchDatasetsetByOrg() {
