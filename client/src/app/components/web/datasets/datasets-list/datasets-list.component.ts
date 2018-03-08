@@ -244,6 +244,7 @@ export class DatasetsListComponent implements OnInit {
                 this.selectedSearchOption = this.datasetSearchOptionOrganizations;
             } else if (Constants.DATASET_LIST_SEARCH_OPTION_TAGS === this.selectedSearchOption) {
                 this.selectedTopic = undefined;
+                this.selectedOrg = undefined;
                 this.selectedType = undefined;
                 this.textSearch = undefined;
                 this.changeTags();
