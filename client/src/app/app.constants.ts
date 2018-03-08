@@ -479,6 +479,7 @@ export class Constants {
     public static ROUTER_LINK_DATA_CATALOG = 'datos/catalogo';
     public static ROUTER_LINK_DATA_CATALOG_TOPICS = 'datos/catalogo/temas';
     public static ROUTER_LINK_DATA_CATALOG_ORGANIZATIONS = 'datos/catalogo/publicadores';
+    public static ROUTER_LINK_DATA_CATALOG_SEARCH = 'datos/catalogo/busqueda';
     public static ROUTER_LINK_DATA_CATALOG_TAGS = 'datos/catalogo/etiquetas';
     public static ROUTER_LINK_DATA_CATALOG_STATS = 'datos/catalogo/estadisticas';
     public static ROUTER_LINK_DATA_CATALOG_HOMER = 'datos/catalogo/homer';

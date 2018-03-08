@@ -103,6 +103,7 @@ export class DatasetsListComponent implements OnInit {
     routerLinkDataCatalogDataset: string;
     routerLinkDataCatalogTopics: string;
     routerLinkDataCatalogOrganizations: string;
+    routerLinkDataCatalogSearchOrganizations: string;
     routerLinkDataCatalogTags: string;
     routerLinkDataCatalogDatasetHomer: string;
     //Pagination Params
@@ -128,6 +129,7 @@ export class DatasetsListComponent implements OnInit {
         this.routerLinkDataCatalogDataset = Constants.ROUTER_LINK_DATA_CATALOG_DATASET;
         this.routerLinkDataCatalogTopics = Constants.ROUTER_LINK_DATA_CATALOG_TOPICS;
         this.routerLinkDataCatalogOrganizations = Constants.ROUTER_LINK_DATA_CATALOG_ORGANIZATIONS;
+        this.routerLinkDataCatalogSearchOrganizations = Constants.ROUTER_LINK_DATA_CATALOG_SEARCH;
         this.routerLinkDataCatalogTags = Constants.ROUTER_LINK_DATA_CATALOG_TAGS;
         this.datasetSearchOptionFreeSearch = Constants.DATASET_LIST_SEARCH_OPTION_FREE_SEARCH;
         this.datasetSearchOptionTopics = Constants.DATASET_LIST_SEARCH_OPTION_TOPICS;
@@ -142,6 +144,8 @@ export class DatasetsListComponent implements OnInit {
             this.selectedSearchOption = this.datasetSearchOptionTopics;
         } else if(router.url.indexOf(Constants.ROUTER_LINK_DATA_PARAM_TAG)>-1){
             this.selectedSearchOption = this.datasetSearchOptionTags;
+        } else if(router.url.indexOf(Constants.ROUTER_LINK_DATA_CATALOG_SEARCH) > -1){
+            this.selectedSearchOption = this.datasetSearchOptionOrganizations; 
         } else if (this.selectedSearchOption === undefined) {
             this.selectedSearchOption = this.datasetSearchOptionFreeSearch; 
         }
@@ -216,12 +220,14 @@ export class DatasetsListComponent implements OnInit {
             this.textSearch = undefined;
             if (Constants.DATASET_LIST_SEARCH_OPTION_FREE_SEARCH === this.selectedSearchOption) {
                 this.selectedTopic = undefined;
+                this.selectedOrg = undefined;
                 this.selectedType = undefined;
                 this.tags = [];
                 this.location.go('/' + this.routerLinkDataCatalog);
                 this.getDatasets(null, null);
             } else if (Constants.DATASET_LIST_SEARCH_OPTION_TOPICS === this.selectedSearchOption) {
                 this.textSearch = undefined;
+                this.selectedOrg = undefined;
                 this.tags = [];
                 this.changeType();
                 
@@ -230,8 +236,11 @@ export class DatasetsListComponent implements OnInit {
                 this.changeType();
                 this.location.go('/' + this.routerLinkDataCatalog
                     + '?' + Constants.ROUTER_LINK_DATA_PARAM_TYPE + '=' + this.selectedType);
-            }*/ else if (this.selectedOrg) {
-                this.getDatasetsByOrg(null, null, this.selectedOrg, this.selectedType);
+            }*/ else if (Constants.DATASET_LIST_SEARCH_OPTION_ORGANIZATIONS === this.selectedSearchOption) {
+                this.selectedTopic = undefined;
+                this.tags = [];
+                this.textSearch = undefined;
+                this.changeType();
                 this.selectedSearchOption = this.datasetSearchOptionOrganizations;
             } else if (Constants.DATASET_LIST_SEARCH_OPTION_TAGS === this.selectedSearchOption) {
                 this.selectedTopic = undefined;
@@ -328,10 +337,11 @@ export class DatasetsListComponent implements OnInit {
             }
         } else if (this.selectedOrg) {
             if (this.selectedType) {
-                this.router.navigate(['/' + this.routerLinkDataCatalogOrganizations + '/' + this.selectedOrg], { queryParams: { tipo: this.selectedType } });
+                this.location.go('/' + this.routerLinkDataCatalogSearchOrganizations + '/' + this.selectedOrg
+                + '?' + Constants.ROUTER_LINK_DATA_PARAM_TYPE + '=' + this.selectedType);
                 this.getDatasetsByOrg(null, null, this.selectedOrg, this.selectedType);
             } else {
-                this.location.go('/' + this.routerLinkDataCatalogOrganizations + '/' + this.selectedOrg);
+                this.location.go('/' + this.routerLinkDataCatalogSearchOrganizations + '/' + this.selectedOrg);
                 this.getDatasetsByOrg(null, null, this.selectedOrg, null);
             }
         } else {
@@ -621,7 +631,7 @@ export class DatasetsListComponent implements OnInit {
         this.searchOptions = [];
         this.searchOptions.push({ label: Constants.DATASET_LIST_DROPDOWN_SEARCH_FREE_SEARCH_VALUE_LABEL, value: this.datasetSearchOptionFreeSearch });
         this.searchOptions.push({ label: Constants.DATASET_LIST_DROPDOWN_SEARCH_TOPICS_LABEL, value: this.datasetSearchOptionTopics });
-        //this.searchOptions.push({ label: Constants.DATASET_LIST_DROPDOWN_SEARCH_ORGANIZATIONS_LABEL, value: this.datasetSearchOptionOrganizations });
+        this.searchOptions.push({ label: Constants.DATASET_LIST_DROPDOWN_SEARCH_ORGANIZATIONS_LABEL, value: this.datasetSearchOptionOrganizations });
         this.searchOptions.push({ label: Constants.DATASET_LIST_DROPDOWN_SEARCH_TAGS_LABEL, value: this.datasetSearchOptionTags });
         //this.searchOptions.push({ label: Constants.DATASET_LIST_DROPDOWN_SEARCH_STATS_LABEL, value: this.datasetSearchOptionStats });
         //this.searchOptions.push({ label: Constants.DATASET_LIST_DROPDOWN_SEARCH_HOMER_LABEL, value: this.datasetSearchOptionHomer });
