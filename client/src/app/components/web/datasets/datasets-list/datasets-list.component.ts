@@ -228,6 +228,7 @@ export class DatasetsListComponent implements OnInit {
             } else if (Constants.DATASET_LIST_SEARCH_OPTION_TOPICS === this.selectedSearchOption) {
                 this.textSearch = undefined;
                 this.selectedOrg = undefined;
+                this.selectedType = undefined;
                 this.tags = [];
                 this.changeType();
                 
@@ -238,6 +239,7 @@ export class DatasetsListComponent implements OnInit {
                     + '?' + Constants.ROUTER_LINK_DATA_PARAM_TYPE + '=' + this.selectedType);
             }*/ else if (Constants.DATASET_LIST_SEARCH_OPTION_ORGANIZATIONS === this.selectedSearchOption) {
                 this.selectedTopic = undefined;
+                this.selectedType = undefined;
                 this.tags = [];
                 this.textSearch = undefined;
                 this.changeType();
