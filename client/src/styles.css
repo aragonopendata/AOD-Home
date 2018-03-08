@@ -3,6 +3,10 @@
      src: url('/static/public/fonts/Roboto-Light.ttf'); 
 }
 
+html {
+    margin: 0 !important;
+}
+
 @media (max-width: 768px){
     html{
         margin-top: 15% !important;
