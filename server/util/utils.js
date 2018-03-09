@@ -71,14 +71,14 @@ module.exports = {
         let tagsParams = [];
         let tags = '';
         tags = req.query.tags;
-        if (tags) tagsParams = tags.replace(' ', '').split(',');
+        tagsParams = tags.replace(' ', '').split(',');
 
-        query = '&fq=' + constants.SERVER_API_LINK_PARAM_TAGS + ':';
-        if (tagsParams.length > 0) {
-            for (var key in tagsParams) {
-                query += '+"' + encodeURI(tagsParams[key]) + '"';
-            }
+        query = '&fq=' + constants.SERVER_API_LINK_PARAM_TAGS + ':(';
+        query += encodeURI(tagsParams[0]) + ' ';
+        for (var key = 1 in tagsParams) {
+            query += 'AND ' + encodeURI(tagsParams[key]) + ' ';
         }
+        query += ")";
         return query;
     },
 
