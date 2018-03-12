@@ -17,7 +17,7 @@ router.get(constants.API_URL_TAGS, function (req, res, next) {
         let serviceName = constants.TAGS_LIST;
         let serviceRequestUrl = serviceBaseUrl + serviceName;
         if (req.query.q) {
-            serviceRequestUrl += '?q=' + req.query.q;
+            serviceRequestUrl += '?q=' + encodeURI(req.query.q);
         }
         logger.notice('URL de petición: ' + serviceRequestUrl);
 
