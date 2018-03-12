@@ -99,7 +99,7 @@ router.get(constants.API_URL_DATASETS_TAGS, function (req, res, next) {
         logger.debug('Servicio: Obtener datasets por tags');
         let serviceBaseUrl = constants.CKAN_API_BASE_URL;
         let serviceName = constants.DATASETS_SEARCH;
-        let serviceRequestUrl = serviceBaseUrl + serviceName + utils.getRequestCommonParams(req) + utils.getRequestTags(req);
+        let serviceRequestUrl = serviceBaseUrl + serviceName + utils.getRequestCommonParams(req) + utils.getRequestTags(req.query.tags);
         logger.notice('URL de petición: ' + serviceRequestUrl);
 
         //Proxy checking

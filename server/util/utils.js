@@ -66,19 +66,14 @@ module.exports = {
         return query;
     },
 
-    getRequestTags: function (req) {
+    getRequestTags: function (tags) {
         var query = '';
-        let tagsParams = [];
-        let tags = '';
-        tags = req.query.tags;
-        tagsParams = tags.replace(' ', '').split(',');
+        
+        tags = tags.replace(' ', '');
+        tags = tags.replace('" "','" AND "');
 
-        query = '&fq=' + constants.SERVER_API_LINK_PARAM_TAGS + ':(';
-        query += encodeURI(tagsParams[0]) + ' ';
-        for (var key = 1 in tagsParams) {
-            query += 'AND ' + encodeURI(tagsParams[key]) + ' ';
-        }
-        query += ")";
+        query = '&fq=' + constants.SERVER_API_LINK_PARAM_TAGS + ':(' + encodeURI(tags) + ')';
+
         return query;
     },
 

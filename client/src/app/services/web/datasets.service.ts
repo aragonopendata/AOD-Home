@@ -70,7 +70,7 @@ export class DatasetsService {
 		let tagsQuery = '';
 		tagsArray = tags;
 		tagsArray.forEach(tag => {
-			tagsQuery += '+' + tag.name;
+			tagsQuery += '+"' + tag.name + '"';
 		});
 
 		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS_TAGS 
