@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Updated
 - Functionality bugs fixed (admin)
 
+## [1.3.7] - 2018-03-12
+## Updated
+- Fixed: RDF generator.
+- Fixed: Search tags engine.
+
 ## [1.3.6] - 2018-03-08
 ## Updated
 - Fixed: White line under footer.
@@ -117,6 +122,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
 [Unreleased]: https://github.com/aragonopendata/AOD-Home/compare/master...develop
+[1.3.7]: https://github.com/aragonopendata/AOD-Home/compare/v1.3.6...v1.3.7
 [1.3.6]: https://github.com/aragonopendata/AOD-Home/compare/v1.3.5...v1.3.6
 [1.3.5]: https://github.com/aragonopendata/AOD-Home/compare/v1.3.4...v1.3.5
 [1.3.4]: https://github.com/aragonopendata/AOD-Home/compare/v1.3.3...v1.3.4
