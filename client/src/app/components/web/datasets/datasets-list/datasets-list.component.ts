@@ -312,7 +312,7 @@ export class DatasetsListComponent implements OnInit {
         } else if (this.selectedSearchOption == this.datasetSearchOptionStats) {
             this.getDatasetsByStats(this.selectedSubGroup, page, this.pageRows);
             this.selectedSearchOption = this.datasetSearchOptionStats;
-        } else if (this.tags) {
+        } else if (this.tags[0]) {
             this.getDatasetsByTags(page, this.pageRows);
             this.selectedSearchOption = this.datasetSearchOptionTags;
         } else if (this.selectedSearchOption == this.datasetSearchOptionHomer) {
