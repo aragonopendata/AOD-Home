@@ -56,8 +56,8 @@ export class DatasetsAdminEditComponent implements OnInit {
 	extraDataQualityURL: string[];
 	extraFrequency: string;
 	extraGranularity: string;
-	extraTemporalFrom: Date;
-	extraTemporalUntil: Date;
+	extraTemporalFrom: string;
+	extraTemporalUntil: string;
 	extraSpatial: string;
 	extraUriAragopedia: string;
 	extraTypeAragopedia: string;
@@ -503,14 +503,10 @@ export class DatasetsAdminEditComponent implements OnInit {
 						this.extraGranularity = this.dataset.extras[index].value;
 						break;
 					case Constants.DATASET_EXTRA_TEMPORAL_FROM:
-						var from = this.dataset.extras[index].value.split("/");
-						var f = new Date(+from[2], +from[1] - 1, +from[0]);
-						this.extraTemporalFrom = f;
+						this.extraTemporalFrom = this.dataset.extras[index].value;
 						break;
 					case Constants.DATASET_EXTRA_TEMPORAL_UNTIL:
-						var from = this.dataset.extras[index].value.split("/");
-						var f = new Date(+from[2], +from[1] - 1, +from[0]);
-						this.extraTemporalUntil = f;
+						this.extraTemporalUntil=  this.dataset.extras[index].value;
 						break;
 					case Constants.DATASET_EXTRA_SPATIAL:
 						this.extraSpatial = this.dataset.extras[index].value;
@@ -983,18 +979,10 @@ export class DatasetsAdminEditComponent implements OnInit {
 					this.addExtra(Constants.DATASET_EXTRA_FREQUENCY, this.extraFrequency);
 				}
 				if (this.extraTemporalUntil != undefined) {
-					let day = this.extraTemporalUntil.getDate();
-					let month = this.extraTemporalUntil.getMonth()+1;
-					let year = this.extraTemporalUntil.getFullYear();
-					let date = day.toString() + '/' + month.toString() + '/' + year.toString();
-					this.addExtra(Constants.DATASET_EXTRA_TEMPORAL_UNTIL, date)
+					this.addExtra(Constants.DATASET_EXTRA_TEMPORAL_UNTIL, this.extraTemporalUntil)
 				}
 				if (this.extraTemporalFrom != undefined) {
-					let day = this.extraTemporalFrom.getDate();
-					let month = this.extraTemporalFrom.getMonth()+1;
-					let year = this.extraTemporalFrom.getFullYear();
-					let date = day.toString() + '/' + month.toString() + '/' + year.toString();
-					this.addExtra(Constants.DATASET_EXTRA_TEMPORAL_FROM, date)
+					this.addExtra(Constants.DATASET_EXTRA_TEMPORAL_FROM, this.extraTemporalFrom)
 				}
 				
 				//LANGUAGES TAB
@@ -1099,18 +1087,10 @@ export class DatasetsAdminEditComponent implements OnInit {
 				this.replaceExtra(Constants.DATASET_EXTRA_FREQUENCY,this.extraFrequency, true)
 			}
 			if (this.extraTemporalUntil != undefined) {
-				let day = this.extraTemporalUntil.getDate();
-				let month = this.extraTemporalUntil.getMonth()+1;
-				let year = this.extraTemporalUntil.getFullYear();
-				let date = day.toString() + '/' + month.toString() + '/' + year.toString();
-				this.replaceExtra(Constants.DATASET_EXTRA_TEMPORAL_UNTIL, date, true)
+				this.replaceExtra(Constants.DATASET_EXTRA_TEMPORAL_UNTIL, this.extraTemporalUntil, true)
 			}
 			if (this.extraTemporalFrom != undefined) {
-				let day = this.extraTemporalFrom.getDate();
-				let month = this.extraTemporalFrom.getMonth()+1;
-				let year = this.extraTemporalFrom.getFullYear();
-				let date = day.toString() + '/' + month.toString() + '/' + year.toString();
-				this.replaceExtra(Constants.DATASET_EXTRA_TEMPORAL_FROM, date, true)
+				this.replaceExtra(Constants.DATASET_EXTRA_TEMPORAL_FROM, this.extraTemporalFrom, true)
 			}
 	
 			//LANGUAGES TAB

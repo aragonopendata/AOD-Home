@@ -91,7 +91,11 @@
 			</div>
 			<div class="section" *ngIf="extraTemporalFrom && extraTemporalUntil">
 				<h6>Periodo de tiempo en el que existen datos</h6>
-				<p>De {{extraTemporalFrom}} a {{extraTemporalUntil}}</p>
+				<p>{{extraTemporalFrom}} - {{extraTemporalUntil}}</p>
+			</div>
+			<div class="section" *ngIf="extraTemporalFrom && !extraTemporalUntil">
+				<h6>Periodo de tiempo en el que existen datos</h6>
+				<p>{{extraTemporalFrom}}</p>
 			</div>
 			<div class="section" *ngIf="dataset.license_title">
 				<h6>Licencia</h6>
