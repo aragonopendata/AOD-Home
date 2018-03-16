@@ -16,7 +16,7 @@
 		</div>
 	</div>
 </div>
-<div class="container" *ngIf="!errorTitle">
+<div class="container" *ngIf="!errorTitle && datasetHomer.package_id == undefined">
 <div class="dtHeader row">
 	<h1 class="globaltitle col-10">{{dataset.title}}</h1>
 	<div class="social col-2">
@@ -219,7 +219,7 @@
 	</div>
 </div>
 </div>
-<div *ngIf="datasetHomer.package_id != undefined" class="container">
+<div *ngIf="!errorTitle && datasetHomer.package_id != undefined" class="container">
 <div class="dtHeader row">
 	<h1 *ngIf="datasetHomer.title" class="globaltitle col-10">{{datasetHomer.title}}</h1>
 	<div class="social col-2">

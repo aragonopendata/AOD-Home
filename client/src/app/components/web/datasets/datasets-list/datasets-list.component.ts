@@ -255,7 +255,7 @@ export class DatasetsListComponent implements OnInit {
                 this.getDatasetsByHomer(null, null);
             } else if (this.selectedSearchOption == this.datasetSearchOptionStats) {
                 this.getDatasetsByStats(this.selectedSubGroup, null, null);
-            } else if (this.textSearchHomer) {
+            } else if (this.selectedSearchOption == this.datasetSearchOptionHomer) {
                 this.selectedSearchOption = this.datasetSearchOptionHomer;
                 this.searchHomerValue = this.textSearchHomer;
                 this.getDatasetsByHomer(null, null);
@@ -637,7 +637,7 @@ export class DatasetsListComponent implements OnInit {
         this.searchOptions.push({ label: Constants.DATASET_LIST_DROPDOWN_SEARCH_ORGANIZATIONS_LABEL, value: this.datasetSearchOptionOrganizations });
         this.searchOptions.push({ label: Constants.DATASET_LIST_DROPDOWN_SEARCH_TAGS_LABEL, value: this.datasetSearchOptionTags });
         //this.searchOptions.push({ label: Constants.DATASET_LIST_DROPDOWN_SEARCH_STATS_LABEL, value: this.datasetSearchOptionStats });
-        //this.searchOptions.push({ label: Constants.DATASET_LIST_DROPDOWN_SEARCH_HOMER_LABEL, value: this.datasetSearchOptionHomer });
+        this.searchOptions.push({ label: Constants.DATASET_LIST_DROPDOWN_SEARCH_HOMER_LABEL, value: this.datasetSearchOptionHomer });
     }
 
     setLanguagesDropdown() {
