@@ -541,7 +541,7 @@ router.get(constants.API_URL_DATASETS_STATS_SEARCH + '/:groupName', function (re
         let serviceRequestUrl = serviceBaseUrl + serviceName + utils.getRequestCommonParams(req);
 
         if (req.params.groupName != 'undefined') {
-            serviceRequestUrl += '&q=(organization:instituto-aragones-estadistica AND 01_IAEST_Temaestadstico:' + req.params.groupName + '*) ';
+            serviceRequestUrl += '&q=(organization:instituto-aragones-estadistica AND 01_IAEST_Temaestadistico:' + req.params.groupName + '*) ';
         } else {
             serviceRequestUrl += '&q=(organization:instituto-aragones-estadistica) ';
         }
