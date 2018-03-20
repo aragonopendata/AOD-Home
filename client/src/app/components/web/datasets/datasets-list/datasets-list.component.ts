@@ -223,6 +223,8 @@ export class DatasetsListComponent implements OnInit {
                 this.selectedOrg = undefined;
                 this.selectedType = undefined;
                 this.tags = [];
+                this.selectedGroup = undefined;
+                this.selectedSubGroup = undefined;
                 this.location.go('/' + this.routerLinkDataCatalog);
                 this.getDatasets(null, null);
             } else if (Constants.DATASET_LIST_SEARCH_OPTION_TOPICS === this.selectedSearchOption) {
@@ -230,18 +232,18 @@ export class DatasetsListComponent implements OnInit {
                 this.selectedOrg = undefined;
                 this.selectedType = undefined;
                 this.tags = [];
+                this.selectedGroup = undefined;
+                this.selectedSubGroup = undefined;
                 this.changeType();
                 
                 this.selectedSearchOption = this.datasetSearchOptionTopics;
-            }/*else if((Constants.DATASET_LIST_SEARCH_OPTION_TOPICS === this.selectedSearchOption) && this.selectedType){
-                this.changeType();
-                this.location.go('/' + this.routerLinkDataCatalog
-                    + '?' + Constants.ROUTER_LINK_DATA_PARAM_TYPE + '=' + this.selectedType);
-            }*/ else if (Constants.DATASET_LIST_SEARCH_OPTION_ORGANIZATIONS === this.selectedSearchOption) {
+            } else if (Constants.DATASET_LIST_SEARCH_OPTION_ORGANIZATIONS === this.selectedSearchOption) {
                 this.selectedTopic = undefined;
                 this.selectedType = undefined;
                 this.tags = [];
                 this.textSearch = undefined;
+                this.selectedGroup = undefined;
+                this.selectedSubGroup = undefined;
                 this.changeType();
                 this.selectedSearchOption = this.datasetSearchOptionOrganizations;
             } else if (Constants.DATASET_LIST_SEARCH_OPTION_TAGS === this.selectedSearchOption) {
@@ -249,16 +251,29 @@ export class DatasetsListComponent implements OnInit {
                 this.selectedOrg = undefined;
                 this.selectedType = undefined;
                 this.textSearch = undefined;
+                this.selectedGroup = undefined;
+                this.selectedSubGroup = undefined;
                 this.changeTags();
                 this.selectedSearchOption = this.datasetSearchOptionTags;
             } else if (this.selectedSearchOption == this.datasetSearchOptionHomer) {
-                this.getDatasetsByHomer(null, null);
-            } else if (this.selectedSearchOption == this.datasetSearchOptionStats) {
-                this.getDatasetsByStats(this.selectedSubGroup, null, null);
-            } else if (this.selectedSearchOption == this.datasetSearchOptionHomer) {
+                this.selectedTopic = undefined;
+                this.selectedOrg = undefined;
+                this.selectedType = undefined;
+                this.textSearch = undefined;
+                this.selectedGroup = undefined;
+                this.selectedSubGroup = undefined;
+                this.tags = [];
                 this.selectedSearchOption = this.datasetSearchOptionHomer;
                 this.searchHomerValue = this.textSearchHomer;
                 this.getDatasetsByHomer(null, null);
+            } else if (this.selectedSearchOption == this.datasetSearchOptionStats) {
+                this.selectedSearchOption = this.datasetSearchOptionStats;
+                this.selectedTopic = undefined;
+                this.selectedOrg = undefined;
+                this.selectedType = undefined;
+                this.textSearch = undefined;
+                this.tags = [];
+                this.getDatasetsByStats(this.selectedSubGroup, null, null);
             } else {
                 this.getDatasets(null, null);
             }
@@ -636,7 +651,7 @@ export class DatasetsListComponent implements OnInit {
         this.searchOptions.push({ label: Constants.DATASET_LIST_DROPDOWN_SEARCH_TOPICS_LABEL, value: this.datasetSearchOptionTopics });
         this.searchOptions.push({ label: Constants.DATASET_LIST_DROPDOWN_SEARCH_ORGANIZATIONS_LABEL, value: this.datasetSearchOptionOrganizations });
         this.searchOptions.push({ label: Constants.DATASET_LIST_DROPDOWN_SEARCH_TAGS_LABEL, value: this.datasetSearchOptionTags });
-        //this.searchOptions.push({ label: Constants.DATASET_LIST_DROPDOWN_SEARCH_STATS_LABEL, value: this.datasetSearchOptionStats });
+        this.searchOptions.push({ label: Constants.DATASET_LIST_DROPDOWN_SEARCH_STATS_LABEL, value: this.datasetSearchOptionStats });
         this.searchOptions.push({ label: Constants.DATASET_LIST_DROPDOWN_SEARCH_HOMER_LABEL, value: this.datasetSearchOptionHomer });
     }
 
