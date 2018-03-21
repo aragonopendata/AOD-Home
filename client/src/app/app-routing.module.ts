@@ -62,6 +62,7 @@ const routes: Routes = [
     { path: Constants.ROUTER_LINK_DATA_CATALOG_SEARCH + '/:' + Constants.ROUTER_LINK_DATA_PARAM_ORGANIZATION_NAME, component: DatasetsListComponent },
     { path: Constants.ROUTER_LINK_DATA_CATALOG_TAGS, component: DatasetsListComponent },
     { path: Constants.ROUTER_LINK_DATA_CATALOG_STATS, component: DatasetsListComponent },
+    { path: Constants.ROUTER_LINK_DATA_CATALOG_STATS + '/:' + Constants.ROUTER_LINK_DATA_PARAM_STATS_GROUP, component: DatasetsListComponent },
     { path: Constants.ROUTER_LINK_DATA_CATALOG_HOMER, component: DatasetsListComponent },
     { path: Constants.ROUTER_LINK_DATA_CATALOG_HOMER_DATASET, component: DatasetsDetailComponent }, 
     { path: Constants.ROUTER_LINK_DATA_CATALOG_HOMER_DATASET + '/:' + Constants.ROUTER_LINK_DATA_PARAM_DATASET_HOMER_NAME, component: DatasetsDetailComponent }, 

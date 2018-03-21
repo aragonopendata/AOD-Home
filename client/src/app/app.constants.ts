@@ -565,6 +565,7 @@ export class Constants {
     public static ROUTER_LINK_DATA_PARAM_TEXT = 'texto';
     public static ROUTER_LINK_DATA_PARAM_TYPE = 'tipo';
     public static ROUTER_LINK_DATA_PARAM_TAG = 'etq';
+    public static ROUTER_LINK_DATA_PARAM_STATS_GROUP = 'group';
     public static ROUTER_LINK_DATA_PARAM_LANG = 'lang';
     public static ROUTER_LINK_DATA_PARAM_TEXT_HOMER = 'text';
     public static ROUTER_LINK_DATA_CAMPUS_PARAM_TYPE = 'type';

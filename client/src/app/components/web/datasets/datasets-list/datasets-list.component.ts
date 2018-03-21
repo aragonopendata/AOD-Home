@@ -150,6 +150,8 @@ export class DatasetsListComponent implements OnInit {
             this.selectedSearchOption = this.datasetSearchOptionTags;
         } else if(router.url.indexOf(Constants.ROUTER_LINK_DATA_CATALOG_SEARCH) > -1){
             this.selectedSearchOption = this.datasetSearchOptionOrganizations; 
+        } else if(router.url.indexOf(Constants.ROUTER_LINK_DATA_CATALOG_STATS) > -1){
+            this.selectedSearchOption = this.datasetSearchOptionStats;
         } else if (this.selectedSearchOption === undefined) {
             this.selectedSearchOption = this.datasetSearchOptionFreeSearch; 
         }
@@ -195,6 +197,15 @@ export class DatasetsListComponent implements OnInit {
             try {
                 this.selectedTopic = params[Constants.ROUTER_LINK_DATA_PARAM_TOPIC_NAME];
                 this.selectedOrg = params[Constants.ROUTER_LINK_DATA_PARAM_ORGANIZATION_NAME];
+                if(params[Constants.ROUTER_LINK_DATA_PARAM_STATS_GROUP]){
+                    if (params[Constants.ROUTER_LINK_DATA_PARAM_STATS_GROUP].length == 2){
+                        this.selectedGroup = params[Constants.ROUTER_LINK_DATA_PARAM_STATS_GROUP];
+                    }else{
+                        this.selectedGroup = params[Constants.ROUTER_LINK_DATA_PARAM_STATS_GROUP];
+                        this.selectedGroup = this.selectedGroup.substring(0,2);
+                        this.selectedSubGroup = params[Constants.ROUTER_LINK_DATA_PARAM_STATS_GROUP];
+                    }
+                }
             } catch (error) {
                 console.error('Error: ngOnInit() params - datasets-list.component.ts');
             }
@@ -276,7 +287,7 @@ export class DatasetsListComponent implements OnInit {
                 this.selectedType = undefined;
                 this.textSearch = "";
                 this.tags = [];
-                this.getDatasetsByStats(this.selectedSubGroup, null, null);
+                this.changeStats();
             } else {
                 this.getDatasets(null, null);
             }
@@ -377,10 +388,17 @@ export class DatasetsListComponent implements OnInit {
     }
 
     changeStats() {
-        if (this.selectedSubGroup != undefined) {
-            this.getDatasetsByStats(this.selectedSubGroup, null, null);
+        if (this.selectedGroup != undefined){
+            if (this.selectedSubGroup != undefined) {
+                this.location.go('/' + Constants.ROUTER_LINK_DATA_CATALOG_STATS + '/' + this.selectedSubGroup);
+                this.getDatasetsByStats(this.selectedSubGroup, null, null);
+            } else {
+                this.location.go('/' + Constants.ROUTER_LINK_DATA_CATALOG_STATS + '/' + this.selectedGroup);
+                this.getDatasetsByStats(this.selectedGroup, null, null);
+            }
         } else {
-            this.getDatasetsByStats(this.selectedGroup, null, null);
+            this.location.go('/' + Constants.ROUTER_LINK_DATA_CATALOG_STATS);
+            this.getDatasetsByStats(this.selectedSubGroup, null, null);
         }
     }
 
