@@ -217,7 +217,7 @@ export class DatasetsListComponent implements OnInit {
             this.searchDatasetsByText();
         } else {
             this.location.go('/' + this.routerLinkDataCatalog);
-            this.textSearch = undefined;
+            this.textSearch = "";
             if (Constants.DATASET_LIST_SEARCH_OPTION_FREE_SEARCH === this.selectedSearchOption) {
                 this.selectedTopic = undefined;
                 this.selectedOrg = undefined;
@@ -228,7 +228,7 @@ export class DatasetsListComponent implements OnInit {
                 this.location.go('/' + this.routerLinkDataCatalog);
                 this.getDatasets(null, null);
             } else if (Constants.DATASET_LIST_SEARCH_OPTION_TOPICS === this.selectedSearchOption) {
-                this.textSearch = undefined;
+                this.textSearch = "";
                 this.selectedOrg = undefined;
                 this.selectedType = undefined;
                 this.tags = [];
@@ -241,7 +241,7 @@ export class DatasetsListComponent implements OnInit {
                 this.selectedTopic = undefined;
                 this.selectedType = undefined;
                 this.tags = [];
-                this.textSearch = undefined;
+                this.textSearch = "";
                 this.selectedGroup = undefined;
                 this.selectedSubGroup = undefined;
                 this.changeType();
@@ -250,7 +250,7 @@ export class DatasetsListComponent implements OnInit {
                 this.selectedTopic = undefined;
                 this.selectedOrg = undefined;
                 this.selectedType = undefined;
-                this.textSearch = undefined;
+                this.textSearch = "";
                 this.selectedGroup = undefined;
                 this.selectedSubGroup = undefined;
                 this.changeTags();
@@ -259,7 +259,7 @@ export class DatasetsListComponent implements OnInit {
                 this.selectedTopic = undefined;
                 this.selectedOrg = undefined;
                 this.selectedType = undefined;
-                this.textSearch = undefined;
+                this.textSearch = "";
                 this.selectedGroup = undefined;
                 this.selectedSubGroup = undefined;
                 this.tags = [];
@@ -270,7 +270,7 @@ export class DatasetsListComponent implements OnInit {
                 this.selectedTopic = undefined;
                 this.selectedOrg = undefined;
                 this.selectedType = undefined;
-                this.textSearch = undefined;
+                this.textSearch = "";
                 this.tags = [];
                 this.getDatasetsByStats(this.selectedSubGroup, null, null);
             } else {
