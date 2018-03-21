@@ -12,6 +12,8 @@ import { DatasetHomer } from '../../../../models/DatasetHomer';
 import { Topic } from '../../../../models/Topic';
 import { Constants } from '../../../../app.constants';
 import { NavigationEnd, Event } from '@angular/router';
+import { Autocomplete } from 'app/models/Autocomplete';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
     selector: 'app-datasets-list',
@@ -31,6 +33,8 @@ export class DatasetsListComponent implements OnInit {
     sort: string;
     sortHomer: string;
     datasets: Dataset[];
+    datasetsAutocomplete: Autocomplete[];
+    queryToSearch: string = '';
     datasetsHomer: DatasetHomer[];
     newestDatasets: Dataset[];
     downloadedDatasets: Dataset[];
@@ -912,12 +916,13 @@ export class DatasetsListComponent implements OnInit {
 
     searchDatasetsByText() {
         this.datasets = [];
-        if(this.textSearch.length > 0){
+        if(this.textSearch != undefined){
             this.location.go('/' + this.routerLinkDataCatalog + '?texto=' + this.textSearch);
+            this.getDatasetsBySearch(null, null, this.textSearch);
         } else{
             this.location.go('/' + this.routerLinkDataCatalog);
+            this.getDatasetsBySearch(null, null, "");
         } 
-        this.getDatasetsBySearch(null, null, this.textSearch);
     }
 
     searchDatasetsetByOrg() {

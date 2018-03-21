@@ -5,6 +5,7 @@ const constants = require('../../util/constants');
 const proxy = require('../../conf/proxy-conf');
 const utils = require('../../util/utils');
 const querystring = require('querystring');
+const request = require('request');
 //LOG SETTINGS
 const logConfig = require('../../conf/log-conf');
 const loggerSettings = logConfig.getLogSettings();
@@ -18,7 +19,16 @@ router.get(constants.API_URL_DATASETS, function (req, res, next) {
         let serviceName = constants.DATASETS_SEARCH;
         let serviceRequestUrl = serviceBaseUrl + serviceName + utils.getRequestCommonParams(req);
         if (req.query.text) {
-            serviceRequestUrl += '&q=(title:'+encodeURIComponent(req.query.text)+' OR res_name:'+encodeURIComponent(req.query.text)+')';
+            let texto_ny = req.query.text.toLocaleLowerCase().split(' ').join('-').split('ñ').join('ny')
+                .split('á').join('a').split('é').join('e').split('í').join('i').split('ó').join('o').split('ú').join('u')
+                .split('ä').join('a').split('ë').join('e').split('ï').join('i').split('ö').join('o').split('ü').join('u');
+            let texto_n = req.query.text.toLocaleLowerCase().split(' ').join('-').split('ñ').join('n')
+                .split('á').join('a').split('é').join('e').split('í').join('i').split('ó').join('o').split('ú').join('u')
+                .split('ä').join('a').split('ë').join('e').split('ï').join('i').split('ö').join('o').split('ü').join('u');
+
+            logger.info(texto_ny + " " + texto_n);
+            serviceRequestUrl += '&q=(name:*'+ encodeURIComponent(texto_n) + '* OR name:*' + encodeURIComponent(texto_ny) 
+                + '* OR res_name:*' + encodeURIComponent(texto_n) + '* OR res_name:*' + encodeURIComponent(texto_ny) + '*)';
         }
         logger.notice('URL de petición: ' + serviceRequestUrl);
 

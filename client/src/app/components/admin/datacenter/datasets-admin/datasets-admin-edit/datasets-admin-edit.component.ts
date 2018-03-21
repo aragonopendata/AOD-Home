@@ -353,7 +353,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 	createUrl(){
 		if(!this.datasetLoaded){
 			if (this.inputDatasetTitle != undefined) {
-				let url = this.inputDatasetTitle.toLocaleLowerCase().split(' ').join('-').split('ñ').join('n')
+				let url = this.inputDatasetTitle.toLocaleLowerCase().split(' ').join('-').split('ñ').join('ny')
 				.split('á').join('a').split('é').join('e').split('í').join('i').split('ó').join('o').split('ú').join('u')
 				.split('ä').join('a').split('ë').join('e').split('ï').join('i').split('ö').join('o').split('ü').join('u');
 				this.inputDatasetUrl = encodeURI(url);
