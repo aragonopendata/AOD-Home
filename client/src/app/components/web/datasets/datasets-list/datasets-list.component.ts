@@ -264,7 +264,6 @@ export class DatasetsListComponent implements OnInit {
                 this.selectedSubGroup = undefined;
                 this.tags = [];
                 this.selectedSearchOption = this.datasetSearchOptionHomer;
-                this.searchHomerValue = this.textSearchHomer;
                 this.getDatasetsByHomer(null, null);
             } else if (this.selectedSearchOption == this.datasetSearchOptionStats) {
                 this.selectedSearchOption = this.datasetSearchOptionStats;
