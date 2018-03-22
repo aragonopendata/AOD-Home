@@ -372,6 +372,8 @@ export class Constants {
     public static ADMIN_DATASET_EDIT_DROPDOWN_FREQUENCY_CUATRIMESTRAL = { label: 'Cuatrimestral', value: 'Cuatrimestral' };
     public static ADMIN_DATASET_EDIT_DROPDOWN_FREQUENCY_TRIMESTRAL = { label: 'Trimestral', value: 'Trimestral' };
     public static ADMIN_DATASET_EDIT_DROPDOWN_FREQUENCY_MENSUAL = { label: 'Mensual', value: 'Mensual' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FREQUENCY_DIARIA = { label: 'Diaria', value: 'Diaria' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FREQUENCY_INSTANTANEA = { label: 'Instantánea', value: 'Instantánea' };
 
     public static ADMIN_DATASET_EDIT_DROPDOWN_LANG_ES = 'Español';
     public static ADMIN_DATASET_EDIT_DROPDOWN_LANG_EN = 'Inglés';
