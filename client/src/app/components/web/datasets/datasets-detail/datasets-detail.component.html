@@ -276,19 +276,20 @@
 			</div>
 		</div>
 	</div>
-	<div class="download col-sm-12 col-md-4" *ngIf="datasetHomer.metadata_origin && datasetHomer.url">
+	<div class="download col-sm-12 col-md-4" *ngIf="datasetHomer.metadata_origin || datasetHomer.url">
 		<div class="title">
 			<h5>Descargas</h5>
 		</div>
 		<div class="container-fluid horizontalFormat">
 			<div class="section" *ngIf="datasetHomer.metadata_origin">
 				<h6>Metadato original</h6>
-				<button class="tags" pButton type="button" pButton label="Metadato" (click)="downloadFile(datasetHomer.metadata_origin)"
-				 style="margin: 2px;"></button>
+				<a class="tags" (click)="downloadHomerRDF(datasetHomer);" target="_blank" title="{{datasetHomer.title}}" pButton type="button" label="Metadato" style="margin: 2px;"></a>
+				<!--<button class="tags" pButton type="button" pButton label="Metadato" (click)="submitEvent(datasetHomer.url,'RDF'); downloadRDF(datasetHomer.title);"
+				target="_blank" style="margin: 2px;"></button>-->
 			</div>
 			<div class="section" *ngIf="datasetHomer.url">
 				<h6>Dato</h6>
-				<button class="tags" pButton type="button" pButton label="Dato" (click)="downloadFile(datasetHomer.url)" style="margin: 2px;"></button>
+				<button class="tags" pButton type="button" pButton label="Dato" (click)="openUrl(datasetHomer.url)" style="margin: 2px;"></button>
 			</div>
 		</div>
 	</div>
