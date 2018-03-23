@@ -453,25 +453,6 @@ export class DatasetsDetailComponent implements OnInit {
 		});
 	}
 
-	downloadHomerRDF(datasetHomer: DatasetHomer){
-		let finalUrl = 'homerDetail/' + datasetHomer.metadata_origin.substring(7, datasetHomer.metadata_origin.length);
-		this.datasetsService.getDatasetHomerRDF(finalUrl).subscribe(result => {
-			//let blob = new Blob(['\ufeff' + result], { type: Constants.DATASET_RDF_FORMAT_OPTIONS_RDF });
-			let dwldLink = document.createElement("a");
-			//let url = URL.createObjectURL(blob);
-			let isSafariBrowser = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
-			if (isSafariBrowser) {  //if Safari open in new window to save file with random filename.
-				dwldLink.setAttribute('target', '_blank');
-			}
-			dwldLink.setAttribute('href', datasetHomer.metadata_origin);
-			dwldLink.setAttribute('download', datasetHomer.title + Constants.DATASET_RDF_FILE_EXTENSION_RDF);
-			dwldLink.style.visibility = 'hidden';
-			document.body.appendChild(dwldLink);
-			dwldLink.click();
-			document.body.removeChild(dwldLink);
-		});
-	}
-
 	loadResourceIframe(resource: any, index: number) {
 		let res = resource.sources_ids[index];
 		let format = resource.formats[index];

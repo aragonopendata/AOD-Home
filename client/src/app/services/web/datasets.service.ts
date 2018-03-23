@@ -1,7 +1,7 @@
 import 'rxjs/add/operator/map';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { Http, Response, URLSearchParams, Headers, RequestOptions } from '@angular/http';
+import { Http, Response, URLSearchParams } from '@angular/http';
 import { Constants } from '../../app.constants';
 import { Dataset } from '../../models/Dataset';
 import { DatasetHomer } from '../../models/DatasetHomer';
@@ -159,17 +159,6 @@ export class DatasetsService {
 		+ '&' + Constants.SERVER_API_LINK_PARAM_LANG + '=' + lang
 		+ '&' + Constants.SERVER_API_LINK_PARAM_TEXT + '=' + text;
 		return this.http.get(fullUrl).map(res => res.json());
-	}
-
-	public getDatasetHomerRDF(datasetHomerMetadataOrigin: string){
-		let fullUrl = datasetHomerMetadataOrigin;
-		let headers = new Headers();
-		headers.append('Access-Control-Allow-Origin' , '*');
-		headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
-		headers.append('Accept','application/json');
-		headers.append('content-type','application/json');
-		let options = new RequestOptions({ headers: headers, withCredentials: false });
-		return this.http.get(fullUrl, options).map(res => res.json());
 	}
 
 	public getDatasetRDF(datasetName: string) {
