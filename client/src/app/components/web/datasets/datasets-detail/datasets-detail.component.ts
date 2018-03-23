@@ -454,7 +454,8 @@ export class DatasetsDetailComponent implements OnInit {
 	}
 
 	downloadHomerRDF(datasetHomer: DatasetHomer){
-		this.datasetsService.getDatasetHomerRDF(datasetHomer.metadata_origin).subscribe(result => {
+		let finalUrl = '/homerDetail/' + datasetHomer.metadata_origin;
+		this.datasetsService.getDatasetHomerRDF(finalUrl).subscribe(result => {
 			//let blob = new Blob(['\ufeff' + result], { type: Constants.DATASET_RDF_FORMAT_OPTIONS_RDF });
 			let dwldLink = document.createElement("a");
 			//let url = URL.createObjectURL(blob);
