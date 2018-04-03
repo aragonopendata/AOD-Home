@@ -209,7 +209,6 @@ a:hover {
 
 .wrapper:hover .detail {
     display: block;
-    width: 354px;
     height: 258px;
     padding: 10px;
     background-color: rgba(235,241,244, 0.95); 
