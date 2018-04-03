@@ -27,9 +27,20 @@ router.get(constants.API_URL_DATASETS, function (req, res, next) {
                 .split('ä').join('a').split('ë').join('e').split('ï').join('i').split('ö').join('o').split('ü').join('u');
 
             logger.info(texto_ny + " " + texto_n);
-            serviceRequestUrl += '&q=(name:*'+ encodeURIComponent(texto_n) + '* OR name:*' + encodeURIComponent(texto_ny) 
-                + '* OR res_name:*' + encodeURIComponent(texto_n) + '* OR res_name:*' + encodeURIComponent(texto_ny) + '*)';
-        }
+
+            let text_ny = texto_ny.split('-');
+            let text_n = texto_n.split('-');
+            serviceRequestUrl += '&q=(';
+            for(var i = 0; i < text_n.length; i++){
+                serviceRequestUrl += '(name:*' + encodeURIComponent(text_n[i]) + 
+                '* OR name:*' + encodeURIComponent(text_ny[i]) + '*) OR (res_name:*' + 
+                encodeURIComponent(text_n[i]) + '* OR res_name:*' + encodeURIComponent(text_ny[i]) + '*)';
+                if(i != text_n.length-1){
+                    serviceRequestUrl += ') AND (';
+                }
+            }
+            serviceRequestUrl += ')';
+            }
         logger.notice('URL de petición: ' + serviceRequestUrl);
 
         //Proxy checking
