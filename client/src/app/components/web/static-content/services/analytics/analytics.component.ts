@@ -13,7 +13,7 @@ declare var jQuery: any;
 export class AnalyticsComponent {
 
 	logstashs: Logstash[];
-	isIframeActive = false;
+	isIframeActive = true;
 
 	constructor(private logstashService: AnalyticsService) { }
 
