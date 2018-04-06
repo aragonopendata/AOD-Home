@@ -16,9 +16,17 @@
 }
 
 .login-box, .register-box {
-    width: fit-content;
+    width: 50%;
     margin-right: auto;
     margin-left: auto;
+}
+
+@media screen and (max-width: 768px){
+    .login-box, .register-box {
+        width: 80%;
+        margin-right: auto;
+        margin-left: auto;
+    }
 }
 
 .login-box-body {
