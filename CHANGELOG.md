@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Updated
 - Functionality bugs fixed (admin)
 
+## [1.3.8] - 2018-04-09
+- Fixed: Free search with multiple terms.
+- Fixed: Organizations heading title.
+- Fixed: Login responsive.
+
 ## [1.3.7] - 2018-03-12
 ## Updated
 - Fixed: RDF generator.
@@ -122,6 +127,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
 [Unreleased]: https://github.com/aragonopendata/AOD-Home/compare/master...develop
+[1.3.8]: https://github.com/aragonopendata/AOD-Home/compare/v1.3.7...v1.3.8
 [1.3.7]: https://github.com/aragonopendata/AOD-Home/compare/v1.3.6...v1.3.7
 [1.3.6]: https://github.com/aragonopendata/AOD-Home/compare/v1.3.5...v1.3.6
 [1.3.5]: https://github.com/aragonopendata/AOD-Home/compare/v1.3.4...v1.3.5
