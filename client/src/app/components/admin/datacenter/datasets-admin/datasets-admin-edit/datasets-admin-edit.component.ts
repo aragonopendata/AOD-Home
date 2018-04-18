@@ -39,6 +39,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 
 	resource: Resource;
 	resources: Resource [] = [];
+	resourceType: string;
 
 	//Add Resource params
 	//BORRAMEdisplayAddResourceDialog: boolean = false;
@@ -1230,10 +1231,12 @@ export class DatasetsAdminEditComponent implements OnInit {
 	
 	openEditResource(resource: any){
 		this.resource = resource;
+		this.getTypeResource();
 	}
 
 	openShowResource(resource: any){
 		this.resource = resource;
+		this.getTypeResource();
 	}
 
 	updateResource(){
@@ -1253,4 +1256,21 @@ export class DatasetsAdminEditComponent implements OnInit {
 		}
 	}
 
+	getTypeResource(){
+		if(this.resource.resource_type == 'view'){
+			this.resourceType = Constants.ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_TYPES_DATABASE_VIEW.label;
+		} else if(this.resource.resource_type == 'url'){
+			this.resourceType = Constants.ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_TYPES_URL_PUBLIC_FILE.label;
+		} else if(this.resource.resource_type == 'file'){
+			this.resourceType = Constants.ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_TYPES_FILE.label;
+		} else{
+			if(document.location.origin == Constants.AOD_BASE_URL){
+				var GA_OD_CoreString = "GA_OD_Core";
+				if(this.resource.url.includes(GA_OD_CoreString)) { this.resourceType = Constants.ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_TYPES_DATABASE_VIEW.label; }
+				else { this.resourceType = Constants.ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_TYPES_FILE.label; }
+			} else{
+				this.resourceType = Constants.ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_TYPES_URL_PUBLIC_FILE.label;
+			}
+		}
+	}
 }
