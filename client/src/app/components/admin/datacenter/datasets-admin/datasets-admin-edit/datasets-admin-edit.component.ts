@@ -1264,7 +1264,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 		} else if(this.resource.resource_type == 'file'){
 			this.resourceType = Constants.ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_TYPES_FILE.label;
 		} else{
-			if(document.location.origin == Constants.AOD_BASE_URL){
+			if(this.resource.url.includes(Constants.AOD_BASE_URL)){
 				var GA_OD_CoreString = "GA_OD_Core";
 				if(this.resource.url.includes(GA_OD_CoreString)) { this.resourceType = Constants.ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_TYPES_DATABASE_VIEW.label; }
 				else { this.resourceType = Constants.ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_TYPES_FILE.label; }
