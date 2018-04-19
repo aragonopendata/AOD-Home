@@ -59,7 +59,6 @@ export class DatasetsAdminEditComponent implements OnInit {
 	extraGranularity: string;
 	extraTemporalFrom: string;
 	extraTemporalUntil: string;
-	extraSpatial: string;
 	extraUriAragopedia: string;
 	extraTypeAragopedia: string;
 	extraShortUriAragopedia: string;
@@ -505,14 +504,16 @@ export class DatasetsAdminEditComponent implements OnInit {
 					case Constants.DATASET_EXTRA_GRANULARITY:
 						this.extraGranularity = this.dataset.extras[index].value;
 						break;
+					case Constants.DATASET_EXTRA_SPATIAL:
+						if(!this.extraGranularity){
+							this.extraGranularity = this.dataset.extras[index].value;
+						}
+						break;
 					case Constants.DATASET_EXTRA_TEMPORAL_FROM:
 						this.extraTemporalFrom = this.dataset.extras[index].value;
 						break;
 					case Constants.DATASET_EXTRA_TEMPORAL_UNTIL:
 						this.extraTemporalUntil=  this.dataset.extras[index].value;
-						break;
-					case Constants.DATASET_EXTRA_SPATIAL:
-						this.extraSpatial = this.dataset.extras[index].value;
 						break;
 					case Constants.DATASET_EXTRA_NAME_ARAGOPEDIA:
 						this.extraNameAragopedia = this.dataset.extras[index].value;
@@ -1006,8 +1007,8 @@ export class DatasetsAdminEditComponent implements OnInit {
 				}
 
 				//EXTRAS TAB
-				if (this.extraSpatial != undefined){
-					this.addExtra(Constants.DATASET_EXTRA_SPATIAL, this.extraSpatial);
+				if (this.extraGranularity != undefined){
+					this.addExtra(Constants.DATASET_EXTRA_GRANULARITY, this.extraGranularity);
 				}
 				if (this.extraDataQuality != undefined){
 					this.addExtra(Constants.DATASET_EXTRA_DATA_QUALITY, this.extraDataQuality);
@@ -1140,8 +1141,8 @@ export class DatasetsAdminEditComponent implements OnInit {
 			}
 	
 			//EXTRAS TAB
-			if (this.extraSpatial != undefined){
-				this.replaceExtra(Constants.DATASET_EXTRA_SPATIAL, this.extraSpatial, true);
+			if (this.extraGranularity != undefined){
+				this.replaceExtra(Constants.DATASET_EXTRA_GRANULARITY, this.extraGranularity, true);
 			}
 			if (this.extraDataQuality != undefined){
 				this.replaceExtra(Constants.DATASET_EXTRA_DATA_QUALITY, this.extraDataQuality, true);
