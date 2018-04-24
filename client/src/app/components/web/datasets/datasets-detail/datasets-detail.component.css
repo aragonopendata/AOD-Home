@@ -106,6 +106,7 @@ a:hover {
     text-align: center;
     background-color: #EAF1F5;
     cursor: pointer;
+    height: 100%;
 }
 
 .recommendedCard img {
@@ -119,13 +120,15 @@ a:hover {
     color:#76A1B8;
     font-size: 14px;
     font-weight: bold;
-    padding-top: 3px;
+    padding-top: 10px;
 }
 
 .recommended-card-block {
     background-color: #76A1B8;
-    height: 80px;
-    margin-top: 5px;
+    height: 110px;
+    margin-top: 10px;
+    position: absolute;
+    width: 384px;    
 }
 
 .recommended-card-block p {
@@ -193,6 +196,7 @@ a:hover {
 
 .cardSize {
     display: block;
+    height: 317px;
 }
 
 .detail {
@@ -201,6 +205,8 @@ a:hover {
 
 .wrapper {
     display: inline-block;
+    width: 100%;
+    height: 317px;
 }
 
 .wrapper:hover .cardSize {
@@ -209,7 +215,7 @@ a:hover {
 
 .wrapper:hover .detail {
     display: block;
-    height: 258px;
+    height: 317px;
     padding: 10px;
     background-color: rgba(235,241,244, 0.95); 
 }
@@ -228,4 +234,31 @@ a:hover {
     background-color: #5ea1b9 !important; 
     border-color: #86b9cb !important;
     margin-right: 5px; 
+}
+
+.tarjetaContainer{
+    width: 400px;
+}
+
+@media screen and (max-width: 1060px){
+	.tarjetaContainer {
+		width: 304px;
+		margin-right: 5%;
+	}
+	.recommendedCard{
+        width: 304px;
+        height: 100%;
+    }
+    .recommended-card-block {
+        width: 304px;    
+    }
+    .wrapper{
+        height: 287px;
+    }
+    .wrapper:hover .detail {
+        height: 287px;
+    }
+    .cardSize {
+        height: 287px;
+    }
 }
