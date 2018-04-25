@@ -240,10 +240,9 @@ a:hover {
     width: 400px;
 }
 
-@media screen and (max-width: 1060px){
+@media screen and (min-width: 1240px) and (max-width: 1540px){
 	.tarjetaContainer {
-		width: 304px;
-		margin-right: 5%;
+        width: 320px;
 	}
 	.recommendedCard{
         width: 304px;
@@ -262,3 +261,91 @@ a:hover {
         height: 287px;
     }
 }
+
+@media screen and (min-width: 940px) and (max-width: 1239px){
+	.tarjetaContainer {
+        width: 240px;
+        height: 238px;
+	}
+	.recommendedCard{
+        height: 100%;
+    }
+    .recommended-card-block {
+        width: 224px;    
+        height: 80px
+    }
+    .wrapper{
+        height: 220px;
+    }
+    .wrapper:hover .detail {
+        height: 220px;
+    }
+    .cardSize {
+        height: 220px;
+    }
+    .detail .back-title .back-value{
+        font-size: 11px;
+    }
+    .recommendedCard p {
+        font-size: 13px;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 939px){
+	.tarjetaContainer {
+        width: 180px;
+        height: 198px;
+	}
+	.recommendedCard{
+        height: 100%;
+    }
+    .recommended-card-block {
+        width: 164px;    
+        height: 66px
+    }
+    .wrapper{
+        height: 182px;
+    }
+    .wrapper:hover .detail {
+        height: 182px;
+    }
+    .cardSize {
+        height: 182px;
+    }
+    .detail .back-title .back-value{
+        font-size: 8px;
+    }
+    .recommendedCard p {
+        font-size: 10px;
+        line-height: 13px;
+    }
+}
+
+@media screen and (max-width: 767px){
+	.tarjetaContainer {
+        width: 100%;
+	}
+	.recommendedCard{
+        height: 100%;
+    }
+    .recommended-card-block {
+        height: 40px;
+        position: initial;
+        width: 100%;
+    }
+    .wrapper{
+        height: 100%;
+        width: 100%;
+    }
+    .cardSize {
+        height: 100%;
+    }
+    .detail .back-title .back-value{
+        font-size: 8px;
+    }
+    .recommendedCard p {
+        font-size: 10px;
+        line-height: 13px;
+    }
+}
+
