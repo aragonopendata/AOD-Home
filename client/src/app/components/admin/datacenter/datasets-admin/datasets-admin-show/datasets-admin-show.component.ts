@@ -174,6 +174,11 @@ export class DatasetsAdminShowComponent implements OnInit {
 				case Constants.DATASET_EXTRA_GRANULARITY:
 					this.extraGranularity = this.dataset.extras[index].value;
 					break;
+				case Constants.DATASET_EXTRA_SPATIAL:
+					if(!this.extraGranularity){
+						this.extraGranularity = this.dataset.extras[index].value;
+					}
+					break;
 				case Constants.DATASET_EXTRA_TEMPORAL_FROM:
 					this.extraTemporalFrom = this.dataset.extras[index].value;
 					break;
