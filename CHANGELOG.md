@@ -134,6 +134,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
 [Unreleased]: https://github.com/aragonopendata/AOD-Home/compare/master...develop
+[1.3.9]: https://github.com/aragonopendata/AOD-Home/compare/v1.3.8...v1.3.9
 [1.3.8]: https://github.com/aragonopendata/AOD-Home/compare/v1.3.7...v1.3.8
 [1.3.7]: https://github.com/aragonopendata/AOD-Home/compare/v1.3.6...v1.3.7
 [1.3.6]: https://github.com/aragonopendata/AOD-Home/compare/v1.3.5...v1.3.6
