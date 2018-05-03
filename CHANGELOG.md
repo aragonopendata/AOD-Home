@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Updated
 - Functionality bugs fixed (admin)
 
+## [1.3.9] - 2018-05-03
+- Fixed: JSON files
+- Fixed: GA_OD_Core views
+- Fixed: Hide access number column
+- Fixed: Detail dataset
+- Fixed: SPARQL section content
+
 ## [1.3.8] - 2018-04-09
 - Fixed: Free search with multiple terms.
 - Fixed: Organizations heading title.
