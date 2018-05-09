@@ -1165,6 +1165,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 			let datasetUpdated: any = this.dataset;
 			datasetUpdated.requestUserId = this.usersAdminService.currentUser.id;
 			datasetUpdated.requestUserName = this.usersAdminService.currentUser.username;
+			datasetUpdated.groups = [];
 			datasetUpdated.groups.push({name: this.selectedTopic})
 			this.datasetsAdminService.updateDataset(datasetUpdated).subscribe( response => {
 				this.msgs = [];
