@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const http = require('http');
+const https = require('https');
 const constants = require('../../util/constants');
 const proxy = require('../../conf/proxy-conf');
 const utils = require('../../util/utils');
@@ -29,7 +29,8 @@ router.get(constants.API_URL_GA_OD_CORE + constants.API_URL_GA_OD_CORE_VIEWS, fu
             httpConf = serviceRequestUrl;
         }
 
-        http.get(httpConf, function (results) {
+        // CAUTION!!! - https will not work at development environment - only pre & pro
+        https.get(httpConf, function (results) {
             var body = '';
             results.on('data', function (chunk) {
                 body += chunk;
