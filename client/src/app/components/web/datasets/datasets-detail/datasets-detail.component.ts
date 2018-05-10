@@ -376,12 +376,14 @@ export class DatasetsDetailComponent implements OnInit {
 		existsSource = false;
 		for (i = 0; i < this.resourcesAux.length; i++) {
 			if (this.existsResourceWithSameName(this.resourcesAux[i].name, name)) {
+				url = this.addFilenameToFileViewUrl(url, name);
 				this.insertSourceWithOtherFormat(id, i, url, format);
 				existsSource = true;
 			}
 		}
 
 		if (!existsSource) {
+			url = this.addFilenameToFileViewUrl(url, name);
 			this.insertNewResource(id, name, url, format);
 		}
 	}
@@ -394,7 +396,7 @@ export class DatasetsDetailComponent implements OnInit {
 		}
 	}
 
-	insertSourceWithOtherFormat(id: string, position: number, url: string, format: string) {
+	insertSourceWithOtherFormat(id: string, position: number, url: string, format: string) { 
 		this.resourcesAux[position].sources.push(url);
 		this.resourcesAux[position].formats.push(format);
 		this.resourcesAux[position].sources_ids.push(id);
@@ -410,6 +412,14 @@ export class DatasetsDetailComponent implements OnInit {
 		newResourceAux.sources_ids = new Array();
 		newResourceAux.sources_ids.push(id);
 		this.resourcesAux.push(newResourceAux);
+	}
+
+	addFilenameToFileViewUrl(url: string, name: string) {
+		if (url.indexOf('/GA_OD_Core/download') >= 0) {
+			return url.concat('&name='.concat(name))
+		} else {
+			return url;
+		}
 	}
 
 	isDatasetDefined(dataset: Dataset) {
