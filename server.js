@@ -4,6 +4,7 @@ const path = require('path');
 const http = require('http');
 const bodyParser = require('body-parser');
 const constants = require('./server/util/constants');
+const session = require('express-session');
 
 //CORS USE
 const corsHeaders = require('./server/conf/cors-headers');
@@ -49,6 +50,13 @@ app.use(express.static(path.join(__dirname, 'client')));
 app.get('/', function (req, res) {
     res.redirect(constants.EXPRESS_NODE_REDIRECT_ROUTING_URL);
 });
+
+// Control Session
+app.use(session({
+    resave: true,
+    saveUninitialized: true,
+    cookie: { secure: true }
+}));
 
 // Set our api routes
 app.use(constants.API_BASE_URL_SECURITY, authenticate);
