@@ -53,6 +53,7 @@ app.get('/', function (req, res) {
 
 // Control Session
 app.use(session({
+    secret: 'keyboard cat',
     resave: true,
     saveUninitialized: true,
     cookie: { secure: true }
