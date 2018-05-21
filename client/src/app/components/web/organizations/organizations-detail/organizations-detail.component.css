@@ -33,6 +33,9 @@ b {
 >>> .ui-datatable-data > tr > td {
     border: none !important;
     border-bottom: 2px solid #5ea2ba !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 >>> .ui-datatable-data > tr:hover {
@@ -45,12 +48,10 @@ b {
 
 a { 
 	text-align:left;
-	/*color:#4F7589 !important;*/
 	color:#3b515c !important;
 	text-decoration: none;
 	outline:0;
 	letter-spacing: 1px;
-	font-weight: bold;
 }
 
 a:hover { 

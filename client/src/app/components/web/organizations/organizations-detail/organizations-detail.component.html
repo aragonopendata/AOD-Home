@@ -66,7 +66,7 @@
 	</div>
 	<div class="ui-g-12"></div>
 </div>
-<p-dataTable [value]="datasets" [responsive]="true" (onSort)="setOrder($event)"#dt>
+<p-dataTable [value]="datasets" (onSort)="setOrder($event)"#dt>
 	<p-column field="name" header="{{numDatasets}} conjuntos de datos encontrados" sortable="custom" sortFunction="setOrder($event)">
 		<ng-template pTemplate="body" let-dataset="rowData">
 			<a routerLink='{{routerLinkDataCatalogDataset}}/{{dataset.name}}' (click)="showDataset(dataset)">
@@ -79,7 +79,7 @@
 			{{dataset?.tracking_summary?.total || '0'}}
 		</ng-template>
 	</p-column>-->
-	<p-column field="lastUpdate" header="Última actualización" [style]="{'width':'220px'}" sortable="custom" sortFunction="setOrder($event)">
+	<p-column field="lastUpdate" header="Última actualización" [style]="{'width':'220px'}" sortable="custom" sortFunction="setOrder($event)"  (window:resize)="onResize()" [hidden]="hideLastUpdateColumn">
 		<ng-template pTemplate="body" let-dataset="rowData">
 			{{dataset.metadata_modified | date: 'dd/MM/yyyy'}}
 		</ng-template>

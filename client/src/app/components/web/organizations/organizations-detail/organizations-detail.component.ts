@@ -16,6 +16,8 @@ import { User } from 'app/models/User';
 
 export class OrganizationsDetailComponent implements OnInit {
 
+	hideAccessNumberColumn: boolean;
+	hideLastUpdateColumn: boolean;
 	org: Organization = new Organization();
 	webpage: string;
 	address: string;
@@ -85,6 +87,7 @@ export class OrganizationsDetailComponent implements OnInit {
                 this.errorMessage="Se ha producido un error en la carga de Publicadores, vuelva a intentarlo y si el error persiste contacte con el administrador.";
 			}
 		});
+		this.onResize();
 	}
 
 	showEditButton(){
@@ -231,4 +234,19 @@ export class OrganizationsDetailComponent implements OnInit {
 			}
 		}
 	}
+
+	onResize(){
+        this.hideLastUpdateColumn = false;
+        this.hideAccessNumberColumn = false;
+        if(window.innerWidth<768){
+            this.hideAccessNumberColumn = true;
+        }else{
+            this.hideAccessNumberColumn = false;
+        }
+        if(window.innerWidth<576){
+            this.hideLastUpdateColumn = true;
+        }else{
+            this.hideLastUpdateColumn = false;
+        }
+    }
 }
