@@ -90,6 +90,8 @@ import { AnalyticsService } from './services/web/analytics.service';
 import { AodCoreAdminService} from './services/admin/aod-core-admin.service';
 import {GoogleAnalyticsEventsService} from "./services/web/google-analytics-events.service";
 
+import { TinymceModule } from 'angular2-tinymce';
+
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -187,6 +189,27 @@ import {GoogleAnalyticsEventsService} from "./services/web/google-analytics-even
 		AccordionModule,
 		MessagesModule,
 		GrowlModule,
+		TinymceModule.withConfig({
+			skin_url: Constants.AOD_ASSETS_BASE_URL + '/public/plugins/tinymce',
+			baseURL: Constants.AOD_ASSETS_BASE_URL + '/public/plugins/tinymce',
+			plugins: [' advlist, table, textcolor, image, link '],
+			style_formats: [
+				{title: 'Tamaño', items: [
+					{title: 'Título 1', format: 'h1'},
+					{title: 'Título 2', format: 'h2'},
+					{title: 'Título 3', format: 'h3'},
+					{title: 'Normal', format: 'p'},
+					{title: 'Código', format: 'pre'},
+				]},
+				{title: 'Bold', icon: 'bold', format: 'bold'},
+				{title: 'Italic', icon: 'italic', format: 'italic'},
+				{title: 'Underline', icon: 'underline', format: 'underline'},
+				{ advlist_bullet_styles: "disc" },
+				{ advlist_number_styles: "default" },
+			],
+			toolbar: ' styleselect | forecolor backcolor | numlist bullist | image link table ',
+			menubar: false
+		  })
 	],
 	providers: [
 		Logger,

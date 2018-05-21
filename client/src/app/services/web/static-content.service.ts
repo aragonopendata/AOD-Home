@@ -13,6 +13,12 @@ export class StaticContentService {
 		return this.http.get(fullUrl).map(res => res.json());
 	}
 
+	public getOpenDataInfoStaticContentById(id) {
+		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_STATIC_CONTENT_INFO 
+						+ Constants.SERVER_API_LINK_STATIC_CONTENT_INFO_OPEN_DATA + '/' + id;
+		return this.http.get(fullUrl).map(res => res.json());
+	}
+
 	public getOpenDataInfoTermsStaticContent() {
 		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_STATIC_CONTENT_INFO 
 						+ Constants.SERVER_API_LINK_STATIC_CONTENT_INFO_OPEN_DATA + '/terms';
