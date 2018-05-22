@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Constants } from '../../app.constants';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 declare var jQuery:any;
 
 @Component({
@@ -33,7 +34,7 @@ export class HomeComponent implements OnInit {
 	routerLinkToolsSparql: string;
 	routerLinkToolsGithub: string;
 
-	constructor( private router: Router, private activatedRoute: ActivatedRoute ) { 
+	constructor( private router: Router, private activatedRoute: ActivatedRoute, private location: Location ) { 
 		//Dynamic URL build to send to HTML template
 		this.routerLinkDataCatalog = Constants.ROUTER_LINK_DATA_CATALOG;
 		this.routerLinkDataTopics = Constants.ROUTER_LINK_DATA_TOPICS;
@@ -213,6 +214,9 @@ export class HomeComponent implements OnInit {
 				//SPARQL
 				case Constants.STATIC_INFO_SPARQL_SECTION_CONTENT:
 					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_SPARQL_SECTION_REDIRECT+fragment);
+				break;
+				default:
+					this.location.go('/');
 				break;
 			}
 		});
