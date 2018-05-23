@@ -1,6 +1,6 @@
-import 'rxjs/add/operator/map';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Http, Response, URLSearchParams } from '@angular/http';
 import { Constants } from '../../app.constants';
 import { Dataset } from '../../models/Dataset';
@@ -21,7 +21,7 @@ export class DatasetsService {
 						+ '&' + Constants.SERVER_API_LINK_PARAM_PAGE + '=' + page.toString() 
 						+ '&' + Constants.SERVER_API_LINK_PARAM_ROWS + '=' + rows.toString() 
 						+ '&' + Constants.SERVER_API_LINK_PARAM_TYPE + '=' + type;
-		return this.http.get(fullUrl).map(res => res.json());
+		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
 
 	public getDatasetsByText(sort: string, page: number, rows: number, text: string) {
@@ -30,19 +30,19 @@ export class DatasetsService {
 						+ '&' + Constants.SERVER_API_LINK_PARAM_PAGE + '=' + page.toString() 
 						+ '&' + Constants.SERVER_API_LINK_PARAM_ROWS + '=' + rows.toString()
 						+ '&' + Constants.SERVER_API_LINK_PARAM_TEXT + '=' + text;
-		return this.http.get(fullUrl).map(res => res.json());
+		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
 
 	public getDatasetByName(datasetName: string) {
 		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS 
 						+ '/' + datasetName;
-		return this.http.get(fullUrl).map(res => res.json());
+		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
 
 	public getDatasetHomerByPackageId(datasetHomerName: string) {
 		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS_HOMER 
 						+ '/' + datasetHomerName;
-		return this.http.get(fullUrl).map(res => res.json());
+		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
 
 	public getDatasetsByTopic(topicName: string, sort: string, page: number, rows: number, type: string) {
@@ -52,7 +52,7 @@ export class DatasetsService {
 						+ '&' + Constants.SERVER_API_LINK_PARAM_PAGE + '=' + page.toString() 
 						+ '&' + Constants.SERVER_API_LINK_PARAM_ROWS + '=' + rows.toString() 
 						+ '&' + Constants.SERVER_API_LINK_PARAM_TYPE + '=' + type;
-		return this.http.get(fullUrl).map(res => res.json());
+		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
 
 	public getDatasetsByOrganization(organizationName: string, sort: string, page: number, rows: number, type: string) {
@@ -62,7 +62,7 @@ export class DatasetsService {
 						+ '&' + Constants.SERVER_API_LINK_PARAM_PAGE + '=' + page.toString() 
 						+ '&' + Constants.SERVER_API_LINK_PARAM_ROWS + '=' + rows.toString() 
 						+ '&' + Constants.SERVER_API_LINK_PARAM_TYPE + '=' + type;
-		return this.http.get(fullUrl).map(res => res.json());
+		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
 
 	public getDatasetsBytags(sort: string, page: number, rows: number, tags: string[]) {
@@ -78,7 +78,7 @@ export class DatasetsService {
 						+ '&' + Constants.SERVER_API_LINK_PARAM_PAGE + '=' + page.toString() 
 						+ '&' + Constants.SERVER_API_LINK_PARAM_ROWS + '=' + rows.toString() 
 						+ '&' + Constants.SERVER_API_LINK_PARAM_TAGS + '=' + tagsQuery;
-		return this.http.get(fullUrl).map(res => res.json());
+		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
 
 	public getDatasetsByStats(sort: string, page: number, rows: number, groupName: string) {
@@ -87,40 +87,40 @@ export class DatasetsService {
 						+ '?' + Constants.SERVER_API_LINK_PARAM_SORT + '=' + sort 
 						+ '&' + Constants.SERVER_API_LINK_PARAM_PAGE + '=' + page.toString() 
 						+ '&' + Constants.SERVER_API_LINK_PARAM_ROWS + '=' + rows.toString() 
-		return this.http.get(fullUrl).map(res => res.json());
+		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
 
 	public getDatasetResourceView(resoruce_id:string) {
 		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_URL_DATASETS_RESOURCE_VIEW 
 						+ '?' + Constants.SERVER_API_LINK_PARAM_RESOURCE_ID + '=' + resoruce_id 
-		return this.http.get(fullUrl).map(res => res.json());
+		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
 
 	public getNewestDataset() {
 		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS_NEWEST;
-		return this.http.get(fullUrl).map(res => res.json());
+		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
 
 	public getDownloadedDataset() {
 		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS_DOWNLOADED;
-		return this.http.get(fullUrl).map(res => res.json());
+		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
 
 	public getDatasetsNumber() {
 		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS_COUNT;
-		return this.http.get(fullUrl).map(res => res.json());
+		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
 
 	public getResourcesNumber() {
 		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_RESOURCES_COUNT;
-		return this.http.get(fullUrl).map(res => res.json());
+		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
 
 	public getDatasetsAutocomplete(text: string, limit: number) {
 		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS_AUTOCOMPLETE 
 						+ '?' + Constants.SERVER_API_LINK_PARAM_TEXT + '=' + text 
 						+ '&' + Constants.SERVER_API_LINK_PARAM_LIMIT + '=' + limit.toString();
-		return this.http.get(fullUrl).map(res => res.json());
+		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
 
 	public setDataset(dataset: Dataset) {
@@ -140,7 +140,7 @@ export class DatasetsService {
 		if (query) {
 			fullUrl += '?q=' + query;
 		}
-		return this.http.get(fullUrl).map(res => res.json());
+		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
 
 	/**
@@ -158,13 +158,13 @@ export class DatasetsService {
 		+ '&' + Constants.SERVER_API_LINK_PARAM_ROWS + '=' + rows.toString()
 		+ '&' + Constants.SERVER_API_LINK_PARAM_LANG + '=' + lang
 		+ '&' + Constants.SERVER_API_LINK_PARAM_TEXT + '=' + text;
-		return this.http.get(fullUrl).map(res => res.json());
+		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
 
 	public getDatasetRDF(datasetName: string) {
 		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS_RDF 
 						+ '/' + datasetName;
-		return this.http.get(fullUrl).map(res => res.json());
+		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
 
 	private handleError(error: Response) {

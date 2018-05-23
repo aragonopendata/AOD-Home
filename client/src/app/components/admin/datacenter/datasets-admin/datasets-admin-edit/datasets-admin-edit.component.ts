@@ -1,8 +1,10 @@
 import { Tag } from './../../../../../models/Tag';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit,  ViewEncapsulation} from '@angular/core';
-import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Rx';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap, catchError } from 'rxjs/operators';
+import { of } from 'rxjs/observable/of';
 import { SelectItem, DialogModule, Message, CalendarModule } from 'primeng/primeng';
 import { DatasetsAdminService } from '../../../../../services/admin/datasets-admin.service';
 import { TopicsAdminService } from '../../../../../services/admin/topics-admin.service';
@@ -916,15 +918,15 @@ export class DatasetsAdminEditComponent implements OnInit {
 	filterTagsMultiple(): void {
 		//Funciona la busqueda, falla al poner un caracter especial
 		this.tagTitle
-			.debounceTime(Constants.DATASET_AUTOCOMPLETE_DEBOUNCE_TIME)
-			.distinctUntilChanged()
-			.switchMap(query => query
+			.pipe(debounceTime(Constants.DATASET_AUTOCOMPLETE_DEBOUNCE_TIME))
+			.pipe(distinctUntilChanged())
+			.pipe(switchMap(query => query
 				? this.datasetsAdminService.getTags(query)
-				: Observable.of<Tag[]>([]))
-			.catch(error => {
+				: Observable.of<Tag[]>([])))
+			.pipe(catchError(error => {
 				console.error(error);
 				return Observable.of<Tag[]>([]);
-			}).subscribe(tags => {
+			})).subscribe(tags => {
 				try {
 					this.datasetTags = <Tag[]>(tags).result;	
 				} catch (error) {

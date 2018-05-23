@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Constants } from '../../app.constants';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class AnalyticsService {
@@ -9,6 +10,6 @@ export class AnalyticsService {
 
     public getFiles() {
         let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_WEB_ANALYTICS;
-        return this.http.get(fullUrl).map((res: Response) => res.json());
+        return this.http.get(fullUrl).pipe(map((res: Response) => res.json()));
     }
 }

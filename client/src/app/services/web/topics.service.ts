@@ -1,6 +1,6 @@
-import 'rxjs/add/operator/map';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Topic } from '../../models/Topic';
 import { Http, Response, Headers, URLSearchParams } from '@angular/http';
 import { Constants } from '../../app.constants';
@@ -14,7 +14,7 @@ export class TopicsService {
 
 	public getTopics() {
 		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_TOPICS;
-		return this.http.get(fullUrl).map(res => res.json());
+		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
 
 	public setTopic(topic: Topic) {

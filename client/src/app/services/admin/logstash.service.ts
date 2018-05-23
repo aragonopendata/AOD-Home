@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Constants } from '../../app.constants';
-
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class LogstashService {
@@ -22,7 +22,7 @@ export class LogstashService {
 		let options = new RequestOptions({ headers: headers });
 		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_LOGSTASH_FILES;
 		console.log(fullUrl);
-		return this.http.get(fullUrl, options).map((res: Response) => res.json());
+		return this.http.get(fullUrl, options).pipe(map((res: Response) => res.json()));
 	}
 
 	public saveLogstash(logstash: any) {
@@ -30,7 +30,7 @@ export class LogstashService {
 		this.createAuthorizationHeader(headers);
 		let options = new RequestOptions({ headers: headers });
 		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_LOGSTASH_INSERT;
-		return this.http.post(fullUrl, JSON.stringify(logstash), { headers: headers }).map(res => res.json());
+		return this.http.post(fullUrl, JSON.stringify(logstash), { headers: headers }).pipe(map(res => res.json()));
 	}
 
 	public updateLogstash(logstash: any) {
@@ -38,7 +38,7 @@ export class LogstashService {
 		this.createAuthorizationHeader(headers);
 		let options = new RequestOptions({ headers: headers });
 		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_LOGSTASH_INSERT + "/" + logstash.id_logstash;
-		return this.http.put(fullUrl, JSON.stringify(logstash), { headers: headers }).map(res => res.json());
+		return this.http.put(fullUrl, JSON.stringify(logstash), { headers: headers }).pipe(map(res => res.json()));
 	}
 
 	public deleteLogstash(logstash: any) {
@@ -46,7 +46,7 @@ export class LogstashService {
 		this.createAuthorizationHeader(headers);
 		let options = new RequestOptions({ headers: headers });
 		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_LOGSTASH_DELETE + "/" + logstash.id_logstash;
-		return this.http.delete(fullUrl, { headers: headers }).map(res => res.json());
+		return this.http.delete(fullUrl, { headers: headers }).pipe(map(res => res.json()));
 	}
 
 	public reloadLogstash() {
@@ -54,6 +54,6 @@ export class LogstashService {
 		this.createAuthorizationHeader(headers);
 		let options = new RequestOptions({ headers: headers });
 		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_LOGSTASH_RELOAD;
-		return this.http.get(fullUrl, { headers: headers }).map(res => res.json());
+		return this.http.get(fullUrl, { headers: headers }).pipe(map(res => res.json()));
 	}
 }

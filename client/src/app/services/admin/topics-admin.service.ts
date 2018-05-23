@@ -1,6 +1,6 @@
-import 'rxjs/add/operator/map';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Topic } from '../../models/Topic';
 import { Http, Response, Headers, URLSearchParams } from '@angular/http';
 import { Constants } from '../../app.constants';
@@ -37,14 +37,14 @@ export class TopicsAdminService {
 	public getTopics() {
 		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_TOPICS;
 		let headers = this.buildRequestHeaders();
-		return this.http.get(fullUrl, { headers: headers }).map(res => res.json());
+		return this.http.get(fullUrl, { headers: headers }).pipe(map(res => res.json()));
 	}
 
 	public getTopicByName(topicName: string) {
 		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_TOPICS 
 						+ '/' + topicName;
 		let headers = this.buildRequestHeaders();
-		return this.http.get(fullUrl, { headers: headers }).map(res => res.json());
+		return this.http.get(fullUrl, { headers: headers }).pipe(map(res => res.json()));
 	}
 
 	public setTopic(topic: Topic) {

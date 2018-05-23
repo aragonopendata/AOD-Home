@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Constants } from '../../app.constants';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class RolesAdminService {
@@ -20,7 +21,7 @@ export class RolesAdminService {
 		let options = new RequestOptions({ headers: headers });
 		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_GET_ROLE
 						+ '/' + roleId;
-		return this.http.get(fullUrl, options).map(res => res.json());
+		return this.http.get(fullUrl, options).pipe(map(res => res.json()));
 	}
 
 	public getRoles() {
@@ -28,6 +29,6 @@ export class RolesAdminService {
 		this.createAuthorizationHeader(headers);
 		let options = new RequestOptions({ headers: headers });
 		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_ROLES_LIST;
-		return this.http.get(fullUrl, options).map(res => res.json());
+		return this.http.get(fullUrl, options).pipe(map(res => res.json()));
 	}
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, URLSearchParams, RequestOptions, Headers} from '@angular/http';
 import { Constants } from 'app/app.constants';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class AodCoreAdminService {
@@ -32,7 +33,7 @@ export class AodCoreAdminService {
     public getViews(){
         let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_GA_OD_CORE + Constants.SERVER_API_LINK_GA_OD_CORE_VIEWS 
         let headers = this.buildRequestHeaders();
-        return this.http.get(fullUrl, { headers: headers }).map(res => res.json());
+        return this.http.get(fullUrl, { headers: headers }).pipe(map(res => res.json()));
     }
 
 }

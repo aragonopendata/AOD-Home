@@ -13,7 +13,7 @@ import { Topic } from '../../../../models/Topic';
 import { Constants } from '../../../../app.constants';
 import { NavigationEnd, Event } from '@angular/router';
 import { Autocomplete } from 'app/models/Autocomplete';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-datasets-list',

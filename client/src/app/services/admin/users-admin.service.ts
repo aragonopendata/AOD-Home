@@ -1,6 +1,6 @@
-import 'rxjs/add/operator/map';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Constants } from '../../app.constants';
 import { User } from '../../models/User';
@@ -42,14 +42,14 @@ export class UsersAdminService {
 			+ '&' + Constants.SERVER_API_LINK_PARAM_PAGE + '=' + page.toString()
 			+ '&' + Constants.SERVER_API_LINK_PARAM_ROWS + '=' + rows.toString();
 		let headers = this.buildRequestHeaders();
-		return this.http.get(fullUrl, { headers: headers }).map(res => res.json());
+		return this.http.get(fullUrl, { headers: headers }).pipe(map(res => res.json()));
 	}
 
 	public getUser(userId: number) {
 		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL  + Constants.SERVER_API_LINK_ADMIN_USERS 
 			+ '/' + userId;
 		let headers = this.buildRequestHeaders();
-		return this.http.get(fullUrl, { headers:  headers }).map(res  =>  res.json());
+		return this.http.get(fullUrl, { headers:  headers }).pipe(map(res  =>  res.json()));
 	}
 
 	public getOrganizationsByCurrentUser() {
@@ -58,7 +58,7 @@ export class UsersAdminService {
 			let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_USERS 
 			+ '/' + this.currentUser.id + Constants.SERVER_API_LINK_ADMIN_USER_ORGANIZATIONS;
 			let headers = this.buildRequestHeaders();
-			return this.http.get(fullUrl, { headers: headers }).map(res => res.json());
+			return this.http.get(fullUrl, { headers: headers }).pipe(map(res => res.json()));
 		}
 	}
 
@@ -69,7 +69,7 @@ export class UsersAdminService {
 			+ '/' + user.id + Constants.SERVER_API_LINK_ADMIN_USER_ORGANIZATIONS;
 			let headers = this.buildRequestHeaders();
 			let requestBodyParams: any = user;
-			return this.http.post(fullUrl, JSON.stringify(requestBodyParams), { headers: headers }).map(res => res.json());
+			return this.http.post(fullUrl, JSON.stringify(requestBodyParams), { headers: headers }).pipe(map(res => res.json()));
 		}
 	}
 
@@ -78,7 +78,7 @@ export class UsersAdminService {
 		let requestBodyParams = user;
 		requestBodyParams.role = user.role[0].id;
 		let headers = this.buildRequestHeaders();
-		return this.http.post(fullUrl, JSON.stringify(requestBodyParams), { headers: headers }).map(res => res.json());
+		return this.http.post(fullUrl, JSON.stringify(requestBodyParams), { headers: headers }).pipe(map(res => res.json()));
 	}
 
 	public updateUser(user: User) {
@@ -86,7 +86,7 @@ export class UsersAdminService {
 			+ '/' + user.id;
 		let headers = this.buildRequestHeaders();
 		let requestBodyParams: any = user;
-		return this.http.put(fullUrl, JSON.stringify(requestBodyParams), { headers: headers }).map(res => res.json());
+		return this.http.put(fullUrl, JSON.stringify(requestBodyParams), { headers: headers }).pipe(map(res => res.json()));
 	}
 
 	public removeUser(user: User) {
@@ -96,6 +96,6 @@ export class UsersAdminService {
 		};
         let headers = this.buildRequestHeaders();
 		let options = new RequestOptions({ headers: headers, body: JSON.stringify(requestBodyParams)});
-		return this.http.delete(fullUrl, options).map((res:Response) => res.json());
+		return this.http.delete(fullUrl, options).pipe(map((res:Response) => res.json()));
 	}
 }

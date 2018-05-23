@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { OrganizationAdmin } from '../../models/OrganizationAdmin';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Http, Response, Headers, URLSearchParams, RequestOptions } from '@angular/http';
 import { Constants } from '../../app.constants';
 
@@ -56,7 +57,7 @@ export class OrganizationsAdminService {
 		this.refreshUser();
 		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_ORGANIZATIONS;
 		let headers = this.buildRequestHeaders();
-		return this.http.get(fullUrl, { headers: headers }).map(res => res.json());
+		return this.http.get(fullUrl, { headers: headers }).pipe(map(res => res.json()));
 	}
 
 	public getOrganizationByName(organizationName: string) {
@@ -64,7 +65,7 @@ export class OrganizationsAdminService {
 		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_ORGANIZATIONS 
 						+ '/' + organizationName;
 		let headers = this.buildRequestHeaders();
-		return this.http.get(fullUrl, { headers: headers }).map(res => res.json());
+		return this.http.get(fullUrl, { headers: headers }).pipe(map(res => res.json()));
 	}
 
 	public createOrganization(image: any, organization: OrganizationAdmin, webpage: string, address: string, person: string) {
@@ -109,14 +110,14 @@ export class OrganizationsAdminService {
 		formData.append('extras', JSON.stringify(extras));
 		let headers = this.buildRequestHeadersforFormData();
 		let options = new RequestOptions({ headers: headers}); // Create a request option
-		return this.http.post(fullUrl, formData, options).map((res:Response) => res.json());
+		return this.http.post(fullUrl, formData, options).pipe(map((res:Response) => res.json()));
     }
 
 	public updateOrganization(organization: OrganizationAdmin){
 	    let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_ORGANIZATION_CUD_OPERATIONS;
 		let headers = this.buildRequestHeaders();
 		let requestBodyParams: any = organization;
-		return this.http.put(fullUrl, JSON.stringify(requestBodyParams), { headers: headers }).map(res => res.json());
+		return this.http.put(fullUrl, JSON.stringify(requestBodyParams), { headers: headers }).pipe(map(res => res.json()));
 	}
 
 	public removeOrganization(organization_name: string, user_id: number,  user_name:string) {
@@ -126,7 +127,7 @@ export class OrganizationsAdminService {
 		};
 		let headers = this.buildRequestHeaders();
 		let options = new RequestOptions({ headers: headers, body: JSON.stringify(requestBodyParams)});
-		return this.http.delete(fullUrl, options).map((res:Response) => res.json());
+		return this.http.delete(fullUrl, options).pipe(map((res:Response) => res.json()));
 	} 
 
 
