@@ -8,6 +8,7 @@
 			"es6",
 			"dom"
 		],
+		"watch": true,
 		"mapRoot": "./",
 		"module": "es6",
 		"moduleResolution": "node",

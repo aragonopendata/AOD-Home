@@ -5,6 +5,7 @@ import { StaticContentService } from '../../../../../../services/web/static-cont
 import { Constants } from '../../../../../../app.constants';
 import { StaticContentAdminService } from '../../../../../../services/admin/static-content-admin.service';
 import { Observable } from 'rxjs/Observable';
+import * as tinymce from '../../../../../../../../node_modules/tinymce/tinymce'
 
 @Component({
 	selector: 'app-open-data-admin',
@@ -13,7 +14,7 @@ import { Observable } from 'rxjs/Observable';
 })
 export class OpenDataAdminComponent implements OnInit {
 
-	edit: boolean = false;
+    edit: boolean = false;
 
     index: number = 0;
     content: StaticContent;
@@ -93,12 +94,37 @@ export class OpenDataAdminComponent implements OnInit {
     }
 
 	save(index, content) {
-        console.log(content)
 		this.staticContentAdminService.setOpenDataInfoStaticContent(content).subscribe();
     }
 
 	editContent(index, event, content) {
         this.content = content;
+        console.log(document.getElementById('#editor'+index));
+        /*tinymce.init({
+            file_picker_callback: function (callback, value, meta) {
+				if (meta.filetype == 'image') {
+					var input = document.createElement('input');
+					input.setAttribute('type', 'file');
+					input.setAttribute('accept', 'image/*');
+					input.click();
+					input.onchange = function () {
+						var file = input.files[0];
+						var reader = new FileReader();
+						reader.onload = function (e) {
+							var id = 'blobid' + (new Date()).getTime();
+							var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+							var base64 = reader.result.split(',')[1];
+							var blobInfo = blobCache.create(id, file, base64);
+							blobCache.add(blobInfo);
+
+        					// call the callback and populate the Title field with the file name
+        					callback(blobInfo.blobUri(), { title: file.name });
+						};
+						reader.readAsDataURL(file);
+					};
+				}
+			}
+        });*/
         if(event.currentTarget.textContent === "Guardar"){
             this.save(index, this.content);
             this.contents[index].previewText = this.getPreviewText(this.contents[index].contentText);
@@ -110,24 +136,6 @@ export class OpenDataAdminComponent implements OnInit {
         var tmpElmnt = document.createElement("div");
         tmpElmnt.innerHTML = text;
         return tmpElmnt.textContent || tmpElmnt.innerText || "";
-    }
-
-    addTable(index){
-        var tableElement = document.createElement("table");
-        var row1 = tableElement.insertRow(0);
-        var row2 = tableElement.insertRow(1);
-        var cell1 = row1.insertCell(0);
-        var cell2 = row1.insertCell(1);
-        var cell3 = row2.insertCell(0);
-        var cell4 = row2.insertCell(1);
-
-        cell1.innerHTML = "Hola";
-        cell2.innerHTML = "soy";
-        cell3.innerHTML = "Edu";
-        cell4.innerHTML = "Feliz Navidad";
-
-        this.contents[index].contentText += tableElement.innerHTML;
-        console.log(this.contents[index].contentText);
     }
 
 }
