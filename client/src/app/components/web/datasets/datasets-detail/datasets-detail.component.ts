@@ -11,6 +11,7 @@ import { AuthenticationService } from 'app/services/security/authentication.serv
 import { UsersAdminService } from 'app/services/admin/users-admin.service';
 import { GoogleAnalyticsEventsService } from "../../../../services/web/google-analytics-events.service";
 import { Organization } from 'app/models/Organization';
+import { Subject } from 'rxjs';
 
 @Component({
 	selector: 'app-datasets-detail',
@@ -19,6 +20,8 @@ import { Organization } from 'app/models/Organization';
 })
 
 export class DatasetsDetailComponent implements OnInit {
+
+	public static doUpdate: Subject<any> = new Subject();
 
 	extrasIAESTNotEmpty: boolean = false;
 	dataset: Dataset = new Dataset();
@@ -82,6 +85,12 @@ export class DatasetsDetailComponent implements OnInit {
 		this.routerLinkTwitterShare = Constants.SHARE_TWITTER + window.location.href;
 		this.routerLinkGooglePlusShare = Constants.SHARE_GOOGLE_PLUS + window.location.href;
 		this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
+
+		DatasetsDetailComponent.doUpdate.subscribe(res => {
+			this.initializeDataset();
+			this.dataset.name = res;
+			this.loadDataset(this.dataset);
+		});
 	}
 
 	ngOnInit() {

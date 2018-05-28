@@ -122,7 +122,7 @@
                         (keyup.enter)="searchDatasetsByText(searchBox.value); openNav();" />
                     <div id="resultsList">
                         <div *ngFor="let autocomplete of datasetAutocomplete" class="search-result">
-                            <a routerLink='/{{routerLinkDataCatalogDataset}}/{{autocomplete.name}}' (click)="openNav()">
+                            <a (click)="openNav(); navigate(autocomplete.name)">
                                     {{autocomplete.title}}
                                 </a>
                         </div>

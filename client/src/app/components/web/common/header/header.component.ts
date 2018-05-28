@@ -6,8 +6,9 @@ import { Dataset } from 'app/models/Dataset';
 import { Observable ,  Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { Autocomplete } from 'app/models/Autocomplete';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DatasetsService } from 'app/services/web/datasets.service';
+import { DatasetsDetailComponent } from '../../datasets/datasets-detail/datasets-detail.component';
 
 @Component({
     selector: 'app-header',
@@ -50,7 +51,8 @@ export class HeaderComponent implements OnInit {
     aragonParticipaWebUrl: string;
 
     constructor(private locale: AppComponent, private constants: Constants,
-            private datasetService: DatasetsService, private router: Router) { 
+            private datasetService: DatasetsService, private router: Router,
+            private route: ActivatedRoute) { 
         this.aodBaseUrl = Constants.AOD_BASE_URL;
         this.presupuestosBaseUrl = Constants.PRESUPUESTOS_BASE_URL;
         this.transparenciaWebUrl = Constants.TRANSPARENCIA_WEB_URL;
@@ -167,9 +169,13 @@ export class HeaderComponent implements OnInit {
         $('.overlay').css('top', $('#header').height());
         if(this.menuActive==true){
             $('#myNav').height($(window).height() - $('#header').height());
-            
         }
-    } 
+    }
+
+    navigate(name: string) {
+        DatasetsDetailComponent.doUpdate.next(name);
+        this.router.navigate(['/'+this.routerLinkDataCatalogDataset, name]);
+    }
 
     ngOnInit() {
         this.getAutocomplete();
