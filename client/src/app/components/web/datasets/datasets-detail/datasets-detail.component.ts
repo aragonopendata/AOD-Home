@@ -12,6 +12,8 @@ import { UsersAdminService } from 'app/services/admin/users-admin.service';
 import { GoogleAnalyticsEventsService } from "../../../../services/web/google-analytics-events.service";
 import { Organization } from 'app/models/Organization';
 import { Subject } from 'rxjs';
+import { DatasetsUtils } from '../../../../utils/DatasetsUtils';
+import { Extra } from '../../../../models/Extra';
 
 @Component({
 	selector: 'app-datasets-detail',
@@ -23,9 +25,11 @@ export class DatasetsDetailComponent implements OnInit {
 
 	public static doUpdate: Subject<any> = new Subject();
 
-	extrasIAESTNotEmpty: boolean = false;
 	dataset: Dataset = new Dataset();
 	datasetHomer: DatasetHomer = new DatasetHomer();
+
+
+	extras: Map<any, any> = new Map();
 	extraDictionary: string;
 	extraDictionaryURL: string[];
 	extraDataQuality: string;
@@ -39,6 +43,7 @@ export class DatasetsDetailComponent implements OnInit {
 	extraShortUriAragopedia: string;
 	extraNameAragopedia: string;
 
+	extrasIAESTNotEmpty: boolean = false;
 	extraIAESTTemaEstadistico: string;
 	extraIAESTUnidadEstadistica: string;
 	extraIAESTPoblacionEstadistica: string;
@@ -48,7 +53,7 @@ export class DatasetsDetailComponent implements OnInit {
 	extraIAESTFuente: string;
 	extraIAESTTratamientoEstadistico: string;
 	extraIAESTLegislacionUE: string;
-	resourceView: ResourceView[];
+	resourceView: ResourceView[] = new Array();
 	iframeRes: string;
 	iframeError: string;
 
@@ -89,8 +94,57 @@ export class DatasetsDetailComponent implements OnInit {
 		DatasetsDetailComponent.doUpdate.subscribe(res => {
 			this.initializeDataset();
 			this.dataset.name = res;
-			this.loadDataset(this.dataset);
+			this.getDataset(this.dataset);
 		});
+	}
+
+	initializeDataset() {
+		this.dataset = new Dataset();
+		this.resourcesAux = new Array();
+		this.extras = new Map();
+	}
+
+	getDataset(dataset: Dataset){
+		let dt = new DatasetsUtils(this.datasetsService);
+		let prom = dt.getDataset(this.dataset);
+		prom.then(data => {
+			let dataValid = JSON.parse(data).success;
+			if(dataValid){
+				this.dataset = JSON.parse(data).result;
+				dt.getResourceView(this.dataset, this.resourceView);
+				dt.setExtras(this.dataset, this.extras);
+				this.getExtras();
+				//dt.getExtrasIAEST();
+				dt.makeFileSourceList(this.dataset, this.resourcesAux);
+				this.getDatasetsRecommended();
+			}else {
+				console.error("Error: loadDataset() - datasets-detail.component.ts");
+				this.errorTitle = this.datasetListErrorTitle;
+				this.errorMessage = this.datasetListErrorMessage;
+			}
+		});
+	}
+
+	getExtras(){
+		this.extraDictionary = this.extras.get(Constants.DATASET_EXTRA_DATA_DICTIONARY);
+		this.extraDictionaryURL = this.extras.get(Constants.DATASET_EXTRA_DATA_DICTIONARY_URL);
+		this.extraDataQuality = this.extras.get(Constants.DATASET_EXTRA_DATA_QUALITY);
+		this.extraDataQualityURL = this.extras.get(Constants.DATASET_EXTRA_DATA_QUALITY_URL);
+		this.extraFrequency = this.extras.get(Constants.DATASET_EXTRA_FREQUENCY);
+		this.extraGranularity = this.extras.get(Constants.DATASET_EXTRA_GRANULARITY);
+		this.extraTemporalFrom = this.extras.get(Constants.DATASET_EXTRA_TEMPORAL_FROM);
+		this.extraTemporalUntil = this.extras.get(Constants.DATASET_EXTRA_TEMPORAL_UNTIL);
+		this.extraUriAragopedia = this.extras.get(Constants.DATASET_EXTRA_URI_ARAGOPEDIA);
+		this.extraTypeAragopedia = this.extras.get(Constants.DATASET_EXTRA_TYPE_ARAGOPEDIA);
+		this.extraShortUriAragopedia = this.extras.get(Constants.DATASET_EXTRA_SHORT_URI_ARAGOPEDIA);
+		this.extraNameAragopedia = this.extras.get(Constants.DATASET_EXTRA_NAME_ARAGOPEDIA);
+
+		if ((this.extraDataQuality == undefined || this.extraDataQuality == '') && this.extraDataQualityURL.length != 0) {
+			this.extraDataQuality = Constants.DATASET_EXTRA_DATA_QUALITY_DEFAULT;
+		}
+		if ((this.extraDictionary == undefined || this.extraDictionary == '') && this.extraDictionaryURL.length != 0) {
+			this.extraDictionary = Constants.DATASET_EXTRA_DATA_DICTIONARY_DEFAULT;
+		}
 	}
 
 	ngOnInit() {
@@ -107,7 +161,7 @@ export class DatasetsDetailComponent implements OnInit {
 		});
 
 		if (this.dataset.name) {
-			this.loadDataset(this.dataset);
+			this.getDataset(this.dataset);
 		}
 		if (this.datasetHomer.package_id) {
 			this.loadDatasetHomer(this.datasetHomer);
@@ -142,36 +196,6 @@ export class DatasetsDetailComponent implements OnInit {
 		}
 	}
 
-	initializeDataset() {
-		this.dataset = new Dataset();
-		this.resourcesAux = new Array();
-		this.datasetsRecommended = new Array();
-	}
-
-	loadDataset(dataset: Dataset) {
-		this.initializeDataset();
-		this.datasetsService.getDatasetByName(dataset.name).subscribe(dataResult => {
-			try {
-				let dataResultValid = JSON.parse(dataResult).success;
-				if (dataResultValid) {
-					this.dataset = JSON.parse(dataResult).result;
-					this.getResourceView();
-					this.getExtras();
-					//this.getExtrasIAEST();
-					this.getDatasetsRecommended();
-					this.makeFileSourceList();
-				} else {
-					this.errorTitle = this.datasetListErrorTitle;
-					this.errorMessage = this.datasetListErrorMessage;
-				}
-			} catch (error) {
-				console.error("Error: loadDataset() - datasets-detail.component.ts");
-				this.errorTitle = this.datasetListErrorTitle;
-				this.errorMessage = this.datasetListErrorMessage;
-			}
-		});
-	}
-
 	loadDatasetHomer(datasetHomer: DatasetHomer) {
 		this.datasetHomer = new DatasetHomer();
 		this.datasetsService.getDatasetHomerByPackageId(datasetHomer.package_id).subscribe(dataResult => {
@@ -185,119 +209,8 @@ export class DatasetsDetailComponent implements OnInit {
 		});
 	}
 
-	getResourceView() {
-		this.resourceView = [];
-		for (var i = 0; i < this.dataset.resources.length; i++) {
-			this.datasetsService.getDatasetResourceView(this.dataset.resources[i].id).subscribe(result => {
-				try {
-					if (JSON.parse(result).result[0]) {
-						this.resourceView.push(JSON.parse(result).result[0]);
-					} else {
-						this.resourceView.push(null);
-					}
-				} catch (error) {
-					console.error("Error: getResourceView() - datasets-detail.component.ts");
-					this.errorTitle = this.datasetListErrorTitle;
-					this.errorMessage = this.datasetListErrorMessage;
-				}
-			});
-
-		}
-	}
-
-	getExtras() {
-		this.extraDictionaryURL = [];
-		this.extraDataQualityURL = [];
-		for (var index = 0; index < this.dataset.extras.length; index++) {
-			if (this.dataset.extras[index].key.indexOf(Constants.DATASET_EXTRA_DATA_DICTIONARY_URL) == 0) {
-				this.extraDictionaryURL.push(this.dataset.extras[index].value);
-			}
-			if (this.dataset.extras[index].key.indexOf(Constants.DATASET_EXTRA_DATA_QUALITY_URL) == 0) {
-				this.extraDataQualityURL.push(this.dataset.extras[index].value);
-			}
-			switch (this.dataset.extras[index].key) {
-				case Constants.DATASET_EXTRA_DATA_DICTIONARY:
-					this.extraDictionary = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_DATA_QUALITY:
-					this.extraDataQuality = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_FREQUENCY:
-					this.extraFrequency = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_GRANULARITY:
-					this.extraGranularity = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_SPATIAL:
-					if(!this.extraGranularity){
-						this.extraGranularity = this.dataset.extras[index].value;
-					}
-					break;
-				case Constants.DATASET_EXTRA_TEMPORAL_FROM:
-					this.extraTemporalFrom = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_TEMPORAL_UNTIL:
-					this.extraTemporalUntil = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_NAME_ARAGOPEDIA:
-					this.extraNameAragopedia = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_SHORT_URI_ARAGOPEDIA:
-					this.extraShortUriAragopedia = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_TYPE_ARAGOPEDIA:
-					this.extraTypeAragopedia = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_URI_ARAGOPEDIA:
-					this.extraUriAragopedia = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_IAEST_TEMA_ESTADISTICO:
-					this.extrasIAESTNotEmpty = true;
-					this.extraIAESTTemaEstadistico = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_IAEST_UNIDAD_ESTADISTICA:
-					this.extrasIAESTNotEmpty = true;
-					this.extraIAESTUnidadEstadistica = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_IAEST_POBLACION_ESTADISTICA:
-					this.extrasIAESTNotEmpty = true;
-					this.extraIAESTPoblacionEstadistica = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_IAEST_UNIDAD_MEDIDA:
-					this.extrasIAESTNotEmpty = true;
-					this.extraIAESTUnidadMedida = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_IAEST_TIPO_OPERACION:
-					this.extrasIAESTNotEmpty = true;
-					this.extraIAESTTipoOperacion = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_IAEST_TIPOLOGIA_DATOS_ORIGEN:
-					this.extrasIAESTNotEmpty = true;
-					this.extraIAESTTipologiaDatosOrigen = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_IAEST_FUENTE:
-					this.extrasIAESTNotEmpty = true;
-					this.extraIAESTFuente = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_IAEST_TRATAMIENTO_ESTADISTICO:
-					this.extrasIAESTNotEmpty = true;
-					this.extraIAESTTratamientoEstadistico = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_IAEST_LEGISLACION_UE:
-					this.extrasIAESTNotEmpty = true;
-					this.extraIAESTLegislacionUE = this.dataset.extras[index].value;
-					break;
-			}
-		}
-		if ((this.extraDataQuality == undefined || this.extraDataQuality == '') && this.extraDataQualityURL.length != 0) {
-			this.extraDataQuality = Constants.DATASET_EXTRA_DATA_QUALITY_DEFAULT;
-		}
-		if ((this.extraDictionary == undefined || this.extraDictionary == '') && this.extraDictionaryURL.length != 0) {
-			this.extraDictionary = Constants.DATASET_EXTRA_DATA_DICTIONARY_DEFAULT;
-		}
-	}
-
 	getDatasetsRecommended() {
+		this.datasetsRecommended = new Array();
 		let datasetRecommendedByTopic: Dataset = new Dataset();
 		let datasetRecommendedByOrganization: Dataset = new Dataset();
 		let datasetRecommendedByTag: Dataset = new Dataset();
@@ -373,64 +286,6 @@ export class DatasetsDetailComponent implements OnInit {
 		}
 	}
 
-	makeFileSourceList() {
-		for (let newRes of this.dataset.resources) {
-			this.keepDataResource(newRes.id, newRes.name, newRes.url, newRes.format);
-		}
-	}
-
-	keepDataResource(id: string, name: string, url: string, format: string) {
-		var i: number;
-		var existsSource: boolean;
-		existsSource = false;
-		for (i = 0; i < this.resourcesAux.length; i++) {
-			if (this.existsResourceWithSameName(this.resourcesAux[i].name, name)) {
-				url = this.addFilenameToFileViewUrl(url, name);
-				this.insertSourceWithOtherFormat(id, i, url, format);
-				existsSource = true;
-			}
-		}
-
-		if (!existsSource) {
-			url = this.addFilenameToFileViewUrl(url, name);
-			this.insertNewResource(id, name, url, format);
-		}
-	}
-
-	existsResourceWithSameName(resourceAuxName: string, newResourceName: string) {
-		if (resourceAuxName == newResourceName) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	insertSourceWithOtherFormat(id: string, position: number, url: string, format: string) { 
-		this.resourcesAux[position].sources.push(url);
-		this.resourcesAux[position].formats.push(format);
-		this.resourcesAux[position].sources_ids.push(id);
-	}
-
-	insertNewResource(id: string, name: string, url: string, format: string) {
-		var newResourceAux: ResourceAux = new ResourceAux();
-		newResourceAux.name = name;
-		newResourceAux.sources = new Array();
-		newResourceAux.sources.push(url);
-		newResourceAux.formats = new Array();
-		newResourceAux.formats.push(format);
-		newResourceAux.sources_ids = new Array();
-		newResourceAux.sources_ids.push(id);
-		this.resourcesAux.push(newResourceAux);
-	}
-
-	addFilenameToFileViewUrl(url: string, name: string) {
-		if (url.indexOf('/GA_OD_Core/download') >= 0) {
-			return url.concat('&name='.concat(name))
-		} else {
-			return url;
-		}
-	}
-
 	isDatasetDefined(dataset: Dataset) {
 		if (dataset && dataset != null && dataset != undefined) {
 			return true;
@@ -456,7 +311,7 @@ export class DatasetsDetailComponent implements OnInit {
 
 	showDataset(dataset: Dataset) {
 		this.datasetsService.setDataset(dataset);
-		this.loadDataset(dataset);
+		this.getDataset(dataset);
 	}
 
 	downloadRDF(datasetName: string) {
