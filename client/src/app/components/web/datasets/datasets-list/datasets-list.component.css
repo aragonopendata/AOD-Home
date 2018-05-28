@@ -3,9 +3,9 @@
     max-width: 80vw;
 }
 
->>> html, body {
+html, body {
     font-family: 'Roboto', sans-serif;
-    line-height: 1;
+    line-height: 1.5;
     margin: 2px 0;
     letter-spacing: 0.05em;
     font-weight: 300;
@@ -20,6 +20,10 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 300;
 }
 
+a {
+    margin-bottom: 0 !important;
+}
+
 p {
     font-family: 'Roboto', sans-serif;
     line-height: 1;
@@ -28,28 +32,37 @@ p {
     font-weight: 300;
 }
 
->>> th {
-    background: #5ea2ba !important;
-    color: white !important;
-}
-
->>> .ui-datatable-data > tr:hover {
-    background-color: 	rgba(94, 162, 186, 0.1) !important;
-}
-
->>> .ui-datatable-data > tr > td {
+.ui-datatable-data > tr > td {
     border: none !important;
     border-bottom: 2px solid #5ea2ba !important;
 }
 
->>> .ui-widget-content {
+.ui-datatable-data > tr:hover {
+    background-color: 	rgba(94, 162, 186, 0.1) !important;
+}
+
+.ui-widget-content {
     border: none !important;
 }
 
->>> .ui-paginator-bottom {
+.ui-paginator-bottom {
     background: white;
     border: none;
 }
+
+.page-item a {
+    color: #3b515c!important;
+}
+
+.page-item a:hover {
+    color: #000!important;
+}
+
+.ui-datatable-thead > tr > th {
+    background: #5ea2ba !important;
+    color: white !important;
+}
+
 
 b {
     font-family: 'Roboto', sans-serif;
@@ -101,20 +114,20 @@ b {
     margin-bottom: 10px;
 }
 
-a {
+.ui-datatable a {
 	font-size: 14px !important;
 	text-align: left;
 	color: #3b515c !important;
 	text-decoration: none;
 	outline: 0;
 	letter-spacing: 1px;
-	font-weight: bold;
 	word-wrap: break-word;
 }
 
-a:hover {
-	font-size: 14px !important;
-	color: #000 !important;
+.ui-datatable a:hover {
+	font-size: 14px;
+    color: #000 !important;
+    text-decoration: none;
 }
 
 .counter {
@@ -151,15 +164,26 @@ a:hover {
     background: linear-gradient(white, #e2e2dc);
 }
 
+.textosNormales a{
+	color: #3b515c !important;
+	text-decoration: none;
+	outline: 0;
+}
+
+.textosNormales a:hover {
+    color: #000 !important;
+    text-decoration: none;
+}
+
 p-autocomplete{
     width: 100%;
 }
 
->>>.ui-inputtext{
+.ui-inputtext{
     width: 100%;
 }
 
->>>.ui-datatable-data > tr > td{
+.ui-datatable-data > tr > td{
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

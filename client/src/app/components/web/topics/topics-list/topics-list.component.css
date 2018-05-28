@@ -40,6 +40,7 @@ b {
     margin: 2px 0 20px;
     letter-spacing: 0.1em;
     font-weight: 700;
+    color: #212529;
 }
 
 .card {
@@ -55,6 +56,7 @@ b {
     align-self: center;
     max-width: 80%;
     height: auto;
+    max-height: 100%;
     margin: 10px;
 }
 

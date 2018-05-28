@@ -7,10 +7,12 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1;
     margin: 2px 0 20px;
     letter-spacing: 0.1em;
-    color: #5ea2ba;
+    color: #5ea2ba !important;
+    font-family: 'RobotoLight', sans-serif;
 }
 
 p {
+    font-family: 'RobotoLight', sans-serif;
     line-height: 1;
     margin: 2px 0 20px;
     letter-spacing: 0.1em;
@@ -23,14 +25,15 @@ b {
     margin: 2px 0 20px;
     letter-spacing: 0.1em;
     font-weight: 700; 
+    color: #5ea2ba !important;
 }
 
->>> th {
+th {
     background: #5ea2ba !important;
     color: white !important;
 }
 
->>> .ui-datatable-data > tr > td {
+.ui-datatable-data > tr > td {
     border: none !important;
     border-bottom: 2px solid #5ea2ba !important;
     white-space: nowrap;
@@ -38,15 +41,28 @@ b {
     text-overflow: ellipsis;
 }
 
->>> .ui-datatable-data > tr:hover {
+.ui-datatable-data > tr:hover {
     background-color: 	rgba(94, 162, 186, 0.1) !important;
 }
 
->>> .ui-widget-content {
+.ui-widget-content {
     border: none !important;
 }
 
-a { 
+.ui-datatable a {
+    text-align:left;
+	color:#3b515c !important;
+	text-decoration: none;
+	outline:0;
+	letter-spacing: 1px;
+}
+
+.ui-datatable a:hover {
+    color: #000 !important;
+    text-decoration: none;
+}
+
+p > a { 
 	text-align:left;
 	color:#3b515c !important;
 	text-decoration: none;
@@ -54,7 +70,7 @@ a {
 	letter-spacing: 1px;
 }
 
-a:hover { 
+p > a:hover { 
 	text-align:left;
 	color:#000000 !important;
 	text-decoration: none;
@@ -77,10 +93,10 @@ a:hover {
 }
 
 .tags {
-	border: 1px solid #7391a5;
+	border: 1px solid #7391a5 !important;
 	padding-top:5px; padding-bottom:5px; padding-left:5px; padding-right:5px;
 	color: #3b515c !important;
-	background-color: #FFFFFF;
+	background-color: #FFFFFF !important;
 	text-decoration: none  !important;
     font-weight: bold;
 }
@@ -92,4 +108,13 @@ a:hover {
 	color: #FFFFFF !important;
 	text-decoration: none  !important;
 	font-weight: bold;
+}
+
+.page-item a {
+    color: #3b515c!important;
+}
+
+.page-item a:hover {
+    color: #000!important;
+    cursor: pointer;
 }

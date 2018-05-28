@@ -1,6 +1,6 @@
 import { OrganizationsService } from './../../../../services/web/organizations.service';
 import { Organization } from './../../../../models/Organization';
-import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
 import { Location, PlatformLocation } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SelectItem, DropdownModule } from 'primeng/primeng';
@@ -18,7 +18,8 @@ import { Observable } from 'rxjs';
 @Component({
     selector: 'app-datasets-list',
     templateUrl: './datasets-list.component.html',
-    styleUrls: ['./datasets-list.component.css']
+    styleUrls: ['./datasets-list.component.css'],
+    encapsulation: ViewEncapsulation.None
 })
 
 export class DatasetsListComponent implements OnInit {

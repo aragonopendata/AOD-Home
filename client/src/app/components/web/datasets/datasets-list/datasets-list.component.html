@@ -223,8 +223,8 @@
                         </div>
                         <div class="boxContent">
                             <div>
-                                <div *ngFor="let newDataset of newestDatasets">
-                                    <a routerLink='/{{routerLinkDataCatalogDataset}}/{{newDataset.name}}' (click)="showDataset(newDataset)" class="textosNormales">
+                                <div *ngFor="let newDataset of newestDatasets" class="textosNormales">
+                                    <a routerLink='/{{routerLinkDataCatalogDataset}}/{{newDataset.name}}' (click)="showDataset(newDataset)">
                                     {{newDataset.title}}
                                 </a>
                                     <div *ngIf="newestDatasets.indexOf(newDataset) != 2" class="separadorVentana"></div>
@@ -241,8 +241,8 @@
                         </div>
                         <div class="boxContent">
                             <div>
-                                <div *ngFor="let downloadedDataset of downloadedDatasets">
-                                    <a routerLink='/{{routerLinkDataCatalogDataset}}/{{downloadedDataset.name}}' (click)="showDataset(downloadedDataset)" class="textosNormales">
+                                <div *ngFor="let downloadedDataset of downloadedDatasets" class="textosNormales">
+                                    <a routerLink='/{{routerLinkDataCatalogDataset}}/{{downloadedDataset.name}}' (click)="showDataset(downloadedDataset)">
                                     {{downloadedDataset.title}}
                                 </a>
                                     <div *ngIf="downloadedDatasets.indexOf(downloadedDataset) != 2" class="separadorVentana"></div>

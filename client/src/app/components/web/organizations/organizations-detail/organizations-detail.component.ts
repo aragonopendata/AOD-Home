@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Organization } from '../../../../models/Organization';
 import { OrganizationsService } from '../../../../services/web/organizations.service';
@@ -11,7 +11,8 @@ import { User } from 'app/models/User';
 @Component({
 	selector: 'app-organizations-detail',
 	templateUrl: './organizations-detail.component.html',
-	styleUrls: ['./organizations-detail.component.css']
+	styleUrls: ['./organizations-detail.component.css'],
+	encapsulation: ViewEncapsulation.None
 })
 
 export class OrganizationsDetailComponent implements OnInit {

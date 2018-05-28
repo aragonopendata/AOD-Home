@@ -6,7 +6,7 @@ h1, h2, h3, h4, h5, h6, li {
 }
 
 .card-header a {
-    font-size: 25px !important;
+    font-size: 25px;
     font-weight: bold;
 }
 
@@ -68,6 +68,7 @@ a:hover {
     display: block;
     transition: 0.3s;
     font-weight: bold;
+    margin-bottom: 0;
 }
 
 .overlay a:hover, .overlay a:focus, .overlay li:hover, .overlay li:focus {
@@ -162,8 +163,6 @@ a:hover {
     margin-left: 10px;
 }
 
-
-
 #logo {
     max-width: 100%;
     height: auto;
@@ -216,11 +215,53 @@ a:hover {
         height:50px;
         width: 50px;
     }
+    .search-result a{
+        font-size: 16px !important;
+    }
 }
 
-@media screen and (max-width: 450px) {
+@media screen and (min-width: 361px) and (max-width: 479px) {
     .aMenu, .aLogin, .menu, .menuLogin {
         height: 40px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .textBox{
+        font-size: 25px;
+        height: 50px;
+    }
+    .btnSearch{
+        font-size: 25px;
+        height: 50px;
+    }
+    .aMenu, .aLogin, .menu, .menuLogin {
+        height: 30px;
+    }
+    .overlay a, .overlay li{
+        font-size: 15px;
+    }
+    ::-webkit-input-placeholder {
+        font-size: 15px !important;
+     }
+     
+     :-moz-placeholder { /* Firefox 18- */
+        font-size: 15px !important;
+     }
+
+     ::-moz-placeholder {  /* Firefox 19+ */
+        font-size: 15px !important;
+     }
+	
+	:-ms-input-placeholder { /* Internet Explorer 10-11 */
+        font-size: 15px !important;
+	}
+	
+	::-ms-input-placeholder { /* Microsoft Edge */
+        font-size: 15px !important;
+    }
+    .search-result a{
+        font-size: 12px !important;
     }
 }
 
@@ -263,7 +304,7 @@ a:hover {
 	}
 }
 
-@media (max-width: 768px) { 
+@media (min-width: 450px) and (max-width: 768px) { 
     .imgob{
         width :25%;
         vertical-align: text-top;
@@ -328,6 +369,22 @@ a:hover {
     border-bottom: 2px solid #76a1b8;
     text-align: center;
 }
+
+@media screen and (max-width: 850px){
+    
+    .left{
+        margin-left: 0;
+        width: 100%;
+        padding-top:8px;
+    }
+    .right{
+        width: 100%;
+    }
+}
+
+.bg-light{
+    background-color: rgba(255, 255, 255, 0.8) !important;
+}
   @include media-breakpoint-up(sm) {
     .active {
         color:#ffffff !important;
@@ -360,69 +417,3 @@ a:hover {
       font-size: 16px;
     }
   }
-
-@media screen and (max-width: 360px) {
-    .textBox{
-        font-size: 25px;
-        height: 50px;
-    }
-    .btnSearch{
-        font-size: 25px;
-        height: 50px;
-    }
-    .overlay a, .overlay li{
-        font-size: 15px;
-    }
-    .logo{
-        height: 34px;
-        width: 160px;
-    }
-    .menuLogin{
-        height:30px;
-    }
-    .menu{
-        height: 30px;
-    }
-    .aLogin{
-        height: 30px;
-    }
-    .aMenu{
-        height: 30px;
-    }
-    ::-webkit-input-placeholder {
-        font-size: 15px !important;
-     }
-     
-     :-moz-placeholder { /* Firefox 18- */
-        font-size: 15px !important;
-     }
-
-     ::-moz-placeholder {  /* Firefox 19+ */
-        font-size: 15px !important;
-     }
-	
-	:-ms-input-placeholder { /* Internet Explorer 10-11 */
-        font-size: 15px !important;
-	}
-	
-	::-ms-input-placeholder { /* Microsoft Edge */
-        font-size: 15px !important;
-	}    
-}
-
-
-@media screen and (max-width: 850px){
-    
-    .left{
-        margin-left: 0;
-        width: 100%;
-        padding-top:8px;
-    }
-    .right{
-        width: 100%;
-    }
-}
-
-.bg-light{
-    background-color: rgba(255, 255, 255, 0.8) !important;
-}

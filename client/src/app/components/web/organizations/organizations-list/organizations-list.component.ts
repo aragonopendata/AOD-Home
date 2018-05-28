@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SelectItem } from 'primeng/primeng';
 import { Organization } from '../../../../models/Organization';
 import { OrganizationsService } from '../../../../services/web/organizations.service';
@@ -7,7 +7,8 @@ import { Constants } from '../../../../app.constants';
 @Component({
 	selector: 'app-organizations-list',
 	templateUrl: './organizations-list.component.html',
-	styleUrls: ['./organizations-list.component.css']
+	styleUrls: ['./organizations-list.component.css'],
+	encapsulation: ViewEncapsulation.None
 })
 
 export class OrganizationsListComponent implements OnInit {

@@ -12,6 +12,12 @@ a:focus {
     text-decoration: none;
 }
 
+b p {
+    font-family: RobotoLight,sans-serif;
+    line-height: 1.3;
+    letter-spacing: .1em;
+}
+
 p ul {
     list-style-type: none;
     padding-left: 0px;
@@ -41,18 +47,6 @@ p ul {
 
 [aria-expanded=true] i:before {
     content: "\f056";
-}
-
-.collapsed {
-    font-weight: 300;
-    font-size: 30px;
-    letter-spacing: 0.1em;
-}
-
-.headLink {
-    font-weight: 300;
-    font-size: 30px;
-    letter-spacing: 0.1em;
 }
 
 .textContent a {

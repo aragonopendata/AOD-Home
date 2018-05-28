@@ -22,7 +22,9 @@ h1, h2, h3, h4, h5, h6 {
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;  
+    box-orient: vertical;
 }
 
 p {
@@ -33,16 +35,26 @@ p {
     font-weight: 300;
 }
 
+.nav-link {
+    margin-bottom: 0;
+}
+
 .description{
     font-family: 'Roboto', sans-serif;
-    line-height: 1;
     margin: 2px 0 5px;
     letter-spacing: 0.05em;
     font-weight: 300;
-    overflow: hidden;
+    display: -webkit-box;
+    line-height: 1;
+    /* autoprefixer: off */
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+    display: block;
     display: -webkit-box;
     -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;  
+    line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 b {
@@ -51,14 +63,15 @@ b {
     margin: 2px 0 20px;
     letter-spacing: 0.1em;
     font-weight: 700;
+    color: #212529;
 }
 
-a {
+.ui-datatable a {
     color: #3b515c !important;
     text-decoration: none;
 }
 
-a:hover {
+.ui-datatable a:hover {
     color: #000000 !important;
     text-decoration: none;
 }
@@ -99,22 +112,35 @@ a:hover {
    padding-right: 10px;
 }
 
->>> th {
+th {
     background: #5ea2ba !important;
     color: white !important;
 }
 
->>> .ui-datatable-data > tr > td {
+.ui-datatable-data > tr > td {
     border: none !important;
     border-bottom: 2px solid #5ea2ba !important;
 }
 
->>> .ui-datatable-data > tr:hover {
+.ui-datatable-data > tr:hover {
     background-color: 	rgba(94, 162, 186, 0.1) !important;
 }
 
->>> .ui-widget-content {
+.ui-widget-content {
     border: none !important;
+}
+
+.ui-paginator-bottom {
+    background: white;
+    border: none;
+}
+
+.page-item a {
+    color: #3b515c!important;
+}
+
+.page-item a:hover {
+    color: #000!important;
 }
 
 .numDatasets {
