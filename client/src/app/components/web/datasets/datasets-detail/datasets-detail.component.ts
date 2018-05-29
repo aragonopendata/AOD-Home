@@ -106,7 +106,7 @@ export class DatasetsDetailComponent implements OnInit {
 
 	getDataset(dataset: Dataset){
 		let dt = new DatasetsUtils(this.datasetsService);
-		let prom = dt.getDataset(this.dataset);
+		let prom = dt.getDataset(dataset);
 		prom.then(data => {
 			let dataValid = JSON.parse(data).success;
 			if(dataValid){
@@ -310,6 +310,7 @@ export class DatasetsDetailComponent implements OnInit {
 
 
 	showDataset(dataset: Dataset) {
+		this.initializeDataset();
 		this.datasetsService.setDataset(dataset);
 		this.getDataset(dataset);
 	}
