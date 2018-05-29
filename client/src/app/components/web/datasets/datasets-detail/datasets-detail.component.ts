@@ -98,6 +98,27 @@ export class DatasetsDetailComponent implements OnInit {
 		});
 	}
 
+	ngOnInit() {
+		this.activatedRoute.params.subscribe(params => {
+			try {
+				this.showEditButton();
+				this.dataset.name = params[Constants.ROUTER_LINK_DATA_PARAM_DATASET_NAME];
+				this.datasetHomer.package_id = params[Constants.ROUTER_LINK_DATA_PARAM_DATASET_HOMER_NAME];
+			} catch (error) {
+				console.error("Error: ngOnInit() params - datasets-detail.component.ts");
+				this.errorTitle = this.datasetListErrorTitle;
+				this.errorMessage = this.datasetListErrorMessage;
+			}
+		});
+
+		if (this.dataset.name) {
+			this.getDataset(this.dataset);
+		}
+		if (this.datasetHomer.package_id) {
+			this.loadDatasetHomer(this.datasetHomer);
+		}
+	}
+
 	initializeDataset() {
 		this.dataset = new Dataset();
 		this.resourcesAux = new Array();
@@ -144,27 +165,6 @@ export class DatasetsDetailComponent implements OnInit {
 		}
 		if ((this.extraDictionary == undefined || this.extraDictionary == '') && this.extraDictionaryURL.length != 0) {
 			this.extraDictionary = Constants.DATASET_EXTRA_DATA_DICTIONARY_DEFAULT;
-		}
-	}
-
-	ngOnInit() {
-		this.activatedRoute.params.subscribe(params => {
-			try {
-				this.showEditButton();
-				this.dataset.name = params[Constants.ROUTER_LINK_DATA_PARAM_DATASET_NAME];
-				this.datasetHomer.package_id = params[Constants.ROUTER_LINK_DATA_PARAM_DATASET_HOMER_NAME];
-			} catch (error) {
-				console.error("Error: ngOnInit() params - datasets-detail.component.ts");
-				this.errorTitle = this.datasetListErrorTitle;
-				this.errorMessage = this.datasetListErrorMessage;
-			}
-		});
-
-		if (this.dataset.name) {
-			this.getDataset(this.dataset);
-		}
-		if (this.datasetHomer.package_id) {
-			this.loadDatasetHomer(this.datasetHomer);
 		}
 	}
 
@@ -308,6 +308,7 @@ export class DatasetsDetailComponent implements OnInit {
 		return exists;
 	}
 
+	//Methods called from HTML.
 
 	showDataset(dataset: Dataset) {
 		this.initializeDataset();

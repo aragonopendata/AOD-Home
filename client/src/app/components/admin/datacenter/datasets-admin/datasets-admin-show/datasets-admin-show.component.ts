@@ -8,6 +8,7 @@ import { Constants } from '../../../../../app.constants';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DatasetsAdminService } from 'app/services/admin/datasets-admin.service';
 import { AuthenticationService } from 'app/services/security/authentication.service';
+import { DatasetsUtils } from '../../../../../utils/DatasetsUtils';
 declare var jQuery:any;
 
 @Component({
@@ -17,6 +18,7 @@ declare var jQuery:any;
 })
 export class DatasetsAdminShowComponent implements OnInit {
 
+	extras: Map<any, any> = new Map();
 	extrasIAESTNotEmpty: boolean = false;
 	dataset: Dataset = new Dataset();
 	datasetLoaded: boolean = false;
@@ -68,8 +70,12 @@ export class DatasetsAdminShowComponent implements OnInit {
 	datasetListErrorMessage: string;
 
 
-	constructor(private datasetsAdminService: DatasetsAdminService, private activatedRoute: ActivatedRoute
-		, public sanitizer: DomSanitizer, public router: Router, public autenticationService: AuthenticationService) {
+	constructor(private datasetsService: DatasetsService,
+		private activatedRoute: ActivatedRoute,
+		public sanitizer: DomSanitizer,
+		public router: Router,
+		public autenticationService: AuthenticationService) {
+			
 		this.datasetListErrorTitle = Constants.DATASET_LIST_ERROR_TITLE;
 		this.datasetListErrorMessage = Constants.DATASET_LIST_ERROR_MESSAGE;
 		this.routerLinkDatasetList = Constants.ROUTER_LINK_ADMIN_DATACENTER_DATASETS;
@@ -94,7 +100,7 @@ export class DatasetsAdminShowComponent implements OnInit {
 			}
 		});
 		if(this.dataset.name){
-			this.loadDataset(this.dataset);
+			this.getDataset(this.dataset);
 		}
 		this.showEditButton();
 	}
@@ -102,25 +108,25 @@ export class DatasetsAdminShowComponent implements OnInit {
 	initializeDataset() {
 		this.dataset = new Dataset();
 		this.resourcesAux = new Array();
+		this.extras = new Map();
 	}
-	
-	loadDataset(dataset: Dataset) {
-		this.initializeDataset();
-		this.datasetsAdminService.getDatasetByName(dataset.name).subscribe(dataResult => {
-			try {
-				if(dataResult != Constants.ADMIN_DATASET_ERR_LOAD_DATASET){
-					this.datasetLoaded = true;
-					this.dataset = JSON.parse(dataResult).result;
-					this.getResourceView();
-					this.getExtras();
-					this.makeFileSourceList();
-				}else{
-					this.disableButtons();
-				}
-			} catch (error) {
-				console.error("Error: loadDataset() - datasets-admin-show.component.ts");
+
+	getDataset(dataset: Dataset){
+		let dt = new DatasetsUtils(this.datasetsService);
+		let prom = dt.getDataset(dataset);
+		prom.then(data => {
+			let dataValid = JSON.parse(data).success;
+			if(dataValid){
+				this.dataset = JSON.parse(data).result;
+				dt.getResourceView(this.dataset, this.resourceView);
+				dt.setExtras(this.dataset, this.extras);
+				this.getExtras();
+				//dt.getExtrasIAEST();
+				dt.makeFileSourceList(this.dataset, this.resourcesAux);
+			}else {
+				console.error("Error: loadDataset() - datasets-detail.component.ts");
 				this.errorTitle = this.datasetListErrorTitle;
-                this.errorMessage = this.datasetListErrorMessage;
+				this.errorMessage = this.datasetListErrorMessage;
 			}
 		});
 	}
@@ -129,187 +135,44 @@ export class DatasetsAdminShowComponent implements OnInit {
 		jQuery("#editButton").prop("disabled",true);
 	}
 
-	getResourceView(){
-		this.resourceView = [];
-		if (this.dataset.resources != undefined ){
-			for (var i = 0; i < this.dataset.resources.length; i++) {
-				this.datasetsAdminService.getDatasetResourceView(this.dataset.resources[i].id).subscribe(result => {
-					try {
-						if(JSON.parse(result).result[0]){
-							this.resourceView.push(JSON.parse(result).result[0]);
-						}else{
-							this.resourceView.push(null);
-						}
-					} catch (error) {
-						console.error("Error: getResourceView() - datasets-admin-show.component.ts");
-						this.errorTitle = this.datasetListErrorTitle;
-						this.errorMessage = this.datasetListErrorMessage;
-					}
-				});
-	
-			}
-		}
-	}
+	getExtras(){
+		this.extraDictionary = this.extras.get(Constants.DATASET_EXTRA_DATA_DICTIONARY);
+		this.extraDictionaryURL = this.extras.get(Constants.DATASET_EXTRA_DATA_DICTIONARY_URL);
+		this.extraDataQuality = this.extras.get(Constants.DATASET_EXTRA_DATA_QUALITY);
+		this.extraDataQualityURL = this.extras.get(Constants.DATASET_EXTRA_DATA_QUALITY_URL);
+		this.extraFrequency = this.extras.get(Constants.DATASET_EXTRA_FREQUENCY);
+		this.extraGranularity = this.extras.get(Constants.DATASET_EXTRA_GRANULARITY);
+		this.extraTemporalFrom = this.extras.get(Constants.DATASET_EXTRA_TEMPORAL_FROM);
+		this.extraTemporalUntil = this.extras.get(Constants.DATASET_EXTRA_TEMPORAL_UNTIL);
+		this.extraUriAragopedia = this.extras.get(Constants.DATASET_EXTRA_URI_ARAGOPEDIA);
+		this.extraTypeAragopedia = this.extras.get(Constants.DATASET_EXTRA_TYPE_ARAGOPEDIA);
+		this.extraShortUriAragopedia = this.extras.get(Constants.DATASET_EXTRA_SHORT_URI_ARAGOPEDIA);
+		this.extraNameAragopedia = this.extras.get(Constants.DATASET_EXTRA_NAME_ARAGOPEDIA);
 
-	getExtras() {
-		this.extraDictionaryURL = [];
-		this.extraDataQualityURL = [];
-		for (var index = 0; index < this.dataset.extras.length; index++) {
-			if (this.dataset.extras[index].key.indexOf(Constants.DATASET_EXTRA_DATA_DICTIONARY_URL) == 0) {
-				this.extraDictionaryURL.push(this.dataset.extras[index].value);
-			}
-			if (this.dataset.extras[index].key.indexOf(Constants.DATASET_EXTRA_DATA_QUALITY_URL) == 0) {
-				this.extraDataQualityURL.push(this.dataset.extras[index].value);
-			}
-			switch (this.dataset.extras[index].key) {
-				case Constants.DATASET_EXTRA_DATA_DICTIONARY:
-					this.extraDictionary = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_DATA_QUALITY:
-					this.extraDataQuality = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_FREQUENCY:
-					this.extraFrequency = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_GRANULARITY:
-					this.extraGranularity = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_SPATIAL:
-					if(!this.extraGranularity){
-						this.extraGranularity = this.dataset.extras[index].value;
-					}
-					break;
-				case Constants.DATASET_EXTRA_TEMPORAL_FROM:
-					this.extraTemporalFrom = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_TEMPORAL_UNTIL:
-					this.extraTemporalUntil = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_NAME_ARAGOPEDIA:
-					this.extraNameAragopedia = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_SHORT_URI_ARAGOPEDIA:
-					this.extraShortUriAragopedia = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_TYPE_ARAGOPEDIA:
-					this.extraTypeAragopedia = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_URI_ARAGOPEDIA:
-					this.extraUriAragopedia = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_IAEST_TEMA_ESTADISTICO:
-					this.extrasIAESTNotEmpty = true;
-					this.extraIAESTTemaEstadistico = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_IAEST_UNIDAD_ESTADISTICA:
-					this.extrasIAESTNotEmpty = true;
-					this.extraIAESTUnidadEstadistica = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_IAEST_POBLACION_ESTADISTICA:
-					this.extrasIAESTNotEmpty = true;
-					this.extraIAESTPoblacionEstadistica = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_IAEST_UNIDAD_MEDIDA:
-					this.extrasIAESTNotEmpty = true;
-					this.extraIAESTUnidadMedida = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_IAEST_TIPO_OPERACION:
-					this.extrasIAESTNotEmpty = true;
-					this.extraIAESTTipoOperacion = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_IAEST_TIPOLOGIA_DATOS_ORIGEN:
-					this.extrasIAESTNotEmpty = true;
-					this.extraIAESTTipologiaDatosOrigen = this.dataset.extras[index].value;	
-					break;
-				case Constants.DATASET_EXTRA_IAEST_FUENTE:
-					this.extrasIAESTNotEmpty = true;
-					this.extraIAESTFuente = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_IAEST_TRATAMIENTO_ESTADISTICO:
-					this.extrasIAESTNotEmpty = true;
-					this.extraIAESTTratamientoEstadistico = this.dataset.extras[index].value;
-					break;
-				case Constants.DATASET_EXTRA_IAEST_LEGISLACION_UE:
-					this.extrasIAESTNotEmpty = true;
-					this.extraIAESTLegislacionUE = this.dataset.extras[index].value;
-				break;
-			}
-		}
-		if((this.extraDataQuality == undefined || this.extraDataQuality == '') && this.extraDataQualityURL.length != 0){
+		if ((this.extraDataQuality == undefined || this.extraDataQuality == '') && this.extraDataQualityURL.length != 0) {
 			this.extraDataQuality = Constants.DATASET_EXTRA_DATA_QUALITY_DEFAULT;
 		}
-		if((this.extraDictionary == undefined || this.extraDictionary == '') && this.extraDictionaryURL.length != 0){
+		if ((this.extraDictionary == undefined || this.extraDictionary == '') && this.extraDictionaryURL.length != 0) {
 			this.extraDictionary = Constants.DATASET_EXTRA_DATA_DICTIONARY_DEFAULT;
 		}
 	}
 
-	makeFileSourceList() {
-		if(this.dataset.resources.length > 0){
-			for (let newRes of this.dataset.resources) {
-				this.keepDataResource(newRes.id, newRes.name, newRes.url, newRes.format);
+	showEditButton(){
+		try {
+			let user = this.autenticationService.getCurrentUser();
+			if(user.rol != Constants.ADMIN_USER_ROL_ORGANIZATION_MEMBER){
+				this.showEdit = true;
 			}
-		}else{
-			this.resourcesEmpty = true;
+		} catch (error) {
+			console.log(error);
+			console.error('Error: showEditButton() - datasets-admin-show.component.ts');
 		}
 	}
 
-	keepDataResource (id:string, name: string, url: string, format: string) {
-		var i: number;
-		var existsSource: boolean;
-		existsSource = false;
-		for (i = 0; i < this.resourcesAux.length; i++) {
-			if (this.existsResourceWithSameName(this.resourcesAux[i].name, name)) {
-				this.insertSourceWithOtherFormat(id, i,url,format);
-				existsSource = true;
-			}
-		}
-
-		if (!existsSource) {
-			this.insertNewResource(id, name, url, format);
-		}
-	}
-
-	existsResourceWithSameName (resourceAuxName: string, newResourceName: string) {
-		if (resourceAuxName == newResourceName) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	insertSourceWithOtherFormat(id:string, position: number, url: string, format: string) {
-		this.resourcesAux[position].sources.push(url);
-		this.resourcesAux[position].formats.push(format);
-		this.resourcesAux[position].sources_ids.push(id);		
-	}
-
-	insertNewResource(id: string, name: string, url: string, format: string) {
-		var newResourceAux: ResourceAux = new ResourceAux();
-		newResourceAux.name = name;
-		newResourceAux.sources = new Array();
-		newResourceAux.sources.push(url);
-		newResourceAux.formats = new Array();
-		newResourceAux.formats.push(format);
-		newResourceAux.sources_ids = new Array();
-		newResourceAux.sources_ids.push(id);
-		this.resourcesAux.push(newResourceAux);
-	}
-
-	isDatasetDefined(dataset: Dataset) {
-		if(dataset && dataset != null && dataset != undefined) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	showDataset(dataset: Dataset) {
-		this.datasetsAdminService.setDataset(dataset);
-		this.loadDataset(dataset);
-	}
+	//Methods called from HTML.
 
 	downloadRDF(datasetName: string){
-		this.datasetsAdminService.getDatasetRDF(datasetName).subscribe(result => {
+		this.datasetsService.getDatasetRDF(datasetName).subscribe(result => {
 			let blob = new Blob(['\ufeff' + result], { type: Constants.DATASET_RDF_FORMAT_OPTIONS_RDF });
 			let dwldLink = document.createElement("a");
 			let url = URL.createObjectURL(blob);
@@ -362,18 +225,6 @@ export class DatasetsAdminShowComponent implements OnInit {
 		}else{
 			let urlAbsolute = 'http://'+url;
 			window.open(urlAbsolute,'_blank');
-		}
-	}
-
-	showEditButton(){
-		try {
-			let user = this.autenticationService.getCurrentUser();
-			if(user.rol != Constants.ADMIN_USER_ROL_ORGANIZATION_MEMBER){
-				this.showEdit = true;
-			}
-		} catch (error) {
-			console.log(error);
-			console.error('Error: showEditButton() - datasets-admin-show.component.ts');
 		}
 	}
 }

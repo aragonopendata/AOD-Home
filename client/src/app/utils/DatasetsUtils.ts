@@ -11,28 +11,6 @@ import { Extra } from "../models/Extra";
 export class DatasetsUtils {
 
 	resourcesAux: ResourceAux[] = new Array();
-    extraIAESTLegislacionUE: string;
-    extraIAESTTratamientoEstadistico: string;
-    extraIAESTFuente: string;
-    extraIAESTTipologiaDatosOrigen: string;
-    extraIAESTTipoOperacion: string;
-    extraIAESTUnidadMedida: string;
-    extraIAESTPoblacionEstadistica: string;
-    extraIAESTUnidadEstadistica: string;
-    extraIAESTTemaEstadistico: string;
-    extrasIAESTNotEmpty: boolean;
-    extraUriAragopedia: string;
-    extraTypeAragopedia: string;
-    extraShortUriAragopedia: string;
-    extraNameAragopedia: string;
-    extraTemporalUntil: string;
-    extraTemporalFrom: string;
-    extraGranularity: string;
-    extraFrequency: string;
-    extraDataQuality: string;
-    extraDictionary: string;
-    extraDataQualityURL: any[];
-    extraDictionaryURL: any[];
 	resourceView: ResourceView[];
     dataset: Dataset;
 
