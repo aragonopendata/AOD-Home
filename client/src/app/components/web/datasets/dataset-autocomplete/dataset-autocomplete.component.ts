@@ -20,6 +20,7 @@ export class DatasetAutocompleteComponent implements OnInit {
 
 	dataset: Dataset;
 	datasetAutocomplete: Autocomplete[];
+	datasets: Autocomplete[];
 	private datasetTitle = new Subject<string>();
 	private resultsLimit: number;
 	//Dynamic URL build parameters
@@ -62,10 +63,10 @@ export class DatasetAutocompleteComponent implements OnInit {
 			}).subscribe(data => {
 				 try {
 					this.datasetAutocomplete = <Autocomplete[]>JSON.parse(data).result;
+					this.datasets = this.datasetAutocomplete;
 				} catch (error) {
 					console.error("Error: getAutocomplete() - datasets-autocomplete.component.ts");
 				}
-				
 			});
 	}
 
@@ -76,9 +77,14 @@ export class DatasetAutocompleteComponent implements OnInit {
 
 	onClick(event) {
 		if (!this._eref.nativeElement.contains(event.target)){
-			jQuery('.search-result').css('visibility', 'hidden');
+			if(this.datasetAutocomplete)
+				this.datasets = this.datasetAutocomplete;
+			this.datasetAutocomplete = null;
+			//jQuery('.search-result').css('visibility', 'hidden');
 	   }else{
-			jQuery('.search-result').css('visibility', 'visible');
+		   if(!this.datasetAutocomplete)
+				this.datasetAutocomplete = this.datasets;
+			//jQuery('.search-result').css('visibility', 'visible');
 	   }
 	}
 }
