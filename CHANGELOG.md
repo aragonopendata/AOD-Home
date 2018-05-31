@@ -8,6 +8,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## Updated
 - Functionality bugs fixed (admin)
 
+## [1.4.0] - 2018-05-31
+- Fixed: Searcher autocomplete modified to write lowercase, hide results optimized.
+- Fixed: Update datasets details searching by header menu searcher.
+- Upgrade: Angular 4 to Angular 6.
+- Fixed: Clean URL home for hash elements.
+- Fixed: Display responsive datasets table in organization detail component.
+- Fixed: Add filename to file view url.
+- Fixed: https protocol in aod-core web service
+
 ## [1.3.9] - 2018-05-03
 - Fixed: JSON files
 - Fixed: GA_OD_Core views
@@ -134,6 +143,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
 [Unreleased]: https://github.com/aragonopendata/AOD-Home/compare/master...develop
+[1.4.0]: https://github.com/aragonopendata/AOD-Home/compare/v1.3.9...v1.4.0
 [1.3.9]: https://github.com/aragonopendata/AOD-Home/compare/v1.3.8...v1.3.9
 [1.3.8]: https://github.com/aragonopendata/AOD-Home/compare/v1.3.7...v1.3.8
 [1.3.7]: https://github.com/aragonopendata/AOD-Home/compare/v1.3.6...v1.3.7
