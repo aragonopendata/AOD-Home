@@ -104,7 +104,7 @@ router.get(constants.API_URL_STATIC_CONTENT_INFO_OPEN_DATA + '/terms', function 
     let contentTitle = constants.STATIC_CONTENT_CONTENT_TITLE_TERM;
     
     const query = {
-        text: 'SELECT sec.id AS "sectionId", sec.title AS "sectionTitle", sec.subtitle AS "sectionSubtitle" '
+        text: 'SELECT cnt.id AS "id", sec.id AS "sectionId", sec.title AS "sectionTitle", sec.subtitle AS "sectionSubtitle" '
         + ', sec.description AS "sectionDescription", cnt.content_order AS "contentOrder" ' 
         + ', cnt.title AS "contentTitle", cnt.content AS "contentText", cnt.target_url AS "targetUrl" ' 
         + 'FROM manager.sections sec '
@@ -145,7 +145,7 @@ router.get(constants.API_URL_STATIC_CONTENT_INFO_APPS, function (req, res, next)
     let sectionTitle = constants.STATIC_CONTENT_SECTION_TITLE_INFO;
     let sectionSubtitle = constants.STATIC_CONTENT_SUBSECTION_TITLE_APPS;
     const query = {
-        text: 'SELECT sec.id AS "sectionId", sec.title AS "sectionTitle", sec.subtitle AS "sectionSubtitle" '
+        text: 'SELECT cnt.id AS "id", sec.id AS "sectionId", sec.title AS "sectionTitle", sec.subtitle AS "sectionSubtitle" '
         + ', sec.description AS "sectionDescription", cnt.content_order AS "contentOrder" '
         + ', cnt.title AS "contentTitle", cnt.content AS "contentText" '
         + 'FROM manager.sections sec '
@@ -186,7 +186,7 @@ router.get(constants.API_URL_STATIC_CONTENT_INFO_EVENTS, function (req, res, nex
     let sectionTitle = constants.STATIC_CONTENT_SECTION_TITLE_INFO;
     let sectionSubtitle = constants.STATIC_CONTENT_SUBSECTION_TITLE_EVENTS;
     const query = {
-        text: 'SELECT sec.id AS "sectionId", sec.title AS "sectionTitle", sec.subtitle AS "sectionSubtitle" '
+        text: 'SELECT cnt.id AS "id", sec.id AS "sectionId", sec.title AS "sectionTitle", sec.subtitle AS "sectionSubtitle" '
         + ', sec.description AS "sectionDescription", cnt.content_order AS "contentOrder" '
         + ', cnt.title AS "contentTitle", cnt.content AS "contentText", cnt.target_url AS "targetUrl" '
         + 'FROM manager.sections sec '
@@ -231,7 +231,7 @@ router.get(constants.API_URL_STATIC_CONTENT_TOOLS_DEVELOPERS, function (req, res
     let sectionTitle = constants.STATIC_CONTENT_SECTION_TITLE_TOOLS;
     let sectionSubtitle = constants.STATIC_CONTENT_SUBSECTION_TITLE_DEVELOPERS;
     const query = {
-        text: 'SELECT sec.id AS "sectionId", sec.title AS "sectionTitle", sec.subtitle AS "sectionSubtitle" '
+        text: 'SELECT cnt.id AS "id", sec.id AS "sectionId", sec.title AS "sectionTitle", sec.subtitle AS "sectionSubtitle" '
         + ', sec.description AS "sectionDescription", cnt.content_order AS "contentOrder" '
         + ', cnt.title AS "contentTitle", cnt.content AS "contentText", cnt.target_url AS "targetUrl" '
         + 'FROM manager.sections sec '
@@ -272,7 +272,7 @@ router.get(constants.API_URL_STATIC_CONTENT_TOOLS_APIS, function (req, res, next
     let sectionTitle = constants.STATIC_CONTENT_SECTION_TITLE_TOOLS;
     let sectionSubtitle = constants.STATIC_CONTENT_SUBSECTION_TITLE_APIS;
     const query = {
-        text: 'SELECT sec.id AS "sectionId", sec.title AS "sectionTitle", sec.subtitle AS "sectionSubtitle" '
+        text: 'SELECT cnt.id AS "id", sec.id AS "sectionId", sec.title AS "sectionTitle", sec.subtitle AS "sectionSubtitle" '
         + ', sec.description AS "sectionDescription", cnt.content_order AS "contentOrder" '
         + ', cnt.title AS "contentTitle", cnt.content AS "contentText", cnt.target_url AS "targetUrl" '
         + 'FROM manager.sections sec '
@@ -313,7 +313,7 @@ router.get(constants.API_URL_STATIC_CONTENT_TOOLS_SPARQL, function (req, res, ne
     let sectionTitle = constants.STATIC_CONTENT_SECTION_TITLE_TOOLS;
     let sectionSubtitle = constants.STATIC_CONTENT_SUBSECTION_TITLE_SPARQL;
     const query = {
-        text: 'SELECT sec.id AS "sectionId", sec.title AS "sectionTitle", sec.subtitle AS "sectionSubtitle" '
+        text: 'SELECT cnt.id AS "id", sec.id AS "sectionId", sec.title AS "sectionTitle", sec.subtitle AS "sectionSubtitle" '
         + ', sec.description AS "sectionDescription", cnt.content_order AS "contentOrder" '
         + ', cnt.title AS "contentTitle", cnt.content AS "contentText", cnt.target_url AS "targetUrl" '
         + 'FROM manager.sections sec '

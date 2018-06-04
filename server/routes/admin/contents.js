@@ -22,8 +22,42 @@ const logConfig = require('../../conf/log-conf');
 const loggerSettings = logConfig.getLogSettings();
 const logger = require('js-logging').dailyFile([loggerSettings]);
 
-//COMMENT: Updates the edited section of static-content-info.
-router.put(constants.API_URL_ADMIN_STATIC_CONTENT_INFO_OPEN_DATA, function (req, res, next) {
+router.put(constants.API_URL_ADMIN_STATIC_CONTENT_INFO, function (req, res, next) {
+    var content = req.body;
+    var id = content.id;
+    const query = {
+        text: 'UPDATE manager.static_contents SET content = $1 '
+        + 'WHERE static_contents.id = $2 ',
+        values: [content.contentText, id],
+        rowMode: constants.SQL_RESULSET_FORMAT
+    };
+    
+    pool.on('error', (err, client) => {
+        logger.error('Error en la conexión con base de datos', err);
+        process.exit(-1);
+    });
+
+    pool.connect((err, client, done) => {
+        if (err) {
+            logger.error(err.stack);
+            res.json({ status: 500, 'error': err });
+            return;
+        }
+        pool.query(query, (err, result) => {
+            done();
+            if (err) {
+                logger.error(err.stack);
+                res.json({ status: 500, 'error': err });
+                return;
+            } else {
+                logger.info('Filas devueltas: ' + result.rows.length);
+                res.json(result.rows);
+            }
+        });
+    });
+});
+
+router.put(constants.API_URL_ADMIN_STATIC_CONTENT_TOOLS, function (req, res, next) {
     var content = req.body;
     var id = content.id;
     const query = {

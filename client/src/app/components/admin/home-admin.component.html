@@ -59,25 +59,22 @@
 					Contenido estático
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-					<a class="dropdown-item" routerLink="/admin/global/content/info" routerLinkActive="active"><i class="fa fa-caret-right"></i>
+					<a class="dropdown-item" routerLink="/admin/global/content/panels/open-data" (click)="navigate('open-data')" routerLinkActive="active"><i class="fa fa-caret-right"></i>
 						<span class="sidebar-title">Información</span>
 					</a>
-					<a class="dropdown-item" routerLink="/admin/global/content/apps" routerLinkActive="active"><i class="fa fa-caret-right"></i>
+					<a class="dropdown-item" routerLink="/admin/global/content/lists/apps" (click)="navigate('apps')" routerLinkActive="active"><i class="fa fa-caret-right"></i>
 						<span class="sidebar-title">Aplicaciones</span>
 					</a>
-					<a class="dropdown-item" routerLink="/admin/global/content/events" routerLinkActive="active"><i class="fa fa-caret-right"></i>
+					<a class="dropdown-item" routerLink="/admin/global/content/panels/events" (click)="navigate('events')" routerLinkActive="active"><i class="fa fa-caret-right"></i>
 						<span class="sidebar-title">Eventos</span>
 					</a>
-					<a class="dropdown-item" routerLink="/admin/global/content/collaboration" routerLinkActive="active"><i class="fa fa-caret-right"></i>
-						<span class="sidebar-title">Colabora</span>
-					</a>
-					<a class="dropdown-item" routerLink="/admin/global/content/developers" routerLinkActive="active"><i class="fa fa-caret-right"></i>
+					<a class="dropdown-item" routerLink="/admin/global/content/panels/developers" (click)="navigate('developers')" routerLinkActive="active"><i class="fa fa-caret-right"></i>
 						  <span class="sidebar-title">Desarrolladores</span>
 					</a>
-					<a class="dropdown-item" routerLink="/admin/global/content/apis" routerLinkActive="active"><i class="fa fa-caret-right"></i>
+					<a class="dropdown-item" routerLink="/admin/global/content/panels/apis" (click)="navigate('apis')" routerLinkActive="active"><i class="fa fa-caret-right"></i>
 						  <span class="sidebar-title">APIs</span>
 					</a>
-					<a class="dropdown-item" routerLink="/admin/global/content/sparql" routerLinkActive="active"><i class="fa fa-caret-right"></i>
+					<a class="dropdown-item" routerLink="/admin/global/content/panels/sparql" (click)="navigate('sparql')" routerLinkActive="active"><i class="fa fa-caret-right"></i>
 						  <span class="sidebar-title">SPARQL</span>
 					</a>
 				</div>

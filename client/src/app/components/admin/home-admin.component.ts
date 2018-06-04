@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'app/services/security/authentication.service';
 import { Constants } from 'app/app.constants';
 import { LoginService } from 'app/services/security/login.service';
+import { InfoPanelsAdminComponent } from './global/static-content-admin/info-panels-admin/info-panels-admin.component';
+import { InfoListAdminComponent } from './global/static-content-admin/info-list-admin/info-list-admin.component';
 
 @Component({
 	selector: 'app-home-admin',
@@ -43,6 +45,18 @@ export class HomeAdminComponent implements OnInit {
 		this.loginService.announceLogout();
 		this.authenticationService.logout();
 		window.location.reload();
+	}
+
+	navigate(sectionName: string){
+		if (sectionName == 'open-data' || sectionName == 'apis'
+		|| sectionName == 'events' || sectionName == 'developers'
+		||sectionName == 'sparql'){
+			InfoPanelsAdminComponent.doUpdate.next(sectionName);
+			//this.router.navigate(['/' + Constants.SERVER_API_LINK_STATIC_CONTENT_INFO, sectionName]);
+		}else {
+			InfoListAdminComponent.doUpdate.next(sectionName);
+			//this.router.navigate(['/' + Constants.SERVER_API_LINK_STATIC_CONTENT_TOOLS, sectionName]);
+		}
 	}
 
 }

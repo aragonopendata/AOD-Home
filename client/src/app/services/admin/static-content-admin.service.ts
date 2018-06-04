@@ -41,9 +41,28 @@ export class StaticContentAdminService {
 		return headers;
 	}
 
-	public setOpenDataInfoStaticContent(updatedContent: StaticContent) {
-		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_STATIC_CONTENT_INFO 
-						+ Constants.SERVER_API_LINK_STATIC_CONTENT_INFO_OPEN_DATA;
+	public getStaticContentBySectionName(sectionName: String){
+		var auxUrl = "";
+		if (sectionName == 'open-data' || sectionName == 'apps'
+		|| sectionName == 'events'){
+			auxUrl = Constants.SERVER_API_LINK_STATIC_CONTENT_INFO;
+		}else {
+			auxUrl = Constants.SERVER_API_LINK_STATIC_CONTENT_TOOLS;
+		}
+		let fullUrl = Constants.AOD_API_WEB_BASE_URL + auxUrl + '/' + sectionName;
+		let requestBodyParams: any = sectionName;
+		return this.http.get(fullUrl, JSON.stringify(requestBodyParams)).map(res => res.json());
+	}
+
+	public setStaticContent(sectionName: String, updatedContent: StaticContent) {
+		var auxUrl = "";
+		if (sectionName == 'open-data' || sectionName == 'apps'
+		|| sectionName == 'events'){
+			auxUrl = Constants.SERVER_API_LINK_ADMIN_STATIC_CONTENT_INFO;
+		}else {
+			auxUrl = Constants.SERVER_API_LINK_ADMIN_STATIC_CONTENT_TOOLS;
+		}
+		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + auxUrl;
 		let headers = this.buildRequestHeaders();
 		let requestBodyParams: any = updatedContent;
 		return this.http.put(fullUrl, JSON.stringify(requestBodyParams), {headers: headers}).map(res => res.json());

@@ -50,6 +50,10 @@ import { OrganizationsAdminEditComponent } from './components/admin/datacenter/o
 import { CampusAdminComponent } from './components/admin/campus-admin/campus-admin.component';
 import { LogstashComponent } from './components/admin/logstash/logstash.component';
 import { PageNotFoundComponent } from './components/error/page-not-found/page-not-found.component';
+import { InfoPanelsAdminComponent } from './components/admin/global/static-content-admin/info-panels-admin/info-panels-admin.component';
+import { InfoListAdminComponent } from './components/admin/global/static-content-admin/info-list-admin/info-list-admin.component';
+
+
 
 const routes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -94,13 +98,8 @@ const routes: Routes = [
             { path: Constants.ROUTER_LINK_USERS, component: UsersAdminComponent, canActivate: [AuthGuard] },
             { path: Constants.ROUTER_LINK_ROLES, component: RolesAdminComponent, canActivate: [AuthGuard] },
             { path: Constants.ROUTER_LINK_CONTENT, canActivate: [AuthGuard], children: [
-                { path: Constants.ROUTER_LINK_INFO, component: OpenDataAdminComponent, canActivate: [AuthGuard] },
-                { path: Constants.ROUTER_LINK_APPS, component: ApplicationsAdminComponent, canActivate: [AuthGuard] },
-                { path: Constants.ROUTER_LINK_EVENTS, component: EventsAdminComponent, canActivate: [AuthGuard] },
-                { path: Constants.ROUTER_LINK_COLLABORATION, component: CollaborationAdminComponent, canActivate: [AuthGuard] },
-                { path: Constants.ROUTER_LINK_DEVELOPERS, component: DevelopersAdminComponent, canActivate: [AuthGuard] },
-                { path: Constants.ROUTER_LINK_APIS, component: ApisAdminComponent, canActivate: [AuthGuard] },
-                { path: Constants.ROUTER_LINK_SPARQL, component: SparqlAdminComponent, canActivate: [AuthGuard] }
+                { path: Constants.ROUTER_LINK_CONTENT_PANELS + '/:' + Constants.ROUTER_LINK_DATA_PARAM_SECTION_NAME, component: InfoPanelsAdminComponent,canActivate: [AuthGuard] },
+                { path: Constants.ROUTER_LINK_CONTENT_LISTS + '/:' + Constants.ROUTER_LINK_DATA_PARAM_SECTION_NAME, component: InfoListAdminComponent,canActivate: [AuthGuard] },
             ]},
         ]},
         { path: Constants.ROUTER_LINK_DATACENTER, component: DatacenterComponent, canActivate: [AuthGuard], children: [

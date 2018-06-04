@@ -90,6 +90,9 @@ import { AnalyticsService } from './services/web/analytics.service';
 import { AodCoreAdminService} from './services/admin/aod-core-admin.service';
 import {GoogleAnalyticsEventsService} from "./services/web/google-analytics-events.service";
 import { TinyMceModule } from 'angular-tinymce';
+import { tinymceDefaultSettings } from 'angular-tinymce';
+import { InfoPanelsAdminComponent } from './components/admin/global/static-content-admin/info-panels-admin/info-panels-admin.component';
+import { InfoListAdminComponent } from './components/admin/global/static-content-admin/info-list-admin/info-list-admin.component';
 
 @NgModule({
 	declarations: [
@@ -153,7 +156,9 @@ import { TinyMceModule } from 'angular-tinymce';
 		DatasetsAdminListComponent,
 		LogstashComponent,
 		DatacenterComponent,
-		GlobalComponent
+		GlobalComponent,
+		InfoPanelsAdminComponent,
+		InfoListAdminComponent
   	],
   	imports: [
 		BrowserModule,
@@ -188,54 +193,7 @@ import { TinyMceModule } from 'angular-tinymce';
 		AccordionModule,
 		MessagesModule,
 		GrowlModule,
-		TinyMceModule.forRoot({
-			skin_url: '../../../assets/tinymce/skins/lightgray',
- 			baseURL: '../../../assets/tinymce',
- 			plugins: [' advlist, lists, table, textcolor, image, link '],
- 			style_formats: [
- 				{title: 'Tamaño', items: [
- 					{title: 'Título 1', format: 'h1'},
- 					{title: 'Título 2', format: 'h2'},
- 					{title: 'Título 3', format: 'h3'},
- 					{title: 'Normal', format: 'p'},
- 					{title: 'Código', format: 'pre'},
- 				]},
- 				{title: 'Bold', icon: 'bold', format: 'bold'},
- 				{title: 'Italic', icon: 'italic', format: 'italic'},
- 				{title: 'Underline', icon: 'underline', format: 'underline'}
- 			],
-			advlist_bullet_styles: "disc",
-			advlist_number_styles: "default",
-			image_dimensions: false,
-			image_description: false,
-			file_picker_types: 'image',
-			file_picker_callback: function (callback, value, meta) {
-				if (meta.filetype == 'image') {
-					var input = document.createElement('input');
-					input.setAttribute('type', 'file');
-					input.setAttribute('accept', 'image/*');
-					input.click();
-					input.onchange = function () {
-						var file = input.files[0];
-						var reader = new FileReader();
-						reader.onload = function (e) {
-							/*var id = 'blobid' + (new Date()).getTime();
-							var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
-							var base64 = reader.result.split(',')[1];
-							var blobInfo = blobCache.create(id, file, base64);
-							blobCache.add(blobInfo);
-
-        					// call the callback and populate the Title field with the file name
-        					callback(blobInfo.blobUri(), { title: file.name });*/
-						};
-						reader.readAsDataURL(file);
-					};
-				}
-			},
- 			toolbar: ' styleselect | forecolor backcolor | numlist bullist | image link table ',
- 			menubar: false
- 		  }
-		)
+		TinyMceModule.forRoot(tinymceDefaultSettings())
 	],
 	providers: [
 		Logger,
