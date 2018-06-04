@@ -47,13 +47,6 @@ import { GlobalComponent } from './components/admin/global/global.component';
 import { DashboardGlobalComponent } from './components/admin/global/dashboard-global/dashboard-global.component';
 import { UsersAdminComponent } from './components/admin/global/users-admin/users-admin.component';
 import { RolesAdminComponent } from './components/admin/global/roles-admin/roles-admin.component';
-import { ApplicationsAdminComponent } from './components/admin/global/static-content-admin/info/applications-admin/applications-admin.component';
-import { CollaborationAdminComponent } from './components/admin/global/static-content-admin/info/collaboration-admin/collaboration-admin.component';
-import { EventsAdminComponent } from './components/admin/global/static-content-admin/info/events-admin/events-admin.component';
-import { OpenDataAdminComponent } from './components/admin/global/static-content-admin/info/open-data-admin/open-data-admin.component';
-import { ApisAdminComponent } from './components/admin/global/static-content-admin/tools/apis-admin/apis-admin.component';
-import { DevelopersAdminComponent } from './components/admin/global/static-content-admin/tools/developers-admin/developers-admin.component';
-import { SparqlAdminComponent } from './components/admin/global/static-content-admin/tools/sparql-admin/sparql-admin.component';
 import { DashboardDatacenterComponent } from './components/admin/datacenter/dashboard-datacenter/dashboard-datacenter.component';
 import { DatacenterComponent } from './components/admin/datacenter/datacenter.component';
 import { OrganizationsAdminComponent } from './components/admin/datacenter/organizations-admin/organizations-admin.component';
@@ -138,13 +131,6 @@ import { InfoListAdminComponent } from './components/admin/global/static-content
 		ApisComponent,
 		DevelopersComponent,
 		SparqlComponent,
-		ApplicationsAdminComponent,
-		CollaborationAdminComponent,
-		EventsAdminComponent,
-		OpenDataAdminComponent,
-		ApisAdminComponent,
-		DevelopersAdminComponent,
-		SparqlAdminComponent,
 		DashboardDatacenterComponent,
 		OrganizationsAdminComponent,
 		OrganizationsAdminListComponent,
