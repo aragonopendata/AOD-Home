@@ -560,7 +560,7 @@ export class Constants {
     public static ROUTER_LINK_SERVICES_CRAS = 'servicios/cras';
     public static ROUTER_LINK_SERVICES_SOCIAL_DATA = 'servicios/open-social-data';
     public static ROUTER_LINK_SERVICES_ANALYTICS = 'servicios/analytics'
-    public static ROUTER_LINK_SERVICES_VISUAL_DATA = 'visualdata'
+    public static ROUTER_LINK_SERVICES_VISUAL_DATA = 'servicios/visualdata'
     public static ROUTER_LINK_DATA_PARAM_DATASET_NAME = 'datasetName';
     public static ROUTER_LINK_DATA_PARAM_DATASET_HOMER_NAME = 'datasetHomerName';
     public static ROUTER_LINK_DATA_PARAM_TOPIC_NAME = 'topicName';
