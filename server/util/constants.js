@@ -58,6 +58,8 @@ exports.API_URL_AUTHENTICATE = '/authenticate';
 exports.API_URL_ADMIN_DATASET = '/dataset';
 exports.API_URL_ADMIN_RESOURCE = '/resource';
 exports.API_URL_ADMIN_ORGANIZATION = '/organization';
+exports.API_URL_ADMIN_STATIC_CONTENT_INFO = '/static-content-admin/info';
+exports.API_URL_ADMIN_STATIC_CONTENT_TOOLS = '/static-content-admin/tools';
 
 /* STATIC CONTENT DATABASE SECTION TITLES */
 exports.API_URL_CAMPUS_EVENTS = '/campus/events';
