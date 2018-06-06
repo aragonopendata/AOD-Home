@@ -10,10 +10,22 @@ const request = require('request');
 //Multer for receive form-data
 const multer  = require('multer')
 var storage = multer.memoryStorage()
-var upload = multer({ storage: storage })
+const upload = multer({
+    storage: multer.diskStorage({
+      destination: (req, file, callback) => {
+        let path = '../../../assets/public/contenido-general/apps';
+        fs.mkdirsSync(path);
+        callback(null, path);
+      },
+      filename: (req, file, callback) => {
+        //originalname is the uploaded file's name with extn
+        callback(null, file.originalname);
+      }
+    })
+});
 // FormData for send form-data
 const formData = require('form-data');
-const fs = require('fs');
+const fs = require('fs-extra');
 //DB SETTINGS
 const db = require('../../db/db-connection');
 const pool = db.getPool();
@@ -56,6 +68,8 @@ router.put(constants.API_URL_ADMIN_STATIC_CONTENT_INFO, function (req, res, next
         });
     });
 });
+
+router.post(constants.API_URL_ADMIN_STATIC_CONTENT_INFO, upload.single('file'));
 
 router.put(constants.API_URL_ADMIN_STATIC_CONTENT_TOOLS, function (req, res, next) {
     var content = req.body;

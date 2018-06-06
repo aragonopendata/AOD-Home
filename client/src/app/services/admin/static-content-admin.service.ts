@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers, URLSearchParams } from '@angular/http';
+import { Http, Response, Headers, URLSearchParams, RequestOptions } from '@angular/http';
 import { Constants } from '../../app.constants';
 import { StaticContent } from '../../models/StaticContent';
 
@@ -42,30 +42,46 @@ export class StaticContentAdminService {
 	}
 
 	public getStaticContentBySectionName(sectionName: String){
-		var auxUrl = "";
-		if (sectionName == 'open-data' || sectionName == 'apps'
-		|| sectionName == 'events'){
-			auxUrl = Constants.SERVER_API_LINK_STATIC_CONTENT_INFO;
-		}else {
-			auxUrl = Constants.SERVER_API_LINK_STATIC_CONTENT_TOOLS;
-		}
-		let fullUrl = Constants.AOD_API_WEB_BASE_URL + auxUrl + '/' + sectionName;
+		let fullUrl = this.getWebURL(sectionName);
 		let requestBodyParams: any = sectionName;
 		return this.http.get(fullUrl, JSON.stringify(requestBodyParams)).map(res => res.json());
 	}
 
 	public setStaticContent(sectionName: String, updatedContent: StaticContent) {
+		let fullUrl = this.getAdminURL(sectionName);
+		let headers = this.buildRequestHeaders();
+		let requestBodyParams: any = updatedContent;
+		return this.http.put(fullUrl, JSON.stringify(requestBodyParams), {headers: headers}).map(res => res.json());
+	}
+
+	public uploadImage(sectionName: String, img: File){
+		let fullUrl = this.getAdminURL(sectionName);
+		let formData: FormData = new FormData();
+		formData.append('file', img[0], img[0].name);
+		let headers = this.buildRequestHeadersforFormData();
+		return this.http.post(fullUrl, formData, { headers: headers}).map(() =>{ return true;});
+	}
+
+	getWebURL(sectionName: String){
 		var auxUrl = "";
-		if (sectionName == 'open-data' || sectionName == 'apps'
+		if (sectionName == 'open-data' || sectionName == 'applications'
+		|| sectionName == 'events'){
+			auxUrl = Constants.SERVER_API_LINK_STATIC_CONTENT_INFO;
+		}else {
+			auxUrl = Constants.SERVER_API_LINK_STATIC_CONTENT_TOOLS;
+		}
+		return Constants.AOD_API_WEB_BASE_URL + auxUrl + '/' + sectionName;
+	}
+
+	getAdminURL(sectionName: String){
+		var auxUrl = "";
+		if (sectionName == 'open-data' || sectionName == 'applications'
 		|| sectionName == 'events'){
 			auxUrl = Constants.SERVER_API_LINK_ADMIN_STATIC_CONTENT_INFO;
 		}else {
 			auxUrl = Constants.SERVER_API_LINK_ADMIN_STATIC_CONTENT_TOOLS;
 		}
-		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + auxUrl;
-		let headers = this.buildRequestHeaders();
-		let requestBodyParams: any = updatedContent;
-		return this.http.put(fullUrl, JSON.stringify(requestBodyParams), {headers: headers}).map(res => res.json());
+		return Constants.AOD_API_ADMIN_BASE_URL + auxUrl;
 	}
 
 }
