@@ -69,7 +69,14 @@ router.put(constants.API_URL_ADMIN_STATIC_CONTENT_INFO, function (req, res, next
     });
 });
 
-router.post(constants.API_URL_ADMIN_STATIC_CONTENT_INFO, upload.single('file'));
+router.post(constants.API_URL_ADMIN_STATIC_CONTENT_INFO, upload.single('file'), function (req, res, next) {
+    res.json({
+        'status': constants.REQUEST_REQUEST_OK,
+        'success': true,
+        'message': 'Organización insertada correctamente.'                   
+    });
+    return;
+});
 
 router.put(constants.API_URL_ADMIN_STATIC_CONTENT_TOOLS, function (req, res, next) {
     var content = req.body;
