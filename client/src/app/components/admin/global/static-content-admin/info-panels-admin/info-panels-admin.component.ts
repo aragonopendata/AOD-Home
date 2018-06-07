@@ -45,7 +45,8 @@ export class InfoPanelsAdminComponent implements OnInit {
 
         this.settings = {
             selector: '#editor',
-            theme_url: Constants.AOD_ASSETS_BASE_URL + '/public/plugins/tinymce/themes/modern',
+            theme_url: Constants.AOD_ASSETS_BASE_URL + '/public/plugins/tinymce/themes',
+            theme: 'modern',
             skin_url: Constants.AOD_ASSETS_BASE_URL + '/public/plugins/tinymce/skins/lightgray',
             baseURL: Constants.AOD_ASSETS_BASE_URL + '/public/plugins/tinymce',
             plugins: [' advlist, lists, table, textcolor, image, link '],
