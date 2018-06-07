@@ -60,8 +60,8 @@ export class InfoListAdminComponent implements OnInit {
 
         this.settings = {
             selector: '#editor',
-            skin_url: '../../../../../../assets/tinymce/skins/lightgray',
-            baseURL: '../../../../../../assets/tinymce',
+            skin_url: Constants.AOD_ASSETS_BASE_URL + '/public/plugins/tinymce/skins/lightgray',
+            baseURL: Constants.AOD_ASSETS_BASE_URL + '/public/plugins/tinymce',
             plugins: [' link '],
             toolbar: ' bold italic underline | link ',
             menubar: false,
