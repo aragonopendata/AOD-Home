@@ -41,6 +41,7 @@ export class InfoListAdminComponent implements OnInit {
     description: string = "";
     img: File;
     imgSRC: string = "";
+    element: Document;
 
 
     settings: any;
@@ -122,13 +123,25 @@ export class InfoListAdminComponent implements OnInit {
         this.display = !this.display;
     }
 
-    setElements() {
+    createElement(){
         let appInfo = this.content.contentText;
         var parser = new DOMParser();
-        let element = parser.parseFromString(appInfo, 'text/html');
-        this.getTitleURL(element);
-        this.getDescription(element);
-        this.getImage(element);
+        this.element = parser.parseFromString(appInfo, 'text/html');
+    }
+
+    getElement(): Document{
+        return this.element;
+    }
+
+    setElement(element){
+        this.element = element;
+    }
+
+    setElements() {
+        this.createElement();
+        this.getTitleURL(this.element);
+        this.getDescription(this.element);
+        this.getImage(this.element);
     }
 
     getTitleURL(element: Document){
@@ -145,6 +158,14 @@ export class InfoListAdminComponent implements OnInit {
 
     fileChange(event){
         this.img = event.target.files;
+        let element = this.getElement();
+        this.staticContentAdminService.uploadImage(this.sectionName, this.img).subscribe(data => {
+            if(data){
+                this.setSRC(element, this.img);
+            }
+        }, error => {
+            console.log(error);
+        });
     }
 
     cancel(){
@@ -157,23 +178,12 @@ export class InfoListAdminComponent implements OnInit {
     }
 
     buildNewConent(title: string, titleURL: string, description: string, imgSRC: string){
-        let appInfo = this.content.contentText;
-        var parser = new DOMParser();
-        let element = parser.parseFromString(appInfo, 'text/html');
+        let element = this.getElement();
         this.setTitle(element, title);
         this.setTitleURL(element, titleURL);
         this.setDescription(element, description);
-        if(this.img){
-            this.staticContentAdminService.uploadImage(this.sectionName, this.img).subscribe(data => {
-                if(data){
-                    this.setSRC(element, this.img);
-                    this.content.contentText = element.body.innerHTML;
-                    this.staticContentAdminService.setStaticContent(this.sectionName, this.content).subscribe();
-                }
-            }, error => {
-                console.log(error);
-            });
-        }
+        this.content.contentText = element.body.innerHTML;
+        this.staticContentAdminService.setStaticContent(this.sectionName, this.content).subscribe();
     }
 
     setTitle(element: Document, title: string){

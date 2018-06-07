@@ -14,6 +14,9 @@ const upload = multer({
     storage: multer.diskStorage({
       destination: (req, file, callback) => {
         let path = '../../../assets/public/contenido-general/apps';
+        if(fs.existsSync(path+file.originalname)){
+            fs.remove(path+file.originalname);
+        }
         fs.mkdirsSync(path);
         callback(null, path);
       },
