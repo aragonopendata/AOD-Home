@@ -195,11 +195,10 @@ export class InfoListAdminComponent implements OnInit {
     }
 
     setSRC(element: Document, img: File){
-        let src = element.getElementsByClassName("app_img").item(0).getElementsByTagName("img").item(0).getAttribute("src");
-        let srcSplited = src.split('/');
+        let srcSplited = this.imgSRC.split('/');
         srcSplited[srcSplited.length - 1] = img[0].name;
-        src = srcSplited.join('/');
-        element.getElementsByClassName("app_img").item(0).getElementsByTagName("img").item(0).setAttribute("src", src);
+        this.imgSRC = srcSplited.join('/');
+        element.getElementsByClassName("app_img").item(0).getElementsByTagName("img").item(0).setAttribute("src", this.imgSRC);
     }
 
 }
