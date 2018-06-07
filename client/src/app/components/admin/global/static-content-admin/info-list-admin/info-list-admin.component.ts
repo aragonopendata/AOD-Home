@@ -167,13 +167,13 @@ export class InfoListAdminComponent implements OnInit {
             this.staticContentAdminService.uploadImage(this.sectionName, this.img).subscribe(data => {
                 if(data){
                     this.setSRC(element, this.img);
+                    this.content.contentText = element.body.innerHTML;
+                    this.staticContentAdminService.setStaticContent(this.sectionName, this.content).subscribe();
                 }
             }, error => {
                 console.log(error);
             });
         }
-        this.content.contentText = element.body.innerHTML;
-        this.staticContentAdminService.setStaticContent(this.sectionName, this.content).subscribe();
     }
 
     setTitle(element: Document, title: string){
