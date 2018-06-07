@@ -60,8 +60,7 @@ export class InfoListAdminComponent implements OnInit {
 
         this.settings = {
             selector: '#editor',
-            theme_url: Constants.AOD_ASSETS_BASE_URL + '/public/plugins/tinymce/themes',
-            theme: 'modern',
+            theme_url: Constants.AOD_ASSETS_BASE_URL + '/public/plugins/tinymce/themes/modern/theme.js',
             skin_url: Constants.AOD_ASSETS_BASE_URL + '/public/plugins/tinymce/skins/lightgray',
             baseURL: Constants.AOD_ASSETS_BASE_URL + '/public/plugins/tinymce',
             plugins: [' link '],
