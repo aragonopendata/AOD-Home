@@ -1,8 +1,8 @@
 <form class="search">
-	<button type="button" class="btnSearch" routerLink="/{{routerLinkDataCatalog}}" [queryParams]="{texto:searchBox.value}">
-		<i aria-hidden="true" class="fa fa-search" style="display: table; vertical-align: middle;"></i>
+	<button tabindex="openedMenu ? 7 : -1" type="button" class="btnSearch" routerLink="/{{routerLinkDataCatalog}}" [queryParams]="{texto:searchBox.value}">
+		<i aria-label="Buscar" class="fa fa-search" style="display: table; vertical-align: middle;"></i>
 	</button>
-	<input autocomplete="off" #searchBox name="searchBox" id="searchBox" placeholder="BUSCA DATOS ABIERTOS" type="search" class="textBox"
+	<input tabindex="openedMenu ? 6 : -1" autocomplete="off" #searchBox name="searchBox" id="searchBox" placeholder="BUSCA DATOS ABIERTOS" type="search" class="textBox"
 	 	(keyup)="search(searchBox.value)" (keyup.enter)="searchDatasetsByText(searchBox.value)"/>
 	<ng-container>
 		<div *ngFor="let autocomplete of datasetAutocomplete" class="search-result">
