@@ -1,6 +1,6 @@
 <div class="container">
 	<div class="dtHeader row">
-		<h1 class="globaltitle col-10">Temas</h1>
+		<h1 tabindex="{{openedMenu ? -1 : 0}}" class="globaltitle col-10">Temas</h1>
 		<div class="social col-2">
 			<a tabindex="{{openedMenu ? -1 : 0}}" href="{{routerLinkFacebookShare}}" target="_blank" title="Compartir en Facebook">
 				<img src="/static/public/contenido-general/social/facebookIcon.png" alt="compartir-en-Facebook">
@@ -32,7 +32,7 @@
 	</div>
 	<div class="ui-g">
 		<div class="ui-sm-12 ui-md-6 ui-lg-4 tarjetaContainer" *ngFor="let topic of topics; let i = index" (mouseenter)="setHover(topic.title, i)" (mouseleave)="unsetHover(topic.title, i)">
-			<div tabindex="{{openedMenu ? -1 : 0}}" class="card" routerLink="/{{routerLinkDataTopics}}/{{topic.name}}" ng-init="selectedTopic = topic.name" (click)="setTopic(topic)">
+			<div tabindex="{{openedMenu ? -1 : 0}}" class="card" routerLink="/{{routerLinkDataTopics}}/{{topic.name}}" ng-init="selectedTopic = topic.name" (click)="setTopic(topic)" (keydown.enter)="navigate(topic.name); setTopic(topic);">
 				<img class="card-img-top" src="{{topic.image_url}}" alt="{{topic.title | uppercase}}" width="fit-content" height="fit-content">
 				<div class="card-block">
 					<p>{{topic.title}}</p>

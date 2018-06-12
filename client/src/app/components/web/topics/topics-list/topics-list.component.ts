@@ -31,7 +31,8 @@ export class TopicsListComponent implements OnInit {
     errorTitle: string;
     errorMessage: string;
 
-	constructor(private topicsService: TopicsService, private utilsService: UtilsService) {
+	constructor(private topicsService: TopicsService, private utilsService: UtilsService,
+		private router: Router) {
 		this.topics = [];
 		this.routerLinkDataTopics = Constants.ROUTER_LINK_DATA_CATALOG_TOPICS;
 		this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
@@ -90,5 +91,9 @@ export class TopicsListComponent implements OnInit {
         this.utilsService.openedMenuChange.subscribe(value => {
 			this.openedMenu = value;
 		});
-    }
+	}
+	
+	navigate(topicName){
+		this.router.navigateByUrl('/' + this.routerLinkDataTopics + '/' + topicName);
+	}
 }

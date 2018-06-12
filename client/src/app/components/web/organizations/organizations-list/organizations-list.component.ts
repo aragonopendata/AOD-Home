@@ -4,6 +4,7 @@ import { Organization } from '../../../../models/Organization';
 import { OrganizationsService } from '../../../../services/web/organizations.service';
 import { Constants } from '../../../../app.constants';
 import { UtilsService } from '../../../../services/web/utils.service';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-organizations-list',
@@ -35,7 +36,8 @@ export class OrganizationsListComponent implements OnInit {
     errorMessage: string;
 
 	constructor(private orgService: OrganizationsService,
-		private utilsService: UtilsService) {
+		private utilsService: UtilsService,
+		private router: Router) {
 		this.routerLinkDataOrganizations = Constants.ROUTER_LINK_DATA_ORGANIZATIONS;
 		this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
 		this.routerLinkFacebookShare = Constants.SHARE_FACEBOOK + window.location.href;
@@ -97,6 +99,10 @@ export class OrganizationsListComponent implements OnInit {
         this.utilsService.openedMenuChange.subscribe(value => {
 			this.openedMenu = value;
 		});
-    }
+	}
+	
+	navigate(orgName){
+		this.router.navigateByUrl('/' + this.routerLinkDataOrganizations+'/'+orgName);
+	}
 
 }
