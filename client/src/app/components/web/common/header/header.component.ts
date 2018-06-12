@@ -9,6 +9,7 @@ import { Autocomplete } from 'app/models/Autocomplete';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DatasetsService } from 'app/services/web/datasets.service';
 import { DatasetsDetailComponent } from '../../datasets/datasets-detail/datasets-detail.component';
+import { UtilsService } from '../../../../services/web/utils.service';
 
 @Component({
     selector: 'app-header',
@@ -17,6 +18,7 @@ import { DatasetsDetailComponent } from '../../datasets/datasets-detail/datasets
 })
 export class HeaderComponent implements OnInit {
     
+    openedMenu: boolean = false;
     menuActive: boolean = false;
     srcMenu: String = '/static/public/header/images/Boton-Menu-Responsive-OFF.png';
     srcLogin: String = '/static/public/header/images/Boton-Acceso-Usuarios-OFF.png';
@@ -53,7 +55,7 @@ export class HeaderComponent implements OnInit {
 
     constructor(private locale: AppComponent, private constants: Constants,
             private datasetService: DatasetsService, private router: Router,
-            private route: ActivatedRoute) { 
+            private route: ActivatedRoute, private utilsService: UtilsService) { 
         this.aodBaseUrl = Constants.AOD_BASE_URL;
         this.presupuestosBaseUrl = Constants.PRESUPUESTOS_BASE_URL;
         this.transparenciaWebUrl = Constants.TRANSPARENCIA_WEB_URL;
@@ -81,6 +83,8 @@ export class HeaderComponent implements OnInit {
     }
 
     openNav() {
+        this.toggleOpenedMenu();
+        this.openedMenu = this.getOpenedMenu();
         if (!this.menuActive) {
             $('#menu').attr('alt', 'cerrar-menú');
             $('.overlay').css('top', $('#header').height());
@@ -183,6 +187,14 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit() {
         this.getAutocomplete();
+    }
+
+    getOpenedMenu(): boolean{
+        return this.utilsService.openedMenu;
+    }
+
+    toggleOpenedMenu() {
+        this.utilsService.tooggleOpenedMenu();
     }
 
 }

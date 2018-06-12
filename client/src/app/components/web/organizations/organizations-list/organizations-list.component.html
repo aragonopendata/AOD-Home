@@ -1,14 +1,14 @@
 <div class="container">
 	<div class="dtHeader row">
-		<h1 class="globaltitle col-10">PUBLICADORES DE ARAGÓN OPEN DATA</h1>
+		<h1 tabindex="{{openedMenu ? -1 : 0}}" class="globaltitle col-10">PUBLICADORES DE ARAGÓN OPEN DATA</h1>
 		<div class="social col-2">
-			<a href="{{routerLinkFacebookShare}}" target="_blank" title="Compartir en Facebook">
+			<a tabindex="{{openedMenu ? -1 : 0}}" href="{{routerLinkFacebookShare}}" target="_blank" title="Compartir en Facebook">
 				<img src="/static/public/contenido-general/social/facebookIcon.png" alt="compartir-en-Facebook">
 			</a>
-			<a href="{{routerLinkTwitterShare}}" target="_blank" title="Compartir en Twitter">
+			<a tabindex="{{openedMenu ? -1 : 0}}" href="{{routerLinkTwitterShare}}" target="_blank" title="Compartir en Twitter">
 				<img src="/static/public/contenido-general/social/twitterIcon.png" alt="compartir-en-Twitter">
 			</a>
-			<a href="{{routerLinkGooglePlusShare}}" target="_blank" title="Compartir en Google Plus">
+			<a tabindex="{{openedMenu ? -1 : 0}}" href="{{routerLinkGooglePlusShare}}" target="_blank" title="Compartir en Google Plus">
 				<img src="/static/public/contenido-general/social/googlePlusIcon.png" alt="compartir-en-Google Plus">
 			</a>
 		</div>
@@ -31,10 +31,10 @@
 			</div>
 		</div>
 	</div>
-	<p-dropdown *ngIf="!errorTitle" [options]="views" [(ngModel)]="selectedView"></p-dropdown>
+	<p-dropdown tabindex="{{openedMenu ? -1 : 0}}" *ngIf="!errorTitle" [options]="views" [(ngModel)]="selectedView"></p-dropdown>
 	<div *ngIf="selectedView" class="ui-g">
 		<div class="ui-sm-12 ui-md-6 ui-lg-4" *ngFor="let org of orgs; let i = index" (mouseenter)="setHover(org.title, i)" (mouseleave)="unsetHover(org.title, i)">
-			<div class="card" routerLink="/{{routerLinkDataOrganizations}}/{{org.name}}" (click)="showOrg(org)">
+			<div tabindex="{{openedMenu ? -1 : 0}}" class="card" routerLink="/{{routerLinkDataOrganizations}}/{{org.name}}" (click)="showOrg(org)">
 				<img class="card-img-top" src="{{org.image_url}}" alt="{{org.name}}" width="297"/>
 				<div class="card-block" style="position: relative; font-size: 15px; margin: 10; padding-top: 5px; height: 60px; background-color: darkslategray; color: white;">
 					<p class="tittle"> {{org.title}}</p>
@@ -54,7 +54,7 @@
 		<p-dataTable [value]="orgs" (onRowSelect)="showOrg(rowData)">
 			<p-column field="orgName" header="HAY {{orgs.length}} ORGANIZACIONES" styleClass="text-left">
 				<ng-template pTemplate="body" let-org="rowData" let-i="rowIndex">
-					<a routerLink='/{{routerLinkDataOrganizations}}/{{org.name}}' (click)="showOrg(org)">
+					<a tabindex="{{openedMenu ? -1 : 0}}" routerLink='/{{routerLinkDataOrganizations}}/{{org.name}}' (click)="showOrg(org)">
 					  {{org.title}}
 				  </a>
 				</ng-template>

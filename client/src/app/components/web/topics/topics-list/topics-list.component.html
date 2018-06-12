@@ -2,13 +2,13 @@
 	<div class="dtHeader row">
 		<h1 class="globaltitle col-10">Temas</h1>
 		<div class="social col-2">
-			<a href="{{routerLinkFacebookShare}}" target="_blank" title="Compartir en Facebook">
+			<a tabindex="{{openedMenu ? -1 : 0}}" href="{{routerLinkFacebookShare}}" target="_blank" title="Compartir en Facebook">
 				<img src="/static/public/contenido-general/social/facebookIcon.png" alt="compartir-en-Facebook">
 			</a>
-			<a href="{{routerLinkTwitterShare}}" target="_blank" title="Compartir en Twitter">
+			<a tabindex="{{openedMenu ? -1 : 0}}" href="{{routerLinkTwitterShare}}" target="_blank" title="Compartir en Twitter">
 				<img src="/static/public/contenido-general/social/twitterIcon.png" alt="compartir-en-Twitter">
 			</a>
-			<a href="{{routerLinkGooglePlusShare}}" target="_blank" title="Compartir en Google Plus">
+			<a tabindex="{{openedMenu ? -1 : 0}}" href="{{routerLinkGooglePlusShare}}" target="_blank" title="Compartir en Google Plus">
 				<img src="/static/public/contenido-general/social/googlePlusIcon.png" alt="compartir-en-Google Plus">
 			</a>
 		</div>
@@ -32,7 +32,7 @@
 	</div>
 	<div class="ui-g">
 		<div class="ui-sm-12 ui-md-6 ui-lg-4 tarjetaContainer" *ngFor="let topic of topics; let i = index" (mouseenter)="setHover(topic.title, i)" (mouseleave)="unsetHover(topic.title, i)">
-			<div class="card" routerLink="/{{routerLinkDataTopics}}/{{topic.name}}" ng-init="selectedTopic = topic.name" (click)="setTopic(topic)">
+			<div tabindex="{{openedMenu ? -1 : 0}}" class="card" routerLink="/{{routerLinkDataTopics}}/{{topic.name}}" ng-init="selectedTopic = topic.name" (click)="setTopic(topic)">
 				<img class="card-img-top" src="{{topic.image_url}}" alt="{{topic.title | uppercase}}" width="fit-content" height="fit-content">
 				<div class="card-block">
 					<p>{{topic.title}}</p>

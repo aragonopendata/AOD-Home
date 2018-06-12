@@ -3,6 +3,7 @@ import { SelectItem } from 'primeng/primeng';
 import { Organization } from '../../../../models/Organization';
 import { OrganizationsService } from '../../../../services/web/organizations.service';
 import { Constants } from '../../../../app.constants';
+import { UtilsService } from '../../../../services/web/utils.service';
 
 @Component({
 	selector: 'app-organizations-list',
@@ -12,6 +13,8 @@ import { Constants } from '../../../../app.constants';
 })
 
 export class OrganizationsListComponent implements OnInit {
+
+	openedMenu: boolean;
 
 	views: SelectItem[];
 	selectedView: boolean = true;
@@ -31,12 +34,14 @@ export class OrganizationsListComponent implements OnInit {
     errorTitle: string;
     errorMessage: string;
 
-	constructor(private orgService: OrganizationsService) {
+	constructor(private orgService: OrganizationsService,
+		private utilsService: UtilsService) {
 		this.routerLinkDataOrganizations = Constants.ROUTER_LINK_DATA_ORGANIZATIONS;
 		this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
 		this.routerLinkFacebookShare = Constants.SHARE_FACEBOOK + window.location.href;
 		this.routerLinkTwitterShare = Constants.SHARE_TWITTER + window.location.href;
 		this.routerLinkGooglePlusShare = Constants.SHARE_GOOGLE_PLUS + window.location.href;
+		this.getOpenedMenu();
 	}
 
 	ngOnInit() {
@@ -87,5 +92,11 @@ export class OrganizationsListComponent implements OnInit {
 			}
 		});
 	}
+
+    getOpenedMenu(){
+        this.utilsService.openedMenuChange.subscribe(value => {
+			this.openedMenu = value;
+		});
+    }
 
 }

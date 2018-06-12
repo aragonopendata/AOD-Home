@@ -19,57 +19,57 @@
 <div class="container" *ngIf="!errorTitle">
 	<div class="dtHeader row">
 		<div class="globaltitle col-10">
-			<h1>{{org.title}}</h1>
-			<button *ngIf="showEdit" class="tags" icon="fa-pencil" pButton type="button" label="Editar" style="margin-bottom: 10px;" routerLink="/login/org/{{org.name}}"></button>
+			<h1 tabindex="{{openedMenu ? -1 : 0}}">{{org.title}}</h1>
+			<button tabindex="{{openedMenu ? -1 : 0}}" *ngIf="showEdit" class="tags" icon="fa-pencil" pButton type="button" label="Editar" style="margin-bottom: 10px;" routerLink="/login/org/{{org.name}}"></button>
 		</div>
 		<div class="social col-2">
-			<a href="{{routerLinkFacebookShare}}" target="_blank" title="Compartir en Facebook">
+			<a tabindex="{{openedMenu ? -1 : 0}}" href="{{routerLinkFacebookShare}}" target="_blank" title="Compartir en Facebook">
 				<img src="/static/public/contenido-general/social/facebookIcon.png" alt="compartir-en-Facebook">
 			</a>
-			<a href="{{routerLinkTwitterShare}}" target="_blank" title="Compartir en Twitter">
+			<a tabindex="{{openedMenu ? -1 : 0}}" href="{{routerLinkTwitterShare}}" target="_blank" title="Compartir en Twitter">
 				<img src="/static/public/contenido-general/social/twitterIcon.png" alt="compartir-en-Twitter">
 			</a>
-			<a href="{{routerLinkGooglePlusShare}}" target="_blank" title="Compartir en Google Plus">
+			<a tabindex="{{openedMenu ? -1 : 0}}" href="{{routerLinkGooglePlusShare}}" target="_blank" title="Compartir en Google Plus">
 				<img src="/static/public/contenido-general/social/googlePlusIcon.png" alt="compartir-en-Google Plus">
 			</a>
 		</div>
 	</div>
 <div class="ui-g details">
 	<div class="ui-g-12">
-		<h6><b>NOMBRE DE LA ORGANIZACIÓN:</b></h6>
-		<p>{{org.title}}</p>
+		<h6 tabindex="{{openedMenu ? -1 : 0}}"><b>NOMBRE DE LA ORGANIZACIÓN:</b></h6>
+		<p tabindex="{{openedMenu ? -1 : 0}}">{{org.title}}</p>
 	</div>		
 	<div class="ui-g-12">
-		<h6><b>PÁGINA WEB DE LA ORGANIZACIÓN:</b></h6>
+		<h6 tabindex="{{openedMenu ? -1 : 0}}"><b>PÁGINA WEB DE LA ORGANIZACIÓN:</b></h6>
 		<div *ngIf="webpage; else NOT_AVAILABLE">
-			<p><a href="{{webpage}}">{{webpage}}</a></p>
+			<p><a tabindex="{{openedMenu ? -1 : 0}}" href="{{webpage}}">{{webpage}}</a></p>
 		</div>
-		<div *ngIf="!webpage">
-			<p>No disponible</p>
+		<div tabindex="{{openedMenu ? -1 : 0}}" *ngIf="!webpage">
+			<p tabindex="{{openedMenu ? -1 : 0}}">No disponible</p>
 		</div>
 	</div>		
 	<div class="ui-g-12">
-		<h6><b>DESCRIPCIÓN DE LA ORGANIZACIÓN:</b></h6>
-		<p>{{org.description || "No disponible"}}</p>
+		<h6 tabindex="{{openedMenu ? -1 : 0}}"><b>DESCRIPCIÓN DE LA ORGANIZACIÓN:</b></h6>
+		<p tabindex="{{openedMenu ? -1 : 0}}">{{org.description || "No disponible"}}</p>
 	</div>		
 	<div class="ui-g-12">
-		<h6><b>DIRECCIÓN DE LA ORGANIZACIÓN:</b></h6>
-		<p>{{address || "No disponible"}}</p>
+		<h6 tabindex="{{openedMenu ? -1 : 0}}"><b>DIRECCIÓN DE LA ORGANIZACIÓN:</b></h6>
+		<p tabindex="{{openedMenu ? -1 : 0}}">{{address || "No disponible"}}</p>
 	</div>		
 	<div class="ui-g-12">
-		<h6><b>PERSONA RESPONSABLE DENTRO DE LA ORGANIZACIÓN:</b></h6>
-		<p>{{person || "No disponible"}}</p>
+		<h6 tabindex="{{openedMenu ? -1 : 0}}"><b>PERSONA RESPONSABLE DENTRO DE LA ORGANIZACIÓN:</b></h6>
+		<p tabindex="{{openedMenu ? -1 : 0}}">{{person || "No disponible"}}</p>
 	</div>		
 	<div class="ui-g-12">
-		<h6><b>EMAIL DE CONTACTO:</b></h6>
-		<p>{{email || "No disponible"}}</p>
+		<h6 tabindex="{{openedMenu ? -1 : 0}}"><b>EMAIL DE CONTACTO:</b></h6>
+		<p tabindex="{{openedMenu ? -1 : 0}}">{{email || "No disponible"}}</p>
 	</div>
 	<div class="ui-g-12"></div>
 </div>
 <p-dataTable [value]="datasets" (onSort)="setOrder($event)"#dt>
 	<p-column field="name" header="{{numDatasets}} conjuntos de datos encontrados" sortable="custom" sortFunction="setOrder($event)">
 		<ng-template pTemplate="body" let-dataset="rowData">
-			<a routerLink='{{routerLinkDataCatalogDataset}}/{{dataset.name}}' (click)="showDataset(dataset)">
+			<a tabindex="{{openedMenu ? -1 : 0}}" routerLink='{{routerLinkDataCatalogDataset}}/{{dataset.name}}' (click)="showDataset(dataset)">
 				  {{dataset.title}}
 			  </a>
 		</ng-template>
@@ -88,26 +88,26 @@
 <nav aria-label="Pagination">
 		<ul class="pagination justify-content-center">
 			<li [ngClass]="actualPage >= 1 ? 'page-item': 'page-item disabled'">
-				<a class="page-link" (click)="paginate(+pageFirst+1)" aria-label="Primero">
+				<a tabindex="{{openedMenu ? -1 : 0}}" class="page-link" (click)="paginate(+pageFirst+1)" aria-label="Primero">
 				<i class="fa fa-fast-backward" ></i>
 				</a>
 			</li>
 			<li [ngClass]="actualPage >= 1 ? 'page-item': 'page-item disabled'">
-				<a class="page-link" (click)="paginate(+actualPage)" aria-label="Anterior">
+				<a tabindex="{{openedMenu ? -1 : 0}}" class="page-link" (click)="paginate(+actualPage)" aria-label="Anterior">
 				<i class="fa fa-step-backward"></i>
 				</a>
 			</li>
 			<li *ngFor="let pageShow of pagesShow" [ngClass]="pageShow == '-' ? 'page-item disabled' : (pageShow == (+actualPage+1) ? 'page-item active': 'page-item')">
-				<a class="page-link" (click)="paginate(pageShow)">{{pageShow}}</a>
+				<a tabindex="{{openedMenu ? -1 : 0}}" class="page-link" (click)="paginate(pageShow)">{{pageShow}}</a>
 			</li>
 
 			<li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
-				<a class="page-link" (click)="paginate(+actualPage+2)" aria-label="Siguiente">
+				<a tabindex="{{openedMenu ? -1 : 0}}" class="page-link" (click)="paginate(+actualPage+2)" aria-label="Siguiente">
 					<i class="fa fa-step-forward"></i>
 					</a>
 			</li>
 			<li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
-				<a class="page-link" (click)="paginate(pageLast)" aria-label="Ultimo">
+				<a tabindex="{{openedMenu ? -1 : 0}}" class="page-link" (click)="paginate(pageLast)" aria-label="Ultimo">
 					<i class="fa fa-fast-forward"></i>
 					</a>
 			</li>

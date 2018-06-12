@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { StaticContent } from '../../../../../models/StaticContent';
 import { StaticContentService } from '../../../../../services/web/static-content.service';
 import { Constants } from "app/app.constants";
+import { UtilsService } from '../../../../../services/web/utils.service';
 
 @Component({
 	selector: 'app-applications',
@@ -9,6 +10,8 @@ import { Constants } from "app/app.constants";
 	styleUrls: ['./applications.component.css']
 })
 export class ApplicationsComponent implements OnInit {
+
+	openedMenu: boolean;
 	contents: StaticContent[];
     sectionTitle: string;
     sectionSubtitle: string;
@@ -19,7 +22,9 @@ export class ApplicationsComponent implements OnInit {
     applicationsErrorTitle: string;
     applicationsErrorMessage: string;
 	
-	constructor(private staticContentService: StaticContentService) { }
+	constructor(private staticContentService: StaticContentService, private utilsService: UtilsService) {
+		this.getOpenedMenu();
+	}
 	
 	ngOnInit() {
 		this.applicationsErrorTitle = Constants.APPLICATIONS_STATIC_CONTENT_ERROR_TITLE;
@@ -42,4 +47,10 @@ export class ApplicationsComponent implements OnInit {
 			
 		});
 	}
+
+    getOpenedMenu(){
+        this.utilsService.openedMenuChange.subscribe(value => {
+			this.openedMenu = value;
+		});
+    }
 }

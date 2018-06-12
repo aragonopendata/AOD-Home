@@ -3,6 +3,7 @@ import { Constants } from '../../app.constants';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 declare var jQuery:any;
+import { UtilsService } from '../../services/web/utils.service';
 
 @Component({
 	selector: 'app-home',
@@ -11,6 +12,8 @@ declare var jQuery:any;
 })
 
 export class HomeComponent implements OnInit {
+
+	openedMenu: boolean;
 
 	hovers: any[] = [];
 	targetUrl: string;
@@ -34,7 +37,8 @@ export class HomeComponent implements OnInit {
 	routerLinkToolsSparql: string;
 	routerLinkToolsGithub: string;
 
-	constructor( private router: Router, private activatedRoute: ActivatedRoute, private location: Location ) { 
+	constructor( private router: Router, private activatedRoute: ActivatedRoute,
+		private location: Location, private utilsService: UtilsService ) { 
 		//Dynamic URL build to send to HTML template
 		this.routerLinkDataCatalog = Constants.ROUTER_LINK_DATA_CATALOG;
 		this.routerLinkDataTopics = Constants.ROUTER_LINK_DATA_TOPICS;
@@ -53,6 +57,8 @@ export class HomeComponent implements OnInit {
 		this.routerLinkToolsApis = Constants.ROUTER_LINK_TOOLS_APIS;
 		this.routerLinkToolsSparql = Constants.ROUTER_LINK_TOOLS_SPARQL;
 		this.routerLinkToolsGithub = Constants.AOD_GITHUB_URL;
+		this.getOpenedMenu();
+		
 	}
 
 	ngOnInit() {
@@ -220,5 +226,15 @@ export class HomeComponent implements OnInit {
 				break;
 			}
 		});
+	}
+
+    getOpenedMenu(){
+        this.utilsService.openedMenuChange.subscribe(value => {
+			this.openedMenu = value;
+		});
+    }
+
+    toggleOpenedMenu() {
+        this.utilsService.tooggleOpenedMenu();
     }
 }

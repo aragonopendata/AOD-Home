@@ -6,7 +6,9 @@ import { Constants } from '../../../../app.constants';
 import { DatasetsService } from '../../../../services/web/datasets.service';
 import { Dataset } from '../../../../models/Dataset';
 import { Autocomplete } from '../../../../models/Autocomplete';
+import { HeaderComponent } from '../../common/header/header.component';
 declare var jQuery:any;
+import { UtilsService } from '../../../../services/web/utils.service';
 
 @Component({
 	host: {'(document:click)': 'onClick($event)'},
@@ -17,6 +19,8 @@ declare var jQuery:any;
 })
 
 export class DatasetAutocompleteComponent implements OnInit {
+
+	openedMenu: boolean;
 
 	dataset: Dataset;
 	datasetAutocomplete: Autocomplete[];
@@ -29,10 +33,12 @@ export class DatasetAutocompleteComponent implements OnInit {
 	resultsExtended: boolean;
 	text: string;
 
-	constructor(private datasetService: DatasetsService, private router: Router, private _eref: ElementRef) {
+	constructor(private datasetService: DatasetsService, private router: Router,
+		private _eref: ElementRef, private utilsService: UtilsService) {
 		this.resultsLimit = Constants.DATASET_AUTOCOMPLETE_LIMIT_RESULTS;
 		this.routerLinkDataCatalog = Constants.ROUTER_LINK_DATA_CATALOG;
 		this.routerLinkDataCatalogDataset = Constants.ROUTER_LINK_DATA_CATALOG_DATASET;
+		this.getOpenedMenu();
 	}
 
 	ngOnInit(): void {
@@ -87,4 +93,10 @@ export class DatasetAutocompleteComponent implements OnInit {
 			//jQuery('.search-result').css('visibility', 'visible');
 	   }
 	}
+
+    getOpenedMenu(){
+        this.utilsService.openedMenuChange.subscribe(value => {
+			this.openedMenu = value;
+		});
+    }
 }

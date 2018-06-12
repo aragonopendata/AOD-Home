@@ -14,6 +14,7 @@ import { Constants } from '../../../../app.constants';
 import { NavigationEnd, Event } from '@angular/router';
 import { Autocomplete } from 'app/models/Autocomplete';
 import { Observable } from 'rxjs';
+import { UtilsService } from '../../../../services/web/utils.service';
 
 @Component({
     selector: 'app-datasets-list',
@@ -23,6 +24,8 @@ import { Observable } from 'rxjs';
 })
 
 export class DatasetsListComponent implements OnInit {
+
+    openedMenu: boolean;
 
     selectedTopic: string;
     selectedOrg: string;
@@ -126,7 +129,8 @@ export class DatasetsListComponent implements OnInit {
     constructor(private datasetsService: DatasetsService, private topicsService: TopicsService
             , private orgsService: OrganizationsService, private router: Router
             , private location: Location, private changeDetectorRef: ChangeDetectorRef
-            , private activatedRoute: ActivatedRoute, private loc: PlatformLocation) {
+            , private activatedRoute: ActivatedRoute, private loc: PlatformLocation,
+            private utilsService: UtilsService) {
         this.datasetListErrorTitle = Constants.DATASET_LIST_ERROR_TITLE;
         this.datasetListErrorMessage = Constants.DATASET_LIST_ERROR_MESSAGE;
         this.pageRows = Constants.DATASET_LIST_ROWS_PER_PAGE;
@@ -171,6 +175,7 @@ export class DatasetsListComponent implements OnInit {
         this.groupsOptionIDITic = Constants.DATASET_LIST_DROPDOWN_GROUPS_IDITIC.value;
         this.groupsOptionMedioAmbiente = Constants.DATASET_LIST_DROPDOWN_GROUPS_MEDIOAMBIENTE.value;
         this.groupsOptionSectorPublico = Constants.DATASET_LIST_DROPDOWN_GROUPS_SECTORPUBLICO.value;
+        this.getOpenedMenu();
     }
 
     ngOnInit() {
@@ -1031,5 +1036,11 @@ export class DatasetsListComponent implements OnInit {
         }else{
             this.hideLastUpdateColumn = false;
         }
+    }
+
+    getOpenedMenu(){
+        this.utilsService.openedMenuChange.subscribe(value => {
+			this.openedMenu = value;
+		});
     }
 }

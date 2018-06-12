@@ -8,6 +8,7 @@ import { OrganizationAdmin } from 'app/models/OrganizationAdmin';
 import { OrganizationsAdminService } from 'app/services/admin/organizations-admin.service';
 import { Dataset } from 'app/models/Dataset';
 import { DatasetsAdminService } from 'app/services/admin/datasets-admin.service';
+import { UtilsService } from '../../services/web/utils.service';
 
 @Component({
 	selector: 'app-login',
@@ -16,6 +17,8 @@ import { DatasetsAdminService } from 'app/services/admin/datasets-admin.service'
 })
 
 export class LoginComponent implements OnInit {
+
+    openedMenu: boolean;
 
     organization: OrganizationAdmin = new OrganizationAdmin();
     dataset: Dataset = new Dataset();
@@ -34,8 +37,12 @@ export class LoginComponent implements OnInit {
     
 
     constructor(private router: Router, private authenticationService: AuthenticationService, private loginService: LoginService
-                , private activatedRoute: ActivatedRoute, private usersAdminService: UsersAdminService
-                , private organizationsAdminService: OrganizationsAdminService, private datasetAdminService: DatasetsAdminService){ }
+        , private activatedRoute: ActivatedRoute, private usersAdminService: UsersAdminService
+        , private organizationsAdminService: OrganizationsAdminService, private datasetAdminService: DatasetsAdminService,
+        private utilsService: UtilsService){
+
+            this.getOpenedMenu();
+        }
 
     ngOnInit() {
         this.activatedRoute.params.subscribe((params: Params) => {
@@ -153,5 +160,15 @@ export class LoginComponent implements OnInit {
             console.log(error);
         }
         
+    }
+
+    getOpenedMenu(){
+        this.utilsService.openedMenuChange.subscribe(value => {
+			this.openedMenu = value;
+		});
+    }
+
+    toggleOpenedMenu() {
+        this.utilsService.tooggleOpenedMenu();
     }
 }

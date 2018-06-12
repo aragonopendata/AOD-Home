@@ -89,6 +89,7 @@ import { LogstashService } from './services/admin/logstash.service';
 import { AnalyticsService } from './services/web/analytics.service';
 import { AodCoreAdminService} from './services/admin/aod-core-admin.service';
 import {GoogleAnalyticsEventsService} from "./services/web/google-analytics-events.service";
+import { UtilsService } from './services/web/utils.service';
 
 @NgModule({
 	declarations: [
@@ -209,7 +210,8 @@ import {GoogleAnalyticsEventsService} from "./services/web/google-analytics-even
 		AnalyticsService,
 		AodCoreAdminService,
 		ConfirmationService,
-		GoogleAnalyticsEventsService
+		GoogleAnalyticsEventsService,
+		UtilsService
 	],
 	bootstrap: [AppComponent]
 })

@@ -3,6 +3,7 @@ import { StaticContent } from '../../../../../models/StaticContent';
 import { StaticContentService } from '../../../../../services/web/static-content.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from "app/app.constants";
+import { UtilsService } from '../../../../../services/web/utils.service';
 declare var jQuery:any;
 
 @Component({
@@ -12,6 +13,7 @@ declare var jQuery:any;
     encapsulation: ViewEncapsulation.None
 })
 export class OpenDataComponent implements OnInit, AfterViewChecked {
+    openedMenu: boolean;
     index: number = 0;
     contents: StaticContent[];
     sectionTitle: string;
@@ -25,7 +27,11 @@ export class OpenDataComponent implements OnInit, AfterViewChecked {
     openDataErrorTitle: string;
     openDataErrorMessage: string;
 
-    constructor(private staticContentService: StaticContentService, private activatedRoute: ActivatedRoute) { }
+    constructor(private staticContentService: StaticContentService,
+        private activatedRoute: ActivatedRoute,
+        private utilsService: UtilsService) {
+            this.getOpenedMenu();
+        }
 
     ngOnInit() {
         this.openDataErrorTitle = Constants.OPEN_DATA_STATIC_CONTENT_ERROR_TITLE;
@@ -76,5 +82,11 @@ export class OpenDataComponent implements OnInit, AfterViewChecked {
             document.getElementById(this.url+'Link').setAttribute('class','headLink');
             document.getElementById(this.url).setAttribute('class','collapse show');
         }
+    }
+
+    getOpenedMenu(){
+        this.utilsService.openedMenuChange.subscribe(value => {
+			this.openedMenu = value;
+		});
     }
 }

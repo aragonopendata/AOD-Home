@@ -18,20 +18,20 @@
 </div>
 <div class="container" *ngIf="!errorTitle && datasetHomer.package_id == undefined">
 <div class="dtHeader row">
-	<h1 class="globaltitle col-10">{{dataset.title}}</h1>
+	<h1 tabindex="{{openedMenu ? -1 : 0}}" class="globaltitle col-10">{{dataset.title}}</h1>
 	<div class="social col-2">
-		<a href="{{routerLinkFacebookShare}}" target="_blank" title="Compartir en Facebook">
+		<a tabindex="{{openedMenu ? -1 : 0}}" href="{{routerLinkFacebookShare}}" target="_blank" title="Compartir en Facebook">
 		  <img src="/static/public/contenido-general/social/facebookIcon.png" alt="compartir-en-Facebook">
 		</a>
-		<a href="{{routerLinkTwitterShare}}" target="_blank" title="Compartir en Twitter">
+		<a tabindex="{{openedMenu ? -1 : 0}}" href="{{routerLinkTwitterShare}}" target="_blank" title="Compartir en Twitter">
 		  <img src="/static/public/contenido-general/social/twitterIcon.png" alt="compartir-en-Twitter">
 		</a>
-		<a href="{{routerLinkGooglePlusShare}}" target="_blank" title="Compartir en Google Plus">
+		<a tabindex="{{openedMenu ? -1 : 0}}" href="{{routerLinkGooglePlusShare}}" target="_blank" title="Compartir en Google Plus">
 		  <img src="/static/public/contenido-general/social/googlePlusIcon.png" alt="compartir-en-Google Plus">
 		</a>
 	</div>
 </div>
-<button *ngIf="showEdit" class="tags" icon="fa-pencil" pButton type="button" label="Editar" style="margin-bottom: 10px;" routerLink="/admin/datacenter/datasets/edit/{{dataset.name}}"></button>	
+<button tabindex="{{openedMenu ? -1 : 0}}" *ngIf="showEdit" class="tags" icon="fa-pencil" pButton type="button" label="Editar" style="margin-bottom: 10px;" routerLink="/admin/datacenter/datasets/edit/{{dataset.name}}"></button>	
 <div class="content row">
 	<div *ngIf="dataPreview" class="dtsetPreview col-12" style='margin-bottom: 10px'>
 		<div class="title">
@@ -54,69 +54,69 @@
 	</div>
 	<div class="infodtset col-sm-12 col-md-8">
 		<div class="title">
-			<h5>Información del conjunto de datos</h5>
+			<h5 tabindex="{{openedMenu ? -1 : 0}}">Información del conjunto de datos</h5>
 		</div>
 		<div class="container-fluid">
 			<div class="section" *ngIf="dataset.title">
-				<h6>Título</h6>
-				<p>{{dataset.title}}</p>
+				<h6 tabindex="{{openedMenu ? -1 : 0}}">Título</h6>
+				<p tabindex="{{openedMenu ? -1 : 0}}">{{dataset.title}}</p>
 			</div>
 			<div class="section" *ngIf="dataset.notes">
-				<h6>Descripción</h6>
-				<p>{{dataset.notes}}</p>
+				<h6 tabindex="{{openedMenu ? -1 : 0}}">Descripción</h6>
+				<p tabindex="{{openedMenu ? -1 : 0}}">{{dataset.notes}}</p>
 			</div>
 			<div class="section" *ngIf="dataset.groups">
-				<h6>Categoría</h6>
+				<h6 tabindex="{{openedMenu ? -1 : 0}}">Categoría</h6>
 				<p *ngFor="let group of dataset.groups">
-					<a routerLink='/{{routerLinkDataCatalogTopics}}/{{group.name}}'>{{group.title}}</a>
+					<a tabindex="{{openedMenu ? -1 : 0}}" routerLink='/{{routerLinkDataCatalogTopics}}/{{group.name}}'>{{group.title}}</a>
 				</p>
 			</div>
 			<div class="section" *ngIf="dataset.tags">
-				<h6>Etiquetas y palabras clave</h6>
-				<button *ngFor="let tag of dataset.tags" class="tags" pButton type="button" routerLink="/{{routerLinkDataCatalogTags}}" [queryParams]="{etq:tag.name}"
+				<h6 tabindex="{{openedMenu ? -1 : 0}}">Etiquetas y palabras clave</h6>
+				<button tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let tag of dataset.tags" class="tags" pButton type="button" routerLink="/{{routerLinkDataCatalogTags}}" [queryParams]="{etq:tag.name}"
 				 pButton label="{{tag.name}}" style="margin: 2px;"></button>
 			</div>
 			<div class="section" *ngIf="dataset.organization">
-				<h6>Organización responsable de la publicación</h6>
-				<a routerLink='/{{routerLinkDataOrgs}}/{{dataset.organization?.name}}'>{{dataset.organization?.title}}</a>
+				<h6 tabindex="{{openedMenu ? -1 : 0}}">Organización responsable de la publicación</h6>
+				<a tabindex="{{openedMenu ? -1 : 0}}" routerLink='/{{routerLinkDataOrgs}}/{{dataset.organization?.name}}'>{{dataset.organization?.title}}</a>
 			</div>
 			<div class="section">
-				<h6>Territorio en el que existen datos</h6>
-				<p>Este conjunto de datos contiene datos en el territorio de {{extraTypeAragopedia}}</p>
-				<p>Esta es la <a href="{{extraUriAragopedia}}"> URI del recurso {{extraShortUriAragopedia}}</a></p>
+				<h6 tabindex="{{openedMenu ? -1 : 0}}">Territorio en el que existen datos</h6>
+				<p tabindex="{{openedMenu ? -1 : 0}}">Este conjunto de datos contiene datos en el territorio de {{extraTypeAragopedia}}</p>
+				<p tabindex="{{openedMenu ? -1 : 0}}">Esta es la <a tabindex="{{openedMenu ? -1 : 0}}" href="{{extraUriAragopedia}}"> URI del recurso {{extraShortUriAragopedia}}</a></p>
 			</div>
 			<div class="section" *ngIf="extraFrequency">
-				<h6>Frecuencia de actualización</h6>
-				<p>{{extraFrequency}}</p>
+				<h6 tabindex="{{openedMenu ? -1 : 0}}">Frecuencia de actualización</h6>
+				<p tabindex="{{openedMenu ? -1 : 0}}">{{extraFrequency}}</p>
 			</div>
 			<div class="section" *ngIf="extraTemporalFrom && extraTemporalUntil">
-				<h6>Periodo de tiempo en el que existen datos</h6>
-				<p>{{extraTemporalFrom}} - {{extraTemporalUntil}}</p>
+				<h6 tabindex="{{openedMenu ? -1 : 0}}">Periodo de tiempo en el que existen datos</h6>
+				<p tabindex="{{openedMenu ? -1 : 0}}">{{extraTemporalFrom}} - {{extraTemporalUntil}}</p>
 			</div>
 			<div class="section" *ngIf="extraTemporalFrom && !extraTemporalUntil">
-				<h6>Periodo de tiempo en el que existen datos</h6>
-				<p>{{extraTemporalFrom}}</p>
+				<h6 tabindex="{{openedMenu ? -1 : 0}}">Periodo de tiempo en el que existen datos</h6>
+				<p tabindex="{{openedMenu ? -1 : 0}}">{{extraTemporalFrom}}</p>
 			</div>
 			<div class="section" *ngIf="dataset.license_title">
-				<h6>Licencia</h6>
-				<p><a href="{{dataset.license_url}}" target="_blank">{{dataset.license_title}}</a></p>
+				<h6 tabindex="{{openedMenu ? -1 : 0}}">Licencia</h6>
+				<p><a tabindex="{{openedMenu ? -1 : 0}}" href="{{dataset.license_url}}" target="_blank">{{dataset.license_title}}</a></p>
 			</div>
 			<div class="section" *ngIf="extraGranularity">
-				<h6>Nivel de detalle</h6>
-				<p>{{extraGranularity}}</p>
+				<h6 tabindex="{{openedMenu ? -1 : 0}}">Nivel de detalle</h6>
+				<p tabindex="{{openedMenu ? -1 : 0}}">{{extraGranularity}}</p>
 			</div>
 			<div class="section" *ngIf="extraDataQuality">
-				<h6>Calidad del dato</h6>
-				<p>{{extraDataQuality}}</p>
-				<a *ngFor="let data of extraDataQualityURL; let i = index" class="tags" (click)="submitEvent(data,'EXTRA');openUrl(data);"
-				pButton type="button" label="[{{i+1}}] Documento de calidad del dato"
+				<h6 tabindex="{{openedMenu ? -1 : 0}}">Calidad del dato</h6>
+				<p tabindex="{{openedMenu ? -1 : 0}}">{{extraDataQuality}}</p>
+				<a tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let data of extraDataQualityURL; let i = index" class="tags" (click)="submitEvent(data,'EXTRA');openUrl(data);"
+				pButton (keydown.enter)="submitEvent(data,'EXTRA');openUrl(data);" type="button" label="[{{i+1}}] Documento de calidad del dato"
 				style="margin: 2px;"></a>
 			</div>
 			<div class="section" *ngIf="extraDictionary">
-				<h6>Diccionario de datos</h6>
-				<p>{{extraDictionary}}</p>
-				<a *ngFor="let dic of extraDictionaryURL; let i = index" class="tags" (click)="submitEvent(dic,'EXTRA');openUrl(dic);"
-				pButton type="button" label="[{{i+1}}] Documento de diccionario de datos"
+				<h6 tabindex="{{openedMenu ? -1 : 0}}">Diccionario de datos</h6>
+				<p tabindex="{{openedMenu ? -1 : 0}}">{{extraDictionary}}</p>
+				<a tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let dic of extraDictionaryURL; let i = index" class="tags" (click)="submitEvent(dic,'EXTRA');openUrl(dic);"
+				pButton (keydown.enter)="submitEvent(dic,'EXTRA');openUrl(dic);" type="button" label="[{{i+1}}] Documento de diccionario de datos"
 				style="margin: 2px;"></a>
 			</div>
 		</div>
@@ -124,78 +124,78 @@
 	
 	<div class="download col-sm-12 col-md-4">
 		<div class="title">
-			<h5>Descargas</h5>
+			<h5 tabindex="{{openedMenu ? -1 : 0}}">Descargas</h5>
 		</div>
 		<div class="container-fluid horizontalFormat">
 			<div class="section" *ngIf="resourcesAux.length != 0">
-				<h6>Archivos con los datos</h6>
+				<h6 tabindex="{{openedMenu ? -1 : 0}}">Archivos con los datos</h6>
 				<div *ngFor="let resource of resourcesAux">
 					<p>{{resource.name}}</p>
 					<div *ngFor="let url of resource.sources; let i = index">
 						<div class="horizontalFormat" *ngIf="resource.getSourcesSize() != i+1">
-							<a class="tags" (click)="submitEvent(url,resource.formats[i]);" href="{{url}}" target="_blank" title="{{resource.name}}" pButton type="button" label="{{resource.formats[i]}}" style="margin: 2px;"></a>
+							<a tabindex="{{openedMenu ? -1 : 0}}" class="tags" (click)="submitEvent(url,resource.formats[i]);" href="{{url}}" target="_blank" title="{{resource.name}}" pButton type="button" label="{{resource.formats[i]}}" style="margin: 2px;"></a>
 						</div>
 						<div *ngIf="resource.getSourcesSize() == i+1">
-							<a class="tags" (click)="submitEvent(url,resource.formats[i]);" href="{{url}}" target="_blank" title="{{resource.name}}" pButton type="button" label="{{resource.formats[i]}}" style="margin: 2px;"></a>
+							<a tabindex="{{openedMenu ? -1 : 0}}" class="tags" (click)="submitEvent(url,resource.formats[i]);" href="{{url}}" target="_blank" title="{{resource.name}}" pButton type="button" label="{{resource.formats[i]}}" style="margin: 2px;"></a>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="section">
-					<h6>Metadatos de la colección</h6>
-					<a class="tags" (click)="submitEvent(dataset.name,'RDF');downloadRDF(dataset.name);" target="_blank" title="Metadato de la colección en RDF" pButton type="button" label="RDF" style="margin: 2px;"></a>
+					<h6 tabindex="{{openedMenu ? -1 : 0}}">Metadatos de la colección</h6>
+					<a tabindex="{{openedMenu ? -1 : 0}}" class="tags" (click)="submitEvent(dataset.name,'RDF');downloadRDF(dataset.name);" target="_blank" title="Metadato de la colección en RDF" pButton type="button" label="RDF" style="margin: 2px;"></a>
 				</div>
 		</div>
 	</div>
 	<div *ngIf="extrasIAESTNotEmpty" class="infodtset col-sm-12 col-md-8" style="margin-top: 5px;">
 			<div class="title">
-				<h5>Propiedades adicionales de los metadatos</h5>
+				<h5 tabindex="{{openedMenu ? -1 : 0}}">Propiedades adicionales de los metadatos</h5>
 			</div>
 			<div class="container-fluid">
 				<div class="section" *ngIf="extraIAESTTemaEstadistico">
-					<h6>Tema estadístico</h6>
-					<p>{{extraIAESTTemaEstadistico}}</p>
+					<h6 tabindex="{{openedMenu ? -1 : 0}}">Tema estadístico</h6>
+					<p tabindex="{{openedMenu ? -1 : 0}}">{{extraIAESTTemaEstadistico}}</p>
 				</div>
 				<div class="section" *ngIf="extraIAESTUnidadEstadistica">
-					<h6>Unidad Estadística</h6>
-					<p>{{extraIAESTUnidadEstadistica}}</p>
+					<h6 tabindex="{{openedMenu ? -1 : 0}}">Unidad Estadística</h6>
+					<p tabindex="{{openedMenu ? -1 : 0}}">{{extraIAESTUnidadEstadistica}}</p>
 				</div>
 				<div class="section" *ngIf="extraIAESTPoblacionEstadistica">
-					<h6>Población estadística</h6>
-					<p>{{extraIAESTPoblacionEstadistica}}</p>
+					<h6 tabindex="{{openedMenu ? -1 : 0}}">Población estadística</h6>
+					<p tabindex="{{openedMenu ? -1 : 0}}">{{extraIAESTPoblacionEstadistica}}</p>
 				</div>
 				<div class="section" *ngIf="extraIAESTUnidadMedida">
-					<h6>Unidad de medida</h6>
-					<p>{{extraIAESTUnidadMedida}}</p>
+					<h6 tabindex="{{openedMenu ? -1 : 0}}">Unidad de medida</h6>
+					<p tabindex="{{openedMenu ? -1 : 0}}">{{extraIAESTUnidadMedida}}</p>
 				</div>
 				<div class="section" *ngIf="extraIAESTTipoOperacion">
-					<h6>Tipo de operación</h6>
-					<p>{{extraIAESTTipoOperacion}}</p>
+					<h6 tabindex="{{openedMenu ? -1 : 0}}">Tipo de operación</h6>
+					<p tabindex="{{openedMenu ? -1 : 0}}">{{extraIAESTTipoOperacion}}</p>
 				</div>
 				<div class="section" *ngIf="extraIAESTTipologiaDatosOrigen">
-					<h6>Tipología de datos de origen</h6>
-					<p>{{extraIAESTTipologiaDatosOrigen}}</p>
+					<h6 tabindex="{{openedMenu ? -1 : 0}}">Tipología de datos de origen</h6>
+					<p tabindex="{{openedMenu ? -1 : 0}}">{{extraIAESTTipologiaDatosOrigen}}</p>
 				</div>
 				<div class="section" *ngIf="extraIAESTFuente">
-					<h6>Fuente</h6>
-					<p>{{extraIAESTFuente}}</p>
+					<h6 tabindex="{{openedMenu ? -1 : 0}}">Fuente</h6>
+					<p tabindex="{{openedMenu ? -1 : 0}}">{{extraIAESTFuente}}</p>
 				</div>
 				<div class="section" *ngIf="extraIAESTTratamientoEstadistico">
-					<h6>Tratamiento estadístico</h6>
-					<p>{{extraIAESTTratamientoEstadistico}}</p>
+					<h6 tabindex="{{openedMenu ? -1 : 0}}">Tratamiento estadístico</h6>
+					<p tabindex="{{openedMenu ? -1 : 0}}">{{extraIAESTTratamientoEstadistico}}</p>
 				</div>					
 				<div class="section" *ngIf="extraIAESTLegislacionUE">
-					<h6>Legislación UE</h6>
-					<p class="textContent" [innerHTML]="extraIAESTLegislacionUE"></p>
+					<h6 tabindex="{{openedMenu ? -1 : 0}}">Legislación UE</h6>
+					<p tabindex="{{openedMenu ? -1 : 0}}" class="textContent" [innerHTML]="extraIAESTLegislacionUE"></p>
 				</div>					
 			</div>
 	</div>
 	<div class="recomend col-12" *ngIf="datasetsRecommended">
-		<h4>También te pueden interesar estos datos</h4>
+		<h4 tabindex="{{openedMenu ? -1 : 0}}">También te pueden interesar estos datos</h4>
 
 		 <div class="ui-g">
 				<div class="ui-sm-12 ui-md-6 ui-lg-4 tarjetaContainer" *ngFor="let dsRecommended of datasetsRecommended; let i = index">
-					<div class="recommendedCard" routerLink="/datos/catalogo/dataset/{{dsRecommended.name}}" (click)="showDataset(dsRecommended)">
+					<div tabindex="{{openedMenu ? -1 : 0}}" class="recommendedCard" routerLink="/datos/catalogo/dataset/{{dsRecommended.name}}" (click)="showDataset(dsRecommended)">
 						<div class="wrapper" *ngFor="let topic of dsRecommended.groups">							
 							<div class="cardSize">
 								<img class="card-img-top" src="{{topic.image_url}}" alt="{{topic.title | uppercase}}" width="fit-content" height="fit-content">
@@ -221,15 +221,15 @@
 </div>
 <div *ngIf="!errorTitle && datasetHomer.package_id != undefined" class="container">
 <div class="dtHeader row">
-	<h1 *ngIf="datasetHomer.title" class="globaltitle col-10">{{datasetHomer.title}}</h1>
+	<h1 tabindex="{{openedMenu ? -1 : 0}}" *ngIf="datasetHomer.title" class="globaltitle col-10">{{datasetHomer.title}}</h1>
 	<div class="social col-2">
-		<a href="{{routerLinkFacebookShare}}" target="_blank" title="Compartir en Facebook">
+		<a tabindex="{{openedMenu ? -1 : 0}}" href="{{routerLinkFacebookShare}}" target="_blank" title="Compartir en Facebook">
 		  <img src="/static/public/contenido-general/social/facebookIcon.png" alt="compartir-en-Facebook">
 		</a>
-		<a href="{{routerLinkTwitterShare}}" target="_blank" title="Compartir en Twitter">
+		<a tabindex="{{openedMenu ? -1 : 0}}" href="{{routerLinkTwitterShare}}" target="_blank" title="Compartir en Twitter">
 		  <img src="/static/public/contenido-general/social/twitterIcon.png" alt="compartir-en-Twitter">
 		</a>
-		<a href="{{routerLinkGooglePlusShare}}" target="_blank" title="Compartir en Google Plus">
+		<a tabindex="{{openedMenu ? -1 : 0}}" href="{{routerLinkGooglePlusShare}}" target="_blank" title="Compartir en Google Plus">
 		  <img src="/static/public/contenido-general/social/googlePlusIcon.png" alt="compartir-en-Google Plus">
 		</a>
 	</div>

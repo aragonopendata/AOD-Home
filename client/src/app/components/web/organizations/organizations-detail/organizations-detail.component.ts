@@ -7,6 +7,7 @@ import { Dataset } from '../../../../models/Dataset';
 import { UsersAdminService } from 'app/services/admin/users-admin.service';
 import { Constants } from '../../../../app.constants';
 import { User } from 'app/models/User';
+import { UtilsService } from '../../../../services/web/utils.service';
 
 @Component({
 	selector: 'app-organizations-detail',
@@ -16,6 +17,8 @@ import { User } from 'app/models/User';
 })
 
 export class OrganizationsDetailComponent implements OnInit {
+
+	openedMenu: boolean;
 
 	hideAccessNumberColumn: boolean;
 	hideLastUpdateColumn: boolean;
@@ -55,13 +58,15 @@ export class OrganizationsDetailComponent implements OnInit {
 			, private datasetsService: DatasetsService
 			, private activatedRoute: ActivatedRoute
 			, private usersAdminService: UsersAdminService
-			, private router: Router) {
+			, private router: Router
+			, private utilsService: UtilsService) {
 		this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
 		this.routerLinkDataCatalogDataset = '/' + Constants.ROUTER_LINK_DATA_CATALOG_DATASET;
 		this.pageRows = Constants.ORGANIZATION_DATASET_LIST_ROWS_PER_PAGE;
 		this.routerLinkFacebookShare = Constants.SHARE_FACEBOOK + window.location.href;
 		this.routerLinkTwitterShare = Constants.SHARE_TWITTER + window.location.href;
 		this.routerLinkGooglePlusShare = Constants.SHARE_GOOGLE_PLUS + window.location.href;
+		this.getOpenedMenu();
 	}
 
 	ngOnInit() {
@@ -249,5 +254,11 @@ export class OrganizationsDetailComponent implements OnInit {
         }else{
             this.hideLastUpdateColumn = false;
         }
+    }
+
+    getOpenedMenu(){
+        this.utilsService.openedMenuChange.subscribe(value => {
+			this.openedMenu = value;
+		});
     }
 }

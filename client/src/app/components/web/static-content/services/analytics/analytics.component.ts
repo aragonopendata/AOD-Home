@@ -3,6 +3,7 @@ import { Component, NgModule } from '@angular/core'
 import { BrowserModule, DomSanitizer } from '@angular/platform-browser'
 import { AnalyticsService } from '../../../../../services/web/analytics.service';
 import { Logstash } from '../../../../../models/Logstash';
+import { UtilsService } from '../../../../../services/web/utils.service';
 declare var jQuery: any;
 
 @Component({
@@ -12,10 +13,14 @@ declare var jQuery: any;
 })
 export class AnalyticsComponent {
 
+	openedMenu: boolean;
 	logstashs: Logstash[];
 	isIframeActive = true;
 
-	constructor(private logstashService: AnalyticsService) { }
+	constructor(private logstashService: AnalyticsService,
+		private utilsService: UtilsService) {
+		this.getOpenedMenu();
+	}
 
 	ngOnInit() {
 		var days = "now/y";
@@ -184,6 +189,12 @@ export class AnalyticsComponent {
 			} catch (error) {
 				console.error('Error: getFiles() - logstash.component.ts', error);
 			}
+		});
+	}
+
+	getOpenedMenu(){
+		this.utilsService.openedMenuChange.subscribe(value => {
+			this.openedMenu = value;
 		});
 	}
 }

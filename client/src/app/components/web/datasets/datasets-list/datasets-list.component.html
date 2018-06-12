@@ -16,143 +16,143 @@
     </div>
 </div>
 <div class="container" *ngIf="!errorTitle">
-    <h1>BANCO DE DATOS</h1>
+    <h1 tabindex="{{openedMenu ? -1 : 0}}">BANCO DE DATOS</h1>
     <!-- Search -->
     <div class="row">
         <div class="col-12 order-12 order-md-1 col-md-8" *ngIf="selectedSearchOption == datasetSearchOptionFreeSearch">
             <div class="form-group">
-                <label for="exampleSelect1">Datos Sobre:</label>
+                <label for="exampleSelect1" tabindex="{{openedMenu ? -1 : 0}}">Datos Sobre:</label>
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Buscar por..." [(ngModel)]="textSearch" (keyup.enter)="searchDatasetsByText()"
+                    <input tabindex="{{openedMenu ? -1 : 0}}" type="text" class="form-control" placeholder="Buscar por..." [(ngModel)]="textSearch" (keyup.enter)="searchDatasetsByText()"
                         #searchInput>
                     <span class="input-group-btn">
-                        <button class="btn btn-secondary" type="button" (click)="searchDatasetsByText()" ><i class="fa fa-search" aria-hidden="true"></i></button>
+                        <button tabindex="{{openedMenu ? -1 : 0}}" class="btn btn-secondary" type="button" (click)="searchDatasetsByText()" ><i class="fa fa-search" aria-hidden="true"></i></button>
                     </span>
                 </div>
             </div>
         </div>
         <div class="col-12 col-md-4 order-md-1 order-12" *ngIf="selectedSearchOption == datasetSearchOptionTopics">
             <div class="form-group">
-                <label>Datos sobre:</label>
-                <select class="form-control" [(ngModel)]="selectedTopic" (change)="changeType()">
-                    <option *ngFor="let topSel of topicsSelect" [ngValue]="topSel.value">{{topSel.label}}</option>
+                <label tabindex="{{openedMenu ? -1 : 0}}">Datos sobre:</label>
+                <select tabindex="{{openedMenu ? -1 : 0}}" class="form-control" [(ngModel)]="selectedTopic" (change)="changeType()">
+                    <option tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let topSel of topicsSelect" [ngValue]="topSel.value">{{topSel.label}}</option>
                 </select>
             </div>
         </div>
         <div class="col-12 col-md-4 order-12 order-md-1" *ngIf="selectedSearchOption == datasetSearchOptionOrganizations">
             <div class="form-group">
-                <label>Datos sobre:</label>
-                <select class="form-control" [(ngModel)]="selectedOrg" (change)="changeType()">
-                        <option *ngFor="let orgs of orgsSelect" [ngValue]="orgs.value">{{orgs.label}}</option>
+                <label tabindex="{{openedMenu ? -1 : 0}}">Datos sobre:</label>
+                <select tabindex="{{openedMenu ? -1 : 0}}" class="form-control" [(ngModel)]="selectedOrg" (change)="changeType()">
+                        <option tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let orgs of orgsSelect" [ngValue]="orgs.value">{{orgs.label}}</option>
                 </select>
             </div>
         </div>
         <div class="col-12 col-md-4 order-12 order-md-4" *ngIf="selectedSearchOption == datasetSearchOptionOrganizations || selectedSearchOption == datasetSearchOptionTopics">
             <div class="form-group">
-                <label>Del tipo:</label>
-                <select class="form-control" [(ngModel)]="selectedType" (change)="changeType()">
-                    <option *ngFor="let types of datasetTypes" [ngValue]="types.value">{{types.label}}</option>
+                <label tabindex="{{openedMenu ? -1 : 0}}">Del tipo:</label>
+                <select tabindex="{{openedMenu ? -1 : 0}}" class="form-control" [(ngModel)]="selectedType" (change)="changeType()">
+                    <option tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let types of datasetTypes" [ngValue]="types.value">{{types.label}}</option>
                 </select>
             </div>
         </div>
 
         <div class="col-12 order-12 order-md-1 col-md-8" *ngIf="selectedSearchOption == datasetSearchOptionTags">
             <div class="form-group">
-                <label>Etiquetas:</label>
-                <div class="input-group">
+                <label tabindex="{{openedMenu ? -1 : 0}}">Etiquetas:</label>
+                <div tabindex="{{openedMenu ? -1 : 0}}" class="input-group">
                     <p-autoComplete [style]="{'width':'100%'}" [inputStyle]="{'padding': '0 1.5em 0.25em'}" [(ngModel)]="tags" [suggestions]="filteredTagsMultiple"
                         (completeMethod)="filterTagsMultiple($event)" [minLength]="1" placeholder="Etiquetas" value="#{tags}"
                         field="name" [multiple]="true">
                     </p-autoComplete>
                     <span class="input-group-btn">
-                        <button class="btn btn-secondary" type="button" (click)="changeTags()" ><i class="fa fa-search" aria-hidden="true"></i></button>
+                        <button tabindex="{{openedMenu ? -1 : 0}}" class="btn btn-secondary" type="button" (click)="changeTags()" ><i class="fa fa-search" aria-hidden="true"></i></button>
                     </span>
                 </div>
             </div>
         </div>
         <div [ngClass]="selectedSearchOption == datasetSearchOptionStats && selectedGroup == undefined ? 'col-12 order-12 order-md-4 col-md-8' : 'col-12 col-md-4 order-12 order-md-1'" *ngIf="selectedSearchOption == datasetSearchOptionStats">
             <div class="form-group">
-                <label>Del Grupo:</label>
-                <select class="form-control" [(ngModel)]="selectedGroup" (change)="resetSubGroupSearch();changeStats()">
-                    <option *ngFor="let group of groupSelect" [ngValue]="group.value">{{group.label}}</option>
+                <label tabindex="{{openedMenu ? -1 : 0}}">Del Grupo:</label>
+                <select tabindex="{{openedMenu ? -1 : 0}}" class="form-control" [(ngModel)]="selectedGroup" (change)="resetSubGroupSearch();changeStats()">
+                    <option tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let group of groupSelect" [ngValue]="group.value">{{group.label}}</option>
                 </select>
             </div>
         </div>
         <div class="col-12 col-md-4 order-12 order-md-4" *ngIf="selectedGroup != undefined && selectedSearchOption == datasetSearchOptionStats">
             <div class="form-group">
-                <label>Del Subgrupo:</label>
-                <select *ngIf="selectedGroup == groupsOptionTerritorio" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
-                    <option *ngFor="let subGroup of subGroupTerritorioSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
+                <label tabindex="{{openedMenu ? -1 : 0}}">Del Subgrupo:</label>
+                <select tabindex="{{openedMenu ? -1 : 0}}" *ngIf="selectedGroup == groupsOptionTerritorio" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
+                    <option tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let subGroup of subGroupTerritorioSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
-                <select *ngIf="selectedGroup == groupsOptionDemografia" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
-                    <option *ngFor="let subGroup of subGroupDemografiaSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
+                <select tabindex="{{openedMenu ? -1 : 0}}" *ngIf="selectedGroup == groupsOptionDemografia" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
+                    <option tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let subGroup of subGroupDemografiaSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
-                <select *ngIf="selectedGroup == groupsOptionEducacion" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
-                    <option *ngFor="let subGroup of subGroupEducacionSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
+                <select tabindex="{{openedMenu ? -1 : 0}}" *ngIf="selectedGroup == groupsOptionEducacion" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
+                    <option tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let subGroup of subGroupEducacionSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
-                <select *ngIf="selectedGroup == groupsOptionSalud" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
-                    <option *ngFor="let subGroup of subGroupSaludSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
+                <select tabindex="{{openedMenu ? -1 : 0}}" *ngIf="selectedGroup == groupsOptionSalud" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
+                    <option tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let subGroup of subGroupSaludSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
-                <select *ngIf="selectedGroup == groupsOptionNivelCalidadVida" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
-                    <option *ngFor="let subGroup of subGroupNivelCalidadVidaSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
+                <select tabindex="{{openedMenu ? -1 : 0}}" *ngIf="selectedGroup == groupsOptionNivelCalidadVida" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
+                    <option tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let subGroup of subGroupNivelCalidadVidaSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
-                <select *ngIf="selectedGroup == groupsOptionAnalisisSociales" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
-                    <option *ngFor="let subGroup of subGroupAnalisisSocialesSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
+                <select tabindex="{{openedMenu ? -1 : 0}}" *ngIf="selectedGroup == groupsOptionAnalisisSociales" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
+                    <option tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let subGroup of subGroupAnalisisSocialesSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
-                <select *ngIf="selectedGroup == groupsOptionTrabajoSalarios" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
-                    <option *ngFor="let subGroup of subGroupTrabajoSalariosSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
+                <select tabindex="{{openedMenu ? -1 : 0}}" *ngIf="selectedGroup == groupsOptionTrabajoSalarios" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
+                    <option tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let subGroup of subGroupTrabajoSalariosSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
-                <select *ngIf="selectedGroup == groupsOptionAgricultura" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
-                    <option *ngFor="let subGroup of subGroupAgriculturaSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
+                <select tabindex="{{openedMenu ? -1 : 0}}" *ngIf="selectedGroup == groupsOptionAgricultura" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
+                    <option tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let subGroup of subGroupAgriculturaSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
-                <select *ngIf="selectedGroup == groupsOptionServicios" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
-                    <option *ngFor="let subGroup of subGroupServiciosSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
+                <select tabindex="{{openedMenu ? -1 : 0}}" *ngIf="selectedGroup == groupsOptionServicios" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
+                    <option tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let subGroup of subGroupServiciosSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
-                <select *ngIf="selectedGroup == groupsOptionPrecios" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
-                    <option *ngFor="let subGroup of subGroupPreciosSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
+                <select tabindex="{{openedMenu ? -1 : 0}}" *ngIf="selectedGroup == groupsOptionPrecios" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
+                    <option tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let subGroup of subGroupPreciosSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
-                <select *ngIf="selectedGroup == groupsOptionPib" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
-                    <option *ngFor="let subGroup of subGroupPIBSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
+                <select tabindex="{{openedMenu ? -1 : 0}}" *ngIf="selectedGroup == groupsOptionPib" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
+                    <option tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let subGroup of subGroupPIBSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
-                <select *ngIf="selectedGroup == groupsOptionFinancieras" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
-                    <option *ngFor="let subGroup of subGroupFinancierasSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
+                <select tabindex="{{openedMenu ? -1 : 0}}" *ngIf="selectedGroup == groupsOptionFinancieras" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
+                    <option tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let subGroup of subGroupFinancierasSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
-                <select *ngIf="selectedGroup == groupsOptionIDITic" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
-                    <option *ngFor="let subGroup of subGroupIDITicSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
+                <select tabindex="{{openedMenu ? -1 : 0}}" *ngIf="selectedGroup == groupsOptionIDITic" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
+                    <option tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let subGroup of subGroupIDITicSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
-                <select *ngIf="selectedGroup == groupsOptionMedioAmbiente" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
-                    <option *ngFor="let subGroup of subGroupMedioAmbienteSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
+                <select tabindex="{{openedMenu ? -1 : 0}}" *ngIf="selectedGroup == groupsOptionMedioAmbiente" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
+                    <option tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let subGroup of subGroupMedioAmbienteSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
-                <select *ngIf="selectedGroup == groupsOptionSectorPublico" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
-                    <option *ngFor="let subGroup of subGroupSectorPublicoSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
+                <select tabindex="{{openedMenu ? -1 : 0}}" *ngIf="selectedGroup == groupsOptionSectorPublico" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
+                    <option tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let subGroup of subGroupSectorPublicoSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
             </div>
         </div>
         <div class="col-12 order-12 order-md-1 col-md-4" *ngIf="selectedSearchOption == datasetSearchOptionHomer">
             <div class="form-group">
-                <label>Buscar:</label>
+                <label tabindex="{{openedMenu ? -1 : 0}}">Buscar:</label>
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Buscar por..." [value]="searchHomerValue" (keyup.enter)="searchDatasetsByHomer(searchHomerInput.value)"
+                    <input tabindex="{{openedMenu ? -1 : 0}}" type="text" class="form-control" placeholder="Buscar por..." [value]="searchHomerValue" (keyup.enter)="searchDatasetsByHomer(searchHomerInput.value)"
                         #searchHomerInput>
                     <span class="input-group-btn">
-                        <button class="btn btn-secondary" type="button" (click)="searchDatasetsByHomer(searchHomerInput.value)"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        <button tabindex="{{openedMenu ? -1 : 0}}" class="btn btn-secondary" type="button" (click)="searchDatasetsByHomer(searchHomerInput.value)"><i class="fa fa-search" aria-hidden="true"></i></button>
                     </span>
                 </div>
             </div>
         </div>
         <div class="col-12 col-md-4 order-12 order-md-4" *ngIf="selectedSearchOption == datasetSearchOptionHomer">
             <div class="form-group">
-                <label>Idioma:</label>
-                <select class="form-control" [(ngModel)]="selectedLang" (change)="getDatasetsByHomer(null,null)">
-                    <option *ngFor="let langSel of langsSelect" [ngValue]="langSel.value">{{langSel.label}}</option>
+                <label tabindex="{{openedMenu ? -1 : 0}}">Idioma:</label>
+                <select tabindex="{{openedMenu ? -1 : 0}}" class="form-control" [(ngModel)]="selectedLang" (change)="getDatasetsByHomer(null,null)">
+                    <option tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let langSel of langsSelect" [ngValue]="langSel.value">{{langSel.label}}</option>
                 </select>
             </div>
         </div>
         <div class="col-12 order-md-12 order-1 col-md-4">
             <div class="form-group">
-                <label>Tipo de búsqueda</label>
-                <select class="form-control" [(ngModel)]="selectedSearchOption" (change)="loadDatasets()">
-                    <option *ngFor="let search of searchOptions" [ngValue]="search.value">{{search.label}}</option>
+                <label tabindex="{{openedMenu ? -1 : 0}}">Tipo de búsqueda</label>
+                <select tabindex="{{openedMenu ? -1 : 0}}" class="form-control" [(ngModel)]="selectedSearchOption" (change)="loadDatasets()">
+                    <option tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let search of searchOptions" [ngValue]="search.value">{{search.label}}</option>
                 </select>
             </div>
         </div>
@@ -162,7 +162,7 @@
         <p-dataTable [value]="datasets" emptyMessage="{{emptyMessage}}" (onSort)="setOrder($event)" #dt>
             <p-column field="name" header="{{numDatasets}} conjuntos de datos encontrados" sortable="custom" sortFunction="orderTable($event)">
                 <ng-template pTemplate="body" let-dataset="rowData">
-                    <a routerLink='/{{routerLinkDataCatalogDataset}}/{{dataset.name}}' (click)="showDataset(dataset)">
+                    <a tabindex="{{openedMenu ? -1 : 0}}" routerLink='/{{routerLinkDataCatalogDataset}}/{{dataset.name}}' (click)="showDataset(dataset)">
                         {{dataset.title}}
                     </a>
                     <i class="fa fa-star" id="informacion_content_3_i" style="color: #5ea2ba;" *ngIf="dataset.tracking_summary && (dataset.tracking_summary.recent > 10)"></i>
@@ -182,25 +182,25 @@
         <nav aria-label="Pagination">
             <ul class="pagination justify-content-center">
                 <li [ngClass]="actualPage >= 1 ? 'page-item': 'page-item disabled'">
-                    <a class="page-link" (click)="paginate(+pageFirst+1)" aria-label="Primero">
+                    <a tabindex="{{openedMenu ? -1 : 0}}" class="page-link" (click)="paginate(+pageFirst+1)" aria-label="Primero">
                         <i class="fa fa-fast-backward" ></i>
                     </a>
                 </li>
                 <li [ngClass]="actualPage >= 1 ? 'page-item': 'page-item disabled'">
-                    <a class="page-link" (click)="paginate(+actualPage)" aria-label="Anterior">
+                    <a tabindex="{{openedMenu ? -1 : 0}}" class="page-link" (click)="paginate(+actualPage)" aria-label="Anterior">
                         <i class="fa fa-step-backward"></i>
                     </a>
                 </li>
                 <li *ngFor="let pageShow of pagesShow" [ngClass]="pageShow == '-' ? 'page-item disabled' : (pageShow == (+actualPage+1) ? 'page-item active': 'page-item')">
-                    <a class="page-link" (click)="paginate(pageShow)">{{pageShow}}</a>
+                    <a tabindex="{{openedMenu ? -1 : 0}}" tabindex="{{openedMenu ? -1 : 0}}" class="page-link" (click)="paginate(pageShow)">{{pageShow}}</a>
                 </li>
                 <li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
-                    <a class="page-link" (click)="paginate(+actualPage+2)" aria-label="Siguiente">
+                    <a tabindex="{{openedMenu ? -1 : 0}}" class="page-link" (click)="paginate(+actualPage+2)" aria-label="Siguiente">
                         <i class="fa fa-step-forward"></i>
                     </a>
                 </li>
                 <li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
-                    <a class="page-link" (click)="paginate(pageLast)" aria-label="Ultimo">
+                    <a tabindex="{{openedMenu ? -1 : 0}}" class="page-link" (click)="paginate(pageLast)" aria-label="Ultimo">
                         <i class="fa fa-fast-forward"></i>
                     </a>
                 </li>
@@ -213,18 +213,18 @@
             </p>
         </div>
         <div class="destacado" style="width: 100%;">
-            <h1>Datos destacados</h1>
-            <h3 style="color: grey">Permítenos recomendarte algunos datos abiertos</h3>
+            <h1 tabindex="{{openedMenu ? -1 : 0}}">Datos destacados</h1>
+            <h3 tabindex="{{openedMenu ? -1 : 0}}" style="color: grey">Permítenos recomendarte algunos datos abiertos</h3>
             <div class="row">
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="box">
                         <div class="boxTitle">
-                            <h3>NUEVOS DATOS</h3>
+                            <h3 tabindex="{{openedMenu ? -1 : 0}}">NUEVOS DATOS</h3>
                         </div>
                         <div class="boxContent">
                             <div>
                                 <div *ngFor="let newDataset of newestDatasets" class="textosNormales">
-                                    <a routerLink='/{{routerLinkDataCatalogDataset}}/{{newDataset.name}}' (click)="showDataset(newDataset)">
+                                    <a tabindex="{{openedMenu ? -1 : 0}}" routerLink='/{{routerLinkDataCatalogDataset}}/{{newDataset.name}}' (click)="showDataset(newDataset)">
                                     {{newDataset.title}}
                                 </a>
                                     <div *ngIf="newestDatasets.indexOf(newDataset) != 2" class="separadorVentana"></div>
@@ -237,12 +237,12 @@
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="box">
                         <div class="boxTitle">
-                            <h3>MÁS DESCARGADOS</h3>
+                            <h3 tabindex="{{openedMenu ? -1 : 0}}">MÁS DESCARGADOS</h3>
                         </div>
                         <div class="boxContent">
                             <div>
                                 <div *ngFor="let downloadedDataset of downloadedDatasets" class="textosNormales">
-                                    <a routerLink='/{{routerLinkDataCatalogDataset}}/{{downloadedDataset.name}}' (click)="showDataset(downloadedDataset)">
+                                    <a tabindex="{{openedMenu ? -1 : 0}}" routerLink='/{{routerLinkDataCatalogDataset}}/{{downloadedDataset.name}}' (click)="showDataset(downloadedDataset)">
                                     {{downloadedDataset.title}}
                                 </a>
                                     <div *ngIf="downloadedDatasets.indexOf(downloadedDataset) != 2" class="separadorVentana"></div>
@@ -255,20 +255,20 @@
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="box">
                         <div class="boxTitle">
-                            <h3>ESTADÍSTICAS</h3>
+                            <h3 tabindex="{{openedMenu ? -1 : 0}}">ESTADÍSTICAS</h3>
                         </div>
                         <div class="boxContent">
                             <div>
-                                <h6>Número de datasets</h6>
-                                <h1>
-                                    <span *ngFor="let num of datasetCount" [ngClass]="num.label == 'slim' ? 'slimCount': 'normalCount'">{{num.value}}</span>
+                                <h6 tabindex="{{openedMenu ? -1 : 0}}">Número de datasets</h6>
+                                <h1 tabindex="{{openedMenu ? -1 : 0}}">
+                                    <span tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let num of datasetCount" [ngClass]="num.label == 'slim' ? 'slimCount': 'normalCount'">{{num.value}}</span>
                                 </h1>
                             </div>
                             <div class="separadorVentana"></div>
                             <div>
-                                <h6>Número de recursos</h6>
+                                <h6 tabindex="{{openedMenu ? -1 : 0}}">Número de recursos</h6>
                                 <h1>
-                                    <span *ngFor="let num of resourceCount" [ngClass]="num.label == 'slim' ? 'slimCount': 'normalCount'">{{num.value}}</span>
+                                    <span tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let num of resourceCount" [ngClass]="num.label == 'slim' ? 'slimCount': 'normalCount'">{{num.value}}</span>
                                 </h1>
                             </div>
                         </div>
@@ -281,7 +281,7 @@
         <p-dataTable [value]="datasetsHomer" emptyMessage="{{emptyMessage}}" [responsive]="true" (onSort)="setOrderHomer($event)" #dt>
             <p-column field="name" header="ENCONTRADOS {{numDatasetsHomer}} RESULTADOS EN HOMER" sortable="custom" [sortable]="true">
                 <ng-template pTemplate="body" let-datasetHomer="rowData">
-                    <a routerLink='//{{routerLinkDataCatalogDatasetHomer}}/{{datasetHomer.package_id}}' (click)="showDatasetHomer(datasetHomer)">
+                    <a tabindex="{{openedMenu ? -1 : 0}}" routerLink='//{{routerLinkDataCatalogDatasetHomer}}/{{datasetHomer.package_id}}' (click)="showDatasetHomer(datasetHomer)">
                         {{datasetHomer.title}}
                     </a>
                 </ng-template>
@@ -300,26 +300,26 @@
         <nav aria-label="Pagination">
             <ul class="pagination justify-content-center">
                 <li [ngClass]="actualPage >= 1 ? 'page-item': 'page-item disabled'">
-                    <a class="page-link" (click)="paginate(+pageFirst+1)" aria-label="Primero">
+                    <a tabindex="{{openedMenu ? -1 : 0}}" class="page-link" (click)="paginate(+pageFirst+1)" aria-label="Primero">
                         <i class="fa fa-fast-backward" ></i>
                     </a>
                 </li>
                 <li [ngClass]="actualPage >= 1 ? 'page-item': 'page-item disabled'">
-                    <a class="page-link" (click)="paginate(+actualPage)" aria-label="Anterior">
+                    <a tabindex="{{openedMenu ? -1 : 0}}" class="page-link" (click)="paginate(+actualPage)" aria-label="Anterior">
                         <i class="fa fa-step-backward"></i>
                     </a>
                 </li>
                 <li *ngFor="let pageShow of pagesShow" [ngClass]="pageShow == '-' ? 'page-item disabled' : (pageShow == (+actualPage+1) ? 'page-item active': 'page-item')">
-                    <a class="page-link" (click)="paginate(pageShow)">{{pageShow}}</a>
+                    <a tabindex="{{openedMenu ? -1 : 0}}" class="page-link" (click)="paginate(pageShow)">{{pageShow}}</a>
                 </li>
 
                 <li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
-                    <a class="page-link" (click)="paginate(+actualPage+2)" aria-label="Siguiente">
+                    <a tabindex="{{openedMenu ? -1 : 0}}" class="page-link" (click)="paginate(+actualPage+2)" aria-label="Siguiente">
                         <i class="fa fa-step-forward"></i>
                     </a>
                 </li>
                 <li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
-                    <a class="page-link" (click)="paginate(pageLast)" aria-label="Ultimo">
+                    <a tabindex="{{openedMenu ? -1 : 0}}" class="page-link" (click)="paginate(pageLast)" aria-label="Ultimo">
                         <i class="fa fa-fast-forward"></i>
                     </a>
                 </li>

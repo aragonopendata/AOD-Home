@@ -6,7 +6,7 @@
 		<div class="col-md-4 threeCol">
 			<h2 class="titleFooter">AVISO LEGAL</h2>
 			<div class="threeCol_child">
-				<div><a href="/{{routerLinkInfoTerms}}">TERMINOS DE USO</a></div>
+				<div><a tabindex="{{openedMenu ? -1 : 0}}" href="/{{routerLinkInfoTerms}}">TERMINOS DE USO</a></div>
 				 
 				<div class="row" >
 					<div class="col-md-3 eur-logo">
@@ -44,12 +44,12 @@
 		<div class="col-md-4 threeCol">
 			<h2 class="titleFooter">CONTENIDO DESTACADO</h2>
 			<ul>
-				<li><a routerLink="/{{routerLinkDataCatalog}}">BANCO DE DATOS</a></li>
-				<li><a href="{{aodBaseUrl}}/{{routerLinkServicesAragopedia}}">ARAGOPEDIA</a></li>
-				<li><a href="{{aodBaseUrl}}/{{routerLinkServicesSocialData}}">OPEN SOCIAL DATA</a></li>
-				<li><a routerLink="/{{routerLinkInfoCollaboration}}">COLABORA</a></li>
-				<li><a routerLink="/{{routerLinkInfoApplications}}">APLICACIONES</a></li>
-				<li><a routerLink="/{{routerLinkInfoOpenData}}">INFO OPEN DATA</a></li>
+				<li><a tabindex="{{openedMenu ? -1 : 0}}" routerLink="/{{routerLinkDataCatalog}}">BANCO DE DATOS</a></li>
+				<li><a tabindex="{{openedMenu ? -1 : 0}}" href="{{aodBaseUrl}}/{{routerLinkServicesAragopedia}}">ARAGOPEDIA</a></li>
+				<li><a tabindex="{{openedMenu ? -1 : 0}}" href="{{aodBaseUrl}}/{{routerLinkServicesSocialData}}">OPEN SOCIAL DATA</a></li>
+				<li><a tabindex="{{openedMenu ? -1 : 0}}" routerLink="/{{routerLinkInfoCollaboration}}">COLABORA</a></li>
+				<li><a tabindex="{{openedMenu ? -1 : 0}}" routerLink="/{{routerLinkInfoApplications}}">APLICACIONES</a></li>
+				<li><a tabindex="{{openedMenu ? -1 : 0}}" routerLink="/{{routerLinkInfoOpenData}}">INFO OPEN DATA</a></li>
 			</ul>
 		</div>
 
@@ -58,31 +58,31 @@
 			
 			<div class="logos paddingleft45">
 				<div class="row show-grid ">
-					<div class="col-xs-4 col-md-3 logos"><a class="ckan" href="{{ckanUrl}}" target="_blank">
+					<div class="col-xs-4 col-md-3 logos"><a tabindex="{{openedMenu ? -1 : 0}}" class="ckan" href="{{ckanUrl}}" target="_blank">
 							<img src="/static/public/footer/images/cajaLogoCKAN.jpg" alt="logo-ckan">
 						  </a></div>
-					<div class="col-xs-4 col-md-3 logos"><a class="mediawiki" href="{{mediaWikiUrl}}" target="_blank">
+					<div class="col-xs-4 col-md-3 logos"><a tabindex="{{openedMenu ? -1 : 0}}" class="mediawiki" href="{{mediaWikiUrl}}" target="_blank">
 							<img src="/static/public/footer/images/cajaLogoMediaWiki.jpg" alt="logo-media-wiki">
 						  </a></div>
-					<div class="col-xs-4 col-md-3 logos">	<a class="virtuoso" href="{{virtuosoUrl}}" target="_blank">
+					<div class="col-xs-4 col-md-3 logos">	<a tabindex="{{openedMenu ? -1 : 0}}" class="virtuoso" href="{{virtuosoUrl}}" target="_blank">
 							<img src="/static/public/footer/images/cajaLogoVirtuoso.jpg" alt="logo-virtuoso">
 						  </a></div>
 					<div class="col-xs-4 col-md-3 logos">
-							<a class="elda" href="{{eldaUrl}}" target="_blank">
+							<a tabindex="{{openedMenu ? -1 : 0}}" class="elda" href="{{eldaUrl}}" target="_blank">
 									<img src="/static/public/footer/images/cajaLogoElda.jpg" alt="logo-elda">
 								  </a>
 					</div>				
 					<div class="separator"></div>
-					<div class="col-xs-4 col-md-3 logos margintop10">	<a class="swagger" href="{{swaggerUrl}}" target="_blank">
+					<div class="col-xs-4 col-md-3 logos margintop10">	<a tabindex="{{openedMenu ? -1 : 0}}" class="swagger" href="{{swaggerUrl}}" target="_blank">
 							<img src="/static/public/footer/images/cajaLogoSwagger.jpg" alt="logo-swagger">
 						  </a></div>
-					<div class="col-xs-4 col-md-3 logos margintop10"><a class="node" href="{{nodeJsUrl}}" target="_blank">
+					<div class="col-xs-4 col-md-3 logos margintop10"><a tabindex="{{openedMenu ? -1 : 0}}" tabindex="{{openedMenu ? -1 : 0}}" class="node" href="{{nodeJsUrl}}" target="_blank">
 							<img src="/static/public/footer/images/cajaLogoNodeJS.jpg" alt="logo-nodejs">
 						  </a></div>
-					<div class="col-xs-4 col-md-3 logos margintop10"><a class="angular" href="{{angularUrl}}" target="_blank">
+					<div class="col-xs-4 col-md-3 logos margintop10"><a tabindex="{{openedMenu ? -1 : 0}}" class="angular" href="{{angularUrl}}" target="_blank">
 							<img src="/static/public/footer/images/cajaLogoAngular.jpg" alt="logo-angular">
 						  </a></div>
-					<div class="col-xs-4 col-md-3 logos margintop10"><a class="kibana" href="{{kibanaUrl}}" target="_blank">
+					<div class="col-xs-4 col-md-3 logos margintop10"><a tabindex="{{openedMenu ? -1 : 0}}" class="kibana" href="{{kibanaUrl}}" target="_blank">
 							<img src="/static/public/footer/images/cajaLogoKibana.jpg" alt="logo-kibana">
 						  </a></div>
 				</div>
@@ -106,22 +106,22 @@
 				<div class="col-md-4">
 						<div class="social-nw">
 								<div class="socialNetworkIcon">
-									<a class="facebook" href="{{oasiFacebookUrl}}">
+									<a tabindex="{{openedMenu ? -1 : 0}}" class="facebook" href="{{oasiFacebookUrl}}">
 											<i class="fa fa-facebook-official" aria-label="contacto-facebook"></i>
 										</a>
 								</div>
 								<div class="socialNetworkIcon">
-									<a class="twitter" href="{{oasiTwitterUrl}}">
+									<a tabindex="{{openedMenu ? -1 : 0}}" class="twitter" href="{{oasiTwitterUrl}}">
 											<i class="fa fa-twitter" aria-label="contacto-twitter"></i>
 										</a>
 								</div>
 								<div class="socialNetworkIcon">
-									<a class="youtube" href="{{oasiYoutubeUrl}}">
+									<a tabindex="{{openedMenu ? -1 : 0}}" class="youtube" href="{{oasiYoutubeUrl}}">
 											<i class="fa fa-youtube-play" aria-label="contacto-youtube"></i>
 										</a>
 								</div>
 								<div class="socialNetworkIcon">
-									<a class="mail" href="mailto:{{aodMail}}">
+									<a tabindex="{{openedMenu ? -1 : 0}}" class="mail" href="mailto:{{aodMail}}">
 											<i class="fa fa-envelope-o" aria-label="contacto-email"><span>AOD</span></i>
 										</a>
 								</div>

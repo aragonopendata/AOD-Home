@@ -14,6 +14,7 @@ import { Organization } from 'app/models/Organization';
 import { Subject } from 'rxjs';
 import { DatasetsUtils } from '../../../../utils/DatasetsUtils';
 import { Extra } from '../../../../models/Extra';
+import { UtilsService } from '../../../../services/web/utils.service';
 
 @Component({
 	selector: 'app-datasets-detail',
@@ -24,6 +25,7 @@ import { Extra } from '../../../../models/Extra';
 export class DatasetsDetailComponent implements OnInit {
 
 	public static doUpdate: Subject<any> = new Subject();
+	openedMenu: boolean;
 
 	dataset: Dataset = new Dataset();
 	datasetHomer: DatasetHomer = new DatasetHomer();
@@ -79,7 +81,12 @@ export class DatasetsDetailComponent implements OnInit {
 	showEdit: boolean = false;
 	dataPreview: boolean = false;
 
-	constructor(private datasetsService: DatasetsService, private usersAdminService: UsersAdminService, private authenticationService: AuthenticationService, private activatedRoute: ActivatedRoute, public sanitizer: DomSanitizer, public googleAnalyticsEventsService: GoogleAnalyticsEventsService) {
+	constructor(private datasetsService: DatasetsService,
+		private usersAdminService: UsersAdminService,
+		private authenticationService: AuthenticationService,
+		private activatedRoute: ActivatedRoute, public sanitizer: DomSanitizer,
+		public googleAnalyticsEventsService: GoogleAnalyticsEventsService,
+		private utilsService:UtilsService) {
 		this.datasetListErrorTitle = Constants.DATASET_LIST_ERROR_TITLE;
 		this.datasetListErrorMessage = Constants.DATASET_LIST_ERROR_MESSAGE;
 		this.routerLinkDataCatalogDataset = Constants.ROUTER_LINK_DATA_CATALOG_DATASET;
@@ -90,6 +97,8 @@ export class DatasetsDetailComponent implements OnInit {
 		this.routerLinkTwitterShare = Constants.SHARE_TWITTER + window.location.href;
 		this.routerLinkGooglePlusShare = Constants.SHARE_GOOGLE_PLUS + window.location.href;
 		this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
+
+		this.getOpenedMenu();
 
 		DatasetsDetailComponent.doUpdate.subscribe(res => {
 			this.initializeDataset();
@@ -417,4 +426,10 @@ export class DatasetsDetailComponent implements OnInit {
 			}
 		}
 	}
+
+    getOpenedMenu(){
+        this.utilsService.openedMenuChange.subscribe(value => {
+			this.openedMenu = value;
+		});
+    }
 }

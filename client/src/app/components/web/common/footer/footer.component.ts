@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Constants } from '../../../../app.constants';
+import { UtilsService } from '../../../../services/web/utils.service';
 
 @Component({
 	selector: 'app-footer',
@@ -7,6 +8,9 @@ import { Constants } from '../../../../app.constants';
 	styleUrls: ['./footer.component.css']
 })
 export class FooterComponent implements OnInit {
+
+	openedMenu: boolean;
+
 	aodBaseUrl: String
 	//Dynamic URL build parameters
 	routerLinkInfoOpenData: string;
@@ -30,7 +34,7 @@ export class FooterComponent implements OnInit {
 	oasiYoutubeUrl: string;
 	aodMail: string;
 
-	constructor(private constants: Constants) { 
+	constructor(private constants: Constants, private utilsService: UtilsService) { 
 		this.aodBaseUrl = Constants.AOD_BASE_URL;
 		this.routerLinkInfoOpenData = Constants.ROUTER_LINK_INFORMATION_OPEN_DATA;
 		this.routerLinkDataCatalog = Constants.ROUTER_LINK_DATA_CATALOG;
@@ -51,9 +55,17 @@ export class FooterComponent implements OnInit {
 		this.oasiTwitterUrl = Constants.OASI_TWITTER_URL;
 		this.oasiYoutubeUrl = Constants.OASI_YOUTUBE_URL;
 		this.aodMail = Constants.AOD_MAIL;
+
+		this.getOpenedMenu();
 	}
 
 	ngOnInit() {
 	}
+
+    getOpenedMenu(){
+        this.utilsService.openedMenuChange.subscribe(value => {
+			this.openedMenu = value;
+		});
+    }
 
 }
