@@ -3,6 +3,7 @@ import { StaticContent } from '../../../../../models/StaticContent';
 import { StaticContentService } from '../../../../../services/web/static-content.service';
 import { Constants } from "app/app.constants";
 import { UtilsService } from '../../../../../services/web/utils.service';
+import StaticContentUtils from '../../../../../utils/StaticContentUtils';
 
 @Component({
 	selector: 'app-applications',
@@ -44,12 +45,13 @@ export class ApplicationsComponent implements OnInit {
                 this.errorTitle = this.applicationsErrorTitle;
                 this.errorMessage = this.applicationsErrorMessage;
 			}
-			
 		});
 	}
 
     getOpenedMenu(){
         this.utilsService.openedMenuChange.subscribe(value => {
+			let staticContentUtils = new StaticContentUtils();
+			staticContentUtils.setAccessibility(this.contents, this.openedMenu);
 			this.openedMenu = value;
 		});
     }

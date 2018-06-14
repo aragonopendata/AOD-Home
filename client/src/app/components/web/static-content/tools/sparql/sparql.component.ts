@@ -4,6 +4,7 @@ import { StaticContentService } from '../../../../../services/web/static-content
 import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from "app/app.constants";
 import { UtilsService } from '../../../../../services/web/utils.service';
+import StaticContentUtils from '../../../../../utils/StaticContentUtils';
 declare var jQuery:any;
 
 @Component({
@@ -84,7 +85,9 @@ export class SparqlComponent implements OnInit {
 
     getOpenedMenu(){
         this.utilsService.openedMenuChange.subscribe(value => {
-            this.openedMenu = value;
-        });
+			let staticContentUtils = new StaticContentUtils();
+			staticContentUtils.setAccessibility(this.contents, this.openedMenu);
+			this.openedMenu = value;
+		});
     }
 }
