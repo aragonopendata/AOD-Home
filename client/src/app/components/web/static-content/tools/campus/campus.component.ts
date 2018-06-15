@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { EventsAdminComponent } from 'app/components/admin/global/static-content-admin/info/events-admin/events-admin.component';
 import { forEach } from '@angular/router/src/utils/collection';
+import { UtilsService } from '../../../../../services/web/utils.service';
 
 @Component({
 	selector: 'app-campus',
@@ -15,6 +16,8 @@ import { forEach } from '@angular/router/src/utils/collection';
 	styleUrls: ['./campus.component.css']
 })
 export class CampusComponent implements OnInit {
+
+    openedMenu: boolean;
 
 	eventsList: Event[];
 	eventsPerPage:number = 10;
@@ -41,7 +44,7 @@ export class CampusComponent implements OnInit {
     routerLinkCampusDetail: string;
     cursoIniciacionLink: string;
 
-	constructor(private campusService: CampusService, private activatedRoute: ActivatedRoute, public sanitizer: DomSanitizer) {
+	constructor(private campusService: CampusService, private activatedRoute: ActivatedRoute, public sanitizer: DomSanitizer, private utilsService: UtilsService) {
         this.routerLinkCampusDetail = Constants.ROUTER_LINK_TOOLS_CAMPUS_CONTENT;
         this.pageRows = Constants.CAMPUS_EVENTS_PER_PAGE;
         this.campusErrorTitle = Constants.CAMPUS_EVENTS_ERROR_TITLE;
@@ -49,6 +52,7 @@ export class CampusComponent implements OnInit {
         this.cursoIniciacionLink = Constants.AOD_ASSETS_BASE_URL + Constants.CAMPUS_CURSO_INICIACION;
         this.campusNoRows = false;
         this.campusNoRowsMessage = Constants.CAMPUS_EVENTS_EMPTY;
+        this.getOpenedMenu();
 	 }
 
 	ngOnInit() {
@@ -195,5 +199,11 @@ export class CampusComponent implements OnInit {
             this.getCampusEvents(page, this.pageRows);
         }   
         document.body.scrollTop = 0;
+    }
+
+    getOpenedMenu(){
+        this.utilsService.openedMenuChange.subscribe(value => {
+			this.openedMenu = value;
+		});
     }
 }

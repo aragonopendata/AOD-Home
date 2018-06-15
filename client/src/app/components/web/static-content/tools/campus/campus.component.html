@@ -3,14 +3,14 @@
 	<div class="row">
 		<div class="col-md-1" id="colCampus"></div>
 		<div class=" col-md-8">
-			<h1 class="firstTitle">AOD CAMPUS</h1>
+			<h1 tabindex="{{openedMenu ? -1 : 0}}" class="firstTitle">AOD CAMPUS</h1>
 
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-1"></div>
 		<div class=" col-md-7 columns">
-			<h6 class="campusTitle">En Campus Open Data queremos que tengas a mano toda la información que hemos ido generando a lo largo del tiempo. Nuestra
+			<h6 tabindex="{{openedMenu ? -1 : 0}}" class="campusTitle">En Campus Open Data queremos que tengas a mano toda la información que hemos ido generando a lo largo del tiempo. Nuestra
 				intención es que la información sirva para que te puedas formar y que los materiales sean tutoriales para entender qué
 				son los datos abiertos y cómo los datos abiertos sirven para fomentar la economía digital y mejorar la transparencia
 				del Gobierno. Tenemos materiales de todo tipo: vídeos, presentaciones, infografías y hasta un curso completo de iniciación
@@ -44,8 +44,8 @@
 
 			<div *ngFor="let event of eventsList; let i = index" class="card mb-4">
 				<div class="card-body">
-					<h2 class="card-title">{{event?.name}}</h2>
-					<div class="media description">
+					<h2 tabindex="{{openedMenu ? -1 : 0}}" class="card-title">{{event?.name}}</h2>
+					<div tabindex="{{openedMenu ? -1 : 0}}" class="media description">
 						{{event?.description}}
 
 					</div>
@@ -55,42 +55,42 @@
 						</a>
 						<div class="media-body">
 							<h4 class="media-heading">
-								<a routerLink='/{{routerLinkCampusDetail}}/{{content?.id}}'>
+								<a tabindex="{{openedMenu ? -1 : 0}}" routerLink='/{{routerLinkCampusDetail}}/{{content?.id}}'>
 									{{content?.title}}
 								</a>
 							</h4>
-							<div class="description">
+							<div tabindex="{{openedMenu ? -1 : 0}}" class="description">
 								{{content?.description}}
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="card-footer text-muted">
+				<div tabindex="{{openedMenu ? -1 : 0}}" class="card-footer text-muted">
 					Publicado el {{event.date | date: 'dd/MM/yyyy'}} - {{event.site}}
 				</div>
 			</div>
 			<!-- Pagination-->
 			<ul class="pagination justify-content-center mb-4">
 				<li [ngClass]="actualPage >= 1 ? 'page-item': 'page-item disabled'">
-					<a class="page-link" (click)="paginate(+pageFirst+1)" aria-label="Primero">
+					<a tabindex="{{openedMenu ? -1 : 0}}" class="page-link" (click)="paginate(+pageFirst+1)" aria-label="Primero">
 					<i class="fa fa-fast-backward" ></i>
 					</a>
 				</li>
 				<li [ngClass]="actualPage >= 1 ? 'page-item': 'page-item disabled'">
-					<a class="page-link" (click)="paginate(+actualPage)" aria-label="Anterior">
+					<a tabindex="{{openedMenu ? -1 : 0}}" class="page-link" (click)="paginate(+actualPage)" aria-label="Anterior">
 					<i class="fa fa-step-backward"></i>
 					</a>
 				</li>
 				<li *ngFor="let pageShow of pagesShow" [ngClass]="pageShow == '-' ? 'page-item disabled' : (pageShow == (+actualPage+1) ? 'page-item active': 'page-item')">
-					<a class="page-link" (click)="paginate(pageShow)">{{pageShow}}</a>
+					<a tabindex="{{openedMenu ? -1 : 0}}" class="page-link" (click)="paginate(pageShow)">{{pageShow}}</a>
 				</li>
 				<li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
-					<a class="page-link" (click)="paginate(+actualPage+2)" aria-label="Siguiente">
+					<a tabindex="{{openedMenu ? -1 : 0}}" class="page-link" (click)="paginate(+actualPage+2)" aria-label="Siguiente">
 						<i class="fa fa-step-forward"></i>
 						</a>
 				</li>
 				<li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
-					<a class="page-link" (click)="paginate(pageLast)" aria-label="Ultimo">
+					<a tabindex="{{openedMenu ? -1 : 0}}" class="page-link" (click)="paginate(pageLast)" aria-label="Ultimo">
 						<i class="fa fa-fast-forward"></i>
 						</a>
 				</li>
@@ -102,13 +102,13 @@
 
 			<!-- Search Widget -->
 			<div class="card my-4">
-				<h5 class="card-header">Búsqueda</h5>
+				<h5 tabindex="{{openedMenu ? -1 : 0}}" class="card-header">Búsqueda</h5>
 				<div class="card-body">
 					<div class="input-group">
-						<input type="text" class="form-control" [value]="searchValue" placeholder="Buscar por..." (keyup.enter)="getCampusEventsBySearch(null,null,searchInput.value)"
+						<input tabindex="{{openedMenu ? -1 : 0}}" type="text" class="form-control" [value]="searchValue" placeholder="Buscar por..." (keyup.enter)="getCampusEventsBySearch(null,null,searchInput.value)"
 						 #searchInput>
 						<span class="input-group-btn">
-						  <button class="btn btn-secondary" type="button" (click)="getCampusEventsBySearch(null,null,searchInput.value)">Buscar</button>
+						  <button tabindex="{{openedMenu ? -1 : 0}}" class="btn btn-secondary" type="button" (click)="getCampusEventsBySearch(null,null,searchInput.value)">Buscar</button>
 						</span>
 					</div>
 				</div>
@@ -116,14 +116,14 @@
 
 			<!-- Type Widget -->
 			<div class="card my-4">
-				<h5 class="card-header">Eventos</h5>
+				<h5 tabindex="{{openedMenu ? -1 : 0}}" class="card-header">Eventos</h5>
 				<div class="card-body">
 					<div class="input-group" *ngIf="!errorTitle">
-						<select class="form-control" [(ngModel)]="selectedType">
+						<select tabindex="{{openedMenu ? -1 : 0}}" class="form-control" [(ngModel)]="selectedType">
 							<option *ngFor="let types of typesSelect" [ngValue]="types.value">{{types.label}}</option>
 						</select>
 						<span class="input-group-btn">
-							<button class="btn btn-secondary" type="button" (click)="getCampusEvents(null,null)">Buscar</button>
+							<button tabindex="{{openedMenu ? -1 : 0}}" class="btn btn-secondary" type="button" (click)="getCampusEvents(null,null)">Buscar</button>
 						</span>
 					</div>
 					<div class="input-group" *ngIf="errorTitle">

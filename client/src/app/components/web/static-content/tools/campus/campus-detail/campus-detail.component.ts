@@ -8,6 +8,7 @@ import { CampusService } from './../../../../../../services/web/campus.service';
 import { Component, OnInit } from '@angular/core';
 import { SelectItem } from 'primeng/primeng';
 import { DomSanitizer } from '@angular/platform-browser';
+import { UtilsService } from '../../../../../../services/web/utils.service';
 
 @Component({
   selector: 'app-campus-detail',
@@ -35,8 +36,9 @@ export class CampusDetailComponent implements OnInit {
   errorMessage: string;
   campusErrorTitle: string;
   campusErrorMessage: string;
+  openedMenu: boolean;
 
-  constructor(private campusService: CampusService, private activatedRoute: ActivatedRoute, public sanitizer: DomSanitizer) {
+  constructor(private campusService: CampusService, private activatedRoute: ActivatedRoute, public sanitizer: DomSanitizer, private utilsService: UtilsService) {
     this.campusErrorTitle = Constants.CAMPUS_EVENTS_ERROR_TITLE;
     this.campusErrorMessage = Constants.CAMPUS_EVENTS_ERROR_MESSAGE;
     this.contentPlatformAragonOpenData = Constants.CAMPUS_CONTENT_PLATFORM_ARAGONOPENDATA;
@@ -48,6 +50,7 @@ export class CampusDetailComponent implements OnInit {
     this.contentPlatformYoutube = Constants.CAMPUS_CONTENT_PLATFORM_YOUTUBE;
     this.contentPlatformLink = Constants.CAMPUS_CONTENT_PLATFORM_LINK;
     this.contentAssetsBaseURL = Constants.AOD_ASSETS_BASE_URL;
+    this.getOpenedMenu();
   }
 
   ngOnInit() {
@@ -118,6 +121,12 @@ export class CampusDetailComponent implements OnInit {
 				this.errorTitle = this.campusErrorTitle;
         this.errorMessage = this.campusErrorMessage;
 			}
+    });
+  }
+
+  getOpenedMenu(){
+    this.utilsService.openedMenuChange.subscribe(value => {
+      this.openedMenu = value;
     });
   }
 
