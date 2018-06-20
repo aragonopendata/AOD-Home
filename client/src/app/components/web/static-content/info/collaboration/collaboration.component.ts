@@ -9,13 +9,18 @@ import {BrowserModule, DomSanitizer} from '@angular/platform-browser'
 })
 
 export class CollaborationComponent {
+
+  imgSrc;
+
   //Dynamic URL build parameters
-	routerLinkCollaborationService;
+  routerLinkCollaborationService;
+
   constructor(private domSanitizer : DomSanitizer) {
     
   }
   ngOnInit() {
       this.routerLinkCollaborationService = this.domSanitizer.bypassSecurityTrustResourceUrl(Constants.AOD_COLLABORATION_URL);
+      this.imgSrc = Constants.AOD_ASSETS_BASE_URL + '/public/colabora/participa-opendata.jpg';
   }
 }
 
