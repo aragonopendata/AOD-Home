@@ -90,6 +90,7 @@ import { AnalyticsService } from './services/web/analytics.service';
 import { AodCoreAdminService} from './services/admin/aod-core-admin.service';
 import {GoogleAnalyticsEventsService} from "./services/web/google-analytics-events.service";
 import { UtilsService } from './services/web/utils.service';
+import { VisualDataComponent } from './components/admin/visual-data/visual-data.component';
 
 @NgModule({
 	declarations: [
@@ -154,6 +155,7 @@ import { UtilsService } from './services/web/utils.service';
 		LogstashComponent,
 		DatacenterComponent,
 		GlobalComponent,
+		VisualDataComponent,
   	],
   	imports: [
 		BrowserModule,

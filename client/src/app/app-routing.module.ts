@@ -49,6 +49,7 @@ import { OrganizationsAdminShowComponent } from './components/admin/datacenter/o
 import { OrganizationsAdminEditComponent } from './components/admin/datacenter/organizations-admin/organizations-admin-edit/organizations-admin-edit.component';
 import { CampusAdminComponent } from './components/admin/campus-admin/campus-admin.component';
 import { LogstashComponent } from './components/admin/logstash/logstash.component';
+import { VisualDataComponent } from './components/admin/visual-data/visual-data.component';
 import { PageNotFoundComponent } from './components/error/page-not-found/page-not-found.component';
 
 const routes: Routes = [
@@ -122,7 +123,8 @@ const routes: Routes = [
             ]}
         ]},
         { path: Constants.ROUTER_LINK_CAMPUS, component: CampusAdminComponent, canActivate: [AuthGuard] },
-        { path: Constants.ROUTER_LINK_LOGSTASH, component: LogstashComponent, canActivate: [AuthGuard] }
+        { path: Constants.ROUTER_LINK_LOGSTASH, component: LogstashComponent, canActivate: [AuthGuard] },
+        { path: Constants.ROUTER_LINK_VISUAL_DATA, component: VisualDataComponent, canActivate: [AuthGuard] }
     ]},
     //{ path: Constants.ROUTER_LINK_404, component: PageNotFoundComponent },
     { path: '**', redirectTo: '/'}

@@ -554,6 +554,7 @@ export class Constants {
     public static ROUTER_LINK_ADMIN_DATACENTER_CAMPUS = 'admin/campus';
     public static ROUTER_LINK_LOGSTASH = 'logstash';
     public static ROUTER_LINK_ADMIN_LOGSTASH = 'admin/logstash';
+    public static ROUTER_LINK_VISUAL_DATA = 'visual-data';
     public static ROUTER_LINK_404 = 'pagenotfound';
     public static ROUTER_LINK_SERVICES_ARAGOPEDIA = 'servicios/aragopedia';
     public static ROUTER_LINK_SERVICES_PRESUPUESTOS = 'servicios/presupuestos';
