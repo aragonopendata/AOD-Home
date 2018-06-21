@@ -2,6 +2,7 @@
     width: 100%;
     clear: both;
     padding: 10vh;
+    margin-top: 2vw;
 }
 
 img {
@@ -22,10 +23,18 @@ img {
     img{
         width: 100%;
     }
+
+    .containerCollaboration {
+        padding: 7vh;
+    }
 }
 
 @media screen and (min-width:577px) and (max-width: 768px){
     h1{
         font-size: 30px;
+    }
+
+    .containerCollaboration {
+        padding: 7vh;
     }
 }
