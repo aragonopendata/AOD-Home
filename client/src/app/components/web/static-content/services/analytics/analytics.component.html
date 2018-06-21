@@ -9,25 +9,25 @@
 	</div>
 </div>
 <div class="iframeAnalytics">
-	<iframe id="sevendays" src="" marginwidth=0 marginheight=0 frameborder=0 scrolling="no"></iframe>
+	<iframe tabindex="{{openedMenu ? -1 : 0}}" id="sevendays" src="" marginwidth=0 marginheight=0 frameborder=0 scrolling="no"></iframe>
 	<div class="btn-group float-left" id="btng-portal-analytics">
-		<button type="button" class="btn btn-primary dropdown-toggle portalAnalyticsPral" data-toggle="dropdown" aria-haspopup="true"
+		<button tabindex="{{openedMenu ? -1 : 0}}" type="button" class="btn btn-primary dropdown-toggle portalAnalyticsPral" data-toggle="dropdown" aria-haspopup="true"
 		 aria-expanded="false">
 			Todos
 			<span class="caret"></span>
 		</button>
 		<ul class="dropdown-menu scrollable-menu" role="menu">
 			<li>
-				<button class="dropdown-item portalAnalytics" value="Todos">Todos</button>
+				<button tabindex="{{openedMenu ? -1 : 0}}" class="dropdown-item portalAnalytics" value="Todos">Todos</button>
 			</li>
 			<div class="dropdown-divider"></div>
 			<li *ngFor="let logstash of logstashs">
-				<button class="dropdown-item portalAnalytics" value="{{ logstash.url }}">{{ logstash.portal_name }}</button>
+				<button tabindex="{{openedMenu ? -1 : 0}}" class="dropdown-item portalAnalytics" value="{{ logstash.url }}">{{ logstash.portal_name }}</button>
 			</li>
 		</ul>
 	</div>
 	<div class="btn-group float-right" id="btng-time-analytics">
-		<button type="button" class="btn btn-primary dropdown-toggle timeAnalyticsPral" data-toggle="dropdown" aria-haspopup="true"
+		<button tabindex="{{openedMenu ? -1 : 0}}" type="button" class="btn btn-primary dropdown-toggle timeAnalyticsPral" data-toggle="dropdown" aria-haspopup="true"
 		 aria-expanded="false">
 		 	Año actual
 			<span class="caret"></span>
@@ -50,32 +50,32 @@
 			</li>
 		</ul>
 	</div>
-	<iframe id="analytics" src="" marginwidth=0 marginheight=0 frameborder=0 scrolling="no"></iframe>
+	<iframe tabindex="{{openedMenu ? -1 : 0}}" id="analytics" src="" marginwidth=0 marginheight=0 frameborder=0 scrolling="no"></iframe>
 	<div class="pagina">
-		<span class="panel-export-title">
+		<span tabindex="{{openedMenu ? -1 : 0}}" class="panel-export-title">
 			Descarga de datos abiertos
 		</span>
 		<div class="export">
 			<ul>
-				<li>
+				<li tabindex="{{openedMenu ? -1 : 0}}">
 					Páginas más vistas:
-					<a class="pages csv" href="">CSV</a>
-					<a class="pages json" href="">JSON</a>
+					<a tabindex="{{openedMenu ? -1 : 0}}" class="pages csv" href="">CSV</a>
+					<a tabindex="{{openedMenu ? -1 : 0}}" class="pages json" href="">JSON</a>
 				</li>
-				<li>
+				<li tabindex="{{openedMenu ? -1 : 0}}">
 					Navegadores:
-					<a class="browsers csv" href="">CSV</a>
-					<a class="browsers json" href="">JSON</a>
+					<a tabindex="{{openedMenu ? -1 : 0}}" class="browsers csv" href="">CSV</a>
+					<a tabindex="{{openedMenu ? -1 : 0}}" class="browsers json" href="">JSON</a>
 				</li>
-				<li>
+				<li tabindex="{{openedMenu ? -1 : 0}}">
 					Archivos descargados:
-					<a class="files csv" href="">CSV</a>
-					<a class="files json" href="">JSON</a>
+					<a tabindex="{{openedMenu ? -1 : 0}}" class="files csv" href="">CSV</a>
+					<a tabindex="{{openedMenu ? -1 : 0}}" class="files json" href="">JSON</a>
 				</li>
-				<li>
+				<li tabindex="{{openedMenu ? -1 : 0}}">
 					Geolocalización:
-					<a class="countries csv" href="">CSV</a>
-					<a class="countries json" href="">JSON</a>
+					<a tabindex="{{openedMenu ? -1 : 0}}" class="countries csv" href="">CSV</a>
+					<a tabindex="{{openedMenu ? -1 : 0}}" class="countries json" href="">JSON</a>
 				</li>
 			</ul>
 		</div>
