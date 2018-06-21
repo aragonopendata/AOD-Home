@@ -1,5 +1,39 @@
-.iframeTableCollaboration {
-    width:100%;
+.containerCollaboration {
+    width: 100%;
     clear: both;
-    padding: 15vh;
+    padding: 10vh;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media screen and (max-width: 576px){
+    h1{
+        font-size: 18px;
+    }
+
+    .description{
+        font-size: 10px;
+    }
+
+    img{
+        width: 100%;
+    }
+
+    .containerCollaboration {
+        padding: 7vh;
+    }
+}
+
+@media screen and (min-width:577px) and (max-width: 768px){
+    h1{
+        font-size: 30px;
+    }
+
+    .containerCollaboration {
+        padding: 7vh;
+    }
 }
