@@ -22,10 +22,6 @@ img {
     img{
         width: 100%;
     }
-
-    .containerCollaboration {
-        padding: 7vh;
-    }
 }
 
 @media screen and (min-width:577px) and (max-width: 768px){
