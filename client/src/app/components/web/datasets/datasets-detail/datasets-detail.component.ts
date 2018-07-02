@@ -15,6 +15,7 @@ import { Subject } from 'rxjs';
 import { DatasetsUtils } from '../../../../utils/DatasetsUtils';
 import { Extra } from '../../../../models/Extra';
 import { UtilsService } from '../../../../services/web/utils.service';
+import { Resource } from '../../../../models/Resource';
 
 @Component({
 	selector: 'app-datasets-detail',
@@ -60,6 +61,7 @@ export class DatasetsDetailComponent implements OnInit {
 	iframeError: string;
 
 	resourcesAux: ResourceAux[] = new Array();
+	resourceCSVFromPX: ResourceAux = new ResourceAux();
 	datasetsRecommended: Dataset[] = new Array();
 	//Dynamic URL build parameters
 	assetsUrl: string;
@@ -146,6 +148,9 @@ export class DatasetsDetailComponent implements OnInit {
 				this.getExtras();
 				//dt.getExtrasIAEST();
 				dt.makeFileSourceList(this.dataset, this.resourcesAux);
+				if(this.checkPxResource()){
+					this.addCsvResourceFromPx();
+				}
 				this.getDatasetsRecommended();
 			}else {
 				console.error("Error: loadDataset() - datasets-detail.component.ts");
@@ -315,6 +320,27 @@ export class DatasetsDetailComponent implements OnInit {
 		}
 
 		return exists;
+	}
+
+	checkPxResource(){
+		let hasResourcePx = false;
+		this.resourcesAux.forEach(resource => {
+			if(resource.formats.includes("px")){
+				hasResourcePx = true;
+				this.resourceCSVFromPX = resource;
+			}
+		});
+		return hasResourcePx;
+	}
+
+	addCsvResourceFromPx(){
+		let resourceCSVFromPX = new ResourceAux();
+		resourceCSVFromPX.name = this.resourceCSVFromPX.name.replace("px","csv");
+		resourceCSVFromPX.formats = ["CSV"];
+		let url = this.resourceCSVFromPX.sources[0].substring(this.resourceCSVFromPX.sources[0].indexOf("iaeaxi_docs")+("iaeaxi_docs".length+1));
+		url = Constants.AOD_BASE_URL + "/catalogo/dataset/" + this.dataset.name + "/resourceCSV/" + url.replace(new RegExp("/", 'g'), "-");
+		resourceCSVFromPX.sources = [url];
+		this.resourcesAux.push(resourceCSVFromPX);
 	}
 
 	//Methods called from HTML.
