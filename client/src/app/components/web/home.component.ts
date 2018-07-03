@@ -27,6 +27,7 @@ export class HomeComponent implements OnInit {
 	routerLinkServicesCras: string;
 	routerLinkServicesSocialData: string;
 	routerLinkServicesAnalytics: string;
+	routerLinkServicesVisual: string;
 	routerLinkInfoOpenData: string;
 	routerLinkInfoApplications: string;
 	routerLinkInfoEventos: string;
@@ -48,6 +49,7 @@ export class HomeComponent implements OnInit {
 		this.routerLinkServicesCras = Constants.ROUTER_LINK_SERVICES_CRAS;
 		this.routerLinkServicesSocialData = Constants.ROUTER_LINK_SERVICES_SOCIAL_DATA;
 		this.routerLinkServicesAnalytics = Constants.ROUTER_LINK_SERVICES_ANALYTICS;
+		this.routerLinkServicesVisual = Constants.ROUTER_LINK_VISUAL_DATA;
 		this.routerLinkInfoOpenData = Constants.ROUTER_LINK_INFORMATION_OPEN_DATA;
 		this.routerLinkInfoApplications = Constants.ROUTER_LINK_INFORMATION_APPS;
 		this.routerLinkInfoEventos = Constants.ROUTER_LINK_INFORMATION_EVENTS;
@@ -80,7 +82,8 @@ export class HomeComponent implements OnInit {
 			{ id: '#imgAPIs', hover: false },
 			{ id: '#imgSPARQL', hover: false },
 			{ id: '#imgGit', hover: false },
-			{ id: '#imgAna', hover: false }
+			{ id: '#imgAna', hover: false },
+			{ id: '#imgVis', hover: false }
 		];
 	}
 
