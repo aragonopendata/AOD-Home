@@ -5,6 +5,8 @@
     min-width: 320px;
     height:auto;
     margin-top: 5%;
+    padding-right: 15px;
+    padding-left: 15px;
 }
 
 .iframeAnalytics #analytics{
@@ -36,7 +38,9 @@
     padding-right: 0px;
     font-family: 'RobotoLight', sans-serif;
     line-height: 1.2;
-    color: #594C4F
+    color: #594C4F;
+    padding-right: 15px;
+    padding-left: 15px
 }
 
 .headerSeparator {

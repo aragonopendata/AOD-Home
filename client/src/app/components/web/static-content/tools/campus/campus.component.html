@@ -1,15 +1,13 @@
 <!-- Page Content -->
 <div class="container-fluid marginsup">
 	<div class="row">
-		<div class="col-md-1" id="colCampus"></div>
-		<div class=" col-md-8">
+		<div class=" col-md-9">
 			<h1 tabindex="{{openedMenu ? -1 : 0}}" class="firstTitle">AOD CAMPUS</h1>
 
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-1"></div>
-		<div class=" col-md-7 columns">
+		<div class=" col-md-8 columns">
 			<h6 tabindex="{{openedMenu ? -1 : 0}}" class="campusTitle">En Campus Open Data queremos que tengas a mano toda la información que hemos ido generando a lo largo del tiempo. Nuestra
 				intención es que la información sirva para que te puedas formar y que los materiales sean tutoriales para entender qué
 				son los datos abiertos y cómo los datos abiertos sirven para fomentar la economía digital y mejorar la transparencia
@@ -20,8 +18,7 @@
 	</div>
 	<div class="row">
 		<!-- Blog Entries Column -->
-		<div class="col-md-1"></div>
-		<div *ngIf="errorTitle" class="alert alert-info col-md-7" role="alert">
+		<div *ngIf="errorTitle" class="alert alert-info col-md-8" role="alert">
 			<div class="col-xs-3">
 				<i class="fa fa-exclamation-triangle fa-5x" style="margin:15px;color: #5ea2ba;"></i>
 			</div>
@@ -34,7 +31,7 @@
 			</div>
 		</div>
 		
-		<div *ngIf="!errorTitle" class="col-md-7 columns">
+		<div *ngIf="!errorTitle" class="col-md-8 columns">
 			<div *ngIf="campusNoRows" class="alert alert-info">
 				<div class="col-xs-9">
 					{{campusNoRowsMessage}}
