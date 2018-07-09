@@ -338,7 +338,7 @@ export class DatasetsDetailComponent implements OnInit {
 		resourceCSVFromPX.name = this.resourceCSVFromPX.name.replace("px","csv");
 		resourceCSVFromPX.formats = ["CSV"];
 		let url = this.resourceCSVFromPX.sources[0].substring(this.resourceCSVFromPX.sources[0].indexOf("iaeaxi_docs")+("iaeaxi_docs".length+1));
-		url = Constants.AOD_BASE_URL + "/catalogo/dataset/" + this.dataset.name + "/resourceCSV/" + url.replace(new RegExp("/", 'g'), "-");
+		url = Constants.AOD_BASE_URL + "/aod/services/web/datasets/" + this.dataset.name + "/resourceCSV/" + url.replace(new RegExp("/", 'g'), "-")		
 		resourceCSVFromPX.sources = [url];
 		this.resourcesAux.push(resourceCSVFromPX);
 	}
@@ -457,5 +457,5 @@ export class DatasetsDetailComponent implements OnInit {
         this.utilsService.openedMenuChange.subscribe(value => {
 			this.openedMenu = value;
 		});
-    }
+	}
 }

@@ -40,6 +40,8 @@ exports.API_URL_DATASETS_ORGANIZATION = '/datasets/organization';
 exports.API_URL_DATASETS_STATS_SEARCH = '/datasets/stats';
 exports.API_URL_DATASETS_RESOURCE_VIEW = '/resourceView';
 exports.API_URL_DATASETS_RDF = '/datasets/rdf';
+exports.API_URL_DATASETS_RESOURCE_CSV = '/datasets/datasetName/resourceCSV';
+exports.API_URL_RESOURCE_CSV = '/resourceCSV';
 exports.API_URL_ORGANIZATIONS = '/organizations';
 exports.API_URL_TOPICS = '/topics';
 exports.API_URL_TAGS = '/tags';
@@ -58,6 +60,7 @@ exports.API_URL_AUTHENTICATE = '/authenticate';
 exports.API_URL_ADMIN_DATASET = '/dataset';
 exports.API_URL_ADMIN_RESOURCE = '/resource';
 exports.API_URL_ADMIN_ORGANIZATION = '/organization';
+exports.API_URL_IAEST_PX_FILES = 'http://servicios3.aragon.es/iaeaxi_docs/';
 
 /* STATIC CONTENT DATABASE SECTION TITLES */
 exports.API_URL_CAMPUS_EVENTS = '/campus/events';
