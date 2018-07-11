@@ -61,7 +61,7 @@ export class DatasetsDetailComponent implements OnInit {
 	iframeError: string;
 
 	resourcesAux: ResourceAux[] = new Array();
-	resourceCSVFromPX: ResourceAux = new ResourceAux();
+	resourceCSVFromPX: ResourceAux[] = new Array();
 	datasetsRecommended: Dataset[] = new Array();
 	//Dynamic URL build parameters
 	assetsUrl: string;
@@ -86,7 +86,7 @@ export class DatasetsDetailComponent implements OnInit {
 	constructor(private datasetsService: DatasetsService,
 		private usersAdminService: UsersAdminService,
 		private authenticationService: AuthenticationService,
-		private activatedRoute: ActivatedRoute, public sanitizer: DomSanitizer,
+		private activatedRoute: ActivatedRoute, public sanitizer: DomSanitizer, private router: Router,
 		public googleAnalyticsEventsService: GoogleAnalyticsEventsService,
 		private utilsService:UtilsService) {
 		this.datasetListErrorTitle = Constants.DATASET_LIST_ERROR_TITLE;
@@ -325,22 +325,30 @@ export class DatasetsDetailComponent implements OnInit {
 	checkPxResource(){
 		let hasResourcePx = false;
 		this.resourcesAux.forEach(resource => {
-			if(resource.formats.includes("px")){
-				hasResourcePx = true;
-				this.resourceCSVFromPX = resource;
-			}
+			let newResource = new ResourceAux();
+			hasResourcePx = true;
+			newResource.name = resource.name;
+			newResource.sources = resource.sources;
+			newResource.formats = resource.formats;
+			this.resourceCSVFromPX.push(newResource);
 		});
 		return hasResourcePx;
 	}
 
 	addCsvResourceFromPx(){
-		let resourceCSVFromPX = new ResourceAux();
-		resourceCSVFromPX.name = this.resourceCSVFromPX.name.replace("px","csv");
-		resourceCSVFromPX.formats = ["CSV"];
-		let url = this.resourceCSVFromPX.sources[0].substring(this.resourceCSVFromPX.sources[0].indexOf("iaeaxi_docs")+("iaeaxi_docs".length+1));
-		url = Constants.AOD_BASE_URL + "/aod/services/web/datasets/" + this.dataset.name + "/resourceCSV/" + url.replace(new RegExp("/", 'g'), "-")		
-		resourceCSVFromPX.sources = [url];
-		this.resourcesAux.push(resourceCSVFromPX);
+		this.resourceCSVFromPX.forEach(resourceCSV => {
+			if(resourceCSV.formats.includes("px")){
+				resourceCSV.name = resourceCSV.name.replace("px","csv");
+				resourceCSV.formats = ["CSV"];
+				let url = resourceCSV.sources[0].substring(resourceCSV.sources[0].indexOf("iaeaxi_docs")+("iaeaxi_docs".length+1));
+				url = Constants.AOD_BASE_URL + "/aod/services/web/datasets/" + this.dataset.name + "/resourceCSV/" + url.replace(new RegExp("/", 'g'), "-")		
+				resourceCSV.sources = [url];
+			}
+		})
+	}
+
+	downloadPxFile(resource: ResourceAux){
+		window.location.href= resource.sources[0];
 	}
 
 	//Methods called from HTML.

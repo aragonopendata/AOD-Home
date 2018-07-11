@@ -129,14 +129,20 @@
 		<div class="container-fluid horizontalFormat">
 			<div class="section" *ngIf="resourcesAux.length != 0">
 				<h6 tabindex="{{openedMenu ? -1 : 0}}">Archivos con los datos</h6>
-				<div *ngFor="let resource of resourcesAux">
+				<div *ngFor="let resource of resourcesAux; let j = index">
 					<p>{{resource.name}}</p>
 					<div *ngFor="let url of resource.sources; let i = index">
 						<div class="horizontalFormat" *ngIf="resource.getSourcesSize() != i+1">
 							<a tabindex="{{openedMenu ? -1 : 0}}" class="tags" (click)="submitEvent(url,resource.formats[i]);" href="{{url}}" target="_blank" title="{{resource.name}}" pButton type="button" label="{{resource.formats[i]}}" style="margin: 2px;"></a>
 						</div>
 						<div *ngIf="resource.getSourcesSize() == i+1">
-							<a tabindex="{{openedMenu ? -1 : 0}}" class="tags" (click)="submitEvent(url,resource.formats[i]);" href="{{url}}" target="_blank" title="{{resource.name}}" pButton type="button" label="{{resource.formats[i]}}" style="margin: 2px;"></a>
+							<div *ngIf="resource.formats[i]=='px'">
+								<a tabindex="{{openedMenu ? -1 : 0}}" class="tags" (click)="submitEvent(url,resource.formats[i]);" href="{{url}}" target="_blank" title="{{resource.name}}" pButton type="button" label="{{resource.formats[i]}}" style="margin: 2px;"></a>
+								<a tabindex="{{openedMenu ? -1 : 0}}" class="tags" (click)="downloadPxFile(resourceCSVFromPX[j]);" title="{{resourceCSVFromPX[j].name}}" pButton type="button" label="{{resourceCSVFromPX[j].formats[i]}}" style="margin: 2px;"></a>
+							</div>
+							<div *ngIf="resource.formats[i]!='px'">
+									<a tabindex="{{openedMenu ? -1 : 0}}" class="tags" (click)="submitEvent(url,resource.formats[i]);" href="{{url}}" target="_blank" title="{{resource.name}}" pButton type="button" label="{{resource.formats[i]}}" style="margin: 2px;"></a>
+							</div>
 						</div>
 					</div>
 				</div>
