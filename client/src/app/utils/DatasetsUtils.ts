@@ -115,8 +115,9 @@ export class DatasetsUtils {
 	}
 
 	addFilenameToFileViewUrl(url: string, name: string) {
-		if (url.indexOf('/GA_OD_Core/download') >= 0) {
-			return url.concat('&name='.concat(name))
+		if (url.indexOf('/GA_OD_Core/download') >= 0 && 
+			name!=url.substring(url.indexOf('&name=')+'&name='.length).replace(new RegExp('%20', 'g'), ' ')) {
+			return url.concat('&nameRes='.concat(name))
 		} else {
 			return url;
 		}
