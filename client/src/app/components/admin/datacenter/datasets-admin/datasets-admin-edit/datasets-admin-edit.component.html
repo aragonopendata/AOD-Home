@@ -437,32 +437,21 @@
 						Por favor, selecciona el idioma o idiomas en los que existe información en tu conjunto de datos.
 					</p>
 					<div class="col-12">
-
 						<div class="form-check">
-							<label class="custom-control custom-checkbox col-12">
-								<input type="checkbox" class="custom-control-input" [checked]="checkLangBoolEs" (change)="changeCheckBoxLang('Español')">
-								<span class="custom-control-indicator"></span>
-								<span class="custom-control-description">Español</span>
+							<label class="checkboxLanguage col-12">
+								<input type="checkbox" aria-label="Checkbox for following text input" [checked]="checkLangBoolEs" (change)="changeCheckBoxLang('Español')"> Español
 							</label>
-							<label class="custom-control custom-checkbox col-12">
-								<input type="checkbox" class="custom-control-input" [checked]="checkLangBoolEn" (change)="changeCheckBoxLang('Inglés')">
-								<span class="custom-control-indicator"></span>
-								<span class="custom-control-description">Inglés</span>
+							<label class="checkboxLanguage col-12">
+								<input type="checkbox" aria-label="Checkbox for following text input" [checked]="checkLangBoolEn" (change)="changeCheckBoxLang('Inglés')"> Inglés
 							</label>
-							<label class="custom-control custom-checkbox col-12">
-								<input type="checkbox" class="custom-control-input" [checked]="checkLangBoolFr" (change)="changeCheckBoxLang('Francés')">
-								<span class="custom-control-indicator"></span>
-								<span class="custom-control-description">Francés</span>
+							<label class="checkboxLanguage col-12">
+								<input type="checkbox" aria-label="Checkbox for following text input" [checked]="checkLangBoolFr" (change)="changeCheckBoxLang('Francés')"> Francés
 							</label>
-							<label class="custom-control custom-checkbox col-12">
-								<input type="checkbox" class="custom-control-input" [checked]="checkLangBoolArg_Lng" (change)="changeCheckBoxLang('Lenguas aragonesas')">
-								<span class="custom-control-indicator"></span>
-								<span class="custom-control-description">Lenguas aragonesas</span>
+							<label class="checkboxLanguage col-12">
+								<input type="checkbox" aria-label="Checkbox for following text input" [checked]="checkLangBoolArg_Lng" (change)="changeCheckBoxLang('Lenguas aragonesas')"> Lenguas aragonesas
 							</label>
-							<label class="custom-control custom-checkbox col-12">
-								<input type="checkbox" class="custom-control-input" [checked]="checkLangBoolOther" (change)="changeCheckBoxLang('Otro')">
-								<span class="custom-control-indicator"></span>
-								<span class="custom-control-description">Otro</span>
+							<label class="checkboxLanguage col-12">
+								<input type="checkbox" aria-label="Checkbox for following text input" [checked]="checkLangBoolOther" (change)="changeCheckBoxLang('Otro')"> Otro
 							</label>
 						</div>
 						<input type="text" class="form-control" [(ngModel)]="checkLangOther" placeholder="Otro" #otherLangInput>

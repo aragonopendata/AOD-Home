@@ -9,3 +9,11 @@
 .calendar input {
     width: 100%;
 }
+
+.form-check {
+    padding-left: 0;
+}
+
+.checkboxLanguage {
+    padding-left: 5px;
+}
