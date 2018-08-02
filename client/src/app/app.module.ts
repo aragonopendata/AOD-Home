@@ -91,6 +91,7 @@ import { AodCoreAdminService} from './services/admin/aod-core-admin.service';
 import {GoogleAnalyticsEventsService} from "./services/web/google-analytics-events.service";
 import { UtilsService } from './services/web/utils.service';
 import { VisualDataComponent } from './components/admin/visual-data/visual-data.component';
+import { KnowledgeComponent } from './components/web/static-content/info/knowledge/knowledge.component';
 
 @NgModule({
 	declarations: [
@@ -156,6 +157,7 @@ import { VisualDataComponent } from './components/admin/visual-data/visual-data.
 		DatacenterComponent,
 		GlobalComponent,
 		VisualDataComponent,
+		KnowledgeComponent,
   	],
   	imports: [
 		BrowserModule,

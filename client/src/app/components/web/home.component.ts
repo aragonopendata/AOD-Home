@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
 	routerLinkDataCatalog: string;
 	routerLinkDataTopics: string;
 	routerLinkDataOrganizations: string;
+	routerLinkServicesOpenDataPool: string;
 	routerLinkServicesAragopedia: string;
 	routerLinkServicesPresupuestos: string;
 	routerLinkServicesCras: string;
@@ -29,6 +30,7 @@ export class HomeComponent implements OnInit {
 	routerLinkServicesAnalytics: string;
 	routerLinkServicesVisual: string;
 	routerLinkInfoOpenData: string;
+	routerLinkInfoKnowledge: string;
 	routerLinkInfoApplications: string;
 	routerLinkInfoEventos: string;
 	routerLinkInfoCollaboration: string;
@@ -44,6 +46,7 @@ export class HomeComponent implements OnInit {
 		this.routerLinkDataCatalog = Constants.ROUTER_LINK_DATA_CATALOG;
 		this.routerLinkDataTopics = Constants.ROUTER_LINK_DATA_TOPICS;
 		this.routerLinkDataOrganizations = Constants.ROUTER_LINK_DATA_ORGANIZATIONS;
+		this.routerLinkServicesOpenDataPool = Constants.ROUTER_LINK_SERVICES_POOL;
 		this.routerLinkServicesAragopedia = Constants.ROUTER_LINK_SERVICES_ARAGOPEDIA;
 		this.routerLinkServicesPresupuestos = Constants.ROUTER_LINK_SERVICES_PRESUPUESTOS;
 		this.routerLinkServicesCras = Constants.ROUTER_LINK_SERVICES_CRAS;
@@ -51,13 +54,14 @@ export class HomeComponent implements OnInit {
 		this.routerLinkServicesAnalytics = Constants.ROUTER_LINK_SERVICES_ANALYTICS;
 		this.routerLinkServicesVisual = Constants.ROUTER_LINK_SERVICES_VISUAL_DATA;
 		this.routerLinkInfoOpenData = Constants.ROUTER_LINK_INFORMATION_OPEN_DATA;
+		this.routerLinkInfoKnowledge = Constants.ROUTER_LINK_INFORMATION_CONOCIMIENTO;
 		this.routerLinkInfoApplications = Constants.ROUTER_LINK_INFORMATION_APPS;
 		this.routerLinkInfoEventos = Constants.ROUTER_LINK_INFORMATION_EVENTS;
 		this.routerLinkInfoCollaboration = Constants.ROUTER_LINK_INFORMATION_COLLABORATION;
 		this.routerLinkToolsCampus = Constants.ROUTER_LINK_TOOLS_CAMPUS;
 		this.routerLinkToolsDevelopers = Constants.ROUTER_LINK_TOOLS_DEVELOPERS;
 		this.routerLinkToolsApis = Constants.ROUTER_LINK_TOOLS_APIS;
-		this.routerLinkToolsSparql = Constants.ROUTER_LINK_TOOLS_SPARQL;
+		this.routerLinkToolsSparql = Constants.SERVER_API_LINK_STATIC_CONTENT_TOOLS_SPARQL;
 		this.routerLinkToolsGithub = Constants.AOD_GITHUB_URL;
 		this.getOpenedMenu();
 		
@@ -83,7 +87,9 @@ export class HomeComponent implements OnInit {
 			{ id: '#imgSPARQL', hover: false },
 			{ id: '#imgGit', hover: false },
 			{ id: '#imgAna', hover: false },
-			{ id: '#imgVis', hover: false }
+			{ id: '#imgVis', hover: false },
+			{ id: '#imgPool', hover: false},
+			{ id: '#imgCono', hover: false }
 		];
 	}
 

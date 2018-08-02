@@ -491,6 +491,7 @@ export class Constants {
     public static ROUTER_LINK_DATA_ORGANIZATIONS = 'datos/publicadores';
     public static ROUTER_LINK_INFORMATION = 'informacion';
     public static ROUTER_LINK_INFORMATION_OPEN_DATA = 'informacion/open-data';
+    public static ROUTER_LINK_INFORMATION_CONOCIMIENTO = 'informacion/conocimiento';
     public static ROUTER_LINK_INFORMATION_TERMS = 'terminos';
     public static ROUTER_LINK_INFORMATION_APPS = 'informacion/aplicaciones';
     public static ROUTER_LINK_INFORMATION_EVENTS = 'informacion/eventos';
@@ -556,6 +557,7 @@ export class Constants {
     public static ROUTER_LINK_ADMIN_LOGSTASH = 'admin/logstash';
     public static ROUTER_LINK_VISUAL_DATA = 'visual-data';
     public static ROUTER_LINK_404 = 'pagenotfound';
+    public static ROUTER_LINK_SERVICES_POOL = '';
     public static ROUTER_LINK_SERVICES_ARAGOPEDIA = 'servicios/aragopedia';
     public static ROUTER_LINK_SERVICES_PRESUPUESTOS = 'servicios/presupuestos';
     public static ROUTER_LINK_SERVICES_CRAS = 'servicios/cras';

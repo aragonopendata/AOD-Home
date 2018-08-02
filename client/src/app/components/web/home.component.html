@@ -67,10 +67,10 @@
 			</p>
 			<div class="ui-g">
 				<div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
-					<div tabindex="{{openedMenu ? -1 : 0}}" class="card card-inverse" (keydown.enter)="goToUrl()" (click)="goToUrl()" (mouseenter)="hover('#imgAragopedia','/static/public/i/cards/Card-05-Aragopedia-ON.jpg')"
-					 (mouseleave)="unhover('#imgAragopedia','/static/public/i/cards/Card-05-Aragopedia-OFF.jpg')">
-						<img class="card-img" id="imgAragopedia" src="/static/public/i/cards/Card-05-Aragopedia-OFF.jpg" alt="aragopedia">
-						<div *ngIf="hovers[3].hover" class="card-img-overlay" style="text-align: center;">
+					<div tabindex="{{openedMenu ? -1 : 0}}" class="card card-inverse" (keydown.enter)="goToUrl(routerLinkServicesOpenDataPool)" (click)="goToUrl(routerLinkServicesOpenDataPool)" (mouseenter)="hover('#imgPool','/static/public/i/cards/Card-05-Aragopedia-ON.jpg')"
+					 (mouseleave)="unhover('#imgPool','/static/public/i/cards/Card-05-Aragopedia-OFF.jpg')">
+						<img class="card-img" id="imgPool" src="/static/public/i/cards/Card-05-Aragopedia-OFF.jpg" alt="datos-enlazados">
+						<div *ngIf="hovers[18].hover" class="card-img-overlay" style="text-align: center;">
 							<h2>Datos enlazados</h2>
 							<p>Descubre nueva información navegando por los datos abiertos enlazados.</p>
 						</div>
@@ -160,6 +160,16 @@
 						<div *ngIf="hovers[7].hover" class="card-img-overlay" style="text-align: center;">
 							<h2>Información</h2>
 							<p>Conoce más sobre el entorno open data y qué hacemos en Aragón.</p>
+						</div>
+					</div>
+				</div>
+				<div class="ui-sm-12 ui-md-6 ui-lg-4" style="cursor: pointer;">
+					<div tabindex="{{openedMenu ? -1 : 0}}" class="card card-inverse" routerLink="/{{routerLinkInfoKnowledge}}" (mouseenter)="hover('#imgCono', '/static/public/i/cards/Card-09-Aplicaciones-ON.jpg')"
+					 (mouseleave)="unhover('#imgCono', '/static/public/i/cards/Card-09-Aplicaciones-OFF.jpg')">
+						<img class="card-img" id="imgCono" src="/static/public/i/cards/Card-09-Aplicaciones-OFF.jpg" alt="conocimiento">
+						<div *ngIf="hovers[19].hover" class="card-img-overlay" style="text-align: center;">
+							<h2>Conocimiento</h2>
+							<p>Entiende e interpreta los datos a través de sus ontologías, vocabularios y ejemplos de consulta.</p>
 						</div>
 					</div>
 				</div>

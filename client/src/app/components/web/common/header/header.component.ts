@@ -40,6 +40,7 @@ export class HeaderComponent implements OnInit {
     routerLinkServicesAnalytics: string;
     routerLinkServicesVisualData: string;
 	routerLinkInfoOpenData: string;
+	routerLinkInfoKnowledge: string;
 	routerLinkInfoApplications: string;
 	routerLinkInfoEventos: string;
 	routerLinkInfoCollaboration: string;
@@ -71,14 +72,15 @@ export class HeaderComponent implements OnInit {
         this.routerLinkServicesSocialData = Constants.ROUTER_LINK_SERVICES_SOCIAL_DATA;
         this.routerLinkServicesAnalytics = Constants.ROUTER_LINK_SERVICES_ANALYTICS;
         this.routerLinkServicesVisualData = Constants.ROUTER_LINK_SERVICES_VISUAL_DATA;
-		this.routerLinkInfoOpenData = Constants.ROUTER_LINK_INFORMATION_OPEN_DATA;
+        this.routerLinkInfoOpenData = Constants.ROUTER_LINK_INFORMATION_OPEN_DATA;
+        this.routerLinkInfoKnowledge = Constants.ROUTER_LINK_INFORMATION_CONOCIMIENTO;
 		this.routerLinkInfoApplications = Constants.ROUTER_LINK_INFORMATION_APPS;
 		this.routerLinkInfoEventos = Constants.ROUTER_LINK_INFORMATION_EVENTS;
 		this.routerLinkInfoCollaboration = Constants.ROUTER_LINK_INFORMATION_COLLABORATION;
 		this.routerLinkToolsCampus = Constants.ROUTER_LINK_TOOLS_CAMPUS;
 		this.routerLinkToolsDevelopers = Constants.ROUTER_LINK_TOOLS_DEVELOPERS;
 		this.routerLinkToolsApis = Constants.ROUTER_LINK_TOOLS_APIS;
-		this.routerLinkToolsSparql = Constants.ROUTER_LINK_TOOLS_SPARQL;
+		this.routerLinkToolsSparql = Constants.SERVER_API_LINK_STATIC_CONTENT_TOOLS_SPARQL;
 		this.routerLinkToolsGithub = Constants.AOD_GITHUB_URL;
     }
 

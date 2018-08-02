@@ -51,6 +51,7 @@ import { CampusAdminComponent } from './components/admin/campus-admin/campus-adm
 import { LogstashComponent } from './components/admin/logstash/logstash.component';
 import { VisualDataComponent } from './components/admin/visual-data/visual-data.component';
 import { PageNotFoundComponent } from './components/error/page-not-found/page-not-found.component';
+import { KnowledgeComponent } from './components/web/static-content/info/knowledge/knowledge.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -71,6 +72,7 @@ const routes: Routes = [
     { path: Constants.ROUTER_LINK_DATA_ORGANIZATIONS, component: OrganizationsListComponent },
     { path: Constants.ROUTER_LINK_INFORMATION, redirectTo: Constants.ROUTER_LINK_INFORMATION_OPEN_DATA },
     { path: Constants.ROUTER_LINK_INFORMATION_OPEN_DATA, component: OpenDataComponent },
+    { path: Constants.ROUTER_LINK_INFORMATION_CONOCIMIENTO, component: KnowledgeComponent },
     { path: Constants.ROUTER_LINK_INFORMATION_TERMS, component: TermsComponent },
     { path: Constants.ROUTER_LINK_INFORMATION_APPS, component: ApplicationsComponent },
     { path: Constants.ROUTER_LINK_INFORMATION_EVENTS, component: EventsComponent },
