@@ -38,6 +38,7 @@ export class HomeComponent implements OnInit {
 	routerLinkToolsDevelopers: string;
 	routerLinkToolsApis: string;
 	routerLinkToolsGithub: string;
+	routerLinkSparql: string;
 
 	constructor( private router: Router, private activatedRoute: ActivatedRoute,
 		private location: Location, private utilsService: UtilsService ) { 
@@ -61,6 +62,7 @@ export class HomeComponent implements OnInit {
 		this.routerLinkToolsDevelopers = Constants.ROUTER_LINK_TOOLS_DEVELOPERS;
 		this.routerLinkToolsApis = Constants.ROUTER_LINK_TOOLS_APIS;
 		this.routerLinkToolsGithub = Constants.AOD_GITHUB_URL;
+		this.routerLinkSparql = Constants.ROUTER_LINK_SPARQL;
 		this.getOpenedMenu();
 		
 	}

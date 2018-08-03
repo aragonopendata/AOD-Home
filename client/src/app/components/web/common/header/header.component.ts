@@ -52,6 +52,7 @@ export class HeaderComponent implements OnInit {
     presupuestosBaseUrl: string;
     transparenciaWebUrl: string;
     aragonParticipaWebUrl: string;
+    routerLinkSparql: string;
 
     constructor(private locale: AppComponent, private constants: Constants,
             private datasetService: DatasetsService, private router: Router,
@@ -79,7 +80,8 @@ export class HeaderComponent implements OnInit {
 		this.routerLinkToolsCampus = Constants.ROUTER_LINK_TOOLS_CAMPUS;
 		this.routerLinkToolsDevelopers = Constants.ROUTER_LINK_TOOLS_DEVELOPERS;
 		this.routerLinkToolsApis = Constants.ROUTER_LINK_TOOLS_APIS;
-		this.routerLinkToolsGithub = Constants.AOD_GITHUB_URL;
+        this.routerLinkToolsGithub = Constants.AOD_GITHUB_URL;
+        this.routerLinkSparql = Constants.ROUTER_LINK_SPARQL;
     }
 
     openNav() {
