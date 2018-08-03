@@ -47,7 +47,6 @@ export class HeaderComponent implements OnInit {
 	routerLinkToolsCampus: string;
 	routerLinkToolsDevelopers: string;
 	routerLinkToolsApis: string;
-	routerLinkToolsSparql: string;
 	routerLinkToolsGithub: string;
     aodBaseUrl: string;
     presupuestosBaseUrl: string;
@@ -80,7 +79,6 @@ export class HeaderComponent implements OnInit {
 		this.routerLinkToolsCampus = Constants.ROUTER_LINK_TOOLS_CAMPUS;
 		this.routerLinkToolsDevelopers = Constants.ROUTER_LINK_TOOLS_DEVELOPERS;
 		this.routerLinkToolsApis = Constants.ROUTER_LINK_TOOLS_APIS;
-		this.routerLinkToolsSparql = Constants.SERVER_API_LINK_STATIC_CONTENT_TOOLS_SPARQL;
 		this.routerLinkToolsGithub = Constants.AOD_GITHUB_URL;
     }
 

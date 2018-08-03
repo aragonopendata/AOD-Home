@@ -37,7 +37,6 @@ export class HomeComponent implements OnInit {
 	routerLinkToolsCampus: string;
 	routerLinkToolsDevelopers: string;
 	routerLinkToolsApis: string;
-	routerLinkToolsSparql: string;
 	routerLinkToolsGithub: string;
 
 	constructor( private router: Router, private activatedRoute: ActivatedRoute,
@@ -61,7 +60,6 @@ export class HomeComponent implements OnInit {
 		this.routerLinkToolsCampus = Constants.ROUTER_LINK_TOOLS_CAMPUS;
 		this.routerLinkToolsDevelopers = Constants.ROUTER_LINK_TOOLS_DEVELOPERS;
 		this.routerLinkToolsApis = Constants.ROUTER_LINK_TOOLS_APIS;
-		this.routerLinkToolsSparql = Constants.SERVER_API_LINK_STATIC_CONTENT_TOOLS_SPARQL;
 		this.routerLinkToolsGithub = Constants.AOD_GITHUB_URL;
 		this.getOpenedMenu();
 		
@@ -225,10 +223,6 @@ export class HomeComponent implements OnInit {
 				break;
 				case Constants.STATIC_INFO_APIS_SECTION_GA_OD_CORE:
 					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_APIS_SECTION_REDIRECT+fragment);
-				break;
-				//SPARQL
-				case Constants.STATIC_INFO_SPARQL_SECTION_CONTENT:
-					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_SPARQL_SECTION_REDIRECT+fragment);
 				break;
 				default:
 					this.location.go('/');

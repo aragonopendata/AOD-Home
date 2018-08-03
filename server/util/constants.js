@@ -48,14 +48,12 @@ exports.API_URL_TAGS = '/tags';
 exports.API_URL_GA_OD_CORE = '/core';
 exports.API_URL_GA_OD_CORE_VIEWS = '/views';
 exports.API_URL_STATIC_CONTENT_INFO_OPEN_DATA = '/static-content/info/open-data';
+exports.API_URL_STATIC_CONTENT_INFO_CONOCIMIENTO = '/static-content/info/conocimiento';
 exports.API_URL_STATIC_CONTENT_INFO_APPS = '/static-content/info/applications';
 exports.API_URL_STATIC_CONTENT_INFO_EVENTS = '/static-content/info/events';
 exports.API_URL_STATIC_CONTENT_INFO_COLLABORATION = '/static-content/info/collaboration';
 exports.API_URL_STATIC_CONTENT_TOOLS_DEVELOPERS = '/static-content/tools/developers';
 exports.API_URL_STATIC_CONTENT_TOOLS_APIS = '/static-content/tools/apis';
-exports.API_URL_STATIC_CONTENT_TOOLS_SPARQL = '/static-content/tools/sparql';
-exports.API_URL_STATIC_CONTENT_TOOLS_SPARQL_CLIENT = '/static-content/tools/sparql-client';
-exports.API_URL_STATIC_CONTENT_TOOLS_SPARQL_GRAPHS = '/static-content/tools/sparql-client/graphs';
 exports.API_URL_AUTHENTICATE = '/authenticate';
 exports.API_URL_ADMIN_DATASET = '/dataset';
 exports.API_URL_ADMIN_RESOURCE = '/resource';
@@ -75,11 +73,11 @@ exports.STATIC_CONTENT_SECTION_TITLE_TOOLS = 'HERRAMIENTAS';
 exports.STATIC_CONTENT_SUBSECTION_TITLE_OPEN_DATA = 'OPEN DATA';
 exports.STATIC_CONTENT_CONTENT_TITLE_TERM = 'TÉRMINOS DE USO Y LICENCIAS';
 exports.STATIC_CONTENT_SUBSECTION_TITLE_APPS = 'APLICACIONES';
+exports.STATIC_CONTENT_SUBSECTION_TITLE_CONOCIMIENTO = 'CONOCIMIENTO';
 exports.STATIC_CONTENT_SUBSECTION_TITLE_EVENTS = 'EVENTOS';
 exports.STATIC_CONTENT_SUBSECTION_TITLE_COLLABORATION = 'COLABORA';
 exports.STATIC_CONTENT_SUBSECTION_TITLE_DEVELOPERS = 'DESARROLLADORES';
 exports.STATIC_CONTENT_SUBSECTION_TITLE_APIS = 'APIS';
-exports.STATIC_CONTENT_SUBSECTION_TITLE_SPARQL = 'SPARQL';
 /* ADMIN CONSTANTS */
 exports.APPLICATION_NAME_CKAN = 'CKAN';
 /* SQL CONSTANTS */
@@ -214,16 +212,6 @@ exports.SERVER_API_LINK_PARAM_TYPE_PLAIN_TEXT_QUERY = '&q=(((res_format:XLS OR r
 
 //Results per page in campus
 exports.CAMPUS_EVENTS_PER_PAGE = 10;
-
-/*  SPARQL */
-exports.SPARQL_API_BASE_URL = 'http://miv-aodfront-01.aragon.local:7030/sparql';
-//exports.SPARQL_API_BASE_URL = 'http://localhost:14730/sparql';
-exports.SPARQL_API_QUERY_URL_ALL_GRAPHS = '?query=SELECT  DISTINCT ?g WHERE  { GRAPH ?g {?s ?p ?o} } ORDER BY ?g &format=json';
-exports.SPARQL_API_LINK_PARAM_GRAPH = '?default-graph-uri=';
-exports.SPARQL_API_LINK_PARAM_QUERY = '&query=';
-exports.SPARQL_API_LINK_PARAM_FORMAT = '&format=';
-exports.SPARQL_API_LINK_PARAM_TIMEOUT = '&timeout=';
-exports.SPARQL_API_LINK_PARAM_DEBUG = '&debug=';
 
 /* ******************* */
 /* DATABASE PROPERTIES */

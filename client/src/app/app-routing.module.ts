@@ -20,8 +20,6 @@ import { CampusComponent } from './components/web/static-content/tools/campus/ca
 import { CampusDetailComponent } from './components/web/static-content/tools/campus/campus-detail/campus-detail.component';
 import { DevelopersComponent } from './components/web/static-content/tools/developers/developers.component';
 import { ApisComponent } from './components/web/static-content/tools/apis/apis.component';
-import { SparqlComponent } from './components/web/static-content/tools/sparql/sparql.component';
-import { SparqlClientComponent } from './components/web/static-content/tools/sparql/sparql-client/sparql-client.component';
 import { LoginComponent } from './components/login/login.component';
 import { ForgottenPasswordComponent } from './components/login/forgotten-password/forgotten-password.component';
 import { RestorePasswordComponent } from './components/login/restore-password/restore-password.component';
@@ -83,8 +81,6 @@ const routes: Routes = [
     { path: Constants.ROUTER_LINK_TOOLS_CAMPUS, component: CampusComponent },
     { path: Constants.ROUTER_LINK_TOOLS_CAMPUS_CONTENT + '/:' + Constants.ROUTER_LINK_TOOLS_CAMPUS_EVENT_NAME, component: CampusDetailComponent },
     { path: Constants.ROUTER_LINK_TOOLS_APIS, component: ApisComponent },
-    { path: Constants.ROUTER_LINK_TOOLS_SPARQL, component: SparqlComponent },
-    // { path: Constants.ROUTER_LINK_TOOLS_SPARQL_CLIENT, component: SparqlClientComponent, pathMatch: 'full' },
     { path: Constants.ROUTER_LINK_LOGIN, component: LoginComponent },
     { path: Constants.ROUTER_LINK_LOGIN + '/:' + Constants.ROUTER_LINK_DATA_PARAM_DATA_LOGIN + '/:' + Constants.ROUTER_LINK_DATA_PARAM_EDIT_DATA, component: LoginComponent },
     { path: Constants.ROUTER_LINK_LOGIN_FORGOT_PASSWORD, component: ForgottenPasswordComponent },

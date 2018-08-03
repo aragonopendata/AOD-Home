@@ -37,8 +37,6 @@ import { CampusComponent } from './components/web/static-content/tools/campus/ca
 import { CampusDetailComponent } from './components/web/static-content/tools/campus/campus-detail/campus-detail.component';
 import { DevelopersComponent } from './components/web/static-content/tools/developers/developers.component';
 import { ApisComponent } from './components/web/static-content/tools/apis/apis.component';
-import { SparqlComponent } from './components/web/static-content/tools/sparql/sparql.component';
-import { SparqlClientComponent } from './components/web/static-content/tools/sparql/sparql-client/sparql-client.component';
 import { ForgottenPasswordComponent } from './components/login/forgotten-password/forgotten-password.component';
 import { RestorePasswordComponent } from './components/login/restore-password/restore-password.component';
 import { HomeAdminComponent } from './components/admin/home-admin.component';
@@ -121,8 +119,6 @@ import { KnowledgeComponent } from './components/web/static-content/info/knowled
 		CampusDetailComponent,
 		DevelopersComponent,
 		ApisComponent,
-		SparqlComponent,
-		SparqlClientComponent,
 		ForgottenPasswordComponent,
 		RestorePasswordComponent,
 		HomeAdminComponent,
@@ -136,7 +132,6 @@ import { KnowledgeComponent } from './components/web/static-content/info/knowled
 		OpenDataComponent,
 		ApisComponent,
 		DevelopersComponent,
-		SparqlComponent,
 		ApplicationsAdminComponent,
 		CollaborationAdminComponent,
 		EventsAdminComponent,
