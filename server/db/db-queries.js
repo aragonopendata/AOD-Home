@@ -99,4 +99,23 @@ exports.DB_ADMIN_DELETE_LOGSTASH = 'DELETE FROM manager.logstash_conf '
 exports.DB_ADMIN_RELOAD_LOGSTASH = 'UPDATE manager.logstash_conf '
 								+ 'SET status=\'1\' '
 							+ 'WHERE manager.logstash_conf.status=\'0\'';
-						   
+
+
+exports.DB_ADMIN_GET_CAMPUS_EVENTS = 'SELECT * from campus.events';
+exports.DB_ADMIN_INSERT_CAMPUS_EVENTS = 'INSERT INTO campus.events (name, description, date) VALUES($1, $2, $3)';
+exports.DB_ADMIN_UPDATE_CAMPUS_EVENTS = 'UPDATE campus.events SET name = COALESCE($1, name), ' +
+									'description = COALESCE($2, description) WHERE id = $3';
+exports.DB_ADMIN_GET_CAMPUS_ENTRYS = 'SELECT * from campus.contents WHERE id = $1';
+exports.DB_ADMIN_INSERT_CAMPUS_ENTRYS = 'INSERT INTO campus.contents ' +
+									'(title, description, url, thumbnail, format, type, platform, event) '+
+									'VALUES($1, $2, $3, $4, $5, $6, $7, $8)';
+exports.DB_ADMIN_UPDATE_CAMPUS_ENTRYS = 'UPDATE campus.events SET' + 
+									'title = COALESCE($1, title),' +
+									'description = COALESCE($2, title),, ' +
+									'url = COALESCE($3, title),, ' +
+									'thumbnail = COALESCE($4, title),, ' +
+									'format = COALESCE($5, title),, ' +
+									'type = COALESCE($6, title),, ' +
+									'platform = COALESCE($7, title),, ' +
+									'event = COALESCE($8, title), ' +
+									'WHERE id = $9'; 
