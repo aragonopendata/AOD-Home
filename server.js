@@ -28,8 +28,8 @@ var tagsAdmin = require('./server/routes/admin/tags');
 var organizationsAdmin = require('./server/routes/admin/organizations');
 var aodCore = require('./server/routes/admin/aod-core')
 var logstash = require('./server/routes/admin/analytics')
-var analytics = require('./server/routes/web/analytics')
-//var campusAdmin = require('./server/routes/admin/campus');
+var analytics = require('./server/routes/web/analytics');
+var campusAdmin = require('./server/routes/admin/campus');
 
 // API ROUTES 
 var authenticate = require('./server/routes/authenticate'); 
@@ -68,7 +68,7 @@ app.use(constants.API_BASE_URL_ADMIN, topicsAdmin);
 app.use(constants.API_BASE_URL_ADMIN, verifyToken, organizationsAdmin);
 app.use(constants.API_BASE_URL_ADMIN, aodCore);
 app.use(constants.API_BASE_URL_ADMIN, verifyToken, logstash);
-//app.use('/api/admin', campusAdmin);
+app.use(constants.API_BASE_URL_ADMIN, verifyToken, campusAdmin);
 
 // PORT FROM ENVIRONMENT
 const port = process.env.PORT || constants.EXPRESS_NODE_STARTING_PORT;
