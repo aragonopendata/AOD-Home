@@ -104,10 +104,22 @@ exports.DB_ADMIN_RELOAD_LOGSTASH = 'UPDATE manager.logstash_conf '
 exports.DB_ADMIN_GET_CAMPUS_EVENTS = 'SELECT e.id, e.name, e.description, e.date, s.name AS site_name FROM campus.events e, campus.sites s, campus.events_sites es' +
 							' WHERE s.id = es.id_site AND e.id = es.id_event';
 
-exports.DB_ADMIN_INSERT_CAMPUS_EVENTS = 'INSERT INTO campus.events (name, description, date) VALUES($1, $2, $3)';
+exports.DB_ADMIN_INSERT_CAMPUS_EVENTS = 'INSERT INTO campus.events (name, description, date) VALUES($1, $2, $3)'+ 
+							'RETURNING campus.events.id';
 
 exports.DB_ADMIN_UPDATE_CAMPUS_EVENTS = 'UPDATE campus.events SET name = COALESCE($1, name), ' +
-									'description = COALESCE($2, description) WHERE id = $3';
+	'description = COALESCE($2, description) WHERE id = $3' + 
+	'RETURNING campus.events.id';
+
+exports.DB_ADMIN_INSERT_CAMPUS_SITES = 'INSERT INTO campus.sites ' +
+	'(name) '+
+	'VALUES($1)' + 
+	'RETURNING campus.sites.id';
+
+exports.DB_ADMIN_INSERT_CAMPUS_EVENTS_SITES  = 'INSERT INTO campus.events_sites ' +
+		'(id_event, id_site) '+
+		'VALUES($1, $2)';
+
 
 exports.DB_ADMIN_GET_CAMPUS_ENTRIES = 'SELECT * from campus.contents WHERE id = $1';
 
