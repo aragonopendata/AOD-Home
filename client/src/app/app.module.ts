@@ -11,9 +11,10 @@ import {
 	CalendarModule, InputSwitchModule, EditorModule, DataListModule, TooltipModule, 
 	AutoCompleteModule, ProgressBarModule, RadioButtonModule, CheckboxModule, FileUploadModule, 
 	ToolbarModule, TabViewModule, PaginatorModule, AccordionModule, MessagesModule, GrowlModule,
-	ConfirmDialogModule, ConfirmationService } from 'primeng/primeng';
+	ConfirmDialogModule, ConfirmationService, ChipsModule } from 'primeng/primeng';
 import { Logger, Options } from 'angular2-logger/core';
 import { Constants } from './app.constants';
+import { MatListModule, MatDatepickerModule, MatNativeDateModule, MatFormFieldModule, MatInputModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
 // Components
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -181,7 +182,13 @@ import { CampusAdminEntriesComponent } from './components/admin/campus-admin/cam
 		AccordionModule,
 		MessagesModule,
 		GrowlModule,
-		TinyMceModule.forRoot(tinymceDefaultSettings())
+		TinyMceModule.forRoot(tinymceDefaultSettings()),
+		MatDatepickerModule,
+		MatNativeDateModule,
+		MatFormFieldModule,
+		MatInputModule,
+		MatListModule,
+		ChipsModule
 	],
 	providers: [
 		Logger,
@@ -204,7 +211,8 @@ import { CampusAdminEntriesComponent } from './components/admin/campus-admin/cam
 		AnalyticsService,
 		AodCoreAdminService,
 		ConfirmationService,
-		GoogleAnalyticsEventsService
+		GoogleAnalyticsEventsService,
+		{provide: MAT_DATE_LOCALE, useValue: 'es-ES'},
 	],
 	bootstrap: [AppComponent]
 })

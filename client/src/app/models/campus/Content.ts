@@ -1,3 +1,5 @@
+import { Topic } from "./Topic";
+
 export class Content{
     id: number;
     title: string;
@@ -5,7 +7,7 @@ export class Content{
     url: string;
     thumbnail: any;
     format: string;
-    type: string;
+    topics: Topic[];
     platform: string;
     event_id: number;
     event_name: string;
