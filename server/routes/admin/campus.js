@@ -849,4 +849,50 @@ router.put(constants.API_URL_ADMIN_CAMPUS_SPEAKERS, function (req, res, next) {
 });
 //endregion
 
+//region Sites
+router.post(constants.API_URL_ADMIN_CAMPUS_SITES, function (req, res, next) {
+    var content = req.body;
+
+    if (!content.name) {
+        logger.error('Input Error', 'name not found');
+        res.json({ status: 400, error: 'Incorrect Input, name not found' });
+        return;
+    }
+
+    pool.on('error', (err, client) => {
+        logger.error('CREACION DE SITE - Error al crear el site en base de datos: ', err);
+        res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'CREACION DE SITE - Error al crear el site en base de datos' });
+        return;
+    })
+    pool.connect((err, client, done) => {
+        if (err) {
+            logger.error('CREACION DE SITE - Error al crear el speaker en base de datos: ', err);
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'CREACION DE SITE - Error al crear el site en base de datos' });
+            return;
+        }
+        const querySite = {
+            text: dbQueries.DB_ADMIN_INSERT_CAMPUS_SITES,
+            values: [content.name]
+        };
+
+        client.query(querySite, (err, response) => {
+            done()
+            if (err) {
+                logger.error('CREACION DE SITE - Error al crear el site en base de datos: ', err);
+                res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'CREACION DE SITE - Error al crear el site en base de datos' });
+                return;
+            } else {
+                logger.info('CREACION DE SITE - Site creado correctamente')
+                res.json({
+                    'status': constants.REQUEST_REQUEST_OK,
+                    'success': true,
+                    'result': 'CREACION DE SITE - Site creado correctamente'
+                });
+            }
+        })
+    })
+});
+
+//endregion
+
 module.exports = router; 
