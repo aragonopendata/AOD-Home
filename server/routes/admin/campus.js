@@ -167,18 +167,18 @@ router.get(constants.API_URL_ADMIN_CAMPUS_EVENTS, function (req, res, next) {
 
 router.get(constants.API_URL_ADMIN_CAMPUS_ENTRIES_BY_EVENT + "/:id", function (req, res, next) {
     var id = req.params.id;
-    
+
     const query = {
         text: dbQueries.DB_ADMIN_GET_CAMPUS_ENTRIES_BY_EVENT,
         values: [id],
         rowMode: constants.SQL_RESULSET_FORMAT
     };
-    
+
     pool.on('error', (err, client) => {
         logger.error('Error en la conexión con base de datos', err);
         process.exit(-1);
     });
-    
+
     pool.connect((err, client, done) => {
         if (err) {
             logger.error(err.stack);
@@ -205,6 +205,39 @@ router.get(constants.API_URL_ADMIN_CAMPUS_ENTRIES + "/:id", function (req, res, 
     const query = {
         text: dbQueries.DB_ADMIN_GET_CAMPUS_ENTRY,
         values: [id],
+        rowMode: constants.SQL_RESULSET_FORMAT
+    };
+
+    pool.on('error', (err, client) => {
+        logger.error('Error en la conexión con base de datos', err);
+        process.exit(-1);
+    });
+
+    pool.connect((err, client, done) => {
+        if (err) {
+            logger.error(err.stack);
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
+            return;
+        }
+        pool.query(query, (err, result) => {
+            done();
+            if (err) {
+                logger.error(err.stack);
+                res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
+                return;
+            } else {
+                logger.info('Filas devueltas: ' + result.rows.length);
+                res.json(result.rows);
+            }
+        });
+    });
+});
+
+router.get(constants.API_URL_ADMIN_CAMPUS_ENTRIES, function (req, res, next) {
+    var id = req.params.id;
+
+    const query = {
+        text: dbQueries.DB_ADMIN_GET_CAMPUS_ENTRIES,
         rowMode: constants.SQL_RESULSET_FORMAT
     };
 

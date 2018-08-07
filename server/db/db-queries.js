@@ -129,6 +129,8 @@ exports.DB_ADMIN_GET_CAMPUS_ENTRY = 'SELECT c.id, c.title, c.description, c.url,
 		'WHERE c.id = $1 AND c.id = ct.id_content AND c.id = cs.id_content '+
 		'AND ct.id_topic = t.id AND cs.id_speaker = s.id';
 
+exports.DB_ADMIN_GET_CAMPUS_ENTRIES = 'SELECT c.id, c.title from campus.contents c';
+
 exports.DB_ADMIN_GET_CAMPUS_ENTRIES_BY_EVENT = 'SELECT c.id, c.title from campus.contents c WHERE c.event = $1';
 
 exports.DB_ADMIN_INSERT_CAMPUS_ENTRIES = 'INSERT INTO campus.contents ' +
