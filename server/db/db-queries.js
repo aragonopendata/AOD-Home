@@ -100,6 +100,7 @@ exports.DB_ADMIN_RELOAD_LOGSTASH = 'UPDATE manager.logstash_conf '
 								+ 'SET status=\'1\' '
 							+ 'WHERE manager.logstash_conf.status=\'0\'';
 
+exports.DB_ADMIN_GET_CAMPUS_SITES = 'SELECT id, name FROM campus.sites';
 
 exports.DB_ADMIN_GET_CAMPUS_EVENTS = 'SELECT e.id, e.name, e.description, e.date, s.name AS site_name FROM campus.events e, campus.sites s, campus.events_sites es' +
 							' WHERE s.id = es.id_site AND e.id = es.id_event';

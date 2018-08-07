@@ -37,6 +37,38 @@ const logConfig = require('../../conf/log-conf');
 const loggerSettings = logConfig.getLogSettings();
 const logger = require('js-logging').dailyFile([loggerSettings]);
 
+
+router.get(constants.API_URL_ADMIN_CAMPUS_SITES, function (req, res, next) {
+    const query = {
+        text: dbQueries.DB_ADMIN_GET_CAMPUS_SITES,
+        rowMode: constants.SQL_RESULSET_FORMAT
+    };
+    
+    pool.on('error', (err, client) => {
+        logger.error('Error en la conexión con base de datos', err);
+        process.exit(-1);
+    });
+
+    pool.connect((err, client, done) => {
+        if (err) {
+            logger.error(err.stack);
+            res.json({ status: 500, 'error': err });
+            return;
+        }
+        pool.query(query, (err, result) => {
+            done();
+            if (err) {
+                logger.error(err.stack);
+                res.json({ status: 500, 'error': err });
+                return;
+            } else {
+                logger.info('Filas devueltas: ' + result.rows.length);
+                res.json(result.rows);
+            }
+        });
+    });
+});
+
 router.get(constants.API_URL_ADMIN_CAMPUS_EVENTS, function (req, res, next) {
     const query = {
         text: dbQueries.DB_ADMIN_GET_CAMPUS_EVENTS,
