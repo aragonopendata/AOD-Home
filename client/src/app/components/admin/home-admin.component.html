@@ -79,9 +79,17 @@
 					</a>
 				</div>
 			</li>
-			<!--<li class="nav-item">
-				<a class="nav-link" routerLink="/admin/campus">AOD Campus<span class="sr-only"></span></a>
-			</li> -->
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">AOD Campus<span class="sr-only"></span></a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+					<a class="dropdown-item" routerLink="/admin/campus-admin/events" routerLinkActive="active"><i class="fa fa-caret-right"></i>
+						<span class="sidebar-title">Eventos</span>
+					</a>
+					<a class="dropdown-item" routerLink="/admin/campus-admin/entries" routerLinkActive="active"><i class="fa fa-caret-right"></i>
+						<span class="sidebar-title">Entradas</span>
+					</a>
+				</div>
+			</li>
 		</ul>
 		<ul class="navbar-nav ml-auto">
 			<li class="nav-item dropdown">

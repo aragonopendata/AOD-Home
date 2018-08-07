@@ -40,11 +40,12 @@ import { OrganizationsAdminComponent } from './components/admin/datacenter/organ
 import { OrganizationsAdminListComponent } from './components/admin/datacenter/organizations-admin/organizations-admin-list/organizations-admin-list.component';
 import { OrganizationsAdminShowComponent } from './components/admin/datacenter/organizations-admin/organizations-admin-show/organizations-admin-show.component';
 import { OrganizationsAdminEditComponent } from './components/admin/datacenter/organizations-admin/organizations-admin-edit/organizations-admin-edit.component';
-import { CampusAdminComponent } from './components/admin/campus-admin/campus-admin.component';
 import { LogstashComponent } from './components/admin/logstash/logstash.component';
 import { PageNotFoundComponent } from './components/error/page-not-found/page-not-found.component';
 import { InfoPanelsAdminComponent } from './components/admin/global/static-content-admin/info-panels-admin/info-panels-admin.component';
 import { InfoListAdminComponent } from './components/admin/global/static-content-admin/info-list-admin/info-list-admin.component';
+import { CampusAdminEventsComponent } from './components/admin/campus-admin/campus-admin-events/campus-admin-events.component';
+import { CampusAdminEntriesComponent } from './components/admin/campus-admin/campus-admin-entries/campus-admin-entries.component';
 
 
 
@@ -113,8 +114,9 @@ const routes: Routes = [
                 { path: Constants.ROUTER_LINK_ORGANIZATIONS_EDIT + '/:' + Constants.ROUTER_LINK_DATA_PARAM_ORGANIZATION_NAME, component: OrganizationsAdminEditComponent, canActivate: [AuthGuard] }
             ]}
         ]},
-        { path: Constants.ROUTER_LINK_CAMPUS, component: CampusAdminComponent, canActivate: [AuthGuard] },
-        { path: Constants.ROUTER_LINK_LOGSTASH, component: LogstashComponent, canActivate: [AuthGuard] }
+        { path: Constants.ROUTER_LINK_CAMPUS_ADMIN_EVENTS, component: CampusAdminEventsComponent, canActivate: [AuthGuard] },
+        { path: Constants.ROUTER_LINK_CAMPUS_ADMIN_ENTRIES, component: CampusAdminEntriesComponent, canActivate: [AuthGuard] },
+        { path: Constants.ROUTER_LINK_LOGSTASH, component: LogstashComponent, canActivate: [AuthGuard] },
     ]},
     //{ path: Constants.ROUTER_LINK_404, component: PageNotFoundComponent },
     { path: '**', redirectTo: '/'}

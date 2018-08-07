@@ -42,7 +42,6 @@ import { SparqlClientComponent } from './components/web/static-content/tools/spa
 import { ForgottenPasswordComponent } from './components/login/forgotten-password/forgotten-password.component';
 import { RestorePasswordComponent } from './components/login/restore-password/restore-password.component';
 import { HomeAdminComponent } from './components/admin/home-admin.component';
-import { CampusAdminComponent } from './components/admin/campus-admin/campus-admin.component';
 import { GlobalComponent } from './components/admin/global/global.component';
 import { DashboardGlobalComponent } from './components/admin/global/dashboard-global/dashboard-global.component';
 import { UsersAdminComponent } from './components/admin/global/users-admin/users-admin.component';
@@ -86,6 +85,8 @@ import { TinyMceModule } from 'angular-tinymce';
 import { tinymceDefaultSettings } from 'angular-tinymce';
 import { InfoPanelsAdminComponent } from './components/admin/global/static-content-admin/info-panels-admin/info-panels-admin.component';
 import { InfoListAdminComponent } from './components/admin/global/static-content-admin/info-list-admin/info-list-admin.component';
+import { CampusAdminEventsComponent } from './components/admin/campus-admin/campus-admin-events/campus-admin-events.component';
+import { CampusAdminEntriesComponent } from './components/admin/campus-admin/campus-admin-entries/campus-admin-entries.component';
 
 @NgModule({
 	declarations: [
@@ -120,7 +121,6 @@ import { InfoListAdminComponent } from './components/admin/global/static-content
 		ForgottenPasswordComponent,
 		RestorePasswordComponent,
 		HomeAdminComponent,
-		CampusAdminComponent,
 		DashboardGlobalComponent,
 		UsersAdminComponent,
 		RolesAdminComponent,
@@ -144,7 +144,9 @@ import { InfoListAdminComponent } from './components/admin/global/static-content
 		DatacenterComponent,
 		GlobalComponent,
 		InfoPanelsAdminComponent,
-		InfoListAdminComponent
+		InfoListAdminComponent,
+		CampusAdminEventsComponent,
+		CampusAdminEntriesComponent
   	],
   	imports: [
 		BrowserModule,
