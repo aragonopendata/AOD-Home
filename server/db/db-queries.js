@@ -115,21 +115,21 @@ exports.DB_ADMIN_INSERT_CAMPUS_EVENTS = 'INSERT INTO campus.events (name, descri
 exports.DB_ADMIN_UPDATE_CAMPUS_EVENTS = 'UPDATE campus.events SET name = COALESCE($1, name), ' +
 'description = COALESCE($2, description) WHERE id = $3';
 		
-exports.DB_ADMIN_UPDATE_CAMPUS_SITES = 'UPDATE campus.sites s SET name = COALESCE($1, name) FROM campus.events_sites es ' + 
-										'WHERE es.id_event = s.id AND es.id_event = $2';
-
-exports.DB_ADMIN_INSERT_CAMPUS_SITES = 'INSERT INTO campus.sites ' +
-	'(name) '+
-	'VALUES($1)' + 
-	'RETURNING campus.sites.id';
+exports.DB_ADMIN_UPDATE_CAMPUS_EVENTS_SITES = 'UPDATE campus.events_sites s SET id_site = COALESCE($1, id_site)' +
+												' WHERE s.id_event = $2';
 
 exports.DB_ADMIN_INSERT_CAMPUS_EVENTS_SITES  = 'INSERT INTO campus.events_sites ' +
 		'(id_event, id_site) '+
 		'VALUES($1, $2)';
 
 
-exports.DB_ADMIN_GET_CAMPUS_ENTRIES = 'SELECT * from campus.contents WHERE id = $1';
-
+exports.DB_ADMIN_GET_CAMPUS_ENTRIES = 'SELECT c.id, c.title, c.description, c.url, c.thumbnail, c.format, c.type, c.platform, c.event, ' +
+		't.name AS topics_name, s.name AS speaker_name, s.description AS speaker_description ' + 
+		'from campus.contents c, campus.topics t, campus.speakers s, ' +
+		'campus.contents_topics ct, campus.contents_speakers cs '+
+		'WHERE c.id = $1 AND c.id = ct.id_content AND c.id = cs.id_content '+
+		'AND ct.id_topic = t.id AND cs.id_speaker = s.id';
+		
 exports.DB_ADMIN_INSERT_CAMPUS_ENTRIES = 'INSERT INTO campus.contents ' +
 									'(title, description, url, thumbnail, format, type, platform, event) '+
 									'VALUES($1, $2, $3, $4, $5, $6, $7, $8)';

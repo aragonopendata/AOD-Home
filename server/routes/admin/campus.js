@@ -1,3 +1,4 @@
+//region Libraries
 const express = require('express');
 const router = express.Router();
 const querystring = require('querystring');
@@ -37,7 +38,9 @@ const logConfig = require('../../conf/log-conf');
 const loggerSettings = logConfig.getLogSettings();
 const logger = require('js-logging').dailyFile([loggerSettings]);
 
+//endregion
 
+ //region get
 router.get(constants.API_URL_ADMIN_CAMPUS_SITES, function (req, res, next) {
     const query = {
         text: dbQueries.DB_ADMIN_GET_CAMPUS_SITES,
@@ -162,10 +165,46 @@ router.get(constants.API_URL_ADMIN_CAMPUS_EVENTS, function (req, res, next) {
     });
 });
 
+router.get(constants.API_URL_ADMIN_CAMPUS_ENTRIES + "/:id", function (req, res, next) {
+    var id = req.params.id;
+    
+    const query = {
+        text: dbQueries.DB_ADMIN_GET_CAMPUS_ENTRIES,
+        values: [id],
+        rowMode: constants.SQL_RESULSET_FORMAT
+    };
+    
+    pool.on('error', (err, client) => {
+        logger.error('Error en la conexión con base de datos', err);
+        process.exit(-1);
+    });
+    
+    pool.connect((err, client, done) => {
+        if (err) {
+            logger.error(err.stack);
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
+            return;
+        }
+        pool.query(query, (err, result) => {
+            done();
+            if (err) {
+                logger.error(err.stack);
+                res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
+                return;
+            } else {
+                logger.info('Filas devueltas: ' + result.rows.length);
+                res.json(result.rows);
+            }
+        });
+    });
+});
+//endregion
+
+//region Events
 router.post(constants.API_URL_ADMIN_CAMPUS_EVENTS, function (req, res, next) {
     var content = req.body;
 
-    if (!content.name || !content.site_name) {
+    if (!content.name || !content.site_id) {
         logger.error('Input Error', 'name or site_name not found');
         res.json({ status: 400, error: 'Incorrect Input, name or site_name not found' });
         return;
@@ -173,7 +212,7 @@ router.post(constants.API_URL_ADMIN_CAMPUS_EVENTS, function (req, res, next) {
 
     var date = new Date().toISOString();
 
-    createEventInCampus(content.name, content.description, content.site_name, date).then(createEvent => {
+    createEventInCampus(content.name, content.description, content.site_id, date).then(createEvent => {
         if (createEvent) {
             logger.info('CREACION DE EVENTO - Evento creado correctamente')
             res.json({
@@ -194,6 +233,7 @@ router.post(constants.API_URL_ADMIN_CAMPUS_EVENTS, function (req, res, next) {
 
 });
 
+
 router.put(constants.API_URL_ADMIN_CAMPUS_EVENTS, function (req, res, next) {
     var content = req.body;
     var id = content.id;
@@ -204,7 +244,7 @@ router.put(constants.API_URL_ADMIN_CAMPUS_EVENTS, function (req, res, next) {
         return;
     }
 
-    updateEventInCampus(content.name, content.description, content.site_name, id).then(updateEvent => {
+    updateEventInCampus(content.name, content.description, content.site_id, id).then(updateEvent => {
         if (updateEvent) {
             logger.info('ACTUALIZACION DE EVENTO - Evento actualizado correctamente')
             res.json({
@@ -226,40 +266,10 @@ router.put(constants.API_URL_ADMIN_CAMPUS_EVENTS, function (req, res, next) {
 });
 
 
-router.get(constants.API_URL_ADMIN_CAMPUS_ENTRIES + "/:id", function (req, res, next) {
-    var id = req.params.id;
+//endregion
 
-    const query = {
-        text: dbQueries.DB_ADMIN_GET_CAMPUS_ENTRIES,
-        values: [id],
-        rowMode: constants.SQL_RESULSET_FORMAT
-    };
+//region Entries
 
-    pool.on('error', (err, client) => {
-        logger.error('Error en la conexión con base de datos', err);
-        process.exit(-1);
-    });
-
-    pool.connect((err, client, done) => {
-        if (err) {
-            logger.error(err.stack);
-            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
-            return;
-        }
-        pool.query(query, (err, result) => {
-            done();
-            if (err) {
-                logger.error(err.stack);
-                res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
-                return;
-            } else {
-                logger.info('Filas devueltas: ' + result.rows.length);
-                res.json(result.rows);
-            }
-        });
-    });
-
-});
 router.post(constants.API_URL_ADMIN_CAMPUS_ENTRIES, upload.single('thumbnail'), function (req, res, next) {
 
     var content = req.body;
@@ -344,17 +354,23 @@ router.put(constants.API_URL_ADMIN_CAMPUS_ENTRIES, function (req, res, next) {
 
 });
 
-var createEventInCampus = function createEventInCampus(name, description, site_name, date) {
+//endregion
+
+//region CreateEventInCampus
+var createEventInCampus = function createEventInCampus(name, description, site_id, date) {
     return new Promise((resolve, reject) => {
         try {
-            pool.connect((connError, client, done) => {
-                if (connError) {
-                    logger.error('Error en transacción', transactionRollbackError.stack);
-                    client.query('ROLLBACK', (rollbackError) => {
-                        if (rollbackError) {
-                            logger.error('Error en transacción', rollbackError.stack);
-                        }
-                    })
+            pool.connect((err, client, done) => {
+                const shouldAbort = (err) => {
+                    if (err) {
+                        client.query('ROLLBACK', (err) => {
+                            if (err) {
+                                console.error('Error rolling back client', err.stack)
+                            }
+                            done();
+                        })
+                    }
+                    return !!err;
                 }
                 logger.notice('Se inicia la transacción de insercion de un nuevo evento en base de datos CAMPUS');
 
@@ -363,27 +379,22 @@ var createEventInCampus = function createEventInCampus(name, description, site_n
                     values: [name, description, date]
                 };
 
-                client.query(queryEvent, (errEvent, resultEvent) => {
-                    if (errEvent) {
-                        reject(errEvent);
+                client.query('BEGIN', (err) => {
+                    if (shouldAbort(err)) {
+                        reject(err);
                     } else {
-                        logger.notice('Se procede a la insercion de un nuevo site');
-                        const querySites = {
-                            text: dbQueries.DB_ADMIN_INSERT_CAMPUS_SITES,
-                            values: [site_name]
-                        };
-                        client.query(querySites, (errSites, resultSites) => {
-                            if (errSites) {
-                                reject(errSites);
+                        client.query(queryEvent, (err, resultEvent) => {
+                            if (shouldAbort(err)) {
+                                reject(err);
                             } else {
                                 logger.notice('Se procede a la insercion de la tabla relacional Sites-Events');
                                 const query_events_sites = {
                                     text: dbQueries.DB_ADMIN_INSERT_CAMPUS_EVENTS_SITES,
-                                    values: [resultEvent.rows[0].id, resultSites.rows[0].id]
+                                    values: [resultEvent.rows[0].id, resultSites.site_id]
                                 };
-                                client.query(query_events_sites, (err_events_sites, result) => {
-                                    if (err_events_sites) {
-                                        reject(err_events_sites);
+                                client.query(query_events_sites, (err, result) => {
+                                    if (shouldAbort(err)) {
+                                        reject(err);
                                     } else {
                                         logger.notice('Evento insertado');
                                         client.query('COMMIT', (commitError) => {
@@ -400,7 +411,7 @@ var createEventInCampus = function createEventInCampus(name, description, site_n
                             }
                         });
                     }
-                })
+                });
             });
         } catch (error) {
             logger.error('Error borrando evento:', error);
@@ -408,19 +419,23 @@ var createEventInCampus = function createEventInCampus(name, description, site_n
         }
     });
 }
+//endregion
 
-
-var updateEventInCampus = function updateEventInCampus(name, description, site_name, id) {
+//region updateEventInCampus
+var updateEventInCampus = function updateEventInCampus(name, description, site_id, id) {
     return new Promise((resolve, reject) => {
         try {
-            pool.connect((connError, client, done) => {
-                if (connError) {
-                    logger.error('Error en transacción', transactionRollbackError.stack);
-                    client.query('ROLLBACK', (rollbackError) => {
-                        if (rollbackError) {
-                            logger.error('Error en transacción', rollbackError.stack);
-                        }
-                    })
+            pool.connect((err, client, done) => {
+                const shouldAbort = (err) => {
+                    if (err) {
+                        client.query('ROLLBACK', (err) => {
+                            if (err) {
+                                console.error('Error rolling back client', err.stack)
+                            }
+                            done();
+                        })
+                    }
+                    return !!err;
                 }
                 logger.notice('Se inicia la transacción de actualizacion de un nuevo evento en base de datos CAMPUS');
                 
@@ -428,40 +443,42 @@ var updateEventInCampus = function updateEventInCampus(name, description, site_n
                     text: dbQueries.DB_ADMIN_UPDATE_CAMPUS_EVENTS,
                     values: [name, description, id]
                 };
-
-                client.query(queryEvent, (errEvent, resultEvent) => {
-                    if (errEvent) {
-                        reject(errEvent);
-                    } else {
-                        logger.notice('Se procede a la actualizacion de site');
-                        const querySites = {
-                            text: dbQueries.DB_ADMIN_UPDATE_CAMPUS_SITES,
-                            values: [site_name, id]
-                        };
-                        client.query(querySites, (errSites, resultSites) => {
-                            if (errSites) {
-                                reject(errSites);
-                            } else {
-                                logger.notice('Evento actualizado');
-                                client.query('COMMIT', (commitError) => {
-                                    done()
-                                    if (commitError) {
-                                        reject(commitError);
-                                    } else {
-                                        logger.notice('Actualización del evento completada');
-                                        resolve(true);
-                                    }
-                                });
-                            }
-                        });
-                    }
-                })
+                client.query('BEGIN', (err) => {
+                    client.query(queryEvent, (err, resultEvent) => {
+                        if (shouldAbort(err)) {
+                            reject(err);
+                        } else {
+                            logger.notice('Se procede a la actualizacion de site');
+                            const querySites = {
+                                text: dbQueries.DB_ADMIN_UPDATE_CAMPUS_EVENTS_SITES,
+                                values: [site_id, id]
+                            };
+                            client.query(querySites, (err, resultSites) => {
+                                if (shouldAbort(err)) {
+                                    reject(err);
+                                } else {
+                                    logger.notice('Evento actualizado');
+                                    client.query('COMMIT', (commitError) => {
+                                        done();
+                                        if (commitError) {
+                                            reject(commitError);
+                                        } else {
+                                            logger.notice('Actualización del evento completada');
+                                            resolve(true);
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    })
+                });
             });
         } catch (error) {
             logger.error('Error borrando evento:', error);
             reject(error);
         }
     });
-}
+};
+//endregion
 
 module.exports = router; 
