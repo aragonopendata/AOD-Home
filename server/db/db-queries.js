@@ -129,18 +129,33 @@ exports.DB_ADMIN_GET_CAMPUS_ENTRIES = 'SELECT c.id, c.title, c.description, c.ur
 		'campus.contents_topics ct, campus.contents_speakers cs '+
 		'WHERE c.id = $1 AND c.id = ct.id_content AND c.id = cs.id_content '+
 		'AND ct.id_topic = t.id AND cs.id_speaker = s.id';
-		
+
 exports.DB_ADMIN_INSERT_CAMPUS_ENTRIES = 'INSERT INTO campus.contents ' +
 									'(title, description, url, thumbnail, format, type, platform, event) '+
-									'VALUES($1, $2, $3, $4, $5, $6, $7, $8)';
+									'VALUES($1, $2, $3, $4, $5, $6, $7, $8)' + 
+									'RETURNING campus.contents.id';
 
-exports.DB_ADMIN_UPDATE_CAMPUS_ENTRIES = 'UPDATE campus.events SET' + 
-									'title = COALESCE($1, title),' +
-									'description = COALESCE($2, title),, ' +
-									'url = COALESCE($3, title),, ' +
-									'thumbnail = COALESCE($4, title),, ' +
-									'format = COALESCE($5, title),, ' +
-									'type = COALESCE($6, title),, ' +
-									'platform = COALESCE($7, title),, ' +
-									'event = COALESCE($8, title), ' +
-									'WHERE id = $9'; 
+exports.DB_ADMIN_INSERT_CAMPUS_CONTENTS_TOPICS  = 'INSERT INTO campus.contents_topics ' +
+												'(id_content, id_topic) '+
+												'VALUES($1, $2)';
+
+exports.DB_ADMIN_INSERT_CAMPUS_CONTENTS_SPEAKERS  = 'INSERT INTO campus.contents_speakers ' +
+												'(id_content, id_speaker) '+
+												'VALUES($1, $2)';
+
+exports.DB_ADMIN_UPDATE_CAMPUS_ENTRIES = 'UPDATE campus.contents SET ' + 
+										'title = COALESCE($1, title), ' +
+										'description = COALESCE($2, description), ' +
+										'url = COALESCE($3, url), ' +
+										'thumbnail = COALESCE($4, thumbnail), ' +
+										'format = COALESCE($5, format), ' +
+										'type = COALESCE($6, type), ' +
+										'platform = COALESCE($7, platform), ' +
+										'event = COALESCE($8, event) ' +
+										'WHERE id = $9';
+
+exports.DB_ADMIN_UPDATE_CAMPUS_ENTRYS_TOPICS = 'UPDATE campus.contents_topics s SET id_topic = COALESCE($1, id_topic)' +
+										' WHERE s.id_content = $2';
+
+exports.DB_ADMIN_UPDATE_CAMPUS_ENTRYS_SPEAKERS = 'UPDATE campus.contents_speakers s SET id_speaker = COALESCE($1, id_speaker)' +
+										' WHERE s.id_content = $2';

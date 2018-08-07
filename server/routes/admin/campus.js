@@ -40,7 +40,7 @@ const logger = require('js-logging').dailyFile([loggerSettings]);
 
 //endregion
 
- //region get
+//region get
 router.get(constants.API_URL_ADMIN_CAMPUS_SITES, function (req, res, next) {
     const query = {
         text: dbQueries.DB_ADMIN_GET_CAMPUS_SITES,
@@ -167,18 +167,18 @@ router.get(constants.API_URL_ADMIN_CAMPUS_EVENTS, function (req, res, next) {
 
 router.get(constants.API_URL_ADMIN_CAMPUS_ENTRIES + "/:id", function (req, res, next) {
     var id = req.params.id;
-    
+
     const query = {
         text: dbQueries.DB_ADMIN_GET_CAMPUS_ENTRIES,
         values: [id],
         rowMode: constants.SQL_RESULSET_FORMAT
     };
-    
+
     pool.on('error', (err, client) => {
         logger.error('Error en la conexión con base de datos', err);
         process.exit(-1);
     });
-    
+
     pool.connect((err, client, done) => {
         if (err) {
             logger.error(err.stack);
@@ -266,96 +266,6 @@ router.put(constants.API_URL_ADMIN_CAMPUS_EVENTS, function (req, res, next) {
 });
 
 
-//endregion
-
-//region Entries
-
-router.post(constants.API_URL_ADMIN_CAMPUS_ENTRIES, upload.single('thumbnail'), function (req, res, next) {
-
-    var content = req.body;
-
-    if (!content.title || content.title == "") {
-        logger.error('Input Error', 'Incorrect input, title required');
-        res.json({ status: 400, error: 'Incorrect Input, title required' });
-        return;
-    }
-
-    const query = {
-        text: dbQueries.DB_ADMIN_INSERT_CAMPUS_ENTRIES,
-        values: [content.title, content.description, content.url, req.file, content.format, content.type, content.platform, content.event]
-    };
-
-    pool.on('error', (err, client) => {
-        logger.error('Error en la conexión con base de datos', err);
-        process.exit(-1);
-    });
-
-    pool.connect((err, client, done) => {
-        if (err) {
-            logger.error(err.stack);
-            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
-            return;
-        }
-        pool.query(query, (err, result) => {
-            done();
-            if (err) {
-                logger.error(err.stack);
-                res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
-                return;
-            } else {
-                logger.info('Nueva entrada creada');
-                res.json({ 'status': constants.REQUEST_REQUEST_OK, message: "Entrada creada" });
-            }
-        });
-    });
-});
-
-
-router.put(constants.API_URL_ADMIN_CAMPUS_ENTRIES, function (req, res, next) {
-    var content = req.body;
-    var id = content.id;
-
-    if ((content.title && content.title == '') || !id) {
-        logger.error('Input Error', 'Incorrect input');
-        res.json({ status: 400, error: 'Incorrect Input' });
-        return;
-    }
-
-    const query = {
-        text: dbQueries.DB_ADMIN_UPDATE_CAMPUS_ENTRIES,
-        values: [content.title, content.description, content.url, req.file,
-        content.format, content.type, content.platform, content.event, id],
-        rowMode: constants.SQL_RESULSET_FORMAT
-    };
-
-    pool.on('error', (err, client) => {
-        logger.error('Error en la conexión con base de datos', err);
-        process.exit(-1);
-    });
-
-    pool.connect((err, client, done) => {
-        if (err) {
-            logger.error(err.stack);
-            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
-            return;
-        }
-        pool.query(query, (err, result) => {
-            done();
-            if (err) {
-                logger.error(err.stack);
-                res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
-                return;
-            } else {
-                logger.info('Evento Actualizado');
-                res.json({ 'status': constants.REQUEST_REQUEST_OK, message: "Evento Actualizado" });
-            }
-        });
-    });
-
-});
-
-//endregion
-
 //region CreateEventInCampus
 var createEventInCampus = function createEventInCampus(name, description, site_id, date) {
     return new Promise((resolve, reject) => {
@@ -422,6 +332,7 @@ var createEventInCampus = function createEventInCampus(name, description, site_i
 //endregion
 
 //region updateEventInCampus
+
 var updateEventInCampus = function updateEventInCampus(name, description, site_id, id) {
     return new Promise((resolve, reject) => {
         try {
@@ -438,7 +349,7 @@ var updateEventInCampus = function updateEventInCampus(name, description, site_i
                     return !!err;
                 }
                 logger.notice('Se inicia la transacción de actualizacion de un nuevo evento en base de datos CAMPUS');
-                
+
                 const queryEvent = {
                     text: dbQueries.DB_ADMIN_UPDATE_CAMPUS_EVENTS,
                     values: [name, description, id]
@@ -480,5 +391,234 @@ var updateEventInCampus = function updateEventInCampus(name, description, site_i
     });
 };
 //endregion
+
+//endregion
+
+//region Entries
+
+router.post(constants.API_URL_ADMIN_CAMPUS_ENTRIES, upload.single('thumbnail'), function (req, res, next) {
+    
+    var content = req.body;
+    
+    if (!content.title || content.title == "") {
+        logger.error('Input Error', 'Incorrect input, title required');
+        res.json({ status: 400, error: 'Incorrect Input, title required' });
+        return;
+    }
+
+    if (!content.type || !content.platform || !content.format || !content.event || !content.id_topic || !content.id_speaker) {
+        logger.error('Input Error', 'Incorrect input');
+        res.json({ status: 400, error: 'Incorrect Input' });
+        return;
+    }
+
+    createEntryInCampus(content.title, content.description, content.url, req.file, content.format,
+        content.type, content.platform, content.event, content.id_topic, content.id_speaker).then(createEvent => {
+            if (createEvent) {
+                logger.info('CREACION DE ENTRY - Entry creado correctamente')
+                res.json({
+                    'status': constants.REQUEST_REQUEST_OK,
+                    'success': true,
+                    'result': 'CREACION DE ENTRY - Entry creado correctamente'
+                });
+            } else {
+                logger.error('CREACION DE ENTRY - Error al crear el entry en base de datos: ', error);
+                res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'CREACION DE ENTRY - Error al crear el entry en base de datos' });
+                return;
+            }
+        }).catch(error => {
+            logger.error('CREACION DE ENTRY - Error al crear el entry en base de datos: ', error);
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'CREACION DE ENTRY - Error al crear el entry en base de datos' });
+            return;
+        });
+});
+
+
+router.put(constants.API_URL_ADMIN_CAMPUS_ENTRIES, function (req, res, next) {
+    
+    var content = req.body;
+    var id = content.id;
+
+    if ((content.title && !content.title === "") || !id) {
+        logger.error('Input Error', 'Incorrect input');
+        res.json({ 'status': constants.REQUEST_ERROR_BAD_DATA, error: 'Incorrect Input' });
+        return;
+    }
+
+    updateEntryInCampus(content.title, content.description, content.url, req.file, content.format,
+        content.type, content.platform, content.event, content.id_topic, content.id_speaker, id).then(updateEvent => {
+            if (updateEvent) {
+                logger.info('ACTUALIZACION DE ENTRY - Entry actualizado correctamente')
+                res.json({
+                    'status': constants.REQUEST_REQUEST_OK,
+                    'success': true,
+                    'result': 'ACTUALIZACION DE ENTRY - Entry actualizado correctamente'
+                });
+            } else {
+                logger.error('ACTUALIZACION DE ENTRY - Error al actualizar el entry en base de datos: ', error);
+                res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'ACTUALIZACIÓN DE ENTRY - Error al actualizar el entry en base de datos' });
+                return;
+            }
+        }).catch(error => {
+            logger.error('ACTUALIZACIÓN DE ENTRY - Error al actualizar el entry en base de datos: ', error);
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'ACTUALIZACIÓN DE ENTRY - Error al actualizar el entry en base de datos' });
+            return;
+        });
+});
+
+
+//region createEntityInCampus
+var createEntryInCampus = function createEntryInCampus(title, description, url, file, format,
+    type, platform, event, id_topic, id_speaker) {
+    return new Promise((resolve, reject) => {
+        try {
+            pool.connect((err, client, done) => {
+                const shouldAbort = (err) => {
+                    if (err) {
+                        client.query('ROLLBACK', (err) => {
+                            if (err) {
+                                console.error('Error rolling back client', err.stack)
+                            }
+                            done();
+                        })
+                    }
+                    return !!err;
+                }
+                logger.notice('Se inicia la transacción de insercion de un nuevo evento en base de datos CAMPUS');
+                
+                const queryEntry = {
+                    text: dbQueries.DB_ADMIN_INSERT_CAMPUS_ENTRIES,
+                    values: [title, description, url, file, format, type, platform, event]
+                };
+
+                client.query('BEGIN', (err) => {
+                    if (shouldAbort(err)) {
+                        reject(err);
+                    } else {
+                        client.query(queryEntry, (err, resultEntry) => {
+                            if (shouldAbort(err)) {
+                                reject(err);
+                            } else {
+                                logger.notice('Se procede a la insercion de la tabla relacional Contents-Topics');
+                                const query_contents_topics = {
+                                    text: dbQueries.DB_ADMIN_INSERT_CAMPUS_CONTENTS_TOPICS,
+                                    values: [resultEntry.rows[0].id, id_topic]
+                                };
+                                client.query(query_contents_topics, (err, result) => {
+                                    if (shouldAbort(err)) {
+                                        reject(err);
+                                    } else {
+                                        logger.notice('Se procede a la insercion de la tabla relacional Contents-Speakers');
+                                        const query_contents_speakers = {
+                                            text: dbQueries.DB_ADMIN_INSERT_CAMPUS_CONTENTS_SPEAKERS,
+                                            values: [resultEntry.rows[0].id, id_speaker]
+                                        };
+                                        client.query(query_contents_speakers, (err, result) => {
+                                            if (shouldAbort(err)) {
+                                                reject(err);
+                                            } else {
+                                                logger.notice('Entry insertado');
+                                                client.query('COMMIT', (commitError) => {
+                                                    done()
+                                                    if (commitError) {
+                                                        reject(commitError);
+                                                    } else {
+                                                        logger.notice('Insercion de entry completada');
+                                                        resolve(true);
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+        } catch (error) {
+            logger.error('Error borrando entity:', error);
+            reject(error);
+        }
+    });
+}
+//endregion
+
+//region updateEntryInCampus
+
+var updateEntryInCampus = function updateEntryInCampus(title, description, url, file, format,
+    type, platform, event, id_topic, id_speaker, id) {
+    return new Promise((resolve, reject) => {
+        try {
+            pool.connect((err, client, done) => {
+                const shouldAbort = (err) => {
+                    if (err) {
+                        client.query('ROLLBACK', (err) => {
+                            if (err) {
+                                console.error('Error rolling back client', err.stack)
+                            }
+                            done();
+                        })
+                    }
+                    return !!err;
+                }
+                logger.notice('Se inicia la transacción de actualizacion de un entry en base de datos CAMPUS');
+                
+                const queryEntry = {
+                    text: dbQueries.DB_ADMIN_UPDATE_CAMPUS_ENTRIES,
+                    values: [title, description, url, file, format,
+                        type, platform, event, id]
+                };
+                client.query('BEGIN', (err) => {
+                    client.query(queryEntry, (err, resultEntry) => {
+                        if (shouldAbort(err)) {
+                            reject(err);
+                        } else {
+                            logger.notice('Se procede a la actualizacion de topics');
+                            const queryTopics = {
+                                text: dbQueries.DB_ADMIN_UPDATE_CAMPUS_ENTRYS_TOPICS,
+                                values: [id_topic, id]
+                            };
+                            client.query(queryTopics, (err, resultSites) => {
+                                if (shouldAbort(err)) {
+                                    reject(err);
+                                } else {
+                                    logger.notice('Se procede a la actualizacion de speakers');
+                                    const querySpeakers = {
+                                        text: dbQueries.DB_ADMIN_UPDATE_CAMPUS_ENTRYS_SPEAKERS,
+                                        values: [id_speaker, id]
+                                    };
+                                    client.query(querySpeakers, (err, resultSpeakers) => {
+                                        if (shouldAbort(err)) {
+                                            reject(err);
+                                        } else {
+                                            logger.notice('Evento actualizado');
+                                            client.query('COMMIT', (commitError) => {
+                                                done();
+                                                if (commitError) {
+                                                    reject(commitError);
+                                                } else {
+                                                    logger.notice('Actualización del evento completada');
+                                                    resolve(true);
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    })
+                });
+            });
+        } catch (error) {
+            logger.error('Error borrando evento:', error);
+            reject(error);
+        }
+    });
+};
+//endregion
+
+//endregion
+
 
 module.exports = router; 
