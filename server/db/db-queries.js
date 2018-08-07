@@ -140,7 +140,7 @@ exports.DB_ADMIN_INSERT_CAMPUS_ENTRIES = 'INSERT INTO campus.contents ' +
 
 exports.DB_ADMIN_INSERT_CAMPUS_CONTENTS_TOPICS  = 'INSERT INTO campus.contents_topics ' +
 												'(id_content, id_topic) '+
-												'VALUES($1, $2)';
+												'VALUES ';
 
 exports.DB_ADMIN_INSERT_CAMPUS_CONTENTS_SPEAKERS  = 'INSERT INTO campus.contents_speakers ' +
 												'(id_content, id_speaker) '+
@@ -157,8 +157,7 @@ exports.DB_ADMIN_UPDATE_CAMPUS_ENTRIES = 'UPDATE campus.contents SET ' +
 										'event = COALESCE($8, event) ' +
 										'WHERE id = $9';
 
-exports.DB_ADMIN_UPDATE_CAMPUS_ENTRIES_TOPICS = 'UPDATE campus.contents_topics s SET id_topic = COALESCE($1, id_topic)' +
-										' WHERE s.id_content = $2';
+exports.DB_ADMIN_DELETE_CAMPUS_ENTRIES_TOPICS = 'DELETE FROM campus.contents_topics WHERE id_content = $1';
 
 exports.DB_ADMIN_UPDATE_CAMPUS_ENTRIES_SPEAKERS  = 'UPDATE campus.contents_speakers s SET id_speaker = COALESCE($1, id_speaker)' +
 										' WHERE s.id_content = $2';

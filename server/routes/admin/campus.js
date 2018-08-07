@@ -232,18 +232,20 @@ router.get(constants.API_URL_ADMIN_CAMPUS_ENTRIES + "/:id", function (req, res, 
                     send = Object.assign({}, result.rows[0]);
                     delete send["topic_id"];
                     delete send["topics_name"];
+
                     var aux_Topcis = [];
-                    console.log(result.rows);
+
                     result.rows.forEach((element, index) => {
                         aux_Topcis.push({ id: element.topic_id, name: element.topic_name });
                         delete result.rows[index]["topic_id"];
                         delete result.rows[index]["topics_name"];
                     });
+
                     send["topics"] = aux_Topcis;
+
                 } else {
                     send = result.rows;
                 }
-                console.log(send);
                 res.json(send);
             }
         });
@@ -491,14 +493,14 @@ router.post(constants.API_URL_ADMIN_CAMPUS_ENTRIES, upload.single('thumbnail'), 
         return;
     }
 
-    if (!content.type || !content.platform || !content.format || !content.event || !content.id_topic || !content.id_speaker) {
+    if (!content.type || !content.platform || !content.format || !content.event || !content.id_topics || !content.id_speaker) {
         logger.error('Input Error', 'Incorrect input');
         res.json({ status: 400, error: 'Incorrect Input' });
         return;
     }
 
     createEntryInCampus(content.title, content.description, content.url, req.file, content.format,
-        content.type, content.platform, content.event, content.id_topic, content.id_speaker).then(createEvent => {
+        content.type, content.platform, content.event, content.id_topics, content.id_speaker).then(createEvent => {
             if (createEvent) {
                 logger.info('CREACION DE ENTRY - Entry creado correctamente')
                 res.json({
@@ -524,14 +526,14 @@ router.put(constants.API_URL_ADMIN_CAMPUS_ENTRIES, function (req, res, next) {
     var content = req.body;
     var id = content.id;
 
-    if ((content.title && !content.title === "") || !id) {
+    if ((content.title && !content.title === "") || !id || !content.id_topics) {
         logger.error('Input Error', 'Incorrect input');
         res.json({ 'status': constants.REQUEST_ERROR_BAD_DATA, error: 'Incorrect Input' });
         return;
     }
 
     updateEntryInCampus(content.title, content.description, content.url, req.file, content.format,
-        content.type, content.platform, content.event, content.id_topic, content.id_speaker, id).then(updateEvent => {
+        content.type, content.platform, content.event, content.id_topics, content.id_speaker, id).then(updateEvent => {
             if (updateEvent) {
                 logger.info('ACTUALIZACION DE ENTRY - Entry actualizado correctamente');
                 res.json({
@@ -554,7 +556,7 @@ router.put(constants.API_URL_ADMIN_CAMPUS_ENTRIES, function (req, res, next) {
 
 //region createEntityInCampus
 var createEntryInCampus = function createEntryInCampus(title, description, url, file, format,
-    type, platform, event, id_topic, id_speaker) {
+    type, platform, event, id_topics, id_speaker) {
     return new Promise((resolve, reject) => {
         try {
             pool.connect((err, client, done) => {
@@ -585,9 +587,12 @@ var createEntryInCampus = function createEntryInCampus(title, description, url, 
                                 reject(err);
                             } else {
                                 logger.notice('Se procede a la insercion de la tabla relacional Contents-Topics');
+                                var aux_Topics = [];
+                                id_topics.forEach(element => {
+                                    aux_Topics.push("(" + Number(resultEntry.rows[0].id) + " ," + Number(element) + ")");
+                                });
                                 const query_contents_topics = {
-                                    text: dbQueries.DB_ADMIN_INSERT_CAMPUS_CONTENTS_TOPICS,
-                                    values: [resultEntry.rows[0].id, id_topic]
+                                    text: dbQueries.DB_ADMIN_INSERT_CAMPUS_CONTENTS_TOPICS + aux_Topics
                                 };
                                 client.query(query_contents_topics, (err, result) => {
                                     if (shouldAbort(err)) {
@@ -632,7 +637,7 @@ var createEntryInCampus = function createEntryInCampus(title, description, url, 
 //region updateEntryInCampus
 
 var updateEntryInCampus = function updateEntryInCampus(title, description, url, file, format,
-    type, platform, event, id_topic, id_speaker, id) {
+    type, platform, event, id_topics, id_speaker, id) {
     return new Promise((resolve, reject) => {
         try {
             pool.connect((err, client, done) => {
@@ -659,32 +664,48 @@ var updateEntryInCampus = function updateEntryInCampus(title, description, url, 
                         if (shouldAbort(err)) {
                             reject(err);
                         } else {
-                            logger.notice('Se procede a la actualizacion de topics');
-                            const queryTopics = {
-                                text: dbQueries.DB_ADMIN_UPDATE_CAMPUS_ENTRIES_TOPICS,
-                                values: [id_topic, id]
+                            logger.notice('Se procede a la eliminar todos los topics de una relacion');
+                            const queryTopicsDel = {
+                                text: dbQueries.DB_ADMIN_DELETE_CAMPUS_ENTRIES_TOPICS,
+                                values: [id]
                             };
-                            client.query(queryTopics, (err, resultSites) => {
+                            client.query(queryTopicsDel, (err, resultDelete) => {
                                 if (shouldAbort(err)) {
                                     reject(err);
                                 } else {
-                                    logger.notice('Se procede a la actualizacion de speakers');
-                                    const querySpeakers = {
-                                        text: dbQueries.DB_ADMIN_UPDATE_CAMPUS_ENTRIES_SPEAKERS,
-                                        values: [id_speaker, id]
+                                    logger.notice('Se procede a la insertar todos los topics');
+
+                                    var aux_Topics = [];
+                                    id_topics.forEach(element => {
+                                        aux_Topics.push("(" + Number(id) + " ," + Number(element) + ")");
+                                    });
+
+                                    const queryTopics = {
+                                        text: dbQueries.DB_ADMIN_INSERT_CAMPUS_CONTENTS_TOPICS + aux_Topics
                                     };
-                                    client.query(querySpeakers, (err, resultSpeakers) => {
+                                    client.query(queryTopics, (err, resultTopics) => {
                                         if (shouldAbort(err)) {
                                             reject(err);
                                         } else {
-                                            logger.notice('Evento actualizado');
-                                            client.query('COMMIT', (commitError) => {
-                                                done();
-                                                if (commitError) {
-                                                    reject(commitError);
+                                            logger.notice('Se procede a la actualizacion de speakers');
+                                            const querySpeakers = {
+                                                text: dbQueries.DB_ADMIN_UPDATE_CAMPUS_ENTRIES_SPEAKERS,
+                                                values: [id_speaker, id]
+                                            };
+                                            client.query(querySpeakers, (err, resultSpeakers) => {
+                                                if (shouldAbort(err)) {
+                                                    reject(err);
                                                 } else {
-                                                    logger.notice('Actualización del evento completada');
-                                                    resolve(true);
+                                                    logger.notice('Evento actualizado');
+                                                    client.query('COMMIT', (commitError) => {
+                                                        done();
+                                                        if (commitError) {
+                                                            reject(commitError);
+                                                        } else {
+                                                            logger.notice('Actualización del evento completada');
+                                                            resolve(true);
+                                                        }
+                                                    });
                                                 }
                                             });
                                         }
