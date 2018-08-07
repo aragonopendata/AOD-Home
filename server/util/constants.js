@@ -71,6 +71,7 @@ exports.API_URL_CAMPUS_TOPICS = '/campus/topics';
 exports.API_URL_CAMPUS_TYPES = '/campus/types';
 exports.API_URL_ADMIN_CAMPUS_SITES = '/campus-admin/sites';
 exports.API_URL_ADMIN_CAMPUS_SPEAKERS = '/campus-admin/speakers';
+exports.API_URL_ADMIN_CAMPUS_ENTRIES_BY_SPEAKER = '/campus-admin/speakers/entries';
 exports.API_URL_ADMIN_CAMPUS_TOPICS = '/campus-admin/topics';
 exports.API_URL_ADMIN_CAMPUS_EVENTS = '/campus-admin/events';
 exports.API_URL_ADMIN_CAMPUS_ENTRIES_BY_EVENT = '/campus-admin/event/entries';

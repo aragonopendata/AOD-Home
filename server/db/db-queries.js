@@ -133,9 +133,11 @@ exports.DB_ADMIN_GET_CAMPUS_ENTRIES = 'SELECT c.id, c.title from campus.contents
 
 exports.DB_ADMIN_GET_CAMPUS_ENTRIES_BY_EVENT = 'SELECT c.id, c.title from campus.contents c WHERE c.event = $1';
 
+exports.DB_ADMIN_GET_CAMPUS_ENTRIES_BY_SPEAKER = 'SELECT c.id, c.title FROM campus.contents c, campus.contents_speakers cs WHERE c.id=cs.id_content AND cs.id_speaker = $1';
+
 exports.DB_ADMIN_INSERT_CAMPUS_ENTRIES = 'INSERT INTO campus.contents ' +
 									'(title, description, url, thumbnail, format, type, platform, event) '+
-									'VALUES($1, $2, $3, $4, $5, $6, $7, $8)' + 
+									'VALUES($1, $2, $3, decode($4, \'base64\'), $5, $6, $7, $8)' + 
 									'RETURNING campus.contents.id';
 
 exports.DB_ADMIN_INSERT_CAMPUS_CONTENTS_TOPICS  = 'INSERT INTO campus.contents_topics ' +

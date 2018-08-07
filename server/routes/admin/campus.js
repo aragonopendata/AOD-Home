@@ -165,6 +165,40 @@ router.get(constants.API_URL_ADMIN_CAMPUS_EVENTS, function (req, res, next) {
     });
 });
 
+router.get(constants.API_URL_ADMIN_CAMPUS_ENTRIES_BY_SPEAKER + "/:id", function (req, res, next) {
+    var id = req.params.id;
+
+    const query = {
+        text: dbQueries.DB_ADMIN_GET_CAMPUS_ENTRIES_BY_SPEAKER,
+        values: [id],
+        rowMode: constants.SQL_RESULSET_FORMAT
+    };
+
+    pool.on('error', (err, client) => {
+        logger.error('Error en la conexión con base de datos', err);
+        process.exit(-1);
+    });
+
+    pool.connect((err, client, done) => {
+        if (err) {
+            logger.error(err.stack);
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
+            return;
+        }
+        pool.query(query, (err, result) => {
+            done();
+            if (err) {
+                logger.error(err.stack);
+                res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
+                return;
+            } else {
+                logger.info('Filas devueltas: ' + result.rows.length);
+                res.json(result.rows);
+            }
+        });
+    });
+});
+
 router.get(constants.API_URL_ADMIN_CAMPUS_ENTRIES_BY_EVENT + "/:id", function (req, res, next) {
     var id = req.params.id;
 
@@ -483,23 +517,22 @@ var updateEventInCampus = function updateEventInCampus(name, description, site_i
 
 //region Entries
 
-router.post(constants.API_URL_ADMIN_CAMPUS_ENTRIES, upload.single('thumbnail'), function (req, res, next) {
+router.post(constants.API_URL_ADMIN_CAMPUS_ENTRIES, function (req, res, next) {
 
     var content = req.body;
-
     if (!content.title || content.title == "") {
         logger.error('Input Error', 'Incorrect input, title required');
         res.json({ status: 400, error: 'Incorrect Input, title required' });
         return;
     }
 
-    if (!content.type || !content.platform || !content.format || !content.event || !content.id_topics || !content.id_speaker) {
+    if (!content.type || !content.platform || !content.format || !content.event || !content.id_topics || typeof content.id_topics != "object" || !content.id_speaker) {
         logger.error('Input Error', 'Incorrect input');
         res.json({ status: 400, error: 'Incorrect Input' });
         return;
     }
 
-    createEntryInCampus(content.title, content.description, content.url, req.file, content.format,
+    createEntryInCampus(content.title, content.description, content.url, content.thumbnail, content.format,
         content.type, content.platform, content.event, content.id_topics, content.id_speaker).then(createEvent => {
             if (createEvent) {
                 logger.info('CREACION DE ENTRY - Entry creado correctamente')
