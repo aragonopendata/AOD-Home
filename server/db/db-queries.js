@@ -161,3 +161,12 @@ exports.DB_ADMIN_DELETE_CAMPUS_ENTRIES_TOPICS = 'DELETE FROM campus.contents_top
 
 exports.DB_ADMIN_UPDATE_CAMPUS_ENTRIES_SPEAKERS  = 'UPDATE campus.contents_speakers s SET id_speaker = COALESCE($1, id_speaker)' +
 										' WHERE s.id_content = $2';
+
+exports.DB_ADMIN_INSERT_CAMPUS_SPEAKERS =  'INSERT INTO campus.speakers ' +
+										   '(name, description) '+
+										   'VALUES($1, $2)';
+										   
+exports.DB_ADMIN_UPDATE_CAMPUS_SPEAKERS =  'UPDATE campus.speakers SET ' +
+										   'name = COALESCE($1, name), ' +
+										   'description = COALESCE($2, description) ' +
+										   'WHERE id = $3';

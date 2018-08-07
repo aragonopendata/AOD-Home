@@ -726,5 +726,94 @@ var updateEntryInCampus = function updateEntryInCampus(title, description, url, 
 
 //endregion
 
+//region Speakers
+router.post(constants.API_URL_ADMIN_CAMPUS_SPEAKERS, function (req, res, next) {
+    var content = req.body;
+
+    if (!content.name) {
+        logger.error('Input Error', 'name not found');
+        res.json({ status: 400, error: 'Incorrect Input, name not found' });
+        return;
+    }
+
+    pool.on('error', (err, client) => {
+        logger.error('CREACION DE SPEAKER - Error al crear el speaker en base de datos: ', err);
+        res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'CREACION DE SPEAKER - Error al crear el speaker en base de datos' });
+        return;
+    })
+    pool.connect((err, client, done) => {
+        if (err) {
+            logger.error('CREACION DE SPEAKER - Error al crear el speaker en base de datos: ', err);
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'CREACION DE SPEAKER - Error al crear el speaker en base de datos' });
+            return;
+        }
+        const querySpeakers = {
+            text: dbQueries.DB_ADMIN_INSERT_CAMPUS_SPEAKERS,
+            values: [content.name, content.description]
+        };
+
+        client.query(querySpeakers, (err, response) => {
+            done()
+            if (err) {
+                logger.error('CREACION DE SPEAKER - Error al crear el speaker en base de datos: ', err);
+                res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'CREACION DE SPEAKER - Error al crear el speaker en base de datos' });
+                return;
+            } else {
+                logger.info('CREACION DE SPEAKER - Speaker creado correctamente')
+                res.json({
+                    'status': constants.REQUEST_REQUEST_OK,
+                    'success': true,
+                    'result': 'CREACION DE SPEAKER - Speaker creado correctamente'
+                });
+            }
+        })
+    })
+});
+
+
+router.put(constants.API_URL_ADMIN_CAMPUS_SPEAKERS, function (req, res, next) {
+    var content = req.body;
+    var id = content.id;
+
+    if (content.name && content.name == "" || !id) {
+        logger.error('Input Error', 'id not found or empty name');
+        res.json({ status: 400, error: 'Incorrect Input, id not found or empty name' });
+        return;
+    }
+
+    pool.on('error', (err, client) => {
+        logger.error('ACTUALIZACION DE SPEAKER - Error al actualizar el speaker en base de datos: ', err);
+        res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'ACTUALIZACION DE SPEAKER - Error al actualizar el speaker en base de datos' });
+        return;
+    })
+    pool.connect((err, client, done) => {
+        if (err) {
+            logger.error('ACTUALIZACION DE SPEAKER - Error al crear el speaker en base de datos: ', err);
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'ACTUALIZACION DE SPEAKER - Error al actualizar el speaker en base de datos' });
+            return;
+        }
+        const querySpeakers = {
+            text: dbQueries.DB_ADMIN_UPDATE_CAMPUS_SPEAKERS,
+            values: [content.name, content.description, id]
+        };
+
+        client.query(querySpeakers, (err, response) => {
+            done()
+            if (err) {
+                logger.error('ACTUALIZACION DE SPEAKER - Error al actualizar el speaker en base de datos: ', err);
+                res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'ACTUALIZACION DE SPEAKER - Error al actualizar el speaker en base de datos' });
+                return;
+            } else {
+                logger.info('ACTUALIZACION DE SPEAKER - Speaker actualizado correctamente')
+                res.json({
+                    'status': constants.REQUEST_REQUEST_OK,
+                    'success': true,
+                    'result': 'ACTUALIZACION DE SPEAKER - Speaker actualizado correctamente'
+                });
+            }
+        })
+    })
+});
+//endregion
 
 module.exports = router; 
