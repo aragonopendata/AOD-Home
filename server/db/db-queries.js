@@ -109,8 +109,10 @@ exports.DB_ADMIN_INSERT_CAMPUS_EVENTS = 'INSERT INTO campus.events (name, descri
 							'RETURNING campus.events.id';
 
 exports.DB_ADMIN_UPDATE_CAMPUS_EVENTS = 'UPDATE campus.events SET name = COALESCE($1, name), ' +
-	'description = COALESCE($2, description) WHERE id = $3' + 
-	'RETURNING campus.events.id';
+'description = COALESCE($2, description) WHERE id = $3';
+		
+exports.DB_ADMIN_UPDATE_CAMPUS_SITES = 'UPDATE campus.sites s SET name = COALESCE($1, name) FROM campus.events_sites es ' + 
+										'WHERE es.id_event = s.id AND es.id_event = $2';
 
 exports.DB_ADMIN_INSERT_CAMPUS_SITES = 'INSERT INTO campus.sites ' +
 	'(name) '+
