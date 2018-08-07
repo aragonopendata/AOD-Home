@@ -365,7 +365,9 @@ router.put(constants.API_URL_ADMIN_CAMPUS_EVENTS, function (req, res, next) {
         return;
     }
 
-    updateEventInCampus(content.name, content.description, content.site_id, id).then(updateEvent => {
+    var date = new Date().toISOString();
+
+    updateEventInCampus(content.name, content.description, content.site_id, date, id).then(updateEvent => {
         if (updateEvent) {
             logger.info('ACTUALIZACION DE EVENTO - Evento actualizado correctamente')
             res.json({
@@ -454,7 +456,7 @@ var createEventInCampus = function createEventInCampus(name, description, site_i
 
 //region updateEventInCampus
 
-var updateEventInCampus = function updateEventInCampus(name, description, site_id, id) {
+var updateEventInCampus = function updateEventInCampus(name, description, site_id, date, id) {
     return new Promise((resolve, reject) => {
         try {
             pool.connect((err, client, done) => {
@@ -473,7 +475,7 @@ var updateEventInCampus = function updateEventInCampus(name, description, site_i
 
                 const queryEvent = {
                     text: dbQueries.DB_ADMIN_UPDATE_CAMPUS_EVENTS,
-                    values: [name, description, id]
+                    values: [name, description, date, id]
                 };
                 client.query('BEGIN', (err) => {
                     client.query(queryEvent, (err, resultEvent) => {
