@@ -101,15 +101,21 @@ exports.DB_ADMIN_RELOAD_LOGSTASH = 'UPDATE manager.logstash_conf '
 							+ 'WHERE manager.logstash_conf.status=\'0\'';
 
 
-exports.DB_ADMIN_GET_CAMPUS_EVENTS = 'SELECT * from campus.events';
+exports.DB_ADMIN_GET_CAMPUS_EVENTS = 'SELECT e.id, e.name, e.description, e.date, s.name AS site_name FROM campus.events e, campus.sites s, campus.events_sites es' +
+							' WHERE s.id = es.id_site AND e.id = es.id_event';
+
 exports.DB_ADMIN_INSERT_CAMPUS_EVENTS = 'INSERT INTO campus.events (name, description, date) VALUES($1, $2, $3)';
+
 exports.DB_ADMIN_UPDATE_CAMPUS_EVENTS = 'UPDATE campus.events SET name = COALESCE($1, name), ' +
 									'description = COALESCE($2, description) WHERE id = $3';
-exports.DB_ADMIN_GET_CAMPUS_ENTRYS = 'SELECT * from campus.contents WHERE id = $1';
-exports.DB_ADMIN_INSERT_CAMPUS_ENTRYS = 'INSERT INTO campus.contents ' +
+
+exports.DB_ADMIN_GET_CAMPUS_ENTRIES = 'SELECT * from campus.contents WHERE id = $1';
+
+exports.DB_ADMIN_INSERT_CAMPUS_ENTRIES = 'INSERT INTO campus.contents ' +
 									'(title, description, url, thumbnail, format, type, platform, event) '+
 									'VALUES($1, $2, $3, $4, $5, $6, $7, $8)';
-exports.DB_ADMIN_UPDATE_CAMPUS_ENTRYS = 'UPDATE campus.events SET' + 
+
+exports.DB_ADMIN_UPDATE_CAMPUS_ENTRIES = 'UPDATE campus.events SET' + 
 									'title = COALESCE($1, title),' +
 									'description = COALESCE($2, title),, ' +
 									'url = COALESCE($3, title),, ' +

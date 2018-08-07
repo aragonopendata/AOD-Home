@@ -152,11 +152,11 @@ router.put(constants.API_URL_ADMIN_CAMPUS_EVENTS, function (req, res, next) {
 });
 
 
-router.get(constants.API_URL_ADMIN_CAMPUS_ENTRYS + "/:id", function (req, res, next) {
+router.get(constants.API_URL_ADMIN_CAMPUS_ENTRIES + "/:id", function (req, res, next) {
     var id = req.params.id;
 
     const query = {
-        text: dbQueries.DB_ADMIN_GET_CAMPUS_ENTRYS,
+        text: dbQueries.DB_ADMIN_GET_CAMPUS_ENTRIES,
         values: [id],
         rowMode: constants.SQL_RESULSET_FORMAT
     };
@@ -186,7 +186,7 @@ router.get(constants.API_URL_ADMIN_CAMPUS_ENTRYS + "/:id", function (req, res, n
     });
 
 });
-router.post(constants.API_URL_ADMIN_CAMPUS_ENTRYS, upload.single('thumbnail'), function (req, res, next) {
+router.post(constants.API_URL_ADMIN_CAMPUS_ENTRIES, upload.single('thumbnail'), function (req, res, next) {
 
     var content = req.body;
 
@@ -197,7 +197,7 @@ router.post(constants.API_URL_ADMIN_CAMPUS_ENTRYS, upload.single('thumbnail'), f
     }
 
     const query = {
-        text: dbQueries.DB_ADMIN_INSERT_CAMPUS_ENTRYS,
+        text: dbQueries.DB_ADMIN_INSERT_CAMPUS_ENTRIES,
         values: [content.title, content.description, content.url, req.file, content.format, content.type, content.platform, content.event]
     };
 
@@ -227,7 +227,7 @@ router.post(constants.API_URL_ADMIN_CAMPUS_ENTRYS, upload.single('thumbnail'), f
 });
 
 
-router.put(constants.API_URL_ADMIN_CAMPUS_EVENTS, function (req, res, next) {
+router.put(constants.API_URL_ADMIN_CAMPUS_ENTRIES, function (req, res, next) {
     var content = req.body;
     var id = content.id;
 
@@ -238,7 +238,7 @@ router.put(constants.API_URL_ADMIN_CAMPUS_EVENTS, function (req, res, next) {
     }
 
     const query = {
-        text: dbQueries.DB_ADMIN_UPDATE_CAMPUS_ENTRYS,
+        text: dbQueries.DB_ADMIN_UPDATE_CAMPUS_ENTRIES,
         values: [content.title, content.description, content.url, req.file,
         content.format, content.type, content.platform, content.event, id],
         rowMode: constants.SQL_RESULSET_FORMAT
