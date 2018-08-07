@@ -52,14 +52,14 @@ router.get(constants.API_URL_ADMIN_CAMPUS_SITES, function (req, res, next) {
     pool.connect((err, client, done) => {
         if (err) {
             logger.error(err.stack);
-            res.json({ status: 500, 'error': err });
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
             return;
         }
         pool.query(query, (err, result) => {
             done();
             if (err) {
                 logger.error(err.stack);
-                res.json({ status: 500, 'error': err });
+                res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
                 return;
             } else {
                 logger.info('Filas devueltas: ' + result.rows.length);
@@ -83,14 +83,14 @@ router.get(constants.API_URL_ADMIN_CAMPUS_EVENTS, function (req, res, next) {
     pool.connect((err, client, done) => {
         if (err) {
             logger.error(err.stack);
-            res.json({ status: 500, 'error': err });
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
             return;
         }
         pool.query(query, (err, result) => {
             done();
             if (err) {
                 logger.error(err.stack);
-                res.json({ status: 500, 'error': err });
+                res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
                 return;
             } else {
                 logger.info('Filas devueltas: ' + result.rows.length);
@@ -111,57 +111,25 @@ router.post(constants.API_URL_ADMIN_CAMPUS_EVENTS, function (req, res, next) {
 
     var date = new Date().toISOString();
 
-    pool.on('error', (err, client) => {
-        logger.error('Error en la conexión con base de datos', err);
-        process.exit(-1);
-    });
-
-    pool.connect((err, client, done) => {
-        if (err) {
-            logger.error(err.stack);
-            res.json({ status: 500, 'error': err });
-            return;
-        }
-
-        const query = {
-            text: dbQueries.DB_ADMIN_INSERT_CAMPUS_EVENTS,
-            values: [content.name, content.description, date]
-        };
-        
-        pool.query(query, (err1, resultEvent) => {
-            if (err1) {
-                logger.error(err1.stack);
-                res.json({ status: 500, 'error': err });
-                return;
-            }
-            const querySites = {
-                text: dbQueries.DB_ADMIN_INSERT_CAMPUS_SITES,
-                values: [content.site_name]
-            };
-            pool.query(querySites, (err2, resultSites) => {
-                if (err2) {
-                    logger.error(err2.stack);
-                    res.json({ status: 500, 'error': err });
-                    return;
-                }
-                const query_Sites_Entries = {
-                    text: dbQueries.DB_ADMIN_INSERT_CAMPUS_EVENTS_SITES,
-                    values: [resultEvent.rows[0].id, resultSites.rows[0].id]
-                };
-                pool.query(query_Sites_Entries, (err3, result) => {
-                    done();
-                    if (err3) {
-                        logger.error(err3.stack);
-                        res.json({ status: 500, 'error': err });
-                        return;
-                    } else {
-                        logger.info('Nuevo evento creado');
-                        res.json({ status: 200, message: "Evento creado"});
-                    }
-                });
+    createEventInCampus(content.name, content.description ,content.site_name, date).then(createEvent => {
+        if(createEvent){
+            logger.info('CREACION DE EVENTO - Evento creado correctamente')
+            res.json({
+                'status': constants.REQUEST_REQUEST_OK,
+                'success': true,
+                'result': 'CREACION DE EVENTO - Evento creado correctamente'
             });
-        });
+        }else{
+            logger.error('ACTUALIZACIÓN DE EVENTO - Error al crear el evento en base de datos: ', error);
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'ACTUALIZACIÓN DE EVENTO - Error al crear el evento en base de datos' });
+            return;         
+        }
+    }).catch(error => {
+        logger.error('ACTUALIZACIÓN DE EVENTO - Error al crear el evento en base de datos: ', error);
+        res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'ACTUALIZACIÓN DE EVENTO - Error al crear el evento en base de datos' });
+        return;
     });
+
 });
 
 router.put(constants.API_URL_ADMIN_CAMPUS_EVENTS, function (req, res, next) {
@@ -170,7 +138,7 @@ router.put(constants.API_URL_ADMIN_CAMPUS_EVENTS, function (req, res, next) {
 
     if ((!content.name && !content.description) || !id || content.name == "") {
         logger.error('Input Error', 'Incorrect input');
-        res.json({ status: 400, error: 'Incorrect Input' });
+        res.json({ 'status': constants.REQUEST_ERROR_BAD_DATA, error: 'Incorrect Input' });
         return;
     }
 
@@ -188,18 +156,18 @@ router.put(constants.API_URL_ADMIN_CAMPUS_EVENTS, function (req, res, next) {
     pool.connect((err, client, done) => {
         if (err) {
             logger.error(err.stack);
-            res.json({ status: 500, 'error': err });
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
             return;
         }
         pool.query(query, (err, result) => {
             done();
             if (err) {
                 logger.error(err.stack);
-                res.json({ status: 500, 'error': err });
+                res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
                 return;
             } else {
                 logger.info('Evento Actualizado');
-                res.json({ status: 200, message: "Evento Actualizado" });
+                res.json({ 'status': constants.REQUEST_REQUEST_OK, message: "Evento Actualizado"});
             }
         });
     });
@@ -224,14 +192,14 @@ router.get(constants.API_URL_ADMIN_CAMPUS_ENTRIES + "/:id", function (req, res, 
     pool.connect((err, client, done) => {
         if (err) {
             logger.error(err.stack);
-            res.json({ status: 500, 'error': err });
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
             return;
         }
         pool.query(query, (err, result) => {
             done();
             if (err) {
                 logger.error(err.stack);
-                res.json({ status: 500, 'error': err });
+                res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
                 return;
             } else {
                 logger.info('Filas devueltas: ' + result.rows.length);
@@ -264,18 +232,18 @@ router.post(constants.API_URL_ADMIN_CAMPUS_ENTRIES, upload.single('thumbnail'), 
     pool.connect((err, client, done) => {
         if (err) {
             logger.error(err.stack);
-            res.json({ status: 500, 'error': err });
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
             return;
         }
         pool.query(query, (err, result) => {
             done();
             if (err) {
                 logger.error(err.stack);
-                res.json({ status: 500, 'error': err });
+                res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
                 return;
             } else {
                 logger.info('Nueva entrada creada');
-                res.json({ status: 200, message: "Entrada creada" });
+                res.json({ 'status': constants.REQUEST_REQUEST_OK, message: "Entrada creada"});
             }
         });
     });
@@ -307,23 +275,87 @@ router.put(constants.API_URL_ADMIN_CAMPUS_ENTRIES, function (req, res, next) {
     pool.connect((err, client, done) => {
         if (err) {
             logger.error(err.stack);
-            res.json({ status: 500, 'error': err });
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
             return;
         }
         pool.query(query, (err, result) => {
             done();
             if (err) {
                 logger.error(err.stack);
-                res.json({ status: 500, 'error': err });
+                res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
                 return;
             } else {
                 logger.info('Evento Actualizado');
-                res.json({ status: 200, message: "Evento Actualizado" });
+                res.json({ 'status': constants.REQUEST_REQUEST_OK, message: "Evento Actualizado"});
             }
         });
     });
 
 });
 
+var createEventInCampus = function createEventInCampus(name, description , site_name, date) {
+    return new Promise((resolve, reject) => {
+        try {
+            pool.connect((connError, client, done) => {
+                if (connError) {
+                    logger.error('Error en transacción', transactionRollbackError.stack);
+                    client.query('ROLLBACK', (rollbackError) => {
+                        if (rollbackError) {
+                            logger.error('Error en transacción', rollbackError.stack);
+                        }
+                    })
+                }
+                logger.notice('Se inicia la transacción de insercion de un nuevo evento en base de datos CAMPUS');
+                
+                const queryEvent= {
+                    text: dbQueries.DB_ADMIN_INSERT_CAMPUS_EVENTS,
+                    values: [name, description, date]
+                };
+
+                client.query(queryEvent, (errEvent, resultEvent) => {
+                    if (errEvent) {
+                        reject(errEvent);
+                    } else {
+                        logger.notice('Se procede a la insercion de un nuevo site');
+                        const querySites = {
+                            text: dbQueries.DB_ADMIN_INSERT_CAMPUS_SITES,
+                            values: [site_name]
+                        };
+                        client.query(querySites, (errSites, resultSites) => {
+                            if (errSites) {
+                                reject(errSites);
+                            } else {
+                                logger.notice('Se procede a la insercion de la tabla relacional Sites-Events');
+                                const query_Sites_Events = {
+                                    text: dbQueries.DB_ADMIN_INSERT_CAMPUS_EVENTS_SITES,
+                                    values: [resultEvent.rows[0].id, resultSites.rows[0].id]
+                                };
+                                client.query(query_Sites_Events, (errSites_Events, result) => {
+                                    if (errSites) {
+                                        reject(errSites);
+                                    } else {
+                                        logger.notice('Evento insertado');
+                                        client.query('COMMIT', (commitError) => {
+                                            done()
+                                            if (commitError) {
+                                                reject(commitError);
+                                            } else {
+                                                logger.notice('Actualización del enveto completada');
+                                                resolve(true);
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    }
+                })
+            });
+        } catch (error) {
+            logger.error('Error borrando evento:', error);
+            reject(error);
+        }
+    });
+}
 
 module.exports = router; 
