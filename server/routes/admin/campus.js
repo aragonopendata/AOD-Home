@@ -69,6 +69,68 @@ router.get(constants.API_URL_ADMIN_CAMPUS_SITES, function (req, res, next) {
     });
 });
 
+router.get(constants.API_URL_ADMIN_CAMPUS_SPEAKERS, function (req, res, next) {
+    const query = {
+        text: dbQueries.DB_ADMIN_GET_CAMPUS_SPEAKERS,
+        rowMode: constants.SQL_RESULSET_FORMAT
+    };
+
+    pool.on('error', (err, client) => {
+        logger.error('Error en la conexión con base de datos', err);
+        process.exit(-1);
+    });
+
+    pool.connect((err, client, done) => {
+        if (err) {
+            logger.error(err.stack);
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
+            return;
+        }
+        pool.query(query, (err, result) => {
+            done();
+            if (err) {
+                logger.error(err.stack);
+                res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
+                return;
+            } else {
+                logger.info('Filas devueltas: ' + result.rows.length);
+                res.json(result.rows);
+            }
+        });
+    });
+});
+
+router.get(constants.API_URL_ADMIN_CAMPUS_TOPICS, function (req, res, next) {
+    const query = {
+        text: dbQueries.DB_ADMIN_GET_CAMPUS_TOPICS,
+        rowMode: constants.SQL_RESULSET_FORMAT
+    };
+
+    pool.on('error', (err, client) => {
+        logger.error('Error en la conexión con base de datos', err);
+        process.exit(-1);
+    });
+
+    pool.connect((err, client, done) => {
+        if (err) {
+            logger.error(err.stack);
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
+            return;
+        }
+        pool.query(query, (err, result) => {
+            done();
+            if (err) {
+                logger.error(err.stack);
+                res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
+                return;
+            } else {
+                logger.info('Filas devueltas: ' + result.rows.length);
+                res.json(result.rows);
+            }
+        });
+    });
+});
+
 router.get(constants.API_URL_ADMIN_CAMPUS_EVENTS, function (req, res, next) {
     const query = {
         text: dbQueries.DB_ADMIN_GET_CAMPUS_EVENTS,
@@ -366,7 +428,7 @@ var updateEventInCampus = function updateEventInCampus(name, description, site_n
                     text: dbQueries.DB_ADMIN_UPDATE_CAMPUS_EVENTS,
                     values: [name, description, id]
                 };
-                
+
                 client.query(queryEvent, (errEvent, resultEvent) => {
                     if (errEvent) {
                         reject(errEvent);
