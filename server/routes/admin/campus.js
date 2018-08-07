@@ -77,8 +77,7 @@ router.post(constants.API_URL_ADMIN_CAMPUS_EVENTS, function (req, res, next) {
         return;
     }
 
-    var nowDate = new Date();
-    var date = nowDate.getFullYear() + '/' + (nowDate.getMonth() + 1) + '/' + nowDate.getDate();
+    var date = new Date().toISOString();
 
     const query = {
         text: dbQueries.DB_ADMIN_INSERT_CAMPUS_EVENTS,
