@@ -227,7 +227,24 @@ router.get(constants.API_URL_ADMIN_CAMPUS_ENTRIES + "/:id", function (req, res, 
                 return;
             } else {
                 logger.info('Filas devueltas: ' + result.rows.length);
-                res.json(result.rows);
+                var send;
+                if (result.rows.length != 0) {
+                    send = Object.assign({}, result.rows[0]);
+                    delete send["topic_id"];
+                    delete send["topics_name"];
+                    var aux_Topcis = [];
+                    console.log(result.rows);
+                    result.rows.forEach((element, index) => {
+                        aux_Topcis.push({ id: element.topic_id, name: element.topic_name });
+                        delete result.rows[index]["topic_id"];
+                        delete result.rows[index]["topics_name"];
+                    });
+                    send["topics"] = aux_Topcis;
+                } else {
+                    send = result.rows;
+                }
+                console.log(send);
+                res.json(send);
             }
         });
     });
