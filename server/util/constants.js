@@ -73,6 +73,7 @@ exports.API_URL_ADMIN_CAMPUS_SITES = '/campus-admin/sites';
 exports.API_URL_ADMIN_CAMPUS_SPEAKERS = '/campus-admin/speakers';
 exports.API_URL_ADMIN_CAMPUS_TOPICS = '/campus-admin/topics';
 exports.API_URL_ADMIN_CAMPUS_EVENTS = '/campus-admin/events';
+exports.API_URL_ADMIN_CAMPUS_ENTRIES_BY_EVENT = '/campus-admin/event/entries';
 exports.API_URL_ADMIN_CAMPUS_ENTRIES = '/campus-admin/entries';
 exports.STATIC_CONTENT_SECTION_TITLE_INFO = 'INFORMACIÓN';
 exports.STATIC_CONTENT_SECTION_TITLE_TOOLS = 'HERRAMIENTAS';

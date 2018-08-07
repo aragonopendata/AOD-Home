@@ -165,11 +165,45 @@ router.get(constants.API_URL_ADMIN_CAMPUS_EVENTS, function (req, res, next) {
     });
 });
 
+router.get(constants.API_URL_ADMIN_CAMPUS_ENTRIES_BY_EVENT + "/:id", function (req, res, next) {
+    var id = req.params.id;
+    
+    const query = {
+        text: dbQueries.DB_ADMIN_GET_CAMPUS_ENTRIES_BY_EVENT,
+        values: [id],
+        rowMode: constants.SQL_RESULSET_FORMAT
+    };
+    
+    pool.on('error', (err, client) => {
+        logger.error('Error en la conexión con base de datos', err);
+        process.exit(-1);
+    });
+    
+    pool.connect((err, client, done) => {
+        if (err) {
+            logger.error(err.stack);
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
+            return;
+        }
+        pool.query(query, (err, result) => {
+            done();
+            if (err) {
+                logger.error(err.stack);
+                res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
+                return;
+            } else {
+                logger.info('Filas devueltas: ' + result.rows.length);
+                res.json(result.rows);
+            }
+        });
+    });
+});
+
 router.get(constants.API_URL_ADMIN_CAMPUS_ENTRIES + "/:id", function (req, res, next) {
     var id = req.params.id;
 
     const query = {
-        text: dbQueries.DB_ADMIN_GET_CAMPUS_ENTRIES,
+        text: dbQueries.DB_ADMIN_GET_CAMPUS_ENTRY,
         values: [id],
         rowMode: constants.SQL_RESULSET_FORMAT
     };
@@ -198,6 +232,7 @@ router.get(constants.API_URL_ADMIN_CAMPUS_ENTRIES + "/:id", function (req, res, 
         });
     });
 });
+
 //endregion
 
 //region Events
@@ -397,9 +432,9 @@ var updateEventInCampus = function updateEventInCampus(name, description, site_i
 //region Entries
 
 router.post(constants.API_URL_ADMIN_CAMPUS_ENTRIES, upload.single('thumbnail'), function (req, res, next) {
-    
+
     var content = req.body;
-    
+
     if (!content.title || content.title == "") {
         logger.error('Input Error', 'Incorrect input, title required');
         res.json({ status: 400, error: 'Incorrect Input, title required' });
@@ -435,7 +470,7 @@ router.post(constants.API_URL_ADMIN_CAMPUS_ENTRIES, upload.single('thumbnail'), 
 
 
 router.put(constants.API_URL_ADMIN_CAMPUS_ENTRIES, function (req, res, next) {
-    
+
     var content = req.body;
     var id = content.id;
 
@@ -448,7 +483,7 @@ router.put(constants.API_URL_ADMIN_CAMPUS_ENTRIES, function (req, res, next) {
     updateEntryInCampus(content.title, content.description, content.url, req.file, content.format,
         content.type, content.platform, content.event, content.id_topic, content.id_speaker, id).then(updateEvent => {
             if (updateEvent) {
-                logger.info('ACTUALIZACION DE ENTRY - Entry actualizado correctamente')
+                logger.info('ACTUALIZACION DE ENTRY - Entry actualizado correctamente');
                 res.json({
                     'status': constants.REQUEST_REQUEST_OK,
                     'success': true,
@@ -485,7 +520,7 @@ var createEntryInCampus = function createEntryInCampus(title, description, url, 
                     return !!err;
                 }
                 logger.notice('Se inicia la transacción de insercion de un nuevo evento en base de datos CAMPUS');
-                
+
                 const queryEntry = {
                     text: dbQueries.DB_ADMIN_INSERT_CAMPUS_ENTRIES,
                     values: [title, description, url, file, format, type, platform, event]
@@ -563,7 +598,7 @@ var updateEntryInCampus = function updateEntryInCampus(title, description, url, 
                     return !!err;
                 }
                 logger.notice('Se inicia la transacción de actualizacion de un entry en base de datos CAMPUS');
-                
+
                 const queryEntry = {
                     text: dbQueries.DB_ADMIN_UPDATE_CAMPUS_ENTRIES,
                     values: [title, description, url, file, format,
@@ -576,7 +611,7 @@ var updateEntryInCampus = function updateEntryInCampus(title, description, url, 
                         } else {
                             logger.notice('Se procede a la actualizacion de topics');
                             const queryTopics = {
-                                text: dbQueries.DB_ADMIN_UPDATE_CAMPUS_ENTRYS_TOPICS,
+                                text: dbQueries.DB_ADMIN_UPDATE_CAMPUS_ENTRIES_TOPICS,
                                 values: [id_topic, id]
                             };
                             client.query(queryTopics, (err, resultSites) => {
@@ -585,7 +620,7 @@ var updateEntryInCampus = function updateEntryInCampus(title, description, url, 
                                 } else {
                                     logger.notice('Se procede a la actualizacion de speakers');
                                     const querySpeakers = {
-                                        text: dbQueries.DB_ADMIN_UPDATE_CAMPUS_ENTRYS_SPEAKERS,
+                                        text: dbQueries.DB_ADMIN_UPDATE_CAMPUS_ENTRIES_SPEAKERS,
                                         values: [id_speaker, id]
                                     };
                                     client.query(querySpeakers, (err, resultSpeakers) => {

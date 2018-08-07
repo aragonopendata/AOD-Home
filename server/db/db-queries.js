@@ -106,7 +106,7 @@ exports.DB_ADMIN_GET_CAMPUS_SPEAKERS = 'SELECT * FROM campus.speakers';
 
 exports.DB_ADMIN_GET_CAMPUS_TOPICS = 'SELECT * FROM campus.topics';
 
-exports.DB_ADMIN_GET_CAMPUS_EVENTS = 'SELECT e.id, e.name, e.description, e.date, s.name AS site_name FROM campus.events e, campus.sites s, campus.events_sites es' +
+exports.DB_ADMIN_GET_CAMPUS_EVENTS = 'SELECT e.id, e.name, e.description, e.date, s.name AS site FROM campus.events e, campus.sites s, campus.events_sites es' +
 							' WHERE s.id = es.id_site AND e.id = es.id_event';
 
 exports.DB_ADMIN_INSERT_CAMPUS_EVENTS = 'INSERT INTO campus.events (name, description, date) VALUES($1, $2, $3)'+ 
@@ -122,13 +122,14 @@ exports.DB_ADMIN_INSERT_CAMPUS_EVENTS_SITES  = 'INSERT INTO campus.events_sites 
 		'(id_event, id_site) '+
 		'VALUES($1, $2)';
 
-
-exports.DB_ADMIN_GET_CAMPUS_ENTRIES = 'SELECT c.id, c.title, c.description, c.url, c.thumbnail, c.format, c.type, c.platform, c.event, ' +
+exports.DB_ADMIN_GET_CAMPUS_ENTRY = 'SELECT c.id, c.title, c.description, c.url, c.thumbnail, c.format, c.type, c.platform, c.event, ' +
 		't.name AS topics_name, s.name AS speaker_name, s.description AS speaker_description ' + 
 		'from campus.contents c, campus.topics t, campus.speakers s, ' +
 		'campus.contents_topics ct, campus.contents_speakers cs '+
 		'WHERE c.id = $1 AND c.id = ct.id_content AND c.id = cs.id_content '+
 		'AND ct.id_topic = t.id AND cs.id_speaker = s.id';
+
+exports.DB_ADMIN_GET_CAMPUS_ENTRIES_BY_EVENT = 'SELECT c.id, c.title from campus.contents c WHERE c.event = $1';
 
 exports.DB_ADMIN_INSERT_CAMPUS_ENTRIES = 'INSERT INTO campus.contents ' +
 									'(title, description, url, thumbnail, format, type, platform, event) '+
@@ -154,8 +155,8 @@ exports.DB_ADMIN_UPDATE_CAMPUS_ENTRIES = 'UPDATE campus.contents SET ' +
 										'event = COALESCE($8, event) ' +
 										'WHERE id = $9';
 
-exports.DB_ADMIN_UPDATE_CAMPUS_ENTRYS_TOPICS = 'UPDATE campus.contents_topics s SET id_topic = COALESCE($1, id_topic)' +
+exports.DB_ADMIN_UPDATE_CAMPUS_ENTRIES_TOPICS = 'UPDATE campus.contents_topics s SET id_topic = COALESCE($1, id_topic)' +
 										' WHERE s.id_content = $2';
 
-exports.DB_ADMIN_UPDATE_CAMPUS_ENTRYS_SPEAKERS = 'UPDATE campus.contents_speakers s SET id_speaker = COALESCE($1, id_speaker)' +
+exports.DB_ADMIN_UPDATE_CAMPUS_ENTRIES_SPEAKERS  = 'UPDATE campus.contents_speakers s SET id_speaker = COALESCE($1, id_speaker)' +
 										' WHERE s.id_content = $2';
