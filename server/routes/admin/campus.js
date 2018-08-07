@@ -526,7 +526,7 @@ router.post(constants.API_URL_ADMIN_CAMPUS_ENTRIES, function (req, res, next) {
         return;
     }
 
-    if (!content.type || !content.platform || !content.format || !content.event || !content.id_topics || typeof content.id_topics != "object" || !content.id_speaker) {
+    if (!content.type || !content.platform || !content.format || !content.event || !content.id_speaker) { // ADD || !content.id_topics || typeof content.id_topics != "object" 
         logger.error('Input Error', 'Incorrect input');
         res.json({ status: 400, error: 'Incorrect Input' });
         return;
@@ -559,7 +559,7 @@ router.put(constants.API_URL_ADMIN_CAMPUS_ENTRIES, function (req, res, next) {
     var content = req.body;
     var id = content.id;
 
-    if ((content.title && !content.title === "") || !id || !content.id_topics) {
+    if ((content.title && !content.title === "") || !id) { //ADD || !content.id_topics
         logger.error('Input Error', 'Incorrect input');
         res.json({ 'status': constants.REQUEST_ERROR_BAD_DATA, error: 'Incorrect Input' });
         return;
@@ -619,6 +619,28 @@ var createEntryInCampus = function createEntryInCampus(title, description, url, 
                             if (shouldAbort(err)) {
                                 reject(err);
                             } else {
+                                logger.notice('Se procede a la insercion de la tabla relacional Contents-Speakers');
+                                const query_contents_speakers = {
+                                    text: dbQueries.DB_ADMIN_INSERT_CAMPUS_CONTENTS_SPEAKERS,
+                                    values: [resultEntry.rows[0].id, id_speaker]
+                                };
+                                client.query(query_contents_speakers, (err, result) => {
+                                    if (shouldAbort(err)) {
+                                        reject(err);
+                                    } else {
+                                        logger.notice('Entry insertado');
+                                        client.query('COMMIT', (commitError) => {
+                                            done()
+                                            if (commitError) {
+                                                reject(commitError);
+                                            } else {
+                                                logger.notice('Insercion de entry completada');
+                                                resolve(true);
+                                            }
+                                        });
+                                    }
+                                });
+                                /*
                                 logger.notice('Se procede a la insercion de la tabla relacional Contents-Topics');
                                 var aux_Topics = [];
                                 id_topics.forEach(element => {
@@ -654,6 +676,7 @@ var createEntryInCampus = function createEntryInCampus(title, description, url, 
                                         });
                                     }
                                 });
+                                */
                             }
                         });
                     }
@@ -697,6 +720,28 @@ var updateEntryInCampus = function updateEntryInCampus(title, description, url, 
                         if (shouldAbort(err)) {
                             reject(err);
                         } else {
+                            logger.notice('Se procede a la actualizacion de speakers');
+                            const querySpeakers = {
+                                text: dbQueries.DB_ADMIN_UPDATE_CAMPUS_ENTRIES_SPEAKERS,
+                                values: [id_speaker, id]
+                            };
+                            client.query(querySpeakers, (err, resultSpeakers) => {
+                                if (shouldAbort(err)) {
+                                    reject(err);
+                                } else {
+                                    logger.notice('Evento actualizado');
+                                    client.query('COMMIT', (commitError) => {
+                                        done();
+                                        if (commitError) {
+                                            reject(commitError);
+                                        } else {
+                                            logger.notice('Actualización del evento completada');
+                                            resolve(true);
+                                        }
+                                    });
+                                }
+                            });
+                            /*
                             logger.notice('Se procede a la eliminar todos los topics de una relacion');
                             const queryTopicsDel = {
                                 text: dbQueries.DB_ADMIN_DELETE_CAMPUS_ENTRIES_TOPICS,
@@ -745,6 +790,7 @@ var updateEntryInCampus = function updateEntryInCampus(title, description, url, 
                                     });
                                 }
                             });
+                            */
                         }
                     })
                 });

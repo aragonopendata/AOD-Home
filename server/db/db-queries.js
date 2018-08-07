@@ -102,9 +102,9 @@ exports.DB_ADMIN_RELOAD_LOGSTASH = 'UPDATE manager.logstash_conf '
 
 exports.DB_ADMIN_GET_CAMPUS_SITES = 'SELECT id, name FROM campus.sites';
 
-exports.DB_ADMIN_GET_CAMPUS_SPEAKERS = 'SELECT * FROM campus.speakers';
+exports.DB_ADMIN_GET_CAMPUS_SPEAKERS = 'SELECT id, name, description FROM campus.speakers';
 
-exports.DB_ADMIN_GET_CAMPUS_TOPICS = 'SELECT * FROM campus.topics';
+exports.DB_ADMIN_GET_CAMPUS_TOPICS = 'SELECT id, name FROM campus.topics';
 
 exports.DB_ADMIN_GET_CAMPUS_EVENTS = 'SELECT e.id, e.name, e.description, e.date, json_build_object(\'id\', s.id, \'name\', s.name) site FROM campus.events e, campus.sites s, campus.events_sites es' +
 							' WHERE s.id = es.id_site AND e.id = es.id_event';
