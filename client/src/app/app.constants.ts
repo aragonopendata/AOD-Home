@@ -559,6 +559,9 @@ export class Constants {
     public static ROUTER_LINK_CAMPUS_ADMIN_SITES = 'campus-admin/sites';
     public static ROUTER_LINK_CAMPUS_ADMIN_SPEAKERS = 'campus-admin/speakers';
     public static ROUTER_LINK_CAMPUS_ADMIN_TOPICS = 'campus-admin/topics';
+    public static ROUTER_LINK_CAMPUS_ADMIN_FORMATS = 'campus-admin/formats';
+    public static ROUTER_LINK_CAMPUS_ADMIN_TYPES = 'campus-admin/types';
+    public static ROUTER_LINK_CAMPUS_ADMIN_PLATFORMS = 'campus-admin/platforms';
     public static ROUTER_LINK_LOGSTASH = 'logstash';
     public static ROUTER_LINK_ADMIN_LOGSTASH = 'admin/logstash';
     public static ROUTER_LINK_404 = 'pagenotfound';

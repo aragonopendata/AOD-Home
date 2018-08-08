@@ -109,13 +109,31 @@ export class CampusAdminService {
 		return this.http.get(fullUrl, { headers: headers }).map(res => res.json());
 	}
 
+	public getFormats() {
+		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + '/' + Constants.ROUTER_LINK_CAMPUS_ADMIN_FORMATS;
+		let headers = this.buildRequestHeaders();
+		return this.http.get(fullUrl, { headers: headers }).map(res => res.json());
+	}
+
+	public getTypes() {
+		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + '/' + Constants.ROUTER_LINK_CAMPUS_ADMIN_TYPES;
+		let headers = this.buildRequestHeaders();
+		return this.http.get(fullUrl, { headers: headers }).map(res => res.json());
+	}
+
+	public getPlatforms() {
+		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + '/' + Constants.ROUTER_LINK_CAMPUS_ADMIN_PLATFORMS;
+		let headers = this.buildRequestHeaders();
+		return this.http.get(fullUrl, { headers: headers }).map(res => res.json());
+	}
+
 	public insertNewSite(site) {
 		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + '/' + Constants.ROUTER_LINK_CAMPUS_ADMIN_SITES;
 		let headers = this.buildRequestHeaders();
 		let requestBodyParams: any = this.createJsonFromString('name', site);
 		return this.http.post(fullUrl, JSON.stringify(requestBodyParams), { headers: headers }).map(res => res.json());
 	}
-	
+
 	public insertNewSpeaker(speaker) {
 		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + '/' + Constants.ROUTER_LINK_CAMPUS_ADMIN_SPEAKERS;
 		let headers = this.buildRequestHeaders();
@@ -136,16 +154,18 @@ export class CampusAdminService {
 		return JSONElement;
 	}
 
-	public insertNewEntry(entry) {
+	public insertNewEntry(entry, id_topics) {
 		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + '/' + Constants.ROUTER_LINK_CAMPUS_ADMIN_ENTRIES;
 		let headers = this.buildRequestHeaders();
+		entry['id_topics'] = id_topics;
 		let requestBodyParams: any = entry;
 		return this.http.post(fullUrl, JSON.stringify(requestBodyParams), { headers: headers }).map(res => res.json());
 	}
 
-	public updateEntry(entry) {
-		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + '/' + Constants.ROUTER_LINK_CAMPUS_ADMIN_ENTRIES + '/';
+	public updateEntry(entry, topicStatus) {
+		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + '/' + Constants.ROUTER_LINK_CAMPUS_ADMIN_ENTRIES;
 		let headers = this.buildRequestHeaders();
+		entry['topicStatus'] = topicStatus;
 		let requestBodyParams: any = entry;
 		return this.http.put(fullUrl, JSON.stringify(requestBodyParams), { headers: headers }).map(res => res.json());
 	}

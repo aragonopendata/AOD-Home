@@ -5,6 +5,7 @@ import { Speaker } from '../../../../models/campus/Speaker';
 import { Event } from '../../../../models/campus/Event';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SelectItem } from 'primeng/primeng';
+import { Topic } from '../../../../models/campus/Topic';
 
 @Component({
     selector: 'app-campus-admin-entries',
@@ -20,6 +21,9 @@ export class CampusAdminEntriesComponent implements OnInit {
     topics: any[] = [];
     events: Event[] = [];
     speakers: Speaker[] = [];
+    formats: any[] = [];
+    types: any[] = [];
+    platforms: any[] = [];
     files: File[];
     img: string;
     searchType: SelectItem[] = [];
@@ -32,6 +36,10 @@ export class CampusAdminEntriesComponent implements OnInit {
     searchOptionSpeakers: boolean = false;
 
     filteredTopics: any[];
+    topicStatus: any = {};
+    topicStatusInserts: number[] = [];
+    topicStatusDeletes: number[] = [];
+    msgs: any[];
 
     constructor(private campusAdminService: CampusAdminService, public sanitizer: DomSanitizer) {
         this.display = false;
@@ -44,6 +52,9 @@ export class CampusAdminEntriesComponent implements OnInit {
         this.setSearchTypes();
         this.setEventSearch();
         this.setSpeakerSearch();
+        this.getFormats();
+        this.getTypes();
+        this.getPlatforms();
     }
 
     setSearchTypes() {
@@ -91,9 +102,12 @@ export class CampusAdminEntriesComponent implements OnInit {
     getEntry(id) {
         this.campusAdminService.getEntry(id).subscribe(result => {
             this.selectedEntry = result;
-            this.selectedEntry.topics.forEach(topic => {
-                this.topics.push({ id: topic.id, name: topic.name });
-            });
+            this.topics = [];
+            if (this.selectedEntry.topics) {
+                this.selectedEntry.topics.forEach(topic => {
+                    this.topics.push({ id: topic.id, name: topic.name });
+                });
+            }
         });
     }
 
@@ -115,9 +129,29 @@ export class CampusAdminEntriesComponent implements OnInit {
         });
     }
 
+    getFormats() {
+        this.campusAdminService.getFormats().subscribe(result => {
+            this.formats = result;
+        });
+    }
+
+    getTypes() {
+        this.campusAdminService.getTypes().subscribe(result => {
+            this.types = result;
+        });
+    }
+
+    getPlatforms() {
+        this.campusAdminService.getPlatforms().subscribe(result => {
+            this.platforms = result;
+        });
+    }
+
     addEntry() {
         this.isNewEntry = true;
-        this.showDialog(new Content());
+        let newEntry = new Content();
+        newEntry.topics = [];
+        this.showDialog(newEntry);
     }
 
     showDialog(entry) {
@@ -127,14 +161,41 @@ export class CampusAdminEntriesComponent implements OnInit {
         }
     }
 
+    isRepeated(value, index, self) {
+        return self.indexOf(value) === index;
+    }
+
     save(entry) {
-        if (this.isNewEntry) {
-            this.campusAdminService.insertNewEntry(entry);
+        if (this.validation(entry)) {
+            if (this.isNewEntry) {
+                let id_topics = [];
+                entry.topics = [];
+                entry.topics.forEach(topic => {
+                    id_topics.push(topic.id);
+                });
+                this.campusAdminService.insertNewEntry(entry, id_topics).subscribe();
+            } else {
+                let uniqueTopicStatusInserts = this.topicStatusInserts.filter(this.isRepeated);
+                let uniqueTopicStatusDeletes = this.topicStatusDeletes.filter(this.isRepeated);
+                this.topicStatus['inserts'] = uniqueTopicStatusInserts;
+                this.topicStatus['deletes'] = uniqueTopicStatusDeletes;
+                this.campusAdminService.updateEntry(entry, this.topicStatus).subscribe();
+            }
+            this.isNewEntry = false;
+            this.display = !this.display;
+            this.getEntries();
         } else {
-            this.campusAdminService.updateEntry(entry);
+            this.showError();
         }
-        this.isNewEntry = false;
-        this.display = !this.display;
+    }
+
+    validation(entry) {
+        let validated = false;
+        if (entry.title && entry.platform && entry.format ||
+            entry.event && entry.speaker_id && entry.topics) {
+            validated = true;
+        }
+        return validated;
     }
 
     cancel() {
@@ -143,7 +204,7 @@ export class CampusAdminEntriesComponent implements OnInit {
         this.topics = [];
         this.isNewEntry = false;
     }
-    
+
     fileChange(event) {
         this.files = event.target.files;
         var file: File = this.files[0];
@@ -188,6 +249,31 @@ export class CampusAdminEntriesComponent implements OnInit {
             }
         }
         return filtered;
+    }
+
+    addInsertedTopic(event) {
+        if (this.isNewEntry) {
+            this.setTopic(event);
+        } else {
+            this.topicStatusInserts.push(event.id);
+        }
+    }
+
+    setTopic(event) {
+        let topic: Topic = new Topic();
+        topic.id = event.id;
+        topic.name = event.name;
+        this.selectedEntry.topics = [];
+        this.selectedEntry.topics.push(topic);
+    }
+    
+    addDeletedTopic(event) {
+        this.topicStatusDeletes.push(event.id);
+    }
+
+    showError() {
+        this.msgs = [];
+        this.msgs.push({ severity: 'error', summary: 'Error de validación', detail: 'No se han introducido todos los campos obligatorios.' });
     }
 
 }

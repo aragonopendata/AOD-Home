@@ -1,3 +1,7 @@
-.md-datepicker-calendar-pane{
-    z-index: 1200
-} 
+.note{
+    font-size: 10px;
+}
+
+>>>.ui-autocomplete .ui-autocomplete-dropdown {
+    padding-bottom: 5px !important;
+}

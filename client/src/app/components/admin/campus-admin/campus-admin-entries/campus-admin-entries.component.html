@@ -41,10 +41,11 @@
     <p-header>{{selectedEntry ? selectedEntry.title : 'Nueva entrada'}}</p-header>
     <div class="container">
         <div class="container">
+            <p class="col-12">Los campos marcados con '*' son obligatorios.</p>
             <div class="form-group row">
-                <label class="col-4 col-form-label">Nombre de la entrada</label>
+                <label class="col-4 col-form-label">Nombre de la entrada*</label>
                 <div class="col-8">
-                    <input class="form-control" type="text" value="{{selectedEntry.title}}" id="name" [(ngModel)]="selectedEntry.title">
+                        <input class="form-control" type="text" value="{{selectedEntry.title}}" id="name" [(ngModel)]="selectedEntry.title" required>
                 </div>
             </div>
             <div class="form-group row">
@@ -54,26 +55,50 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-4 col-form-label">Etiquetas y palabras clave</label>
+                <label class="col-4 col-form-label">Etiquetas y palabras clave*</label>
                 <div class="col-8">
-                    <p-autoComplete [(ngModel)]="topics" [suggestions]="filteredTopics" (completeMethod)="filterTopics($event)" [minLength]="3"
-                        placeholder="Etiquetas y palabras clave" field="name" [multiple]="true">
+                    <p-autoComplete (onSelect)="addInsertedTopic($event)" (onUnselect)="addDeletedTopic($event)" [(ngModel)]="topics" [suggestions]="filteredTopics" (completeMethod)="filterTopics($event)" [minLength]="3"
+                        placeholder="Etiquetas y palabras clave" field="name" [multiple]="true" required>
                     </p-autoComplete>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-4 col-form-label">Evento</label>
+                <label class="col-4 col-form-label">Evento*</label>
                 <div class="col-8">
-                    <select class="form-control" [(ngModel)]="selectedEntry.event">
+                    <select class="form-control" [(ngModel)]="selectedEntry.event" required>
                         <option *ngFor="let event of events" [ngValue]="event.id" >{{event.name}}</option>
                     </select>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-4 col-form-label">Ponente</label>
+                <label class="col-4 col-form-label">Ponente*</label>
                 <div class="col-8">
-                    <select class="form-control" [(ngModel)]="selectedEntry.speaker_id">
+                    <select class="form-control" [(ngModel)]="selectedEntry.speaker_id" required>
                         <option *ngFor="let speaker of speakers" [ngValue]="speaker.id" >{{speaker.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Formato*</label>
+                <div class="col-8">
+                    <select class="form-control" [(ngModel)]="selectedEntry.format" required>
+                        <option *ngFor="let format of formats" [ngValue]="format.id">{{format.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Tipo de contenido*</label>
+                <div class="col-8">
+                    <select class="form-control" [(ngModel)]="selectedEntry.type" required>
+                        <option *ngFor="let type of types" [ngValue]="type.id">{{type.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Plataforma*</label>
+                <div class="col-8">
+                    <select class="form-control" [(ngModel)]="selectedEntry.platform" required>
+                        <option *ngFor="let platform of platforms" [ngValue]="platform.id">{{platform.name}}</option>
                     </select>
                 </div>
             </div>
@@ -100,3 +125,4 @@
         <button type="button" pButton icon="fa-times" style="background-color: red; border-color: red;" (click)="cancel();" label="Cancelar"></button>
     </p-footer>
 </p-dialog>
+<p-growl [(value)]="msgs"></p-growl>
