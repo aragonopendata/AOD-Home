@@ -714,28 +714,6 @@ var createEntryInCampus = function createEntryInCampus(title, description, url, 
                             if (shouldAbort(err)) {
                                 reject(err);
                             } else {
-                                logger.notice('Se procede a la insercion de la tabla relacional Contents-Speakers');
-                                const query_contents_speakers = {
-                                    text: dbQueries.DB_ADMIN_INSERT_CAMPUS_CONTENTS_SPEAKERS,
-                                    values: [resultEntry.rows[0].id, id_speaker]
-                                };
-                                client.query(query_contents_speakers, (err, result) => {
-                                    if (shouldAbort(err)) {
-                                        reject(err);
-                                    } else {
-                                        logger.notice('Entry insertado');
-                                        client.query('COMMIT', (commitError) => {
-                                            done()
-                                            if (commitError) {
-                                                reject(commitError);
-                                            } else {
-                                                logger.notice('Insercion de entry completada');
-                                                resolve(true);
-                                            }
-                                        });
-                                    }
-                                });
-                                /*
                                 logger.notice('Se procede a la insercion de la tabla relacional Contents-Topics');
                                 var aux_Topics = [];
                                 id_topics.forEach(element => {
@@ -771,7 +749,6 @@ var createEntryInCampus = function createEntryInCampus(title, description, url, 
                                         });
                                     }
                                 });
-                                */
                             }
                         });
                     }
