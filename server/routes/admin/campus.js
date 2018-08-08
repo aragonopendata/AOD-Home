@@ -319,6 +319,99 @@ router.get(constants.API_URL_ADMIN_CAMPUS_ENTRIES, function (req, res, next) {
     });
 });
 
+router.get(constants.API_URL_ADMIN_CAMPUS_FORMATS, function (req, res, next) {
+    const query = {
+        text: dbQueries.DB_ADMIN_GET_CAMPUS_FORMATS,
+        rowMode: constants.SQL_RESULSET_FORMAT
+    };
+
+    pool.on('error', (err, client) => {
+        logger.error('Error en la conexión con base de datos', err);
+        process.exit(-1);
+    });
+
+    pool.connect((err, client, done) => {
+        if (err) {
+            logger.error(err.stack);
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
+            return;
+        }
+        pool.query(query, (err, result) => {
+            done();
+            if (err) {
+                logger.error(err.stack);
+                res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
+                return;
+            } else {
+                logger.info('Filas devueltas: ' + result.rows.length);
+                res.json(result.rows);
+            }
+        });
+    });
+});
+
+router.get(constants.API_URL_ADMIN_CAMPUS_TYPES, function (req, res, next) {
+    const query = {
+        text: dbQueries.DB_ADMIN_GET_CAMPUS_TYPES,
+        rowMode: constants.SQL_RESULSET_FORMAT
+    };
+
+    pool.on('error', (err, client) => {
+        logger.error('Error en la conexión con base de datos', err);
+        process.exit(-1);
+    });
+
+    pool.connect((err, client, done) => {
+        if (err) {
+            logger.error(err.stack);
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
+            return;
+        }
+        pool.query(query, (err, result) => {
+            done();
+            if (err) {
+                logger.error(err.stack);
+                res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
+                return;
+            } else {
+                logger.info('Filas devueltas: ' + result.rows.length);
+                res.json(result.rows);
+            }
+        });
+    });
+});
+
+router.get(constants.API_URL_ADMIN_CAMPUS_PLATFORMS, function (req, res, next) {
+    const query = {
+        text: dbQueries.DB_ADMIN_GET_CAMPUS_PLATFORMS,
+        rowMode: constants.SQL_RESULSET_FORMAT
+    };
+
+    pool.on('error', (err, client) => {
+        logger.error('Error en la conexión con base de datos', err);
+        process.exit(-1);
+    });
+
+    pool.connect((err, client, done) => {
+        if (err) {
+            logger.error(err.stack);
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
+            return;
+        }
+        pool.query(query, (err, result) => {
+            done();
+            if (err) {
+                logger.error(err.stack);
+                res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': err });
+                return;
+            } else {
+                logger.info('Filas devueltas: ' + result.rows.length);
+                res.json(result.rows);
+            }
+        });
+    });
+});
+
 //endregion
 
 //region Events
@@ -528,14 +621,14 @@ router.post(constants.API_URL_ADMIN_CAMPUS_ENTRIES, function (req, res, next) {
         return;
     }
 
-    if (!content.type || !content.platform || !content.format || !content.event || !content.id_speaker) { // ADD || !content.id_topics || typeof content.id_topics != "object" 
+    if (!content.type || !content.platform || !content.format || !content.event || !content.speaker_id) { // ADD || !content.id_topics || typeof content.id_topics != "object" 
         logger.error('Input Error', 'Incorrect input');
         res.json({ status: 400, error: 'Incorrect Input' });
         return;
     }
 
     createEntryInCampus(content.title, content.description, content.url, content.thumbnail, content.format,
-        content.type, content.platform, content.event, content.id_topics, content.id_speaker).then(createEvent => {
+        content.type, content.platform, content.event, content.id_topics, content.speaker_id).then(createEvent => {
             if (createEvent) {
                 logger.info('CREACION DE ENTRY - Entry creado correctamente')
                 res.json({
@@ -568,7 +661,7 @@ router.put(constants.API_URL_ADMIN_CAMPUS_ENTRIES, function (req, res, next) {
     }
 
     updateEntryInCampus(content.title, content.description, content.url, req.file, content.format,
-        content.type, content.platform, content.event, content.id_topics, content.id_speaker, id).then(updateEvent => {
+        content.type, content.platform, content.event, content.id_topics, content.speaker_id, id).then(updateEvent => {
             if (updateEvent) {
                 logger.info('ACTUALIZACION DE ENTRY - Entry actualizado correctamente');
                 res.json({

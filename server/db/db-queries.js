@@ -104,6 +104,12 @@ exports.DB_ADMIN_GET_CAMPUS_SITES = 'SELECT id, name FROM campus.sites';
 
 exports.DB_ADMIN_GET_CAMPUS_SPEAKERS = 'SELECT id, name, description FROM campus.speakers';
 
+exports.DB_ADMIN_GET_CAMPUS_TYPES = 'SELECT id, name FROM campus.types';
+
+exports.DB_ADMIN_GET_CAMPUS_FORMATS = 'SELECT id, name FROM campus.formats';
+
+exports.DB_ADMIN_GET_CAMPUS_PLATFORMS = 'SELECT id, name FROM campus.platforms';
+
 exports.DB_ADMIN_GET_CAMPUS_TOPICS = 'SELECT id, name FROM campus.topics';
 
 exports.DB_ADMIN_GET_CAMPUS_EVENTS = 'SELECT e.id, e.name, e.description, e.date, json_build_object(\'id\', s.id, \'name\', s.name) site FROM campus.events e, campus.sites s, campus.events_sites es' +
