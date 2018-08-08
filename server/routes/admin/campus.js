@@ -621,7 +621,7 @@ router.post(constants.API_URL_ADMIN_CAMPUS_ENTRIES, function (req, res, next) {
         return;
     }
 
-    if (!content.type || !content.platform || !content.format || !content.event || !content.speaker_id) { // ADD || !content.id_topics || typeof content.id_topics != "object" 
+    if (!content.type || !content.platform || !content.format || !content.event || !content.speaker_id || !content.id_topics || typeof content.id_topics != "object") { // ADD 
         logger.error('Input Error', 'Incorrect input');
         res.json({ status: 400, error: 'Incorrect Input' });
         return;
@@ -660,8 +660,28 @@ router.put(constants.API_URL_ADMIN_CAMPUS_ENTRIES, function (req, res, next) {
         return;
     }
 
+    if (!content.topicStatus) {
+        content.topicStatus = JSON.parse(JSON.stringify({ inserts: [], deletes: null }));
+    } else {
+        if (!content.topicStatus.inserts) {
+            content.topicStatus.inserts = [];
+        }
+        if (!content.topicStatus.deletes || content.topicStatus.deletes.length == 0) {
+            content.topicStatus.deletes = null;
+        } else {
+            content.topicStatus.deletes.forEach(element => {
+                if (isNaN(Number(element))) {
+                    logger.error('Input Error', 'Incorrect input');
+                    res.json({ 'status': constants.REQUEST_ERROR_BAD_DATA, error: 'Incorrect Input' });
+                    return;
+                }
+            });
+            content.topicStatus.deletes = content.topicStatus.deletes.toString();
+        }
+    }
+
     updateEntryInCampus(content.title, content.description, content.url, req.file, content.format,
-        content.type, content.platform, content.event, content.id_topics, content.speaker_id, id).then(updateEvent => {
+        content.type, content.platform, content.event, content.topicStatus, content.speaker_id, id).then(updateEvent => {
             if (updateEvent) {
                 logger.info('ACTUALIZACION DE ENTRY - Entry actualizado correctamente');
                 res.json({
@@ -765,7 +785,7 @@ var createEntryInCampus = function createEntryInCampus(title, description, url, 
 //region updateEntryInCampus
 
 var updateEntryInCampus = function updateEntryInCampus(title, description, url, file, format,
-    type, platform, event, id_topics, id_speaker, id) {
+    type, platform, event, topicStatus, id_speaker, id) {
     return new Promise((resolve, reject) => {
         try {
             pool.connect((err, client, done) => {
@@ -792,31 +812,9 @@ var updateEntryInCampus = function updateEntryInCampus(title, description, url, 
                         if (shouldAbort(err)) {
                             reject(err);
                         } else {
-                            logger.notice('Se procede a la actualizacion de speakers');
-                            const querySpeakers = {
-                                text: dbQueries.DB_ADMIN_UPDATE_CAMPUS_ENTRIES_SPEAKERS,
-                                values: [id_speaker, id]
-                            };
-                            client.query(querySpeakers, (err, resultSpeakers) => {
-                                if (shouldAbort(err)) {
-                                    reject(err);
-                                } else {
-                                    logger.notice('Evento actualizado');
-                                    client.query('COMMIT', (commitError) => {
-                                        done();
-                                        if (commitError) {
-                                            reject(commitError);
-                                        } else {
-                                            logger.notice('Actualización del evento completada');
-                                            resolve(true);
-                                        }
-                                    });
-                                }
-                            });
-                            /*
                             logger.notice('Se procede a la eliminar todos los topics de una relacion');
                             const queryTopicsDel = {
-                                text: dbQueries.DB_ADMIN_DELETE_CAMPUS_ENTRIES_TOPICS,
+                                text: dbQueries.DB_ADMIN_DELETE_CAMPUS_ENTRIES_TOPICS + topicStatus.deletes + ')',
                                 values: [id]
                             };
                             client.query(queryTopicsDel, (err, resultDelete) => {
@@ -826,13 +824,21 @@ var updateEntryInCampus = function updateEntryInCampus(title, description, url, 
                                     logger.notice('Se procede a la insertar todos los topics');
 
                                     var aux_Topics = [];
-                                    id_topics.forEach(element => {
+                                    topicStatus.inserts.forEach(element => {
                                         aux_Topics.push("(" + Number(id) + " ," + Number(element) + ")");
                                     });
+                                    let queryTopics;
+                                    //With this, we jump de insert section in case the is no insertion requiered
+                                    if(aux_Topics.length == 0){
+                                        queryTopics = {
+                                            text: "SELECT 1"
+                                        };
+                                    }else{
+                                        queryTopics = {
+                                            text: dbQueries.DB_ADMIN_INSERT_CAMPUS_CONTENTS_TOPICS + aux_Topics
+                                        };
+                                    }
 
-                                    const queryTopics = {
-                                        text: dbQueries.DB_ADMIN_INSERT_CAMPUS_CONTENTS_TOPICS + aux_Topics
-                                    };
                                     client.query(queryTopics, (err, resultTopics) => {
                                         if (shouldAbort(err)) {
                                             reject(err);
@@ -862,7 +868,6 @@ var updateEntryInCampus = function updateEntryInCampus(title, description, url, 
                                     });
                                 }
                             });
-                            */
                         }
                     })
                 });

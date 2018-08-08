@@ -169,7 +169,7 @@ exports.DB_ADMIN_UPDATE_CAMPUS_ENTRIES = 'UPDATE campus.contents SET ' +
 										'event = COALESCE($8, event) ' +
 										'WHERE id = $9';
 
-exports.DB_ADMIN_DELETE_CAMPUS_ENTRIES_TOPICS = 'DELETE FROM campus.contents_topics WHERE id_content = $1';
+exports.DB_ADMIN_DELETE_CAMPUS_ENTRIES_TOPICS = 'DELETE FROM campus.contents_topics WHERE id_content = $1 AND id_topic IN (';
 
 exports.DB_ADMIN_UPDATE_CAMPUS_ENTRIES_SPEAKERS  = 'UPDATE campus.contents_speakers s SET id_speaker = COALESCE($1, id_speaker)' +
 										' WHERE s.id_content = $2';
