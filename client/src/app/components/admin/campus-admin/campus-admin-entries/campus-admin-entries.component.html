@@ -65,7 +65,7 @@
             <div class="form-group row">
                 <label class="col-4 col-form-label">Evento*</label>
                 <div class="col-8">
-                    <select class="form-control" [(ngModel)]="selectedEntry.event" required>
+                    <select class="form-control" [(ngModel)]="selectedEntry.event_id" required>
                         <option *ngFor="let event of events" [ngValue]="event.id" >{{event.name}}</option>
                     </select>
                 </div>
