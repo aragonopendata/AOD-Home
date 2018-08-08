@@ -365,7 +365,7 @@ router.put(constants.API_URL_ADMIN_CAMPUS_EVENTS, function (req, res, next) {
         return;
     }
 
-    var date = new Date().toISOString();
+    var date = content.date;
 
     updateEventInCampus(content.name, content.description, content.site_id, date, id).then(updateEvent => {
         if (updateEvent) {

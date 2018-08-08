@@ -1,0 +1,42 @@
+<div class="container" style="padding-left: 15%; padding-right: 15%;">
+    <p-dataTable [paginator]="true" [rows]="10" [value]="speakers" emptyMessage="{{emptyMessage}}">
+        <p-column field="name" [style]="{'width':'55%'}" header="Lista de ponentes"></p-column>
+        <p-column header="edit" header="Edición" [style]="{'width':'6%', 'text-align': 'center'}">
+            <ng-template pTemplate="body" let-speaker="rowData">
+                <button class="btn btn-primary p-2" type="button" (click)="showDialog(speaker)" data-toggle="tooltip" data-placement="top"
+                    title="Editar">
+                    <i class="fa fa-edit"></i>
+                </button>
+            </ng-template>
+        </p-column>
+        <p-footer>
+            <div class="ui-helper-clearfix" style="width:100%">
+                <button class="btn btn-primary" type="button" icon="fa-plus" (click)="addSpeaker()" style="float:left">
+                    <i class="fa fa-plus"></i> Añade un ponente nuevo
+                </button>
+            </div>
+        </p-footer>
+    </p-dataTable>
+</div>
+<p-dialog [width]="900" [(visible)]="display">
+    <p-header>{{selectedSpeaker ? selectedSpeaker.name : 'Nuevo ponente'}}</p-header>
+    <div class="container">
+        <div class="form-group row">
+            <label class="col-4 col-form-label">Nombre del ponente</label>
+            <div class="col-8">
+                <input class="form-control" type="text" value="{{selectedSpeaker.name}}" id="name" [(ngModel)]="selectedSpeaker.name">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-4 col-form-label">Descripción</label>
+            <div class="col-8">
+                <textarea style="width: 100%; height: 100px;" type="text" value="{{selectedSpeaker.description}}" id="desc" [(ngModel)]="selectedSpeaker.description"></textarea>
+            </div>
+        </div>
+    </div>
+    <p-footer>
+        <button type="button" pButton icon="fa-floppy-o" (click)="save(selectedSpeaker);" label="Guardar"></button>
+        <button type="button" pButton icon="fa-times" style="background-color: red; border-color: red;" (click)="cancel($event);"
+            label="Cancelar"></button>
+    </p-footer>
+</p-dialog>

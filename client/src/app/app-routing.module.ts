@@ -46,7 +46,7 @@ import { InfoPanelsAdminComponent } from './components/admin/global/static-conte
 import { InfoListAdminComponent } from './components/admin/global/static-content-admin/info-list-admin/info-list-admin.component';
 import { CampusAdminEventsComponent } from './components/admin/campus-admin/campus-admin-events/campus-admin-events.component';
 import { CampusAdminEntriesComponent } from './components/admin/campus-admin/campus-admin-entries/campus-admin-entries.component';
-
+import { CampusAdminSpeakersComponent } from './components/admin/campus-admin/campus-admin-speakers/campus-admin-speakers.component';
 
 
 const routes: Routes = [
@@ -116,6 +116,7 @@ const routes: Routes = [
         ]},
         { path: Constants.ROUTER_LINK_CAMPUS_ADMIN_EVENTS, component: CampusAdminEventsComponent, canActivate: [AuthGuard] },
         { path: Constants.ROUTER_LINK_CAMPUS_ADMIN_ENTRIES, component: CampusAdminEntriesComponent, canActivate: [AuthGuard] },
+        { path: Constants.ROUTER_LINK_CAMPUS_ADMIN_SPEAKERS, component: CampusAdminSpeakersComponent, canActivate: [AuthGuard] },
         { path: Constants.ROUTER_LINK_LOGSTASH, component: LogstashComponent, canActivate: [AuthGuard] },
     ]},
     //{ path: Constants.ROUTER_LINK_404, component: PageNotFoundComponent },

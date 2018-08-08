@@ -57,11 +57,16 @@ export class CampusAdminService {
 		return this.http.get(fullUrl, { headers: headers }).map(res => res.json());
 	}
 
+	public getTopics() {
+		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + '/' + Constants.ROUTER_LINK_CAMPUS_ADMIN_TOPICS;
+		let headers = this.buildRequestHeaders();
+		return this.http.get(fullUrl, { headers: headers }).map(res => res.json());
+	}
+
 	public updateEvent(event, site_id) {
 		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + '/' + Constants.ROUTER_LINK_CAMPUS_ADMIN_EVENTS;
 		let headers = this.buildRequestHeaders();
 		event['site_id'] = site_id;
-		console.log(event);
 		let requestBodyParams: any = event;
 		return this.http.put(fullUrl, JSON.stringify(requestBodyParams), { headers: headers }).map(res => res.json());
 	}
@@ -80,16 +85,69 @@ export class CampusAdminService {
 		return this.http.get(fullUrl, { headers: headers }).map(res => res.json());
 	}
 
+	public getEntriesByEvent(idEvent) {
+		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + '/' + Constants.ROUTER_LINK_CAMPUS_ADMIN_ENTRIES_BY_EVENT + '/' + idEvent;
+		let headers = this.buildRequestHeaders();
+		return this.http.get(fullUrl, { headers: headers }).map(res => res.json());
+	}
+
+	public getEntriesBySpeaker(idSpeaker) {
+		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + '/' + Constants.ROUTER_LINK_CAMPUS_ADMIN_ENTRIES_BY_SPEAKER + '/' + idSpeaker;
+		let headers = this.buildRequestHeaders();
+		return this.http.get(fullUrl, { headers: headers }).map(res => res.json());
+	}
+
 	public getEntry(id) {
 		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + '/' + Constants.ROUTER_LINK_CAMPUS_ADMIN_ENTRIES + '/' + id;
 		let headers = this.buildRequestHeaders();
 		return this.http.get(fullUrl, { headers: headers }).map(res => res.json());
 	}
-	
+
 	public getSpeakers() {
 		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + '/' + Constants.ROUTER_LINK_CAMPUS_ADMIN_SPEAKERS;
 		let headers = this.buildRequestHeaders();
 		return this.http.get(fullUrl, { headers: headers }).map(res => res.json());
+	}
+
+	public insertNewSite(site) {
+		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + '/' + Constants.ROUTER_LINK_CAMPUS_ADMIN_SITES;
+		let headers = this.buildRequestHeaders();
+		let requestBodyParams: any = this.createJsonFromString('name', site);
+		return this.http.post(fullUrl, JSON.stringify(requestBodyParams), { headers: headers }).map(res => res.json());
+	}
+	
+	public insertNewSpeaker(speaker) {
+		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + '/' + Constants.ROUTER_LINK_CAMPUS_ADMIN_SPEAKERS;
+		let headers = this.buildRequestHeaders();
+		let requestBodyParams: any = speaker;
+		return this.http.post(fullUrl, JSON.stringify(requestBodyParams), { headers: headers }).map(res => res.json());
+	}
+
+	public updateSpeaker(speaker) {
+		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + '/' + Constants.ROUTER_LINK_CAMPUS_ADMIN_SPEAKERS;
+		let headers = this.buildRequestHeaders();
+		let requestBodyParams: any = speaker;
+		return this.http.put(fullUrl, JSON.stringify(requestBodyParams), { headers: headers }).map(res => res.json());
+	}
+
+	createJsonFromString(field, value) {
+		let JSONElement: any = {};
+		JSONElement[field] = value;
+		return JSONElement;
+	}
+
+	public insertNewEntry(entry) {
+		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + '/' + Constants.ROUTER_LINK_CAMPUS_ADMIN_ENTRIES;
+		let headers = this.buildRequestHeaders();
+		let requestBodyParams: any = entry;
+		return this.http.post(fullUrl, JSON.stringify(requestBodyParams), { headers: headers }).map(res => res.json());
+	}
+
+	public updateEntry(entry) {
+		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + '/' + Constants.ROUTER_LINK_CAMPUS_ADMIN_ENTRIES + '/';
+		let headers = this.buildRequestHeaders();
+		let requestBodyParams: any = entry;
+		return this.http.put(fullUrl, JSON.stringify(requestBodyParams), { headers: headers }).map(res => res.json());
 	}
 
 }

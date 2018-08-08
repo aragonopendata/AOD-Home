@@ -35,39 +35,21 @@
         </div>
         <div class="form-group row">
             <label class="col-4 col-form-label">Localización del evento</label>
-            <div class="col-8">
-                <select class="form-control" [(ngModel)]="eventSelected.site">
-                    <option *ngFor="let site of sites">{{site.name}}</option>
-                </select>
+            <div class="col-4">
+                <p-autoComplete #auto [(ngModel)]="eventSelected.site" [suggestions]="filteredSites" (completeMethod)="filterSites($event)"
+                    [minLength]="1" placeholder="Localización" field="name" [dropdown]="true" [style]="{'position': 'fixed', 'overflow': 'visible', 'z-index': '1000'}">
+                </p-autoComplete>
+            </div>
+            <div class="col-4">
+                <button pButton type="button" icon="fa-plus" (click)="confirm()" label="Añadir nueva localización"></button>
             </div>
         </div>
         <div class="form-group row">
-            <label class="col-4 col-form-label">Contenidos del evento</label>
+            <label class="col-4 col-form-label">Fecha del evento</label>
             <div class="col-8">
-                <mat-list>
-                    <mat-list-item *ngFor="let content of contentsPaginated">
-                        <span class="fa fa-angle-double-right">
-                            {{content.title}}
-                        </span>
-                    </mat-list-item>
-                </mat-list>
-                <p-paginator [alwaysShow]="false" rows="3" [totalRecords]="totalRecords" (onPageChange)="paginate($event)" #p></p-paginator>
+                <p-calendar [inline]="true" [yearNavigator]="true" yearRange="1900:2100" [(ngModel)]="eventSelected.date" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
             </div>
         </div>
-        <!--<div class="form-group row">
-          <label class="col-4 col-form-label">Fecha</label>
-          <div class="col-8">
-              <mat-form-field>
-                    <input matInput value="{{eventSelected.date}}" [matDatepicker]="picker" placeholder="Choose a date">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker [startAt]="eventSelected.date"></mat-datepicker>
-                </mat-form-field>
-                <input value="{{eventSelected.date}}" [matDatepicker]="myDatepicker" [(ngModel)]="eventSelected.date">
-                <mat-datepicker-toggle [for]="myDatepicker"></mat-datepicker-toggle>
-                    <mat-datepicker #myDatepicker>
-                </mat-datepicker>
-          </div>
-        </div>-->
     </div>
     <p-footer>
         <button type="button" pButton icon="fa-floppy-o" (click)="save(eventSelected);" label="Guardar"></button>
@@ -75,3 +57,5 @@
             label="Cancelar"></button>
     </p-footer>
 </p-dialog>
+
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" width="425"></p-confirmDialog>

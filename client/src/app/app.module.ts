@@ -11,10 +11,9 @@ import {
 	CalendarModule, InputSwitchModule, EditorModule, DataListModule, TooltipModule, 
 	AutoCompleteModule, ProgressBarModule, RadioButtonModule, CheckboxModule, FileUploadModule, 
 	ToolbarModule, TabViewModule, PaginatorModule, AccordionModule, MessagesModule, GrowlModule,
-	ConfirmDialogModule, ConfirmationService, ChipsModule } from 'primeng/primeng';
+	ConfirmDialogModule, ConfirmationService } from 'primeng/primeng';
 import { Logger, Options } from 'angular2-logger/core';
 import { Constants } from './app.constants';
-import { MatListModule, MatDatepickerModule, MatNativeDateModule, MatFormFieldModule, MatInputModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
 // Components
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -88,6 +87,7 @@ import { InfoPanelsAdminComponent } from './components/admin/global/static-conte
 import { InfoListAdminComponent } from './components/admin/global/static-content-admin/info-list-admin/info-list-admin.component';
 import { CampusAdminEventsComponent } from './components/admin/campus-admin/campus-admin-events/campus-admin-events.component';
 import { CampusAdminEntriesComponent } from './components/admin/campus-admin/campus-admin-entries/campus-admin-entries.component';
+import { CampusAdminSpeakersComponent } from './components/admin/campus-admin/campus-admin-speakers/campus-admin-speakers.component';
 
 @NgModule({
 	declarations: [
@@ -147,7 +147,8 @@ import { CampusAdminEntriesComponent } from './components/admin/campus-admin/cam
 		InfoPanelsAdminComponent,
 		InfoListAdminComponent,
 		CampusAdminEventsComponent,
-		CampusAdminEntriesComponent
+		CampusAdminEntriesComponent,
+		CampusAdminSpeakersComponent
   	],
   	imports: [
 		BrowserModule,
@@ -182,13 +183,7 @@ import { CampusAdminEntriesComponent } from './components/admin/campus-admin/cam
 		AccordionModule,
 		MessagesModule,
 		GrowlModule,
-		TinyMceModule.forRoot(tinymceDefaultSettings()),
-		MatDatepickerModule,
-		MatNativeDateModule,
-		MatFormFieldModule,
-		MatInputModule,
-		MatListModule,
-		ChipsModule
+		TinyMceModule.forRoot(tinymceDefaultSettings())
 	],
 	providers: [
 		Logger,
@@ -212,7 +207,6 @@ import { CampusAdminEntriesComponent } from './components/admin/campus-admin/cam
 		AodCoreAdminService,
 		ConfirmationService,
 		GoogleAnalyticsEventsService,
-		{provide: MAT_DATE_LOCALE, useValue: 'es-ES'},
 	],
 	bootstrap: [AppComponent]
 })
