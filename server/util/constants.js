@@ -48,6 +48,7 @@ exports.API_URL_GA_OD_CORE_VIEWS = '/views';
 exports.API_URL_STATIC_CONTENT_INFO_OPEN_DATA = '/static-content/info/open-data';
 exports.API_URL_STATIC_CONTENT_INFO_APPS = '/static-content/info/applications';
 exports.API_URL_STATIC_CONTENT_INFO_EVENTS = '/static-content/info/events';
+exports.API_URL_STATIC_CONTENT_INFO_CONOCIMIENTO = '/static-content/info/conocimiento';
 exports.API_URL_STATIC_CONTENT_INFO_COLLABORATION = '/static-content/info/collaboration';
 exports.API_URL_STATIC_CONTENT_TOOLS_DEVELOPERS = '/static-content/tools/developers';
 exports.API_URL_STATIC_CONTENT_TOOLS_APIS = '/static-content/tools/apis';
@@ -89,6 +90,7 @@ exports.STATIC_CONTENT_SUBSECTION_TITLE_COLLABORATION = 'COLABORA';
 exports.STATIC_CONTENT_SUBSECTION_TITLE_DEVELOPERS = 'DESARROLLADORES';
 exports.STATIC_CONTENT_SUBSECTION_TITLE_APIS = 'APIS';
 exports.STATIC_CONTENT_SUBSECTION_TITLE_SPARQL = 'SPARQL';
+exports.STATIC_CONTENT_SUBSECTION_TITLE_CONOCIMIENTO = 'CONOCIMIENTO';
 /* ADMIN CONSTANTS */
 exports.APPLICATION_NAME_CKAN = 'CKAN';
 /* SQL CONSTANTS */

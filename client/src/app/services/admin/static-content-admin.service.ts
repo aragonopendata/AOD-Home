@@ -65,7 +65,7 @@ export class StaticContentAdminService {
 	getWebURL(sectionName: String){
 		var auxUrl = "";
 		if (sectionName == 'open-data' || sectionName == 'applications'
-		|| sectionName == 'events'){
+		|| sectionName == 'events' || sectionName == 'conocimiento'){
 			auxUrl = Constants.SERVER_API_LINK_STATIC_CONTENT_INFO;
 		}else {
 			auxUrl = Constants.SERVER_API_LINK_STATIC_CONTENT_TOOLS;
@@ -76,7 +76,7 @@ export class StaticContentAdminService {
 	getAdminURL(sectionName: String){
 		var auxUrl = "";
 		if (sectionName == 'open-data' || sectionName == 'applications'
-		|| sectionName == 'events'){
+		|| sectionName == 'events' || sectionName == 'conocimiento'){
 			auxUrl = Constants.SERVER_API_LINK_ADMIN_STATIC_CONTENT_INFO;
 		}else {
 			auxUrl = Constants.SERVER_API_LINK_ADMIN_STATIC_CONTENT_TOOLS;

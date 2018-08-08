@@ -50,12 +50,10 @@ export class HomeAdminComponent implements OnInit {
 	navigate(sectionName: string){
 		if (sectionName == 'open-data' || sectionName == 'apis'
 		|| sectionName == 'events' || sectionName == 'developers'
-		||sectionName == 'sparql'){
+		||sectionName == 'sparql' || sectionName == 'conocimiento'){
 			InfoPanelsAdminComponent.doUpdate.next(sectionName);
-			//this.router.navigate(['/' + Constants.SERVER_API_LINK_STATIC_CONTENT_INFO, sectionName]);
 		}else {
 			InfoListAdminComponent.doUpdate.next(sectionName);
-			//this.router.navigate(['/' + Constants.SERVER_API_LINK_STATIC_CONTENT_TOOLS, sectionName]);
 		}
 	}
 
