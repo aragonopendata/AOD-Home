@@ -516,7 +516,7 @@ var createEventInCampus = function createEventInCampus(name, description, site_i
                                 logger.notice('Se procede a la insercion de la tabla relacional Sites-Events');
                                 const query_events_sites = {
                                     text: dbQueries.DB_ADMIN_INSERT_CAMPUS_EVENTS_SITES,
-                                    values: [resultEvent.rows[0].id, resultSites.site_id]
+                                    values: [resultEvent.rows[0].id, site_id]
                                 };
                                 client.query(query_events_sites, (err, result) => {
                                     if (shouldAbort(err)) {
