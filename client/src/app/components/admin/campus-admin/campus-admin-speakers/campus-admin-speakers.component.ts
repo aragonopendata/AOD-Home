@@ -12,8 +12,10 @@ export class CampusAdminSpeakersComponent implements OnInit {
     selectedSpeaker: Speaker;
     display: boolean = false;
     isNewSpeaker: boolean = false;
+    emptyMessage: string;
     constructor(private campusAdminService: CampusAdminService) {
         this.selectedSpeaker = new Speaker();
+        this.emptyMessage = 'No se han encontrado resultados';
     }
 
     ngOnInit() {

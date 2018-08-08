@@ -13,6 +13,8 @@ import { DatePipe } from '@angular/common';
 })
 export class CampusAdminEventsComponent implements OnInit {
 
+  emptyMessage: string;
+
   events: Event[];
   eventSelected: Event;
   isNewEvent: boolean;
@@ -33,6 +35,7 @@ export class CampusAdminEventsComponent implements OnInit {
     private campusAdminService: CampusAdminService,
     private confirmationService: ConfirmationService,
     private datePipe: DatePipe) {
+    this.emptyMessage = 'No se han encontrado resultados';
     this.display = false;
     this.eventSelected = new Event();
   }

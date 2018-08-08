@@ -40,11 +40,13 @@ export class CampusAdminEntriesComponent implements OnInit {
     topicStatusInserts: number[] = [];
     topicStatusDeletes: number[] = [];
     msgs: any[];
+    emptyMessage: string;
 
     constructor(private campusAdminService: CampusAdminService, public sanitizer: DomSanitizer) {
         this.display = false;
         this.entries = [];
         this.selectedEntry = new Content();
+        this.emptyMessage = 'No se han encontrado resultados';
     }
 
     ngOnInit() {
@@ -192,7 +194,7 @@ export class CampusAdminEntriesComponent implements OnInit {
     validation(entry) {
         let validated = false;
         if (entry.title && entry.platform && entry.format ||
-            entry.event && entry.speaker_id && entry.topics) {
+            entry.event_id && entry.speaker_id && entry.topics) {
             validated = true;
         }
         return validated;

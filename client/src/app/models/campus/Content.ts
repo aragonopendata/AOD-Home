@@ -11,5 +11,6 @@ export class Content{
     platform: string;
     event_id: number;
     event_name: string;
-    
+    speaker_id: number;
+    type_id: number;
 }
