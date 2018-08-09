@@ -1,5 +1,5 @@
-<div class="container" style="padding-left: 15%; padding-right: 15%;">
-    <div class="row">
+<div class="container">
+    <div class="row search">
         <div *ngIf="searchOptionEvents" class="search col-8">
             <select class="form-control" [(ngModel)]="selectedEvent" (change)="getEntriesByEvent()">
                 <option *ngFor="let event of searchByEvent" [ngValue]="event.value">{{event.label}}</option>
@@ -16,7 +16,7 @@
             </select>
         </div>
     </div>
-    <div>
+    <div class="row">
         <p-dataTable [paginator]="true" [rows]="10" [value]="entries" emptyMessage="{{emptyMessage}}">
             <p-column field="title" [style]="{'width':'55%'}" header="Lista de contenidos"></p-column>
             <p-column header="edit" header="Edición" [style]="{'width':'6%', 'text-align': 'center'}">
