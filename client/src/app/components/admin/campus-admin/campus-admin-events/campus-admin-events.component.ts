@@ -72,7 +72,9 @@ export class CampusAdminEventsComponent implements OnInit {
 
   addEvent() {
     this.isNewEvent = true;
-    this.showDialog(new Event());
+    this.eventSelected = new Event();
+    this.eventSelected.date = new Date();
+    this.showDialog(this.eventSelected);
   }
 
   save(event) {
@@ -85,6 +87,8 @@ export class CampusAdminEventsComponent implements OnInit {
     }
     this.isNewEvent = false;
     this.display = !this.display;
+    this.eventSelected = new Event();
+    this.eventSelected.date = new Date(event.date);
   }
 
   filterSites(event) {
