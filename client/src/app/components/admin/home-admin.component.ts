@@ -20,6 +20,7 @@ export class HomeAdminComponent implements OnInit {
 	user: any;
 	showUsersMenu: boolean = false;
 	showAnalyticsMenu: boolean = false;
+	showContentEditionMenu: boolean = false;
 
 	constructor(private usersAdminService: UsersAdminService, private authenticationService: AuthenticationService, private loginService: LoginService, private router: Router) {
 		this.routerLinkLogin = Constants.ROUTER_LINK_LOGIN;
@@ -37,6 +38,7 @@ export class HomeAdminComponent implements OnInit {
 		if(this.user.rol == Constants.ADMIN_USER_ROL_GLOBAL_ADMIN){
 			this.showUsersMenu = true;
 			this.showAnalyticsMenu = true;
+			this.showContentEditionMenu = true;
 		}
 	}
 

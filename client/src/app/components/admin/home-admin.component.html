@@ -54,7 +54,7 @@
 					</a>
 				</div>
 			</li>
-			<li class="nav-item dropdown">
+			<li *ngIf="showContentEditionMenu" class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					Contenido estático
 				</a>
@@ -79,7 +79,7 @@
 					</a>
 				</div>
 			</li>
-			<li class="nav-item dropdown">
+			<li *ngIf="showContentEditionMenu" class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">AOD Campus<span class="sr-only"></span></a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 					<a class="dropdown-item" routerLink="/admin/campus-admin/events" routerLinkActive="active"><i class="fa fa-caret-right"></i>
