@@ -37,7 +37,7 @@
             <label class="col-4 col-form-label">Localización del evento</label>
             <div class="col-4">
                 <p-autoComplete #auto [(ngModel)]="eventSelected.site" [suggestions]="filteredSites" (completeMethod)="filterSites($event)"
-                    [minLength]="1" placeholder="Localización" field="name" [dropdown]="true" [style]="{'position': 'fixed', 'overflow': 'visible', 'z-index': '1000'}">
+                    [minLength]="1" placeholder="Localización" field="name" [dropdown]="true">
                 </p-autoComplete>
             </div>
             <div class="col-4">

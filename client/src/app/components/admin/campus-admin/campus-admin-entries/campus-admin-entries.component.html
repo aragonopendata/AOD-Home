@@ -65,7 +65,7 @@
             <div class="form-group row">
                 <label class="col-4 col-form-label">Evento*</label>
                 <div class="col-8">
-                    <select class="form-control" [(ngModel)]="selectedEntry.event_id" required>
+                    <select class="form-control" [(ngModel)]="selectedEntry.event" required>
                         <option *ngFor="let event of events" [ngValue]="event.id" >{{event.name}}</option>
                     </select>
                 </div>
@@ -89,7 +89,7 @@
             <div class="form-group row">
                 <label class="col-4 col-form-label">Tipo de contenido*</label>
                 <div class="col-8">
-                    <select class="form-control" [(ngModel)]="selectedEntry.type_id" required>
+                    <select class="form-control" [(ngModel)]="selectedEntry.type" required>
                         <option *ngFor="let type of types" [ngValue]="type.id">{{type.name}}</option>
                     </select>
                 </div>

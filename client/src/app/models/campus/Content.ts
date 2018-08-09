@@ -9,8 +9,9 @@ export class Content{
     format: string;
     topics: Topic[];
     platform: string;
+    event: number;
     event_id: number;
     event_name: string;
     speaker_id: number;
-    type_id: number;
+    type: number;
 }

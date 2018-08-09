@@ -5,3 +5,7 @@
 >>>.ui-autocomplete .ui-autocomplete-dropdown {
     padding-bottom: 5px !important;
 }
+
+>>>.ui-autocomplete .ui-autocomplete-input {
+    padding-right: 0;
+}

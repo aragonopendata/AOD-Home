@@ -194,7 +194,7 @@ export class CampusAdminEntriesComponent implements OnInit {
     validation(entry) {
         let validated = false;
         if (entry.title && entry.platform && entry.format ||
-            entry.event_id && entry.speaker_id && entry.topics) {
+            entry.event && entry.speaker_id && entry.topics) {
             validated = true;
         }
         return validated;
