@@ -171,7 +171,6 @@ export class CampusAdminEntriesComponent implements OnInit {
         if (this.validation(entry)) {
             if (this.isNewEntry) {
                 let id_topics = [];
-                entry.topics = [];
                 entry.topics.forEach(topic => {
                     id_topics.push(topic.id);
                 });
@@ -193,8 +192,8 @@ export class CampusAdminEntriesComponent implements OnInit {
 
     validation(entry: Content) {
         let validated = false;
-        if (entry.title === null && entry.platform === null && entry.format === null ||
-            entry.event === null && entry.speaker_id === null && entry.topics === null) {
+        if (entry.title != null && entry.platform != null && entry.format != null &&
+            entry.event != null && entry.speaker_id != null && entry.topics != null && entry.title.length > 0 && entry.topics.length > 0) {
             validated = true;
         }
         return validated;
