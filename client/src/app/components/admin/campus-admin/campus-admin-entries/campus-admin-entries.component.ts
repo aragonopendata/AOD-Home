@@ -167,7 +167,7 @@ export class CampusAdminEntriesComponent implements OnInit {
         return self.indexOf(value) === index;
     }
 
-    save(entry) {
+    save(entry: Content) {
         if (this.validation(entry)) {
             if (this.isNewEntry) {
                 let id_topics = [];
@@ -191,10 +191,10 @@ export class CampusAdminEntriesComponent implements OnInit {
         }
     }
 
-    validation(entry) {
+    validation(entry: Content) {
         let validated = false;
-        if (entry.title && entry.platform && entry.format ||
-            entry.event && entry.speaker_id && entry.topics) {
+        if (entry.title === null && entry.platform === null && entry.format === null ||
+            entry.event === null && entry.speaker_id === null && entry.topics === null) {
             validated = true;
         }
         return validated;
