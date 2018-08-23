@@ -1,3 +1,20 @@
+<div class="container" *ngIf="errorTitle">
+    <div class="alert alert-info" role="alert">
+        <div class="row">
+            <div class="col-xs-3">
+                <i class="fa fa-exclamation-triangle fa-5x" style="margin:15px;color: #5ea2ba;"></i>
+            </div>
+            <div class="col-xs-9">
+                <h1>{{errorTitle}}</h1>
+                <h2>{{errorMessage}}</h2>
+                <a class="mail" href="mailto:opendata@aragon.es">
+                    <h2>
+                        <i class="fa fa-envelope-o"></i> Contactar con el Administrador</h2>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container">
     <p-dataTable [paginator]="true" [rows]="10" [value]="events" emptyMessage="{{emptyMessage}}">
         <p-column field="name" [style]="{'width':'55%'}" header="Lista de eventos"></p-column>
@@ -21,8 +38,9 @@
 <p-dialog [width]="900" [(visible)]="display">
     <p-header>{{eventSelected ? eventSelected.name : 'Nuevo evento'}}</p-header>
     <div class="container">
+        <p class="col-12">Los campos marcados con '*' son obligatorios.</p>
         <div class="form-group row">
-            <label class="col-4 col-form-label">Nombre del evento</label>
+            <label class="col-4 col-form-label">Nombre del evento*</label>
             <div class="col-8">
                 <input class="form-control" type="text" value="{{eventSelected.name}}" id="name" [(ngModel)]="eventSelected.name">
             </div>
@@ -34,7 +52,7 @@
             </div>
         </div>
         <div class="form-group row">
-            <label class="col-4 col-form-label">Localización del evento</label>
+            <label class="col-4 col-form-label">Localización del evento*</label>
             <div class="col-4">
                 <p-autoComplete #auto [(ngModel)]="eventSelected.site" [suggestions]="filteredSites" (completeMethod)="filterSites($event)"
                     [minLength]="1" placeholder="Localización" field="name" [dropdown]="true">
@@ -45,9 +63,9 @@
             </div>
         </div>
         <div class="form-group row">
-            <label class="col-4 col-form-label">Fecha del evento</label>
+            <label class="col-4 col-form-label">Fecha del evento*</label>
             <div class="col-8">
-                <p-calendar [inline]="true" [yearNavigator]="true" yearRange="1900:2100" [(ngModel)]="eventSelected.date" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
+                <p-calendar [locale]="es" [inline]="true" [yearNavigator]="true" yearRange="1900:2100" dateFormat="dd/mm/yy" [(ngModel)]="eventSelected.date" [showIcon]="true"></p-calendar>
             </div>
         </div>
     </div>
@@ -59,3 +77,4 @@
 </p-dialog>
 
 <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" width="425"></p-confirmDialog>
+<p-growl [(value)]="messages"></p-growl>

@@ -6,6 +6,7 @@ import { Event } from '../../../../models/campus/Event';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SelectItem } from 'primeng/primeng';
 import { Topic } from '../../../../models/campus/Topic';
+import { Constants } from '../../../../app.constants';
 
 @Component({
     selector: 'app-campus-admin-entries',
@@ -14,9 +15,15 @@ import { Topic } from '../../../../models/campus/Topic';
 })
 export class CampusAdminEntriesComponent implements OnInit {
 
+    errorTitle: string;
+    errorMessage: string;
+    openDataErrorTitle: string;
+    openDataErrorMessage: string;
+
     display: boolean;
     isNewEntry: boolean = false;
     entries: Content[];
+    entriesCopy: Content[];
     selectedEntry: Content;
     topics: any[] = [];
     events: Event[] = [];
@@ -39,8 +46,10 @@ export class CampusAdminEntriesComponent implements OnInit {
     topicStatus: any = {};
     topicStatusInserts: number[] = [];
     topicStatusDeletes: number[] = [];
-    msgs: any[];
+    messages: any[];
     emptyMessage: string;
+    uniqueTopicStatusInserts: number[];
+    uniqueTopicStatusDeletes: any[];
 
     constructor(private campusAdminService: CampusAdminService, public sanitizer: DomSanitizer) {
         this.display = false;
@@ -50,6 +59,8 @@ export class CampusAdminEntriesComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.openDataErrorTitle = Constants.OPEN_DATA_STATIC_CONTENT_ERROR_TITLE;
+        this.openDataErrorMessage = Constants.OPEN_DATA_STATIC_CONTENT_ERROR_MESSAGE;
         this.getEntries();
         this.setSearchTypes();
         this.setEventSearch();
@@ -77,14 +88,26 @@ export class CampusAdminEntriesComponent implements OnInit {
 
     getEntries() {
         this.campusAdminService.getEntries().subscribe(result => {
-            this.entries = result;
+            try {
+                this.entries = result;
+            } catch{
+                console.error('Error: getEntries() - campus-admin-entries.component.ts');
+                this.errorTitle = this.openDataErrorTitle;
+                this.errorMessage = this.openDataErrorMessage;
+            }
         });
     }
 
     getEntriesByEvent() {
         if (this.selectedEvent) {
             this.campusAdminService.getEntriesByEvent(this.selectedEvent).subscribe(result => {
-                this.entries = result;
+                try {
+                    this.entries = result;
+                } catch{
+                    console.error('Error: getEntriesByEvent() - campus-admin-entries.component.ts');
+                    this.errorTitle = this.openDataErrorTitle;
+                    this.errorMessage = this.openDataErrorMessage;
+                }
             });
         } else {
             this.getEntries();
@@ -94,7 +117,13 @@ export class CampusAdminEntriesComponent implements OnInit {
     getEntriesBySpeaker() {
         if (this.selectedSpeaker) {
             this.campusAdminService.getEntriesBySpeaker(this.selectedSpeaker).subscribe(result => {
-                this.entries = result;
+                try {
+                    this.entries = result;
+                } catch{
+                    console.error('Error: getEntriesBySpeaker() - campus-admin-entries.component.ts');
+                    this.errorTitle = this.openDataErrorTitle;
+                    this.errorMessage = this.openDataErrorMessage;
+                }
             });
         } else {
             this.getEntries();
@@ -102,58 +131,96 @@ export class CampusAdminEntriesComponent implements OnInit {
     }
 
     getEntry(id) {
+        this.topicStatusInserts = [];
+        this.topicStatusDeletes = [];
         this.campusAdminService.getEntry(id).subscribe(result => {
-            this.selectedEntry = result;
-            this.topics = [];
-            if (this.selectedEntry.topics) {
-                this.selectedEntry.topics.forEach(topic => {
-                    this.topics.push({ id: topic.id, name: topic.name });
-                });
+            try {
+                this.selectedEntry = result;
+                this.topics = [];
+                if (this.selectedEntry.topics) {
+                    this.selectedEntry.topics.forEach(topic => {
+                        this.topics.push({ id: topic.id, name: topic.name });
+                    });
+                }
+            } catch{
+                console.error('Error: getEntry() - campus-admin-entries.component.ts');
+                this.errorTitle = this.openDataErrorTitle;
+                this.errorMessage = this.openDataErrorMessage;
             }
         });
     }
 
     getEvents() {
         this.campusAdminService.getEvents().subscribe(result => {
-            this.events = result;
-            this.events.forEach(event => {
-                this.searchByEvent.push({ value: event.id, label: event.name });
-            });
+            try {
+                this.events = result;
+                this.events.forEach(event => {
+                    this.searchByEvent.push({ value: event.id, label: event.name });
+                });
+            } catch{
+                console.error('Error: getEvents() - campus-admin-entries.component.ts');
+                this.errorTitle = this.openDataErrorTitle;
+                this.errorMessage = this.openDataErrorMessage;
+            }
         });
     }
 
     getSpeakers() {
         this.campusAdminService.getSpeakers().subscribe(result => {
-            this.speakers = result;
-            this.speakers.forEach(speaker => {
-                this.searchBySpeaker.push({ value: speaker.id, label: speaker.name });
-            });
+            try {
+                this.speakers = result;
+                this.speakers.forEach(speaker => {
+                    this.searchBySpeaker.push({ value: speaker.id, label: speaker.name });
+                });
+            } catch{
+                console.error('Error: getSpeakers() - campus-admin-entries.component.ts');
+                this.errorTitle = this.openDataErrorTitle;
+                this.errorMessage = this.openDataErrorMessage;
+            }
         });
     }
 
     getFormats() {
         this.campusAdminService.getFormats().subscribe(result => {
-            this.formats = result;
+            try {
+                this.formats = result;
+            } catch{
+                console.error('Error: getFormats() - campus-admin-entries.component.ts');
+                this.errorTitle = this.openDataErrorTitle;
+                this.errorMessage = this.openDataErrorMessage;
+            }
         });
     }
 
     getTypes() {
         this.campusAdminService.getTypes().subscribe(result => {
-            this.types = result;
+            try {
+                this.types = result;
+            } catch{
+                console.error('Error: getTypes() - campus-admin-entries.component.ts');
+                this.errorTitle = this.openDataErrorTitle;
+                this.errorMessage = this.openDataErrorMessage;
+            }
         });
     }
 
     getPlatforms() {
         this.campusAdminService.getPlatforms().subscribe(result => {
-            this.platforms = result;
+            try {
+                this.platforms = result;
+            } catch{
+                console.error('Error: getPlatforms() - campus-admin-entries.component.ts');
+                this.errorTitle = this.openDataErrorTitle;
+                this.errorMessage = this.openDataErrorMessage;
+            }
         });
     }
 
     addEntry() {
         this.isNewEntry = true;
-        let newEntry = new Content();
-        newEntry.topics = [];
-        this.showDialog(newEntry);
+        this.selectedEntry = new Content();
+        this.selectedEntry.topics = [];
+        this.showDialog(this.selectedEntry);
     }
 
     showDialog(entry) {
@@ -171,29 +238,30 @@ export class CampusAdminEntriesComponent implements OnInit {
         if (this.validation(entry)) {
             if (this.isNewEntry) {
                 let id_topics = [];
-                entry.topics.forEach(topic => {
-                    id_topics.push(topic.id);
-                });
-                this.campusAdminService.insertNewEntry(entry, id_topics).subscribe();
+                this.setIdTopics(entry, id_topics);
+                this.callInsertEntryService(entry, id_topics);
             } else {
-                let uniqueTopicStatusInserts = this.topicStatusInserts.filter(this.isRepeated);
-                let uniqueTopicStatusDeletes = this.topicStatusDeletes.filter(this.isRepeated);
-                this.topicStatus['inserts'] = uniqueTopicStatusInserts;
-                this.topicStatus['deletes'] = uniqueTopicStatusDeletes;
-                this.campusAdminService.updateEntry(entry, this.topicStatus).subscribe();
+                this.setTopicStatus();
+                this.callUpdateEntryService(entry);
             }
             this.isNewEntry = false;
             this.display = !this.display;
-            this.getEntries();
         } else {
-            this.showError();
+            this.showMessage('warn',
+                '¡ATENCIÓN!',
+                'No se han introducido todos los campos obligatorios'
+            );
         }
     }
 
     validation(entry: Content) {
         let validated = false;
-        if (entry.title != null && entry.platform != null && entry.format != null &&
-            entry.event != null && entry.speaker_id != null && entry.topics != null && entry.title.length > 0 && entry.topics.length > 0) {
+        if (entry.title != null && entry.title != undefined && entry.title.length > 0 &&
+            entry.platform != null && entry.platform != undefined &&
+            entry.format != null && entry.format != undefined &&
+            entry.event != null && entry.event != undefined &&
+            entry.speaker_id != null && entry.topics != undefined &&
+            entry.topics != null && entry.topics != undefined && entry.topics.length > 0) {
             validated = true;
         }
         return validated;
@@ -253,28 +321,84 @@ export class CampusAdminEntriesComponent implements OnInit {
     }
 
     addInsertedTopic(event) {
-        if (this.isNewEntry) {
-            this.setTopic(event);
-        } else {
-            this.topicStatusInserts.push(event.id);
-        }
+        this.selectedEntry.topics.push({ id: event.id, name: event.name });
+        this.topicStatusInserts.push(event.id);
     }
 
     setTopic(event) {
         let topic: Topic = new Topic();
         topic.id = event.id;
         topic.name = event.name;
-        this.selectedEntry.topics = [];
         this.selectedEntry.topics.push(topic);
     }
-    
+
+    setIdTopics(entry, id_topics) {
+        entry.topics.forEach(topic => {
+            id_topics.push(topic.id);
+        });
+    }
+
+    setTopicStatus() {
+        this.uniqueTopicStatusInserts = this.topicStatusInserts.filter(this.isRepeated);
+        this.uniqueTopicStatusDeletes = this.topicStatusDeletes.filter(this.isRepeated);
+        this.topicStatus['inserts'] = this.uniqueTopicStatusInserts;
+        this.topicStatus['deletes'] = this.uniqueTopicStatusDeletes;
+    }
+
     addDeletedTopic(event) {
+        this.selectedEntry.topics.splice(this.topics.indexOf(event), 1);
         this.topicStatusDeletes.push(event.id);
     }
 
-    showError() {
-        this.msgs = [];
-        this.msgs.push({ severity: 'error', summary: 'Error de validación', detail: 'No se han introducido todos los campos obligatorios.' });
+    callInsertEntryService(entry, id_topics) {
+        this.campusAdminService.insertNewEntry(entry, id_topics).subscribe(result => {
+            if (result.status == 200 && result.success) {
+                let auxEntry = new Content();
+                auxEntry.id = result.id;
+                auxEntry.title = entry.title;
+                this.entries.push(auxEntry);
+                this.refreshTable();
+                this.showMessage('success',
+                    'Inserción de entrada',
+                    'Entrada añadida correctamente'
+                );
+            } else {
+                this.showMessage('error',
+                    'Inserción de entrada',
+                    'Error al añadir la entrada'
+                );
+            }
+        });
+    }
+
+    callUpdateEntryService(entry) {
+        this.campusAdminService.updateEntry(entry, this.topicStatus).subscribe(result => {
+            if (result.status == 200 && result.success) {
+                this.showMessage('success',
+                    'Actualización de entrada',
+                    'Entrada actualizada correctamente'
+                );
+            } else {
+                this.showMessage('error',
+                    'Actualización de entrada',
+                    'Error al actualizar la entrada'
+                );
+            }
+        });
+    }
+
+    showMessage(severity, summary, detail) {
+        this.messages = [];
+        this.messages.push({
+            severity: severity,
+            summary: summary,
+            detail: detail
+        });
+    }
+
+    refreshTable() {
+        this.entriesCopy = Object.assign([], this.entries);
+        this.entries = this.entriesCopy;
     }
 
 }

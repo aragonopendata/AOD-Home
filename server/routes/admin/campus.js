@@ -424,15 +424,14 @@ router.post(constants.API_URL_ADMIN_CAMPUS_EVENTS, function (req, res, next) {
         return;
     }
 
-    var date = new Date().toISOString();
-
-    createEventInCampus(content.name, content.description, content.site_id, date).then(createEvent => {
+    createEventInCampus(content.name, content.description, content.site_id, content.date).then(createEvent => {
         if (createEvent) {
             logger.info('CREACION DE EVENTO - Evento creado correctamente')
             res.json({
                 'status': constants.REQUEST_REQUEST_OK,
                 'success': true,
-                'result': 'CREACION DE EVENTO - Evento creado correctamente'
+                'result': 'CREACION DE EVENTO - Evento creado correctamente',
+                'id': createEvent
             });
         } else {
             logger.error('CREACION DE EVENTO - Error al crear el evento en base de datos: ', error);
@@ -529,7 +528,7 @@ var createEventInCampus = function createEventInCampus(name, description, site_i
                                                 reject(commitError);
                                             } else {
                                                 logger.notice('Insercion del evento completada');
-                                                resolve(true);
+                                                resolve(resultEvent.rows[0].id);
                                             }
                                         });
                                     }
@@ -634,7 +633,8 @@ router.post(constants.API_URL_ADMIN_CAMPUS_ENTRIES, function (req, res, next) {
                 res.json({
                     'status': constants.REQUEST_REQUEST_OK,
                     'success': true,
-                    'result': 'CREACION DE ENTRY - Entry creado correctamente'
+                    'result': 'CREACION DE ENTRY - Entry creado correctamente',
+                    'id': createEvent
                 });
             } else {
                 logger.error('CREACION DE ENTRY - Error al crear el entry en base de datos: ', error);
@@ -762,7 +762,7 @@ var createEntryInCampus = function createEntryInCampus(title, description, url, 
                                                         reject(commitError);
                                                     } else {
                                                         logger.notice('Insercion de entry completada');
-                                                        resolve(true);
+                                                        resolve(resultEntry.rows[0].id);
                                                     }
                                                 });
                                             }
