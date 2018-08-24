@@ -75,9 +75,17 @@ export class CampusAdminService {
 		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + '/' + Constants.ROUTER_LINK_CAMPUS_ADMIN_EVENTS;
 		let headers = this.buildRequestHeaders();
 		event['site_id'] = site_id;
-		event.date = new Date(event.date).toLocaleDateString();
+		this.formatDate(event);
 		let requestBodyParams: any = event;
 		return this.http.post(fullUrl, JSON.stringify(requestBodyParams), { headers: headers }).map(res => res.json());
+	}
+
+	formatDate(event){
+		let eventDate = new Date(event.date);
+		let day = eventDate.getDate();
+		let month = eventDate.getMonth() + 1;
+		let year = eventDate.getFullYear();
+		event.date = year + '-' + month + '-' + day;
 	}
 
 	public getEntries() {
