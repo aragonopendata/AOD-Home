@@ -199,7 +199,6 @@ export class CampusAdminEventsComponent implements OnInit {
         this.campusAdminService.insertNewEvent(event, site_id).subscribe(result => {
             if (result.status == 200 && result.success) {
                 event.id = result.id;
-                this.transformDate(event);
                 this.events.push(event);
                 this.refreshTable();
                 this.showMessage('success',
@@ -212,15 +211,6 @@ export class CampusAdminEventsComponent implements OnInit {
                     'Error al insertar el evento');
             }
         });
-    }
-
-    transformDate(event){
-        let dateArray = [];
-        dateArray = event.date.split('/');
-        event.date = new Date(dateArray[dateArray.length - 1 ],
-            dateArray[dateArray.length - 2 ] - 1,
-            dateArray[dateArray.length - 3 ]
-        );
     }
 
     callUpdateEventService(event, site_id) {
