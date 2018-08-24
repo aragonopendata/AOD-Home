@@ -89,6 +89,7 @@ export class CampusAdminSpeakersComponent implements OnInit {
     callInsertSpeakerService(speaker) {
         this.campusAdminService.insertNewSpeaker(speaker).subscribe(result => {
             if (result.status == 200 && result.success) {
+                speaker.id = result.id;
                 this.speakers.push(speaker);
                 this.refreshTable();
                 this.showMessage('success',

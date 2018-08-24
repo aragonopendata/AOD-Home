@@ -919,7 +919,8 @@ router.post(constants.API_URL_ADMIN_CAMPUS_SPEAKERS, function (req, res, next) {
                 res.json({
                     'status': constants.REQUEST_REQUEST_OK,
                     'success': true,
-                    'result': 'CREACION DE SPEAKER - Speaker creado correctamente'
+                    'result': 'CREACION DE SPEAKER - Speaker creado correctamente',
+                    'id': response.rows[0].id
                 });
             }
         })

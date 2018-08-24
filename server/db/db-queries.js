@@ -176,7 +176,8 @@ exports.DB_ADMIN_UPDATE_CAMPUS_ENTRIES_SPEAKERS  = 'UPDATE campus.contents_speak
 
 exports.DB_ADMIN_INSERT_CAMPUS_SPEAKERS =  'INSERT INTO campus.speakers ' +
 										   '(name, description) '+
-										   'VALUES($1, $2)';
+										   'VALUES($1, $2)' +
+										   'RETURNING campus.speakers.id';
 
 exports.DB_ADMIN_UPDATE_CAMPUS_SPEAKERS =  'UPDATE campus.speakers SET ' +
 										   'name = COALESCE($1, name), ' +
