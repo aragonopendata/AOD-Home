@@ -67,6 +67,7 @@ export class CampusAdminService {
 		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + '/' + Constants.ROUTER_LINK_CAMPUS_ADMIN_EVENTS;
 		let headers = this.buildRequestHeaders();
 		event['site_id'] = site_id;
+		this.formatDate(event);
 		let requestBodyParams: any = event;
 		return this.http.put(fullUrl, JSON.stringify(requestBodyParams), { headers: headers }).map(res => res.json());
 	}
