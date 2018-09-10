@@ -28,13 +28,6 @@ import { GlobalComponent } from './components/admin/global/global.component';
 import { DashboardGlobalComponent } from './components/admin/global/dashboard-global/dashboard-global.component';
 import { UsersAdminComponent } from './components/admin/global/users-admin/users-admin.component';
 import { RolesAdminComponent } from './components/admin/global/roles-admin/roles-admin.component';
-import { ApplicationsAdminComponent } from './components/admin/global/static-content-admin/info/applications-admin/applications-admin.component';
-import { CollaborationAdminComponent } from './components/admin/global/static-content-admin/info/collaboration-admin/collaboration-admin.component';
-import { EventsAdminComponent } from './components/admin/global/static-content-admin/info/events-admin/events-admin.component';
-import { OpenDataAdminComponent } from './components/admin/global/static-content-admin/info/open-data-admin/open-data-admin.component';
-import { ApisAdminComponent } from './components/admin/global/static-content-admin/tools/apis-admin/apis-admin.component';
-import { DevelopersAdminComponent } from './components/admin/global/static-content-admin/tools/developers-admin/developers-admin.component';
-import { SparqlAdminComponent } from './components/admin/global/static-content-admin/tools/sparql-admin/sparql-admin.component';
 import { DatacenterComponent } from './components/admin/datacenter/datacenter.component';
 import { DashboardDatacenterComponent } from './components/admin/datacenter/dashboard-datacenter/dashboard-datacenter.component';
 import { DatasetsAdminComponent } from './components/admin/datacenter/datasets-admin/datasets-admin.component';
@@ -45,11 +38,16 @@ import { OrganizationsAdminComponent } from './components/admin/datacenter/organ
 import { OrganizationsAdminListComponent } from './components/admin/datacenter/organizations-admin/organizations-admin-list/organizations-admin-list.component';
 import { OrganizationsAdminShowComponent } from './components/admin/datacenter/organizations-admin/organizations-admin-show/organizations-admin-show.component';
 import { OrganizationsAdminEditComponent } from './components/admin/datacenter/organizations-admin/organizations-admin-edit/organizations-admin-edit.component';
-import { CampusAdminComponent } from './components/admin/campus-admin/campus-admin.component';
 import { LogstashComponent } from './components/admin/logstash/logstash.component';
 import { VisualDataComponent } from './components/admin/visual-data/visual-data.component';
 import { PageNotFoundComponent } from './components/error/page-not-found/page-not-found.component';
 import { KnowledgeComponent } from './components/web/static-content/info/knowledge/knowledge.component';
+import { InfoPanelsAdminComponent } from './components/admin/global/static-content-admin/info-panels-admin/info-panels-admin.component';
+import { InfoListAdminComponent } from './components/admin/global/static-content-admin/info-list-admin/info-list-admin.component';
+import { CampusAdminEventsComponent } from './components/admin/campus-admin/campus-admin-events/campus-admin-events.component';
+import { CampusAdminEntriesComponent } from './components/admin/campus-admin/campus-admin-entries/campus-admin-entries.component';
+import { CampusAdminSpeakersComponent } from './components/admin/campus-admin/campus-admin-speakers/campus-admin-speakers.component';
+
 
 const routes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -93,13 +91,8 @@ const routes: Routes = [
             { path: Constants.ROUTER_LINK_USERS, component: UsersAdminComponent, canActivate: [AuthGuard] },
             { path: Constants.ROUTER_LINK_ROLES, component: RolesAdminComponent, canActivate: [AuthGuard] },
             { path: Constants.ROUTER_LINK_CONTENT, canActivate: [AuthGuard], children: [
-                { path: Constants.ROUTER_LINK_INFO, component: OpenDataAdminComponent, canActivate: [AuthGuard] },
-                { path: Constants.ROUTER_LINK_APPS, component: ApplicationsAdminComponent, canActivate: [AuthGuard] },
-                { path: Constants.ROUTER_LINK_EVENTS, component: EventsAdminComponent, canActivate: [AuthGuard] },
-                { path: Constants.ROUTER_LINK_COLLABORATION, component: CollaborationAdminComponent, canActivate: [AuthGuard] },
-                { path: Constants.ROUTER_LINK_DEVELOPERS, component: DevelopersAdminComponent, canActivate: [AuthGuard] },
-                { path: Constants.ROUTER_LINK_APIS, component: ApisAdminComponent, canActivate: [AuthGuard] },
-                { path: Constants.ROUTER_LINK_SPARQL, component: SparqlAdminComponent, canActivate: [AuthGuard] }
+                { path: Constants.ROUTER_LINK_CONTENT_PANELS + '/:' + Constants.ROUTER_LINK_DATA_PARAM_SECTION_NAME, component: InfoPanelsAdminComponent,canActivate: [AuthGuard] },
+                { path: Constants.ROUTER_LINK_CONTENT_LISTS + '/:' + Constants.ROUTER_LINK_DATA_PARAM_SECTION_NAME, component: InfoListAdminComponent,canActivate: [AuthGuard] },
             ]},
         ]},
         { path: Constants.ROUTER_LINK_DATACENTER, component: DatacenterComponent, canActivate: [AuthGuard], children: [
@@ -120,9 +113,12 @@ const routes: Routes = [
                 { path: Constants.ROUTER_LINK_ORGANIZATIONS_EDIT + '/:' + Constants.ROUTER_LINK_DATA_PARAM_ORGANIZATION_NAME, component: OrganizationsAdminEditComponent, canActivate: [AuthGuard] }
             ]}
         ]},
-        { path: Constants.ROUTER_LINK_CAMPUS, component: CampusAdminComponent, canActivate: [AuthGuard] },
         { path: Constants.ROUTER_LINK_LOGSTASH, component: LogstashComponent, canActivate: [AuthGuard] },
-        { path: Constants.ROUTER_LINK_VISUAL_DATA, component: VisualDataComponent, canActivate: [AuthGuard] }
+        { path: Constants.ROUTER_LINK_VISUAL_DATA, component: VisualDataComponent, canActivate: [AuthGuard] },
+        { path: Constants.ROUTER_LINK_CAMPUS_ADMIN_EVENTS, component: CampusAdminEventsComponent, canActivate: [AuthGuard] },
+        { path: Constants.ROUTER_LINK_CAMPUS_ADMIN_ENTRIES, component: CampusAdminEntriesComponent, canActivate: [AuthGuard] },
+        { path: Constants.ROUTER_LINK_CAMPUS_ADMIN_SPEAKERS, component: CampusAdminSpeakersComponent, canActivate: [AuthGuard] },
+        { path: Constants.ROUTER_LINK_LOGSTASH, component: LogstashComponent, canActivate: [AuthGuard] },
     ]},
     //{ path: Constants.ROUTER_LINK_404, component: PageNotFoundComponent },
     { path: '**', redirectTo: '/'}

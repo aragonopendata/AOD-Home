@@ -54,31 +54,42 @@
 					</a>
 				</div>
 			</li>
-			<!-- <li class="nav-item dropdown">
+			<li *ngIf="showContentEditionMenu" class="nav-item dropdown">
 				<a tabindex="0" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					Contenido estático
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-					<a class="dropdown-item" routerLink="/admin/global/content/info" routerLinkActive="active"><i class="fa fa-caret-right"></i>
+					<a class="dropdown-item" routerLink="/admin/global/content/panels/open-data" (click)="navigate('open-data')" routerLinkActive="active"><i class="fa fa-caret-right"></i>
 						<span class="sidebar-title">Información</span>
 					</a>
-					<a class="dropdown-item" routerLink="/admin/global/content/apps" routerLinkActive="active"><i class="fa fa-caret-right"></i>
+					<a class="dropdown-item" routerLink="/admin/global/content/panels/conocimiento" (click)="navigate('conocimiento')" routerLinkActive="active"><i class="fa fa-caret-right"></i>
+						<span class="sidebar-title">Conocimiento</span>
+					</a>
+					<a class="dropdown-item" routerLink="/admin/global/content/lists/applications" (click)="navigate('applications')" routerLinkActive="active"><i class="fa fa-caret-right"></i>
 						<span class="sidebar-title">Aplicaciones</span>
 					</a>
-					<a class="dropdown-item" routerLink="/admin/global/content/events" routerLinkActive="active"><i class="fa fa-caret-right"></i>
+					<a class="dropdown-item" routerLink="/admin/global/content/panels/events" (click)="navigate('events')" routerLinkActive="active"><i class="fa fa-caret-right"></i>
 						<span class="sidebar-title">Eventos</span>
 					</a>
-					<a class="dropdown-item" routerLink="/admin/global/content/collaboration" routerLinkActive="active"><i class="fa fa-caret-right"></i>
-						<span class="sidebar-title">Colabora</span>
-					</a>
-					<a class="dropdown-item" routerLink="/admin/global/content/developers" routerLinkActive="active"><i class="fa fa-caret-right"></i>
+					<a class="dropdown-item" routerLink="/admin/global/content/panels/developers" (click)="navigate('developers')" routerLinkActive="active"><i class="fa fa-caret-right"></i>
 						  <span class="sidebar-title">Desarrolladores</span>
 					</a>
-					<a class="dropdown-item" routerLink="/admin/global/content/apis" routerLinkActive="active"><i class="fa fa-caret-right"></i>
+					<a class="dropdown-item" routerLink="/admin/global/content/panels/apis" (click)="navigate('apis')" routerLinkActive="active"><i class="fa fa-caret-right"></i>
 						  <span class="sidebar-title">APIs</span>
 					</a>
-					<a class="dropdown-item" routerLink="/admin/global/content/sparql" routerLinkActive="active"><i class="fa fa-caret-right"></i>
-						  <span class="sidebar-title">SPARQL</span>
+				</div>
+			</li>
+			<li *ngIf="showContentEditionMenu" class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">AOD Campus<span class="sr-only"></span></a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+					<a class="dropdown-item" routerLink="/admin/campus-admin/events" routerLinkActive="active"><i class="fa fa-caret-right"></i>
+						<span class="sidebar-title">Eventos</span>
+					</a>
+					<a class="dropdown-item" routerLink="/admin/campus-admin/entries" routerLinkActive="active"><i class="fa fa-caret-right"></i>
+						<span class="sidebar-title">Entradas</span>
+					</a>
+					<a class="dropdown-item" routerLink="/admin/campus-admin/speakers" routerLinkActive="active"><i class="fa fa-caret-right"></i>
+						<span class="sidebar-title">Ponentes</span>
 					</a>
 				</div>
 			</li>
@@ -93,7 +104,6 @@
 			<li class="nav-item dropdown">
 				<a tabindex="0" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 					<i class="fa fa-user"></i>
-					{{currentUserName}}
 				</a>
 				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="Preview">
 					<a tabindex="0" class="dropdown-item" (click)="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i>Cerrar Sesión</a>

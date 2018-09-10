@@ -1,0 +1,80 @@
+<div class="container" *ngIf="errorTitle">
+    <div class="alert alert-info" role="alert">
+        <div class="row">
+            <div class="col-xs-3">
+                <i class="fa fa-exclamation-triangle fa-5x" style="margin:15px;color: #5ea2ba;"></i>
+            </div>
+            <div class="col-xs-9">
+                <h1>{{errorTitle}}</h1>
+                <h2>{{errorMessage}}</h2>
+                <a class="mail" href="mailto:opendata@aragon.es">
+                    <h2>
+                        <i class="fa fa-envelope-o"></i> Contactar con el Administrador</h2>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <p-dataTable [paginator]="true" [rows]="10" [value]="events" emptyMessage="{{emptyMessage}}">
+        <p-column field="name" [style]="{'width':'55%'}" header="Lista de eventos"></p-column>
+        <p-column header="edit" header="Edición" [style]="{'width':'6%', 'text-align': 'center'}">
+            <ng-template pTemplate="body" let-event="rowData">
+                <button class="btn btn-primary p-2" type="button" (click)="showDialog(event)" data-toggle="tooltip" data-placement="top"
+                    title="Editar">
+                    <i class="fa fa-edit"></i>
+                </button>
+            </ng-template>
+        </p-column>
+        <p-footer>
+            <div class="ui-helper-clearfix" style="width:100%">
+                <button class="btn btn-primary" type="button" icon="fa-plus" (click)="addEvent()" style="float:left">
+                    <i class="fa fa-plus"></i> Añade un evento nuevo
+                </button>
+            </div>
+        </p-footer>
+    </p-dataTable>
+</div>
+<p-dialog [width]="900" [(visible)]="display">
+    <p-header>{{eventSelected ? eventSelected.name : 'Nuevo evento'}}</p-header>
+    <div class="container">
+        <p class="col-12">Los campos marcados con '*' son obligatorios.</p>
+        <div class="form-group row">
+            <label class="col-4 col-form-label">Nombre del evento*</label>
+            <div class="col-8">
+                <input class="form-control" type="text" value="{{eventSelected.name}}" id="name" [(ngModel)]="eventSelected.name">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-4 col-form-label">Descripción</label>
+            <div class="col-8">
+                <textarea style="width: 100%; height: 100px;" type="text" value="{{eventSelected.description}}" id="desc" [(ngModel)]="eventSelected.description"></textarea>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-4 col-form-label">Localización del evento*</label>
+            <div class="col-4">
+                <p-autoComplete #auto [(ngModel)]="eventSelected.site" [suggestions]="filteredSites" (completeMethod)="filterSites($event)"
+                    [minLength]="1" placeholder="Localización" field="name" [dropdown]="true">
+                </p-autoComplete>
+            </div>
+            <div class="col-4">
+                <button pButton type="button" icon="fa-plus" (click)="confirm()" label="Añadir nueva localización"></button>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-4 col-form-label">Fecha del evento*</label>
+            <div class="col-8">
+                <p-calendar [locale]="es" [inline]="true" [yearNavigator]="true" yearRange="1900:2100" dateFormat="yy-mm-dd" [(ngModel)]="eventSelected.date" [showIcon]="true"></p-calendar>
+            </div>
+        </div>
+    </div>
+    <p-footer>
+        <button type="button" pButton icon="fa-floppy-o" (click)="save(eventSelected);" label="Guardar"></button>
+        <button type="button" pButton icon="fa-times" style="background-color: red; border-color: red;" (click)="cancel($event);"
+            label="Cancelar"></button>
+    </p-footer>
+</p-dialog>
+
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" width="425"></p-confirmDialog>
+<p-growl [(value)]="messages"></p-growl>

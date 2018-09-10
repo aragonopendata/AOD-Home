@@ -51,6 +51,7 @@ exports.API_URL_STATIC_CONTENT_INFO_OPEN_DATA = '/static-content/info/open-data'
 exports.API_URL_STATIC_CONTENT_INFO_CONOCIMIENTO = '/static-content/info/conocimiento';
 exports.API_URL_STATIC_CONTENT_INFO_APPS = '/static-content/info/applications';
 exports.API_URL_STATIC_CONTENT_INFO_EVENTS = '/static-content/info/events';
+exports.API_URL_STATIC_CONTENT_INFO_CONOCIMIENTO = '/static-content/info/conocimiento';
 exports.API_URL_STATIC_CONTENT_INFO_COLLABORATION = '/static-content/info/collaboration';
 exports.API_URL_STATIC_CONTENT_TOOLS_DEVELOPERS = '/static-content/tools/developers';
 exports.API_URL_STATIC_CONTENT_TOOLS_APIS = '/static-content/tools/apis';
@@ -59,6 +60,8 @@ exports.API_URL_ADMIN_DATASET = '/dataset';
 exports.API_URL_ADMIN_RESOURCE = '/resource';
 exports.API_URL_ADMIN_ORGANIZATION = '/organization';
 exports.API_URL_IAEST_PX_FILES = 'http://servicios3.aragon.es/iaeaxi_docs/';
+exports.API_URL_ADMIN_STATIC_CONTENT_INFO = '/static-content-admin/info';
+exports.API_URL_ADMIN_STATIC_CONTENT_TOOLS = '/static-content-admin/tools';
 
 /* STATIC CONTENT DATABASE SECTION TITLES */
 exports.API_URL_CAMPUS_EVENTS = '/campus/events';
@@ -68,6 +71,16 @@ exports.API_URL_CAMPUS_CONTENT = '/campus/content';
 exports.API_URL_CAMPUS_SPEAKERS = '/campus/speakers';
 exports.API_URL_CAMPUS_TOPICS = '/campus/topics';
 exports.API_URL_CAMPUS_TYPES = '/campus/types';
+exports.API_URL_ADMIN_CAMPUS_SITES = '/campus-admin/sites';
+exports.API_URL_ADMIN_CAMPUS_SPEAKERS = '/campus-admin/speakers';
+exports.API_URL_ADMIN_CAMPUS_TYPES = '/campus-admin/types';
+exports.API_URL_ADMIN_CAMPUS_PLATFORMS = '/campus-admin/platforms';
+exports.API_URL_ADMIN_CAMPUS_FORMATS = '/campus-admin/formats';
+exports.API_URL_ADMIN_CAMPUS_ENTRIES_BY_SPEAKER = '/campus-admin/speakers/entries';
+exports.API_URL_ADMIN_CAMPUS_TOPICS = '/campus-admin/topics';
+exports.API_URL_ADMIN_CAMPUS_EVENTS = '/campus-admin/events';
+exports.API_URL_ADMIN_CAMPUS_ENTRIES_BY_EVENT = '/campus-admin/event/entries';
+exports.API_URL_ADMIN_CAMPUS_ENTRIES = '/campus-admin/entries';
 exports.STATIC_CONTENT_SECTION_TITLE_INFO = 'INFORMACIÓN';
 exports.STATIC_CONTENT_SECTION_TITLE_TOOLS = 'HERRAMIENTAS';
 exports.STATIC_CONTENT_SUBSECTION_TITLE_OPEN_DATA = 'OPEN DATA';
@@ -78,6 +91,8 @@ exports.STATIC_CONTENT_SUBSECTION_TITLE_EVENTS = 'EVENTOS';
 exports.STATIC_CONTENT_SUBSECTION_TITLE_COLLABORATION = 'COLABORA';
 exports.STATIC_CONTENT_SUBSECTION_TITLE_DEVELOPERS = 'DESARROLLADORES';
 exports.STATIC_CONTENT_SUBSECTION_TITLE_APIS = 'APIS';
+exports.STATIC_CONTENT_SUBSECTION_TITLE_SPARQL = 'SPARQL';
+exports.STATIC_CONTENT_SUBSECTION_TITLE_CONOCIMIENTO = 'CONOCIMIENTO';
 /* ADMIN CONSTANTS */
 exports.APPLICATION_NAME_CKAN = 'CKAN';
 /* SQL CONSTANTS */

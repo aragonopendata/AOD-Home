@@ -511,6 +511,8 @@ export class Constants {
     public static ROUTER_LINK_ROLES = 'roles';
     public static ROUTER_LINK_ADMIN_GLOBAL_ROLES = 'admin/global/roles';
     public static ROUTER_LINK_CONTENT = 'content';
+    public static ROUTER_LINK_CONTENT_PANELS = 'panels';
+    public static ROUTER_LINK_CONTENT_LISTS = 'lists';
     public static ROUTER_LINK_ADMIN_GLOBAL_CONTENT = 'admin/global/content';
     public static ROUTER_LINK_INFO = 'info';
     public static ROUTER_LINK_ADMIN_GLOBAL_CONTENT_INFO = 'admin/global/info';
@@ -544,8 +546,16 @@ export class Constants {
     public static ROUTER_LINK_ADMIN_DATACENTER_ORGANIZATIONS_SHOW = 'admin/datacenter/organizations/show';
     public static ROUTER_LINK_ORGANIZATIONS_EDIT = 'edit';
     public static ROUTER_LINK_ADMIN_DATACENTER_ORGANIZATIONS_EDIT = 'admin/datacenter/organizations/edit';
-    public static ROUTER_LINK_CAMPUS = 'campus';
-    public static ROUTER_LINK_ADMIN_DATACENTER_CAMPUS = 'admin/campus';
+    public static ROUTER_LINK_CAMPUS_ADMIN_EVENTS = 'campus-admin/events';
+    public static ROUTER_LINK_CAMPUS_ADMIN_ENTRIES = 'campus-admin/entries';
+    public static ROUTER_LINK_CAMPUS_ADMIN_ENTRIES_BY_EVENT = 'campus-admin/event/entries';
+    public static ROUTER_LINK_CAMPUS_ADMIN_ENTRIES_BY_SPEAKER = 'campus-admin/speakers/entries';
+    public static ROUTER_LINK_CAMPUS_ADMIN_SITES = 'campus-admin/sites';
+    public static ROUTER_LINK_CAMPUS_ADMIN_SPEAKERS = 'campus-admin/speakers';
+    public static ROUTER_LINK_CAMPUS_ADMIN_TOPICS = 'campus-admin/topics';
+    public static ROUTER_LINK_CAMPUS_ADMIN_FORMATS = 'campus-admin/formats';
+    public static ROUTER_LINK_CAMPUS_ADMIN_TYPES = 'campus-admin/types';
+    public static ROUTER_LINK_CAMPUS_ADMIN_PLATFORMS = 'campus-admin/platforms';
     public static ROUTER_LINK_LOGSTASH = 'logstash';
     public static ROUTER_LINK_ADMIN_LOGSTASH = 'admin/logstash';
     public static ROUTER_LINK_VISUAL_DATA = 'visual-data';
@@ -571,7 +581,8 @@ export class Constants {
     public static ROUTER_LINK_DATA_CAMPUS_PARAM_TEXT = 'text';
     public static ROUTER_LINK_TOOLS_CAMPUS_EVENT_NAME = 'eventName';
     public static ROUTER_LINK_DATA_PARAM_DATA_LOGIN = 'data';
-    public static ROUTER_LINK_DATA_PARAM_EDIT_DATA = 'dataName'; 
+    public static ROUTER_LINK_DATA_PARAM_EDIT_DATA = 'dataName';
+    public static ROUTER_LINK_DATA_PARAM_SECTION_NAME = 'sectionName'; 
     public static ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT = '/informacion/open-data#';
     public static ROUTER_LINK_STATIC_CONTENT_EVENTS_SECTION_REDIRECT = '/informacion/eventos#';
     public static ROUTER_LINK_STATIC_CONTENT_DEVELOPERS_SECTION_REDIRECT = '/herramientas/desarrolladores#';
@@ -626,6 +637,8 @@ export class Constants {
     public static SERVER_API_LINK_ADMIN_DATASET_CUD_OPERATIONS = '/dataset';
     public static SERVER_API_LINK_ADMIN_DATASET_CUD_OPERATIONS_UPDATE = '/dataset_update';
     public static SERVER_API_LINK_ADMIN_RESOURCE_CUD_OPERATIONS = '/resource';
+    public static SERVER_API_LINK_ADMIN_STATIC_CONTENT_INFO = '/static-content-admin/info';
+    public static SERVER_API_LINK_ADMIN_STATIC_CONTENT_TOOLS = '/static-content-admin/tools';
     public static SERVER_API_LINK_GA_OD_CORE = '/core';
     public static SERVER_API_LINK_GA_OD_CORE_VIEWS = '/views';
     public static SERVER_API_LINK_PARAM_SORT = 'sort';

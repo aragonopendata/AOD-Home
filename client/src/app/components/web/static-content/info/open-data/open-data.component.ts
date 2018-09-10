@@ -62,7 +62,7 @@ export class OpenDataComponent implements OnInit, AfterViewChecked {
                     });
                 }
             } catch (error) {
-                console.error('Error: getStaticContentInfo() - open-data.component.ts');
+                console.error('Error: getStaticContentInfo() - open-data.component.ts\n' + error);
                 this.errorTitle = this.openDataErrorTitle;
                 this.errorMessage = this.openDataErrorMessage;
             }

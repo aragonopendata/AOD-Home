@@ -1,0 +1,30 @@
+<div class="container" *ngIf="errorTitle">
+  <div class="alert alert-info" role="alert">
+      <div class="row">
+          <div class="col-xs-3">
+              <i class="fa fa-exclamation-triangle fa-5x" style="margin:15px;color: #5ea2ba;"></i>
+          </div>
+          <div class="col-xs-9">
+              <h1>{{errorTitle}}</h1>
+              <h2>{{errorMessage}}</h2>
+              <a class="mail" href="mailto:opendata@aragon.es">
+                  <h2>
+                      <i class="fa fa-envelope-o"></i> Contactar con el Administrador</h2>
+              </a>
+          </div>
+      </div>
+  </div>
+</div>
+<div style="margin: 2%;">
+  <div *ngFor="let content of contents; let i = index" style="margin-top: 2%;">
+      <h3>{{content.contentTitle}}</h3>
+      <p class="contentDescription" *ngIf="!content.edit">{{content.previewText}}</p>
+      <angular-tinymce id="editor" [settings]="settings" [(ngModel)]='content.contentText' *ngIf="content.edit"></angular-tinymce>
+      <div style="margin-top: 2%;">
+          <button type="button" pButton icon="fa-edit" (click)="editContent(i, $event, content)" [hidden]="content.edit" label="Editar"></button>
+          <button type="button" pButton icon="fa-check" (click)="editContent(i, $event, content)" [hidden]="!content.edit" label="Guardar"></button>
+          <button class="ui-button-danger" type="button" pButton icon="fa-close" (click)="editContent(i, $event, content)" [hidden]="!content.edit"
+              label="Cancelar"></button>
+      </div>
+  </div>
+</div>

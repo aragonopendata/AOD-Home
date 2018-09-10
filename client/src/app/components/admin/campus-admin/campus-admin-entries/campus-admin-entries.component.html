@@ -1,0 +1,128 @@
+<div class="container">
+    <div class="row search">
+        <div *ngIf="searchOptionEvents" class="search col-8">
+            <select class="form-control" [(ngModel)]="selectedEvent" (change)="getEntriesByEvent()">
+                <option *ngFor="let event of searchByEvent" [ngValue]="event.value">{{event.label}}</option>
+            </select>
+        </div>
+        <div *ngIf="searchOptionSpeakers" class="search col-8">
+            <select class="form-control" [(ngModel)]="selectedSpeaker" (change)="getEntriesBySpeaker()">
+                <option *ngFor="let speaker of searchBySpeaker" [ngValue]="speaker.value">{{speaker.label}}</option>
+            </select>
+        </div>
+        <div class="{{selectedType ? 'search col-4' : 'search col-4 offset-8'}}">
+            <select class="form-control" [(ngModel)]="selectedType" (change)="change(selectedType)">
+                <option *ngFor="let type of searchType" [ngValue]="type.value">{{type.label}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <p-dataTable [paginator]="true" [rows]="10" [value]="entries" emptyMessage="{{emptyMessage}}">
+            <p-column field="title" [style]="{'width':'55%'}" header="Lista de contenidos"></p-column>
+            <p-column header="edit" header="Edición" [style]="{'width':'6%', 'text-align': 'center'}">
+                <ng-template pTemplate="body" let-entry="rowData">
+                    <button class="btn btn-primary p-2" type="button" (click)="showDialog(entry)" data-toggle="tooltip" data-placement="top"
+                        title="Editar">
+                        <i class="fa fa-edit"></i>
+                    </button>
+                </ng-template>
+            </p-column>
+            <p-footer>
+                <div class="ui-helper-clearfix" style="width:100%">
+                    <button class="btn btn-primary" type="button" icon="fa-plus" (click)="addEntry()" style="float:left">
+                        <i class="fa fa-plus"></i> Añade una entrada nueva
+                    </button>
+                </div>
+            </p-footer>
+        </p-dataTable>
+    </div>
+</div>
+<p-dialog [width]="900" [(visible)]="display">
+    <p-header>{{selectedEntry ? selectedEntry.title : 'Nueva entrada'}}</p-header>
+    <div class="container">
+        <div class="container">
+            <p class="col-12">Los campos marcados con '*' son obligatorios.</p>
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Nombre de la entrada*</label>
+                <div class="col-8">
+                        <input class="form-control" type="text" value="{{selectedEntry.title}}" id="name" [(ngModel)]="selectedEntry.title" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Descripción</label>
+                <div class="col-8">
+                    <textarea style="width: 100%; height: 100px;" type="text" value="{{selectedEntry.description}}" id="desc" [(ngModel)]="selectedEntry.description"></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Etiquetas y palabras clave*</label>
+                <div class="col-8">
+                    <p-autoComplete (onSelect)="addInsertedTopic($event)" (onUnselect)="addDeletedTopic($event)" [(ngModel)]="topics" [suggestions]="filteredTopics" (completeMethod)="filterTopics($event)" [minLength]="3"
+                        placeholder="Etiquetas y palabras clave" field="name" [multiple]="true" required>
+                    </p-autoComplete>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Evento*</label>
+                <div class="col-8">
+                    <select class="form-control" [(ngModel)]="selectedEntry.event" required>
+                        <option *ngFor="let event of events" [ngValue]="event.id" >{{event.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Ponente*</label>
+                <div class="col-8">
+                    <select class="form-control" [(ngModel)]="selectedEntry.speaker_id" required>
+                        <option *ngFor="let speaker of speakers" [ngValue]="speaker.id" >{{speaker.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Formato*</label>
+                <div class="col-8">
+                    <select class="form-control" [(ngModel)]="selectedEntry.format" required>
+                        <option *ngFor="let format of formats" [ngValue]="format.id">{{format.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Tipo de contenido*</label>
+                <div class="col-8">
+                    <select class="form-control" [(ngModel)]="selectedEntry.type" required>
+                        <option *ngFor="let type of types" [ngValue]="type.id">{{type.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Plataforma*</label>
+                <div class="col-8">
+                    <select class="form-control" [(ngModel)]="selectedEntry.platform" required>
+                        <option *ngFor="let platform of platforms" [ngValue]="platform.id">{{platform.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Miniatura</label>
+                <div class="col-4">
+                    <img *ngIf="selectedEntry.thumbnail" class="media-object" [src]='sanitizer.bypassSecurityTrustResourceUrl("data:image/png;base64,"+selectedEntry.thumbnail)'
+                        style="width: 150px;margin-right: 15px;">
+                </div>
+                <div class="col-4">
+                    <input type="file" class="form-control" (change)="fileChange($event)" placeholder="Subir fichero" accept="image/png">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-4 col-form-label">URL</label>
+                <div class="col-8">
+                    <input class="form-control" type="text" value="{{selectedEntry.url}}" id="name" [(ngModel)]="selectedEntry.url">
+                </div>
+            </div>
+        </div>
+    </div>
+    <p-footer>
+        <button type="button" pButton icon="fa-floppy-o" (click)="save(selectedEntry);" label="Guardar"></button>
+        <button type="button" pButton icon="fa-times" style="background-color: red; border-color: red;" (click)="cancel();" label="Cancelar"></button>
+    </p-footer>
+</p-dialog>
+<p-growl [(value)]="messages"></p-growl>
