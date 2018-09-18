@@ -79,3 +79,7 @@ p ul {
 .textContent section {
     margin-bottom: 20px;
 }
+
+>>>.imgs {
+    max-width: 100% !important;
+}

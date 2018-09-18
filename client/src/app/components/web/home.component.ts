@@ -187,6 +187,16 @@ export class HomeComponent implements OnInit {
 				case Constants.STATIC_INFO_OPEN_DATA_SECTION_CONDITIONS:
 					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT+fragment);
 				break;
+				//CONOCIMIENTO
+				case Constants.STATIC_INFO_CONOCIMIENTO_SECTION_EI2A:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_CONOCIMIENTO_SECTION_REDIRECT+fragment);
+				break;
+				case Constants.STATIC_INFO_CONOCIMIENTO_SECTION_ONTOLOGY:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_CONOCIMIENTO_SECTION_REDIRECT+fragment);
+				break;
+				case Constants.STATIC_INFO_CONOCIMIENTO_SECTION_CONSULTA:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_CONOCIMIENTO_SECTION_REDIRECT+fragment);
+				break;
 				//EVENTS
 				case Constants.STATIC_INFO_EVENTS_SECTION_JACATHON:
 					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_EVENTS_SECTION_REDIRECT+fragment);

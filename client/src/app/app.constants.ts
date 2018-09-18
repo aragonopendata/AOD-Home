@@ -327,6 +327,9 @@ export class Constants {
     public static STATIC_INFO_OPEN_DATA_SECTION_DOCUMENTATION = 'documentacion';
     public static STATIC_INFO_OPEN_DATA_SECTION_TERMS = 'terminos-licencias'; 
     public static STATIC_INFO_OPEN_DATA_SECTION_CONDITIONS = 'condiciones-social-data';
+    public static STATIC_INFO_CONOCIMIENTO_SECTION_EI2A = 'ontologias-generadas';
+    public static STATIC_INFO_CONOCIMIENTO_SECTION_ONTOLOGY = 'ontologias-utilizadas';
+    public static STATIC_INFO_CONOCIMIENTO_SECTION_CONSULTA = 'punto-sparql';
     public static STATIC_INFO_EVENTS_SECTION_JACATHON = 'jacathon';
     public static STATIC_INFO_DEVELOPERS_SECTION_INTEROPERABILITY = 'interoperabilidad';
     public static STATIC_INFO_DEVELOPERS_SECTION_TECHNOLOGY = 'tecnologia-utilizada';
@@ -584,6 +587,7 @@ export class Constants {
     public static ROUTER_LINK_DATA_PARAM_EDIT_DATA = 'dataName';
     public static ROUTER_LINK_DATA_PARAM_SECTION_NAME = 'sectionName'; 
     public static ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT = '/informacion/open-data#';
+    public static ROUTER_LINK_STATIC_CONTENT_CONOCIMIENTO_SECTION_REDIRECT = '/informacion/conocimiento#';
     public static ROUTER_LINK_STATIC_CONTENT_EVENTS_SECTION_REDIRECT = '/informacion/eventos#';
     public static ROUTER_LINK_STATIC_CONTENT_DEVELOPERS_SECTION_REDIRECT = '/herramientas/desarrolladores#';
     public static ROUTER_LINK_STATIC_CONTENT_APIS_SECTION_REDIRECT = '/herramientas/apis#';

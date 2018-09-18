@@ -224,8 +224,8 @@ router.get(constants.API_URL_STATIC_CONTENT_INFO_EVENTS, function (req, res, nex
 });
 
 router.get(constants.API_URL_STATIC_CONTENT_INFO_CONOCIMIENTO, function (req, res, next) {
-    let sectionTitle = constants.STATIC_CONTENT_SECTION_TITLE_INFO;
-    let sectionSubtitle = constants.STATIC_CONTENT_SUBSECTION_TITLE_CONOCIMIENTO;
+    let sectionTitle = constants.STATIC_CONTENT_SECTION_TITLE_CONOCIMIENTO;
+    let sectionSubtitle = constants.STATIC_CONTENT_SUBSECTION_TITLE_ONTOLOGIA;
     const query = {
         text: 'SELECT cnt.id AS "id", sec.id AS "sectionId", sec.title AS "sectionTitle", sec.subtitle AS "sectionSubtitle" '
         + ', sec.description AS "sectionDescription", cnt.content_order AS "contentOrder" '
