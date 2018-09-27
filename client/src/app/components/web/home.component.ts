@@ -194,6 +194,9 @@ export class HomeComponent implements OnInit {
 				case Constants.STATIC_INFO_CONOCIMIENTO_SECTION_ONTOLOGY:
 					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_CONOCIMIENTO_SECTION_REDIRECT+fragment);
 				break;
+				case Constants.STATIC_INFO_CONOCIMIENTO_SECTION_GRAFO:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_CONOCIMIENTO_SECTION_REDIRECT+fragment);
+				break;
 				case Constants.STATIC_INFO_CONOCIMIENTO_SECTION_CONSULTA:
 					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_CONOCIMIENTO_SECTION_REDIRECT+fragment);
 				break;
@@ -234,6 +237,9 @@ export class HomeComponent implements OnInit {
 					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_APIS_SECTION_REDIRECT+fragment);
 				break;
 				case Constants.STATIC_INFO_APIS_SECTION_GA_OD_CORE:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_APIS_SECTION_REDIRECT+fragment);
+				break;
+				case Constants.STATIC_INFO_APIS_SECTION_GRAFO_CONOCIMIENTO:
 					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_APIS_SECTION_REDIRECT+fragment);
 				break;
 				default:

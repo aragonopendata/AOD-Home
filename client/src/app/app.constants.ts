@@ -329,6 +329,7 @@ export class Constants {
     public static STATIC_INFO_OPEN_DATA_SECTION_CONDITIONS = 'condiciones-social-data';
     public static STATIC_INFO_CONOCIMIENTO_SECTION_EI2A = 'ontologias-generadas';
     public static STATIC_INFO_CONOCIMIENTO_SECTION_ONTOLOGY = 'ontologias-utilizadas';
+    public static STATIC_INFO_CONOCIMIENTO_SECTION_GRAFO = 'grafo-conocimiento';
     public static STATIC_INFO_CONOCIMIENTO_SECTION_CONSULTA = 'punto-sparql';
     public static STATIC_INFO_EVENTS_SECTION_JACATHON = 'jacathon';
     public static STATIC_INFO_DEVELOPERS_SECTION_INTEROPERABILITY = 'interoperabilidad';
@@ -342,6 +343,7 @@ export class Constants {
     public static STATIC_INFO_APIS_SECTION_ARAGODBPEDIA_1 = 'api-aragodbpedia-1';
     public static STATIC_INFO_APIS_SECTION_ARAGODBPEDIA_2 = 'api-aragodbpedia-2';
     public static STATIC_INFO_APIS_SECTION_GA_OD_CORE = 'api-ga-od-core';
+    public static STATIC_INFO_APIS_SECTION_GRAFO_CONOCIMIENTO = 'api-grafo-conocimiento';
 
     public static UNDEFINED = "undefined";
 
