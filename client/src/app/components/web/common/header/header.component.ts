@@ -33,6 +33,7 @@ export class HeaderComponent implements OnInit {
     routerLinkDataCatalogDataset: string;
 	routerLinkDataTopics: string;
 	routerLinkDataOrganizations: string;
+	routerLinkServicesOpenDataPool: string;
 	routerLinkServicesAragopedia: string;
 	routerLinkServicesPresupuestos: string;
 	routerLinkServicesCras: string;
@@ -67,6 +68,7 @@ export class HeaderComponent implements OnInit {
         this.routerLinkDataCatalogDataset = Constants.ROUTER_LINK_DATA_CATALOG_DATASET;
 		this.routerLinkDataTopics = Constants.ROUTER_LINK_DATA_TOPICS;
 		this.routerLinkDataOrganizations = Constants.ROUTER_LINK_DATA_ORGANIZATIONS;
+		this.routerLinkServicesOpenDataPool = Constants.ROUTER_LINK_SERVICES_POOL;
 		this.routerLinkServicesAragopedia = Constants.ROUTER_LINK_SERVICES_ARAGOPEDIA;
 		this.routerLinkServicesCras = Constants.ROUTER_LINK_SERVICES_CRAS;
         this.routerLinkServicesSocialData = Constants.ROUTER_LINK_SERVICES_SOCIAL_DATA;

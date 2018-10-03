@@ -64,7 +64,7 @@
                     <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
                         <div class="card-block">
                             <ul id="servicios">
-                                <li><a tabindex="{{openedMenu ? 12 : -1}}" href="" (click)="openNav()">Datos enlazados</a></li>
+                                <li><a tabindex="{{openedMenu ? 12 : -1}}" href="{{aodBaseUrl}}/{{routerLinkServicesOpenDataPool}}" (click)="openNav()">Datos enlazados</a></li>
                                 <li><a tabindex="{{openedMenu ? 13 : -1}}" href="{{aodBaseUrl}}/{{routerLinkServicesAragopedia}}" (click)="openNav()">Aragopedia</a></li>
                                 <li><a tabindex="{{openedMenu ? 14 : -1}}" href="{{presupuestosBaseUrl}}" (click)="openNav()">Presupuestos</a></li>
                                 <li><a tabindex="{{openedMenu ? 15 : -1}}" routerLink="/{{routerLinkServicesAnalytics}}" (click)="openNav()">Open Analytics Data</a></li>
