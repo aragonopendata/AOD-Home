@@ -31,7 +31,6 @@ export class DatasetsDetailComponent implements OnInit {
 	dataset: Dataset = new Dataset();
 	datasetHomer: DatasetHomer = new DatasetHomer();
 
-
 	extras: Map<any, any> = new Map();
 	extraDictionary: string;
 	extraDictionaryURL: string[];
@@ -121,7 +120,6 @@ export class DatasetsDetailComponent implements OnInit {
 				this.errorMessage = this.datasetListErrorMessage;
 			}
 		});
-
 		if (this.dataset.name) {
 			this.getDataset(this.dataset);
 		}
@@ -142,6 +140,7 @@ export class DatasetsDetailComponent implements OnInit {
 		prom.then(data => {
 			let dataValid = JSON.parse(data).success;
 			if(dataValid){
+				this.viewCounter();
 				this.dataset = JSON.parse(data).result;
 				dt.getResourceView(this.dataset, this.resourceView);
 				dt.setExtras(this.dataset, this.extras);
@@ -461,9 +460,31 @@ export class DatasetsDetailComponent implements OnInit {
 		}
 	}
 
+	viewCounter(){
+		if(this.checkUniqueUser()){
+			this.datasetsService.trackingDataset(this.dataset.name).subscribe( result => {
+				if(!result) { console.error("Error: viewCounter() - datasets-detail.component.ts") }
+			});
+		}
+	}
+
+	checkUniqueUser(){
+		this.datasetsService.refreshUser();
+		if(!this.datasetsService.currentUserKey) { 
+			this.datasetsService.setCurrentUserKey(this.userKeyGenerator(16, Constants.DATASET_DETAIL_CHARS_FOR_USER_KEY));
+		}
+		return true;
+	}
+
     getOpenedMenu(){
         this.utilsService.openedMenuChange.subscribe(value => {
 			this.openedMenu = value;
 		});
+	}
+
+	userKeyGenerator(length, chars) {
+		var result = '';
+		for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+		return result;
 	}
 }
