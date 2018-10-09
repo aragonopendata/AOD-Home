@@ -168,11 +168,11 @@
                     <i class="fa fa-star" id="informacion_content_3_i" style="color: #5ea2ba;" *ngIf="dataset.tracking_summary && (dataset.tracking_summary.recent > 10)"></i>
                 </ng-template>
             </p-column>
-            <!--<p-column field="accesos" header="Nº de accesos" [style]="{'width':'160px'}" sortable="custom" sortFunction="orderTable($event)" (window:resize)="onResize()" [hidden]="hideAccessNumberColumn">
+            <p-column field="accesos" header="Nº de accesos" [style]="{'width':'160px'}" sortable="custom" sortFunction="orderTable($event)" (window:resize)="onResize()" [hidden]="hideAccessNumberColumn">
                 <ng-template pTemplate="body" let-dataset="rowData">
                     {{dataset?.tracking_summary?.total || '0'}}
                 </ng-template>
-            </p-column>-->
+            </p-column>
             <p-column field="lastUpdate" header="Última actualización" [style]="{'width':'220px'}" sortable="custom" sortFunction="orderTable($event)" (window:resize)="onResize()" [hidden]="hideLastUpdateColumn">
                 <ng-template pTemplate="body" let-dataset="rowData">
                     {{dataset.metadata_modified | date: 'dd/MM/yyyy'}}

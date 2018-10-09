@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Http, Response, URLSearchParams } from '@angular/http';
+import { Http, Headers, Response, URLSearchParams } from '@angular/http';
 import { Constants } from '../../app.constants';
 import { Dataset } from '../../models/Dataset';
 import { DatasetHomer } from '../../models/DatasetHomer';
@@ -12,8 +12,20 @@ export class DatasetsService {
 	private datasetsDetail: Dataset[];
 	private dataset: Dataset;
 	private datasetHomer: DatasetHomer;
+	public currentUserKey: string;
 
-	constructor(private http: Http) { }
+	constructor(private http: Http) {
+		this.currentUserKey = localStorage.getItem('user_key');
+	}
+
+	public refreshUser(){
+		this.currentUserKey = localStorage.getItem('user_key');
+	}
+
+	public setCurrentUserKey(key: string){
+		localStorage.setItem('user_key', key);
+		this.currentUserKey = localStorage.getItem('user_key');
+	}
 
 	public getDatasets(sort: string, page: number, rows: number, type: string) {
 		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS 
@@ -170,5 +182,19 @@ export class DatasetsService {
 	private handleError(error: Response) {
 		console.error(error);
 		return Observable.throw(error.json().error || 'Server error');
+	}
+
+	public trackingDataset(datasetName: string){
+		var headers = new Headers();
+		headers.append('Content-Type', ' application/json');
+		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_TRACKING;
+		return this.http.post(fullUrl, JSON.stringify({ user_key: this.currentUserKey, url: '/dataset/' + datasetName }), { headers: headers }).pipe(map(res => {
+			let status = res.status;
+			if(status == 200){
+				return true;
+			} else{
+				return false;
+			}
+		}));
 	}
 }

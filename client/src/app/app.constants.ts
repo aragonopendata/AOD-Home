@@ -301,6 +301,7 @@ export class Constants {
     public static DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_DATASET= '/dataset/';
     public static DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_RESOURCE= '/resource/';
     public static DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_VIEW= '/view/';
+    public static DATASET_DETAIL_CHARS_FOR_USER_KEY = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
     public static DATASET_EXTRA_IAEST_TEMA_ESTADISTICO = '01_IAEST_Tema estadístico';
     public static DATASET_EXTRA_IAEST_UNIDAD_ESTADISTICA = '02_IAEST_Unidad Estadística';
@@ -647,6 +648,7 @@ export class Constants {
     public static SERVER_API_LINK_ADMIN_STATIC_CONTENT_TOOLS = '/static-content-admin/tools';
     public static SERVER_API_LINK_GA_OD_CORE = '/core';
     public static SERVER_API_LINK_GA_OD_CORE_VIEWS = '/views';
+    public static SERVER_API_LINK_TRACKING = '/tracking';
     public static SERVER_API_LINK_PARAM_SORT = 'sort';
     public static SERVER_API_LINK_PARAM_PAGE = 'page';
     public static SERVER_API_LINK_PARAM_ROWS = 'rows';

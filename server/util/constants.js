@@ -47,6 +47,7 @@ exports.API_URL_TOPICS = '/topics';
 exports.API_URL_TAGS = '/tags';
 exports.API_URL_GA_OD_CORE = '/core';
 exports.API_URL_GA_OD_CORE_VIEWS = '/views';
+exports.API_URL_DATASETS_TRACKING = '/tracking';
 exports.API_URL_STATIC_CONTENT_INFO_OPEN_DATA = '/static-content/info/open-data';
 exports.API_URL_STATIC_CONTENT_INFO_CONOCIMIENTO = '/static-content/info/conocimiento';
 exports.API_URL_STATIC_CONTENT_INFO_APPS = '/static-content/info/applications';
@@ -237,6 +238,14 @@ exports.DB_PASSWORD = '';
 exports.DB_MAX_CONNECTIONS = 10; //default 10
 exports.DB_IDLE_TIMEOUT_MILLIS = 30000; // default 10000 (10 seconds)
 exports.DB_CONNECTION_TIMEOUT_MILLIS = 5000;
+
+/* ******************* */
+/* CKAN DATABASE PROPERTIES */
+exports.DB_CKAN_HOST = '';
+exports.DB_CKAN_NAME = '';
+exports.DB_CKAN_PORT = 0;
+exports.DB_CKAN_USER = '';
+exports.DB_CKAN_PASSWORD = '';
 
 /* **************** */
 /* PROXY PROPERTIES */

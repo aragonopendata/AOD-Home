@@ -74,11 +74,11 @@
 			  </a>
 		</ng-template>
 	</p-column>
-	<!--<p-column field="accesos" header="Nº de accesos" [style]="{'width':'160px'}" sortable="custom" sortFunction="setOrder($event)">
+	<p-column field="accesos" header="Nº de accesos" [style]="{'width':'160px'}" sortable="custom" sortFunction="setOrder($event)">
 		<ng-template pTemplate="body"  let-dataset="rowData">
 			{{dataset?.tracking_summary?.total || '0'}}
 		</ng-template>
-	</p-column>-->
+	</p-column>
 	<p-column field="lastUpdate" header="Última actualización" [style]="{'width':'220px'}" sortable="custom" sortFunction="setOrder($event)"  (window:resize)="onResize()" [hidden]="hideLastUpdateColumn">
 		<ng-template pTemplate="body" let-dataset="rowData">
 			{{dataset.metadata_modified | date: 'dd/MM/yyyy'}}
@@ -113,7 +113,7 @@
 			</li>
 		</ul>
 	</nav>
-<!-- <p-paginator rows="{{pageRows}}" totalRecords="{{numDatasets}}" (onPageChange)="paginate($event)"></p-paginator> -->
+<p-paginator rows="{{pageRows}}" totalRecords="{{numDatasets}}" (onPageChange)="paginate($event)"></p-paginator>
 <div class="nota">
 	<p>
 		<i class="fa fa-star" id="informacion_content_3_i" style="color: #5ea2ba;"></i>

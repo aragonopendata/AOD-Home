@@ -8,6 +8,10 @@ const querystring = require('querystring');
 const request = require('request');
 const csvWriter = require('csv-write-stream');
 const iconv = require('iconv-lite');
+const crypto = require('crypto')
+//DB SETTINGS 
+const db = require('../../db/db-connection');
+const pool = db.getCkanPool();
 //LOG SETTINGS
 const logConfig = require('../../conf/log-conf');
 const loggerSettings = logConfig.getLogSettings();
@@ -411,43 +415,6 @@ router.get(constants.API_URL_DATASETS + '/:datasetName', function (req, res, nex
         }).on('error', function (err) {
             utils.errorHandler(err, res, serviceName);
         });
-
-        //CKAN TRACKING REGISTERING
-        //CKAN doesn't increment the tracking throught API calls
-        logger.debug('Tracking datasets...');
-        var post_data = querystring.stringify({
-            'url': constants.CKAN_URL_PATH_TRACKING_DATASET + req.params.datasetName,
-            'type': constants.CKAN_TRACKING_TYPE_PARAM_PAGE
-        });
-        logger.debug('Param URL:' + post_data);
-
-        var post_option = {
-            host: constants.CKAN_BASE_URL,
-            port: constants.CKAN_BASE_PORT,
-            path: constants.CKAN_URL_PATH_TRACKING,
-            method: constants.HTTP_REQUEST_METHOD_POST,
-            headers: {
-                'Content-Type': constants.HTTP_REQUEST_HEADER_CONTENT_TYPE_FORM_URLENCODED,
-                'Content-Length': Buffer.byteLength(post_data),
-                'User-Agent': constants.HTTP_REQUEST_HEADER_USER_AGENT_NODE_SERVER_REQUEST
-            }
-        }
-        logger.debug('POST Option:' + post_option);
-
-        var post_request = http.request(post_option, function (results) {
-            results.setEncoding(constants.HTTP_RESPONSE_DATA_ENCODING);
-            results.on('data', function (chunk) {
-                logger.debug('Request on data OK');
-            });
-        }).on('error', function (err) {
-            //No hacemos
-            logger.debug('Error en tracking:' + err);
-        });
-
-        logger.debug('Writing Post');
-        post_request.write(post_data);
-        logger.debug('Ending Tracking');
-        post_request.end();
     } catch (error) {
         logger.error('Error in route' + constants.API_URL_DATASETS);
     }
@@ -684,6 +651,47 @@ router.get(constants.API_URL_DATASETS + '/:datasetName' + constants.API_URL_RESO
         });
     } catch (error) {
         logger.error('Error in route' + contants.API_URL_DATASETS_RESOURCE_CSV);
+    }
+});
+
+/** UPDATE TRACKING OF DATASET */
+router.post(constants.API_URL_DATASETS_TRACKING, function (req, res, next) {
+    try{
+        let user = crypto.createHash('md5').update(req.body.user_key).digest('hex');
+        let url = req.body.url;
+        const query = {
+            text: 'INSERT INTO public.tracking_raw(user_key, url, tracking_type, access_timestamp) '
+            + 'VALUES ($1, $2, $3, now()) ',
+            values: [user, url, constants.CKAN_TRACKING_TYPE_PARAM_PAGE]
+        };
+
+        pool.connect((connError, client, release) => {
+            if (connError) {
+                logger.error(connError.stack);
+                res.json({ status: constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': connError });
+                return;
+            }
+            client.query(query, (err, queryResult) => {
+                if (err) {
+                    logger.error(err.stack);
+                    return console.error('Error executing query', err.stack)
+                } else {
+                    client.query('COMMIT', (commitError) => {
+                        release();
+                        if (commitError) {
+                            logger.notice('Error realizando commit: ' + commitError);
+                            res.json({ status: constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': commitError });
+                        } else {
+                            logger.notice('Tracking insertado correctamente');
+                            res.json({ status: 200 });
+                        }
+                    });
+                }
+            })
+        })
+    } catch (error) {
+        logger.error('ACTUALIZACIÓN DEL TRACKING - Error actualizando tracking');
+        res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'ACTUALIZACIÓN DEL TRACKING - Error actualizando tracking' });
     }
 });
 
