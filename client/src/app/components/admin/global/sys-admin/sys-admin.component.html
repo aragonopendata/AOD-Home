@@ -1,0 +1,24 @@
+<div class="container">
+    <button class="btn btn-primary" type="button" (click)="changeEmailRevision()" style="margin-bottom: 5px;">
+        Revisar Informe
+    </button>
+    <div *ngIf="toCheck" class="alert alert-danger" role="alert">
+        Tiene una revisión de informe pendiente en su correo electrónico.
+    </div>
+    <p-dataTable *ngIf="records" [value]="records" [responsive]="true" emptyMessage="{{emptyMessage}}" [paginator]="true" [rows]="10" #dt>
+        <p-column field="date" header="Fecha de registro" [style]="{'width': '200px'}"></p-column>
+        <p-column field="service" header="Servicio"></p-column>
+        <p-column field="status" header="Estado" [filter]="true" filterMatchMode="equals" [style]="{'width': '200px'}">
+            <ng-template pTemplate="filter" let-col>
+                <p-dropdown [options]="states" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" [style]="{'width':'100%'}" styleClass="ui-column-filter"></p-dropdown>
+            </ng-template>
+            <ng-template pTemplate="body" let-record="rowData">
+                <div>
+                    <span *ngIf="record.status == 'OK'" class="badge badge-pill badge-success">{{record.status}}</span>
+                    <span *ngIf="record.status == 'ERROR'" class="badge badge-pill badge-danger">{{record.status}}</span>
+                </div>
+            </ng-template>
+        </p-column>
+    </p-dataTable>
+</div>
+<p-growl [(value)]="msgs"></p-growl>

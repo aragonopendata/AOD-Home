@@ -51,6 +51,7 @@ import { CampusAdminComponent } from './components/admin/campus-admin/campus-adm
 import { LogstashComponent } from './components/admin/logstash/logstash.component';
 import { VisualDataComponent } from './components/admin/visual-data/visual-data.component';
 import { PageNotFoundComponent } from './components/error/page-not-found/page-not-found.component';
+import { SysAdminComponent } from './components/admin/global/sys-admin/sys-admin.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -92,6 +93,7 @@ const routes: Routes = [
         { path: Constants.ROUTER_LINK_GLOBAL, component: GlobalComponent, canActivate: [AuthGuard], children: [
             { path: '', redirectTo: Constants.ROUTER_LINK_DASHBOARD, pathMatch: 'full' },
             { path: Constants.ROUTER_LINK_DASHBOARD, component: DashboardGlobalComponent, canActivate: [AuthGuard] },
+            { path: Constants.ROUTER_LINK_ADMIN_SYS, component: SysAdminComponent, canActivate: [AuthGuard] },
             { path: Constants.ROUTER_LINK_USERS, component: UsersAdminComponent, canActivate: [AuthGuard] },
             { path: Constants.ROUTER_LINK_ROLES, component: RolesAdminComponent, canActivate: [AuthGuard] },
             { path: Constants.ROUTER_LINK_CONTENT, canActivate: [AuthGuard], children: [

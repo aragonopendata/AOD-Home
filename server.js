@@ -31,6 +31,7 @@ var aodCore = require('./server/routes/admin/aod-core')
 var logstash = require('./server/routes/admin/analytics')
 var analytics = require('./server/routes/web/analytics')
 //var campusAdmin = require('./server/routes/admin/campus');
+var sysAdmin = require('./server/routes/admin/sys-admin');
 
 // API ROUTES 
 var authenticate = require('./server/routes/authenticate'); 
@@ -78,6 +79,7 @@ app.use(constants.API_BASE_URL_ADMIN, verifyToken, organizationsAdmin);
 app.use(constants.API_BASE_URL_ADMIN, aodCore);
 app.use(constants.API_BASE_URL_ADMIN, verifyToken, logstash);
 //app.use('/api/admin', campusAdmin);
+app.use(constants.API_BASE_URL_ADMIN, verifyToken, sysAdmin);
 
 // PORT FROM ENVIRONMENT
 const port = process.env.PORT || constants.EXPRESS_NODE_STARTING_PORT;

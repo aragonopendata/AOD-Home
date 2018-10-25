@@ -27,7 +27,11 @@
 				</div>
 			</li>
 
-			<li class="nav-item dropdown">
+			<li *ngIf="showSysAdminMenu" class="nav-item active">
+				<a class="nav-link" routerLink="./global/sysadmin">Administración de sistema<span class="sr-only">(current)</span></a>
+			</li>
+
+			<li *ngIf="!showSysAdminMenu" class="nav-item dropdown">
 				<a tabindex="0" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					Banco de Datos
 				</a>

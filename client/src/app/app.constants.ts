@@ -452,7 +452,8 @@ export class Constants {
     public static ADMIN_USER_ROL_GLOBAL_ADMIN = 'global_adm';
     public static ADMIN_USER_ROL_ORGANIZATION_ADMIN = 'org_adm';
     public static ADMIN_USER_ROL_ORGANIZATION_EDITOR = 'org_editor';
-    public static ADMIN_USER_ROL_ORGANIZATION_MEMBER = 'org_member'; 
+    public static ADMIN_USER_ROL_ORGANIZATION_MEMBER = 'org_member';
+    public static ADMIN_USER_ROL_SYS_ADMIN = 'sysadmin';
 
     //ADMIN ORGANIZATION
     public static GROWL_SEVERITY_SUCCESS = 'success';
@@ -510,6 +511,7 @@ export class Constants {
     public static ROUTER_LINK_ADMIN = 'admin';
     public static ROUTER_LINK_GLOBAL = 'global';
     public static ROUTER_LINK_ADMIN_GLOBAL = 'admin/global';
+    public static ROUTER_LINK_ADMIN_SYS = 'sysadmin';
     public static ROUTER_LINK_DASHBOARD = 'dashboard';
     public static ROUTER_LINK_ADMIN_GLOBAL_DASHBOARD = 'admin/global/dashboard';
     public static ROUTER_LINK_USERS = 'users';
@@ -623,6 +625,7 @@ export class Constants {
     public static SERVER_API_LINK_CAMPUS_TOPICS = '/campus/topics';
     public static SERVER_API_LINK_WEB_ANALYTICS = '/analytics/files';
     public static SERVER_API_LINK_ADMIN_USERS = '/users';
+    public static SERVER_API_LINK_ADMIN_SYS = '/sysadmin';
     public static SERVER_API_LINK_ADMIN_ROLES_LIST = '/roles';
     public static SERVER_API_LINK_ADMIN_GET_ROLE = '/role';
     public static SERVER_API_LINK_ADMIN_LOGSTASH_FILES = '/logstash/files';
