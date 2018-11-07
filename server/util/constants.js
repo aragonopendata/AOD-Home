@@ -260,4 +260,4 @@ exports.ANALYTICS_LOGSTASH_PATH = '/data/apps/LogStash'
 /* ******************* */
 /* SPIDER LOG FILE */
 exports.SPIDER_LOG_PATH = '/data/logs/spider/spider.log';
-exports.SPIDER_EMAIL_REVISION_PATH = '/data/scripts/procesos/emailRevision.json';
+exports.SPIDER_EMAIL_REVISION_PATH = '/data/scripts/procesos/spider/emailRevision.json';
