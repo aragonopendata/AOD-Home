@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { SysAdminService } from 'app/services/admin/sys-admin.service';
+import { AuthenticationService } from 'app/services/security/authentication.service';
+import { Constants } from 'app/app.constants';
 import { SelectItem, Message } from 'primeng/primeng';
 
 @Component({
@@ -9,6 +12,7 @@ import { SelectItem, Message } from 'primeng/primeng';
 })
 export class SysAdminComponent implements OnInit {
 
+    user: any;
     records: any;
     states: SelectItem[];
     selectedState: SelectItem;
@@ -16,9 +20,10 @@ export class SysAdminComponent implements OnInit {
     toCheck: boolean = false;
     msgs: Message[] = [];
 
-    constructor(private sysAdminService: SysAdminService) { }
+    constructor(private sysAdminService: SysAdminService, private authenticationService: AuthenticationService, private router: Router) { }
 
     ngOnInit() {
+        this.checkRol();
         this.states = [
             {label: 'Todos los estados', value: null},
             {label: 'OK', value: 'OK'},
@@ -26,6 +31,13 @@ export class SysAdminComponent implements OnInit {
         ];
         this.checkEmailRevision();
         this.getLogFileData();
+    }
+
+    checkRol(){
+        this.user = this.authenticationService.getCurrentUser();
+        if(this.user.rol != Constants.ADMIN_USER_ROL_SYS_ADMIN){
+            this.router.navigate(['/' + Constants.ROUTER_LINK_ADMIN_GLOBAL_DASHBOARD]);
+        }
     }
 
     getLogFileData() {
@@ -77,7 +89,7 @@ export class SysAdminComponent implements OnInit {
         this.msgs = [];
         this.msgs.push({
             severity:'success',
-            summary: 'INFROME REVISADO',
+            summary: 'INFORME REVISADO',
             detail: 'El informe ha sido revisado correctamente'
         });
     }
