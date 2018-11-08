@@ -511,7 +511,7 @@ export class Constants {
     public static ROUTER_LINK_ADMIN = 'admin';
     public static ROUTER_LINK_GLOBAL = 'global';
     public static ROUTER_LINK_ADMIN_GLOBAL = 'admin/global';
-    public static ROUTER_LINK_ADMIN_SYS = 'sysadmin';
+    public static ROUTER_LINK_SANITY_CHECK = 'sanitycheck';
     public static ROUTER_LINK_DASHBOARD = 'dashboard';
     public static ROUTER_LINK_ADMIN_GLOBAL_DASHBOARD = 'admin/global/dashboard';
     public static ROUTER_LINK_USERS = 'users';

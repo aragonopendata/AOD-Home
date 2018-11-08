@@ -93,7 +93,7 @@ const routes: Routes = [
         { path: Constants.ROUTER_LINK_GLOBAL, component: GlobalComponent, canActivate: [AuthGuard], children: [
             { path: '', redirectTo: Constants.ROUTER_LINK_DASHBOARD, pathMatch: 'full' },
             { path: Constants.ROUTER_LINK_DASHBOARD, component: DashboardGlobalComponent, canActivate: [AuthGuard] },
-            { path: Constants.ROUTER_LINK_ADMIN_SYS, component: SysAdminComponent, canActivate: [AuthGuard] },
+            { path: Constants.ROUTER_LINK_SANITY_CHECK, component: SysAdminComponent, canActivate: [AuthGuard] },
             { path: Constants.ROUTER_LINK_USERS, component: UsersAdminComponent, canActivate: [AuthGuard] },
             { path: Constants.ROUTER_LINK_ROLES, component: RolesAdminComponent, canActivate: [AuthGuard] },
             { path: Constants.ROUTER_LINK_CONTENT, canActivate: [AuthGuard], children: [
