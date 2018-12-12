@@ -15,7 +15,7 @@
 		<p>¿Desea continuar?</p>
 		<p-footer>
 			<button type="button" pButton icon="fa-check" (click)="cancelDataset()" label="Sí"></button>
-			<button type="button" pButton icon="fa-close" (click)="undoCancelDataset()" label="No"></button>
+			<button type="button" pButton icon="fa-times" (click)="undoCancelDataset()" label="No"></button>
 		</p-footer>
 	</p-dialog>
 
@@ -85,9 +85,9 @@
 						<div class="row justify-content-end">
 							<div class="btn-group" role="group" aria-label="Action Buttons">
 								<button type="submit" class="btn btn-primary" (click)="addResource()">
-									<i class="fa fa-plus"></i> Añadir</button>
+									<i class="fas fa-plus"></i> Añadir</button>
 								<button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">
-										<i class="fa fa-close"></i> Cancelar
+										<i class="fas fa-times"></i> Cancelar
 								</button>
 							</div>
 						</div>
@@ -193,9 +193,9 @@
 						<div class="row justify-content-end">
 							<div class="btn-group" role="group" aria-label="Action Buttons">
 								<button type="submit" class="btn btn-primary" (click)="updateResource()" data-dismiss="modal" >
-									<i class="fa fa-plus"></i> Actualizar</button>
+									<i class="fas fa-plus"></i> Actualizar</button>
 								<button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">
-									<i class="fa fa-close"></i> Cancelar
+									<i class="fas fa-times"></i> Cancelar
 								</button>
 							</div>
 						</div>
@@ -221,9 +221,9 @@
 						<div class="row justify-content-end">
 							<div class="btn-group" role="group" aria-label="Action Buttons">
 								<button type="submit" class="btn btn-danger" (click)="deleteResource()">
-									<i class="fa fa-trash"></i> Eliminar</button>
+									<i class="fas fa-trash-alt"></i> Eliminar</button>
 								<button type="button" data-dismiss="modal" (click)="undoDeleteResource()" class="btn btn-primary">
-									<i class="fa fa-close"></i> Cancelar</button>
+									<i class="fas fa-times"></i> Cancelar</button>
 							</div>
 						</div>
 					</div>
@@ -328,7 +328,7 @@
 						<div class="col-12">
 							<h3>
 								<span *ngFor="let tag of tags" class="badge badge-pill badge-secondary">{{tag.display_name}}
-									<span class="fa fa-close" (click)="delTag(tag.display_name)"></span>
+									<span class="fas fa-times" (click)="delTag(tag.display_name)"></span>
 								</span>
 							</h3>
 						</div>
@@ -493,7 +493,7 @@
 									<p>{{urlDic}}</p>
 								</div>
 								<button class="col-sm-2 btn btn-danger" type="button" (click)="removeUrl('quality', urlDic)">Quitar
-									<i class="fa fa-close"></i>
+									<i class="fas fa-times"></i>
 								</button>
 							</div>
 						</li>
@@ -504,7 +504,7 @@
 									<input type="text" class="form-control" placeholder="Introduzca URL" #inputUrlQuality>
 								</div>
 								<button type="button" (click)="addUrl('quality', inputUrlQuality.value);inputUrlQuality.value=''" class="col-sm-2 btn btn-primary">Añadir
-									<i class="fa fa-plus"></i>
+									<i class="fas fa-plus"></i>
 								</button>
 							</div>
 						</li>
@@ -526,7 +526,7 @@
 									<p>{{urlDic}}</p>
 								</div>
 								<button class="col-sm-2 btn btn-danger" type="button" (click)="removeUrl('dictionary', urlDic)">Quitar
-									<i class="fa fa-close"></i>
+									<i class="fas fa-times"></i>
 								</button>
 							</div>
 						</li>
@@ -537,7 +537,7 @@
 									<input type="text" class="form-control" placeholder="Introduzca URL" #inputUrlDictionary>
 								</div>
 								<button type="button" (click)="addUrl('dictionary', inputUrlDictionary.value);inputUrlDictionary.value=''" class="col-sm-2 btn btn-primary">Añadir
-									<i class="fa fa-plus"></i>
+									<i class="fas fa-plus"></i>
 								</button>
 							</div>
 						</li>
@@ -610,23 +610,23 @@
 						<p-column field="name" header="Nombre" sortable="custom" [sortable]="false"></p-column>
 						<p-column field="resource_type" header="Tipo" sortable="custom" [sortable]="false">
 							<ng-template pTemplate="body" let-resource="rowData">
-								<div *ngIf="resource.resource_type == 'view'"><i class="fa fa-database"></i> Vista BBDD</div>
-								<div *ngIf="resource.resource_type == 'file'"><i class="fa fa-file"></i> Fichero</div>
-								<div *ngIf="resource.resource_type == 'url'"><i class="fa fa-external-link"></i> Url Externa</div>
+								<div *ngIf="resource.resource_type == 'view'"><i class="fas fa-database"></i> Vista BBDD</div>
+								<div *ngIf="resource.resource_type == 'file'"><i class="fas fa-file"></i> Fichero</div>
+								<div *ngIf="resource.resource_type == 'url'"><i class="fas fa-external-link-alt"></i> Url Externa</div>
 							</ng-template>
 						</p-column>
 						<p-column field="format" header="Formato" sortable="custom" [sortable]="false"></p-column>
 						<p-column header="Edición" [style]="{'width':'14%'}">
 							<ng-template pTemplate="body" let-resource="rowData">
-								<button type="button" class="btn btn-primary" data-toggle="modal" (click)="openShowResource(resource)" data-target=".modalShowResource"><i class="fa fa-search"></i></button>
-								<button type="button" class="btn btn-primary" data-toggle="modal" (click)="openEditResource(resource)" data-target=".modalEditResource"><i class="fa fa-edit"></i></button>
-								<button type="button" class="btn btn-primary" data-toggle="modal" (click)="openRemoveResource(resource)" data-target=".modalRemoveResource"><i class="fa fa-trash"></i></button>
+								<button type="button" class="btn btn-primary" data-toggle="modal" (click)="openShowResource(resource)" data-target=".modalShowResource"><i class="fas fa-search"></i></button>
+								<button type="button" class="btn btn-primary" data-toggle="modal" (click)="openEditResource(resource)" data-target=".modalEditResource"><i class="fas fa-edit"></i></button>
+								<button type="button" class="btn btn-primary" data-toggle="modal" (click)="openRemoveResource(resource)" data-target=".modalRemoveResource"><i class="fas fa-trash-alt"></i></button>
 							</ng-template>
 						</p-column>
 						<p-footer>
 							<div class="ui-helper-clearfix" style="width:100%">
 								<button type="button" class="btn btn-primary" data-toggle="modal" style="float:left" data-target=".modalAddResource" (click)="resetAddResourceModal()">
-								<i class="fa fa-plus"></i> Añadir</button>
+								<i class="fas fa-plus"></i> Añadir</button>
 							</div>
 						</p-footer>
 						</p-dataTable>

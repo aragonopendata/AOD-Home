@@ -64,3 +64,7 @@ b {
 .img {
     max-height: 30px;
 }
+
+.fa-close:before {
+    content: '\F00D';
+}

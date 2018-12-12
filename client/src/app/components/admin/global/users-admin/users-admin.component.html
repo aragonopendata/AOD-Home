@@ -25,16 +25,16 @@
 		</p-column>
 		<p-column header="Edición" [style]="{'width':'12%'}">
 			<ng-template pTemplate="body" let-user="rowData">
-				<button class="btn btn-primary p-2" type="button" (click)="showDialog(user, false, false)" data-toggle="tooltip" data-placement="top" title="Mostrar"><i class="fa fa-search"></i></button>
-				<button class="btn btn-primary p-2" type="button" (click)="showDialog(user, true, false)" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fa fa-edit"></i></button>
-				<button *ngIf="user.role[0].id != 1" class="btn btn-primary p-2" type="button" (click)="showDeleteDialog(user)" data-toggle="tooltip" data-placement="top" title="Borrar"><i class="fa fa-trash"></i></button>
+				<button class="btn btn-primary p-2" type="button" (click)="showDialog(user, false, false)" data-toggle="tooltip" data-placement="top" title="Mostrar"><i class="fas fa-search"></i></button>
+				<button class="btn btn-primary p-2" type="button" (click)="showDialog(user, true, false)" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fas fa-edit"></i></button>
+				<button *ngIf="user.role[0].id != 1" class="btn btn-primary p-2" type="button" (click)="showDeleteDialog(user)" data-toggle="tooltip" data-placement="top" title="Borrar"><i class="fas fa-trash-alt"></i></button>
 			</ng-template>
 		</p-column>
 		<p-footer>
 			
 			<div class="ui-helper-clearfix" style="width:100%">
 					<button class="btn btn-primary" type="button" icon="fa-plus" (click)="showDialog(null, false, true)" style="float:left" >
-						<i class="fa fa-plus"></i> Nuevo Usuario
+						<i class="fas fa-plus"></i> Nuevo Usuario
 					</button>
 			</div>
 		</p-footer>
@@ -80,8 +80,8 @@
 		</div>
 		<p-footer>
 			<div class="ui-dialog-buttonpane ui-helper-clearfix">
-				<button type="button" class="btn btn-danger mt-2" (click)="displayViewDialog = false"><i class="fa fa-close"></i> Cancelar</button>
-				<button type="button" class="btn btn-primary mt-2" (click)="enableEdition()"><i class="fa fa-edit"></i> Editar</button>
+				<button type="button" class="btn btn-danger mt-2" (click)="displayViewDialog = false"><i class="fas fa-times"></i> Cancelar</button>
+				<button type="button" class="btn btn-primary mt-2" (click)="enableEdition()"><i class="fas fa-edit"></i> Editar</button>
 			</div>
 		</p-footer>
 	</p-dialog>
@@ -177,12 +177,12 @@
 		</div>
 		<p-footer>
 			<div *ngIf="!createOrg" class="ui-dialog-buttonpane ui-helper-clearfix">
-				<button class="btn btn-danger mt-2" (click)="cancelSaveUser()"><i class="fa fa-close"></i> Cancelar</button>
-				<button class="btn btn-primary mt-2" (click)="saveUser()"><i class="fa fa-save"></i> Guardar</button>
+				<button class="btn btn-danger mt-2" (click)="cancelSaveUser()"><i class="fas fa-times"></i> Cancelar</button>
+				<button class="btn btn-primary mt-2" (click)="saveUser()"><i class="fas fa-save"></i> Guardar</button>
 			</div>
 			<div *ngIf="createOrg" class="ui-dialog-buttonpane ui-helper-clearfix">
-				<button class="btn btn-danger mt-2" (click)="createOrg = false"><i class="fa fa-close"></i> Cancelar</button>
-				<button class="btn btn-primary mt-2" (click)="saveOrg()"><i class="fa fa-plus"></i> Crear Organización</button>
+				<button class="btn btn-danger mt-2" (click)="createOrg = false"><i class="fas fa-times"></i> Cancelar</button>
+				<button class="btn btn-primary mt-2" (click)="saveOrg()"><i class="fas fa-plus"></i> Crear Organización</button>
 			</div>
 		</p-footer>
 	</p-dialog>
@@ -192,7 +192,7 @@
 		<p>¿Desea continuar?</p>
 			 <p-footer>
 				 <button type="button" pButton icon="fa-check" (click)="deleteUser()" label="Sí"></button>
-				 <button type="button" pButton icon="fa-close" (click)="undoDeleteUser()" label="No"></button>
+				 <button type="button" pButton icon="fa-times" (click)="undoDeleteUser()" label="No"></button>
 			 </p-footer>
 	</p-dialog>
 </div>

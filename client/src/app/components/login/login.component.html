@@ -10,13 +10,11 @@
 			<form (ngSubmit)="f.form.valid && login()" #f="ngForm" method="post" accept-charset="utf-8" novalidate>
 				<div class="form-group has-feedback" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
 					<input tabindex="{{openedMenu ? -1 : 0}}" type="text" placeholder="Nombre de usuario" class="form-control" id="login" maxlength="80" size="30" name="username" [(ngModel)]="model.username" #username="ngModel">
-					<span class="glyphicon glyphicon-user form-control-feedback"></span>
-					<span><font color="red"></font></span>
+					<i class="fas fa-user form-control-feedback" aria-label="username"></i>
 				</div>
 				<div class="form-group has-feedback" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
 					<input tabindex="{{openedMenu ? -1 : 0}}" type="password" placeholder="Contraseña" class="form-control" id="password" name="password" [(ngModel)]="model.password" #password="ngModel" required size="30">
-					<span class="glyphicon glyphicon-lock form-control-feedback"></span>
-					<span><font color="red"></font></span>
+					<i class="fas fa-lock form-control-feedback" aria-label="password"></i>
 				</div>
 				<br/>
 				<div class="form-group">

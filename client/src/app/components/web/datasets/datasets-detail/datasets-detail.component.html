@@ -2,14 +2,14 @@
 	<div class="alert alert-info" role="alert">
 		<div class="row">
 			<div class="col-xs-3">
-				<i class="fa fa-exclamation-triangle fa-5x" style="margin:15px;color: #5ea2ba;"></i>
+				<i class="fas fa-exclamation-triangle fa-5x" style="margin:15px;color: #5ea2ba;"></i>
 			</div>
 			<div class="col-xs-9">
 				<h1>{{errorTitle}}</h1>
 				<h2>{{errorMessage}}</h2>
 
 				<a class="mail" href="mailto:opendata@aragon.es">
-					<h2> <i class="fa fa-envelope-o"></i> Contactar con el Administrador</h2>
+					<h2> <i class="far fa-envelope"></i> Contactar con el Administrador</h2>
 				</a>
 
 			</div>
@@ -31,7 +31,7 @@
 		</a>
 	</div>
 </div>
-<button tabindex="{{openedMenu ? -1 : 0}}" *ngIf="showEdit" class="tags" icon="fa-pencil" pButton type="button" label="Editar" style="margin-bottom: 10px;" routerLink="/admin/datacenter/datasets/edit/{{dataset.name}}"></button>	
+<button tabindex="{{openedMenu ? -1 : 0}}" *ngIf="showEdit" class="tags" icon="fa-pencil-alt" pButton type="button" label="Editar" style="margin-bottom: 10px;" routerLink="/admin/datacenter/datasets/edit/{{dataset.name}}"></button>	
 <div class="content row">
 	<div *ngIf="dataPreview" class="dtsetPreview col-12" style='margin-bottom: 10px'>
 		<div class="title">

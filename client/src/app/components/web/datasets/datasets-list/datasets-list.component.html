@@ -2,13 +2,13 @@
     <div class="alert alert-info" role="alert">
         <div class="row">
             <div class="col-xs-3">
-                <i class="fa fa-exclamation-triangle fa-5x" style="margin:15px;color: #5ea2ba;"></i>
+                <i class="fas fa-exclamation-triangle fa-5x" style="margin:15px;color: #5ea2ba;"></i>
             </div>
             <div class="col-xs-9">
                 <h1>{{errorTitle}}</h1>
                 <h2>{{errorMessage}}</h2>
                 <a class="mail" href="mailto:opendata@aragon.es">
-                    <h2> <i class="fa fa-envelope-o"></i> Contactar con el Administrador</h2>
+                    <h2> <i class="far fa-envelope"></i> Contactar con el Administrador</h2>
                 </a>
 
             </div>
@@ -26,7 +26,7 @@
                     <input tabindex="{{openedMenu ? -1 : 0}}" type="text" class="form-control" placeholder="Buscar por..." [(ngModel)]="textSearch" (keyup.enter)="searchDatasetsByText()"
                         #searchInput>
                     <span class="input-group-btn">
-                        <button tabindex="{{openedMenu ? -1 : 0}}" class="btn btn-secondary" type="button" (click)="searchDatasetsByText()" ><i class="fa fa-search" aria-hidden="true"></i></button>
+                        <button tabindex="{{openedMenu ? -1 : 0}}" class="btn btn-secondary" type="button" (click)="searchDatasetsByText()" ><i class="fas fa-search" aria-hidden="true"></i></button>
                     </span>
                 </div>
             </div>
@@ -65,7 +65,7 @@
                         field="name" [multiple]="true">
                     </p-autoComplete>
                     <span class="input-group-btn">
-                        <button tabindex="{{openedMenu ? -1 : 0}}" class="btn btn-secondary" type="button" (click)="changeTags()" ><i class="fa fa-search" aria-hidden="true"></i></button>
+                        <button tabindex="{{openedMenu ? -1 : 0}}" class="btn btn-secondary" type="button" (click)="changeTags()" ><i class="fas fa-search" aria-hidden="true"></i></button>
                     </span>
                 </div>
             </div>
@@ -135,7 +135,7 @@
                     <input tabindex="{{openedMenu ? -1 : 0}}" type="text" class="form-control" placeholder="Buscar por..." [value]="searchHomerValue" (keyup.enter)="searchDatasetsByHomer(searchHomerInput.value)"
                         #searchHomerInput>
                     <span class="input-group-btn">
-                        <button tabindex="{{openedMenu ? -1 : 0}}" class="btn btn-secondary" type="button" (click)="searchDatasetsByHomer(searchHomerInput.value)"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        <button tabindex="{{openedMenu ? -1 : 0}}" class="btn btn-secondary" type="button" (click)="searchDatasetsByHomer(searchHomerInput.value)"><i class="fas fa-search" aria-hidden="true"></i></button>
                     </span>
                 </div>
             </div>
@@ -165,7 +165,7 @@
                     <a tabindex="{{openedMenu ? -1 : 0}}" routerLink='/{{routerLinkDataCatalogDataset}}/{{dataset.name}}' (click)="showDataset(dataset)">
                         {{dataset.title}}
                     </a>
-                    <i class="fa fa-star" id="informacion_content_3_i" style="color: #5ea2ba;" *ngIf="dataset.tracking_summary && (dataset.tracking_summary.recent > 10)"></i>
+                    <i class="fas fa-star" id="informacion_content_3_i" style="color: #5ea2ba;" *ngIf="dataset.tracking_summary && (dataset.tracking_summary.recent > 10)"></i>
                 </ng-template>
             </p-column>
             <p-column field="accesos" header="Nº de accesos" [style]="{'width':'160px'}" sortable="custom" sortFunction="orderTable($event)" (window:resize)="onResize()" [hidden]="hideAccessNumberColumn">
@@ -183,12 +183,12 @@
             <ul class="pagination justify-content-center">
                 <li [ngClass]="actualPage >= 1 ? 'page-item': 'page-item disabled'">
                     <a tabindex="{{openedMenu ? -1 : 0}}" class="page-link" (click)="paginate(+pageFirst+1)" aria-label="Primero">
-                        <i class="fa fa-fast-backward" ></i>
+                        <i class="fas fa-fast-backward" ></i>
                     </a>
                 </li>
                 <li [ngClass]="actualPage >= 1 ? 'page-item': 'page-item disabled'">
                     <a tabindex="{{openedMenu ? -1 : 0}}" class="page-link" (click)="paginate(+actualPage)" aria-label="Anterior">
-                        <i class="fa fa-step-backward"></i>
+                        <i class="fas fa-step-backward"></i>
                     </a>
                 </li>
                 <li *ngFor="let pageShow of pagesShow" [ngClass]="pageShow == '-' ? 'page-item disabled' : (pageShow == (+actualPage+1) ? 'page-item active': 'page-item')">
@@ -196,19 +196,19 @@
                 </li>
                 <li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
                     <a tabindex="{{openedMenu ? -1 : 0}}" class="page-link" (click)="paginate(+actualPage+2)" aria-label="Siguiente">
-                        <i class="fa fa-step-forward"></i>
+                        <i class="fas fa-step-forward"></i>
                     </a>
                 </li>
                 <li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
                     <a tabindex="{{openedMenu ? -1 : 0}}" class="page-link" (click)="paginate(pageLast)" aria-label="Ultimo">
-                        <i class="fa fa-fast-forward"></i>
+                        <i class="fas fa-fast-forward"></i>
                     </a>
                 </li>
             </ul>
         </nav>
         <div class="nota">
             <p>
-                <i class="fa fa-star" id="informacion_content_3_i" style="color: #5ea2ba;"></i> Se ha accedido al conjunto
+                <i class="fas fa-star" id="informacion_content_3_i" style="color: #5ea2ba;"></i> Se ha accedido al conjunto
                 de datos más de 10 veces en los últimos 14 días.
             </p>
         </div>
@@ -301,12 +301,12 @@
             <ul class="pagination justify-content-center">
                 <li [ngClass]="actualPage >= 1 ? 'page-item': 'page-item disabled'">
                     <a tabindex="{{openedMenu ? -1 : 0}}" class="page-link" (click)="paginate(+pageFirst+1)" aria-label="Primero">
-                        <i class="fa fa-fast-backward" ></i>
+                        <i class="fas fa-fast-backward" ></i>
                     </a>
                 </li>
                 <li [ngClass]="actualPage >= 1 ? 'page-item': 'page-item disabled'">
                     <a tabindex="{{openedMenu ? -1 : 0}}" class="page-link" (click)="paginate(+actualPage)" aria-label="Anterior">
-                        <i class="fa fa-step-backward"></i>
+                        <i class="fas fa-step-backward"></i>
                     </a>
                 </li>
                 <li *ngFor="let pageShow of pagesShow" [ngClass]="pageShow == '-' ? 'page-item disabled' : (pageShow == (+actualPage+1) ? 'page-item active': 'page-item')">
@@ -315,12 +315,12 @@
 
                 <li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
                     <a tabindex="{{openedMenu ? -1 : 0}}" class="page-link" (click)="paginate(+actualPage+2)" aria-label="Siguiente">
-                        <i class="fa fa-step-forward"></i>
+                        <i class="fas fa-step-forward"></i>
                     </a>
                 </li>
                 <li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
                     <a tabindex="{{openedMenu ? -1 : 0}}" class="page-link" (click)="paginate(pageLast)" aria-label="Ultimo">
-                        <i class="fa fa-fast-forward"></i>
+                        <i class="fas fa-fast-forward"></i>
                     </a>
                 </li>
             </ul>

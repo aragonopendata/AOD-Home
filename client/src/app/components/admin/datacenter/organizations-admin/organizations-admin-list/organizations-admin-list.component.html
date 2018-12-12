@@ -17,7 +17,7 @@
       <ng-template pTemplate="body" let-org="rowData">
         <button pButton type="button" icon="fa-search" routerLink="../show/{{org.name}}"></button>
         <button pButton type="button" icon="fa-edit" routerLink="../edit/{{org.name}}"></button>
-        <button *ngIf="showDeleteButton" pButton type="button" icon="fa-trash" (click)="confirm(org)"></button>
+        <button *ngIf="showDeleteButton" pButton type="button" icon="fa-trash-alt" (click)="confirm(org)"></button>
       </ng-template>
     </p-column>
     <p-footer *ngIf="showSaveButton">

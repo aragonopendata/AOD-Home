@@ -6,7 +6,7 @@
 		<p>¿Desea continuar?</p>
 			 <p-footer>
 				 <button type="button" pButton icon="fa-check" (click)="deleteDataset()" label="Sí"></button>
-				 <button type="button" pButton icon="fa-close" (click)="undoDeleteDataset()" label="No"></button>
+				 <button type="button" pButton icon="fa-times" (click)="undoDeleteDataset()" label="No"></button>
 			 </p-footer>
 	</p-dialog>
 	<p-growl [(value)]="msgs"></p-growl>
@@ -19,7 +19,7 @@
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Buscar por..." [(ngModel)]="searchValue" (keyup.enter)="searchDatasetsByText(searchInput.value)" #searchInput>
                         <span class="input-group-btn">
-                            <button class="btn btn-secondary" type="button" (click)="searchDatasetsByText(searchInput.value)" ><i class="fa fa-search" aria-hidden="true"></i></button>
+                            <button class="btn btn-secondary" type="button" (click)="searchDatasetsByText(searchInput.value)" ><i class="fas fa-search" aria-hidden="true"></i></button>
                         </span>
                     </div>                
             </div>
@@ -32,9 +32,9 @@
 	<p-dataTable *ngIf="datasets" [value]="datasets" [responsive]="true" emptyMessage="{{emptyMessage}}" (onSort)="setOrder($event)" #dt>
 		<p-column field="name" [style]="{'width':'55%'}" header="{{numDatasets}} conjuntos de datos encontrados" sortable="custom" sortFunction="orderTable($event)">
 			<ng-template pTemplate="body" let-dataset="rowData">
-				<i *ngIf="dataset.private" class="fa fa-lock"></i>
+				<i *ngIf="dataset.private" class="fas fa-lock"></i>
 					{{dataset.title}}
-				<i class="fa fa-star" id="informacion_content_3_i" style="color: #5ea2ba;" *ngIf="dataset.tracking_summary && (dataset.tracking_summary.recent > 10)"></i>
+				<i class="fas fa-star" id="informacion_content_3_i" style="color: #5ea2ba;" *ngIf="dataset.tracking_summary && (dataset.tracking_summary.recent > 10)"></i>
 			</ng-template>
 		</p-column>
 		<p-column field="accesos" header="Nº de accesos" [style]="{'width':'15%'}" sortable="custom" sortFunction="orderTable($event)">
@@ -49,15 +49,15 @@
 		</p-column>
 		<p-column header="edit" header="Edición" [style]="{'width':'12%'}">
 			<ng-template pTemplate="body" let-dataset="rowData">
-				<button class="btn btn-primary p-2" type="button" routerLink="/{{routerLinkAdminDatacenterDatasetsShow}}/{{dataset.name}}" (click)="showDataset(dataset)" data-toggle="tooltip" data-placement="top" title="Mostrar"><i class="fa fa-search"></i></button>
-				<button *ngIf="currentUser.rol != orgMemberRol" class="btn btn-primary p-2" type="button" routerLink="/{{routerLinkAdminDatacenterDatasetsEdit}}/{{dataset.name}}" (click)="showDataset(dataset)" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fa fa-edit"></i></button>
-				<button *ngIf="currentUser.rol != orgMemberRol" class="btn btn-primary p-2" type="button" (click)="showDeleteDialog(dataset.title,dataset.name)" data-toggle="tooltip" data-placement="top" title="Borrar"><i class="fa fa-trash"></i></button>
+				<button class="btn btn-primary p-2" type="button" routerLink="/{{routerLinkAdminDatacenterDatasetsShow}}/{{dataset.name}}" (click)="showDataset(dataset)" data-toggle="tooltip" data-placement="top" title="Mostrar"><i class="fas fa-search"></i></button>
+				<button *ngIf="currentUser.rol != orgMemberRol" class="btn btn-primary p-2" type="button" routerLink="/{{routerLinkAdminDatacenterDatasetsEdit}}/{{dataset.name}}" (click)="showDataset(dataset)" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fas fa-edit"></i></button>
+				<button *ngIf="currentUser.rol != orgMemberRol" class="btn btn-primary p-2" type="button" (click)="showDeleteDialog(dataset.title,dataset.name)" data-toggle="tooltip" data-placement="top" title="Borrar"><i class="fas fa-trash-alt"></i></button>
 			</ng-template>
 		</p-column>
 		<p-footer>
 			<div *ngIf="currentUser.rol != orgMemberRol" class="ui-helper-clearfix" style="width:100%">
 				<button class="btn btn-primary" type="button" icon="fa-plus" (click)="addDataset()" style="float:left" routerLink="/{{routerLinkAdminDatacenterDatasetsEdit}}" >
-					<i class="fa fa-plus"></i> Añade un conjunto de datos
+					<i class="fas fa-plus"></i> Añade un conjunto de datos
 				</button>
 			</div>
 		</p-footer>
@@ -66,12 +66,12 @@
 		<ul class="pagination justify-content-center">
 			<li [ngClass]="actualPage >= 1 ? 'page-item': 'page-item disabled'">
 				<a class="page-link" (click)="paginate(+pageFirst+1)" aria-label="Primero">
-			<i class="fa fa-fast-backward" ></i>
+			<i class="fas fa-fast-backward" ></i>
 			</a>
 			</li>
 			<li [ngClass]="actualPage >= 1 ? 'page-item': 'page-item disabled'">
 				<a class="page-link" (click)="paginate(+actualPage)" aria-label="Anterior">
-			<i class="fa fa-step-backward"></i>
+			<i class="fas fa-step-backward"></i>
 			</a>
 			</li>
 			<li *ngFor="let pageShow of pagesShow" [ngClass]="pageShow == '-' ? 'page-item disabled' : (pageShow == (+actualPage+1) ? 'page-item active': 'page-item')">
@@ -79,12 +79,12 @@
 			</li>
 			<li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
 				<a class="page-link" (click)="paginate(+actualPage+2)" aria-label="Siguiente">
-				<i class="fa fa-step-forward"></i>
+				<i class="fas fa-step-forward"></i>
 				</a>
 			</li>
 			<li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
 				<a class="page-link" (click)="paginate(pageLast)" aria-label="Ultimo">
-				<i class="fa fa-fast-forward"></i>
+				<i class="fas fa-fast-forward"></i>
 				</a>
 			</li>
 		</ul>
