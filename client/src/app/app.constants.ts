@@ -331,6 +331,7 @@ export class Constants {
     public static STATIC_INFO_OPEN_DATA_SECTION_TERMS = 'terminos-licencias'; 
     public static STATIC_INFO_OPEN_DATA_SECTION_CONDITIONS = 'condiciones-social-data';
     public static STATIC_INFO_EVENTS_SECTION_JACATHON = 'jacathon';
+    public static STATIC_INFO_EVENTS_SECTION_PRESTACION_SERVICIOS_MUNDO_DIGITAL = 'prestacion-servicios-publicos-mundo-digital';
     public static STATIC_INFO_DEVELOPERS_SECTION_INTEROPERABILITY = 'interoperabilidad';
     public static STATIC_INFO_DEVELOPERS_SECTION_TECHNOLOGY = 'tecnologia-utilizada';
     public static STATIC_INFO_DEVELOPERS_SECTION_DIRECT_DOWNLOAD = 'descarga-directa';

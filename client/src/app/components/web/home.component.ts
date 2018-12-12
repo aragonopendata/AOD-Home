@@ -185,6 +185,9 @@ export class HomeComponent implements OnInit {
 				case Constants.STATIC_INFO_EVENTS_SECTION_JACATHON:
 					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_EVENTS_SECTION_REDIRECT+fragment);
 				break;
+				case Constants.STATIC_INFO_EVENTS_SECTION_PRESTACION_SERVICIOS_MUNDO_DIGITAL:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_EVENTS_SECTION_REDIRECT+fragment);
+				break;
 				//DEVELOPERS
 				case Constants.STATIC_INFO_DEVELOPERS_SECTION_INTEROPERABILITY:
 					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_DEVELOPERS_SECTION_REDIRECT+fragment);
