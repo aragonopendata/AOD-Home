@@ -23,14 +23,14 @@
 			<div class="card">
 				<div class="card-header" role="tab"  id="{{content.contentOrder}}">
 					<div>
-						<a tabindex="{{openedMenu ? -1 : 0}}" id="{{content.targetUrl}}Link"  class="collapsed headLink"  data-toggle="collapse"  data-parent="#accordion"  href="#{{content.targetUrl}}"
-						aria-expanded="true"  aria-controls="content.contentOrder">
+						<a tabindex="{{openedMenu ? -1 : 0}}" id="{{content.targetUrl}}Link" class="headLink collapsed" data-toggle="collapse"  data-parent="#accordion"  href="#{{content.targetUrl}}"
+						[attr.aria-expanded]="content.contentOrder == 1 ? true : false"  aria-controls="content.contentOrder">
 							{{content.contentTitle}}
 							<i class="fa fa-minus-circle"  aria-hidden="true"></i>
 						</a>
 					</div>
 				</div>
-				<div id="{{content.targetUrl}}"  class="collapse show"  role="tabpanel"  aria-labelledby="content.contentOrder">
+				<div id="{{content.targetUrl}}"  [ngClass]="{'collapse show': content.contentOrder == 1, 'collapse':content.contentOrder != 1}" role="tabpanel"  aria-labelledby="content.contentOrder">
 					<div class="card-block">
 						<p class="textContent" [innerHTML]="content.contentText | safeHtml"></p>
 					</div>
