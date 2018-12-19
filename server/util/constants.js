@@ -253,6 +253,13 @@ exports.PROXY_PASS = '';
 exports.PROXY_URL = '';
 exports.PROXY_PORT = '';
 
+/* **************** */
+/* SMTP PROPERTIES */
+exports.SMTP_USER = '';
+exports.SMTP_PASSWORD = '';
+exports.SMTP_HOST = '';
+exports.SMTP_PORT = '';
+
 /* ******************* */
 /* ANALYTICS CONF */
 exports.ANALYTICS_LOGSTASH_PATH = '/data/apps/LogStash'

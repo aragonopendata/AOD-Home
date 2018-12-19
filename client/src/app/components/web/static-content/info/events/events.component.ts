@@ -1,10 +1,11 @@
-import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, NgZone } from '@angular/core';
 import { StaticContent } from '../../../../../models/StaticContent';
 import { StaticContentService } from '../../../../../services/web/static-content.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Constants } from "app/app.constants";
 import { UtilsService } from '../../../../../services/web/utils.service';
 import StaticContentUtils from '../../../../../utils/StaticContentUtils';
+import { Http, Headers } from '@angular/http';
 declare var jQuery:any;
 
 @Component({
@@ -30,8 +31,18 @@ export class EventsComponent implements OnInit {
 
     constructor(private staticContentService: StaticContentService,
         private activatedRoute: ActivatedRoute,
-        private utilsService: UtilsService) {
+        private utilsService: UtilsService,
+        private http: Http,
+        private zone:NgZone) {
+
         this.getOpenedMenu();
+
+        window['angularComponentReference'] = {
+            zone: this.zone,
+            componentFn: (value) => this.provisionServicesRegistration(value),
+            component: this,
+        };
+
     }
 
     ngOnInit() {
@@ -85,4 +96,21 @@ export class EventsComponent implements OnInit {
 			this.openedMenu = value;
 		});
     }
+
+    public provisionServicesRegistration(value){
+        var headers = new Headers();
+        headers.append('Content-Type', ' application/json');
+        let fullURL = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_REGISTRATION_EVENT_PRESTACION_PUBLI;
+        this.http.post(fullURL, JSON.stringify(value), { headers: headers }).subscribe(result => {
+            if(result.json().status == 200){
+                jQuery('#success').show();
+                jQuery('#registrationForm')[0].reset();
+                jQuery('#success').html('Registro completado con exito!');
+            }else if(result.json().status != 200){
+                jQuery('#error').show();
+                jQuery('#error').html('No se ha podido realizar el registro. Vuelva a intentarlo más tarde.');
+            }
+        });
+    }
+    
 }

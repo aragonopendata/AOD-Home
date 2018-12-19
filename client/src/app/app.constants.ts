@@ -660,6 +660,7 @@ export class Constants {
     public static SERVER_API_LINK_PARAM_SORT_HOMER_NAME = 'title';
     public static SERVER_API_LINK_PARAM_SORT_HOMER_PORTAL = 'portal';
     public static SERVER_API_LINK_PARAM_SORT_HOMER_LANGUAGE = 'language';
+    public static SERVER_API_LINK_REGISTRATION_EVENT_PRESTACION_PUBLI = '/inscripcionPrestacionServPubli';
 
     public static SERVER_API_LINK_SPARQL_CLIENT_PARAM_GRAPH = 'graph';
     public static SERVER_API_LINK_SPARQL_CLIENT_PARAM_QUERY = 'query';
