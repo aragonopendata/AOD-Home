@@ -49,19 +49,19 @@ exports.API_URL_GA_OD_CORE = '/core';
 exports.API_URL_GA_OD_CORE_VIEWS = '/views';
 exports.API_URL_DATASETS_TRACKING = '/tracking';
 exports.API_URL_STATIC_CONTENT_INFO_OPEN_DATA = '/static-content/info/open-data';
+exports.API_URL_STATIC_CONTENT_INFO_CONOCIMIENTO = '/static-content/info/conocimiento';
 exports.API_URL_STATIC_CONTENT_INFO_APPS = '/static-content/info/applications';
 exports.API_URL_STATIC_CONTENT_INFO_EVENTS = '/static-content/info/events';
 exports.API_URL_STATIC_CONTENT_INFO_COLLABORATION = '/static-content/info/collaboration';
 exports.API_URL_STATIC_CONTENT_TOOLS_DEVELOPERS = '/static-content/tools/developers';
 exports.API_URL_STATIC_CONTENT_TOOLS_APIS = '/static-content/tools/apis';
-exports.API_URL_STATIC_CONTENT_TOOLS_SPARQL = '/static-content/tools/sparql';
-exports.API_URL_STATIC_CONTENT_TOOLS_SPARQL_CLIENT = '/static-content/tools/sparql-client';
-exports.API_URL_STATIC_CONTENT_TOOLS_SPARQL_GRAPHS = '/static-content/tools/sparql-client/graphs';
 exports.API_URL_AUTHENTICATE = '/authenticate';
 exports.API_URL_ADMIN_DATASET = '/dataset';
 exports.API_URL_ADMIN_RESOURCE = '/resource';
 exports.API_URL_ADMIN_ORGANIZATION = '/organization';
 exports.API_URL_IAEST_PX_FILES = 'http://servicios3.aragon.es/iaeaxi_docs/';
+exports.API_URL_ADMIN_STATIC_CONTENT_INFO = '/static-content-admin/info';
+exports.API_URL_ADMIN_STATIC_CONTENT_TOOLS = '/static-content-admin/tools';
 
 /* STATIC CONTENT DATABASE SECTION TITLES */
 exports.API_URL_CAMPUS_EVENTS = '/campus/events';
@@ -71,8 +71,19 @@ exports.API_URL_CAMPUS_CONTENT = '/campus/content';
 exports.API_URL_CAMPUS_SPEAKERS = '/campus/speakers';
 exports.API_URL_CAMPUS_TOPICS = '/campus/topics';
 exports.API_URL_CAMPUS_TYPES = '/campus/types';
+exports.API_URL_ADMIN_CAMPUS_SITES = '/campus-admin/sites';
+exports.API_URL_ADMIN_CAMPUS_SPEAKERS = '/campus-admin/speakers';
+exports.API_URL_ADMIN_CAMPUS_TYPES = '/campus-admin/types';
+exports.API_URL_ADMIN_CAMPUS_PLATFORMS = '/campus-admin/platforms';
+exports.API_URL_ADMIN_CAMPUS_FORMATS = '/campus-admin/formats';
+exports.API_URL_ADMIN_CAMPUS_ENTRIES_BY_SPEAKER = '/campus-admin/speakers/entries';
+exports.API_URL_ADMIN_CAMPUS_TOPICS = '/campus-admin/topics';
+exports.API_URL_ADMIN_CAMPUS_EVENTS = '/campus-admin/events';
+exports.API_URL_ADMIN_CAMPUS_ENTRIES_BY_EVENT = '/campus-admin/event/entries';
+exports.API_URL_ADMIN_CAMPUS_ENTRIES = '/campus-admin/entries';
 exports.STATIC_CONTENT_SECTION_TITLE_INFO = 'INFORMACIÓN';
 exports.STATIC_CONTENT_SECTION_TITLE_TOOLS = 'HERRAMIENTAS';
+exports.STATIC_CONTENT_SECTION_TITLE_CONOCIMIENTO = 'CONOCIMIENTO';
 exports.STATIC_CONTENT_SUBSECTION_TITLE_OPEN_DATA = 'OPEN DATA';
 exports.STATIC_CONTENT_CONTENT_TITLE_TERM = 'TÉRMINOS DE USO Y LICENCIAS';
 exports.STATIC_CONTENT_SUBSECTION_TITLE_APPS = 'APLICACIONES';
@@ -81,6 +92,7 @@ exports.STATIC_CONTENT_SUBSECTION_TITLE_COLLABORATION = 'COLABORA';
 exports.STATIC_CONTENT_SUBSECTION_TITLE_DEVELOPERS = 'DESARROLLADORES';
 exports.STATIC_CONTENT_SUBSECTION_TITLE_APIS = 'APIS';
 exports.STATIC_CONTENT_SUBSECTION_TITLE_SPARQL = 'SPARQL';
+exports.STATIC_CONTENT_SUBSECTION_TITLE_ONTOLOGIA = 'ONTOLOGIAS Y DATOS ENLAZADOS';
 /* ADMIN CONSTANTS */
 exports.APPLICATION_NAME_CKAN = 'CKAN';
 /* SQL CONSTANTS */
@@ -215,16 +227,6 @@ exports.SERVER_API_LINK_PARAM_TYPE_PLAIN_TEXT_QUERY = '&q=(((res_format:XLS OR r
 
 //Results per page in campus
 exports.CAMPUS_EVENTS_PER_PAGE = 10;
-
-/*  SPARQL */
-exports.SPARQL_API_BASE_URL = 'http://miv-aodfront-01.aragon.local:7030/sparql';
-//exports.SPARQL_API_BASE_URL = 'http://localhost:14730/sparql';
-exports.SPARQL_API_QUERY_URL_ALL_GRAPHS = '?query=SELECT  DISTINCT ?g WHERE  { GRAPH ?g {?s ?p ?o} } ORDER BY ?g &format=json';
-exports.SPARQL_API_LINK_PARAM_GRAPH = '?default-graph-uri=';
-exports.SPARQL_API_LINK_PARAM_QUERY = '&query=';
-exports.SPARQL_API_LINK_PARAM_FORMAT = '&format=';
-exports.SPARQL_API_LINK_PARAM_TIMEOUT = '&timeout=';
-exports.SPARQL_API_LINK_PARAM_DEBUG = '&debug=';
 
 /* ******************* */
 /* DATABASE PROPERTIES */

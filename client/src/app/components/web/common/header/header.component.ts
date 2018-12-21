@@ -33,6 +33,7 @@ export class HeaderComponent implements OnInit {
     routerLinkDataCatalogDataset: string;
 	routerLinkDataTopics: string;
 	routerLinkDataOrganizations: string;
+	routerLinkServicesOpenDataPool: string;
 	routerLinkServicesAragopedia: string;
 	routerLinkServicesPresupuestos: string;
 	routerLinkServicesCras: string;
@@ -40,18 +41,19 @@ export class HeaderComponent implements OnInit {
     routerLinkServicesAnalytics: string;
     routerLinkServicesVisualData: string;
 	routerLinkInfoOpenData: string;
+	routerLinkInfoKnowledge: string;
 	routerLinkInfoApplications: string;
 	routerLinkInfoEventos: string;
 	routerLinkInfoCollaboration: string;
 	routerLinkToolsCampus: string;
 	routerLinkToolsDevelopers: string;
 	routerLinkToolsApis: string;
-	routerLinkToolsSparql: string;
 	routerLinkToolsGithub: string;
     aodBaseUrl: string;
     presupuestosBaseUrl: string;
     transparenciaWebUrl: string;
     aragonParticipaWebUrl: string;
+    routerLinkSparql: string;
 
     constructor(private locale: AppComponent, private constants: Constants,
             private datasetService: DatasetsService, private router: Router,
@@ -66,20 +68,22 @@ export class HeaderComponent implements OnInit {
         this.routerLinkDataCatalogDataset = Constants.ROUTER_LINK_DATA_CATALOG_DATASET;
 		this.routerLinkDataTopics = Constants.ROUTER_LINK_DATA_TOPICS;
 		this.routerLinkDataOrganizations = Constants.ROUTER_LINK_DATA_ORGANIZATIONS;
+		this.routerLinkServicesOpenDataPool = Constants.ROUTER_LINK_SERVICES_POOL;
 		this.routerLinkServicesAragopedia = Constants.ROUTER_LINK_SERVICES_ARAGOPEDIA;
 		this.routerLinkServicesCras = Constants.ROUTER_LINK_SERVICES_CRAS;
         this.routerLinkServicesSocialData = Constants.ROUTER_LINK_SERVICES_SOCIAL_DATA;
         this.routerLinkServicesAnalytics = Constants.ROUTER_LINK_SERVICES_ANALYTICS;
         this.routerLinkServicesVisualData = Constants.ROUTER_LINK_SERVICES_VISUAL_DATA;
-		this.routerLinkInfoOpenData = Constants.ROUTER_LINK_INFORMATION_OPEN_DATA;
+        this.routerLinkInfoOpenData = Constants.ROUTER_LINK_INFORMATION_OPEN_DATA;
+        this.routerLinkInfoKnowledge = Constants.ROUTER_LINK_INFORMATION_CONOCIMIENTO;
 		this.routerLinkInfoApplications = Constants.ROUTER_LINK_INFORMATION_APPS;
 		this.routerLinkInfoEventos = Constants.ROUTER_LINK_INFORMATION_EVENTS;
 		this.routerLinkInfoCollaboration = Constants.ROUTER_LINK_INFORMATION_COLLABORATION;
 		this.routerLinkToolsCampus = Constants.ROUTER_LINK_TOOLS_CAMPUS;
 		this.routerLinkToolsDevelopers = Constants.ROUTER_LINK_TOOLS_DEVELOPERS;
 		this.routerLinkToolsApis = Constants.ROUTER_LINK_TOOLS_APIS;
-		this.routerLinkToolsSparql = Constants.ROUTER_LINK_TOOLS_SPARQL;
-		this.routerLinkToolsGithub = Constants.AOD_GITHUB_URL;
+        this.routerLinkToolsGithub = Constants.AOD_GITHUB_URL;
+        this.routerLinkSparql = Constants.ROUTER_LINK_SPARQL;
     }
 
     openNav() {

@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
 	routerLinkDataCatalog: string;
 	routerLinkDataTopics: string;
 	routerLinkDataOrganizations: string;
+	routerLinkServicesOpenDataPool: string;
 	routerLinkServicesAragopedia: string;
 	routerLinkServicesPresupuestos: string;
 	routerLinkServicesCras: string;
@@ -29,14 +30,15 @@ export class HomeComponent implements OnInit {
 	routerLinkServicesAnalytics: string;
 	routerLinkServicesVisual: string;
 	routerLinkInfoOpenData: string;
+	routerLinkInfoKnowledge: string;
 	routerLinkInfoApplications: string;
 	routerLinkInfoEventos: string;
 	routerLinkInfoCollaboration: string;
 	routerLinkToolsCampus: string;
 	routerLinkToolsDevelopers: string;
 	routerLinkToolsApis: string;
-	routerLinkToolsSparql: string;
 	routerLinkToolsGithub: string;
+	routerLinkSparql: string;
 
 	constructor( private router: Router, private activatedRoute: ActivatedRoute,
 		private location: Location, private utilsService: UtilsService ) { 
@@ -44,6 +46,7 @@ export class HomeComponent implements OnInit {
 		this.routerLinkDataCatalog = Constants.ROUTER_LINK_DATA_CATALOG;
 		this.routerLinkDataTopics = Constants.ROUTER_LINK_DATA_TOPICS;
 		this.routerLinkDataOrganizations = Constants.ROUTER_LINK_DATA_ORGANIZATIONS;
+		this.routerLinkServicesOpenDataPool = Constants.ROUTER_LINK_SERVICES_POOL;
 		this.routerLinkServicesAragopedia = Constants.ROUTER_LINK_SERVICES_ARAGOPEDIA;
 		this.routerLinkServicesPresupuestos = Constants.ROUTER_LINK_SERVICES_PRESUPUESTOS;
 		this.routerLinkServicesCras = Constants.ROUTER_LINK_SERVICES_CRAS;
@@ -51,14 +54,15 @@ export class HomeComponent implements OnInit {
 		this.routerLinkServicesAnalytics = Constants.ROUTER_LINK_SERVICES_ANALYTICS;
 		this.routerLinkServicesVisual = Constants.ROUTER_LINK_SERVICES_VISUAL_DATA;
 		this.routerLinkInfoOpenData = Constants.ROUTER_LINK_INFORMATION_OPEN_DATA;
+		this.routerLinkInfoKnowledge = Constants.ROUTER_LINK_INFORMATION_CONOCIMIENTO;
 		this.routerLinkInfoApplications = Constants.ROUTER_LINK_INFORMATION_APPS;
 		this.routerLinkInfoEventos = Constants.ROUTER_LINK_INFORMATION_EVENTS;
 		this.routerLinkInfoCollaboration = Constants.ROUTER_LINK_INFORMATION_COLLABORATION;
 		this.routerLinkToolsCampus = Constants.ROUTER_LINK_TOOLS_CAMPUS;
 		this.routerLinkToolsDevelopers = Constants.ROUTER_LINK_TOOLS_DEVELOPERS;
 		this.routerLinkToolsApis = Constants.ROUTER_LINK_TOOLS_APIS;
-		this.routerLinkToolsSparql = Constants.ROUTER_LINK_TOOLS_SPARQL;
 		this.routerLinkToolsGithub = Constants.AOD_GITHUB_URL;
+		this.routerLinkSparql = Constants.ROUTER_LINK_SPARQL;
 		this.getOpenedMenu();
 		
 	}
@@ -83,7 +87,9 @@ export class HomeComponent implements OnInit {
 			{ id: '#imgSPARQL', hover: false },
 			{ id: '#imgGit', hover: false },
 			{ id: '#imgAna', hover: false },
-			{ id: '#imgVis', hover: false }
+			{ id: '#imgVis', hover: false },
+			{ id: '#imgPool', hover: false},
+			{ id: '#imgCono', hover: false }
 		];
 	}
 
@@ -181,6 +187,19 @@ export class HomeComponent implements OnInit {
 				case Constants.STATIC_INFO_OPEN_DATA_SECTION_CONDITIONS:
 					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT+fragment);
 				break;
+				//CONOCIMIENTO
+				case Constants.STATIC_INFO_CONOCIMIENTO_SECTION_EI2A:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_CONOCIMIENTO_SECTION_REDIRECT+fragment);
+				break;
+				case Constants.STATIC_INFO_CONOCIMIENTO_SECTION_ONTOLOGY:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_CONOCIMIENTO_SECTION_REDIRECT+fragment);
+				break;
+				case Constants.STATIC_INFO_CONOCIMIENTO_SECTION_GRAFO:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_CONOCIMIENTO_SECTION_REDIRECT+fragment);
+				break;
+				case Constants.STATIC_INFO_CONOCIMIENTO_SECTION_CONSULTA:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_CONOCIMIENTO_SECTION_REDIRECT+fragment);
+				break;
 				//EVENTS
 				case Constants.STATIC_INFO_EVENTS_SECTION_JACATHON:
 					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_EVENTS_SECTION_REDIRECT+fragment);
@@ -223,9 +242,8 @@ export class HomeComponent implements OnInit {
 				case Constants.STATIC_INFO_APIS_SECTION_GA_OD_CORE:
 					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_APIS_SECTION_REDIRECT+fragment);
 				break;
-				//SPARQL
-				case Constants.STATIC_INFO_SPARQL_SECTION_CONTENT:
-					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_SPARQL_SECTION_REDIRECT+fragment);
+				case Constants.STATIC_INFO_APIS_SECTION_GRAFO_CONOCIMIENTO:
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_APIS_SECTION_REDIRECT+fragment);
 				break;
 				default:
 					this.location.go('/');

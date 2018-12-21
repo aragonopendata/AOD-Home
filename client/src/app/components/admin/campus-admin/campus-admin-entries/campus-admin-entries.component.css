@@ -1,0 +1,11 @@
+.note{
+    font-size: 10px;
+}
+
+.search {
+    margin-bottom: 1%;
+}
+
+>>>.ui-autocomplete .ui-autocomplete-dropdown {
+    padding-bottom: 5px !important;
+} 

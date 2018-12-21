@@ -6,7 +6,6 @@ import { Constants } from './../../../../../app.constants';
 import { CampusService } from './../../../../../services/web/campus.service';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { EventsAdminComponent } from 'app/components/admin/global/static-content-admin/info/events-admin/events-admin.component';
 import { forEach } from '@angular/router/src/utils/collection';
 import { UtilsService } from '../../../../../services/web/utils.service';
 

@@ -1,0 +1,73 @@
+<div class="container" *ngIf="errorTitle">
+    <div class="alert alert-info" role="alert">
+        <div class="row">
+            <div class="col-xs-3">
+                <i class="fa fa-exclamation-triangle fa-5x" style="margin:15px;color: #5ea2ba;"></i>
+            </div>
+            <div class="col-xs-9">
+                <h1>{{errorTitle}}</h1>
+                <h2>{{errorMessage}}</h2>
+                <a class="mail" href="mailto:opendata@aragon.es">
+                    <h2>
+                        <i class="fa fa-envelope-o"></i> Contactar con el Administrador</h2>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container" style="padding-left: 15%; padding-right: 15%;">
+    <p-dataTable *ngIf="contents" [value]="contents" emptyMessage="{{emptyMessage}}" (onSort)="setOrder($event)">
+        <p-column field="contentTitle" [style]="{'width':'55%'}" header="Lista de aplicaciones"></p-column>
+        <p-column header="edit" header="Edición" [style]="{'width':'6%', 'text-align': 'center'}" *ngIf="currentUser.rol == memberRol">
+            <ng-template pTemplate="body" let-content="rowData">
+                <button class="btn btn-primary p-2" type="button" (click)="showDialog(content)" data-toggle="tooltip" data-placement="top"
+                    title="Editar">
+                    <i class="fa fa-edit"></i>
+                </button>
+            </ng-template>
+        </p-column>
+        <!--<p-footer>
+        <div *ngIf="currentUser.rol != orgMemberRol" class="ui-helper-clearfix" style="width:100%">
+            <button class="btn btn-primary" type="button" icon="fa-plus" (click)="addDataset()" style="float:left" routerLink="/{{routerLinkAdminDatacenterDatasetsEdit}}">
+                <i class="fa fa-plus"></i> Añade un conjunto de datos
+            </button>
+        </div>
+    </p-footer>-->
+    </p-dataTable>
+</div>
+<p-dialog [width]="900" [(visible)]="display">
+    <p-header>{{title}}</p-header>
+    <div class="container">
+        <div class="form-group row">
+            <label for="title-input" class="col-4 col-form-label">Título</label>
+            <div class="col-8">
+                <input class="form-control" type="text" value="{{title}}" id="title" [(ngModel)]="title">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="titleURL-input" class="col-4 col-form-label">Url</label>
+            <div class="col-8">
+                <input class="form-control" type="text" value="{{titleURL}}" id="title" [(ngModel)]="titleURL">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="desc-input" class="col-4 col-form-label">Descripción</label>
+            <div class="col-8">
+                <angular-tinymce id="editor" [settings]="settings" [(ngModel)]='description'></angular-tinymce>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="img-input" class="col-4 col-form-label">Imagen</label>
+            <div class="col-4">
+                <img src="{{imgSRC}}">
+            </div>
+            <div class="col-4">
+                <input type="file" class="form-control" (change)="fileChange($event)" placeholder="Subir fichero" accept="image/x-png,image/gif,image/jpeg">
+            </div>
+        </div>
+    </div>
+    <p-footer>
+        <button type="button" pButton icon="fa-floppy-o" (click)="save(title, titleURL, description, imgSRC);" label="Guardar"></button>
+        <button type="button" pButton icon="fa-times" style="background-color: red; border-color: red;" (click)="cancel();" label="Cancelar"></button>
+    </p-footer>
+</p-dialog>

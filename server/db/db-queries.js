@@ -99,4 +99,87 @@ exports.DB_ADMIN_DELETE_LOGSTASH = 'DELETE FROM manager.logstash_conf '
 exports.DB_ADMIN_RELOAD_LOGSTASH = 'UPDATE manager.logstash_conf '
 								+ 'SET status=\'1\' '
 							+ 'WHERE manager.logstash_conf.status=\'0\'';
-						   
+
+exports.DB_ADMIN_GET_CAMPUS_SITES = 'SELECT id, name FROM campus.sites';
+
+exports.DB_ADMIN_GET_CAMPUS_SPEAKERS = 'SELECT id, name, description FROM campus.speakers';
+
+exports.DB_ADMIN_GET_CAMPUS_TYPES = 'SELECT id, name FROM campus.types';
+
+exports.DB_ADMIN_GET_CAMPUS_FORMATS = 'SELECT id, name FROM campus.formats';
+
+exports.DB_ADMIN_GET_CAMPUS_PLATFORMS = 'SELECT id, name FROM campus.platforms';
+
+exports.DB_ADMIN_GET_CAMPUS_TOPICS = 'SELECT id, name FROM campus.topics';
+
+exports.DB_ADMIN_GET_CAMPUS_EVENTS = 'SELECT e.id, e.name, e.description, e.date, json_build_object(\'id\', s.id, \'name\', s.name) site FROM campus.events e, campus.sites s, campus.events_sites es' +
+							' WHERE s.id = es.id_site AND e.id = es.id_event';
+
+exports.DB_ADMIN_INSERT_CAMPUS_EVENTS = 'INSERT INTO campus.events (name, description, date) VALUES($1, $2, $3)'+ 
+							'RETURNING campus.events.id';
+
+exports.DB_ADMIN_UPDATE_CAMPUS_EVENTS = 'UPDATE campus.events SET name = COALESCE($1, name), ' +
+							'description = COALESCE($2, description), date = COALESCE($3, date) WHERE id = $4';
+		
+exports.DB_ADMIN_UPDATE_CAMPUS_EVENTS_SITES = 'UPDATE campus.events_sites s SET id_site = COALESCE($1, id_site)' +
+												' WHERE s.id_event = $2';
+
+exports.DB_ADMIN_INSERT_CAMPUS_EVENTS_SITES  = 'INSERT INTO campus.events_sites ' +
+		'(id_event, id_site) '+
+		'VALUES($1, $2)';
+
+exports.DB_ADMIN_INSERT_CAMPUS_SITES  = 'INSERT INTO campus.sites ' +
+												'(name) '+
+												'VALUES($1)';
+
+exports.DB_ADMIN_GET_CAMPUS_ENTRY = 'SELECT c.id, c.title, c.description, c.url, encode(c.thumbnail, \'base64\') AS thumbnail, c.format, c.type, c.platform, c.event, ' +
+		't.id AS topic_id, t.name AS topic_name, s.id AS speaker_id ' + 
+		'from campus.contents c, campus.topics t, campus.speakers s, ' +
+		'campus.contents_topics ct, campus.contents_speakers cs '+
+		'WHERE c.id = $1 AND c.id = ct.id_content AND c.id = cs.id_content '+
+		'AND ct.id_topic = t.id AND cs.id_speaker = s.id';
+
+exports.DB_ADMIN_GET_CAMPUS_ENTRIES = 'SELECT c.id, c.title from campus.contents c';
+
+exports.DB_ADMIN_GET_CAMPUS_ENTRIES_BY_EVENT = 'SELECT c.id, c.title from campus.contents c WHERE c.event = $1';
+
+exports.DB_ADMIN_GET_CAMPUS_ENTRIES_BY_SPEAKER = 'SELECT c.id, c.title FROM campus.contents c, campus.contents_speakers cs WHERE c.id=cs.id_content AND cs.id_speaker = $1';
+
+exports.DB_ADMIN_INSERT_CAMPUS_ENTRIES = 'INSERT INTO campus.contents ' +
+									'(title, description, url, thumbnail, format, type, platform, event) '+
+									'VALUES($1, $2, $3, decode($4, \'base64\'), $5, $6, $7, $8)' + 
+									'RETURNING campus.contents.id';
+
+exports.DB_ADMIN_INSERT_CAMPUS_CONTENTS_TOPICS  = 'INSERT INTO campus.contents_topics ' +
+												'(id_content, id_topic) '+
+												'VALUES ';
+
+exports.DB_ADMIN_INSERT_CAMPUS_CONTENTS_SPEAKERS  = 'INSERT INTO campus.contents_speakers ' +
+												'(id_content, id_speaker) '+
+												'VALUES($1, $2)';
+
+exports.DB_ADMIN_UPDATE_CAMPUS_ENTRIES = 'UPDATE campus.contents SET ' + 
+										'title = COALESCE($1, title), ' +
+										'description = COALESCE($2, description), ' +
+										'url = COALESCE($3, url), ' +
+										'thumbnail = COALESCE($4, thumbnail), ' +
+										'format = COALESCE($5, format), ' +
+										'type = COALESCE($6, type), ' +
+										'platform = COALESCE($7, platform), ' +
+										'event = COALESCE($8, event) ' +
+										'WHERE id = $9';
+
+exports.DB_ADMIN_DELETE_CAMPUS_ENTRIES_TOPICS = 'DELETE FROM campus.contents_topics WHERE id_content = $1 AND id_topic IN (';
+
+exports.DB_ADMIN_UPDATE_CAMPUS_ENTRIES_SPEAKERS  = 'UPDATE campus.contents_speakers s SET id_speaker = COALESCE($1, id_speaker)' +
+										' WHERE s.id_content = $2';
+
+exports.DB_ADMIN_INSERT_CAMPUS_SPEAKERS =  'INSERT INTO campus.speakers ' +
+										   '(name, description) '+
+										   'VALUES($1, $2)' +
+										   'RETURNING campus.speakers.id';
+
+exports.DB_ADMIN_UPDATE_CAMPUS_SPEAKERS =  'UPDATE campus.speakers SET ' +
+										   'name = COALESCE($1, name), ' +
+										   'description = COALESCE($2, description) ' +
+										   'WHERE id = $3';

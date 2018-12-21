@@ -1,4 +1,5 @@
 export class StaticContent {
+    id: number;
     sectionId: number;
     sectionTitle: string;
     sectionSubtitle: string;
@@ -7,4 +8,6 @@ export class StaticContent {
     contentTitle: string;
     contentText: string;
     targetUrl: string;
+    edit: boolean;
+    previewText: string;
 }

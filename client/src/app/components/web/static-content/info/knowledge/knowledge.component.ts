@@ -1,20 +1,20 @@
-import { Component, OnInit, AfterViewChecked, ViewEncapsulation  } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { StaticContent } from '../../../../../models/StaticContent';
 import { StaticContentService } from '../../../../../services/web/static-content.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Constants } from "app/app.constants";
+import { ActivatedRoute } from '@angular/router';
 import { UtilsService } from '../../../../../services/web/utils.service';
+import { Constants } from '../../../../../app.constants';
 import StaticContentUtils from '../../../../../utils/StaticContentUtils';
 declare var jQuery:any;
 
 @Component({
-    selector: 'app-open-data',
-    templateUrl: './open-data.component.html',
-    styleUrls: ['./open-data.component.css'],
-    encapsulation: ViewEncapsulation.None
+  selector: 'app-knowledge',
+  templateUrl: './knowledge.component.html',
+  styleUrls: ['./knowledge.component.css']
 })
-export class OpenDataComponent implements OnInit, AfterViewChecked {
-    openedMenu: boolean;
+export class KnowledgeComponent implements OnInit {
+
+  openedMenu: boolean;
     index: number = 0;
     contents: StaticContent[];
     sectionTitle: string;
@@ -47,7 +47,7 @@ export class OpenDataComponent implements OnInit, AfterViewChecked {
     }
 
     getStaticContentInfo() {
-        this.staticContentService.getOpenDataInfoStaticContent().subscribe(staticContent => {
+        this.staticContentService.getOpenDataInfoKnowledgeStaticContent().subscribe(staticContent => {
             try {
                 this.contents = staticContent;
                 this.sectionTitle = this.contents[0].sectionTitle;
@@ -62,7 +62,7 @@ export class OpenDataComponent implements OnInit, AfterViewChecked {
                     });
                 }
             } catch (error) {
-                console.error('Error: getStaticContentInfo() - open-data.component.ts\n' + error);
+                console.error('Error: getStaticContentInfo() - open-data.component.ts');
                 this.errorTitle = this.openDataErrorTitle;
                 this.errorMessage = this.openDataErrorMessage;
             }
@@ -92,4 +92,5 @@ export class OpenDataComponent implements OnInit, AfterViewChecked {
 			this.openedMenu = value;
 		});
     }
+
 }

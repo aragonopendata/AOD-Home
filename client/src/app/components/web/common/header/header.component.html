@@ -32,7 +32,7 @@
             </div>
         </div>
     </div>
-    <div id="myNav" class="overlay" (window:resize)="onResize($event)">
+    <div id="myNav" class="overlay" (window:resize)="onResize($event)">
         <div class="overlay-content" *ngIf="openedMenu">
             <div id="accordion" role="tablist" aria-multiselectable="true" aria-hidden="!openedMenu">
                 <div class="card">
@@ -64,12 +64,13 @@
                     <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
                         <div class="card-block">
                             <ul id="servicios">
-                                <li><a tabindex="{{openedMenu ? 12 : -1}}" href="{{aodBaseUrl}}/{{routerLinkServicesAragopedia}}" (click)="openNav()">Aragopedia</a></li>
-                                <li><a tabindex="{{openedMenu ? 13 : -1}}" href="{{presupuestosBaseUrl}}" (click)="openNav()">Presupuestos</a></li>
-                                <li><a tabindex="{{openedMenu ? 14 : -1}}" routerLink="/{{routerLinkServicesAnalytics}}" (click)="openNav()">Open Analytics Data</a></li>
-                                <li><a tabindex="{{openedMenu ? 15 : -1}}" href="{{aodBaseUrl}}/{{routerLinkServicesSocialData}}" (click)="openNav()">Open Social Data</a></li>
-                                <li><a tabindex="{{openedMenu ? 16 : -1}}" href="{{aodBaseUrl}}/{{routerLinkServicesVisualData}}" (click)="openNav()">Open Visual Data</a></li>
-                                <li><a tabindex="{{openedMenu ? 17 : -1}}" href="{{aodBaseUrl}}/{{routerLinkServicesCras}}" (click)="openNav()">CRAs Aragón</a></li>
+                                <li><a tabindex="{{openedMenu ? 12 : -1}}" href="{{aodBaseUrl}}/{{routerLinkServicesOpenDataPool}}" (click)="openNav()">Datos enlazados</a></li>
+                                <li><a tabindex="{{openedMenu ? 13 : -1}}" href="{{aodBaseUrl}}/{{routerLinkServicesAragopedia}}" (click)="openNav()">Aragopedia</a></li>
+                                <li><a tabindex="{{openedMenu ? 14 : -1}}" href="{{presupuestosBaseUrl}}" (click)="openNav()">Presupuestos</a></li>
+                                <li><a tabindex="{{openedMenu ? 15 : -1}}" routerLink="/{{routerLinkServicesAnalytics}}" (click)="openNav()">Open Analytics Data</a></li>
+                                <li><a tabindex="{{openedMenu ? 17 : -1}}" href="{{aodBaseUrl}}/{{routerLinkServicesSocialData}}" (click)="openNav()">Open Social Data</a></li>
+                                <li><a tabindex="{{openedMenu ? 17 : -1}}" href="{{aodBaseUrl}}/{{routerLinkServicesVisualData}}" (click)="openNav()">Open Visual Data</a></li>
+                                <li><a tabindex="{{openedMenu ? 18 : -1}}" href="{{aodBaseUrl}}/{{routerLinkServicesCras}}" (click)="openNav()">CRAs Aragón</a></li>
                             </ul>
                         </div>
                     </div>
@@ -77,7 +78,7 @@
                 <div class="card">
                     <div class="card-header" role="tab" id="headingThree">
                         <h5 class="mb-0">
-                            <a (keydown.enter)="collapse" class="collapsed" tabindex="{{openedMenu ? 18 : -1}}" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            <a (keydown.enter)="collapse" class="collapsed" tabindex="{{openedMenu ? 19 : -1}}" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                               Información
                           </a>
                         </h5>
@@ -85,10 +86,11 @@
                     <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
                         <div class="card-block">
                             <ul id="info">
-                                <li><a tabindex="{{openedMenu ? 19 : -1}}" routerLink="/{{routerLinkInfoOpenData}}" (click)="openNav()">Información</a></li>
-                                <li><a tabindex="{{openedMenu ? 20 : -1}}" routerLink="/{{routerLinkInfoApplications}}" (click)="openNav()">Aplicaciones</a></li>
-                                <li><a tabindex="{{openedMenu ? 21 : -1}}" routerLink="/{{routerLinkInfoEventos}}" (click)="openNav()">Eventos</a></li>
-                                <li><a tabindex="{{openedMenu ? 22 : -1}}" routerLink="/{{routerLinkInfoCollaboration}}" (click)="openNav()">Colabora</a></li>
+                                <li><a tabindex="{{openedMenu ? 20 : -1}}" routerLink="/{{routerLinkInfoOpenData}}" (click)="openNav()">Información</a></li>
+                                <li><a tabindex="{{openedMenu ? 21 : -1}}" routerLink="/{{routerLinkInfoKnowledge}}" (click)="openNav()">Conocimiento</a></li>
+                                <li><a tabindex="{{openedMenu ? 21 : -1}}" routerLink="/{{routerLinkInfoApplications}}" (click)="openNav()">Aplicaciones</a></li>
+                                <li><a tabindex="{{openedMenu ? 22 : -1}}" routerLink="/{{routerLinkInfoEventos}}" (click)="openNav()">Eventos</a></li>
+                                <li><a tabindex="{{openedMenu ? 23 : -1}}" routerLink="/{{routerLinkInfoCollaboration}}" (click)="openNav()">Colabora</a></li>
                             </ul>
                         </div>
                     </div>
@@ -96,7 +98,7 @@
                 <div class="card">
                     <div class="card-header" role="tab" id="headingFour">
                         <h5 class="mb-0">
-                            <a (keydown.enter)="collapse" class="collapsed" tabindex="{{openedMenu ? 23 : -1}}" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
+                            <a (keydown.enter)="collapse" class="collapsed" tabindex="{{openedMenu ? 24 : -1}}" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
                                   Herramientas
                               </a>
                         </h5>
@@ -104,11 +106,11 @@
                     <div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingFour">
                         <div class="card-block">
                             <ul id="tools">
-                                <li><a tabindex="{{openedMenu ? 24 : -1}}" routerLink="/{{routerLinkToolsCampus}}" (click)="openNav()">AOD Campus</a></li>
-                                <li><a tabindex="{{openedMenu ? 25 : -1}}" routerLink="/{{routerLinkToolsDevelopers}}" (click)="openNav()">Desarrolladores</a></li>
-                                <li><a tabindex="{{openedMenu ? 26 : -1}}" routerLink="/{{routerLinkToolsApis}}" (click)="openNav()">APIs</a></li>
-                                <li><a tabindex="{{openedMenu ? 27 : -1}}" routerLink="/{{routerLinkToolsSparql}}" (click)="openNav()">SPARQL</a></li>
-                                <li><a tabindex="{{openedMenu ? 28 : -1}}" href="{{routerLinkToolsGithub}}" (click)="openNav()">GITHUB</a></li>
+                                <li><a tabindex="{{openedMenu ? 25 : -1}}" routerLink="/{{routerLinkToolsCampus}}" (click)="openNav()">AOD Campus</a></li>
+                                <li><a tabindex="{{openedMenu ? 26 : -1}}" routerLink="/{{routerLinkToolsDevelopers}}" (click)="openNav()">Desarrolladores</a></li>
+                                <li><a tabindex="{{openedMenu ? 27 : -1}}" routerLink="/{{routerLinkToolsApis}}" (click)="openNav()">APIs</a></li>
+                                <li><a tabindex="{{openedMenu ? 28 : -1}}" href="{{aodBaseUrl}}/{{routerLinkSparql}}" (click)="openNav()">SPARQL</a></li>
+                                <li><a tabindex="{{openedMenu ? 29 : -1}}" href="{{routerLinkToolsGithub}}" (click)="openNav()">GITHUB</a></li>
                             </ul>
                         </div>
                     </div>
@@ -116,10 +118,15 @@
             </div>
             <div>
                 <form class="search">
+<<<<<<< HEAD
                     <button type="button" tabindex="{{openedMenu ? 30 : -1}}" class="btnSearch" routerLink="/{{routerLinkDataCatalog}}" [queryParams]="{texto:searchBox.value}" (click)="openNav()">
                             <i class="fas fa-search" style="display: table; vertical-align: middle;"></i>
+=======
+                    <button type="button" tabindex="{{openedMenu ? 31 : -1}}" class="btnSearch" routerLink="/{{routerLinkDataCatalog}}" [queryParams]="{texto:searchBox.value}" (click)="openNav()">
+                            <i class="fa fa-search" style="display: table; vertical-align: middle;"></i>
+>>>>>>> develop
                         </button>
-                    <input autocomplete="off" tabindex="{{openedMenu ? 29 : -1}}" #searchBox id="searchBox" placeholder="BUSCA DATOS ABIERTOS" type="search" class="textBox" (keyup)="search(searchBox.value)"
+                    <input autocomplete="off" tabindex="{{openedMenu ? 30 : -1}}" #searchBox id="searchBox" placeholder="BUSCA DATOS ABIERTOS" type="search" class="textBox" (keyup)="search(searchBox.value)"
                         (keyup.enter)="searchDatasetsByText(searchBox.value); openNav();" />
                     <div id="resultsList">
                         <div *ngFor="let autocomplete of datasetAutocomplete" class="search-result">

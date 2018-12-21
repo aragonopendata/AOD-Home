@@ -89,7 +89,7 @@ export class DatasetsUtils {
 	}
 
 	existsResourceWithSameName(resourceAuxName: string, newResourceName: string) {
-		if (resourceAuxName == newResourceName) {
+		if (resourceAuxName.trim() == newResourceName.trim()) {
 			return true;
 		} else {
 			return false;

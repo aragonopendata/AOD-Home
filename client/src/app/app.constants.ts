@@ -59,8 +59,6 @@ export class Constants {
     public static DEVELOPERS_STATIC_CONTENT_ERROR_MESSAGE = 'Se ha producido un error en la carga de datos, vuelva a intentarlo y si el error persiste contacte con el administrador.';
     public static APIS_STATIC_CONTENT_ERROR_TITLE = 'Se ha producido un error';
     public static APIS_STATIC_CONTENT_ERROR_MESSAGE = 'Se ha producido un error en la carga de datos, vuelva a intentarlo y si el error persiste contacte con el administrador.';
-    public static SPARQL_STATIC_CONTENT_ERROR_TITLE = 'Se ha producido un error';
-    public static SPARQL_STATIC_CONTENT_ERROR_MESSAGE = 'Se ha producido un error en la carga de datos, vuelva a intentarlo y si el error persiste contacte con el administrador.';
 
     //COMMON CONSTANTS
     public static DATASET_LIST_ROWS_PER_PAGE = 20;
@@ -330,6 +328,10 @@ export class Constants {
     public static STATIC_INFO_OPEN_DATA_SECTION_DOCUMENTATION = 'documentacion';
     public static STATIC_INFO_OPEN_DATA_SECTION_TERMS = 'terminos-licencias'; 
     public static STATIC_INFO_OPEN_DATA_SECTION_CONDITIONS = 'condiciones-social-data';
+    public static STATIC_INFO_CONOCIMIENTO_SECTION_EI2A = 'ontologias-generadas';
+    public static STATIC_INFO_CONOCIMIENTO_SECTION_ONTOLOGY = 'ontologias-utilizadas';
+    public static STATIC_INFO_CONOCIMIENTO_SECTION_GRAFO = 'grafo-conocimiento';
+    public static STATIC_INFO_CONOCIMIENTO_SECTION_CONSULTA = 'punto-sparql';
     public static STATIC_INFO_EVENTS_SECTION_JACATHON = 'jacathon';
     public static STATIC_INFO_EVENTS_SECTION_PRESTACION_SERVICIOS_MUNDO_DIGITAL = 'prestacion-servicios-publicos-mundo-digital';
     public static STATIC_INFO_DEVELOPERS_SECTION_INTEROPERABILITY = 'interoperabilidad';
@@ -343,7 +345,7 @@ export class Constants {
     public static STATIC_INFO_APIS_SECTION_ARAGODBPEDIA_1 = 'api-aragodbpedia-1';
     public static STATIC_INFO_APIS_SECTION_ARAGODBPEDIA_2 = 'api-aragodbpedia-2';
     public static STATIC_INFO_APIS_SECTION_GA_OD_CORE = 'api-ga-od-core';
-    public static STATIC_INFO_SPARQL_SECTION_CONTENT = 'contenidoSparql';
+    public static STATIC_INFO_APIS_SECTION_GRAFO_CONOCIMIENTO = 'api-grafo-conocimiento';
 
     public static UNDEFINED = "undefined";
 
@@ -494,6 +496,7 @@ export class Constants {
     public static ROUTER_LINK_DATA_ORGANIZATIONS = 'datos/publicadores';
     public static ROUTER_LINK_INFORMATION = 'informacion';
     public static ROUTER_LINK_INFORMATION_OPEN_DATA = 'informacion/open-data';
+    public static ROUTER_LINK_INFORMATION_CONOCIMIENTO = 'informacion/conocimiento';
     public static ROUTER_LINK_INFORMATION_TERMS = 'terminos';
     public static ROUTER_LINK_INFORMATION_APPS = 'informacion/aplicaciones';
     public static ROUTER_LINK_INFORMATION_EVENTS = 'informacion/eventos';
@@ -503,9 +506,6 @@ export class Constants {
     public static ROUTER_LINK_TOOLS_CAMPUS = 'herramientas/campus';
     public static ROUTER_LINK_TOOLS_CAMPUS_CONTENT = 'herramientas/campus/content';
     public static ROUTER_LINK_TOOLS_APIS = 'herramientas/apis';
-    public static ROUTER_LINK_TOOLS_SPARQL = 'herramientas/sparql';
-    public static ROUTER_LINK_TOOLS_SPARQL_CLIENT = 'herramientas/sparql/client';
-    public static ROUTER_LINK_TOOLS_DEFAULT_SPARQL_CLIENT = 'portal/cliente-sparql';
     public static ROUTER_LINK_LOGIN = 'login';
     public static ROUTER_LINK_LOGIN_FORGOT_PASSWORD = 'login/forgot-password';
     public static ROUTER_LINK_LOGIN_RESTORE_PASSWORD = 'login/restore-password';
@@ -520,6 +520,8 @@ export class Constants {
     public static ROUTER_LINK_ROLES = 'roles';
     public static ROUTER_LINK_ADMIN_GLOBAL_ROLES = 'admin/global/roles';
     public static ROUTER_LINK_CONTENT = 'content';
+    public static ROUTER_LINK_CONTENT_PANELS = 'panels';
+    public static ROUTER_LINK_CONTENT_LISTS = 'lists';
     public static ROUTER_LINK_ADMIN_GLOBAL_CONTENT = 'admin/global/content';
     public static ROUTER_LINK_INFO = 'info';
     public static ROUTER_LINK_ADMIN_GLOBAL_CONTENT_INFO = 'admin/global/info';
@@ -534,7 +536,6 @@ export class Constants {
     public static ROUTER_LINK_APIS = 'apis';
     public static ROUTER_LINK_ADMIN_GLOBAL_CONTENT_APIS = 'admin/global/apis';
     public static ROUTER_LINK_SPARQL = 'sparql';
-    public static ROUTER_LINK_ADMIN_GLOBAL_CONTENT_SPARQL = 'admin/global/sparql';
     public static ROUTER_LINK_DATACENTER = 'datacenter';
     public static ROUTER_LINK_ADMIN_DATACENTER = 'admin/datacenter';
     public static ROUTER_LINK_ADMIN_DATACENTER_DASHBOARD = 'admin/datacenter/dashboard';
@@ -554,12 +555,21 @@ export class Constants {
     public static ROUTER_LINK_ADMIN_DATACENTER_ORGANIZATIONS_SHOW = 'admin/datacenter/organizations/show';
     public static ROUTER_LINK_ORGANIZATIONS_EDIT = 'edit';
     public static ROUTER_LINK_ADMIN_DATACENTER_ORGANIZATIONS_EDIT = 'admin/datacenter/organizations/edit';
-    public static ROUTER_LINK_CAMPUS = 'campus';
-    public static ROUTER_LINK_ADMIN_DATACENTER_CAMPUS = 'admin/campus';
+    public static ROUTER_LINK_CAMPUS_ADMIN_EVENTS = 'campus-admin/events';
+    public static ROUTER_LINK_CAMPUS_ADMIN_ENTRIES = 'campus-admin/entries';
+    public static ROUTER_LINK_CAMPUS_ADMIN_ENTRIES_BY_EVENT = 'campus-admin/event/entries';
+    public static ROUTER_LINK_CAMPUS_ADMIN_ENTRIES_BY_SPEAKER = 'campus-admin/speakers/entries';
+    public static ROUTER_LINK_CAMPUS_ADMIN_SITES = 'campus-admin/sites';
+    public static ROUTER_LINK_CAMPUS_ADMIN_SPEAKERS = 'campus-admin/speakers';
+    public static ROUTER_LINK_CAMPUS_ADMIN_TOPICS = 'campus-admin/topics';
+    public static ROUTER_LINK_CAMPUS_ADMIN_FORMATS = 'campus-admin/formats';
+    public static ROUTER_LINK_CAMPUS_ADMIN_TYPES = 'campus-admin/types';
+    public static ROUTER_LINK_CAMPUS_ADMIN_PLATFORMS = 'campus-admin/platforms';
     public static ROUTER_LINK_LOGSTASH = 'logstash';
     public static ROUTER_LINK_ADMIN_LOGSTASH = 'admin/logstash';
     public static ROUTER_LINK_VISUAL_DATA = 'visual-data';
     public static ROUTER_LINK_404 = 'pagenotfound';
+    public static ROUTER_LINK_SERVICES_POOL = 'pool/';
     public static ROUTER_LINK_SERVICES_ARAGOPEDIA = 'servicios/aragopedia';
     public static ROUTER_LINK_SERVICES_PRESUPUESTOS = 'servicios/presupuestos';
     public static ROUTER_LINK_SERVICES_CRAS = 'servicios/cras';
@@ -580,12 +590,13 @@ export class Constants {
     public static ROUTER_LINK_DATA_CAMPUS_PARAM_TEXT = 'text';
     public static ROUTER_LINK_TOOLS_CAMPUS_EVENT_NAME = 'eventName';
     public static ROUTER_LINK_DATA_PARAM_DATA_LOGIN = 'data';
-    public static ROUTER_LINK_DATA_PARAM_EDIT_DATA = 'dataName'; 
+    public static ROUTER_LINK_DATA_PARAM_EDIT_DATA = 'dataName';
+    public static ROUTER_LINK_DATA_PARAM_SECTION_NAME = 'sectionName'; 
     public static ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT = '/informacion/open-data#';
+    public static ROUTER_LINK_STATIC_CONTENT_CONOCIMIENTO_SECTION_REDIRECT = '/informacion/conocimiento#';
     public static ROUTER_LINK_STATIC_CONTENT_EVENTS_SECTION_REDIRECT = '/informacion/eventos#';
     public static ROUTER_LINK_STATIC_CONTENT_DEVELOPERS_SECTION_REDIRECT = '/herramientas/desarrolladores#';
     public static ROUTER_LINK_STATIC_CONTENT_APIS_SECTION_REDIRECT = '/herramientas/apis#';
-    public static ROUTER_LINK_STATIC_CONTENT_SPARQL_SECTION_REDIRECT = '/herramientas/sparql#';
 
     //SERVER API URLS
     public static SERVER_API_LINK_AUTHENTICATE = '/authenticate';
@@ -608,14 +619,12 @@ export class Constants {
     public static SERVER_API_LINK_ORGANIZATION = '/organization'; 
     public static SERVER_API_LINK_STATIC_CONTENT_INFO = '/static-content/info';
     public static SERVER_API_LINK_STATIC_CONTENT_INFO_OPEN_DATA = '/open-data';
+    public static SERVER_API_LINK_STATIC_CONTENT_INFO_CONOCIMIENTO = '/conocimiento';
     public static SERVER_API_LINK_STATIC_CONTENT_INFO_APPLICATIONS = '/applications';
     public static SERVER_API_LINK_STATIC_CONTENT_INFO_EVENTS = '/events';
     public static SERVER_API_LINK_STATIC_CONTENT_TOOLS = '/static-content/tools';
     public static SERVER_API_LINK_STATIC_CONTENT_TOOLS_DEVELOPERS = '/developers';
     public static SERVER_API_LINK_STATIC_CONTENT_TOOLS_APIS = '/apis';
-    public static SERVER_API_LINK_STATIC_CONTENT_TOOLS_SPARQL = '/sparql';
-    public static SERVER_API_LINK_STATIC_CONTENT_TOOLS_SPARQL_CLIENT = '/sparql-client';
-    public static SERVER_API_LINK_STATIC_CONTENT_TOOLS_SPARQL_GRAPHS = '/sparql-client/graphs';
     public static SERVER_API_LINK_CAMPUS = '/campus';
     public static SERVER_API_LINK_CAMPUS_EVENTS = '/campus/events';
     public static SERVER_API_LINK_CAMPUS_EVENT = '/campus/event';
@@ -639,6 +648,8 @@ export class Constants {
     public static SERVER_API_LINK_ADMIN_DATASET_CUD_OPERATIONS = '/dataset';
     public static SERVER_API_LINK_ADMIN_DATASET_CUD_OPERATIONS_UPDATE = '/dataset_update';
     public static SERVER_API_LINK_ADMIN_RESOURCE_CUD_OPERATIONS = '/resource';
+    public static SERVER_API_LINK_ADMIN_STATIC_CONTENT_INFO = '/static-content-admin/info';
+    public static SERVER_API_LINK_ADMIN_STATIC_CONTENT_TOOLS = '/static-content-admin/tools';
     public static SERVER_API_LINK_GA_OD_CORE = '/core';
     public static SERVER_API_LINK_GA_OD_CORE_VIEWS = '/views';
     public static SERVER_API_LINK_TRACKING = '/tracking';
@@ -661,38 +672,6 @@ export class Constants {
     public static SERVER_API_LINK_PARAM_SORT_HOMER_PORTAL = 'portal';
     public static SERVER_API_LINK_PARAM_SORT_HOMER_LANGUAGE = 'language';
     public static SERVER_API_LINK_REGISTRATION_EVENT_PRESTACION_PUBLI = '/inscripcionPrestacionServPubli';
-
-    public static SERVER_API_LINK_SPARQL_CLIENT_PARAM_GRAPH = 'graph';
-    public static SERVER_API_LINK_SPARQL_CLIENT_PARAM_QUERY = 'query';
-    public static SERVER_API_LINK_SPARQL_CLIENT_PARAM_FORMAT = 'format';
-    public static SERVER_API_LINK_SPARQL_CLIENT_PARAM_TIMEOUT = 'timeout';
-    public static SERVER_API_LINK_SPARQL_CLIENT_PARAM_DEBUG = 'debug';
-
-    public static SPARQL_CLIENT_DEFAULT_GRAPH = 'http://opendata.aragon.es/graph/Aragopedia/latest';
-    public static SPARQL_CLIENT_DEFAULT_QUERY = 'select distinct ?Concept where {[] a ?Concept} LIMIT 100';
-    public static SPARQL_CLIENT_DEFAULT_FORMAT = 'text/html';
-    public static SPARQL_CLIENT_DEFAULT_TIMEOUT = 0;
-    public static SPARQL_CLIENT_DEFAULT_DEBUG = true;
-
-    public static SPARQL_CLIENT_FORMAT_OPTIONS_AUTO = 'auto';
-    public static SPARQL_CLIENT_FORMAT_OPTIONS_HTML = 'text/html';
-    public static SPARQL_CLIENT_FORMAT_OPTIONS_EXCEL = 'application/vnd.ms-excel';
-    public static SPARQL_CLIENT_FORMAT_OPTIONS_XML = 'application/sparql-results+xml';
-    public static SPARQL_CLIENT_FORMAT_OPTIONS_JSON = 'application/sparql-results+json';
-    public static SPARQL_CLIENT_FORMAT_OPTIONS_JAVASCRIPT = 'application/javascript';
-    public static SPARQL_CLIENT_FORMAT_OPTIONS_PLAIN_TEXT = 'text/plain';
-    public static SPARQL_CLIENT_FORMAT_OPTIONS_RDF_XML = 'application/rdf+xml';
-    public static SPARQL_CLIENT_FORMAT_OPTIONS_CSV = 'text/csv';
-
-    public static SPARQL_CLIENT_FILE_NAME = 'Sparql';
-    public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_XML = '.xml';
-    public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_XLS = '.xls';
-    public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_SRX = '.srx';
-    public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_JSON = '.json';
-    public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_JS = '.js';
-    public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_TXT = '.txt';
-    public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_RDF = '.rdf';
-    public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_CSV = '.csv';
 
     public static KIBANA_URL = Constants.AOD_BASE_URL + "/elastic/app/kibana#/dashboard/e6433860-d68c-11e7-a49d-f956d0989e2c";
     public static KIBANA_URL_SEVEN = Constants.AOD_BASE_URL + "/elastic/app/kibana#/dashboard/6b50d7f0-e589-11e7-bac3-69701294f3ab";

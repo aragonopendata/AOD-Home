@@ -20,6 +20,7 @@ export class FooterComponent implements OnInit {
 	routerLinkServicesSocialData: string;
 	routerLinkInfoCollaboration: string;
 	routerLinkInfoApplications: string;
+	routerLinkInfoKnowledge: string;
 	
 	ckanUrl: string;
 	mediaWikiUrl: string;
@@ -43,6 +44,7 @@ export class FooterComponent implements OnInit {
 		this.routerLinkInfoCollaboration = Constants.ROUTER_LINK_INFORMATION_COLLABORATION;
 		this.routerLinkInfoApplications = Constants.ROUTER_LINK_INFORMATION_APPS;
 		this.routerLinkInfoTerms = Constants.ROUTER_LINK_INFORMATION_TERMS;
+		this.routerLinkInfoKnowledge = Constants.ROUTER_LINK_INFORMATION_CONOCIMIENTO;
 		this.ckanUrl = Constants.CKAN_URL;
 		this.mediaWikiUrl = Constants.MEDIA_WIKI_URL;
 		this.virtuosoUrl = Constants.VIRTUOSO_URL;

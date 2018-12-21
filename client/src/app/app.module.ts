@@ -37,23 +37,13 @@ import { CampusComponent } from './components/web/static-content/tools/campus/ca
 import { CampusDetailComponent } from './components/web/static-content/tools/campus/campus-detail/campus-detail.component';
 import { DevelopersComponent } from './components/web/static-content/tools/developers/developers.component';
 import { ApisComponent } from './components/web/static-content/tools/apis/apis.component';
-import { SparqlComponent } from './components/web/static-content/tools/sparql/sparql.component';
-import { SparqlClientComponent } from './components/web/static-content/tools/sparql/sparql-client/sparql-client.component';
 import { ForgottenPasswordComponent } from './components/login/forgotten-password/forgotten-password.component';
 import { RestorePasswordComponent } from './components/login/restore-password/restore-password.component';
 import { HomeAdminComponent } from './components/admin/home-admin.component';
-import { CampusAdminComponent } from './components/admin/campus-admin/campus-admin.component';
 import { GlobalComponent } from './components/admin/global/global.component';
 import { DashboardGlobalComponent } from './components/admin/global/dashboard-global/dashboard-global.component';
 import { UsersAdminComponent } from './components/admin/global/users-admin/users-admin.component';
 import { RolesAdminComponent } from './components/admin/global/roles-admin/roles-admin.component';
-import { ApplicationsAdminComponent } from './components/admin/global/static-content-admin/info/applications-admin/applications-admin.component';
-import { CollaborationAdminComponent } from './components/admin/global/static-content-admin/info/collaboration-admin/collaboration-admin.component';
-import { EventsAdminComponent } from './components/admin/global/static-content-admin/info/events-admin/events-admin.component';
-import { OpenDataAdminComponent } from './components/admin/global/static-content-admin/info/open-data-admin/open-data-admin.component';
-import { ApisAdminComponent } from './components/admin/global/static-content-admin/tools/apis-admin/apis-admin.component';
-import { DevelopersAdminComponent } from './components/admin/global/static-content-admin/tools/developers-admin/developers-admin.component';
-import { SparqlAdminComponent } from './components/admin/global/static-content-admin/tools/sparql-admin/sparql-admin.component';
 import { DashboardDatacenterComponent } from './components/admin/datacenter/dashboard-datacenter/dashboard-datacenter.component';
 import { DatacenterComponent } from './components/admin/datacenter/datacenter.component';
 import { OrganizationsAdminComponent } from './components/admin/datacenter/organizations-admin/organizations-admin.component';
@@ -92,6 +82,14 @@ import {GoogleAnalyticsEventsService} from "./services/web/google-analytics-even
 import { UtilsService } from './services/web/utils.service';
 import { VisualDataComponent } from './components/admin/visual-data/visual-data.component';
 import { SysAdminComponent } from './components/admin/global/sys-admin/sys-admin.component';
+import { KnowledgeComponent } from './components/web/static-content/info/knowledge/knowledge.component';
+import { TinyMceModule } from 'angular-tinymce';
+import { tinymceDefaultSettings } from 'angular-tinymce';
+import { InfoPanelsAdminComponent } from './components/admin/global/static-content-admin/info-panels-admin/info-panels-admin.component';
+import { InfoListAdminComponent } from './components/admin/global/static-content-admin/info-list-admin/info-list-admin.component';
+import { CampusAdminEventsComponent } from './components/admin/campus-admin/campus-admin-events/campus-admin-events.component';
+import { CampusAdminEntriesComponent } from './components/admin/campus-admin/campus-admin-entries/campus-admin-entries.component';
+import { CampusAdminSpeakersComponent } from './components/admin/campus-admin/campus-admin-speakers/campus-admin-speakers.component';
 
 @NgModule({
 	declarations: [
@@ -121,12 +119,9 @@ import { SysAdminComponent } from './components/admin/global/sys-admin/sys-admin
 		CampusDetailComponent,
 		DevelopersComponent,
 		ApisComponent,
-		SparqlComponent,
-		SparqlClientComponent,
 		ForgottenPasswordComponent,
 		RestorePasswordComponent,
 		HomeAdminComponent,
-		CampusAdminComponent,
 		DashboardGlobalComponent,
 		UsersAdminComponent,
 		RolesAdminComponent,
@@ -136,14 +131,6 @@ import { SysAdminComponent } from './components/admin/global/sys-admin/sys-admin
 		OpenDataComponent,
 		ApisComponent,
 		DevelopersComponent,
-		SparqlComponent,
-		ApplicationsAdminComponent,
-		CollaborationAdminComponent,
-		EventsAdminComponent,
-		OpenDataAdminComponent,
-		ApisAdminComponent,
-		DevelopersAdminComponent,
-		SparqlAdminComponent,
 		DashboardDatacenterComponent,
 		OrganizationsAdminComponent,
 		OrganizationsAdminListComponent,
@@ -158,6 +145,12 @@ import { SysAdminComponent } from './components/admin/global/sys-admin/sys-admin
 		GlobalComponent,
 		VisualDataComponent,
 		SysAdminComponent,
+		KnowledgeComponent,
+		InfoPanelsAdminComponent,
+		InfoListAdminComponent,
+		CampusAdminEventsComponent,
+		CampusAdminEntriesComponent,
+		CampusAdminSpeakersComponent
   	],
   	imports: [
 		BrowserModule,
@@ -192,6 +185,7 @@ import { SysAdminComponent } from './components/admin/global/sys-admin/sys-admin
 		AccordionModule,
 		MessagesModule,
 		GrowlModule,
+		TinyMceModule.forRoot(tinymceDefaultSettings())
 	],
 	providers: [
 		Logger,
