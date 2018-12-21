@@ -118,13 +118,8 @@
             </div>
             <div>
                 <form class="search">
-<<<<<<< HEAD
-                    <button type="button" tabindex="{{openedMenu ? 30 : -1}}" class="btnSearch" routerLink="/{{routerLinkDataCatalog}}" [queryParams]="{texto:searchBox.value}" (click)="openNav()">
-                            <i class="fas fa-search" style="display: table; vertical-align: middle;"></i>
-=======
                     <button type="button" tabindex="{{openedMenu ? 31 : -1}}" class="btnSearch" routerLink="/{{routerLinkDataCatalog}}" [queryParams]="{texto:searchBox.value}" (click)="openNav()">
                             <i class="fa fa-search" style="display: table; vertical-align: middle;"></i>
->>>>>>> develop
                         </button>
                     <input autocomplete="off" tabindex="{{openedMenu ? 30 : -1}}" #searchBox id="searchBox" placeholder="BUSCA DATOS ABIERTOS" type="search" class="textBox" (keyup)="search(searchBox.value)"
                         (keyup.enter)="searchDatasetsByText(searchBox.value); openNav();" />
