@@ -75,13 +75,14 @@ app.use(constants.API_BASE_URL_WEB, analytics);
 app.use(constants.API_BASE_URL_ADMIN, verifyToken, usersAdmin);
 app.use(constants.API_BASE_URL_ADMIN, rolesAdmin);
 app.use(constants.API_BASE_URL_ADMIN, contentsAdmin);
+app.use(constants.API_BASE_URL_ADMIN, verifyToken, campusAdmin);
 app.use(constants.API_BASE_URL_ADMIN, verifyToken, datasetsAdmin);
 app.use(constants.API_BASE_URL_ADMIN, verifyToken, tagsAdmin);
 app.use(constants.API_BASE_URL_ADMIN, topicsAdmin);
 app.use(constants.API_BASE_URL_ADMIN, verifyToken, organizationsAdmin);
 app.use(constants.API_BASE_URL_ADMIN, aodCore);
 app.use(constants.API_BASE_URL_ADMIN, verifyToken, logstash);
-app.use('/api/admin', campusAdmin);
+//app.use('/api/admin', campusAdmin);
 app.use(constants.API_BASE_URL_ADMIN, verifyToken, sysAdmin);
 app.use(constants.API_BASE_URL_WEB, mailer);
 
