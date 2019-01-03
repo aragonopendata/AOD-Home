@@ -130,7 +130,7 @@ exports.DB_ADMIN_INSERT_CAMPUS_EVENTS_SITES  = 'INSERT INTO campus.events_sites 
 
 exports.DB_ADMIN_INSERT_CAMPUS_SITES  = 'INSERT INTO campus.sites ' +
 												'(name) '+
-												'VALUES($1)';
+												'VALUES($1) RETURNING campus.sites.id';
 
 exports.DB_ADMIN_GET_CAMPUS_ENTRY = 'SELECT c.id, c.title, c.description, c.url, encode(c.thumbnail, \'base64\') AS thumbnail, c.format, c.type, c.platform, c.event, ' +
 		't.id AS topic_id, t.name AS topic_name, s.id AS speaker_id ' + 

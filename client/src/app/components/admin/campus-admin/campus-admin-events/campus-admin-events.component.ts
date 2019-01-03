@@ -20,6 +20,7 @@ export class CampusAdminEventsComponent implements OnInit {
 
     emptyMessage: string;
 
+    newSiteId: number;
     events: Event[];
     eventsCopy: Event[];
     eventSelected: Event;
@@ -98,7 +99,13 @@ export class CampusAdminEventsComponent implements OnInit {
 
     save(event) {
         if (this.validation(event)) {
-            let site_id = event.site.id;
+            let site_id;
+            if (this.newSiteId != undefined && this.newSiteId > 0) {
+                site_id = this.newSiteId;
+            } else {
+                site_id = event.site.id;
+            }
+            
             if (this.isNewEvent) {
                 this.callInsertEventService(event, site_id);
             } else {
@@ -231,6 +238,9 @@ export class CampusAdminEventsComponent implements OnInit {
 
     callInsertSiteService(site) {
         this.campusAdminService.insertNewSite(site).subscribe(result => {
+            if (result.id != undefined && result.id > 0) {
+                this.newSiteId = result.id;
+            }
             if (result.status == 200 && result.success) {
                 this.showMessage('success',
                     'Inserción de localización',

@@ -1010,7 +1010,8 @@ router.post(constants.API_URL_ADMIN_CAMPUS_SITES, function (req, res, next) {
                 res.json({
                     'status': constants.REQUEST_REQUEST_OK,
                     'success': true,
-                    'result': 'CREACION DE SITE - Site creado correctamente'
+                    'result': 'CREACION DE SITE - Site creado correctamente',
+                    'id': response.rows[0].id
                 });
             }
         })
