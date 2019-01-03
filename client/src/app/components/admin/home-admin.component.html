@@ -15,15 +15,9 @@
 					Administración de Usuarios
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-					<!-- <a class="dropdown-item" routerLink="/admin/global" >
-						<span class="sidebar-title">Dashboard</span>
-					</a> -->
 					<a class="dropdown-item" routerLink="./global/users" >
 						<span class="sidebar-title">Usuarios</span>
 					</a>
-					<!-- <a class="dropdown-item" routerLink="./global/roles" >
-						<span class="sidebar-title">Roles</span>
-					</a> -->
 				</div>
 			</li>
 
@@ -83,11 +77,11 @@
 			<li *ngIf="showContentEditionMenu" class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">AOD Campus<span class="sr-only"></span></a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-					<a class="dropdown-item" routerLink="/admin/campus-admin/events" routerLinkActive="active">
-						<span class="sidebar-title">Eventos</span>
-					</a>
 					<a class="dropdown-item" routerLink="/admin/campus-admin/entries" routerLinkActive="active">
 						<span class="sidebar-title">Entradas</span>
+					</a>
+					<a class="dropdown-item" routerLink="/admin/campus-admin/events" routerLinkActive="active">
+						<span class="sidebar-title">Eventos</span>
 					</a>
 					<a class="dropdown-item" routerLink="/admin/campus-admin/speakers" routerLinkActive="active">
 						<span class="sidebar-title">Ponentes</span>

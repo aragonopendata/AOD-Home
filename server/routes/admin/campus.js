@@ -106,7 +106,7 @@ router.get(constants.API_URL_ADMIN_CAMPUS_SPEAKERS, function (req, res, next) {
 router.get(constants.API_URL_ADMIN_CAMPUS_TOPICS, function (req, res, next) {
     const query = {
         text: dbQueries.DB_ADMIN_GET_CAMPUS_TOPICS,
-        rowMode: constants.SQL_RESULSET_FORMAT
+        rowMode: constants.SQL_RESULSET_FORMAT_JSON
     };
 
     pool.on('error', (err, client) => {

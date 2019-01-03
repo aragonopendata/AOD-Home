@@ -260,7 +260,7 @@ export class CampusAdminEntriesComponent implements OnInit {
             entry.platform != null && entry.platform != undefined &&
             entry.format != null && entry.format != undefined &&
             entry.event != null && entry.event != undefined &&
-            entry.speaker_id != null && entry.topics != undefined &&
+            entry.speaker_id != null && entry.speaker_id != undefined &&
             entry.topics != null && entry.topics != undefined && entry.topics.length > 0) {
             validated = true;
         }
