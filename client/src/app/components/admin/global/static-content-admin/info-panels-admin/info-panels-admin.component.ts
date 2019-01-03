@@ -64,6 +64,9 @@ export class InfoPanelsAdminComponent implements OnInit {
             toolbar: ' styleselect | bold italic underline | forecolor backcolor | numlist bullist | image link table ',
             menubar: false,
             branding: false,
+            convert_urls: true,
+            relative_urls: false,
+            remove_script_host: false,
             file_picker_callback: function (callback, value, meta) {
                 if (meta.filetype == 'image') {
                     var input = document.createElement('input');
