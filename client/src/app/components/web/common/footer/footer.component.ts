@@ -16,6 +16,7 @@ export class FooterComponent implements OnInit {
 	routerLinkInfoOpenData: string;
 	routerLinkInfoTerms: string;
 	routerLinkDataCatalog: string;
+	routerLinkServicesOpenDataPool: string;
 	routerLinkServicesAragopedia: string;
 	routerLinkServicesSocialData: string;
 	routerLinkInfoCollaboration: string;
@@ -39,6 +40,7 @@ export class FooterComponent implements OnInit {
 		this.aodBaseUrl = Constants.AOD_BASE_URL;
 		this.routerLinkInfoOpenData = Constants.ROUTER_LINK_INFORMATION_OPEN_DATA;
 		this.routerLinkDataCatalog = Constants.ROUTER_LINK_DATA_CATALOG;
+		this.routerLinkServicesOpenDataPool = Constants.ROUTER_LINK_SERVICES_POOL;
 		this.routerLinkServicesAragopedia = Constants.ROUTER_LINK_SERVICES_ARAGOPEDIA;
 		this.routerLinkServicesSocialData = Constants.ROUTER_LINK_SERVICES_SOCIAL_DATA;
 		this.routerLinkInfoCollaboration = Constants.ROUTER_LINK_INFORMATION_COLLABORATION;
