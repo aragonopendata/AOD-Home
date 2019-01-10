@@ -17,8 +17,13 @@ export class AnalyticsComponent {
 	logstashs: Logstash[];
 	isIframeActive = true;
 
+	aodBaseUrl: String;
+	routerLinkDataCatalogDataset: String;
+
 	constructor(private logstashService: AnalyticsService,
 		private utilsService: UtilsService) {
+		this.aodBaseUrl = Constants.AOD_BASE_URL;
+		this.routerLinkDataCatalogDataset = Constants.ROUTER_LINK_DATA_CATALOG_DATASET
 		this.getOpenedMenu();
 	}
 
