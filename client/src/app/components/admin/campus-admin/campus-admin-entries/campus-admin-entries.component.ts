@@ -226,7 +226,7 @@ export class CampusAdminEntriesComponent implements OnInit {
 
     showDialog(entry) {
         this.display = !this.display;
-        if (!this.isNewEntry) {
+        if (entry.id > 0) {
             this.getEntry(entry.id);
         }
     }
