@@ -220,6 +220,7 @@ export class CampusAdminEntriesComponent implements OnInit {
         this.isNewEntry = true;
         this.selectedEntry = new Content();
         this.selectedEntry.topics = [];
+        this.topics = [];
         this.showDialog(this.selectedEntry);
     }
 
@@ -362,6 +363,7 @@ export class CampusAdminEntriesComponent implements OnInit {
                     'Inserción de entrada',
                     'Entrada añadida correctamente'
                 );
+                this.topics = [];
             } else {
                 this.showMessage('error',
                     'Inserción de entrada',
