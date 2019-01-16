@@ -33,7 +33,7 @@
 		<p-footer>
 			
 			<div class="ui-helper-clearfix" style="width:100%">
-					<button class="btn btn-primary" type="button" icon="fa-plus" (click)="showDialog(null, false, true)" style="float:left" >
+					<button class="btn btn-primary" type="button" icon="fas fa-plus" (click)="showDialog(null, false, true)" style="float:left" >
 						<i class="fas fa-plus"></i> Nuevo Usuario
 					</button>
 			</div>
@@ -191,8 +191,8 @@
 		<p>Se va a proceder a borrar el usuario <b>{{user?.fullname}}</b></p>
 		<p>¿Desea continuar?</p>
 			 <p-footer>
-				 <button type="button" pButton icon="fa-check" (click)="deleteUser()" label="Sí"></button>
-				 <button type="button" pButton icon="fa-times" (click)="undoDeleteUser()" label="No"></button>
+				 <button type="button" pButton icon="fas fa-check" (click)="deleteUser()" label="Sí"></button>
+				 <button type="button" pButton icon="fas fa-times" (click)="undoDeleteUser()" label="No"></button>
 			 </p-footer>
 	</p-dialog>
 </div>

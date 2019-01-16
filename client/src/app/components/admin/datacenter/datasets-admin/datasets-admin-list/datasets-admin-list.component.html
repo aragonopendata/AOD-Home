@@ -5,8 +5,8 @@
 		<p>Se va a proceder a borrar el dataset <b>{{datasetTitleDelete}}</b></p>
 		<p>¿Desea continuar?</p>
 			 <p-footer>
-				 <button type="button" pButton icon="fa-check" (click)="deleteDataset()" label="Sí"></button>
-				 <button type="button" pButton icon="fa-times" (click)="undoDeleteDataset()" label="No"></button>
+				 <button type="button" pButton icon="fas fa-check" (click)="deleteDataset()" label="Sí"></button>
+				 <button type="button" pButton icon="fas fa-times" (click)="undoDeleteDataset()" label="No"></button>
 			 </p-footer>
 	</p-dialog>
 	<p-growl [(value)]="msgs"></p-growl>
@@ -56,7 +56,7 @@
 		</p-column>
 		<p-footer>
 			<div *ngIf="currentUser.rol != orgMemberRol" class="ui-helper-clearfix" style="width:100%">
-				<button class="btn btn-primary" type="button" icon="fa-plus" (click)="addDataset()" style="float:left" routerLink="/{{routerLinkAdminDatacenterDatasetsEdit}}" >
+				<button class="btn btn-primary" type="button" icon="fas fa-plus" (click)="addDataset()" style="float:left" routerLink="/{{routerLinkAdminDatacenterDatasetsEdit}}" >
 					<i class="fas fa-plus"></i> Añade un conjunto de datos
 				</button>
 			</div>

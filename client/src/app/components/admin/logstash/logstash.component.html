@@ -17,14 +17,14 @@
     <p-column styleClass="text-center" field="url" [style]="{'width':'37%'}" header="Url"></p-column>
     <p-column styleClass="text-center" header="Edición" [style]="{'width':'9%'}">
       <ng-template pTemplate="body" let-logstash="rowData">
-        <button pButton type="button" icon="fa-edit" (click)="showDialog(logstash, true, false)"></button>
-        <button pButton type="button" icon="fa-trash-alt" (click)="showDeleteDialog(logstash)"></button>
+        <button pButton type="button" icon="fas fa-edit" (click)="showDialog(logstash, true, false)"></button>
+        <button pButton type="button" icon="fas fa-trash-alt" (click)="showDeleteDialog(logstash)"></button>
       </ng-template>
     </p-column>
     <p-footer>
       <div class="ui-helper-clearfix" style="width:100%">
-        <button type="button" pButton icon="fa-plus" style="float:left" (click)="showDialog(null, false, true)" label="Nuevo portal"></button>
-        <button type="button" pButton icon="fa-redo-alt" style="float:right" (click)="reloadLogstash()" label="Recargar Portales"></button>
+        <button type="button" pButton icon="fas fa-plus" style="float:left" (click)="showDialog(null, false, true)" label="Nuevo portal"></button>
+        <button type="button" pButton icon="fas fa-redo-alt" style="float:right" (click)="reloadLogstash()" label="Recargar Portales"></button>
       </div>
     </p-footer>
   </p-dataTable>
@@ -34,8 +34,8 @@
     </p>
     <p>¿Desea continuar?</p>
     <p-footer>
-      <button type="button" pButton icon="fa-check" label="Sí" (click)="deleteLogstash()"></button>
-      <button type="button" pButton icon="fa-times" label="No" (click)="undoDeleteLogstash()"></button>
+      <button type="button" pButton icon="fas fa-check" label="Sí" (click)="deleteLogstash()"></button>
+      <button type="button" pButton icon="fas fa-times" label="No" (click)="undoDeleteLogstash()"></button>
     </p-footer>
   </p-dialog>
   <p-dialog appendTo="body" header="{{editDialogTitle}}" [(visible)]="displayEditDialog" [responsive]="true" showEffect="fade"
@@ -89,10 +89,10 @@
       </div>
       <p-footer>
         <div *ngIf="editing" class="ui-dialog-buttonpane ui-helper-clearfix">
-          <button type="button" pButton icon="fa-check" label="Guardar" (click)="updateLogstash()"></button>
+          <button type="button" pButton icon="fas fa-check" label="Guardar" (click)="updateLogstash()"></button>
         </div>
         <div *ngIf="!editing" class="ui-dialog-buttonpane ui-helper-clearfix">
-          <button type="button" pButton icon="fa-check" label="Crear Portal" (click)="saveLogstash()"></button>
+          <button type="button" pButton icon="fas fa-check" label="Crear Portal" (click)="saveLogstash()"></button>
         </div>
       </p-footer>
     </div>

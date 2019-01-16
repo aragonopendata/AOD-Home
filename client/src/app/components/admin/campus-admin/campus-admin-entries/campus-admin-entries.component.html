@@ -23,14 +23,14 @@
                 <ng-template pTemplate="body" let-entry="rowData">
                     <button class="btn btn-primary p-2" type="button" (click)="showDialog(entry)" data-toggle="tooltip" data-placement="top"
                         title="Editar">
-                        <i class="fa fa-edit"></i>
+                        <i class="fas fa-edit"></i>
                     </button>
                 </ng-template>
             </p-column>
             <p-footer>
                 <div class="ui-helper-clearfix" style="width:100%">
-                    <button class="btn btn-primary" type="button" icon="fa-plus" (click)="addEntry()" style="float:left">
-                        <i class="fa fa-plus"></i> Añade una entrada nueva
+                    <button class="btn btn-primary" type="button" icon="fas fa-plus" (click)="addEntry()" style="float:left">
+                        <i class="fas fa-plus"></i> Añade una entrada nueva
                     </button>
                 </div>
             </p-footer>
@@ -121,8 +121,8 @@
         </div>
     </div>
     <p-footer>
-        <button type="button" pButton icon="fa-floppy-o" (click)="save(selectedEntry);" label="Guardar"></button>
-        <button type="button" pButton icon="fa-times" style="background-color: red; border-color: red;" (click)="cancel();" label="Cancelar"></button>
+        <button type="button" pButton icon="far fa-save" (click)="save(selectedEntry);" label="Guardar"></button>
+        <button type="button" pButton icon="fas fa-times" style="background-color: red; border-color: red;" (click)="cancel();" label="Cancelar"></button>
     </p-footer>
 </p-dialog>
 <p-growl [(value)]="messages"></p-growl>

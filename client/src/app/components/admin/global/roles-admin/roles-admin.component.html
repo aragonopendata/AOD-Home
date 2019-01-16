@@ -5,19 +5,19 @@
 		<p-column header="Usuarios asignados" [sortable]="true">
 			<ng-template let-role="rowData" let-ri="rowIndex" pTemplate="body">
 				<span>{{roles[ri].assignedUsers.length}}</span>
-				<button pButton type="button" icon="fa-search" (click)="showUsers(role)"></button>
+				<button pButton type="button" icon="fas fa-search" (click)="showUsers(role)"></button>
 			</ng-template>
 		</p-column>
 		<p-column header="Edición">
 			<ng-template pTemplate="body" let-role="rowData">
-				<button pButton type="button" icon="fa-search" (click)="showDialog(role, false)"></button>
-				<button pButton type="button" icon="fa-edit" (click)="showDialog(role, true)"></button>
-				<button pButton type="button" icon="fa-trash-alt"></button>
+				<button pButton type="button" icon="fas fa-search" (click)="showDialog(role, false)"></button>
+				<button pButton type="button" icon="fas fa-edit" (click)="showDialog(role, true)"></button>
+				<button pButton type="button" icon="fas fa-trash-alt"></button>
 			</ng-template>
 		</p-column>
 		<p-footer>
 			<div class="ui-helper-clearfix" style="width:100%">
-				<button type="button" pButton icon="fa-plus" style="float:left" (click)="showDialogToAdd()" label="Añadir"></button>
+				<button type="button" pButton icon="fas fa-plus" style="float:left" (click)="showDialogToAdd()" label="Añadir"></button>
 			</div>
 		</p-footer>
 	</p-dataTable>
@@ -44,7 +44,7 @@
 	</div>
 	<p-footer>
 		<div class="ui-dialog-buttonpane ui-helper-clearfix">
-			<button type="button" pButton icon="fa-check" label="Guardar"></button>
+			<button type="button" pButton icon="fas fa-check" label="Guardar"></button>
 		</div>
 	</p-footer>
 </p-dialog>
@@ -62,7 +62,7 @@
 	</div>
 	<p-footer>
 		<div class="ui-dialog-buttonpane ui-helper-clearfix">
-			<button type="button" pButton icon="fa-edit" (click)="enableEdition()" label="Editar"></button>
+			<button type="button" pButton icon="fas fa-edit" (click)="enableEdition()" label="Editar"></button>
 		</div>
 	</p-footer>
 </p-dialog>

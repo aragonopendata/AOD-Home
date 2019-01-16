@@ -2,14 +2,14 @@
     <div class="alert alert-info" role="alert">
         <div class="row">
             <div class="col-xs-3">
-                <i class="fa fa-exclamation-triangle fa-5x" style="margin:15px;color: #5ea2ba;"></i>
+                <i class="fas fa-exclamation-triangle fa-5x" style="margin:15px;color: #5ea2ba;"></i>
             </div>
             <div class="col-xs-9">
                 <h1>{{errorTitle}}</h1>
                 <h2>{{errorMessage}}</h2>
                 <a class="mail" href="mailto:opendata@aragon.es">
                     <h2>
-                        <i class="fa fa-envelope-o"></i> Contactar con el Administrador</h2>
+                        <i class="far fa-envelope"></i> Contactar con el Administrador</h2>
                 </a>
             </div>
         </div>
@@ -22,14 +22,14 @@
             <ng-template pTemplate="body" let-event="rowData">
                 <button class="btn btn-primary p-2" type="button" (click)="showDialog(event)" data-toggle="tooltip" data-placement="top"
                     title="Editar">
-                    <i class="fa fa-edit"></i>
+                    <i class="fas fa-edit"></i>
                 </button>
             </ng-template>
         </p-column>
         <p-footer>
             <div class="ui-helper-clearfix" style="width:100%">
-                <button class="btn btn-primary" type="button" icon="fa-plus" (click)="addEvent()" style="float:left">
-                    <i class="fa fa-plus"></i> Añade un evento nuevo
+                <button class="btn btn-primary" type="button" icon="fas fa-plus" (click)="addEvent()" style="float:left">
+                    <i class="fas fa-plus"></i> Añade un evento nuevo
                 </button>
             </div>
         </p-footer>
@@ -59,7 +59,7 @@
                 </p-autoComplete>
             </div>
             <div class="col-4">
-                <button pButton type="button" icon="fa-plus" (click)="confirm()" label="Añadir nueva localización"></button>
+                <button pButton type="button" icon="fas fa-plus" (click)="confirm()" label="Añadir nueva localización"></button>
             </div>
         </div>
         <div class="form-group row">
@@ -70,11 +70,11 @@
         </div>
     </div>
     <p-footer>
-        <button type="button" pButton icon="fa-floppy-o" (click)="save(eventSelected);" label="Guardar"></button>
-        <button type="button" pButton icon="fa-times" style="background-color: red; border-color: red;" (click)="cancel($event);"
+        <button type="button" pButton icon="far fa-save" (click)="save(eventSelected);" label="Guardar"></button>
+        <button type="button" pButton icon="fas fa-times" style="background-color: red; border-color: red;" (click)="cancel($event);"
             label="Cancelar"></button>
     </p-footer>
 </p-dialog>
 
-<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" width="425"></p-confirmDialog>
+<p-confirmDialog header="Confirmation" icon="fas fa-exclamation-triangle" width="425"></p-confirmDialog>
 <p-growl [(value)]="messages"></p-growl>

@@ -15,14 +15,14 @@
     <p-column field="package_count" header="Nº datos" [sortable]="true" [style]="{'width':'18%'}"></p-column>
     <p-column header="Edición"  [style]="{'width':'12%'}">
       <ng-template pTemplate="body" let-org="rowData">
-        <button pButton type="button" icon="fa-search" routerLink="../show/{{org.name}}"></button>
-        <button pButton type="button" icon="fa-edit" routerLink="../edit/{{org.name}}"></button>
-        <button *ngIf="showDeleteButton" pButton type="button" icon="fa-trash-alt" (click)="confirm(org)"></button>
+        <button pButton type="button" icon="fas fa-search" routerLink="../show/{{org.name}}"></button>
+        <button pButton type="button" icon="fas fa-edit" routerLink="../edit/{{org.name}}"></button>
+        <button *ngIf="showDeleteButton" pButton type="button" icon="fas fa-trash-alt" (click)="confirm(org)"></button>
       </ng-template>
     </p-column>
     <p-footer *ngIf="showSaveButton">
       <div class="ui-helper-clearfix" style="width:100%">
-        <button type="button" pButton icon="fa-plus" style="float:left" routerLink="../edit" label="Añade una nueva organización"></button>
+        <button type="button" pButton icon="fas fa-plus" style="float:left" routerLink="../edit" label="Añade una nueva organización"></button>
       </div>
     </p-footer>
   </p-dataTable>
@@ -33,12 +33,12 @@
     <p-column field="package_count" header="Nº datos" [sortable]="true" [style]="{'width':'18%'}"></p-column>
     <p-column header="Edición"  [style]="{'width':'8%'}">
       <ng-template pTemplate="body" let-org="rowData">
-        <button pButton type="button" icon="fa-search" routerLink="../show/{{org.name}}"></button>
+        <button pButton type="button" icon="fas fa-search" routerLink="../show/{{org.name}}"></button>
       </ng-template>
     </p-column>
     <p-footer *ngIf="showSaveButton">
       <div class="ui-helper-clearfix" style="width:100%">
-        <button type="button" pButton icon="fa-plus" style="float:left" routerLink="../edit" label="Añade una nueva organización"></button>
+        <button type="button" pButton icon="fas fa-plus" style="float:left" routerLink="../edit" label="Añade una nueva organización"></button>
       </div>
     </p-footer>
   </p-dataTable>
