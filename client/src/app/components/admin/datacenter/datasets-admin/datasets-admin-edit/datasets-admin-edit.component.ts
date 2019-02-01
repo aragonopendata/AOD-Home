@@ -1073,6 +1073,36 @@ export class DatasetsAdminEditComponent implements OnInit {
 						this.addExtra(Constants.DATASET_EXTRA_DATA_QUALITY_URL+i, this.extraDataQualityURL[i]);
 					}
 				}
+
+				// EXTRAS IAEST TAB
+				if (this.extraIAESTTemaEstadistico != undefined){
+					this.addExtra(Constants.DATASET_EXTRA_IAEST_TEMA_ESTADISTICO, this.extraIAESTTemaEstadistico);
+				}
+				if (this.extraIAESTUnidadEstadistica != undefined){
+					this.addExtra(Constants.DATASET_EXTRA_IAEST_UNIDAD_ESTADISTICA, this.extraIAESTUnidadEstadistica);
+				}
+				if (this.extraIAESTPoblacionEstadistica != undefined){
+					this.addExtra(Constants.DATASET_EXTRA_IAEST_POBLACION_ESTADISTICA, this.extraIAESTPoblacionEstadistica);
+				}
+				if (this.extraIAESTUnidadMedida != undefined){
+					this.addExtra(Constants.DATASET_EXTRA_IAEST_UNIDAD_MEDIDA, this.extraIAESTUnidadMedida);
+				}
+				if (this.extraIAESTTipoOperacion != undefined){
+					this.addExtra(Constants.DATASET_EXTRA_IAEST_TIPO_OPERACION, this.extraIAESTTipoOperacion);
+				}
+				if (this.extraIAESTTipologiaDatosOrigen != undefined){
+					this.addExtra(Constants.DATASET_EXTRA_IAEST_TIPOLOGIA_DATOS_ORIGEN, this.extraIAESTTipologiaDatosOrigen);
+				}
+				if (this.extraIAESTFuente != undefined){
+					this.addExtra(Constants.DATASET_EXTRA_IAEST_FUENTE, this.extraIAESTFuente);
+				}
+				if (this.extraIAESTTratamientoEstadistico != undefined){
+					this.addExtra(Constants.DATASET_EXTRA_IAEST_TRATAMIENTO_ESTADISTICO, this.extraIAESTTratamientoEstadistico);
+				}
+				if (this.extraIAESTLegislacionUE != undefined){
+					this.addExtra(Constants.DATASET_EXTRA_IAEST_LEGISLACION_UE, this.extraIAESTLegislacionUE);
+				}
+
 				//LICENSE AND ORGANIZATION TAB
 				this.dataset.license_id = Constants.ADMIN_DATASET_EDIT_LICENSE_ID_DEFAULT;
 				this.dataset.license_title = Constants.ADMIN_DATASET_EDIT_LICENSE_TITLE_DEFAULT;
@@ -1206,6 +1236,35 @@ export class DatasetsAdminEditComponent implements OnInit {
 				for (var i = 0; i < this.extraDataQualityURL.length; i++) {
 					this.addExtra(Constants.DATASET_EXTRA_DATA_QUALITY_URL+i, this.extraDataQualityURL[i]);
 				}
+			}
+
+			// EXTRAS IAEST TAB
+			if (this.extraIAESTTemaEstadistico != undefined){
+				this.replaceExtra(Constants.DATASET_EXTRA_IAEST_TEMA_ESTADISTICO, this.extraIAESTTemaEstadistico, true);
+			}
+			if (this.extraIAESTUnidadEstadistica != undefined){
+				this.replaceExtra(Constants.DATASET_EXTRA_IAEST_UNIDAD_ESTADISTICA, this.extraIAESTUnidadEstadistica, true);
+			}
+			if (this.extraIAESTPoblacionEstadistica != undefined){
+				this.replaceExtra(Constants.DATASET_EXTRA_IAEST_POBLACION_ESTADISTICA, this.extraIAESTPoblacionEstadistica, true);
+			}
+			if (this.extraIAESTUnidadMedida != undefined){
+				this.replaceExtra(Constants.DATASET_EXTRA_IAEST_UNIDAD_MEDIDA, this.extraIAESTUnidadMedida, true);
+			}
+			if (this.extraIAESTTipoOperacion != undefined){
+				this.replaceExtra(Constants.DATASET_EXTRA_IAEST_TIPO_OPERACION, this.extraIAESTTipoOperacion, true);
+			}
+			if (this.extraIAESTTipologiaDatosOrigen != undefined){
+				this.replaceExtra(Constants.DATASET_EXTRA_IAEST_TIPOLOGIA_DATOS_ORIGEN, this.extraIAESTTipologiaDatosOrigen, true);
+			}
+			if (this.extraIAESTFuente != undefined){
+				this.replaceExtra(Constants.DATASET_EXTRA_IAEST_FUENTE, this.extraIAESTFuente, true);
+			}
+			if (this.extraIAESTTratamientoEstadistico != undefined){
+				this.replaceExtra(Constants.DATASET_EXTRA_IAEST_TRATAMIENTO_ESTADISTICO, this.extraIAESTTratamientoEstadistico, true);
+			}
+			if (this.extraIAESTLegislacionUE != undefined){
+				this.replaceExtra(Constants.DATASET_EXTRA_IAEST_LEGISLACION_UE, this.extraIAESTLegislacionUE, true);
 			}
 			
 			let datasetUpdated: any = this.dataset;
