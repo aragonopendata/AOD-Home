@@ -66,6 +66,17 @@ export class DatasetsAdminEditComponent implements OnInit {
 	extraShortUriAragopedia: string;
 	extraNameAragopedia: string;
 
+	isIAESTDataset: boolean = false;
+	extraIAESTTemaEstadistico: string;
+	extraIAESTUnidadEstadistica: string;
+	extraIAESTPoblacionEstadistica: string;
+	extraIAESTUnidadMedida: string;
+	extraIAESTTipoOperacion: string;
+	extraIAESTTipologiaDatosOrigen: string;
+	extraIAESTFuente: string;
+	extraIAESTTratamientoEstadistico: string;
+	extraIAESTLegislacionUE: string;
+
 	selectedState: string = 'public';
 
 	//LANGUAGES
@@ -296,7 +307,8 @@ export class DatasetsAdminEditComponent implements OnInit {
 						this.selectedState = 'public';
 					}
 					this.getExtras();
-					//GET GEO 
+					this.setIAESTDataset(this.dataset.maintainer);
+					// GET GEO 
 					if (this.dataset.groups[0] != undefined) {
 						this.selectedTopic = this.dataset.groups[0].name;
 					}
@@ -545,7 +557,33 @@ export class DatasetsAdminEditComponent implements OnInit {
 						this.checkLangOther = this.dataset.extras[index].value;
 						this.checkLangBoolOther = true;
 						break;
-					
+					case Constants.DATASET_EXTRA_IAEST_TEMA_ESTADISTICO:
+						this.extraIAESTTemaEstadistico = this.dataset.extras[index].value;
+						break;
+					case Constants.DATASET_EXTRA_IAEST_UNIDAD_ESTADISTICA:
+						this.extraIAESTUnidadEstadistica = this.dataset.extras[index].value;
+						break;
+					case Constants.DATASET_EXTRA_IAEST_POBLACION_ESTADISTICA:
+						this.extraIAESTPoblacionEstadistica = this.dataset.extras[index].value;
+						break;
+					case Constants.DATASET_EXTRA_IAEST_UNIDAD_MEDIDA:
+						this.extraIAESTUnidadMedida = this.dataset.extras[index].value;
+						break;
+					case Constants.DATASET_EXTRA_IAEST_TIPO_OPERACION:
+						this.extraIAESTTipoOperacion = this.dataset.extras[index].value;
+						break;
+					case Constants.DATASET_EXTRA_IAEST_TIPOLOGIA_DATOS_ORIGEN:
+						this.extraIAESTTipologiaDatosOrigen = this.dataset.extras[index].value;
+						break;
+					case Constants.DATASET_EXTRA_IAEST_FUENTE:
+						this.extraIAESTFuente = this.dataset.extras[index].value;
+						break;
+					case Constants.DATASET_EXTRA_IAEST_TRATAMIENTO_ESTADISTICO:
+						this.extraIAESTTratamientoEstadistico = this.dataset.extras[index].value;
+						break;
+					case Constants.DATASET_EXTRA_IAEST_LEGISLACION_UE:
+						this.extraIAESTLegislacionUE = this.dataset.extras[index].value;
+						break;
 				}
 			}
 		
@@ -557,6 +595,12 @@ export class DatasetsAdminEditComponent implements OnInit {
 			}
 		} catch (error) {
 			console.error('Error: getExtras() - datasets-admin-edit.component.ts');
+		}
+	}
+
+	setIAESTDataset(maintainer: string) {
+		if (maintainer === Constants.DATASET_EXTRA_IAEST_MAINTAINER) {
+			this.isIAESTDataset = true;
 		}
 	}
 

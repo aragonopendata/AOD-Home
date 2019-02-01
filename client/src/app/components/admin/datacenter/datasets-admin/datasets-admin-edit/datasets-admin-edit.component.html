@@ -257,6 +257,9 @@
 				<li class="nav-item">
 					<a class="nav-link" data-toggle="tab" href="#extra" role="tab">Extras</a>
 				</li>
+				<li *ngIf="isIAESTDataset" class="nav-item">
+					<a class="nav-link" data-toggle="tab" href="#extra_iaest" role="tab">Extras IAEST</a>
+				</li> 
 				<li class="nav-item">
 					<a class="nav-link" data-toggle="tab" href="#pub_lic" role="tab">Publicador y licencia *</a>
 				</li>
@@ -542,6 +545,34 @@
 							</div>
 						</li>
 					</ul>
+				</div>
+				<div *ngIf="isIAESTDataset" class="tab-pane" id="extra_iaest" role="tabpanel">
+					<h3 style="margin-top: 2%;">Tema Estadístico</h3>
+					<input type="text" class="form-control" [(ngModel)]="extraIAESTTemaEstadistico" placeholder="Tema Estadístico">
+
+					<h3 style="margin-top: 2%;">Unidad Estadística</h3>
+					<input type="text" class="form-control" [(ngModel)]="extraIAESTUnidadEstadistica" placeholder="Unidad Estadística">
+
+					<h3 style="margin-top: 2%;">Población Estadística</h3>
+					<input type="text" class="form-control" [(ngModel)]="extraIAESTPoblacionEstadistica" placeholder="Población Estadística">
+
+					<h3 style="margin-top: 2%;">Unidad de medida</h3>
+					<input type="text" class="form-control" [(ngModel)]="extraIAESTUnidadMedida" placeholder="Unidad de medida">
+
+					<h3 style="margin-top: 2%;">Tipo de operación</h3>
+					<input type="text" class="form-control" [(ngModel)]="extraIAESTTipoOperacion" placeholder="Tipo de operación">
+
+					<h3 style="margin-top: 2%;">Tipología de datos de origen</h3>
+					<input type="text" class="form-control" [(ngModel)]="extraIAESTTipologiaDatosOrigen" placeholder="Tipología de datos de origen">
+
+					<h3 style="margin-top: 2%;">IAEST Fuente</h3>
+					<input type="text" class="form-control" [(ngModel)]="extraIAESTFuente" placeholder="IAEST Fuente">
+
+					<h3 style="margin-top: 2%;">Tratamiento Estadístico</h3>
+					<input type="text" class="form-control" [(ngModel)]="extraIAESTTratamientoEstadistico" placeholder="Tratamiento Estadístico">
+
+					<h3 style="margin-top: 2%;">IAEST Legislación UE</h3>
+					<input type="text" class="form-control" [(ngModel)]="extraIAESTLegislacionUE" placeholder="IAEST Legislación UE">
 				</div>
 				<div class="tab-pane" id="pub_lic" role="tabpanel">
 					<h3 style="margin-top: 2%;">Publicador *</h3>

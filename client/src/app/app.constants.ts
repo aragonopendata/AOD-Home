@@ -4,13 +4,13 @@ export class Constants {
     public static PRESUPUESTOS_BASE_URL = 'http://miv-aodfront-01.aragon.local:7031';
     //public static AOD_ASSETS_BASE_URL = 'http://localhost:3000/assets';
     public static AOD_ASSETS_BASE_URL = 'http://miv-aodfront-01.aragon.local:7030/static';
-    //public static AOD_API_WEB_BASE_URL = 'http://localhost:4200/aod/services/web';
-    public static AOD_API_WEB_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/web';
-    //public static AOD_API_ADMIN_BASE_URL = 'http://localhost:4200/aod/services/admin';
-    public static AOD_API_ADMIN_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/admin';
-    //public static AOD_API_SECURITY_BASE_URL = 'http://localhost:4200/aod/services/security';
-    public static AOD_API_SECURITY_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/security';
-    public static AOD_API_CKAN_BASE_URL = 'http://miv-aodfront-01.aragon.local:5000';
+        //public static AOD_API_WEB_BASE_URL = 'http://localhost:4200/aod/services/web';
+        public static AOD_API_WEB_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/web';
+        //public static AOD_API_ADMIN_BASE_URL = 'http://localhost:4200/aod/services/admin';
+        public static AOD_API_ADMIN_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/admin';
+        //public static AOD_API_SECURITY_BASE_URL = 'http://localhost:4200/aod/services/security';
+        public static AOD_API_SECURITY_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/security';
+        public static AOD_API_CKAN_BASE_URL = 'http://miv-aodfront-01.aragon.local:5000';
     public static AOD_COLLABORATION_URL = 'https://aragon.uservoice.com/forums/192552-datos-que-me-gustar%C3%ADa-reutilizar';
     public static AOD_GITHUB_URL = 'http://github.com/aragonopendata';
     public static CKAN_URL = 'http://ckan.org/';
@@ -303,15 +303,16 @@ export class Constants {
     public static DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_VIEW= '/view/';
     public static DATASET_DETAIL_CHARS_FOR_USER_KEY = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-    public static DATASET_EXTRA_IAEST_TEMA_ESTADISTICO = '01_IAEST_Tema estadístico';
+    public static DATASET_EXTRA_IAEST_TEMA_ESTADISTICO = '01_IAEST_Tema estadistico';
     public static DATASET_EXTRA_IAEST_UNIDAD_ESTADISTICA = '02_IAEST_Unidad Estadística';
     public static DATASET_EXTRA_IAEST_POBLACION_ESTADISTICA = '03_IAEST_Población estadística';
     public static DATASET_EXTRA_IAEST_UNIDAD_MEDIDA = '04_IAEST_Unidad de medida';
-    public static DATASET_EXTRA_IAEST_TIPO_OPERACION = '07_IAEST_Tipo de operación';
-    public static DATASET_EXTRA_IAEST_TIPOLOGIA_DATOS_ORIGEN = '08_IAEST_Tipología de datos de origen';
+    public static DATASET_EXTRA_IAEST_TIPO_OPERACION = '07_IAEST_Tipo de operacion';
+    public static DATASET_EXTRA_IAEST_TIPOLOGIA_DATOS_ORIGEN = '08_IAEST_Tipologia de datos de origen';
     public static DATASET_EXTRA_IAEST_FUENTE = '09_IAEST_Fuente';
-    public static DATASET_EXTRA_IAEST_TRATAMIENTO_ESTADISTICO = '11_IAEST_Tratamiento estadístico';
-    public static DATASET_EXTRA_IAEST_LEGISLACION_UE = '15_IAEST_Legislación UE';
+    public static DATASET_EXTRA_IAEST_TRATAMIENTO_ESTADISTICO = '11_IAEST_Tratamiento estadistico';
+    public static DATASET_EXTRA_IAEST_LEGISLACION_UE = '5_IAEST_Legislacion UE';
+    public static DATASET_EXTRA_IAEST_MAINTAINER = 'Instituto Aragonés de Estadística';
 
     public static DATASET_RDF_FORMAT_OPTIONS_RDF = 'application/rdf+xml;charset=utf-8;'
     public static DATASET_RDF_FILE_EXTENSION_RDF = '.rdf'

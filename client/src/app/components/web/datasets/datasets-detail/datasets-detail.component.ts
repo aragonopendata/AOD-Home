@@ -145,7 +145,8 @@ export class DatasetsDetailComponent implements OnInit {
 				dt.getResourceView(this.dataset, this.resourceView);
 				dt.setExtras(this.dataset, this.extras);
 				this.getExtras();
-				//dt.getExtrasIAEST();
+				this.getExtrasIAEST();
+				this.checkExtrasIAESTEmpty();
 				dt.makeFileSourceList(this.dataset, this.resourcesAux);
 				if(this.checkPxResource()){
 					this.addCsvResourceFromPx();
@@ -178,6 +179,32 @@ export class DatasetsDetailComponent implements OnInit {
 		}
 		if ((this.extraDictionary == undefined || this.extraDictionary == '') && this.extraDictionaryURL.length != 0) {
 			this.extraDictionary = Constants.DATASET_EXTRA_DATA_DICTIONARY_DEFAULT;
+		}
+	}
+
+	getExtrasIAEST() {
+		this.extraIAESTTemaEstadistico = this.extras.get(Constants.DATASET_EXTRA_IAEST_TEMA_ESTADISTICO);
+		this.extraIAESTUnidadEstadistica = this.extras.get(Constants.DATASET_EXTRA_IAEST_UNIDAD_ESTADISTICA);
+		this.extraIAESTPoblacionEstadistica = this.extras.get(Constants.DATASET_EXTRA_IAEST_POBLACION_ESTADISTICA);
+		this.extraIAESTUnidadMedida = this.extras.get(Constants.DATASET_EXTRA_IAEST_UNIDAD_MEDIDA);
+		this.extraIAESTTipoOperacion = this.extras.get(Constants.DATASET_EXTRA_IAEST_TIPO_OPERACION);
+		this.extraIAESTTipologiaDatosOrigen = this.extras.get(Constants.DATASET_EXTRA_IAEST_TIPOLOGIA_DATOS_ORIGEN);
+		this.extraIAESTFuente = this.extras.get(Constants.DATASET_EXTRA_IAEST_FUENTE);
+		this.extraIAESTTratamientoEstadistico = this.extras.get(Constants.DATASET_EXTRA_IAEST_TRATAMIENTO_ESTADISTICO);
+		this.extraIAESTLegislacionUE = this.extras.get(Constants.DATASET_EXTRA_IAEST_LEGISLACION_UE);
+	}
+
+	checkExtrasIAESTEmpty() {
+		if (this.extraIAESTFuente != undefined  || 
+			this.extraIAESTUnidadEstadistica != undefined ||
+			this.extraIAESTPoblacionEstadistica != undefined ||
+			this.extraIAESTUnidadMedida != undefined ||
+			this.extraIAESTTipoOperacion != undefined || 
+			this.extraIAESTTipologiaDatosOrigen != undefined ||
+			this.extraIAESTFuente != undefined || 
+			this.extraIAESTTratamientoEstadistico != undefined ||
+			this.extraIAESTLegislacionUE != undefined) {
+				this.extrasIAESTNotEmpty = true;
 		}
 	}
 

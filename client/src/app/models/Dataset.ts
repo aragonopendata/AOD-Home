@@ -38,11 +38,10 @@ export class Dataset {
     title: string;
     description: string;
     extras: Extra[];
-    extrasIAEST: Extra[];
     license_url: string;
     organization: Organization;
     revision_id: string;
-    //ADMIN FIELDS ??
+    // ADMIN FIELDS ??
     acessos: number;
     topic: Topic;
     coberturaGeo: string;
