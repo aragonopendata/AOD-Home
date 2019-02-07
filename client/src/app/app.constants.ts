@@ -304,9 +304,10 @@ export class Constants {
     public static DATASET_DETAIL_CHARS_FOR_USER_KEY = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
     public static DATASET_EXTRA_IAEST_TEMA_ESTADISTICO = '01_IAEST_Tema estadistico';
-    public static DATASET_EXTRA_IAEST_UNIDAD_ESTADISTICA = '02_IAEST_Unidad Estadística';
-    public static DATASET_EXTRA_IAEST_POBLACION_ESTADISTICA = '03_IAEST_Población estadística';
+    public static DATASET_EXTRA_IAEST_UNIDAD_ESTADISTICA = '02_IAEST_Unidad Estadistica';
+    public static DATASET_EXTRA_IAEST_POBLACION_ESTADISTICA = '03_IAEST_Poblacion estadistica';
     public static DATASET_EXTRA_IAEST_UNIDAD_MEDIDA = '04_IAEST_Unidad de medida';
+    public static DATASET_EXTRA_IAEST_PERIODO_BASE = '06_IAEST_Periodo base';
     public static DATASET_EXTRA_IAEST_TIPO_OPERACION = '07_IAEST_Tipo de operacion';
     public static DATASET_EXTRA_IAEST_TIPOLOGIA_DATOS_ORIGEN = '08_IAEST_Tipologia de datos de origen';
     public static DATASET_EXTRA_IAEST_FUENTE = '09_IAEST_Fuente';

@@ -71,6 +71,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 	extraIAESTUnidadEstadistica: string;
 	extraIAESTPoblacionEstadistica: string;
 	extraIAESTUnidadMedida: string;
+	extraIAESTPeriodoBase: string;
 	extraIAESTTipoOperacion: string;
 	extraIAESTTipologiaDatosOrigen: string;
 	extraIAESTFuente: string;
@@ -568,6 +569,9 @@ export class DatasetsAdminEditComponent implements OnInit {
 						break;
 					case Constants.DATASET_EXTRA_IAEST_UNIDAD_MEDIDA:
 						this.extraIAESTUnidadMedida = this.dataset.extras[index].value;
+						break;
+					case Constants.DATASET_EXTRA_IAEST_PERIODO_BASE:
+						this.extraIAESTPeriodoBase = this.dataset.extras[index].value;
 						break;
 					case Constants.DATASET_EXTRA_IAEST_TIPO_OPERACION:
 						this.extraIAESTTipoOperacion = this.dataset.extras[index].value;
@@ -1087,6 +1091,9 @@ export class DatasetsAdminEditComponent implements OnInit {
 				if (this.extraIAESTUnidadMedida != undefined){
 					this.addExtra(Constants.DATASET_EXTRA_IAEST_UNIDAD_MEDIDA, this.extraIAESTUnidadMedida);
 				}
+				if (this.extraIAESTPeriodoBase != undefined){
+					this.addExtra(Constants.DATASET_EXTRA_IAEST_PERIODO_BASE, this.extraIAESTPeriodoBase);
+				}
 				if (this.extraIAESTTipoOperacion != undefined){
 					this.addExtra(Constants.DATASET_EXTRA_IAEST_TIPO_OPERACION, this.extraIAESTTipoOperacion);
 				}
@@ -1250,6 +1257,9 @@ export class DatasetsAdminEditComponent implements OnInit {
 			}
 			if (this.extraIAESTUnidadMedida != undefined){
 				this.replaceExtra(Constants.DATASET_EXTRA_IAEST_UNIDAD_MEDIDA, this.extraIAESTUnidadMedida, true);
+			}
+			if (this.extraIAESTPeriodoBase != undefined){
+				this.replaceExtra(Constants.DATASET_EXTRA_IAEST_PERIODO_BASE, this.extraIAESTPeriodoBase, true);
 			}
 			if (this.extraIAESTTipoOperacion != undefined){
 				this.replaceExtra(Constants.DATASET_EXTRA_IAEST_TIPO_OPERACION, this.extraIAESTTipoOperacion, true);

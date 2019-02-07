@@ -39,6 +39,7 @@ export class DatasetsAdminShowComponent implements OnInit {
 	extraIAESTUnidadEstadistica: string;
 	extraIAESTPoblacionEstadistica: string;
 	extraIAESTUnidadMedida: string;
+	extraIAESTPeriodoBase: string;
 	extraIAESTTipoOperacion: string;
 	extraIAESTTipologiaDatosOrigen: string;
 	extraIAESTFuente: string;
@@ -163,6 +164,7 @@ export class DatasetsAdminShowComponent implements OnInit {
 		this.extraIAESTUnidadEstadistica = this.extras.get(Constants.DATASET_EXTRA_IAEST_UNIDAD_ESTADISTICA);
 		this.extraIAESTPoblacionEstadistica = this.extras.get(Constants.DATASET_EXTRA_IAEST_POBLACION_ESTADISTICA);
 		this.extraIAESTUnidadMedida = this.extras.get(Constants.DATASET_EXTRA_IAEST_UNIDAD_MEDIDA);
+		this.extraIAESTPeriodoBase = this.extras.get(Constants.DATASET_EXTRA_IAEST_PERIODO_BASE);
 		this.extraIAESTTipoOperacion = this.extras.get(Constants.DATASET_EXTRA_IAEST_TIPO_OPERACION);
 		this.extraIAESTTipologiaDatosOrigen = this.extras.get(Constants.DATASET_EXTRA_IAEST_TIPOLOGIA_DATOS_ORIGEN);
 		this.extraIAESTFuente = this.extras.get(Constants.DATASET_EXTRA_IAEST_FUENTE);
@@ -175,6 +177,7 @@ export class DatasetsAdminShowComponent implements OnInit {
 			this.extraIAESTUnidadEstadistica != undefined ||
 			this.extraIAESTPoblacionEstadistica != undefined ||
 			this.extraIAESTUnidadMedida != undefined ||
+			this.extraIAESTPeriodoBase != undefined ||
 			this.extraIAESTTipoOperacion != undefined || 
 			this.extraIAESTTipologiaDatosOrigen != undefined ||
 			this.extraIAESTFuente != undefined || 
