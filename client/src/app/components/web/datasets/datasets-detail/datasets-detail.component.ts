@@ -366,7 +366,7 @@ export class DatasetsDetailComponent implements OnInit {
 
 	addCsvResourceFromPx(){
 		this.resourceCSVFromPX.forEach(resourceCSV => {
-			if(resourceCSV.formats.includes("px")){
+			if(resourceCSV.formats.indexOf("px") !== -1){
 				resourceCSV.name = resourceCSV.name.replace("px","csv");
 				resourceCSV.formats = ["CSV"];
 				let url = resourceCSV.sources[0].substring(resourceCSV.sources[0].indexOf("iaeaxi_docs")+("iaeaxi_docs".length+1));
