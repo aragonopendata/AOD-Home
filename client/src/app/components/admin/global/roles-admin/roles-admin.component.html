@@ -1,68 +1,95 @@
-<div style="padding: 2%;">
-	<p-dataTable [value]="roles" [paginator]="true" rows="15" [responsive]="true">
-		<p-column field="roleName" header="Nombre" [sortable]="true"></p-column>
+<div class="container">
+	<p-messages closable="true" label="Administración de roles" [(value)]="roleAdminMessages"></p-messages>
+	<p-growl sticky="true" life="2000" [(value)]="roleAdminMessages"></p-growl>
+
+	<p-dataTable [value]="roles" [paginator]="true" rows="15" [responsive]="true"
+		emptyMessage="No se han encontrado registros." [rows]="pageRows" [paginator]="true" [pageLinks]="3"
+		[rowsPerPageOptions]="[5,10,20]">
+		<p-column field="name" header="Nombre" [sortable]="true"></p-column>
 		<p-column field="description" header="Rol" [sortable]="true"></p-column>
-		<p-column header="Usuarios asignados" [sortable]="true">
-			<ng-template let-role="rowData" let-ri="rowIndex" pTemplate="body">
-				<span>{{roles[ri].assignedUsers.length}}</span>
-				<button pButton type="button" icon="fas fa-search" (click)="showUsers(role)"></button>
+		<p-column header="Usuarios asignados" [sortable]="true" [style]="{'width':'20%'}">
+			<ng-template pTemplate="body" let-id="rowData">
+				<button class="btn btn-block btn-primary p-2" type="button" (click)="showUsers(id)" data-toggle="tooltip"
+					data-placement="top" title="Mostrar"><i class="fas fa-users"></i></button>
 			</ng-template>
 		</p-column>
-		<p-column header="Edición">
+		<p-column header="Edición" [style]="{'width':'12%'}">
 			<ng-template pTemplate="body" let-role="rowData">
-				<button pButton type="button" icon="fas fa-search" (click)="showDialog(role, false)"></button>
-				<button pButton type="button" icon="fas fa-edit" (click)="showDialog(role, true)"></button>
-				<button pButton type="button" icon="fas fa-trash-alt"></button>
+				<button class="btn btn-primary p-2" type="button" (click)="showDialog(role, false, false)"
+					data-toggle="tooltip" data-placement="top" title="Mostrar"><i class="fas fa-search"></i></button>
+				<button class="btn btn-primary p-2" type="button" (click)="showDialog(role, true, false)"
+					data-toggle="tooltip" data-placement="top" title="Editar"><i class="fas fa-edit"></i></button>
+				<button *ngIf="role.id != 1" class="btn btn-primary p-2" type="button" (click)="showDeleteDialog(role)" data-toggle="tooltip"
+					data-placement="top" title="Borrar"><i class="fas fa-trash-alt"></i></button>
 			</ng-template>
 		</p-column>
 		<p-footer>
 			<div class="ui-helper-clearfix" style="width:100%">
-				<button type="button" pButton icon="fas fa-plus" style="float:left" (click)="showDialogToAdd()" label="Añadir"></button>
+				<button type="button" pButton icon="fas fa-plus" style="float:left" (click)="showDialog(null,false,true)"
+					label="Añadir"></button>
 			</div>
 		</p-footer>
 	</p-dataTable>
+
+	<p-dialog *ngIf="role" appendTo="body" header="Usuarios asignados" [(visible)]="displayUsers" [responsive]="true"
+		showEffect="fade" modal="true" width="400">
+		<div *ngFor="let user of users">
+			{{user.fullname}}<br/>
+		</div>
+	</p-dialog>
+
+	<p-dialog appendTo="body" header="{{editDialogTitle}}" [(visible)]="displayDialogEdit" [responsive]="true"
+		showEffect="fade" modal="true" width="700">
+		<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="role">
+			<div class="ui-grid-row" style="padding: 5px;">
+				<div class="ui-grid-col-3"><label for="name">Nombre:</label></div>
+				<div class="ui-grid-col-9"><input pInputText id="name" [(ngModel)]="role.name" /></div>
+			</div>
+			<div class="ui-grid-row" style="padding: 5px;">
+				<div class="ui-grid-col-3"><label for="description">Descripción:</label></div>
+				<div class="ui-grid-col-9"><input pInputText id="description" [(ngModel)]="role.description" /></div>
+			</div>
+			<div class="ui-grid-row" style="padding: 5px;">
+				<div class="ui-grid-col-3"><label>Activo: </label></div>
+				<div class="ui-grid-col-9">
+					<p-inputSwitch onLabel="Sí" offLabel="No" [(ngModel)]="role.active"></p-inputSwitch>
+				</div>
+			</div>
+		</div>
+		<p-footer>
+			<div class="ui-dialog-buttonpane ui-helper-clearfix">
+				<button class="btn btn-danger mt-2" (click)="displayDialogEdit = false"><i class="fas fa-times"></i> Cancelar</button>
+				<button class="btn btn-primary mt-2" (click)="saveRole()"><i class="fas fa-save"></i> Guardar</button>
+			</div>
+		</p-footer>
+	</p-dialog>
+
+	<p-dialog header="Detalles del role" appendTo="body" [(visible)]="displayDialog" [responsive]="true"
+		showEffect="fade" [modal]="true" width="1000">
+		<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="role" style="font-size:16px; padding:20px;">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-5"><b>Nombre: </b></div>
+				<div class="ui-grid-col-7">{{role.name}}</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-5"><b>Descripción: </b></div>
+				<div class="ui-grid-col-7">{{role.description}}</div>
+			</div>
+		</div>
+		<p-footer>
+			<div class="ui-dialog-buttonpane ui-helper-clearfix">
+				<button type="button" class="btn btn-danger mt-2" (click)="displayDialog = false"><i class="fas fa-times"></i> Cancelar</button>
+				<button type="button" class="btn btn-primary mt-2" (click)="enableEdition()"><i class="fas fa-edit"></i> Editar</button>
+			</div>
+		</p-footer>
+	</p-dialog>
+	<!-- DELETE ROLE DIALOG -->
+	<p-dialog header="¿Está seguro de que deasea borrar el rol?" [(visible)]="displayDeleteDialog">
+		<p>Se va a proceder a borrar el rol <b>{{role?.name}}</b></p>
+		<p>¿Desea continuar?</p>
+			 <p-footer>
+				 <button type="button" pButton icon="fas fa-check" (click)="deleteRole()" label="Sí"></button>
+				 <button type="button" pButton icon="fas fa-times" (click)="undoDeleteRole()" label="No"></button>
+			 </p-footer>
+	</p-dialog>
 </div>
-
-<p-dialog *ngIf="role" appendTo="body" header="Usuarios asignados" [(visible)]="displayUsers" [responsive]="true" showEffect="fade"
- modal="true">
-	<div *ngFor="let user of role.assignedUsers" style="text-align: center;">
-		{{user.username}}<br/>
-	</div>
-</p-dialog>
-
-<p-dialog appendTo="body" header="Detalles del rol" [(visible)]="displayDialogEdit" [responsive]="true" showEffect="fade"
- modal="true">
-	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="role">
-		<div class="ui-grid-row" style="padding: 5px;">
-			<div class="ui-grid-col-4"><label for="roleName">Nombre del rol</label></div>
-			<div class="ui-grid-col-8"><input pInputText id="roleName" [(ngModel)]="role.roleName" /></div>
-		</div>
-		<div class="ui-grid-row" style="padding: 5px;">
-			<div class="ui-grid-col-4"><label for="description">Descripción</label></div>
-			<div class="ui-grid-col-8"><input pInputText id="description" [(ngModel)]="role.description" /></div>
-		</div>
-	</div>
-	<p-footer>
-		<div class="ui-dialog-buttonpane ui-helper-clearfix">
-			<button type="button" pButton icon="fas fa-check" label="Guardar"></button>
-		</div>
-	</p-footer>
-</p-dialog>
-
-<p-dialog header="Detalles del rol" appendTo="body" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true">
-	<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="role" style="font-size:16px; padding:20px;">
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-5"><b>Nombre del rol: </b></div>
-			<div class="ui-grid-col-7">{{role.roleName}}</div>
-		</div>
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-5"><b>Descripción: </b></div>
-			<div class="ui-grid-col-7">{{role.description}}</div>
-		</div>
-	</div>
-	<p-footer>
-		<div class="ui-dialog-buttonpane ui-helper-clearfix">
-			<button type="button" pButton icon="fas fa-edit" (click)="enableEdition()" label="Editar"></button>
-		</div>
-	</p-footer>
-</p-dialog>

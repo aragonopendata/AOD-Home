@@ -26,25 +26,18 @@ router.get('/users', function (req, res, next) {
                 rowMode: constants.SQL_RESULSET_FORMAT_JSON
             };
             client.query(queryDb, function (err, result) {
-                done()
+                done();
                 if (err) {
                     logger.error('LISTADO DE USUARIOS - Error obteniendo el listado: ', err);
                     res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'OBTENER USUARIO - Error obteniendo el listado' });
-                }
+                };
                 res.json(result.rows);  
-            })
-        }).catch(connError => {
-            logger.error('LISTADO DE USUARIOS - Error en la conexión con base de datos: ', connError);
-            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'LISTADO DE USUARIOS - Error en la conexión con base de datos' });
-            return;
-        })
+            });
+        });
     } catch (error) {
         logger.error('LISTADO DE USUARIOS - Error obteniendo el listado: ', error);
-        //res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'LISTADO DE USUARIOS - Error obteniendo el listado' });
-         
         return;
-
-    }
+    };
 });
 
 /** GET USER BY ID */
