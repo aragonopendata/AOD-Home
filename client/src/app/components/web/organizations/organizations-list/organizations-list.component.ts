@@ -29,7 +29,6 @@ export class OrganizationsListComponent implements OnInit {
 
 	routerLinkFacebookShare: string;
 	routerLinkTwitterShare: string;
-	routerLinkGooglePlusShare: string;
 
 	//Error Params
     errorTitle: string;
@@ -42,7 +41,6 @@ export class OrganizationsListComponent implements OnInit {
 		this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
 		this.routerLinkFacebookShare = Constants.SHARE_FACEBOOK + window.location.href;
 		this.routerLinkTwitterShare = Constants.SHARE_TWITTER + window.location.href;
-		this.routerLinkGooglePlusShare = Constants.SHARE_GOOGLE_PLUS + window.location.href;
 		this.getOpenedMenu();
 	}
 

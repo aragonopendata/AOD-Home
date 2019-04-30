@@ -63,7 +63,6 @@ export class DatasetsAdminShowComponent implements OnInit {
 	routerLinkDataOrgs: string;
 	routerLinkFacebookShare: string;
 	routerLinkTwitterShare: string;
-	routerLinkGooglePlusShare: string;
 	//Error Params
 	errorTitle: string;
 	errorMessage: string;
@@ -86,7 +85,6 @@ export class DatasetsAdminShowComponent implements OnInit {
 		this.routerLinkDataOrgs = Constants.ROUTER_LINK_DATA_ORGANIZATIONS;
 		this.routerLinkFacebookShare = Constants.SHARE_FACEBOOK + window.location.href;
 		this.routerLinkTwitterShare = Constants.SHARE_TWITTER + window.location.href;
-		this.routerLinkGooglePlusShare = Constants.SHARE_GOOGLE_PLUS + window.location.href;
 		this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
 	}
 

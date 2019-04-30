@@ -36,7 +36,6 @@ export class OrganizationsDetailComponent implements OnInit {
 	routerLinkDataCatalogDataset: string;
 	routerLinkFacebookShare: string;
 	routerLinkTwitterShare: string;
-	routerLinkGooglePlusShare: string;
 	assetsUrl: string;
 	 //Pagination Params
 	 pages: number [];
@@ -65,7 +64,6 @@ export class OrganizationsDetailComponent implements OnInit {
 		this.pageRows = Constants.ORGANIZATION_DATASET_LIST_ROWS_PER_PAGE;
 		this.routerLinkFacebookShare = Constants.SHARE_FACEBOOK + window.location.href;
 		this.routerLinkTwitterShare = Constants.SHARE_TWITTER + window.location.href;
-		this.routerLinkGooglePlusShare = Constants.SHARE_GOOGLE_PLUS + window.location.href;
 		this.getOpenedMenu();
 	}
 

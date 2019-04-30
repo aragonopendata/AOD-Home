@@ -24,9 +24,9 @@ export class TopicsListComponent implements OnInit {
 	assetsUrl: string;
 	routerLinkFacebookShare: string;
 	routerLinkTwitterShare: string;
-	routerLinkGooglePlusShare: string;
 	aodMail: string;
 	
+
 	//Error Params
     errorTitle: string;
     errorMessage: string;
@@ -38,7 +38,6 @@ export class TopicsListComponent implements OnInit {
 		this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
 		this.routerLinkFacebookShare = Constants.SHARE_FACEBOOK + window.location.href;
 		this.routerLinkTwitterShare = Constants.SHARE_TWITTER + window.location.href;
-		this.routerLinkGooglePlusShare = Constants.SHARE_GOOGLE_PLUS + window.location.href;
 		this.aodMail = Constants.AOD_MAIL;
 
 		this.getOpenedMenu();
