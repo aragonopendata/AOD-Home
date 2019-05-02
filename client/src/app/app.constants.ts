@@ -2,19 +2,15 @@ export class Constants {
     //URLS
     public static AOD_BASE_URL = 'http://miv-aodfront-01.aragon.local:7030';
     public static PRESUPUESTOS_BASE_URL = 'http://miv-aodfront-01.aragon.local:7031';
-    //public static AOD_ASSETS_BASE_URL = 'http://localhost:3421/assets';
+    //public static AOD_ASSETS_BASE_URL = 'http://localhost:3000/assets';
     public static AOD_ASSETS_BASE_URL = 'http://miv-aodfront-01.aragon.local:7030/static';
-    //public static AOD_API_WEB_BASE_URL = 'http://localhost:4213/aod/services/web';
+    //public static AOD_API_WEB_BASE_URL = 'http://localhost:4200/aod/services/web';
     public static AOD_API_WEB_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/web';
-    //public static AOD_API_ADMIN_BASE_URL = 'http://localhost:4213/aod/services/admin';
+    //public static AOD_API_ADMIN_BASE_URL = 'http://localhost:4200/aod/services/admin';
     public static AOD_API_ADMIN_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/admin';
-    //public static AOD_API_SECURITY_BASE_URL = 'http://localhost:4213/aod/services/security';
+    //public static AOD_API_SECURITY_BASE_URL = 'http://localhost:4200/aod/services/security';
     public static AOD_API_SECURITY_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/security'; 
-     
-    
     public static AOD_API_CKAN_BASE_URL = 'http://miv-aodfront-01.aragon.local:5000'; 
- 
-
     public static AOD_COLLABORATION_URL = 'https://aragon.uservoice.com/forums/192552-datos-que-me-gustar%C3%ADa-reutilizar';
     public static AOD_GITHUB_URL = 'http://github.com/aragonopendata';
     public static CKAN_URL = 'http://ckan.org/';
