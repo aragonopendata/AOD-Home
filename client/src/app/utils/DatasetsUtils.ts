@@ -97,7 +97,15 @@ export class DatasetsUtils {
 	}
 
 	insertSourceWithOtherFormat(resource: Resource, position: number, resourcesAux: ResourceAux[]) { 
-		resourcesAux[position].sources.push(resource.url);
+		//Se busca la palabra api_key= en la URL y se borra de todos los formatos menos de la API 
+		var resourceUrl = resource.url.split('?')[0]+'?_view=completa';
+	
+		if (resource.url.includes("api_key=") && resource.format != "API"){
+			resourcesAux[position].sources.push(resourceUrl);
+		}else{
+			resourcesAux[position].sources.push(resource.url);
+		}
+		
 		resourcesAux[position].formats.push(resource.format);
 		resourcesAux[position].sources_ids.push(resource.id);
 	}
@@ -106,7 +114,16 @@ export class DatasetsUtils {
 		var newResourceAux: ResourceAux = new ResourceAux();
 		newResourceAux.name = resource.name;
 		newResourceAux.sources = new Array();
-		newResourceAux.sources.push(resource.url);
+
+		//Se busca la palabra api_key= en la URL y se borra de todos los formatos menos de la API
+		var resourceUrl = resource.url.split('?')[0]+'?_view=completa';
+
+		if (resource.url.includes("api_key=") && resource.format != "API"){
+			newResourceAux.sources.push(resourceUrl);
+		}else{
+			newResourceAux.sources.push(resource.url);
+		}
+
 		newResourceAux.formats = new Array();
 		newResourceAux.formats.push(resource.format);
 		newResourceAux.sources_ids = new Array();
