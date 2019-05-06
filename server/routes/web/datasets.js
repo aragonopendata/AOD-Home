@@ -36,7 +36,27 @@ router.get(constants.API_URL_DATASETS, function (req, res, next) {
 
             let text_ny = texto_ny.split('-');
             let text_n = texto_n.split('-');
-            serviceRequestUrl += '&q=';
+
+            serviceRequestUrl += '&q=(';
+            //Title dataset
+            for(var i = 0; i < text_n.length; i++){ 
+                serviceRequestUrl += 'title:' + encodeURIComponent(text_n[i]) + '';
+                if(i != text_n.length-1){
+                    serviceRequestUrl += ' AND ';
+                }
+            }
+            serviceRequestUrl += ') OR (';
+            //Description dataset
+            for(var i = 0; i < text_n.length; i++){ 
+                serviceRequestUrl += 'notes:' + encodeURIComponent(text_n[i]) + '';
+                if(i != text_n.length-1){
+                    serviceRequestUrl += ' AND ';
+                }
+            }
+            serviceRequestUrl += ')';
+            
+
+            /*serviceRequestUrl += '&q=';
             for(var i = 0; i < text_n.length; i++){
                 if (encodeURIComponent(text_n[i]) === encodeURIComponent(text_ny[i])) {
                     serviceRequestUrl += encodeURIComponent(text_n[i]);
@@ -46,7 +66,7 @@ router.get(constants.API_URL_DATASETS, function (req, res, next) {
                 if(i != text_n.length-1){
                     serviceRequestUrl += '+';
                 }
-            }
+            }*/
             /*serviceRequestUrl += '&q=(';
             for(var i = 0; i < text_n.length; i++){
                 serviceRequestUrl += '(name:*' + encodeURIComponent(text_n[i]) + 
