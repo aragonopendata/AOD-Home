@@ -27,6 +27,7 @@
     "@angular/router": "6.0.3",
     "@angular/tsc-wrapped": "4.3.6",
     "@angular/upgrade": "6.0.3",
+    "@ngx-lite/json-ld": "^0.5.2",
     "@ngx-translate/core": "7.2.2",
     "@ngx-translate/http-loader": "1.1.0",
     "angular-in-memory-web-api": "0.3.2",

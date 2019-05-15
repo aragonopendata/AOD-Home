@@ -55,6 +55,8 @@ import { DatasetsAdminShowComponent } from './components/admin/datacenter/datase
 import { DatasetsAdminEditComponent } from './components/admin/datacenter/datasets-admin/datasets-admin-edit/datasets-admin-edit.component';
 import { DatasetsAdminListComponent } from './components/admin/datacenter/datasets-admin/datasets-admin-list/datasets-admin-list.component';
 import { LogstashComponent } from './components/admin/logstash/logstash.component';
+// JSON+LD
+import { NgxJsonLdModule } from '@ngx-lite/json-ld';
 // Pipes
 import { EventSafeHtmlPipe } from './components/web/static-content/info/events/events-safeHTML.pipe';
 import { OpenDataSafeHtmlPipe } from "./components/web/static-content/info/open-data/open-data-safeHTML.pipe";
@@ -185,6 +187,7 @@ import { CampusAdminSpeakersComponent } from './components/admin/campus-admin/ca
 		AccordionModule,
 		MessagesModule,
 		GrowlModule,
+		NgxJsonLdModule,
 		TinyMceModule.forRoot(tinymceDefaultSettings())
 	],
 	providers: [
