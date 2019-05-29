@@ -4,6 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 declare var jQuery:any;
 import { UtilsService } from '../../services/web/utils.service';
+import { Topic } from 'app/models/Topic';
+import { TopicsService } from 'app/services/web/topics.service';
 
 @Component({
 	selector: 'app-home',
@@ -39,9 +41,14 @@ export class HomeComponent implements OnInit {
 	routerLinkToolsApis: string;
 	routerLinkToolsGithub: string;
 	routerLinkSparql: string;
+	topics: Topic[];
+	topic: Topic;
+
+	errorTitle: string;
+    errorMessage: string;
 
 	constructor( private router: Router, private activatedRoute: ActivatedRoute,
-		private location: Location, private utilsService: UtilsService ) { 
+		private location: Location, private utilsService: UtilsService, private topicsService: TopicsService) { 
 		//Dynamic URL build to send to HTML template
 		this.routerLinkDataCatalog = Constants.ROUTER_LINK_DATA_CATALOG;
 		this.routerLinkDataTopics = Constants.ROUTER_LINK_DATA_TOPICS;
@@ -64,7 +71,6 @@ export class HomeComponent implements OnInit {
 		this.routerLinkToolsGithub = Constants.AOD_GITHUB_URL;
 		this.routerLinkSparql = Constants.ROUTER_LINK_SPARQL;
 		this.getOpenedMenu();
-		
 	}
 
 	ngOnInit() {
@@ -89,8 +95,9 @@ export class HomeComponent implements OnInit {
 			{ id: '#imgAna', hover: false },
 			{ id: '#imgVis', hover: false },
 			{ id: '#imgPool', hover: false},
-			{ id: '#imgCono', hover: false }
+			{ id: '#imgCono', hover: false },
 		];
+		this.getTopics();
 	}
 
 	move(id) {
@@ -260,5 +267,48 @@ export class HomeComponent implements OnInit {
 
     toggleOpenedMenu() {
         this.utilsService.tooggleOpenedMenu();
-    }
+	}
+
+	setHovers() {
+		for (let top of this.topics) {
+			this.hovers.push({ label: top.title, hover: false });
+		}
+	}
+	
+	getTopics(): void {
+		this.topicsService.getTopics().subscribe(topics => {
+			try {
+				this.topics = JSON.parse(topics).result;
+				this.setHovers();
+			} catch (error) {
+				console.error("Error: getTopics() - topics-list.component.ts");
+				this.errorTitle="Se ha producido un error";
+                this.errorMessage="Se ha producido un error en la carga de Temas, vuelva a intentarlo y si el error persiste contacte con el administrador.";
+			}
+		});
+	}
+
+	setTopic(topic) {
+		this.topicsService.setTopic(topic);
+	}
+
+	setHover(name, index) {
+		for (let hover of this.hovers) {
+			if (hover.label === name) {
+				hover.hover = !hover.hover;
+			}
+		}
+	}
+
+	unsetHover(name, index) {
+		for (let hover of this.hovers) {
+			if (hover.label === name) {
+				hover.hover = !hover.hover;
+			}
+		}
+	}
+	
+	navigate(topicName){
+		this.router.navigateByUrl('/' + this.routerLinkDataTopics + '/' + topicName);
+	}
 }
