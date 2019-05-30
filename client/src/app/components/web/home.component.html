@@ -13,7 +13,8 @@
 			<div *ngFor="let topic of topics" class="d-inline mr-3">
 				<img src="{{topic.image_url}}" alt="{{topic.title | uppercase}}" width="50px" height="50px" 
 				tabindex="{{openedMenu ? -1 : 0}}" routerLink="/{{routerLinkDataTopics}}/{{topic.name}}" ng-init="selectedTopic = topic.name"
-				 (click)="setTopic(topic)" (keydown.enter)="navigate(topic.name); setTopic(topic);" style="cursor: pointer; text-transform: capitalize;" title="{{topic.title}}">
+				 (click)="setTopic(topic)" (keydown.enter)="navigate(topic.name); setTopic(topic);" style="cursor: pointer; text-transform: capitalize;" title="{{topic.title}}"
+				 onmouseout="this.style='cursor: pointer; text-transform: capitalize;';" onmouseover="this.style='cursor: pointer; text-transform: capitalize; filter: opacity(30%);';">
 			</div>
 		</div>
 	</div>
