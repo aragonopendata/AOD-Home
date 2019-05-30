@@ -5,8 +5,8 @@
     border: none;
     cursor: pointer;
     float: right;
-    font-size: 5vw;
-    height: 15vh;
+    font-size: 30px;
+    height: 70px;
     width: 10%;
     text-align: center;
 	vertical-align: middle;
@@ -20,7 +20,7 @@
 .search {
 	position: relative;
 	display: table;
-	width: 100%;
+	margin: auto;
 	top: 15%;
 	left: 0;
 	z-index: 1;
@@ -57,9 +57,9 @@
 	color: #5EA2BA;
 	background: white;
 	border: none;
-	height: 15vh;
+	height: 70px;
 	width: 90%;
-	font-size: 80px;
+	font-size: 34px;
 	padding-right: 5%;
 	padding-left: 2%;
 	border-top-left-radius: 10px;
@@ -71,15 +71,15 @@
 
 @media screen and (min-width: 1000px) and (max-width: 1700px){
 	#searchBox 	{
-		height: 10vh;
+		height: 70px;
 		padding-right: 5%;
 	}
 	.btnSearch{
-		height: 10vh;
-		font-size: 40px;
+		height: 70px;
+		font-size: 34px;
 	}
 	.textBox{
-		font-size: 50px;
+		font-size: 39px;
 	}
 	::-webkit-input-placeholder {
 		font-size: 45px;
