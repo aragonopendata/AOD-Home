@@ -6,6 +6,9 @@ declare var jQuery:any;
 import { UtilsService } from '../../services/web/utils.service';
 import { Topic } from 'app/models/Topic';
 import { TopicsService } from 'app/services/web/topics.service';
+import { DatasetsService } from '../../services/web/datasets.service';
+import { Dataset } from 'app/models/Dataset';
+import { SelectItem } from 'app/models/SelectItem';
 
 @Component({
 	selector: 'app-home',
@@ -43,11 +46,18 @@ export class HomeComponent implements OnInit {
 	routerLinkSparql: string;
 	topics: Topic[];
 	topic: Topic;
+	newestDatasets: Dataset[];
+	downloadedDatasets: Dataset[];
+	datasetCount: SelectItem[];
+	resourceCount: SelectItem[];
+	routerLinkDataCatalogDataset: string;
 
 	errorTitle: string;
-    errorMessage: string;
+	errorMessage: string;
+	datasetListErrorTitle: string;
+    datasetListErrorMessage: string;
 
-	constructor( private router: Router, private activatedRoute: ActivatedRoute,
+	constructor( private datasetsService: DatasetsService,private router: Router, private activatedRoute: ActivatedRoute,
 		private location: Location, private utilsService: UtilsService, private topicsService: TopicsService) { 
 		//Dynamic URL build to send to HTML template
 		this.routerLinkDataCatalog = Constants.ROUTER_LINK_DATA_CATALOG;
@@ -70,6 +80,7 @@ export class HomeComponent implements OnInit {
 		this.routerLinkToolsApis = Constants.ROUTER_LINK_TOOLS_APIS;
 		this.routerLinkToolsGithub = Constants.AOD_GITHUB_URL;
 		this.routerLinkSparql = Constants.ROUTER_LINK_SPARQL;
+		this.routerLinkDataCatalogDataset = Constants.ROUTER_LINK_DATA_CATALOG_DATASET;
 		this.getOpenedMenu();
 	}
 
@@ -98,6 +109,8 @@ export class HomeComponent implements OnInit {
 			{ id: '#imgCono', hover: false },
 		];
 		this.getTopics();
+		this.setInfoTables();
+		this.setDatasetsStats();
 	}
 
 	move(id) {
@@ -311,4 +324,68 @@ export class HomeComponent implements OnInit {
 	navigate(topicName){
 		this.router.navigateByUrl('/' + this.routerLinkDataTopics + '/' + topicName);
 	}
+
+	setInfoTables() {
+        this.datasetsService.getNewestDataset().subscribe(datasets => {
+            try {
+                this.newestDatasets = JSON.parse(datasets).result.results;
+            } catch (error) {
+                console.error('Error: setInfoTables() - datasets-list.component.ts');
+                this.errorTitle = this.datasetListErrorTitle;
+                this.errorMessage = this.datasetListErrorMessage;
+            }
+        });
+        this.datasetsService.getDownloadedDataset().subscribe(datasets => {
+            try {
+                this.downloadedDatasets = JSON.parse(datasets).result.results;
+            } catch (error) {
+                console.error('Error: setInfoTables() - datasets-list.component.ts');
+                this.errorTitle = this.datasetListErrorTitle;
+                this.errorMessage = this.datasetListErrorMessage;
+            }
+        });
+	}
+	setDatasetsStats() {
+        this.datasetsService.getDatasetsNumber().subscribe(datasets => {
+            try {
+                this.datasetCount = [];
+                let totalNumDatasets = '';
+                totalNumDatasets = JSON.parse(datasets).result.count + '';
+                while (totalNumDatasets.length < 8) totalNumDatasets = 'S' + totalNumDatasets;
+                for (var i = 0; i < totalNumDatasets.length; i++) {
+                    if (totalNumDatasets[i] == 'S') {
+                        this.datasetCount.push({ label: 'slim', value: '0' });
+                    } else {
+                        this.datasetCount.push({ label: 'normal', value: totalNumDatasets[i] });
+                    }
+                }
+                return this.datasetCount;
+            } catch (error) {
+                console.error('Error: setDatasetsStats() - datasets-list.component.ts');
+                this.errorTitle = this.datasetListErrorTitle;
+                this.errorMessage = this.datasetListErrorMessage;
+            }
+        });
+
+        this.datasetsService.getResourcesNumber().subscribe(resources => {
+            try {
+                this.resourceCount = [];
+                let totalNumResources = '';
+                totalNumResources = JSON.parse(resources).result.count + '';
+                while (totalNumResources.length < 8) totalNumResources = 'S' + totalNumResources;
+                for (var i = 0; i < totalNumResources.length; i++) {
+                    if (totalNumResources[i] == 'S') {
+                        this.resourceCount.push({ label: 'slim', value: '0' });
+                    } else {
+                        this.resourceCount.push({ label: 'normal', value: totalNumResources[i] });
+                    }
+                }
+                return this.resourceCount;
+            } catch (error) {
+                console.error('Error: setDatasetsStats() - datasets-list.component.ts');
+                this.errorTitle = this.datasetListErrorTitle;
+                this.errorMessage = this.datasetListErrorMessage;
+            }
+        });
+    }
 }

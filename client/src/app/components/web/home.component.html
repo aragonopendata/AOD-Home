@@ -17,6 +17,36 @@
 				 onmouseout="this.style='cursor: pointer; text-transform: capitalize;';" onmouseover="this.style='cursor: pointer; text-transform: capitalize; filter: opacity(30%);';">
 			</div>
 		</div>
+		<div class="row">
+			<div class="box col-3 col-md-3">
+				<div class="boxTitle">
+					<h3 tabindex="{{openedMenu ? -1 : 0}}">MÁS DESCARGADOS</h3>
+				</div>
+				<div class="boxContent">
+					<div>
+						<div *ngFor="let downloadedDataset of downloadedDatasets" class="textosNormales">
+							<a tabindex="{{openedMenu ? -1 : 0}}" routerLink='/{{routerLinkDataCatalogDataset}}/{{downloadedDataset.name}}' (click)="showDataset(downloadedDataset)">
+							{{downloadedDataset.title}}
+						</a>
+							<div *ngIf="downloadedDatasets.indexOf(downloadedDataset) != 2" class="separadorVentana"></div>
+						</div>
+						<div>
+							<h6 tabindex="{{openedMenu ? -1 : 0}}">Número de datasets</h6>
+							<h1 tabindex="{{openedMenu ? -1 : 0}}">
+								<span tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let num of datasetCount" [ngClass]="num.label == 'slim' ? 'slimCount': 'normalCount'">{{num.value}}</span>
+							</h1>
+						</div>
+						<div class="separadorVentana"></div>
+						<div>
+							<h6 tabindex="{{openedMenu ? -1 : 0}}">Número de recursos</h6>
+							<h1>
+								<span tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let num of resourceCount" [ngClass]="num.label == 'slim' ? 'slimCount': 'normalCount'">{{num.value}}</span>
+							</h1>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 	<div class="jumbotron-fluid dataCenter" id="dataCenter">
 		<button tabindex="{{openedMenu ? -1 : 0}}" type="button" class="btn btn-secondary goUp" (click)="move('searchMain')">

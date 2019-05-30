@@ -270,3 +270,73 @@ button {
     padding-right: 15%;
     padding-left: 15%; 
 }
+
+.box {
+    padding: 0;
+    border: solid 1px #5ea2ba;
+    margin-bottom: 15px !important;
+    margin-right: 0;
+    float: none;
+    margin-left: 65px;
+    max-width: 350px;
+}
+
+.boxTitle {
+    border: 1px solid #76a1b8;
+    width: 100%;
+    max-height: 50px;
+    background-color: #5ea2ba;
+}
+
+.boxTitle h3 {
+    padding: 15px; 
+    display: table-cell;
+    vertical-align: middle;
+    color: white;
+    font-size: 23px;
+}
+
+.boxContent {
+    border: 1px solid #76a1b8;
+    text-align: justify;
+    padding: 10px;
+    overflow: auto;
+}
+
+.boxContent a {
+    color:black;
+}
+
+.boxContent h6 {
+    font-weight: 700;
+}
+
+.boxContent h1 {
+    font-size: 42px;
+}
+
+.normalCount {
+    margin: 1px;
+    left: 1px;
+    padding: initial;
+    color: #5ea1b9;
+    font-weight: 900;
+    background: -webkit-linear-gradient(white, e2e2dc);
+    background: -o-linear-gradient(white, e2e2dc);
+    background: -moz-linear-gradient(white, e2e2dc);
+    background: linear-gradient(white, #e2e2dc);
+    font-size: 50px;
+}
+
+.slimCount {
+    margin: 1px;
+    left: 1px;
+    padding: initial;
+    color: #5ea1b9;
+    font-weight: normal;
+    background: -webkit-linear-gradient(white, e2e2dc);
+    background: -o-linear-gradient(white, e2e2dc);
+    background: -moz-linear-gradient(white, e2e2dc);
+    background: linear-gradient(white, #e2e2dc);
+    font-size:50px;
+}
