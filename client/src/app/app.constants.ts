@@ -1,17 +1,17 @@
 export class Constants {
     //URLS
-    public static AOD_BASE_URL = 'https://preopendata.aragon.es';
-    public static PRESUPUESTOS_BASE_URL = 'http://mev-aodfront-01.aragon.local:7031';
-    public static AOD_ASSETS_BASE_URL = 'http://localhost:3333/assets';
-    //public static AOD_ASSETS_BASE_URL = 'http://miv-aodfront-01.aragon.local:7030/static';
-    public static AOD_API_WEB_BASE_URL = 'http://localhost:4233/aod/services/web';
-    //public static AOD_API_WEB_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/web';
-    public static AOD_API_ADMIN_BASE_URL = 'http://localhost:4233/aod/services/admin';
-    //public static AOD_API_ADMIN_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/admin';
-    public static AOD_API_SECURITY_BASE_URL = 'http://localhost:4233/aod/services/security';
-    //public static AOD_API_SECURITY_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/security'; 
-    public static AOD_API_CKAN_BASE_URL = 'http://mev-aodfront-01.aragon.local:5000';  
-    public static VISUAL_SERVER_URL = 'https://preopendata.aragon.es';
+    public static AOD_BASE_URL = 'http://miv-aodfront-01.aragon.local:7030';
+    public static PRESUPUESTOS_BASE_URL = 'http://miv-aodfront-01.aragon.local:7031';
+    //public static AOD_ASSETS_BASE_URL = 'http://localhost:3000/assets';
+    public static AOD_ASSETS_BASE_URL = 'http://miv-aodfront-01.aragon.local:7030/static';
+    //public static AOD_API_WEB_BASE_URL = 'http://localhost:4200/aod/services/web';
+    public static AOD_API_WEB_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/web';
+    //public static AOD_API_ADMIN_BASE_URL = 'http://localhost:4200/aod/services/admin';
+    public static AOD_API_ADMIN_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/admin';
+    //public static AOD_API_SECURITY_BASE_URL = 'http://localhost:4200/aod/services/security';
+    public static AOD_API_SECURITY_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/security'; 
+    public static AOD_API_CKAN_BASE_URL = 'http://miv-aodfront-01.aragon.local:5000';  
+    public static VISUAL_SERVER_URL = 'http://miv-aodfront-01.aragon.local:7030';
     public static VISUAL_BACK_SERVER_URL = Constants.VISUAL_SERVER_URL + '/apivisualdata';
     public static LIST_ALL_CHARTS_PATH = '/services/charts';
     public static GET_EMBED_CHART_URL = '/servicios/visualdata/charts/embed/';
