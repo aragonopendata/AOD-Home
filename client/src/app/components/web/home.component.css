@@ -1,16 +1,16 @@
 @font-face {
     font-family: RobotoLight;
-     src: url('/static/public/fonts/Roboto-Light.ttf'); 
+    src: url('/static/public/fonts/Roboto-Light.ttf');
 }
 
-@media (max-width: 768px){
-    html{
+@media (max-width: 768px) {
+    html {
         margin-top: 15% !important;
     }
 }
 
-@media (min-width: 768px){
-    html{
+@media (min-width: 768px) {
+    html {
         margin-top: 5% !important;
     }
 }
@@ -38,7 +38,6 @@ h1 {
     h1 {
         font-size: 100px;
     }
-
     .card h2 {
         font-size: 40px;
     }
@@ -65,12 +64,12 @@ p {
 
 @media screen and (max-width: 700px) {
     p {
-       font-size: 15px;
+        font-size: 15px;
     }
     .card h2 {
         font-size: 35px;
     }
-  }
+}
 
 .searchMain {
     position: relative;
@@ -94,11 +93,10 @@ p {
     outline: none;
 }
 
-
 .dataCenter {
     text-align: center;
     position: relative;
-    background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(252,110,81, 0.5));
+    background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(252, 110, 81, 0.5));
     width: 100%;
     min-height: fit-content;
     top: 112%;
@@ -109,7 +107,7 @@ p {
 .services {
     text-align: center;
     position: relative;
-    background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(244,208,63, 0.5));
+    background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(244, 208, 63, 0.5));
     width: 100%;
     min-height: fit-content;
     top: 212%;
@@ -120,7 +118,7 @@ p {
 .info {
     text-align: center;
     position: relative;
-    background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(54,215,183, 0.5));
+    background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(54, 215, 183, 0.5));
     width: 100%;
     min-height: fit-content;
     top: 312%;
@@ -131,7 +129,7 @@ p {
 .tools {
     text-align: center;
     position: relative;
-    background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(34,167,240, 0.5));
+    background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(34, 167, 240, 0.5));
     width: 100%;
     min-height: fit-content;
     top: 412%;
@@ -159,6 +157,14 @@ p {
     z-index: 0;
 }
 
+.topicsHomePage {
+    padding-top: 46vh;
+}
+
+iframe::-webkit-scrollbar {
+    display: none;
+}
+
 .searcher {
     position: absolute;
     width: 65%;
@@ -170,45 +176,55 @@ p {
     z-index: 1;
     display: table;
 }
-#autocomplete{
+
+#autocomplete {
     display: table-cell;
     vertical-align: middle;
 }
 
 @media screen and (max-height: 500px) {
-    .searcher{
+    .searcher {
         top: 20%;
     }
-}  
+}
 
 @media screen and (max-width: 500px) {
-    .searcher{
+    .searcher {
         top: 20%;
     }
 }
 
 @media screen and (min-width: 500px) and (max-width: 1366px) {
-    .searcher{
+    .searcher {
         top: 20%;
     }
 }
 
-::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-    color:    #5EA2BA;
+::-webkit-input-placeholder {
+    /* WebKit, Blink, Edge */
+    color: #5EA2BA;
 }
-:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-   color:    #5EA2BA;
-   opacity:  1;
+
+:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: #5EA2BA;
+    opacity: 1;
 }
-::-moz-placeholder { /* Mozilla Firefox 19+ */
-   color:    #5EA2BA;
-   opacity:  1;
+
+::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: #5EA2BA;
+    opacity: 1;
 }
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
-   color:    #5EA2BA;
+
+:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: #5EA2BA;
 }
-::-ms-input-placeholder { /* Microsoft Edge */
-   color:    #5EA2BA;
+
+::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: #5EA2BA;
 }
 
 .goUp {
@@ -268,7 +284,7 @@ button {
 
 .titleDesc {
     padding-right: 15%;
-    padding-left: 15%; 
+    padding-left: 15%;
 }
 
 .box {
@@ -289,7 +305,7 @@ button {
 }
 
 .boxTitle h3 {
-    padding: 15px; 
+    padding: 15px;
     display: table-cell;
     vertical-align: middle;
     color: white;
@@ -304,7 +320,7 @@ button {
 }
 
 .boxContent a {
-    color:black;
+    color: black;
 }
 
 .boxContent h6 {
@@ -338,5 +354,5 @@ button {
     background: -o-linear-gradient(white, e2e2dc);
     background: -moz-linear-gradient(white, e2e2dc);
     background: linear-gradient(white, #e2e2dc);
-    font-size:50px;
+    font-size: 50px;
 }

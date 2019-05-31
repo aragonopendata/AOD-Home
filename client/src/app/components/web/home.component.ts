@@ -2,13 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { Constants } from '../../app.constants';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-declare var jQuery:any;
+declare var jQuery: any;
 import { UtilsService } from '../../services/web/utils.service';
 import { Topic } from 'app/models/Topic';
 import { TopicsService } from 'app/services/web/topics.service';
 import { DatasetsService } from '../../services/web/datasets.service';
 import { Dataset } from 'app/models/Dataset';
 import { SelectItem } from 'app/models/SelectItem';
+import { ChartService } from 'app/services/web/chart.service';
+
+import { GlobalUtils } from '../../utils/GlobalUtils';
 
 @Component({
 	selector: 'app-home',
@@ -55,10 +58,12 @@ export class HomeComponent implements OnInit {
 	errorTitle: string;
 	errorMessage: string;
 	datasetListErrorTitle: string;
-    datasetListErrorMessage: string;
+	datasetListErrorMessage: string;
 
-	constructor( private datasetsService: DatasetsService,private router: Router, private activatedRoute: ActivatedRoute,
-		private location: Location, private utilsService: UtilsService, private topicsService: TopicsService) { 
+	chartsData: Array<any> = [];
+
+	constructor(private datasetsService: DatasetsService, private router: Router, private activatedRoute: ActivatedRoute,
+		private location: Location, private utilsService: UtilsService, private topicsService: TopicsService, private chartService: ChartService) {
 		//Dynamic URL build to send to HTML template
 		this.routerLinkDataCatalog = Constants.ROUTER_LINK_DATA_CATALOG;
 		this.routerLinkDataTopics = Constants.ROUTER_LINK_DATA_TOPICS;
@@ -105,12 +110,37 @@ export class HomeComponent implements OnInit {
 			{ id: '#imgGit', hover: false },
 			{ id: '#imgAna', hover: false },
 			{ id: '#imgVis', hover: false },
-			{ id: '#imgPool', hover: false},
-			{ id: '#imgCono', hover: false },
+			{ id: '#imgPool', hover: false },
+			{ id: '#imgCono', hover: false }
 		];
 		this.getTopics();
 		this.setInfoTables();
 		this.setDatasetsStats();
+		this.loadCharts();
+	}
+
+	loadCharts() {
+		let pagination = 0;
+		let n_charts = 999999;
+		let totalCharts = 0;
+		let randomChart = 0;
+		let maxChartsToLoad = 2;
+
+		this.chartService
+			.getCharts(pagination, n_charts)
+			.subscribe(data => {
+				//Se saca el total de graficas para luego obtener un numero aleatorio en base al máximo de gráficas
+				totalCharts = data.charts.length;
+				for (let i = 0; i < maxChartsToLoad; i++) {
+					randomChart = GlobalUtils.generateRandomNumberByRange(0, totalCharts);
+					this.chartsData[i] = {
+						url: Constants.AOD_BASE_URL + Constants.GET_EMBED_CHART_URL + data.charts[randomChart].id,
+						title: data.charts[randomChart].title,
+						id: data.charts[randomChart].id
+					};
+					
+				}
+			});
 	}
 
 	move(id) {
@@ -168,118 +198,118 @@ export class HomeComponent implements OnInit {
 	}
 
 	getUrlFragment() {
-        this.activatedRoute.fragment.subscribe(fragment => {
-			switch(fragment){
+		this.activatedRoute.fragment.subscribe(fragment => {
+			switch (fragment) {
 				//OPEN-DATA
 				case Constants.STATIC_INFO_OPEN_DATA_SECTION_OPEN_DATA:
-					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT+fragment);
-				break;
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT + fragment);
+					break;
 				case Constants.STATIC_INFO_OPEN_DATA_SECTION_REUTILIZATION:
-					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT+fragment);
-				break;
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT + fragment);
+					break;
 				case Constants.STATIC_INFO_OPEN_DATA_SECTION_GOOD_PRACTICES:
-					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT+fragment);
-				break;
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT + fragment);
+					break;
 				case Constants.STATIC_INFO_OPEN_DATA_SECTION_LEGAL:
-					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT+fragment);
-				break;
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT + fragment);
+					break;
 				case Constants.STATIC_INFO_OPEN_DATA_SECTION_EXPERIENCIES:
-					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT+fragment);
-				break;
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT + fragment);
+					break;
 				case Constants.STATIC_INFO_OPEN_DATA_SECTION_ARAGON_OPEN_DATA:
-					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT+fragment);
-				break;
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT + fragment);
+					break;
 				case Constants.STATIC_INFO_OPEN_DATA_SECTION_OBJECTIVES:
-					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT+fragment);
-				break;
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT + fragment);
+					break;
 				case Constants.STATIC_INFO_OPEN_DATA_SECTION_PARTICIPATION:
-					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT+fragment);
-				break;
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT + fragment);
+					break;
 				case Constants.STATIC_INFO_OPEN_DATA_SECTION_ARAGON_SERVICES:
-					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT+fragment);
-				break;
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT + fragment);
+					break;
 				case Constants.STATIC_INFO_OPEN_DATA_SECTION_DOCUMENTATION:
-					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT+fragment);
-				break;
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT + fragment);
+					break;
 				case Constants.STATIC_INFO_OPEN_DATA_SECTION_TERMS:
-					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT+fragment);
-				break;
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT + fragment);
+					break;
 				case Constants.STATIC_INFO_OPEN_DATA_SECTION_CONDITIONS:
-					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT+fragment);
-				break;
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_OPEN_DATA_SECTION_REDIRECT + fragment);
+					break;
 				//CONOCIMIENTO
 				case Constants.STATIC_INFO_CONOCIMIENTO_SECTION_EI2A:
-					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_CONOCIMIENTO_SECTION_REDIRECT+fragment);
-				break;
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_CONOCIMIENTO_SECTION_REDIRECT + fragment);
+					break;
 				case Constants.STATIC_INFO_CONOCIMIENTO_SECTION_ONTOLOGY:
-					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_CONOCIMIENTO_SECTION_REDIRECT+fragment);
-				break;
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_CONOCIMIENTO_SECTION_REDIRECT + fragment);
+					break;
 				case Constants.STATIC_INFO_CONOCIMIENTO_SECTION_GRAFO:
-					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_CONOCIMIENTO_SECTION_REDIRECT+fragment);
-				break;
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_CONOCIMIENTO_SECTION_REDIRECT + fragment);
+					break;
 				case Constants.STATIC_INFO_CONOCIMIENTO_SECTION_CONSULTA:
-					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_CONOCIMIENTO_SECTION_REDIRECT+fragment);
-				break;
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_CONOCIMIENTO_SECTION_REDIRECT + fragment);
+					break;
 				//EVENTS
 				case Constants.STATIC_INFO_EVENTS_SECTION_JACATHON:
-					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_EVENTS_SECTION_REDIRECT+fragment);
-				break;
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_EVENTS_SECTION_REDIRECT + fragment);
+					break;
 				case Constants.STATIC_INFO_EVENTS_SECTION_PRESTACION_SERVICIOS_MUNDO_DIGITAL:
-					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_EVENTS_SECTION_REDIRECT+fragment);
-				break;
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_EVENTS_SECTION_REDIRECT + fragment);
+					break;
 				//DEVELOPERS
 				case Constants.STATIC_INFO_DEVELOPERS_SECTION_INTEROPERABILITY:
-					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_DEVELOPERS_SECTION_REDIRECT+fragment);
-				break;
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_DEVELOPERS_SECTION_REDIRECT + fragment);
+					break;
 				case Constants.STATIC_INFO_DEVELOPERS_SECTION_TECHNOLOGY:
-					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_DEVELOPERS_SECTION_REDIRECT+fragment);
-				break;
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_DEVELOPERS_SECTION_REDIRECT + fragment);
+					break;
 				case Constants.STATIC_INFO_DEVELOPERS_SECTION_DIRECT_DOWNLOAD:
-					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_DEVELOPERS_SECTION_REDIRECT+fragment);
-				break;
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_DEVELOPERS_SECTION_REDIRECT + fragment);
+					break;
 				case Constants.STATIC_INFO_DEVELOPERS_SECTION_METADATES:
-					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_DEVELOPERS_SECTION_REDIRECT+fragment);
-				break;
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_DEVELOPERS_SECTION_REDIRECT + fragment);
+					break;
 				case Constants.STATIC_INFO_DEVELOPERS_SECTION_TOOLS:
-					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_DEVELOPERS_SECTION_REDIRECT+fragment);
-				break;
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_DEVELOPERS_SECTION_REDIRECT + fragment);
+					break;
 				//APIS
 				case Constants.STATIC_INFO_APIS_SECTION_CKAN:
-					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_APIS_SECTION_REDIRECT+fragment);
-				break;
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_APIS_SECTION_REDIRECT + fragment);
+					break;
 				case Constants.STATIC_INFO_APIS_SECTION_SOCIAL_DATA:
-					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_APIS_SECTION_REDIRECT+fragment);
-				break;
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_APIS_SECTION_REDIRECT + fragment);
+					break;
 				case Constants.STATIC_INFO_APIS_SECTION_ARAGOPEDIA:
-					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_APIS_SECTION_REDIRECT+fragment);
-				break;
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_APIS_SECTION_REDIRECT + fragment);
+					break;
 				case Constants.STATIC_INFO_APIS_SECTION_ARAGODBPEDIA_1:
-					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_APIS_SECTION_REDIRECT+fragment);
-				break;
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_APIS_SECTION_REDIRECT + fragment);
+					break;
 				case Constants.STATIC_INFO_APIS_SECTION_ARAGODBPEDIA_2:
-					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_APIS_SECTION_REDIRECT+fragment);
-				break;
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_APIS_SECTION_REDIRECT + fragment);
+					break;
 				case Constants.STATIC_INFO_APIS_SECTION_GA_OD_CORE:
-					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_APIS_SECTION_REDIRECT+fragment);
-				break;
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_APIS_SECTION_REDIRECT + fragment);
+					break;
 				case Constants.STATIC_INFO_APIS_SECTION_GRAFO_CONOCIMIENTO:
-					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_APIS_SECTION_REDIRECT+fragment);
-				break;
+					this.router.navigateByUrl(Constants.ROUTER_LINK_STATIC_CONTENT_APIS_SECTION_REDIRECT + fragment);
+					break;
 				default:
 					this.location.go('/');
-				break;
+					break;
 			}
 		});
 	}
 
-    getOpenedMenu(){
-        this.utilsService.openedMenuChange.subscribe(value => {
+	getOpenedMenu() {
+		this.utilsService.openedMenuChange.subscribe(value => {
 			this.openedMenu = value;
 		});
-    }
+	}
 
-    toggleOpenedMenu() {
-        this.utilsService.tooggleOpenedMenu();
+	toggleOpenedMenu() {
+		this.utilsService.tooggleOpenedMenu();
 	}
 
 	setHovers() {
@@ -287,7 +317,7 @@ export class HomeComponent implements OnInit {
 			this.hovers.push({ label: top.title, hover: false });
 		}
 	}
-	
+
 	getTopics(): void {
 		this.topicsService.getTopics().subscribe(topics => {
 			try {
@@ -295,8 +325,8 @@ export class HomeComponent implements OnInit {
 				this.setHovers();
 			} catch (error) {
 				console.error("Error: getTopics() - topics-list.component.ts");
-				this.errorTitle="Se ha producido un error";
-                this.errorMessage="Se ha producido un error en la carga de Temas, vuelva a intentarlo y si el error persiste contacte con el administrador.";
+				this.errorTitle = "Se ha producido un error";
+				this.errorMessage = "Se ha producido un error en la carga de Temas, vuelva a intentarlo y si el error persiste contacte con el administrador.";
 			}
 		});
 	}
@@ -320,72 +350,72 @@ export class HomeComponent implements OnInit {
 			}
 		}
 	}
-	
-	navigate(topicName){
+
+	navigate(topicName) {
 		this.router.navigateByUrl('/' + this.routerLinkDataTopics + '/' + topicName);
 	}
 
 	setInfoTables() {
-        this.datasetsService.getNewestDataset().subscribe(datasets => {
-            try {
-                this.newestDatasets = JSON.parse(datasets).result.results;
-            } catch (error) {
-                console.error('Error: setInfoTables() - datasets-list.component.ts');
-                this.errorTitle = this.datasetListErrorTitle;
-                this.errorMessage = this.datasetListErrorMessage;
-            }
-        });
-        this.datasetsService.getDownloadedDataset().subscribe(datasets => {
-            try {
-                this.downloadedDatasets = JSON.parse(datasets).result.results;
-            } catch (error) {
-                console.error('Error: setInfoTables() - datasets-list.component.ts');
-                this.errorTitle = this.datasetListErrorTitle;
-                this.errorMessage = this.datasetListErrorMessage;
-            }
-        });
+		this.datasetsService.getNewestDataset().subscribe(datasets => {
+			try {
+				this.newestDatasets = JSON.parse(datasets).result.results;
+			} catch (error) {
+				console.error('Error: setInfoTables() - datasets-list.component.ts');
+				this.errorTitle = this.datasetListErrorTitle;
+				this.errorMessage = this.datasetListErrorMessage;
+			}
+		});
+		this.datasetsService.getDownloadedDataset().subscribe(datasets => {
+			try {
+				this.downloadedDatasets = JSON.parse(datasets).result.results;
+			} catch (error) {
+				console.error('Error: setInfoTables() - datasets-list.component.ts');
+				this.errorTitle = this.datasetListErrorTitle;
+				this.errorMessage = this.datasetListErrorMessage;
+			}
+		});
 	}
 	setDatasetsStats() {
-        this.datasetsService.getDatasetsNumber().subscribe(datasets => {
-            try {
-                this.datasetCount = [];
-                let totalNumDatasets = '';
-                totalNumDatasets = JSON.parse(datasets).result.count + '';
-                while (totalNumDatasets.length < 8) totalNumDatasets = 'S' + totalNumDatasets;
-                for (var i = 0; i < totalNumDatasets.length; i++) {
-                    if (totalNumDatasets[i] == 'S') {
-                        this.datasetCount.push({ label: 'slim', value: '0' });
-                    } else {
-                        this.datasetCount.push({ label: 'normal', value: totalNumDatasets[i] });
-                    }
-                }
-                return this.datasetCount;
-            } catch (error) {
-                console.error('Error: setDatasetsStats() - datasets-list.component.ts');
-                this.errorTitle = this.datasetListErrorTitle;
-                this.errorMessage = this.datasetListErrorMessage;
-            }
-        });
+		this.datasetsService.getDatasetsNumber().subscribe(datasets => {
+			try {
+				this.datasetCount = [];
+				let totalNumDatasets = '';
+				totalNumDatasets = JSON.parse(datasets).result.count + '';
+				while (totalNumDatasets.length < 8) totalNumDatasets = 'S' + totalNumDatasets;
+				for (var i = 0; i < totalNumDatasets.length; i++) {
+					if (totalNumDatasets[i] == 'S') {
+						this.datasetCount.push({ label: 'slim', value: '0' });
+					} else {
+						this.datasetCount.push({ label: 'normal', value: totalNumDatasets[i] });
+					}
+				}
+				return this.datasetCount;
+			} catch (error) {
+				console.error('Error: setDatasetsStats() - datasets-list.component.ts');
+				this.errorTitle = this.datasetListErrorTitle;
+				this.errorMessage = this.datasetListErrorMessage;
+			}
+		});
 
-        this.datasetsService.getResourcesNumber().subscribe(resources => {
-            try {
-                this.resourceCount = [];
-                let totalNumResources = '';
-                totalNumResources = JSON.parse(resources).result.count + '';
-                while (totalNumResources.length < 8) totalNumResources = 'S' + totalNumResources;
-                for (var i = 0; i < totalNumResources.length; i++) {
-                    if (totalNumResources[i] == 'S') {
-                        this.resourceCount.push({ label: 'slim', value: '0' });
-                    } else {
-                        this.resourceCount.push({ label: 'normal', value: totalNumResources[i] });
-                    }
-                }
-                return this.resourceCount;
-            } catch (error) {
-                console.error('Error: setDatasetsStats() - datasets-list.component.ts');
-                this.errorTitle = this.datasetListErrorTitle;
-                this.errorMessage = this.datasetListErrorMessage;
-            }
-        });
-    }
+		this.datasetsService.getResourcesNumber().subscribe(resources => {
+			try {
+				this.resourceCount = [];
+				let totalNumResources = '';
+				totalNumResources = JSON.parse(resources).result.count + '';
+				while (totalNumResources.length < 8) totalNumResources = 'S' + totalNumResources;
+				for (var i = 0; i < totalNumResources.length; i++) {
+					if (totalNumResources[i] == 'S') {
+						this.resourceCount.push({ label: 'slim', value: '0' });
+					} else {
+						this.resourceCount.push({ label: 'normal', value: totalNumResources[i] });
+					}
+				}
+				return this.resourceCount;
+			} catch (error) {
+				console.error('Error: setDatasetsStats() - datasets-list.component.ts');
+				this.errorTitle = this.datasetListErrorTitle;
+				this.errorMessage = this.datasetListErrorMessage;
+			}
+		});
+	}
 }

@@ -62,6 +62,7 @@ import { EventSafeHtmlPipe } from './components/web/static-content/info/events/e
 import { OpenDataSafeHtmlPipe } from "./components/web/static-content/info/open-data/open-data-safeHTML.pipe";
 import { ApiSafeHtmlPipe } from "./components/web/static-content/tools/apis/apis-safeHTML.pipe";
 import { DeveloperSafeHtmlPipe } from "./components/web/static-content/tools/developers/developers-safeHTML.pipe";
+import { HomeSafeHtmlPipe } from "./components/web/home-safeHTML.pipe";
 // Services
 import { AuthenticationService } from './services/security/authentication.service';
 import { LoginService } from './services/security/login.service';
@@ -92,6 +93,7 @@ import { InfoListAdminComponent } from './components/admin/global/static-content
 import { CampusAdminEventsComponent } from './components/admin/campus-admin/campus-admin-events/campus-admin-events.component';
 import { CampusAdminEntriesComponent } from './components/admin/campus-admin/campus-admin-entries/campus-admin-entries.component';
 import { CampusAdminSpeakersComponent } from './components/admin/campus-admin/campus-admin-speakers/campus-admin-speakers.component';
+import { ChartService } from './services/web/chart.service';
 
 @NgModule({
 	declarations: [
@@ -113,6 +115,7 @@ import { CampusAdminSpeakersComponent } from './components/admin/campus-admin/ca
 		EventSafeHtmlPipe,
 		ApiSafeHtmlPipe,
 		DeveloperSafeHtmlPipe,
+		HomeSafeHtmlPipe,
 		ApplicationsComponent,
 		EventsComponent,
 		CollaborationComponent,
@@ -212,7 +215,8 @@ import { CampusAdminSpeakersComponent } from './components/admin/campus-admin/ca
 		AodCoreAdminService,
 		ConfirmationService,
 		GoogleAnalyticsEventsService,
-		UtilsService
+		UtilsService,
+		ChartService
 	],
 	bootstrap: [AppComponent]
 })
