@@ -161,6 +161,10 @@ p {
     padding-top: 46vh;
 }
 
+.noCardBorder {
+    border: none;
+}
+
 iframe::-webkit-scrollbar {
     display: none;
 }

@@ -61,6 +61,7 @@ export class HomeComponent implements OnInit {
 	datasetListErrorMessage: string;
 
 	chartsData: Array<any> = [];
+	totalDatasetsOfOrg: any;
 
 	constructor(private datasetsService: DatasetsService, private router: Router, private activatedRoute: ActivatedRoute,
 		private location: Location, private utilsService: UtilsService, private topicsService: TopicsService, private chartService: ChartService) {
@@ -117,6 +118,7 @@ export class HomeComponent implements OnInit {
 		this.setInfoTables();
 		this.setDatasetsStats();
 		this.loadCharts();
+		this.getTotalDatasetsOfOrg();
 	}
 
 	loadCharts() {
@@ -141,6 +143,27 @@ export class HomeComponent implements OnInit {
 					
 				}
 			});
+	}
+
+	getTotalDatasetsOfOrg() {
+		let pageNumber = 0;
+		let rowsNumber = 20;
+		let sort = 'relevance, -metadata_modified';
+		let orgName = 'instituto-aragones-estadistica';
+		this.datasetsService.getDatasetsByOrganization(orgName, sort, pageNumber, rowsNumber, null).subscribe(datasets => {
+			try {
+				this.totalDatasetsOfOrg = {
+					orgName: 'Datasets Estadísticos',
+					url: Constants.AOD_BASE_URL + '/' + Constants.ROUTER_LINK_DATA_CATALOG_SEARCH + '/' + orgName,
+					count: JSON.parse(datasets).result.count
+				};
+			} catch (error) {
+				console.error("Error: getDatasets() - organizations-detail.component.ts");
+				console.error("Error ---> " + error);
+				this.errorTitle="Se ha producido un error";
+                this.errorMessage="Se ha producido un error en la carga de Datsets, vuelva a intentarlo y si el error persiste contacte con el administrador.";
+			}
+		});
 	}
 
 	move(id) {
