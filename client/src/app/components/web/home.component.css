@@ -169,6 +169,22 @@ iframe::-webkit-scrollbar {
     display: none;
 }
 
+.card.statisticalData {
+    color: #5ea2ba !important;
+}
+
+.statisticalData .datasetsCount {
+    font-size: 25px !important;
+}
+
+.statisticalData h5.card-title {
+    font-weight: bold !important;
+}
+
+.statisticalData a:hover {
+    text-decoration: none;
+}
+
 .searcher {
     position: absolute;
     width: 65%;
@@ -186,21 +202,116 @@ iframe::-webkit-scrollbar {
     vertical-align: middle;
 }
 
-@media screen and (max-height: 500px) {
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) { 
+    .back {
+        min-height: 9%;
+    }
     .searcher {
-        top: 20%;
+        top: 4%;
+    }
+    .topicsHomePage {
+        padding-top: 21vh;
+    }
+    .topicsHomePage img {
+        width: 35px;
+        height: 35px;
+        margin: .25rem !important;
+    }
+    .contentRow {
+        margin: 1rem !important;
+    }
+    .box {
+        margin: auto !important;
+    }
+    input#searchBox.textBox {
+        font-size: 22px !important;
+    }
+    button.btnSearch {
+        font-size: 18px !important;
     }
 }
 
-@media screen and (max-width: 500px) {
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {  
+    .back {
+        min-height: 15%;
+    }
+    .searcher {
+        top: 7%;
+    }
+    .topicsHomePage {
+        padding-top: 37vh;
+    }
+    .topicsHomePage img {
+        width: 35px;
+        height: 35px;
+        margin: .25rem !important;
+    }
+    .box {
+        max-width: 100% !important;
+        margin-left: 0 !important;
+    }
+    .contentRow {
+        margin: 1rem !important;
+    }
+}
+ 
+/* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
+@media (min-width: 768px) {
+    .back {
+        min-height: 15%;
+    }
+    .searcher {
+        top: 8%;
+    }
+    button.btnSearch i {
+        font-size: 30px !important;
+    }
+    input#searchBox.textBox {
+        font-size: 40px !important;
+    }
+    .topicsHomePage {
+        padding-top: 36vh;
+    }
+    .box {
+        max-width: 100% !important;
+        margin: auto !important;
+    }
+    .contentRow {
+        margin: 1rem !important;
+    }
+}
+ 
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) { 
+    .back {
+        min-height: 20%;
+    }
+    .searcher {
+        top: 11%;
+    }
+    .topicsHomePage {
+        padding-top: 37vh;
+    }
+    .statisticalDataCol {
+        margin: auto !important;
+    }
+    .contentRow {
+        margin: 1rem !important;
+    }
+}
+ 
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {  
+    .back {
+        min-height: 40%;
+    }
     .searcher {
         top: 20%;
     }
-}
-
-@media screen and (min-width: 500px) and (max-width: 1366px) {
-    .searcher {
-        top: 20%;
+    .contentRow {
+        margin: 1rem !important;
     }
 }
 

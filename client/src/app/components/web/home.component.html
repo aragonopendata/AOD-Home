@@ -10,7 +10,7 @@
 				<img src="/static/public/i/flechaDown_home.png" alt="avanzar-a-sección-datos" />
 			</button>
 		</div>
-		<div class="row m-0 justify-content-center topicsHomePage">
+		<div class="row m-0 mr-2 ml-2 justify-content-center topicsHomePage">
 			<div *ngFor="let topic of topics" class="d-inline mr-3">
 				<img src="{{topic.image_url}}" alt="{{topic.title | uppercase}}" width="50px" height="50px"
 					tabindex="{{openedMenu ? -1 : 0}}" routerLink="/{{routerLinkDataTopics}}/{{topic.name}}"
@@ -21,8 +21,8 @@
 					onmouseover="this.style='cursor: pointer; text-transform: capitalize; filter: opacity(30%);';">
 			</div>
 		</div>
-		<div class="row m-0">
-			<div class="box col-3 col-md-3">
+		<div class="row m-0 contentRow">
+			<div class="box col-sm-12 col-md-6 col-lg-7 col-xl-3">
 				<div class="boxTitle">
 					<h3 tabindex="{{openedMenu ? -1 : 0}}">MÁS DESCARGADOS</h3>
 				</div>
@@ -55,7 +55,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-12 col-md-3 col-lg-3 d-flex align-items-stretch"
+			<div class="col-sm-12 col-md-12 col-lg-6 col-xl-3 d-flex align-items-stretch"
 				*ngFor="let chart of chartsData; let i = index;">
 				<div class="card mt-2 mb-2 w-100 noCardBorder">
 					<div class="card-img-top w-100">
@@ -63,11 +63,11 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-12 col-md-3 col-lg-3 d-flex">
-				<div class="card mt-2 mb-2 w-100 text-center noCardBorder">
+			<div class="col-sm-12 col-md-12 col-lg-6 col-xl-3 d-flex statisticalDataCol">
+				<div class="card mt-2 mb-2 w-100 text-center noCardBorder statisticalData">
 					<div class="card-img-top w-100">
 						<i class="far fa-chart-bar fa-9x mt-5"></i>
-						<p>{{totalDatasetsOfOrg.count}}</p>
+						<p class="datasetsCount">{{totalDatasetsOfOrg.count}}</p>
 					</div>
 					<div class="card-body w-100">
 						<h5 class="card-title"><a href="{{totalDatasetsOfOrg.url}}">{{totalDatasetsOfOrg.orgName}}</a></h5>
