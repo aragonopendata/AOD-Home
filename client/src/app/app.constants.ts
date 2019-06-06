@@ -11,6 +11,8 @@ export class Constants {
     //public static AOD_API_SECURITY_BASE_URL = 'http://localhost:4200/aod/services/security';
     public static AOD_API_SECURITY_BASE_URL = 'http://miv-aodfront-01.aragon.local:4200/aod/services/security'; 
     public static AOD_API_CKAN_BASE_URL = 'http://miv-aodfront-01.aragon.local:5000';  
+    //public static SPARQL_API_BASE_URL = 'http://localhost:8890/sparql';
+    public static SPARQL_API_BASE_URL = 'http://biv-aodback-01.aragon.local:8890/sparql';
     public static VISUAL_SERVER_URL = 'http://miv-aodfront-01.aragon.local:7030';
     public static VISUAL_BACK_SERVER_URL = Constants.VISUAL_SERVER_URL + '/apivisualdata';
     public static LIST_ALL_CHARTS_PATH = '/services/charts';
@@ -513,6 +515,7 @@ export class Constants {
     public static ROUTER_LINK_TOOLS_CAMPUS = 'herramientas/campus';
     public static ROUTER_LINK_TOOLS_CAMPUS_CONTENT = 'herramientas/campus/content';
     public static ROUTER_LINK_TOOLS_APIS = 'herramientas/apis';
+    public static ROUTER_LINK_TOOLS_SPARQL = 'herramientas/sparql';
     public static ROUTER_LINK_LOGIN = 'login';
     public static ROUTER_LINK_LOGIN_FORGOT_PASSWORD = 'login/forgot-password';
     public static ROUTER_LINK_LOGIN_RESTORE_PASSWORD = 'login/restore-password';
@@ -632,6 +635,9 @@ export class Constants {
     public static SERVER_API_LINK_STATIC_CONTENT_TOOLS = '/static-content/tools';
     public static SERVER_API_LINK_STATIC_CONTENT_TOOLS_DEVELOPERS = '/developers';
     public static SERVER_API_LINK_STATIC_CONTENT_TOOLS_APIS = '/apis';
+    public static SERVER_API_LINK_STATIC_CONTENT_TOOLS_SPARQL = '/sparql';
+    public static SERVER_API_LINK_STATIC_CONTENT_TOOLS_SPARQL_CLIENT = '/sparql-client';
+    public static SERVER_API_LINK_STATIC_CONTENT_TOOLS_SPARQL_GRAPHS = '/sparql-client/graphs';
     public static SERVER_API_LINK_CAMPUS = '/campus';
     public static SERVER_API_LINK_CAMPUS_EVENTS = '/campus/events';
     public static SERVER_API_LINK_CAMPUS_EVENT = '/campus/event';
@@ -679,6 +685,44 @@ export class Constants {
     public static SERVER_API_LINK_PARAM_SORT_HOMER_PORTAL = 'portal';
     public static SERVER_API_LINK_PARAM_SORT_HOMER_LANGUAGE = 'language';
     public static SERVER_API_LINK_REGISTRATION_EVENT_PRESTACION_PUBLI = '/inscripcionPrestacionServPubli';
+
+    public static SERVER_API_LINK_SPARQL_CLIENT_PARAM_GRAPH = 'graph';
+    public static SERVER_API_LINK_SPARQL_CLIENT_PARAM_QUERY = 'query';
+    public static SERVER_API_LINK_SPARQL_CLIENT_PARAM_FORMAT = 'format';
+    public static SERVER_API_LINK_SPARQL_CLIENT_PARAM_TIMEOUT = 'timeout';
+    public static SERVER_API_LINK_SPARQL_CLIENT_PARAM_DEBUG = 'debug';
+
+    public static SPARQL_API_LINK_PARAM_GRAPH = '?default-graph-uri=';
+    public static SPARQL_API_LINK_PARAM_QUERY = '&query=';
+    public static SPARQL_API_LINK_PARAM_FORMAT = '&format=';
+    public static SPARQL_API_LINK_PARAM_TIMEOUT = '&timeout=';
+    public static SPARQL_API_LINK_PARAM_DEBUG = '&debug=';
+
+    public static SPARQL_CLIENT_DEFAULT_GRAPH = 'http://opendata.aragon.es/graph/Aragopedia/latest';
+    public static SPARQL_CLIENT_DEFAULT_QUERY = 'select distinct ?Concept where {[] a ?Concept} LIMIT 100';
+    public static SPARQL_CLIENT_DEFAULT_FORMAT = 'text/html';
+    public static SPARQL_CLIENT_DEFAULT_TIMEOUT = 0;
+    public static SPARQL_CLIENT_DEFAULT_DEBUG = true;
+
+    public static SPARQL_CLIENT_FORMAT_OPTIONS_AUTO = 'auto';
+    public static SPARQL_CLIENT_FORMAT_OPTIONS_HTML = 'text/html';
+    public static SPARQL_CLIENT_FORMAT_OPTIONS_EXCEL = 'application/vnd.ms-excel';
+    public static SPARQL_CLIENT_FORMAT_OPTIONS_XML = 'application/sparql-results+xml';
+    public static SPARQL_CLIENT_FORMAT_OPTIONS_JSON = 'application/sparql-results+json';
+    public static SPARQL_CLIENT_FORMAT_OPTIONS_JAVASCRIPT = 'application/javascript';
+    public static SPARQL_CLIENT_FORMAT_OPTIONS_PLAIN_TEXT = 'text/plain';
+    public static SPARQL_CLIENT_FORMAT_OPTIONS_RDF_XML = 'application/rdf+xml';
+    public static SPARQL_CLIENT_FORMAT_OPTIONS_CSV = 'text/csv';
+
+    public static SPARQL_CLIENT_FILE_NAME = 'Sparql';
+    public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_XML = '.xml';
+    public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_XLS = '.xls';
+    public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_SRX = '.srx';
+    public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_JSON = '.json';
+    public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_JS = '.js';
+    public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_TXT = '.txt';
+    public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_RDF = '.rdf';
+    public static SPARQL_CLIENT_FORMAT_FILE_EXTENSION_CSV = '.csv';
 
     public static KIBANA_URL = Constants.AOD_BASE_URL + "/elastic/app/kibana#/dashboard/e6433860-d68c-11e7-a49d-f956d0989e2c";
     public static KIBANA_URL_SEVEN = Constants.AOD_BASE_URL + "/elastic/app/kibana#/dashboard/6b50d7f0-e589-11e7-bac3-69701294f3ab";

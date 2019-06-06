@@ -48,6 +48,7 @@ import { InfoListAdminComponent } from './components/admin/global/static-content
 import { CampusAdminEventsComponent } from './components/admin/campus-admin/campus-admin-events/campus-admin-events.component';
 import { CampusAdminEntriesComponent } from './components/admin/campus-admin/campus-admin-entries/campus-admin-entries.component';
 import { CampusAdminSpeakersComponent } from './components/admin/campus-admin/campus-admin-speakers/campus-admin-speakers.component';
+import { SparqlClientComponent } from './components/web/static-content/tools/sparql/sparql-client/sparql-client.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -79,6 +80,7 @@ const routes: Routes = [
     { path: Constants.ROUTER_LINK_TOOLS_CAMPUS, component: CampusComponent },
     { path: Constants.ROUTER_LINK_TOOLS_CAMPUS_CONTENT + '/:' + Constants.ROUTER_LINK_TOOLS_CAMPUS_EVENT_NAME, component: CampusDetailComponent },
     { path: Constants.ROUTER_LINK_TOOLS_APIS, component: ApisComponent },
+    { path: Constants.ROUTER_LINK_TOOLS_SPARQL, component: SparqlClientComponent },
     { path: Constants.ROUTER_LINK_LOGIN, component: LoginComponent },
     { path: Constants.ROUTER_LINK_LOGIN + '/:' + Constants.ROUTER_LINK_DATA_PARAM_DATA_LOGIN + '/:' + Constants.ROUTER_LINK_DATA_PARAM_EDIT_DATA, component: LoginComponent },
     { path: Constants.ROUTER_LINK_LOGIN_FORGOT_PASSWORD, component: ForgottenPasswordComponent },

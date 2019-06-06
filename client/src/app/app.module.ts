@@ -94,6 +94,7 @@ import { CampusAdminEventsComponent } from './components/admin/campus-admin/camp
 import { CampusAdminEntriesComponent } from './components/admin/campus-admin/campus-admin-entries/campus-admin-entries.component';
 import { CampusAdminSpeakersComponent } from './components/admin/campus-admin/campus-admin-speakers/campus-admin-speakers.component';
 import { ChartService } from './services/web/chart.service';
+import { SparqlClientComponent } from './components/web/static-content/tools/sparql/sparql-client/sparql-client.component';
 
 @NgModule({
 	declarations: [
@@ -155,7 +156,8 @@ import { ChartService } from './services/web/chart.service';
 		InfoListAdminComponent,
 		CampusAdminEventsComponent,
 		CampusAdminEntriesComponent,
-		CampusAdminSpeakersComponent
+		CampusAdminSpeakersComponent,
+		SparqlClientComponent
   	],
   	imports: [
 		BrowserModule,

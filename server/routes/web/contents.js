@@ -395,4 +395,97 @@ router.get(constants.API_URL_STATIC_CONTENT_TOOLS_APIS, function (req, res, next
     });
 });
 
+router.get(constants.API_URL_STATIC_CONTENT_TOOLS_SPARQL_CLIENT, function (req, res, next) {
+    try {
+        logger.debug('Servicio: Petición SPARQL');
+        let serviceBaseUrl = constants.SPARQL_API_BASE_URL;
+        let serviceRequestUrl = serviceBaseUrl;
+        logger.debug('req.query.graph: ' + req.query.graph);
+        if (req.query.graph && req.query.graph !='http://opendata.aragon.es/graph/Aragopedia/latest') {
+            serviceRequestUrl += constants.SPARQL_API_LINK_PARAM_GRAPH + encodeURIComponent(req.query.graph);
+        } else {
+            serviceRequestUrl += constants.SPARQL_API_LINK_PARAM_GRAPH;
+        }
+
+        if (req.query.query) {
+            serviceRequestUrl += constants.SPARQL_API_LINK_PARAM_QUERY + encodeURIComponent(req.query.query);
+        }
+
+        if (req.query.format) {
+            serviceRequestUrl += constants.SPARQL_API_LINK_PARAM_FORMAT + encodeURIComponent(req.query.format);
+        }
+
+        if (req.query.timeout) {
+            serviceRequestUrl += constants.SPARQL_API_LINK_PARAM_TIMEOUT + encodeURIComponent(req.query.timeout);
+        }
+
+        if (req.query.debug) {
+            serviceRequestUrl += constants.SPARQL_API_LINK_PARAM_DEBUG + encodeURIComponent(req.query.debug);
+        }
+
+        logger.notice('URL de petición: ' + serviceRequestUrl);
+
+        //Proxy checking
+        let httpConf = null;
+        if (constants.REQUESTS_NEED_PROXY == true) {
+            logger.warning('Realizando petición a través de proxy');
+            let httpProxyConf = proxy.getproxyOptions(serviceRequestUrl);
+            httpConf = httpProxyConf;
+        } else {
+            httpConf = serviceRequestUrl;
+        }
+
+        http.get(httpConf, function (results) {
+            var body = '';
+            results.on('data', function (chunk) {
+                body += chunk;
+            });
+            results.on('end', function () {
+                res.json(body);
+            });
+        }).on('error', function (err) {
+            utils.errorHandler(err, res, serviceName);
+        });
+
+    } catch (error) {
+        logger.error(error);
+    }
+});
+
+router.get(constants.API_URL_STATIC_CONTENT_TOOLS_SPARQL_GRAPHS, function (req, res, next) {
+    try {
+        logger.debug('Servicio: Petición SPARQL Obtener Grafos');
+        let serviceBaseUrl = constants.SPARQL_API_BASE_URL;
+        let serviceRequestUrl = serviceBaseUrl;
+
+        serviceRequestUrl += constants.SPARQL_API_QUERY_URL_ALL_GRAPHS;
+
+        logger.notice('URL de petición: ' + serviceRequestUrl);
+
+        //Proxy checking
+        let httpConf = null;
+        if (constants.REQUESTS_NEED_PROXY == true) {
+            logger.warning('Realizando petición a través de proxy');
+            let httpProxyConf = proxy.getproxyOptions(serviceRequestUrl);
+            httpConf = httpProxyConf;
+        } else {
+            httpConf = serviceRequestUrl;
+        }
+
+        http.get(httpConf, function (results) {
+            var body = '';
+            results.on('data', function (chunk) {
+                body += chunk;
+            });
+            results.on('end', function () {
+                res.json(body);
+            });
+        }).on('error', function (err) {
+            utils.errorHandler(err, res, serviceName);
+        });
+    } catch (error) {
+        logger.error(error);
+    }
+});
+
 module.exports = router;

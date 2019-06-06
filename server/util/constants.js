@@ -55,6 +55,9 @@ exports.API_URL_STATIC_CONTENT_INFO_EVENTS = '/static-content/info/events';
 exports.API_URL_STATIC_CONTENT_INFO_COLLABORATION = '/static-content/info/collaboration';
 exports.API_URL_STATIC_CONTENT_TOOLS_DEVELOPERS = '/static-content/tools/developers';
 exports.API_URL_STATIC_CONTENT_TOOLS_APIS = '/static-content/tools/apis';
+exports.API_URL_STATIC_CONTENT_TOOLS_SPARQL = '/static-content/tools/sparql';
+exports.API_URL_STATIC_CONTENT_TOOLS_SPARQL_CLIENT = '/static-content/tools/sparql-client';
+exports.API_URL_STATIC_CONTENT_TOOLS_SPARQL_GRAPHS = '/static-content/tools/sparql-client/graphs';
 exports.API_URL_AUTHENTICATE = '/authenticate';
 exports.API_URL_ADMIN_DATASET = '/dataset';
 exports.API_URL_ADMIN_RESOURCE = '/resource';
@@ -227,6 +230,16 @@ exports.SERVER_API_LINK_PARAM_TYPE_PLAIN_TEXT_QUERY = '&q=(((res_format:XLS OR r
 
 //Results per page in campus
 exports.CAMPUS_EVENTS_PER_PAGE = 10;
+
+/*  SPARQL */
+//exports.SPARQL_API_BASE_URL = 'http://localhost:8890/sparql';
+exports.SPARQL_API_BASE_URL = 'http://biv-aodback-01.aragon.local:8890/sparql';
+exports.SPARQL_API_QUERY_URL_ALL_GRAPHS = '?query=SELECT  DISTINCT ?g WHERE  { GRAPH ?g {?s ?p ?o} } ORDER BY ?g &format=json';
+exports.SPARQL_API_LINK_PARAM_GRAPH = '?default-graph-uri=';
+exports.SPARQL_API_LINK_PARAM_QUERY = '&query=';
+exports.SPARQL_API_LINK_PARAM_FORMAT = '&format=';
+exports.SPARQL_API_LINK_PARAM_TIMEOUT = '&timeout=';
+exports.SPARQL_API_LINK_PARAM_DEBUG = '&debug=';
 
 /* ******************* */
 /* DATABASE PROPERTIES */

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, URLSearchParams } from '@angular/http';
 import { Constants } from '../../app.constants';
+import { GlobalUtils } from '../../utils/GlobalUtils';
 import { map } from 'rxjs/operators';
 
 @Injectable()
@@ -54,5 +55,26 @@ export class StaticContentService {
 		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_STATIC_CONTENT_TOOLS 
 						+ Constants.SERVER_API_LINK_STATIC_CONTENT_TOOLS_APIS;
 		return this.http.get(fullUrl).pipe(map(res => res.json()));
+	}
+
+	public getSparqlGraphs() {
+		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_STATIC_CONTENT_TOOLS 
+						+ Constants.SERVER_API_LINK_STATIC_CONTENT_TOOLS_SPARQL_GRAPHS;
+		return this.http.get(fullUrl).map(res => res.json());
+	}
+
+	public sendSparqlClient(formParms) {
+		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_STATIC_CONTENT_TOOLS 
+					+ Constants.SERVER_API_LINK_STATIC_CONTENT_TOOLS_SPARQL_CLIENT
+					+ '?' + Constants.SERVER_API_LINK_SPARQL_CLIENT_PARAM_GRAPH + '=' + encodeURIComponent(formParms.graph)
+					+ '&' + Constants.SERVER_API_LINK_SPARQL_CLIENT_PARAM_QUERY + '=' + encodeURIComponent(formParms.query)
+					+ '&' + Constants.SERVER_API_LINK_SPARQL_CLIENT_PARAM_FORMAT + '=' + encodeURIComponent(formParms.format)
+					+ '&' + Constants.SERVER_API_LINK_SPARQL_CLIENT_PARAM_TIMEOUT + '=' + encodeURIComponent(formParms.timeout)
+					if(formParms.debug == true){
+						+ '&' + Constants.SERVER_API_LINK_SPARQL_CLIENT_PARAM_DEBUG + '=on';
+					}
+							
+		fullUrl = GlobalUtils.formatRequestSPARQL(fullUrl);
+		return this.http.get(fullUrl).map(res => res.json());
 	}
 }
