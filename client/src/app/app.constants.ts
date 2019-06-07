@@ -16,7 +16,7 @@ export class Constants {
     public static VISUAL_SERVER_URL = 'http://miv-aodfront-01.aragon.local:7030';
     public static VISUAL_BACK_SERVER_URL = Constants.VISUAL_SERVER_URL + '/apivisualdata';
     public static LIST_ALL_CHARTS_PATH = '/services/charts';
-    public static GET_EMBED_CHART_URL = '/servicios/visualdata/charts/embed/';
+    public static GET_HOME_EMBED_CHART_URL = '/servicios/visualdata/charts/homeEmbed/';
     public static AOD_COLLABORATION_URL = 'https://aragon.uservoice.com/forums/192552-datos-que-me-gustar%C3%ADa-reutilizar';
     public static AOD_GITHUB_URL = 'http://github.com/aragonopendata';
     public static CKAN_URL = 'http://ckan.org/';

@@ -57,20 +57,35 @@
 			</div>
 			<div class="col-sm-12 col-md-12 col-lg-6 col-xl-3 d-flex align-items-stretch"
 				*ngFor="let chart of chartsData; let i = index;">
-				<div class="card mt-2 mb-2 w-100 noCardBorder">
-					<div class="card-img-top w-100">
-						<iframe width="350px" height="350px" class="w-100" [src]="chart.url | safeHtml"></iframe>
+				<div class="box card mt-2 mb-2 w-100 noCardBorder">
+					<div class="boxTitle">
+						<h3 tabindex="{{openedMenu ? -1 : 0}}" (click)="openChart(chart.id)">
+							{{(chart.title.length>23)? (chart.title | slice:0:23) + '...': (chart.title)}}</h3>
+					</div>
+					<div class="boxContent">
+						<div class="card-img-top w-100">
+							<object [data]="chart.url | safeHtml" width="350" height="350" id="chartContent"
+								class="w-100" type="text/html">
+								Tu navegador no soporta la ejecución de los gráficos
+							</object>
+						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-12 col-md-12 col-lg-6 col-xl-3 d-flex statisticalDataCol">
-				<div class="card mt-2 mb-2 w-100 text-center noCardBorder statisticalData">
-					<div class="card-img-top w-100">
-						<i class="far fa-chart-bar fa-9x mt-5"></i>
-						<p class="datasetsCount">{{totalDatasetsOfOrg.count}}</p>
+			<div class="col-sm-12 col-md-12 col-lg-6 col-xl-3 d-flex statisticalDataCol"
+				*ngFor="let datasetData of totalDatasetsOfOrg;">
+				<div class="box card mt-2 mb-2 w-100 text-center noCardBorder statisticalData">
+					<div class="boxTitle">
+						<h3 tabindex="{{openedMenu ? -1 : 0}}">{{datasetData.orgName}}</h3>
 					</div>
-					<div class="card-body w-100">
-						<h5 class="card-title"><a href="{{totalDatasetsOfOrg.url}}">{{totalDatasetsOfOrg.orgName}}</a></h5>
+					<div class="boxContent">
+						<div class="card-img-top w-100">
+							<i class="far fa-chart-bar fa-9x mt-5"></i>
+							<p class="datasetsCount">{{datasetData.count}}</p>
+						</div>
+						<div class="card-body w-100">
+							<h5 class="card-title"><a href="{{datasetData.url}}">{{datasetData.orgName}}</a></h5>
+						</div>
 					</div>
 				</div>
 			</div>

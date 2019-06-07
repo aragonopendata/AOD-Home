@@ -61,7 +61,7 @@ export class HomeComponent implements OnInit {
 	datasetListErrorMessage: string;
 
 	chartsData: Array<any> = [];
-	totalDatasetsOfOrg: any;
+	totalDatasetsOfOrg: Array<any> = [];
 
 	constructor(private datasetsService: DatasetsService, private router: Router, private activatedRoute: ActivatedRoute,
 		private location: Location, private utilsService: UtilsService, private topicsService: TopicsService, private chartService: ChartService) {
@@ -136,13 +136,17 @@ export class HomeComponent implements OnInit {
 				for (let i = 0; i < maxChartsToLoad; i++) {
 					randomChart = GlobalUtils.generateRandomNumberByRange(0, totalCharts);
 					this.chartsData[i] = {
-						url: Constants.AOD_BASE_URL + Constants.GET_EMBED_CHART_URL + data.charts[randomChart].id,
+						url: Constants.AOD_BASE_URL + Constants.GET_HOME_EMBED_CHART_URL + data.charts[randomChart].id,
 						title: data.charts[randomChart].title,
 						id: data.charts[randomChart].id
 					};
 					
 				}
 			});
+	}
+
+	openChart(id) {
+		window.location.href = Constants.AOD_BASE_URL + '/servicios/visualdata/charts/' + id;
 	}
 
 	getTotalDatasetsOfOrg() {
@@ -152,11 +156,11 @@ export class HomeComponent implements OnInit {
 		let orgName = 'instituto-aragones-estadistica';
 		this.datasetsService.getDatasetsByOrganization(orgName, sort, pageNumber, rowsNumber, null).subscribe(datasets => {
 			try {
-				this.totalDatasetsOfOrg = {
+				this.totalDatasetsOfOrg.push({
 					orgName: 'Datasets Estadísticos',
 					url: Constants.AOD_BASE_URL + '/' + Constants.ROUTER_LINK_DATA_CATALOG_SEARCH + '/' + orgName,
 					count: JSON.parse(datasets).result.count
-				};
+				});
 			} catch (error) {
 				console.error("Error: getDatasets() - organizations-detail.component.ts");
 				console.error("Error ---> " + error);
