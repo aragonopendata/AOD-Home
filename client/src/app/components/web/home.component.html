@@ -21,7 +21,7 @@
 					onmouseover="this.style='cursor: pointer; text-transform: capitalize; filter: opacity(30%);';">
 			</div>
 		</div>
-		<div class="row m-0 contentRow">
+		<!--<div class="row m-0 contentRow">
 			<div class="box col-sm-12 col-md-6 col-lg-7 col-xl-3">
 				<div class="boxTitle">
 					<h3 tabindex="{{openedMenu ? -1 : 0}}">MÁS DESCARGADOS</h3>
@@ -88,6 +88,24 @@
 						</div>
 					</div>
 				</div>
+			</div>
+		</div>-->
+		<div class="row m-0 contentRow">
+			<div class="col-xs-6 col-md-3 indicatorDataset" *ngFor="let indicatorDataset of indicatorDatasetsInfo;">
+				<div class="indicatorNumber">{{indicatorDataset.count}}</div>
+				<h3 class="text-center mt-3"><a href="{{indicatorDataset.url}}">{{indicatorDataset.title}}</a></h3>
+			</div>
+			<div class="col-xs-6 col-md-3 indicatorOrg" *ngFor="let indicatorOrg of indicatorOrgsInfo;">
+				<div class="indicatorNumber">{{indicatorOrg.count}}</div>
+				<h3 class="text-center mt-3"><a href="{{indicatorOrg.url}}">{{indicatorOrg.title}}</a></h3>
+			</div>
+			<div class="col-xs-6 col-md-3 indicatorTopic" *ngFor="let indicatorTopic of indicatorTopicsInfo;">
+				<div class="indicatorNumber">{{indicatorTopic.count}}</div>
+				<h3 class="text-center mt-3"><a href="{{indicatorTopic.url}}">{{indicatorTopic.title}}</a></h3>
+			</div>
+			<div class="col-xs-6 col-md-3 indicatorApp" *ngFor="let indicatorApp of indicatorAppsInfo;">
+				<div class="indicatorNumber">{{indicatorApp.count}}</div>
+				<h3 class="text-center mt-3"><a href="{{indicatorApp.url}}">{{indicatorApp.title}}</a></h3>
 			</div>
 		</div>
 	</div>

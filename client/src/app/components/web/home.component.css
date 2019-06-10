@@ -202,6 +202,26 @@ iframe::-webkit-scrollbar {
     vertical-align: middle;
 }
 
+.indicatorNumber {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    font-size: 3.6em;
+    color: #fff;
+    line-height: 150px;
+    text-align: center;
+    background: #5ea2ba;
+    margin: 0 auto;
+}
+
+.indicatorDataset a, .indicatorTopic a, .indicatorOrg a, .indicatorApp a {
+    color: #5ea2ba;
+}
+
+.indicatorDataset a:hover, .indicatorTopic a:hover, .indicatorOrg a:hover, .indicatorApp a:hover {
+    text-decoration: none;
+}
+
 /* Extra small devices (portrait phones, less than 576px) */
 @media (max-width: 575.98px) { 
     .back {
@@ -303,7 +323,7 @@ iframe::-webkit-scrollbar {
 }
  
 /* Extra large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) {  
+@media (min-width: 1367px) {  
     .back {
         min-height: 40%;
     }

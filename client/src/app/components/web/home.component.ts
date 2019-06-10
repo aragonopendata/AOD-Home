@@ -10,8 +10,10 @@ import { DatasetsService } from '../../services/web/datasets.service';
 import { Dataset } from 'app/models/Dataset';
 import { SelectItem } from 'app/models/SelectItem';
 import { ChartService } from 'app/services/web/chart.service';
+import { OrganizationsService } from '../../services/web/organizations.service';
 
 import { GlobalUtils } from '../../utils/GlobalUtils';
+import { StaticContentService } from 'app/services/web/static-content.service';
 
 @Component({
 	selector: 'app-home',
@@ -62,9 +64,14 @@ export class HomeComponent implements OnInit {
 
 	chartsData: Array<any> = [];
 	totalDatasetsOfOrg: Array<any> = [];
+	indicatorDatasetsInfo: Array<any> = [];
+	indicatorTopicsInfo: Array<any> = [];
+	indicatorOrgsInfo: Array<any> = [];
+	indicatorAppsInfo: Array<any> = [];
 
 	constructor(private datasetsService: DatasetsService, private router: Router, private activatedRoute: ActivatedRoute,
-		private location: Location, private utilsService: UtilsService, private topicsService: TopicsService, private chartService: ChartService) {
+		private location: Location, private utilsService: UtilsService, private topicsService: TopicsService, private chartService: ChartService,
+		private orgService: OrganizationsService, private staticContentService: StaticContentService) {
 		//Dynamic URL build to send to HTML template
 		this.routerLinkDataCatalog = Constants.ROUTER_LINK_DATA_CATALOG;
 		this.routerLinkDataTopics = Constants.ROUTER_LINK_DATA_TOPICS;
@@ -119,6 +126,15 @@ export class HomeComponent implements OnInit {
 		this.setDatasetsStats();
 		this.loadCharts();
 		this.getTotalDatasetsOfOrg();
+
+		this.loadIndicators();
+	}
+
+	loadIndicators() {
+		this.getDatasetsIndicator();
+		this.getOrgsIndicator();
+		this.getTopicsIndicator();
+		this.getAppsIndicator();
 	}
 
 	loadCharts() {
@@ -140,13 +156,89 @@ export class HomeComponent implements OnInit {
 						title: data.charts[randomChart].title,
 						id: data.charts[randomChart].id
 					};
-					
+
 				}
 			});
 	}
 
 	openChart(id) {
 		window.location.href = Constants.AOD_BASE_URL + '/servicios/visualdata/charts/' + id;
+	}
+
+	getOrgsIndicator() {
+		let title = 'Publicadores';
+		this.orgService.getOrganizations().subscribe(orgs => {
+			try {
+				this.indicatorOrgsInfo.push({
+					title: title,
+					url: Constants.AOD_BASE_URL + '/' + Constants.ROUTER_LINK_DATA_ORGANIZATIONS,
+					count: JSON.parse(orgs).result.length
+				});
+			} catch (error) {
+				console.error("Error: getOrgsIndicator() - home.component.ts");
+				this.errorTitle = "Se ha producido un error";
+				this.errorMessage = "Se ha producido un error en la carga de Publicadores, vuelva a intentarlo y si el error persiste contacte con el administrador.";
+			}
+		});
+	}
+
+	getTopicsIndicator() {
+		let title = 'Temas';
+		this.topicsService.getTopics().subscribe(topics => {
+			try {
+				this.indicatorTopicsInfo.push({
+					title: title,
+					url: Constants.AOD_BASE_URL + '/' + Constants.ROUTER_LINK_DATA_TOPICS,
+					count: JSON.parse(topics).result.length
+				});
+			} catch (error) {
+				console.error("Error: getTopicsIndicator() - home.component.ts");
+				this.errorTitle = "Se ha producido un error";
+				this.errorMessage = "Se ha producido un error en la carga de Temas, vuelva a intentarlo y si el error persiste contacte con el administrador.";
+			}
+		});
+	}
+
+	getDatasetsIndicator() {
+		let pageNumber = 0;
+		let rowsNumber = 20;
+		let sort = 'relevance, -metadata_modified';
+		let selectedType = 'tipo';
+		let title = 'Conjuntos de datos';
+
+		this.datasetsService.getDatasets(sort, pageNumber, rowsNumber, selectedType).subscribe(datasets => {
+			try {
+				this.indicatorDatasetsInfo.push({
+					title: title,
+					url: Constants.AOD_BASE_URL + '/' + Constants.ROUTER_LINK_DATA_CATALOG,
+					count: JSON.parse(datasets).result.count
+				});
+			} catch (error) {
+				console.error('Error: getDatasetsIndicator() - home.component.ts');
+				console.error("Error ---> " + error);
+				this.errorTitle = this.datasetListErrorTitle;
+				this.errorMessage = this.datasetListErrorMessage;
+			}
+		});
+	}
+
+	getAppsIndicator() {
+		let title = 'Aplicaciones con datos abiertos';
+
+		this.staticContentService.getApplicationsInfoStaticContent().subscribe(staticContent => {
+			try {
+				this.indicatorAppsInfo.push({
+					title: title,
+					url: Constants.AOD_BASE_URL + '/' + Constants.ROUTER_LINK_INFORMATION_APPS,
+					count: staticContent.length
+				});
+			} catch (error) {
+				console.error('Error: getAppsIndicator() - home.component.ts');
+				console.error("Error ---> " + error);
+				this.errorTitle = "Se ha producido un error";
+				this.errorMessage = "Se ha producido un error en la carga de Temas, vuelva a intentarlo y si el error persiste contacte con el administrador.";
+			}
+		});
 	}
 
 	getTotalDatasetsOfOrg() {
@@ -164,8 +256,8 @@ export class HomeComponent implements OnInit {
 			} catch (error) {
 				console.error("Error: getDatasets() - organizations-detail.component.ts");
 				console.error("Error ---> " + error);
-				this.errorTitle="Se ha producido un error";
-                this.errorMessage="Se ha producido un error en la carga de Datsets, vuelva a intentarlo y si el error persiste contacte con el administrador.";
+				this.errorTitle = "Se ha producido un error";
+				this.errorMessage = "Se ha producido un error en la carga de Datsets, vuelva a intentarlo y si el error persiste contacte con el administrador.";
 			}
 		});
 	}
