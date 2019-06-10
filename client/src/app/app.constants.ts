@@ -13,6 +13,8 @@ export class Constants {
     public static AOD_API_CKAN_BASE_URL = 'http://miv-aodfront-01.aragon.local:5000';  
     //public static SPARQL_API_BASE_URL = 'http://localhost:8890/sparql';
     public static SPARQL_API_BASE_URL = 'http://biv-aodback-01.aragon.local:8890/sparql';
+    public static SPARQL_ENDPOINT_URL = 'https://preopendata.aragon.es/sparql';
+    //public static SPARQL_ENDPOINT_URL = 'https://opendata.aragon.es/sparql';
     public static VISUAL_SERVER_URL = 'http://miv-aodfront-01.aragon.local:7030';
     public static VISUAL_BACK_SERVER_URL = Constants.VISUAL_SERVER_URL + '/apivisualdata';
     public static LIST_ALL_CHARTS_PATH = '/services/charts';
