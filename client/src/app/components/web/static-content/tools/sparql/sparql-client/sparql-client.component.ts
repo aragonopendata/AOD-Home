@@ -1,8 +1,8 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Constants } from '../../../../../../app.constants';
-//declare const YASGUI: any;
-declare const YASQE: any;
-declare const YASR: any;
+declare const YASGUI: any;
+// declare const YASQE: any;
+// declare const YASR: any;
 
 @Component({
 	selector: 'app-sparql-client',
@@ -11,9 +11,9 @@ declare const YASR: any;
 })
 export class SparqlClientComponent implements OnInit {
 
-	//yasgui: any;
-	yasqe: any;
-	yasr: any;
+	yasgui: any;
+	// yasqe: any;
+	// yasr: any;
 
 	constructor(private elem: ElementRef) {}
 
@@ -22,10 +22,10 @@ export class SparqlClientComponent implements OnInit {
 	}
 
 	showYasGUI() {
-		/*this.yasgui = YASGUI(document.getElementById("yasgui"), {
+		this.yasgui = YASGUI(document.getElementById("yasgui"), {
 			yasqe:{sparql:{endpoint: Constants.SPARQL_ENDPOINT_URL}}
-		  });*/
-		var yasqe = YASQE(document.getElementById("yasqe"), {
+		  });
+		/*var yasqe = YASQE(document.getElementById("yasqe"), {
 			backdrop: true,
 			persistent: null,
 			sparql: {
@@ -50,8 +50,8 @@ export class SparqlClientComponent implements OnInit {
 			});
 		};
 		yasqe.options.sparql.callbacks.complete = yasr.setResponse;
-		yasr.options.getUsedPrefixes = yasqe.getPrefixesFromQuery;
-		/*let elementsBtnFullScreen = this.elem.nativeElement.querySelectorAll('.btn_fullscreen');
+		yasr.options.getUsedPrefixes = yasqe.getPrefixesFromQuery;*/
+		let elementsBtnFullScreen = this.elem.nativeElement.querySelectorAll('.btn_fullscreen');
 		elementsBtnFullScreen.forEach(element => {
 			element.remove()
 		});
@@ -70,6 +70,6 @@ export class SparqlClientComponent implements OnInit {
 		let elementsMainTabs = this.elem.nativeElement.querySelectorAll('.mainTabs');
 		elementsMainTabs.forEach(element => {
 			element.remove()
-		});*/
+		});
 	}
 }
