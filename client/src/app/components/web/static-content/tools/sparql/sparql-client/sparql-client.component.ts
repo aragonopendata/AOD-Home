@@ -33,5 +33,9 @@ export class SparqlClientComponent implements OnInit {
 		elementsControlBar.forEach(element => {
 			element.remove()
 		});
+		let elementsGoogleChart = this.elem.nativeElement.querySelectorAll('.select_gchart');
+		elementsGoogleChart.forEach(element => {
+			element.remove()
+		});
 	}
 }
