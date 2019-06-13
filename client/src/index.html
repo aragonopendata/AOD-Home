@@ -8,6 +8,82 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" type="image/x-icon" href="/static/public/i/favicon.ico">
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+	<!-- global tags -->
+	<meta name="portal" content="Aragón Open Data" />
+	<meta name="home" content="https://opendata.aragon.es/" />
+	<meta name="sitioWeb" content="https://opendata.aragon.es/" />
+	<meta name="author" content="" />
+	<meta name="idContenido" content="" />
+
+	<!-- Open Graph tags -->
+	<meta property="og:title" content="Aragón Open Data" />
+	<meta property="og:site_name" content="Aragón Open Data" />
+	<meta property="og:description" content="" />
+	<meta property="og:type" content="website" />
+	<meta property="og:image" content="https://opendata.aragon.es/static/public/header/images/AOD-Logo.png" />
+	<meta property="og:url" content="" />
+	
+
+	<!-- Dublin Core tags -->
+	<meta name="dcterms.title" content="" />
+	<meta name="dcterms.description" content="" />
+	<meta name="dcterms.subject" content="" />
+	<meta name="dcterms.identifier" content="" />
+	<meta name="dcterms.language" content="es" />
+	<meta name="dcterms.coverage" content="" />
+	<meta name="dcterms.publisher" content="" />
+	<meta name="dcterms.frequency" content="" />
+	<meta name="dcterms.periodoftime" content="" />
+	<meta name="dcterms.license" content='https://creativecommons.org/licenses/by/4.0/' />
+	<meta name="dcterms.type" content="text" />
+	<meta name="dcterms.format" content="text/html" />
+	<meta name="dcterms.creator" content="" />
+
+	<!-- Dataset tags -->
+	<meta name="etiquetas" content="" />
+	<meta name="keywords" content="" />
+	<meta name="niveldedetalle" content="" />
+	<meta name="formatosDisponibles" content="" />
+
+	<!-- Inclusion de JSON-LD -->
+	<script type="application/ld+json"> 
+
+		{ "@context":
+
+		{ "ei2a": "http://opendata.aragon.es/def/e2ia#", "dct": "http://purl.org/dc/terms/", "dcmi": "http://purl.org/dc/dcmitype/", "schema": "http://schema.org/" }
+		,"@type": ["ei2a:Document","dcmi:InteractiveResource"], "dct:title": "Aragon Open Data: Portal de datos abiertos del Gobierno de Aragón", "dct:description": "Aragón Open Data ofrece servicios como Open Data Pool, Open Analytics Data, Open Social Data u Open Visual Data ", "dct:format": "text/html", "dct:date": "2019", "dct:coverage":
+		
+		{ "@type": "schema:Place", "@id": "http://opendata.aragon.es/recurso/territorio/ComunidadAutonoma/Arag%C3%B3n" }
+		,"dct:language": "es", "dct:creator":
+		
+		{ "@type": "schema:GovernmentOrganization", "@id": "http://opendata.aragon.es/recurso/sectorpublico/organization/gobierno-aragon", "schema:name": "Gobierno de Aragón" }
+		,"dct:publisher":
+		
+		{ "@type": "schema:GovernmentOrganization", "@id": "http://opendata.aragon.es/recurso/sectorpublico/organization/gobierno-aragon", "schema:name": "Gobierno de Aragón" }
+		,"dct:rights":
+		
+		{ "@type": "schema:WebPage", "@id": "https://opendata.aragon.es/terminos" }
+		} ,{ "@context": "http://schema.org/", "@type": ["WebPage","WebSite"], "name": "Aragón Open Data ofrece servicios como Open Data Pool, Open Analytics Data, Open Social Data u Open Visual Data", "fileFormat": "text/html", "datePublished": "2019", "spatialCoverage":
+		
+		{ "@type": "Place", "@id": "http://opendata.aragon.es/recurso/territorio/ComunidadAutonoma/Arag%C3%B3n" }
+		,"inLanguage": "es", "creator":
+		
+		{ "@type": "GovernmentOrganization", "@id": "http://opendata.aragon.es/recurso/sectorpublico/organization/gobierno-aragon", "name": "Gobierno de Aragón" }
+		,"publisher":
+		
+		{ "@type": "GovernmentOrganization", "@id": "http://opendata.aragon.es/recurso/sectorpublico/organization/gobierno-aragon", "name": "Gobierno de Aragón" }
+		,"license":
+		
+		{ "@type": "WebPage", "@id": "https://opendata.aragon.es/terminos" }
+		} ,{ "@context": "http://schema.org", "@type": "GovernmentOrganization", "@id": "http://opendata.aragon.es/recurso/sectorpublico/organization/gobierno-aragon", "url": "http://www.aragon.es", "logo":
+		
+		{ "@type": "ImageObject", "url": "https://opendata.aragon.es/static/public/header/images/AOD-Logo.png"}
+		, "contactPoint": [
+		
+		{ "@type": "ContactPoint", "telephone": "+34 976714000", "contactType": "customer support" }
+		], "sameAs": [ "https://www.youtube.com/user/GobiernoAragon", "https://twitter.com/oasi", "https://www.facebook.com/observatorio.aragones" ] } 
+	</script>
 </head>
 
 <body>
@@ -44,55 +120,6 @@
 		ga('create', 'UA-36118896-2', 'auto');
 	</script>
 	<!-- End Google Analytics -->
-	<!-- Formulario inscripción evento -->
-	<!-- <script>
-		$(function() {
-			$(document).on('click','#enviarBtn',function(){
-				var name = $('#name').val();
-				var surname = $('#surname').val();
-				var email = $('#email').val();
-				var orgEmpresa = $('#orgEmpresa').val();
-				var puesto = $('#puesto').val();
-				
-				$('#error').hide();
-				$('#success').hide();
-
-				$('#nameError').hide();
-				$('#surnameError').hide();
-				$('#emailError').hide();
-				$('#orgEmpresaError').hide();
-				$('#puestoError').hide();
-
-				var emailValidator = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-
-				if(name == "" || name == " "){
-					$('#nameError').show();
-					$('#nameError').html('El campo <b>Nombre</b> no puede estar vacio / The field <b>Name</b> can not be empty');
-				}else if(surname == "" || surname == " "){
-					$('#surnameError').show();
-					$('#surnameError').html('El campo <b>Apellidos</b> no puede estar vacio / The field <b>Surname</b> can not be empty');
-				}else if(email == "" || email == " "){
-					$('#emailError').show();
-					$('#emailError').html('El campo <b>E-mail</b> no puede estar vacio / The field <b>E-mail</b> can not be empty');
-				}else if(orgEmpresa == "" || orgEmpresa == " "){
-					$('#orgEmpresaError').show();
-					$('#orgEmpresaError').html('El campo <b>Organización - Empresa</b> no puede estar vacio / The field <b>Organization - Company</b> can not be empty');
-				}else if(puesto == "" || puesto == " "){
-					$('#puestoError').show();
-					$('#puestoError').html('El campo <b>Puesto que desempeña</b> no puede estar vacio / The field <b>Corporate title - Business title</b> can not be empty');
-				} else {
-					if(emailValidator.test(email)){
-						var data = {"name": name, "surname": surname, "email": email, "orgEmpresa": orgEmpresa, "puesto": puesto};
-						window.angularComponentReference.zone.run(() =>
-						{window.angularComponentReference.componentFn(data);});
-					}else{
-						$('#emailError').show();
-						$('#emailError').html('El formato del e-mail no es correcto / The format of e-mail is not correct');
-					}
-				}
-			});
-		});
-	</script> -->
 </body>
 
 </html>
