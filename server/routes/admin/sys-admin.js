@@ -61,7 +61,7 @@ router.get('/sysadmin', function (req, res, next) {
 
 function getValidLogLine(lineDate, executionDate) {
     var isInRange = false;
-    if (lineDate.getHours() == executionDate.getHours() &&
+    if (lineDate.getDay() == executionDate.getDay() &&
         lineDate.toLocaleDateString() == executionDate.toLocaleDateString()) {
         isInRange = true;
     }
