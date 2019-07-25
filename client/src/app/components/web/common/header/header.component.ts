@@ -20,8 +20,8 @@ export class HeaderComponent implements OnInit {
     
     openedMenu: boolean = false;
     menuActive: boolean = false;
-    srcMenu: String = '/static/public/header/images/Boton-Menu-Responsive-OFF.png';
-    srcLogin: String = '/static/public/header/images/Boton-Acceso-Usuarios-OFF.png';
+    srcMenu: string;
+    srcLogin: string;
     dataset: Dataset;
 	datasetAutocomplete: Autocomplete[];
 	private datasetTitle = new Subject<string>();
@@ -54,6 +54,7 @@ export class HeaderComponent implements OnInit {
     transparenciaWebUrl: string;
     aragonParticipaWebUrl: string;
     routerLinkSparql: string;
+    assetsUrl: string;
 
     constructor(private locale: AppComponent, private constants: Constants,
             private datasetService: DatasetsService, private router: Router,
@@ -84,6 +85,10 @@ export class HeaderComponent implements OnInit {
 		this.routerLinkToolsApis = Constants.ROUTER_LINK_TOOLS_APIS;
         this.routerLinkToolsGithub = Constants.AOD_GITHUB_URL;
         this.routerLinkSparql = Constants.ROUTER_LINK_SPARQL;
+        this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
+
+        this.srcMenu = this.assetsUrl + '/public/header/images/Boton-Menu-Responsive-OFF.png';
+        this.srcLogin = this.assetsUrl + '/public/header/images/Boton-Acceso-Usuarios-OFF.png';
     }
 
     openNav() {
@@ -93,22 +98,22 @@ export class HeaderComponent implements OnInit {
             $('#menu').attr('alt', 'cerrar-menú');
             $('.overlay').css('top', $('#header').height());
             $('#myNav').height($(window).height() - $('#header').height());
-            $('#logo').attr('src', '/static/public/header/images/AOD-Logo-Responsive.png');
+            $('#logo').attr('src', this.assetsUrl + '/public/header/images/AOD-Logo-Responsive.png');
             this.menuActive = !this.menuActive;
             $('#nav').attr('class', 'navbar navbar-toggleable-md bg-inverse');
             $('#nav').css('background-color', 'rgba(0,0,0, 0.82)');
-            this.srcLogin = '/static/public/header/images/Boton-Acceso-Usuarios-gris.png';
-            this.srcMenu = '/static/public/header/images/Boton-Salir-Menu-Responsive-OFF.png';
+            this.srcLogin = this.assetsUrl + '/public/header/images/Boton-Acceso-Usuarios-gris.png';
+            this.srcMenu = this.assetsUrl + '/public/header/images/Boton-Salir-Menu-Responsive-OFF.png';
         } else {
             $('#menu').attr('alt', 'desplegar-menú');
             $('body,html').css('overflow-y', 'auto');
             $('#myNav').height('0%');
             $('#nav').attr('class', 'navbar navbar-toggleable-md bg-light');
-            $('#logo').attr('src', '/static/public/header/images/AOD-Logo.png');
+            $('#logo').attr('src', this.assetsUrl + '/public/header/images/AOD-Logo.png');
             $('#searchBox').val('');
             this.menuActive = !this.menuActive;
-            this.srcLogin = '/static/public/header/images/Boton-Acceso-Usuarios-OFF.png';
-            this.srcMenu = '/static/public/header/images/Boton-Menu-Responsive-OFF.png';
+            this.srcLogin = this.assetsUrl + '/public/header/images/Boton-Acceso-Usuarios-OFF.png';
+            this.srcMenu = this.assetsUrl + '/public/header/images/Boton-Menu-Responsive-OFF.png';
             this.datasetAutocomplete = [];
         }
     }
@@ -116,15 +121,15 @@ export class HeaderComponent implements OnInit {
     hover(id) {
         if (this.menuActive) {
             if (id === '#login') {
-                this.srcLogin = '/static/public/header/images/Boton-Acceso-Usuarios-blanco.png';
+                this.srcLogin = this.assetsUrl + '/public/header/images/Boton-Acceso-Usuarios-blanco.png';
             } else if (id === '#menu') {
-                this.srcMenu = '/static/public/header/images/Boton-Salir-Menu-Responsive-ON.png';
+                this.srcMenu = this.assetsUrl + '/public/header/images/Boton-Salir-Menu-Responsive-ON.png';
             }
         } else {
             if (id === '#login') {
-                this.srcLogin = '/static/public/header/images/Boton-Acceso-Usuarios-ON.png';
+                this.srcLogin = this.assetsUrl + '/public/header/images/Boton-Acceso-Usuarios-ON.png';
             } else if (id === '#menu') {
-                this.srcMenu = '/static/public/header/images/Boton-Menu-Responsive-ON.jpg';
+                this.srcMenu = this.assetsUrl + '/public/header/images/Boton-Menu-Responsive-ON.jpg';
             }
         }
     }
@@ -132,15 +137,15 @@ export class HeaderComponent implements OnInit {
     unhover(id) {
         if (this.menuActive) {
             if (id === '#login') {
-                this.srcLogin = '/static/public/header/images/Boton-Acceso-Usuarios-gris.png';
+                this.srcLogin = this.assetsUrl + '/public/header/images/Boton-Acceso-Usuarios-gris.png';
             } else if (id === '#menu') {
-                this.srcMenu = '/static/public/header/images/Boton-Salir-Menu-Responsive-OFF.png';
+                this.srcMenu = this.assetsUrl + '/public/header/images/Boton-Salir-Menu-Responsive-OFF.png';
             }
         } else {
             if (id === '#login') {
-                this.srcLogin = '/static/public/header/images/Boton-Acceso-Usuarios-OFF.png';
+                this.srcLogin = this.assetsUrl + '/public/header/images/Boton-Acceso-Usuarios-OFF.png';
             } else if (id === '#menu') {
-                this.srcMenu = '/static/public/header/images/Boton-Menu-Responsive-OFF.png';
+                this.srcMenu = this.assetsUrl + '/public/header/images/Boton-Menu-Responsive-OFF.png';
             }
         }
     }

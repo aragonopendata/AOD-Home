@@ -5,8 +5,8 @@
                 <button (click)="locale.switchLanguage('es')">Español</button>
             </ul>--> 
         <div class="row primary nav">
-            <div class="col-4 col-sm-6"> <img class="img-fluid imgob" alt="logo-gobierno-de-aragon" id="imgGobAragon" src="/static/public/contenido-general/header/logoDGABlanco.png"  />
-                <img id="imgGobFEDER" class="img-fluid imgob" alt="logo-union-europea" src="/static/public/contenido-general/header/logoFEDER.png" />
+            <div class="col-4 col-sm-6"> <img class="img-fluid imgob" alt="logo-gobierno-de-aragon" id="imgGobAragon" src="{{assetsUrl}}/public/contenido-general/header/logoDGABlanco.png"  />
+                <img id="imgGobFEDER" class="img-fluid imgob" alt="logo-union-europea" src="{{assetsUrl}}/public/contenido-general/header/logoFEDER.png" />
             </div>            
             <div class="col-8 col-sm-6">               
                 <a class="nav-link col-3" tabindex="3" href="{{transparenciaWebUrl}}" target="_blank">TRANSPARENCIA</a>
@@ -18,7 +18,7 @@
     <div class="navbar navbar-toggleable-md navbar-light" id="nav">
         
             <a class="navbar-brand logo" tabindex="4" href="/">
-                  <img alt="logo-aragon-open-data" class="navbar-brand" id="logo" src="/static/public/header/images/AOD-Logo.png"  class="d-inline-block align-top">
+                  <img alt="logo-aragon-open-data" class="navbar-brand" id="logo" src="{{assetsUrl}}/public/header/images/AOD-Logo.png"  class="d-inline-block align-top">
               </a>
             <div (keydown.enter)="focusUserName()" id="loginLink" class="nav-item menuLogin" (mouseenter)="hover('#login')" (click)="focusUserName()" (mouseleave)="unhover('#login')">
                 <a role="button" tabindex="5" class="button nav-link aLogin" routerLink="/{{routerLinkLogin}}">

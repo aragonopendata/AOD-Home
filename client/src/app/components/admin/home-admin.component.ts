@@ -16,6 +16,7 @@ export class HomeAdminComponent implements OnInit {
 
 	currentUserName: string;
 	routerLinkLogin: string;
+	assetsUrl: string;
 
 	user: any;
 	showUsersMenu: boolean = false;
@@ -26,6 +27,7 @@ export class HomeAdminComponent implements OnInit {
 
 	constructor(private usersAdminService: UsersAdminService, private authenticationService: AuthenticationService, private loginService: LoginService, private router: Router) {
 		this.routerLinkLogin = Constants.ROUTER_LINK_LOGIN;
+		this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
 		
 	 }
 

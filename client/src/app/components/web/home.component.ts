@@ -39,6 +39,7 @@ export class HomeComponent implements OnInit {
 	routerLinkToolsApis: string;
 	routerLinkToolsGithub: string;
 	routerLinkSparql: string;
+	assetsUrl: string;
 
 	constructor( private router: Router, private activatedRoute: ActivatedRoute,
 		private location: Location, private utilsService: UtilsService ) { 
@@ -63,6 +64,7 @@ export class HomeComponent implements OnInit {
 		this.routerLinkToolsApis = Constants.ROUTER_LINK_TOOLS_APIS;
 		this.routerLinkToolsGithub = Constants.AOD_GITHUB_URL;
 		this.routerLinkSparql = Constants.ROUTER_LINK_SPARQL;
+		this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
 		this.getOpenedMenu();
 		
 	}
