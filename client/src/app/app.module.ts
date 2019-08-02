@@ -90,6 +90,7 @@ import { GoogleAnalyticsEventsService } from "./services/web/google-analytics-ev
 import { UtilsService } from './services/web/utils.service';
 import { TinyMceModule } from 'angular-tinymce';
 import { tinymceDefaultSettings } from 'angular-tinymce';
+import { FilesAdminService } from './services/admin/files-admin.service';
 
 
 @NgModule({
@@ -202,6 +203,7 @@ import { tinymceDefaultSettings } from 'angular-tinymce';
 		RolesAdminService,
 		StaticContentAdminService,
 		DatasetsAdminService,
+		FilesAdminService,
 		TopicsAdminService,
 		OrganizationsAdminService,
 		CampusAdminService,

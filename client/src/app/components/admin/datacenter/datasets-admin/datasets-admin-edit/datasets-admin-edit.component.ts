@@ -7,6 +7,7 @@ import { debounceTime, distinctUntilChanged, switchMap, catchError } from 'rxjs/
 import { of } from 'rxjs/observable/of';
 import { SelectItem, DialogModule, Message, CalendarModule } from 'primeng/primeng';
 import { DatasetsAdminService } from '../../../../../services/admin/datasets-admin.service';
+import { FilesAdminService } from '../../../../../services/admin/files-admin.service';
 import { TopicsAdminService } from '../../../../../services/admin/topics-admin.service';
 import { OrganizationsAdminService } from '../../../../../services/admin/organizations-admin.service';
 import { Dataset } from '../../../../../models/Dataset';
@@ -151,10 +152,14 @@ export class DatasetsAdminEditComponent implements OnInit {
     errorTitle: string;
     errorMessage: string;
 	datasetEditErroTitle: string;
-    datasetEditErrorMessage: string;
+	datasetEditErrorMessage: string;
+	
+	// Control for enabled tabs
+	activeTab = [true, false, false];
+	currentTab = 0;
 
 	constructor(private datasetsAdminService: DatasetsAdminService, private topicsAdminService: TopicsAdminService, private organizationsAdminService: OrganizationsAdminService,
-		private usersAdminService: UsersAdminService, private aodCoreAdminService: AodCoreAdminService, private activatedRoute: ActivatedRoute, private router: Router) {
+		private usersAdminService: UsersAdminService, private aodCoreAdminService: AodCoreAdminService, private activatedRoute: ActivatedRoute, private router: Router, private filesAdminService: FilesAdminService) {
 			this.routerLinkDatasetList = Constants.ROUTER_LINK_ADMIN_DATACENTER_DATASETS;
 			this.newResourceAccessTypePublicFile = Constants.ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_TYPES_URL_PUBLIC_FILE.value;
 			this.newResourceAccessTypeDatabaseView = Constants.ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_TYPES_DATABASE_VIEW.value;
@@ -194,6 +199,83 @@ export class DatasetsAdminEditComponent implements OnInit {
 		} else {
 			this.initializeDataset();
 		}
+	}
+
+	// Show error message if the user tries to navigate to the next tab before setting required params on previous tabs
+	showErrorTab(tab){
+		if(this.currentTab < tab){
+			this.msgs.push({severity:'warn', summary:'Error', detail: 'Completa primero las pestañas previas'});
+		}
+	}
+
+	// Check geographic coverage is set
+	checkGeoCoverage(){
+		let valid = undefined;
+
+		if(this.aragonRadioValue
+			|| (this.provinciaRadioValue && this.provinciaInput !== undefined && this.provinciaInput !== '')
+			|| (this.comarcaRadioValue && this.comarcaInput !== undefined && this.provinciaInput != '')
+			|| (this.municipioRadioValue && this.municipioInput !== undefined && this.municipioInput != '')
+			|| (this.otherRadioValue && this.otherInputGeo && this.otherInputGeo != '')){
+			
+				valid = true;
+		}
+		return valid;
+	}
+	
+	// Iterate requiredObj array from init to end and show error message if array[i] is not set
+	showErrorMsg(requiredObj, init, end, msg){
+		for(let i=0; i<requiredObj.slice(init, end).length; i++){
+			if(requiredObj[i] === undefined || requiredObj[i] === ''){
+				this.msgs.push({severity:'warn', summary:'¡Atención!', detail: 'Faltan por rellenar el campo obligatorio ' + msg[i]});
+			}
+		}
+	}
+
+	// Checks that required params are set before saving dataset and enables following tabs when previous are completed
+	checkAndNextTab(option: boolean){
+		let msg = ['Titulo', 'Descripción', 'Temática', 'Cobertura Geográfica', 'Publicador'];
+		let requiredObj = [this.inputDatasetTitle, this.inputDatasetDescription, this.selectedTopic, this.checkGeoCoverage(), this.selectedOrg];
+
+		this.msgs = [];
+		if(this.currentTab === 0){
+			// Check first tab required params
+			if(requiredObj.slice(0,4).every( obj => obj !== undefined && obj !== '') && requiredObj[4] == undefined){
+				this.activeTab = [true, true, false];
+				this.currentTab = 1;
+				this.msgs.push({severity:'success', summary:'¡Correcto!', detail: 'Puedes pasar a la pestaña 2'});
+
+			}else{
+				this.showErrorMsg(requiredObj, 0, 4, msg);
+			}
+		}else if(this.currentTab > 0){
+			// Check first and second tab required params
+			if(requiredObj.every( obj => obj !== undefined && obj !== '')){
+				this.saveDataset(option);
+				this.activeTab = [true, true, true];
+
+				if(this.currentTab === 1){
+					this.currentTab = 2;
+					this.msgs.push({severity:'success', summary:'¡Correcto!', detail: 'Puedes pasar a la pestaña 3'});
+				}
+				
+			}else{
+				this.showErrorMsg(requiredObj, 0, 5, msg);
+			}
+		}		
+	}
+
+	// Upload file
+	uploadFile($event) {
+		this.filesAdminService.createFile($event.target.files[0]).subscribe( response => {
+			if(response.success) {
+				console.log($event.target.files[0]);
+				console.log($event.target.files[0].name);
+				this.msgs.push({severity:'success', summary:'Fichero subido', detail:'Se ha subido el fichero con exito'});
+			}else{
+				console.log('Error en la petición');
+			}
+		});	
 	}
 
 	initializeDataset() {
@@ -293,7 +375,8 @@ export class DatasetsAdminEditComponent implements OnInit {
 	}
 	
 	loadDataset(dataset: Dataset) {
-
+		this.activeTab = [true, true, true];
+		this.currentTab = 3;
 		this.datasetsAdminService.getDatasetByName(dataset.name).subscribe(dataResult => {
 			try {
 				if(dataResult != Constants.ADMIN_DATASET_ERR_LOAD_DATASET){
@@ -930,8 +1013,8 @@ export class DatasetsAdminEditComponent implements OnInit {
 			&& this.selectedTopic != undefined ) {
 			valid = true;
 		} else {
-			this.msgs = [];
-			this.msgs.push({severity:'warn', summary:'¡Atención!', detail: 'Faltan por rellenar campos obligatorios'});
+			// this.msgs = [];
+			// this.msgs.push({severity:'warn', summary:'¡Atención!', detail: 'Faltan por rellenar campos obligatorios'});
 		}
 		return valid;
 	}

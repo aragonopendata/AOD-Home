@@ -8,9 +8,22 @@ const http = require('http');
 const proxy = require('../../conf/proxy-conf');
 const request = require('request');
 //Multer for receive form-data
-const multer  = require('multer')
-var storage = multer.memoryStorage()
-var upload = multer({ storage: storage })
+const multer  = require('multer');
+var storage = multer.memoryStorage();
+var upload = multer({ storage: storage });
+
+// Multer to save files to disk
+var disk_storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, '/tmp');
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname+ '-' + Date.now());
+    }
+  })
+   
+var disk_upload = multer({ storage: disk_storage });
+
 // FormData for send form-data
 const formData = require('form-data');
 const fs = require('fs');
@@ -467,57 +480,83 @@ router.delete(constants.API_URL_ADMIN_RESOURCE, function (req, res, next) {
     }
 })
 
-/** GET DATASETS RESOURCE_VIEW */
-router.get(constants.API_URL_DATASETS_RESOURCE_VIEW, function (req, res, next) {
+/** CREATE FILE */
+router.post(constants.API_URL_ADMIN_RESOURCE, upload.single('file'), function (req, res, next) {
     try {
-
-        logger.debug('Servicio: Obtener vistas de los recursos');
-        let serviceBaseUrl = constants.CKAN_API_BASE_URL;
-        let serviceName = constants.DATASETS_RESOURCE_VIEW;
-        let serviceRequestUrl = serviceBaseUrl + serviceName + '?id=' + req.query.resId;
-
-        var query = '';
-        let resParams = [];
-
-        logger.notice('URL de petición: ' + serviceRequestUrl);
-
+        var resource = req.body;
         let apiKey = utils.getApiKey(req.get('Authorization'));
         if (apiKey) {
             logger.info('API KEY del usuario recuperada: ' + apiKey);
-            var httpRequestOptions = {
-                url: serviceRequestUrl,
-                method: constants.HTTP_REQUEST_METHOD_GET,
-                headers: {
-                    'Content-Type': constants.HTTP_REQUEST_HEADER_CONTENT_TYPE_JSON,
-                    'User-Agent': constants.HTTP_REQUEST_HEADER_USER_AGENT_NODE_SERVER_REQUEST,
-                    'Authorization': apiKey
-                }
-            };
-            request(httpRequestOptions, function (err, response, body) {
-                if (err) {
-                    utils.errorHandler(err, res, serviceName);
-                }
-                if (response) {
-                    if (response.statusCode == 200) {
-                        res.json(body);
+            if (resource.resource_type != 'view'){
+                //2. ADD RESOURCE IN CKAN
+                insertResourceInCKAN(apiKey, req)
+                .then( insertCkanResponse => {
+                    res.json(JSON.parse(insertCkanResponse));
+                });
+            } else {
+                let resourceJSON = req;
+                resourceJSON.body.format = 'JSON';
+                resourceJSON.body.url = constants.GA_OD_CORE_BASE_URL+'/download?view_id='+resourceJSON.body.view_id+'&formato=json';
+                //2. ADD RESOURCE IN CKAN
+                insertResourceInCKAN(apiKey, resourceJSON)
+                .then( insertCkanResponseJson => {
+                    if (insertCkanResponseJson) {
+                        let resourceCSV = req;
+                        resourceCSV.body.format = 'CSV';
+                        resourceCSV.body.url = constants.GA_OD_CORE_BASE_URL+'/download?view_id='+resourceCSV.body.view_id+'&formato=csv';
+                        insertResourceInCKAN(apiKey, resourceCSV)
+                        .then( insertCkanResponseCsv => {
+                            if ( insertCkanResponseCsv){
+                                let resourceXML = req;
+                                resourceXML.body.format = 'XML';
+                                resourceXML.body.url = constants.GA_OD_CORE_BASE_URL+'/download?view_id='+resourceXML.body.view_id+'&formato=xml';
+                        
+                                insertResourceInCKAN(apiKey, resourceXML)
+                                .then( insertCkanResponseXml => {
+                                    if(insertCkanResponseXml){
+                                        res.json(JSON.parse(insertCkanResponseXml));
+                                    }else{
+                                        logger.error('CREACCION DE RECURSOS - Error al Insertar XML: ', error);
+                                        res.json({ 'status': constants.REQUEST_ERROR_FORBIDDEN, 'error': 'CREACCION DE RECURSOS - Error al Insertar XML' });
+                                    }
+                                });
+                            } else {
+                                logger.error('CREACCION DE RECURSOS - Error al Insertar CSV: ', error);
+                                res.json({ 'status': constants.REQUEST_ERROR_FORBIDDEN, 'error': 'CREACCION DE RECURSOS - Error al Insertar CSV' });
+                            }
+                        });
                     } else {
-                        res.json(JSON.stringify(res.statusCode) + ' - ' + JSON.stringify(res.statusMessage));
+                        logger.error('CREACCION DE RECURSOS - Error al Insertar JSON: ', error);
+                        res.json({ 'status': constants.REQUEST_ERROR_FORBIDDEN, 'error': 'CREACCION DE RECURSOS - Error al Insertar JSON' });
                     }
-                } else {
-                    res.json({ 'status': constants.REQUEST_ERROR_FORBIDDEN, 'error': 'OBTENER VISTAS DE RECURSO - Error al obtener las vistas de los recursos' });
-                }
-            }).on('error', function (err) {
-                utils.errorHandler(err, res, serviceName);
-            });
+                });
+            }
         } else {
-            logger.error('OBTENER VISTAS DE RECURSO - Usuario no autorizado');
-            res.json({ 'status': constants.REQUEST_ERROR_FORBIDDEN, 'error': 'OBTENER VISTAS DE RECURSO - API KEY incorrecta' });
+            logger.error('CREACCION DE RECURSOS - Usuario no autorizado: ', error);
+            res.json({ 'status': constants.REQUEST_ERROR_FORBIDDEN, 'error': 'CREACCION DE RECURSOS - Usuario no autorizado' });
             return;
         }
     } catch (error) {
-        logger.error('Error in route' + constants.API_URL_DATASETS_RESOURCE_VIEW);
+        logger.error('CREACCION DE RECURSOS - Error al crear el recurso: ', error);
+        res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'CREACCION DE RECURSOS - Error al crear el recurso' });
+        return;
+    }    
+  })
+
+/** POST DATASETS RESOURCE XLSM UPLOAD */
+router.post(constants.API_URL_ADMIN_CREATE_FILE, disk_upload.single('file'), function (req, res, next) {
+    try {
+        const file = req.file;
+        console.log(req.file);
+        if (!file) {
+            res.json({ 'status': constants.REQUEST_ERROR_BAD_DATA, 'success': false, 'message': 'Please, upload a file.' });
+          }
+        res.json({ 'status': constants.REQUEST_REQUEST_OK, 'success': true, 'message': 'File uploaded succesfully.' });
+    } catch (error) {
+        console.log(error);
     }
-});
+
+  })
 
 /** GET USER PERMISSIONS FUNCTION */
 var getUserPermissions = function checkUserPermissions(userId, userName) {
