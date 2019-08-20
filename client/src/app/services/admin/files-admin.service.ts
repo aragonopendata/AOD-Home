@@ -42,15 +42,24 @@ export class FilesAdminService {
 		return this.file;
 	}
 
-	public createFile(newFile: any) {
+	public createFile(newFile: any, datasetid) {
 		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_CREATE_FILE;
 		let headers = this.buildRequestHeaders();
 		let formData:FormData = new FormData();
 		if(newFile != null){
-			formData.append('file', newFile, newFile.name);
-			formData.append('filename', newFile.name);
+			formData.append('file', newFile, datasetid + '-mapeo_ei2a.xlsm');
+			formData.append('filename', datasetid + '-mapeo_ei2a.xlsm');
 		}
 		let options = new RequestOptions({ headers: headers});
 		return this.http.post(fullUrl, formData, options).pipe(map(res => res.json()));
 	}
+
+	public downloadFile(fileid) {
+		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_DOWNLOAD_FILE + '?fileid=' + fileid;
+		let headers = this.buildRequestHeaders();
+		headers.append('responseType', "arraybuffer");
+		let options = new RequestOptions({ headers: headers});
+		return this.http.get(fullUrl, options);
+	}
+
 }

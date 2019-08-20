@@ -7,6 +7,8 @@ const dbQueries = require('../../db/db-queries');
 const http = require('http');
 const proxy = require('../../conf/proxy-conf');
 const request = require('request');
+const path = require('path');
+
 //Multer for receive form-data
 const multer  = require('multer');
 var storage = multer.memoryStorage();
@@ -15,10 +17,10 @@ var upload = multer({ storage: storage });
 // Multer to save files to disk
 var disk_storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, '/tmp');
+      cb(null, constants.XLMS_PATH);
     },
     filename: function (req, file, cb) {
-        cb(null, file.originalname+ '-' + Date.now());
+        cb(null, file.originalname);
     }
   })
    
@@ -548,10 +550,31 @@ router.post(constants.API_URL_ADMIN_CREATE_FILE, disk_upload.single('file'), fun
     try {
         const file = req.file;
         console.log(req.file);
+        console.log(req.file.filename);
         if (!file) {
             res.json({ 'status': constants.REQUEST_ERROR_BAD_DATA, 'success': false, 'message': 'Please, upload a file.' });
           }
-        res.json({ 'status': constants.REQUEST_REQUEST_OK, 'success': true, 'message': 'File uploaded succesfully.' });
+        res.json({ 'status': constants.REQUEST_REQUEST_OK, 'success': true, 'filename': req.file.filename, 'message': 'File uploaded succesfully.' });
+    } catch (error) {
+        console.log(error);
+    }
+
+  })
+
+/** GET DATASETS RESOURCE XLSM */
+router.get(constants.SERVER_API_DOWNLOAD_FILE, function (req, res) {
+    try {
+        console.log("Request recived");
+        console.log(req.query.fileid);
+        var fileLocation = path.join(constants.XLMS_PATH, req.query.fileid + '-mapeo_ei2a.xlsm');
+        console.log(fileLocation);
+        res.download(fileLocation, function(err){
+            console.log(err);
+            if(err && !res.headersSent){
+                console.log('Sending 404');
+                res.sendStatus(constants.REQUEST_NOT_FOUND);                
+            }
+        });
     } catch (error) {
         console.log(error);
     }

@@ -18,6 +18,7 @@ import { UsersAdminService } from 'app/services/admin/users-admin.service';
 import { AodCoreAdminService } from 'app/services/admin/aod-core-admin.service';
 import { Extra } from 'app/models/Extra';
 import { Resource } from 'app/models/Resource';
+import { saveAs } from 'file-saver';
 declare var jQuery:any;
 
 @Component({
@@ -158,6 +159,9 @@ export class DatasetsAdminEditComponent implements OnInit {
 	activeTab = [true, false, false];
 	currentTab = 0;
 
+	// mapeo file
+	mapeo_file_tmp = undefined;
+
 	constructor(private datasetsAdminService: DatasetsAdminService, private topicsAdminService: TopicsAdminService, private organizationsAdminService: OrganizationsAdminService,
 		private usersAdminService: UsersAdminService, private aodCoreAdminService: AodCoreAdminService, private activatedRoute: ActivatedRoute, private router: Router, private filesAdminService: FilesAdminService) {
 			this.routerLinkDatasetList = Constants.ROUTER_LINK_ADMIN_DATACENTER_DATASETS;
@@ -265,17 +269,31 @@ export class DatasetsAdminEditComponent implements OnInit {
 		}		
 	}
 
+	uploadFileTmp($event){
+		this.mapeo_file_tmp = $event.target.files[0];
+	}
+
 	// Upload file
-	uploadFile($event) {
-		this.filesAdminService.createFile($event.target.files[0]).subscribe( response => {
+	uploadFile() {
+		this.filesAdminService.createFile(this.mapeo_file_tmp, this.dataset.id).subscribe( response => {
 			if(response.success) {
-				console.log($event.target.files[0]);
-				console.log($event.target.files[0].name);
+				console.log(this.mapeo_file_tmp);
+				console.log(this.mapeo_file_tmp.name);
 				this.msgs.push({severity:'success', summary:'Fichero subido', detail:'Se ha subido el fichero con exito'});
 			}else{
 				console.log('Error en la petición');
 			}
 		});	
+	}
+
+	downloadMapFile($event) {
+		this.filesAdminService.downloadFile(this.dataset.id).subscribe( response => {
+			console.log(response);
+			if(response.status === 200 && response.ok){
+				var blob = new Blob([response.arrayBuffer()], {type: 'application/vnd.ms-excel.sheet.macroEnabled.12'});
+				saveAs(blob, "mapeo_ei2a.xlsm");
+			}
+		});
 	}
 
 	initializeDataset() {
@@ -1235,6 +1253,9 @@ export class DatasetsAdminEditComponent implements OnInit {
 	}
 
 	saveDatasetUpdate(option: boolean){
+		if(this.mapeo_file_tmp !== undefined){
+			this.uploadFile();
+		}
 		try {
 			this.dataset.title = this.inputDatasetTitle;
 			this.dataset.notes = this.inputDatasetDescription;

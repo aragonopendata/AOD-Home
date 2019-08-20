@@ -642,7 +642,12 @@
 							</div>
 							<div class="row">
 								<div class="col-md-12">
-									<input class="primary" type="file" #uploader (change)="uploadFile($event)">
+									<input class="primary" type="file" #uploader (change)="uploadFileTmp($event)">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<a href="javascript:;" (click)="downloadMapFile($event)">Descargar fichero de mapeo modificado</a>
 								</div>
 							</div>
 						</div>
