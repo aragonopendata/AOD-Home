@@ -562,24 +562,25 @@ router.post(constants.API_URL_ADMIN_CREATE_FILE, disk_upload.single('file'), fun
   })
 
 /** GET DATASETS RESOURCE XLSM */
-router.get(constants.SERVER_API_DOWNLOAD_FILE, function (req, res) {
-    try {
-        console.log("Request recived");
-        console.log(req.query.fileid);
-        var fileLocation = path.join(constants.XLMS_PATH, req.query.fileid + '-mapeo_ei2a.xlsm');
-        console.log(fileLocation);
-        res.download(fileLocation, function(err){
-            console.log(err);
-            if(err && !res.headersSent){
-                console.log('Sending 404');
-                res.sendStatus(constants.REQUEST_NOT_FOUND);                
-            }
-        });
-    } catch (error) {
-        console.log(error);
-    }
+// router.get(constants.SERVER_API_DOWNLOAD_FILE, function (req, res) {
+//     try {
+//         console.log("Request recived");
+//         console.log(req.query.fileid);
+//         var fileLocation = path.join(constants.XLMS_PATH, req.query.fileid + '.xlsm');
+//         console.log(fileLocation);
+//         res.download(fileLocation, 'mapeo_ei2a.xlsm');
+//         // res.download(fileLocation, function(err){
+//         //     console.log(err);
+//         //     if(err && !res.headersSent){
+//         //         console.log('Sending 404');
+//         //         res.sendStatus(constants.REQUEST_NOT_FOUND);                
+//         //     }
+//         // });
+//     } catch (error) {
+//         console.log(error);
+//     }
 
-  })
+//   })
 
 /** GET USER PERMISSIONS FUNCTION */
 var getUserPermissions = function checkUserPermissions(userId, userName) {

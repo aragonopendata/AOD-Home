@@ -19,6 +19,7 @@ import { AodCoreAdminService } from 'app/services/admin/aod-core-admin.service';
 import { Extra } from 'app/models/Extra';
 import { Resource } from 'app/models/Resource';
 import { saveAs } from 'file-saver';
+
 declare var jQuery:any;
 
 @Component({
@@ -286,14 +287,28 @@ export class DatasetsAdminEditComponent implements OnInit {
 		});	
 	}
 
+	// downloadMapFile($event) {
+	// 	this.filesAdminService.downloadFile(this.dataset.id).subscribe( response => {
+	// 		console.log(response);
+	// 		if(response.status === 200 && response.ok){
+	// 			var blob = new Blob([response.arrayBuffer()], {type: 'application/vnd.ms-excel.sheet.macroEnabled.12'});
+	// 			saveAs(blob, "mapeo_ei2a_edited.xlsm");
+	// 		}
+	// 	});
+	// }
+
 	downloadMapFile($event) {
-		this.filesAdminService.downloadFile(this.dataset.id).subscribe( response => {
-			console.log(response);
-			if(response.status === 200 && response.ok){
-				var blob = new Blob([response.arrayBuffer()], {type: 'application/vnd.ms-excel.sheet.macroEnabled.12'});
-				saveAs(blob, "mapeo_ei2a.xlsm");
-			}
-		});
+		// var link = document.createElement("a");
+		// link.href = Constants.AOD_BASE_URL + Constants.XLMS_PATH + this.dataset.id + '.xlsm';
+		// link.download = "mapeo_ei2a.xlsm";
+		
+		// document.body.appendChild(link);
+		// link.click();
+		// document.body.removeChild(link);
+		
+		let url = Constants.AOD_BASE_URL + Constants.XLMS_PATH + this.dataset.id + '/mapeo_ei2a.xlsm';
+		console.log(url);
+		window.open(url, '_blank');
 	}
 
 	initializeDataset() {
