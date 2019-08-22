@@ -17,7 +17,16 @@ var upload = multer({ storage: storage });
 // Multer to save files to disk
 var disk_storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, constants.XLMS_PATH);
+        const dir = constants.XLSM_PATH + req.body.datasetid;
+        console.log(dir);
+        try {
+            if (!fs.existsSync(dir)){
+              fs.mkdirSync(dir)
+            }
+          } catch (err) {
+            console.error(err)
+          }
+      cb(null, dir);   
     },
     filename: function (req, file, cb) {
         cb(null, file.originalname);
@@ -27,7 +36,7 @@ var disk_storage = multer.diskStorage({
 var disk_upload = multer({ storage: disk_storage });
 
 // FormData for send form-data
-const formData = require('form-data');
+const formData = require('form-data');  
 const fs = require('fs');
 //DB SETTINGS
 const db = require('../../db/db-connection');
@@ -549,8 +558,7 @@ router.post(constants.API_URL_ADMIN_RESOURCE, upload.single('file'), function (r
 router.post(constants.API_URL_ADMIN_CREATE_FILE, disk_upload.single('file'), function (req, res, next) {
     try {
         const file = req.file;
-        console.log(req.file);
-        console.log(req.file.filename);
+
         if (!file) {
             res.json({ 'status': constants.REQUEST_ERROR_BAD_DATA, 'success': false, 'message': 'Please, upload a file.' });
           }
@@ -560,27 +568,6 @@ router.post(constants.API_URL_ADMIN_CREATE_FILE, disk_upload.single('file'), fun
     }
 
   })
-
-/** GET DATASETS RESOURCE XLSM */
-// router.get(constants.SERVER_API_DOWNLOAD_FILE, function (req, res) {
-//     try {
-//         console.log("Request recived");
-//         console.log(req.query.fileid);
-//         var fileLocation = path.join(constants.XLMS_PATH, req.query.fileid + '.xlsm');
-//         console.log(fileLocation);
-//         res.download(fileLocation, 'mapeo_ei2a.xlsm');
-//         // res.download(fileLocation, function(err){
-//         //     console.log(err);
-//         //     if(err && !res.headersSent){
-//         //         console.log('Sending 404');
-//         //         res.sendStatus(constants.REQUEST_NOT_FOUND);                
-//         //     }
-//         // });
-//     } catch (error) {
-//         console.log(error);
-//     }
-
-//   })
 
 /** GET USER PERMISSIONS FUNCTION */
 var getUserPermissions = function checkUserPermissions(userId, userName) {
