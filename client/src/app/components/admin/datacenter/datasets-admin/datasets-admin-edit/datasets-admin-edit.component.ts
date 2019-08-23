@@ -288,7 +288,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 	}
 
 	downloadMapFile($event) {
-		let url = Constants.AOD_BASE_URL + Constants.XLMS_PATH + this.dataset.id + '/mapeo_ei2a.xlsm';
+		let url = Constants.AOD_BASE_URL + Constants.XLMS_PATH + this.dataset.id + '/mapeo_ei2a.xlsm?q=' + Date.now();
 		console.log(url);
 		window.open(url, '_blank');
 	}
