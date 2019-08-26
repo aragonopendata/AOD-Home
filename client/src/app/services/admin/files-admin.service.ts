@@ -55,10 +55,10 @@ export class FilesAdminService {
 	}
 	
 	public downloadFile(fileid) {
-		let fullUrl = Constants.AOD_BASE_URL + Constants.XLMS_PATH + fileid + '.xlsm';
+		let fullUrl = Constants.AOD_BASE_URL + Constants.XLMS_PATH + fileid + '/mapeo_ei2a.xlsm?q=' + Date.now();
 		let headers = this.buildRequestHeaders();
 		let options = new RequestOptions({ headers: headers});
-		return this.http.get(fullUrl, options);
+		return this.http.options(fullUrl, options);
 	}
 
 }
