@@ -38,3 +38,12 @@ testem.log
 #System Files
 .DS_Store
 Thumbs.db
+
+client/src/app/app.constants.ts
+server/util/constants.js
+client/src/app/app.constants.ts.old
+client/src/app/app.constants.ts.old2
+client/src/app/app.constants.tsold3
+package-lock.json
+server/util/constants.js.old
+server/util/constants.js.old2

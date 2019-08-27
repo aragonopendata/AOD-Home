@@ -244,10 +244,10 @@
 					<a class="nav-link active" [class.disabled]="!activeTab[0]" data-toggle="tab" href="#content_tab" role="tab">Contenido *</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" [class.disabled]="!activeTab[1]" (click)="showErrorTab(1)" data-toggle="tab" href="#context_tab" role="tab">Contexto *</a>
+					<a class="nav-link" [class.disabled]="!activeTab[1]" (click)="checkAndNextTab(1, false)" data-toggle="tab" href="#context_tab" role="tab">Contexto *</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link enabled" [class.disabled]="!activeTab[2]" (click)="showErrorTab(2)" data-toggle="tab" href="#structure_tab" role="tab">Estructura *</a>
+					<a class="nav-link enabled" [class.disabled]="!activeTab[2]" (click)="checkAndNextTab(2, false)" data-toggle="tab" href="#structure_tab" role="tab">Estructura *</a>
 				</li>
 				<li *ngIf="isIAESTDataset" class="nav-item">
 						<a class="nav-link" data-toggle="tab" href="#extra_iaest" role="tab">Extras IAEST</a>
@@ -645,7 +645,7 @@
 									<input class="primary" type="file" #uploader (change)="uploadFileTmp($event)">
 								</div>
 							</div>
-							<div class="row">
+							<div *ngIf="showMapLink" class="row">
 								<div class="col-md-12">
 									<a  href="javascript:;" (click)="downloadMapFile($event)">Descargar fichero de mapeo modificado</a>
 								</div>
@@ -690,8 +690,8 @@
 			<p>Los campos marcados con este asterisco * son obligatorios, recuerda rellenarlos</p>
 			<div class="row justify-content-end pb-5">
 				<div class="btn-group" role="group" aria-label="Action Buttons">
-					<button id="saveAndContinueB" type="button" (click)="checkAndNextTab(false)" class="btn btn-primary">Guarda y sigue</button>
-					<button id="saveAndFinishB" type="button" (click)="checkAndNextTab(true)" class="btn btn-primary">Guarda y finaliza</button>
+					<!-- <button id="saveAndContinueB" type="button" (click)="checkAndNextTab(false)" class="btn btn-primary">Guarda y sigue</button> -->
+					<button id="saveAndFinishB" type="button" (click)="checkAndNextTab(currentTab, true)" class="btn btn-primary">Guardar</button>
 					<button type="button" (click)="showCancelDialog(dataset.title,dataset.name)" class="btn btn-danger">Cancelar</button>
 				</div>
 			</div>

@@ -162,6 +162,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 
 	// mapeo file
 	mapeo_file_tmp = undefined;
+	showMapLink = false;
 
 	constructor(private datasetsAdminService: DatasetsAdminService, private topicsAdminService: TopicsAdminService, private organizationsAdminService: OrganizationsAdminService,
 		private usersAdminService: UsersAdminService, private aodCoreAdminService: AodCoreAdminService, private activatedRoute: ActivatedRoute, private router: Router, private filesAdminService: FilesAdminService) {
@@ -237,35 +238,70 @@ export class DatasetsAdminEditComponent implements OnInit {
 		}
 	}
 
-	// Checks that required params are set before saving dataset and enables following tabs when previous are completed
-	checkAndNextTab(option: boolean){
+	checkTab0(){
 		let msg = ['Titulo', 'Descripción', 'Temática', 'Cobertura Geográfica', 'Publicador'];
 		let requiredObj = [this.inputDatasetTitle, this.inputDatasetDescription, this.selectedTopic, this.checkGeoCoverage(), this.selectedOrg];
 
+		// Check first tab required params
+		if(requiredObj.slice(0,4).every( obj => obj !== undefined && obj !== '') && requiredObj[4] == undefined){
+			return true;
+		}else{
+			this.showErrorMsg(requiredObj, 0, 4, msg);
+			return false;
+		}
+	}
+
+	checkTab1(){
+		let msg = ['Titulo', 'Descripción', 'Temática', 'Cobertura Geográfica', 'Publicador'];
+		let requiredObj = [this.inputDatasetTitle, this.inputDatasetDescription, this.selectedTopic, this.checkGeoCoverage(), this.selectedOrg];
+
+		// Check second tab required params
+		if(requiredObj.every( obj => obj !== undefined && obj !== '')){
+			return true;
+		}else{
+			this.showErrorMsg(requiredObj, 0, 5, msg);
+		}
+		return false;
+	}
+
+	// Checks that required params are set before saving dataset and enables following tabs when previous are completed
+	checkAndNextTab(nextTab, save: boolean){
+
 		this.msgs = [];
 		if(this.currentTab === 0){
-			// Check first tab required params
-			if(requiredObj.slice(0,4).every( obj => obj !== undefined && obj !== '') && requiredObj[4] == undefined){
-				this.activeTab = [true, true, false];
-				this.currentTab = 1;
-				this.msgs.push({severity:'success', summary:'¡Correcto!', detail: 'Puedes pasar a la pestaña 2'});
-
-			}else{
-				this.showErrorMsg(requiredObj, 0, 4, msg);
-			}
-		}else if(this.currentTab > 0){
-			// Check first and second tab required params
-			if(requiredObj.every( obj => obj !== undefined && obj !== '')){
-				this.saveDataset(option);
-				this.activeTab = [true, true, true];
-
-				if(this.currentTab === 1){
-					this.currentTab = 2;
-					this.msgs.push({severity:'success', summary:'¡Correcto!', detail: 'Puedes pasar a la pestaña 3'});
+			if(save){
+				if(this.checkTab0()){
+					this.msgs.push({severity:'warn', summary:'¡Atención!', detail: 'Rellena los campos de la siguiente pestaña antes de guardar'});
 				}
-				
-			}else{
-				this.showErrorMsg(requiredObj, 0, 5, msg);
+			}
+			if(nextTab === 1){
+				if(this.checkTab0()){
+					this.activeTab = [true, true, false];
+					this.currentTab = 1;
+				}
+			}else if(nextTab === 2){
+				if(this.checkTab1()  && this.dataset != undefined && this.dataset.id != undefined){
+					this.activeTab = [true, true, true];
+					this.currentTab = 2;
+				}
+			}
+		}else if(this.currentTab === 1){
+			if(save){
+				if(this.checkTab1()){
+					this.saveDataset(false);
+				}
+			}
+			if(nextTab === 2){
+				if(this.dataset === undefined || this.dataset.id === undefined){
+					this.msgs.push({severity:'warn', summary:'¡Atención!', detail: 'Guarda el dataset para pasar a la pestaña 3'});
+				}else if(this.checkTab1() && this.dataset != undefined && this.dataset.id != undefined){
+					this.activeTab = [true, true, true];
+					this.currentTab = 2;
+				}
+			}
+		}else if(this.currentTab === 2){
+			if(this.checkTab1() && save){
+				this.saveDataset(true);
 			}
 		}		
 	}
@@ -400,8 +436,16 @@ export class DatasetsAdminEditComponent implements OnInit {
 	}
 	
 	loadDataset(dataset: Dataset) {
+		this.filesAdminService.downloadFile(this.dataset.id).
+		subscribe(
+			response => {
+				console.log(response);
+				if(response.headers.get('Content-Type') === 'application/vnd.ms-excel.sheet.macroEnabled.12'){
+					this.showMapLink = true;
+				}
+		});
 		this.activeTab = [true, true, true];
-		this.currentTab = 3;
+		this.currentTab = 2;
 		this.datasetsAdminService.getDatasetByName(dataset.name).subscribe(dataResult => {
 			try {
 				if(dataResult != Constants.ADMIN_DATASET_ERR_LOAD_DATASET){
