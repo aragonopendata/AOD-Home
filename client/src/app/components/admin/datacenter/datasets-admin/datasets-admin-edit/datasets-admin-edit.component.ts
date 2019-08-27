@@ -436,14 +436,6 @@ export class DatasetsAdminEditComponent implements OnInit {
 	}
 	
 	loadDataset(dataset: Dataset) {
-		this.filesAdminService.downloadFile(this.dataset.id).
-		subscribe(
-			response => {
-				console.log(response);
-				if(response.headers.get('Content-Type') === 'application/vnd.ms-excel.sheet.macroEnabled.12'){
-					this.showMapLink = true;
-				}
-		});
 		this.activeTab = [true, true, true];
 		this.currentTab = 2;
 		this.datasetsAdminService.getDatasetByName(dataset.name).subscribe(dataResult => {
@@ -496,6 +488,16 @@ export class DatasetsAdminEditComponent implements OnInit {
 					this.tags = this.dataset.tags;
 					this.loadResources();
 					this.loadDropdowns();
+
+					this.filesAdminService.downloadFile(this.dataset.id).
+					subscribe(
+						response => {
+							console.log(response);
+							if(response.headers.get('Content-Type') === 'application/vnd.ms-excel.sheet.macroEnabled.12'){
+								this.showMapLink = true;
+							}
+					});
+					
 				}else{
 					this.disableButtons();
 				}
