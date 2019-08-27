@@ -645,9 +645,14 @@
 									<input class="primary" type="file" #uploader (change)="uploadFileTmp($event)">
 								</div>
 							</div>
+							<div *ngIf="showMapLink" class="row" style="margin-top: 1%">
+								<div class="col-md-12">
+									<p>Descargar fichero de mapeo modificado:</p>
+								</div>
+							</div>
 							<div *ngIf="showMapLink" class="row">
 								<div class="col-md-12">
-									<a  href="javascript:;" (click)="downloadMapFile($event)">Descargar fichero de mapeo modificado</a>
+									<button type="button" pButton icon="fas fa-download" (click)="downloadMapFile($event)" aria-hidden="true"></button> mapeo_ei2a.xlsm
 								</div>
 							</div>
 						</div>
