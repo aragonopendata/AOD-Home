@@ -276,6 +276,7 @@ router.put(constants.API_URL_ADMIN_DATASET, function (req, res, next) {
 router.delete(constants.API_URL_ADMIN_DATASET, function (req, res, next) {
     try {
         var dataset = req.body;
+        console.log(req.body);
         logger.notice('Dataset a borrar: ' + JSON.stringify(dataset.name));
         //0. CHECKING REQUEST PARAMETERS
         if(dataset.name != ''){
@@ -293,6 +294,21 @@ router.delete(constants.API_URL_ADMIN_DATASET, function (req, res, next) {
                                 'result':'BORRADO DE DATASETS - Dataset borrado correctamente'
                             };
                             res.json(successJson);
+
+                            // Clean map file if exists
+                            const dir = constants.XLSM_PATH + req.body.datasetid;
+                            const file = dir + '/mapeo_ei2a.xlsm';
+                            console.log(dir);
+
+                            try {
+                                if (fs.existsSync(file)){
+                                    fs.unlinkSync(file);
+                                    fs.rmdirSync(dir);
+                                }
+                            } catch (err) {
+                                console.error(err)
+                            }
+
                         }else{
                           
                             logger.error('BORRADO DE DATASETS - Error al borrar el dataset en CKAN: ' + JSON.stringify(deleteCkanResponse));
@@ -314,6 +330,7 @@ router.delete(constants.API_URL_ADMIN_DATASET, function (req, res, next) {
                         res.json({ 'status': constants.REQUEST_ERROR_BAD_DATA, 'error': 'BORRADO DE DATASETS - Respuesta del servidor errónea' });
                         return;
                     });
+
             } else {
                 logger.error('BORRADO DE DATASETS - Usuario no autorizado: ', error);
                 res.json({ 'status': constants.REQUEST_ERROR_FORBIDDEN, 'error': 'BORRADO DE DATASETS - Usuario no autorizado' });

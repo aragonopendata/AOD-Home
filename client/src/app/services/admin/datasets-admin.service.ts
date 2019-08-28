@@ -109,12 +109,14 @@ export class DatasetsAdminService {
 		return this.http.get(fullUrl, { headers: headers }).pipe(map(res => res.json()));
 	}
 
-	public removeDataset(dataset_name: string, user_name:string, user_id: number) {
+	public removeDataset(dataset_name: string, user_name:string, user_id: number, dataset_id: string) {
+
 		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_DATASET_CUD_OPERATIONS;
 		let requestBodyParams = {
 			requestUserId: user_id,
 			requestUserName: user_name,
-			name: dataset_name
+			name: dataset_name,
+			datasetid: dataset_id
 		};
 		let headers = this.buildRequestHeaders();
 		let options = new RequestOptions({ headers: headers, body: JSON.stringify(requestBodyParams)}); // Create a request option

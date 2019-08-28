@@ -242,11 +242,22 @@ export class DatasetsAdminListComponent implements OnInit {
         this.displayDeleteDialog=false;
         let user_id = this.usersAdminService.currentUser.id;
         let user_name = this.usersAdminService.currentUser.username;
-        this.datasetsAdminService.removeDataset(this.datasetNameToDelete,user_name, user_id).subscribe( response => {
-            this.msgs = [];
-            this.msgs.push({severity:'info', summary:'Dataset Borrado', detail:'Dataset borrado correctamente'});
-            this.loadDatasets();
+
+        this.datasetsAdminService.getDatasetByName(this.datasetNameToDelete).subscribe( response => {
+            if(response.success){
+                let dataset = JSON.parse(response).result;
+
+                this.datasetsAdminService.removeDataset(this.datasetNameToDelete,user_name, user_id, dataset.id).subscribe( response => {
+                    this.msgs = [];
+                    this.msgs.push({severity:'info', summary:'Dataset Borrado', detail:'Dataset borrado correctamente'});
+                    this.loadDatasets();
+                });
+            }else{
+                this.msgs.push({severity:'warn', summary:'Error', detail:'Error eliminando dataset'});
+                console.log('Error eliminando dataset');
+            }
         });
+    
     }
 
     undoDeleteDataset(){

@@ -164,6 +164,9 @@ export class DatasetsAdminEditComponent implements OnInit {
 	mapeo_file_tmp = undefined;
 	showMapLink = false;
 
+	// Controls if the dataset has already be saved in CKAN
+	previouslySaved = false;
+
 	constructor(private datasetsAdminService: DatasetsAdminService, private topicsAdminService: TopicsAdminService, private organizationsAdminService: OrganizationsAdminService,
 		private usersAdminService: UsersAdminService, private aodCoreAdminService: AodCoreAdminService, private activatedRoute: ActivatedRoute, private router: Router, private filesAdminService: FilesAdminService) {
 			this.routerLinkDatasetList = Constants.ROUTER_LINK_ADMIN_DATACENTER_DATASETS;
@@ -441,6 +444,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 		this.datasetsAdminService.getDatasetByName(dataset.name).subscribe(dataResult => {
 			try {
 				if(dataResult != Constants.ADMIN_DATASET_ERR_LOAD_DATASET){
+					this.previouslySaved = true;
 					this.datasetLoaded = true;
 					this.dataset = JSON.parse(dataResult).result;
 					this.inputDatasetTitle = this.dataset.title;
@@ -526,7 +530,8 @@ export class DatasetsAdminEditComponent implements OnInit {
 			if (this.inputDatasetTitle != undefined) {
 				let url = this.inputDatasetTitle.toLocaleLowerCase().split(' ').join('-').split('ñ').join('ny')
 				.split('á').join('a').split('é').join('e').split('í').join('i').split('ó').join('o').split('ú').join('u')
-				.split('ä').join('a').split('ë').join('e').split('ï').join('i').split('ö').join('o').split('ü').join('u');
+				.split('ä').join('a').split('ë').join('e').split('ï').join('i').split('ö').join('o').split('ü').join('u')
+				.split(',').join('');
 				this.inputDatasetUrl = encodeURI(url);
 			}
 		}
@@ -1311,6 +1316,9 @@ export class DatasetsAdminEditComponent implements OnInit {
 		}
 		try {
 			this.dataset.title = this.inputDatasetTitle;
+			if(!this.previouslySaved){
+				this.dataset.url = this.baseUrl + '/' + Constants.ROUTER_LINK_DATA_CATALOG_DATASET + '/' + this.inputDatasetUrl;
+			}
 			this.dataset.notes = this.inputDatasetDescription;
 			if(this.selectedOrg!=undefined){
 				this.dataset.organization = this.orgs.find(x => x.id === this.selectedOrg);
