@@ -444,6 +444,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 		this.datasetsAdminService.getDatasetByName(dataset.name).subscribe(dataResult => {
 			try {
 				if(dataResult != Constants.ADMIN_DATASET_ERR_LOAD_DATASET){
+					console.log('Load dataset');
 					this.previouslySaved = true;
 					this.datasetLoaded = true;
 					this.dataset = JSON.parse(dataResult).result;
@@ -1150,14 +1151,15 @@ export class DatasetsAdminEditComponent implements OnInit {
 	
 	//Call when you click Save Button
 	saveDataset(option: boolean){
-		if(this.dataset.name){
-			this.saveDatasetUpdate(option);
-		}else{
+		if(!this.previouslySaved){
 			this.saveDatasetAdd(option);
+		}else if(this.dataset.name){
+			this.saveDatasetUpdate(option);
 		}
 	}
 
 	saveDatasetAdd(option: boolean){
+		console.log('Save ADD');
 		try {
 			if (this.checkDatasetInsertparams()) {
 				//Name and Description TAB
@@ -1165,6 +1167,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 				this.dataset.notes = this.inputDatasetDescription;
 				this.dataset.url = this.baseUrl + '/' + Constants.ROUTER_LINK_DATA_CATALOG_DATASET + '/' + this.inputDatasetUrl;
 				this.dataset.name = this.inputDatasetUrl;
+				console.log(this.dataset.name);
 				//Groups And Tags TAB
 				this.dataset.tags = this.tags;
 
@@ -1311,14 +1314,12 @@ export class DatasetsAdminEditComponent implements OnInit {
 	}
 
 	saveDatasetUpdate(option: boolean){
+		console.log('Save Update');
 		if(this.mapeo_file_tmp !== undefined){
 			this.uploadFile();
 		}
 		try {
 			this.dataset.title = this.inputDatasetTitle;
-			if(!this.previouslySaved){
-				this.dataset.url = this.baseUrl + '/' + Constants.ROUTER_LINK_DATA_CATALOG_DATASET + '/' + this.inputDatasetUrl;
-			}
 			this.dataset.notes = this.inputDatasetDescription;
 			if(this.selectedOrg!=undefined){
 				this.dataset.organization = this.orgs.find(x => x.id === this.selectedOrg);
