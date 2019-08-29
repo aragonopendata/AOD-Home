@@ -343,13 +343,17 @@ export class DatasetsAdminEditComponent implements OnInit {
 	}
 
 	initializeDataset() {
+		this.createEmptyDataset();
+		this.loadDropdowns();
+	}
+
+	createEmptyDataset() {
 		this.dataset = new Dataset();
 		this.dataset.extras = new Array ();
 		this.dataset.groups = new Array ();
 		this.tags = [];
 		this.extraDictionaryURL = [];
 		this.extraDataQualityURL = [];
-		this.loadDropdowns();
 	}
 
 	loadDropdowns() {
@@ -1160,6 +1164,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 
 	saveDatasetAdd(option: boolean){
 		console.log('Save ADD');
+		this.createEmptyDataset();
 		try {
 			if (this.checkDatasetInsertparams()) {
 				//Name and Description TAB
