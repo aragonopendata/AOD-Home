@@ -494,6 +494,15 @@ export class DatasetsAdminEditComponent implements OnInit {
 					this.tags = this.dataset.tags;
 					this.loadResources();
 					this.loadDropdowns();
+
+					this.filesAdminService.downloadFile(this.dataset.id).
+					subscribe(
+						response => {
+							console.log(response);
+							if(response.headers.get('Content-Type') === 'application/vnd.ms-excel.sheet.macroEnabled.12'){
+								this.showMapLink = true;
+							}
+					});
 					
 				}else{
 					this.disableButtons();
