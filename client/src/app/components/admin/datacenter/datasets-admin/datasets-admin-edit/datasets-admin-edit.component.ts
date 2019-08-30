@@ -1193,11 +1193,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 
 	saveDatasetAdd(option: boolean){
 		console.log('Save ADD');
-<<<<<<< HEAD
-
-=======
 		this.createEmptyDataset();
->>>>>>> 42ae3360295aea4d69e5dfd8795c094681cf5efd
 		try {
 			if (this.checkDatasetInsertparams()) {
 				//Name and Description TAB
