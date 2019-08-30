@@ -19,6 +19,17 @@
 		</p-footer>
 	</p-dialog>
 
+	<p-dialog header="¿Desea eliminar el dataset y salir?" [(visible)]="displayAutoSavedDeleteDialog">
+			<p>El dataset ha sido guardado automáticamente. Se va a proceder a volver al listado. Puede eliminar el datset o mantenerlo sin guardar los cambios.
+				<b>{{datasetTitleDelete}}</b>
+			</p>
+			<p>¿Qué desea hacer?</p>
+			<p-footer>
+				<button type="button" pButton icon="fas fa-check" (click)="deleteDatasetAndExit()" label="Eliminar y salir"></button>
+				<button type="button" pButton icon="fas fa-times" (click)="cancelDataset()" label="Mantener y salir"></button>
+			</p-footer>
+		</p-dialog>
+
 	<div class="modal fade modalAddResource" tabindex="-1" id="modalAddResource" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
@@ -241,7 +252,7 @@
 		<div class=" col-md-12">
 			<ul class="nav nav-tabs nav-fill" role="tablist">
 				<li class="nav-item">
-					<a class="nav-link active" [class.disabled]="!activeTab[0]" data-toggle="tab" href="#content_tab" role="tab">Contenido *</a>
+					<a class="nav-link active" [class.disabled]="!activeTab[0]" (click)="checkAndNextTab(0, false)" data-toggle="tab" href="#content_tab" role="tab">Contenido *</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" [class.disabled]="!activeTab[1]" (click)="checkAndNextTab(1, false)" data-toggle="tab" href="#context_tab" role="tab">Contexto *</a>
@@ -611,26 +622,29 @@
 								</ng-template>
 							</p-column>
 							<p-footer>
+								<div *ngIf="!previouslySaved" class="row">
+									<div class="col-md-12">
+										<p>Si añades el recurso, <b>el dataset se guardará automáticamente</b></p>
+									</div>
+								</div>
 								<div class="ui-helper-clearfix" style="width:100%">
 									<button type="button" class="btn btn-primary" data-toggle="modal" style="float:left" data-target=".modalAddResource" (click)="resetAddResourceModal()">
 									<i class="fas fa-plus"></i> Añadir</button>
 								</div>
 							</p-footer>
 							</p-dataTable>
-						<p>
-							Importante una vez que haya incorporado datos:
+						<p style="margin-top: 2%">
+							<b>Importante una vez que haya incorporado datos,</b> relacione sus datos con la Estructura de información interoperable de Aragón EI2A, para ello:
 						</p>
 						<ul>
 							<li>
-								Relacione sus  datos con la <a href="https://opendata.aragon.es/def/ei2a/" target="_blank">Estructura de información interoperable de Aragón EI2A</a>, para ello:
+								1. Descargue el archivo excel <a href="https://opendata.aragon.es/public/documentos/mapeo_ei2a.xlsm" target="_blank">mapeo_ei2a.xlsm</a> y habilite su edición y contenido.
 							</li>
 							<li>
-								Descargue el archivo excel <a href="https://opendata.aragon.es/public/documentos/mapeo_ei2a.xlsm" target="_blank">mapeo_ei2a.xlsm</a> y habilite su edición y contenido.
-							<li>
-								Cumplimente en la fila inicial la cabecera con la denominación de los campos de sus datos y seleccione en las siguientes filas los elementos y entidades acordes del EI2A a los que correspondan. Tenga en cuenta en incluir solo los campos representativos de sus datos, evite códigos internos de bases de datos y para cualquier ayuda o petición contacte con opendata@aragon.es.
+								2. Cumplimente en la fila inicial la cabecera con la denominación de los campos de sus datos y seleccione en las siguientes filas los elementos y entidades acordes del EI2A a los que correspondan. Tenga en cuenta en incluir solo los campos representativos de sus datos, evite códigos internos de bases de datos y para cualquier ayuda o petición contacte con <a href="mailto:opendata@aragon.es">opendata@aragon.es</a>
 							</li>
 							<li>
-								Una vez cumplimentado y guardado, suba el fichero con la siguiente opción (ojo con el cierre de sesión por tiempo excesivo ¿qué puede ocurrir? se puede cerrar la sesión... ¿como lo hacemos? y también si se consigue subir el archivo que se incorpore como un recurso /enlace del apartado de diccionario de datos donde se podrá descargar como CSV ...).
+								3. Una vez cumplimentado y guardado, suba el fichero con la siguiente opción “seleccionar archivo” en la misma línea.
 							</li>
 						</ul>
 
@@ -693,7 +707,7 @@
 				
 			</div>
 			<p>Los campos marcados con este asterisco * son obligatorios, recuerda rellenarlos</p>
-			<div class="row justify-content-end pb-5">
+			<div *ngIf="currentTab === 2" class="row justify-content-end pb-5">
 				<div class="btn-group" role="group" aria-label="Action Buttons">
 					<!-- <button id="saveAndContinueB" type="button" (click)="checkAndNextTab(false)" class="btn btn-primary">Guarda y sigue</button> -->
 					<button id="saveAndFinishB" type="button" (click)="checkAndNextTab(currentTab, true)" class="btn btn-primary">Guardar</button>

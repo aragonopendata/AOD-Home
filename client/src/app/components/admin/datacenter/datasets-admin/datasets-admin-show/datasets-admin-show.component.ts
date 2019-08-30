@@ -250,6 +250,9 @@ export class DatasetsAdminShowComponent implements OnInit {
 	openUrl(url: string){
 		if(url.substring(0,4)=='http'){
 			window.open(url,'_blank');
+		}else if(url.substring(url.length-15) === 'mapeo_ei2a.xlsm'){
+			let urlAbsolute = 'http://'+url+'?q='+Date.now();
+			window.open(urlAbsolute,'_blank');
 		}else{
 			let urlAbsolute = 'http://'+url;
 			window.open(urlAbsolute,'_blank');

@@ -37,6 +37,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 	datasetTitleDelete: string;
 	datasetNameToDelete: string;
 	displayDeleteDialog: boolean = false;
+	displayAutoSavedDeleteDialog: boolean = false;
 	datasetLoaded: boolean = false;
 	datasetTags: Tag[];
 	tagTitle = new Subject<string>();
@@ -158,6 +159,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 	
 	// Control for enabled tabs
 	activeTab = [true, false, false];
+	unlockedTabs = 0;
 	currentTab = 0;
 
 	// mapeo file
@@ -166,6 +168,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 
 	// Controls if the dataset has already be saved in CKAN
 	previouslySaved = false;
+	autoSaved = false;
 
 	constructor(private datasetsAdminService: DatasetsAdminService, private topicsAdminService: TopicsAdminService, private organizationsAdminService: OrganizationsAdminService,
 		private usersAdminService: UsersAdminService, private aodCoreAdminService: AodCoreAdminService, private activatedRoute: ActivatedRoute, private router: Router, private filesAdminService: FilesAdminService) {
@@ -212,7 +215,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 
 	// Show error message if the user tries to navigate to the next tab before setting required params on previous tabs
 	showErrorTab(tab){
-		if(this.currentTab < tab){
+		if(this.unlockedTabs < tab){
 			this.msgs.push({severity:'warn', summary:'Error', detail: 'Completa primero las pestañas previas'});
 		}
 	}
@@ -271,42 +274,36 @@ export class DatasetsAdminEditComponent implements OnInit {
 	checkAndNextTab(nextTab, save: boolean){
 
 		this.msgs = [];
-		if(this.currentTab === 0){
-			if(save){
-				if(this.checkTab0()){
-					this.msgs.push({severity:'warn', summary:'¡Atención!', detail: 'Rellena los campos de la siguiente pestaña antes de guardar'});
-				}
-			}
+
+		if(this.unlockedTabs === 0){
 			if(nextTab === 1){
 				if(this.checkTab0()){
 					this.activeTab = [true, true, false];
-					this.currentTab = 1;
+					this.unlockedTabs = 1;
 				}
 			}else if(nextTab === 2){
-				if(this.checkTab1()  && this.dataset != undefined && this.dataset.id != undefined){
-					this.activeTab = [true, true, true];
-					this.currentTab = 2;
-				}
-			}
-		}else if(this.currentTab === 1){
-			if(save){
 				if(this.checkTab1()){
-					this.saveDataset(false);
-				}
-			}
-			if(nextTab === 2){
-				if(this.dataset === undefined || this.dataset.id === undefined){
-					this.msgs.push({severity:'warn', summary:'¡Atención!', detail: 'Guarda el dataset para pasar a la pestaña 3'});
-				}else if(this.checkTab1() && this.dataset != undefined && this.dataset.id != undefined){
 					this.activeTab = [true, true, true];
-					this.currentTab = 2;
+					this.unlockedTabs = 2;
 				}
 			}
-		}else if(this.currentTab === 2){
+		}else if(this.unlockedTabs === 1){
+			if(nextTab === 2){
+				if(this.checkTab1()){
+					this.activeTab = [true, true, true];
+					this.unlockedTabs = 2;
+				}
+			}
+		}else if(this.unlockedTabs === 2){
 			if(this.checkTab1() && save){
 				this.saveDataset(true);
 			}
-		}		
+		}
+		
+		if(nextTab <= this.unlockedTabs){
+			this.currentTab = nextTab;
+		}
+		
 	}
 
 	uploadFileTmp($event){
@@ -319,6 +316,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 			if(response.success) {
 				console.log(this.mapeo_file_tmp);
 				console.log(this.mapeo_file_tmp.name);
+				this.mapeo_file_tmp = undefined;
 				this.msgs.push({severity:'success', summary:'Fichero subido', detail:'Se ha subido el fichero con exito'});
 			}else{
 				console.log('Error en la petición');
@@ -440,11 +438,10 @@ export class DatasetsAdminEditComponent implements OnInit {
 	
 	loadDataset(dataset: Dataset) {
 		this.activeTab = [true, true, true];
-		this.currentTab = 2;
+		this.unlockedTabs = 2;
 		this.datasetsAdminService.getDatasetByName(dataset.name).subscribe(dataResult => {
 			try {
 				if(dataResult != Constants.ADMIN_DATASET_ERR_LOAD_DATASET){
-					console.log('Load dataset');
 					this.previouslySaved = true;
 					this.datasetLoaded = true;
 					this.dataset = JSON.parse(dataResult).result;
@@ -493,15 +490,6 @@ export class DatasetsAdminEditComponent implements OnInit {
 					this.tags = this.dataset.tags;
 					this.loadResources();
 					this.loadDropdowns();
-
-					this.filesAdminService.downloadFile(this.dataset.id).
-					subscribe(
-						response => {
-							console.log(response);
-							if(response.headers.get('Content-Type') === 'application/vnd.ms-excel.sheet.macroEnabled.12'){
-								this.showMapLink = true;
-							}
-					});
 					
 				}else{
 					this.disableButtons();
@@ -983,6 +971,11 @@ export class DatasetsAdminEditComponent implements OnInit {
 	}
 
 	resetAddResourceModal() {
+
+		if(!this.previouslySaved){
+			this.saveDataset(false);
+		}
+
 		this.newResourceAccessType = undefined;
 		this.newResourceUrl = undefined;
 		this.selectedCoreView = undefined;
@@ -1000,7 +993,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 	addResource() {
 		try {
 			if (this.checkResource()){
-				if(this.dataset != undefined && this.dataset.id != undefined) {
+				if(this.previouslySaved) {
 					switch (this.newResourceAccessType) {
 						case this.newResourceAccessTypePublicFile:
 							let resource = {
@@ -1011,9 +1004,9 @@ export class DatasetsAdminEditComponent implements OnInit {
 								name: this.newResourceName,
 								url: this.newResourceUrl
 							}
-	
+							
 							//CALL TO POST METHOD ON SERVICE
-							this.datasetsAdminService.createResource(null,resource).subscribe( response => {
+							this.datasetsAdminService.createResource(null, resource).subscribe( response => {
 								if( response.success) {
 									this.msgs.push({severity:'success', summary:'Recurso Creado', detail:'Se ha creado el Recurso con exito'});
 									jQuery('#modalAddResource').modal('hide')
@@ -1024,7 +1017,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 						break;
 		
 						case this.newResourceAccessTypeDatabaseView:
-							let resourceView = {
+							let viewResource = {
 								resource_type: 'view',
 								package_id: this.dataset.id,
 								description: this.newResourceDescription,
@@ -1033,7 +1026,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 							}
 	
 							//CALL TO POST METHOD ON SERVICE
-							this.datasetsAdminService.createResource(null,resourceView).subscribe( response => {
+							this.datasetsAdminService.createResource(null, viewResource).subscribe( response => {
 								if( response.success) {
 									this.msgs.push({severity:'success', summary:'Recurso Creado', detail:'Se ha creado el Recurso con exito'});
 									jQuery('#modalAddResource').modal('hide')
@@ -1057,7 +1050,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 								}
 	
 								//CALL TO POST METHOD ON SERVICE
-								this.datasetsAdminService.createResource(file,resource).subscribe( response => {
+								this.datasetsAdminService.createResource(file, resource).subscribe( response => {
 									if( response.success) {
 										this.msgs.push({severity:'success', summary:'Recurso Creado', detail:'Se ha creado el Recurso con exito'});
 										jQuery('#modalAddResource').modal('hide')
@@ -1069,7 +1062,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 						break;
 					}
 				}else{
-					this.msgs.push({severity:'warn', summary:'No se puede crear el recurso', detail:'El dataset aun no se ha guardado. Pulse guardar y seguir, y despues añada el recurso'});
+					console.log('Dataset not saved');
 				}
 			} else {
 				this.msgs.push({severity:'warn', summary:'No se puede crear el recurso', detail:'Faltan campos por rellenar para añadir el recurso'});
@@ -1143,7 +1136,43 @@ export class DatasetsAdminEditComponent implements OnInit {
 				
 			});
 	}
+
+	addMapFileToExtraDictionary(save) {
+		let url = Constants.AOD_BASE_URL + Constants.XLMS_PATH + this.dataset.id + '/mapeo_ei2a.xlsm';
+		console.log(url);
+		if(this.extraDictionaryURL.findIndex(item => item === url) === -1){
+			console.log('Adding ' + url + ' to extraDictionaryURL');
+			this.extraDictionaryURL.push(url);
+			console.log(this.extraDictionaryURL);		
+		}
+
+		if(save){
+			this.saveDataset(false);
+		}
+
+	}
 	
+	uploadMapFile(){
+		if(this.mapeo_file_tmp !== undefined){
+
+			if(this.dataset.id === undefined){
+				this.datasetsAdminService.getDatasetByName(this.dataset.name).subscribe(dataResult => {
+					try {
+						if(dataResult != Constants.ADMIN_DATASET_ERR_LOAD_DATASET){
+							this.dataset = JSON.parse(dataResult).result;
+							this.uploadFile();
+							this.addMapFileToExtraDictionary(true);
+						}
+					}catch (error) {
+						console.error(error);
+					}
+				});
+			}else{
+				this.addMapFileToExtraDictionary(false);
+			}
+		}
+	}
+
 	//Call when you click Save and End Button
 	saveDatasetEnd(){
 		this.saveDataset(true);
@@ -1160,6 +1189,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 
 	saveDatasetAdd(option: boolean){
 		console.log('Save ADD');
+
 		try {
 			if (this.checkDatasetInsertparams()) {
 				//Name and Description TAB
@@ -1299,9 +1329,12 @@ export class DatasetsAdminEditComponent implements OnInit {
 					}
 					if(response.status == 200){
 						this.msgs.push({severity:'success', summary:'Dataset Creado', detail:'Se ha creado el Dataset con exito'});
+						this.previouslySaved = true;
+						this.uploadMapFile();
 						if(option){
 							setTimeout(() => this.router.navigate(['/' + this.routerLinkDatasetList]), 1500)
 						}else{
+							this.autoSaved = true;
 							this.loadDataset(this.dataset);
 						}
 					}
@@ -1315,9 +1348,6 @@ export class DatasetsAdminEditComponent implements OnInit {
 
 	saveDatasetUpdate(option: boolean){
 		console.log('Save Update');
-		if(this.mapeo_file_tmp !== undefined){
-			this.uploadFile();
-		}
 		try {
 			this.dataset.title = this.inputDatasetTitle;
 			this.dataset.notes = this.inputDatasetDescription;
@@ -1453,6 +1483,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 				
 				if(response.status == 200){
 					this.msgs.push({severity:'success', summary:'Dataset Actualizado', detail:'Se ha actualizado el Dataset con exito'});
+					this.uploadMapFile();
 					if(option){
 						setTimeout(() => this.router.navigate(['/' + this.routerLinkDatasetList]), 1500)
 					}else{
@@ -1474,10 +1505,25 @@ export class DatasetsAdminEditComponent implements OnInit {
 	}
 
 	showCancelDialog(datasetTitle: string, datasetName: string){
-        this.datasetTitleDelete = datasetTitle;
-        this.displayDeleteDialog = true;
-        this.datasetNameToDelete = datasetName;
-    }
+		if(this.autoSaved){
+			this.displayAutoSavedDeleteDialog = true;
+		}else{
+			this.displayDeleteDialog = true;
+		}
+		this.datasetTitleDelete = datasetTitle;
+		this.datasetNameToDelete = datasetName;	
+
+	}
+	
+	deleteDatasetAndExit(){
+		this.datasetsAdminService.removeDataset(this.dataset.name,
+									this.usersAdminService.currentUser.username,
+									this.usersAdminService.currentUser.id,
+									this.dataset.id).subscribe(
+										resource =>{
+											this.cancelDataset();
+										});
+	}
 
     cancelDataset(){
 		this.displayDeleteDialog=false;
