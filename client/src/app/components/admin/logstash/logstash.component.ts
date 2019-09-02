@@ -34,8 +34,8 @@ export class LogstashComponent implements OnInit {
 
   getPermissions(): void{
     this.user = this.authenticationService.getCurrentUser();
-    
-    if(this.user.name === 'analytics'){
+
+    if(this.user.username === "analytics"){
       this.showRecargarPortalesButton = true;
     }
 
