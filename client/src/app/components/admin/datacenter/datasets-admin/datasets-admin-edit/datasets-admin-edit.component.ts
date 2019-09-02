@@ -1174,24 +1174,21 @@ export class DatasetsAdminEditComponent implements OnInit {
 						if(dataResult != Constants.ADMIN_DATASET_ERR_LOAD_DATASET){
 							this.dataset = JSON.parse(dataResult).result;
 							this.uploadFile();
-							this.addMapFileToExtraDictionary(true);
+							//this.addMapFileToExtraDictionary(true);
 						}
 					}catch (error) {
 						console.error(error);
 					}
 				});
 			}else{
-				this.addMapFileToExtraDictionary(false);
+				this.uploadFile();
+				//this.addMapFileToExtraDictionary(false);
 			}
 		}
 	}
 
-	//Call when you click Save and End Button
-	saveDatasetEnd(){
-		this.saveDataset(true);
-	}
-	
-	//Call when you click Save Button
+	// Call when you click Save Button
+	// Warning: Option false will set autoSaved = true
 	saveDataset(option: boolean){
 		if(!this.previouslySaved){
 			this.saveDatasetAdd(option);

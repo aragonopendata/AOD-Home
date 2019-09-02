@@ -22,6 +22,7 @@ export class LogstashComponent implements OnInit {
   displayEditDialog: boolean = false;
   editing: boolean = false;
   editDialogTitle: string;
+  showRecargarPortalesButton: boolean = false;
 
   user: any;
 
@@ -32,7 +33,12 @@ export class LogstashComponent implements OnInit {
   }
 
   getPermissions(): void{
-		this.user = this.authenticationService.getCurrentUser();
+    this.user = this.authenticationService.getCurrentUser();
+    
+    if(this.user.name === 'analytics'){
+      this.showRecargarPortalesButton = true;
+    }
+
 		if(this.user.rol == Constants.ADMIN_USER_ROL_GLOBAL_ADMIN){
       this.getFiles();
 		}else{

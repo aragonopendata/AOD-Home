@@ -277,7 +277,7 @@
 						<div style="margin-top: 2%;">
 							<h3>Título *</h3>
 							<p>
-								Por favor, da una denominación del conjunto de datos. El nombre que des al conjunto de datos es importante porque se convierte en su identificador.
+									Por favor, dale una denominación del conjunto de datos. El nombre que des al conjunto de datos es importante porque se convierte en su identificador.
 							</p>
 							<input class="col-12 form-control" type="text" (keyup)="createUrl()" placeholder="Título" [(ngModel)]="inputDatasetTitle">
 						</div>
@@ -296,7 +296,7 @@
 						<textarea class="col-12 form-control" [(ngModel)]="inputDatasetDescription" rows="5" cols="150"></textarea>
 						<h3 style="margin-top: 2%;">Temática *</h3>
 						<p>
-							Estos son los temas conforme a la Norma Técnica de Interoperabilidad: elija el que crea que se adapta mejor a la información que contiene tu conjunto de datos.
+							Estos son los temas conforme a la Norma Técnica de Interoperabilidad: elige el que crea que se adapta mejor a la información que contiene tu conjunto de datos.
 						</p>
 						
 						<select class="form-control" [(ngModel)]="selectedTopic">
@@ -489,18 +489,6 @@
 							Esta información se ha confeccionado con los datos aportados al dar de alta la organización publicadora, para modificarla
 							utiliza la pizarra de administración de tu organización.
 						</p>
-						<ul>
-							<li>
-								Publicado por:
-								<span>{{dataset?.organization?.title}}</span>
-							</li>
-							<li>
-								Enlace a la pizarra de administración:
-								<span>
-									<button type="button" routerLink="../../../../" pButton label="Pizarra"></button>
-								</span>
-							</li>
-						</ul>
 						<h3 style="margin-top: 2%;">Calidad del dato</h3>
 						<p>
 							Si has utilizado alguna metodología para controlar la calidad de los datos este es el lugar para explicarla, por ejemplo normas ISO, normas concretas… etc
@@ -592,11 +580,12 @@
 						<h3 style="margin-top: 2%;">Ficheros de datos *</h3>
 						<ul>
 							<li>
-								Nombre: Introduce un nombre descriptivo puedes utilizar el mismo nombre que para el conjunto de datos.
-							</li>
-							<li>
 								Acceso al recurso: Seleccione la forma de cómo se va a obtener el recurso.
 							</li>
+							<li>
+								Nombre: Introduce un nombre descriptivo puedes utilizar el mismo nombre que para el conjunto de datos.
+							</li>
+
 							<li>
 								Descripción: Si deseas dar más detalle sobre los datos
 							</li>
@@ -709,7 +698,6 @@
 			<p>Los campos marcados con este asterisco * son obligatorios, recuerda rellenarlos</p>
 			<div *ngIf="currentTab === 2" class="row justify-content-end pb-5">
 				<div class="btn-group" role="group" aria-label="Action Buttons">
-					<!-- <button id="saveAndContinueB" type="button" (click)="checkAndNextTab(false)" class="btn btn-primary">Guarda y sigue</button> -->
 					<button id="saveAndFinishB" type="button" (click)="checkAndNextTab(currentTab, true)" class="btn btn-primary">Guardar</button>
 					<button type="button" (click)="showCancelDialog(dataset.title,dataset.name)" class="btn btn-danger">Cancelar</button>
 				</div>
