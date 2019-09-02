@@ -16,6 +16,7 @@ import { DatasetsUtils } from '../../../../utils/DatasetsUtils';
 import { Extra } from '../../../../models/Extra';
 import { UtilsService } from '../../../../services/web/utils.service';
 import { Resource } from '../../../../models/Resource';
+import { FilesAdminService } from 'app/services/admin/files-admin.service';
 
 @Component({
 	selector: 'app-datasets-detail',
@@ -82,12 +83,15 @@ export class DatasetsDetailComponent implements OnInit {
 	showEdit: boolean = false;
 	dataPreview: boolean = false;
 
+	showMapLink = false;
+
 	constructor(private datasetsService: DatasetsService,
 		private usersAdminService: UsersAdminService,
 		private authenticationService: AuthenticationService,
 		private activatedRoute: ActivatedRoute, public sanitizer: DomSanitizer, private router: Router,
 		public googleAnalyticsEventsService: GoogleAnalyticsEventsService,
-		private utilsService:UtilsService) {
+		private utilsService:UtilsService,
+		private filesAdminService: FilesAdminService) {
 		this.datasetListErrorTitle = Constants.DATASET_LIST_ERROR_TITLE;
 		this.datasetListErrorMessage = Constants.DATASET_LIST_ERROR_MESSAGE;
 		this.routerLinkDataCatalogDataset = Constants.ROUTER_LINK_DATA_CATALOG_DATASET;
@@ -151,6 +155,14 @@ export class DatasetsDetailComponent implements OnInit {
 					this.addCsvResourceFromPx();
 				}
 				this.getDatasetsRecommended();
+				this.filesAdminService.downloadFile(this.dataset.id).
+				subscribe(
+					response => {
+						console.log(response);
+						if(response.headers.get('Content-Type') === 'application/vnd.ms-excel.sheet.macroEnabled.12'){
+							this.showMapLink = true;
+						}
+				});
 			}else {
 				console.error("Error: loadDataset() - datasets-detail.component.ts");
 				this.errorTitle = this.datasetListErrorTitle;
@@ -515,4 +527,19 @@ export class DatasetsDetailComponent implements OnInit {
 		for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
 		return result;
 	}
+
+	downloadMapFile($event) {
+		this.filesAdminService.downloadFile(this.dataset.id).
+		subscribe(
+			response => {
+				console.log(response);
+				if(response.headers.get('Content-Type') === 'application/vnd.ms-excel.sheet.macroEnabled.12'){
+					let url = Constants.AOD_BASE_URL + Constants.XLMS_PATH + this.dataset.id + '/mapeo_ei2a.xlsm?q=' + Date.now();
+					console.log(url);
+					window.open(url, '_blank');
+				}
+		});
+
+	}
+
 }
