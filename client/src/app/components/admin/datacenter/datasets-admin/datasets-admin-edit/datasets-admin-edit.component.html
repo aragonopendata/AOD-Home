@@ -622,41 +622,43 @@
 								</div>
 							</p-footer>
 							</p-dataTable>
-						<p style="margin-top: 2%">
-							<b>Importante una vez que haya incorporado datos,</b> relacione sus datos con la Estructura de información interoperable de Aragón EI2A, para ello:
-						</p>
-						<ul>
-							<li>
-								1. Descargue el archivo excel <a href="https://opendata.aragon.es/public/documentos/mapeo_ei2a.xlsm" target="_blank">mapeo_ei2a.xlsm</a> y habilite su edición y contenido.
-							</li>
-							<li>
-								2. Cumplimente en la fila inicial la cabecera con la denominación de los campos de sus datos y seleccione en las siguientes filas los elementos y entidades acordes del EI2A a los que correspondan. Tenga en cuenta en incluir solo los campos representativos de sus datos, evite códigos internos de bases de datos y para cualquier ayuda o petición contacte con <a href="mailto:opendata@aragon.es">opendata@aragon.es</a>
-							</li>
-							<li>
-								3. Una vez cumplimentado y guardado, suba el fichero con la siguiente opción “seleccionar archivo” en la misma línea.
-							</li>
-						</ul>
 
-						<div class="container">
-							<div class="row">
-								<div class="col-md-12">
-									<p>Sube el fichero mapeo_ei2a.xlsm modificado:</p>
-								</div>
+						<!-- <div class="row">
+							<div class="col-md-12">
+								<p>Sube el fichero mapeo_ei2a.xlsm modificado:</p>
 							</div>
-							<div class="row">
-								<div class="col-md-12">
-									<input class="primary" type="file" #uploader (change)="uploadFileTmp($event)">
-								</div>
+						</div> -->
+						<div class="row">
+							<div class="col-md-12">
+								<p style="margin-top: 2%">
+										<b>Importante una vez que haya incorporado datos,</b> relacione sus datos con la Estructura de información interoperable de Aragón EI2A, para ello:
+									</p>
+									<ul>
+										<li>
+											1. Descargue el archivo excel <a href="https://opendata.aragon.es/public/documentos/mapeo_ei2a.xlsm" target="_blank">mapeo_ei2a.xlsm</a> y habilite su edición y contenido.
+										</li>
+										<li>
+											2. Cumplimente en la fila inicial la cabecera con la denominación de los campos de sus datos y seleccione en las siguientes filas los elementos y entidades acordes del EI2A a los que correspondan. Tenga en cuenta en incluir solo los campos representativos de sus datos, evite códigos internos de bases de datos y para cualquier ayuda o petición contacte con <a href="mailto:opendata@aragon.es">opendata@aragon.es</a>
+										</li>
+										<li>
+											3. Una vez cumplimentado y guardado, suba el fichero con la siguiente opción: “Seleccionar archivo”.  <input class="primary" type="file" #uploader (change)="uploadFileTmp($event)">
+										</li>
+									</ul>
 							</div>
-							<div *ngIf="showMapLink" class="row" style="margin-top: 1%">
-								<div class="col-md-12">
-									<p>Descargar fichero de mapeo modificado:</p>
-								</div>
+						</div>
+						<!-- <div class="row">
+							<div class="col-md-12">
+								
 							</div>
-							<div *ngIf="showMapLink" class="row">
-								<div class="col-md-12">
-									<button type="button" pButton icon="fas fa-download" (click)="downloadMapFile($event)" aria-hidden="true"></button> mapeo_ei2a.xlsm
-								</div>
+						</div> -->
+						<div *ngIf="showMapLink" class="row" style="margin-top: 1%">
+							<div class="col-md-12">
+								<p>Descargar fichero de mapeo modificado:</p>
+							</div>
+						</div>
+						<div *ngIf="showMapLink" class="row">
+							<div class="col-md-12">
+								<button type="button" pButton icon="fas fa-download" (click)="downloadMapFile($event)" aria-hidden="true"></button> mapeo_ei2a.xlsm
 							</div>
 						</div>
 
