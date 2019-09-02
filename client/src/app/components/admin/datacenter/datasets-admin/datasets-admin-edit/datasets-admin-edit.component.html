@@ -252,16 +252,16 @@
 		<div class=" col-md-12">
 			<ul class="nav nav-tabs nav-fill" role="tablist">
 				<li class="nav-item">
-					<a class="nav-link active" [class.disabled]="!activeTab[0]" (click)="checkAndNextTab(0, false)" data-toggle="tab" href="#content_tab" role="tab">Contenido *</a>
+					<a class="nav-link active" [class.disabled]="!activeTab[0]" (click)="checkAndNextTab(0, false)" data-toggle="tab" href="#content_tab" role="tab">1º - Contenido *</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" [class.disabled]="!activeTab[1]" (click)="checkAndNextTab(1, false)" data-toggle="tab" href="#context_tab" role="tab">Contexto *</a>
+					<a class="nav-link" [class.disabled]="!activeTab[1]" (click)="checkAndNextTab(1, false)" data-toggle="tab" href="#context_tab" role="tab">2º - Contexto *</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link enabled" [class.disabled]="!activeTab[2]" (click)="checkAndNextTab(2, false)" data-toggle="tab" href="#structure_tab" role="tab">Estructura *</a>
+					<a class="nav-link enabled" [class.disabled]="!activeTab[2]" (click)="checkAndNextTab(2, false)" data-toggle="tab" href="#structure_tab" role="tab">3º - Estructura *</a>
 				</li>
 				<li *ngIf="isIAESTDataset" class="nav-item">
-						<a class="nav-link" data-toggle="tab" href="#extra_iaest" role="tab">Extras IAEST</a>
+						<a class="nav-link" data-toggle="tab" href="#extra_iaest" role="tab">4º - Extras IAEST</a>
 				</li>
 			</ul>
 		</div>
