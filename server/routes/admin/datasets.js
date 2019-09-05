@@ -8,6 +8,7 @@ const http = require('http');
 const proxy = require('../../conf/proxy-conf');
 const request = require('request');
 const path = require('path');
+var xlsx = require('node-xlsx');
 
 //Multer for receive form-data
 const multer  = require('multer');
@@ -297,12 +298,14 @@ router.delete(constants.API_URL_ADMIN_DATASET, function (req, res, next) {
 
                             // Clean map file if exists
                             const dir = constants.XLSM_PATH + req.body.datasetid;
-                            const file = dir + '/mapeo_ei2a.xlsm';
+                            const file1 = dir + '/mapeo_ei2a.xlsm';
+                            const file2 = dir + '/mapeo_ei2a.csv';
                             console.log(dir);
 
                             try {
-                                if (fs.existsSync(file)){
-                                    fs.unlinkSync(file);
+                                if (fs.existsSync(file1)){
+                                    fs.unlinkSync(file1);
+                                    fs.unlinkSync(file2);
                                     fs.rmdirSync(dir);
                                 }
                             } catch (err) {
@@ -579,6 +582,42 @@ router.post(constants.API_URL_ADMIN_CREATE_FILE, disk_upload.single('file'), fun
         if (!file) {
             res.json({ 'status': constants.REQUEST_ERROR_BAD_DATA, 'success': false, 'message': 'Please, upload a file.' });
           }
+
+        // Parse XLSM to CSV
+        const dir = constants.XLSM_PATH + req.body.datasetid;
+        const fx = dir + '/mapeo_ei2a';
+        console.log(dir);
+
+        var obj = xlsx.parse(fx + '.xlsm');
+        var rows = [];
+        var writeStr = "";
+
+        var sheet = obj[0];
+        //loop through all rows in the sheet
+        for(var j = 0; j < 7; j++)
+        {
+                //add the row to the rows array
+                if(sheet['data'][j] != ''){
+                    rows.push(sheet['data'][j]);
+                }
+        }
+
+        //creates the csv string to write it to a file
+        for(var i = 0; i < rows.length; i++)
+        {
+            writeStr += rows[i].join(",") + "\n";
+        }
+
+        console.log(writeStr)
+
+        // Write to file
+        fs.writeFile(fx + ".csv", writeStr, function(err) {
+            if(err) {
+                return console.log(err);
+            }
+            console.log("mapeo_ei2a.csv was saved correctly");
+        });
+
         res.json({ 'status': constants.REQUEST_REQUEST_OK, 'success': true, 'filename': req.file.filename, 'message': 'File uploaded succesfully.' });
     } catch (error) {
         console.log(error);

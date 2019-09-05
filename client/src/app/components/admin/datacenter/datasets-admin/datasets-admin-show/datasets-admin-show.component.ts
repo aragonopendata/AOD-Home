@@ -286,4 +286,9 @@ export class DatasetsAdminShowComponent implements OnInit {
 
 	}
 
+	downloadMapFileAsCSV($event) {
+		let url = Constants.AOD_BASE_URL + Constants.XLMS_PATH + this.dataset.id + '/mapeo_ei2a.csv?q=' + Date.now();
+		window.open(url, '_blank');
+	}
+
 }
