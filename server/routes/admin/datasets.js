@@ -593,12 +593,25 @@ router.post(constants.API_URL_ADMIN_CREATE_FILE, disk_upload.single('file'), fun
         var writeStr = "";
 
         var sheet = obj[0];
+        
+        let max_val = sheet['data'][1].length
+        for (let index = 2; index < 7; index++) {
+            let max_val_tmp = sheet['data'][index].length;
+            if(max_val_tmp > max_val){
+                max_val = max_val_tmp
+            }
+        }
+
+        rows.push(sheet['data'][0].slice(0, max_val))
+        console.log(sheet['data'][0].slice(0, max_val))
+
         //loop through all rows in the sheet
-        for(var j = 0; j < 7; j++)
+        for(var j = 1; j < 7; j++)
         {
                 //add the row to the rows array
                 if(sheet['data'][j] != ''){
                     rows.push(sheet['data'][j]);
+                    console.log(sheet['data'][j])
                 }
         }
 
@@ -608,7 +621,7 @@ router.post(constants.API_URL_ADMIN_CREATE_FILE, disk_upload.single('file'), fun
             writeStr += rows[i].join(",") + "\n";
         }
 
-        console.log(writeStr)
+        //console.log(writeStr)
 
         // Write to file
         fs.writeFile(fx + ".csv", writeStr, function(err) {
