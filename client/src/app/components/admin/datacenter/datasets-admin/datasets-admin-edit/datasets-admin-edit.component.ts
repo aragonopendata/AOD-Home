@@ -307,7 +307,11 @@ export class DatasetsAdminEditComponent implements OnInit {
 	}
 
 	uploadFileTmp($event){
-		this.mapeo_file_tmp = $event.target.files[0];
+		if ($event.target.files[0].name.slice(-5) === '.xlsm') {
+			this.mapeo_file_tmp = $event.target.files[0];			
+		}else{
+			this.msgs.push({severity:'warn', summary:'Error', detail:'El fichero debe ser de tipo .xlsm'});
+		}
 	}
 
 	// Upload file
