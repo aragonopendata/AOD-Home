@@ -603,25 +603,13 @@ router.post(constants.API_URL_ADMIN_CREATE_FILE, disk_upload.single('file'), fun
         }
 
         rows.push(sheet['data'][0].slice(0, max_val))
-        console.log(sheet['data'][0].slice(0, max_val))
+        rows.push(sheet['data'][7].slice(0, max_val))
 
-        //loop through all rows in the sheet
-        for(var j = 1; j < 7; j++)
-        {
-                //add the row to the rows array
-                if(sheet['data'][j] != ''){
-                    rows.push(sheet['data'][j]);
-                    console.log(sheet['data'][j])
-                }
-        }
-
-        //creates the csv string to write it to a file
+        // Creates the csv string to write it to a file
         for(var i = 0; i < rows.length; i++)
         {
             writeStr += rows[i].join(",") + "\n";
         }
-
-        //console.log(writeStr)
 
         // Write to file
         fs.writeFile(fx + ".csv", writeStr, function(err) {
