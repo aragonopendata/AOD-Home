@@ -55,6 +55,14 @@ import { DatasetsAdminShowComponent } from './components/admin/datacenter/datase
 import { DatasetsAdminEditComponent } from './components/admin/datacenter/datasets-admin/datasets-admin-edit/datasets-admin-edit.component';
 import { DatasetsAdminListComponent } from './components/admin/datacenter/datasets-admin/datasets-admin-list/datasets-admin-list.component';
 import { LogstashComponent } from './components/admin/logstash/logstash.component';
+import { InfoPanelsAdminComponent } from './components/admin/global/static-content-admin/info-panels-admin/info-panels-admin.component';
+import { InfoListAdminComponent } from './components/admin/global/static-content-admin/info-list-admin/info-list-admin.component';
+import { CampusAdminEventsComponent } from './components/admin/campus-admin/campus-admin-events/campus-admin-events.component';
+import { CampusAdminEntriesComponent } from './components/admin/campus-admin/campus-admin-entries/campus-admin-entries.component';
+import { CampusAdminSpeakersComponent } from './components/admin/campus-admin/campus-admin-speakers/campus-admin-speakers.component';
+import { VisualDataComponent } from './components/admin/visual-data/visual-data.component';
+import { SysAdminComponent } from './components/admin/global/sys-admin/sys-admin.component';
+import { KnowledgeComponent } from './components/web/static-content/info/knowledge/knowledge.component';
 // Pipes
 import { EventSafeHtmlPipe } from './components/web/static-content/info/events/events-safeHTML.pipe';
 import { OpenDataSafeHtmlPipe } from "./components/web/static-content/info/open-data/open-data-safeHTML.pipe";
@@ -78,18 +86,12 @@ import { CampusAdminService } from './services/admin/campus-admin.service';
 import { LogstashService } from './services/admin/logstash.service';
 import { AnalyticsService } from './services/web/analytics.service';
 import { AodCoreAdminService} from './services/admin/aod-core-admin.service';
-import {GoogleAnalyticsEventsService} from "./services/web/google-analytics-events.service";
+import { GoogleAnalyticsEventsService } from "./services/web/google-analytics-events.service";
 import { UtilsService } from './services/web/utils.service';
-import { VisualDataComponent } from './components/admin/visual-data/visual-data.component';
-import { SysAdminComponent } from './components/admin/global/sys-admin/sys-admin.component';
-import { KnowledgeComponent } from './components/web/static-content/info/knowledge/knowledge.component';
 import { TinyMceModule } from 'angular-tinymce';
 import { tinymceDefaultSettings } from 'angular-tinymce';
-import { InfoPanelsAdminComponent } from './components/admin/global/static-content-admin/info-panels-admin/info-panels-admin.component';
-import { InfoListAdminComponent } from './components/admin/global/static-content-admin/info-list-admin/info-list-admin.component';
-import { CampusAdminEventsComponent } from './components/admin/campus-admin/campus-admin-events/campus-admin-events.component';
-import { CampusAdminEntriesComponent } from './components/admin/campus-admin/campus-admin-entries/campus-admin-entries.component';
-import { CampusAdminSpeakersComponent } from './components/admin/campus-admin/campus-admin-speakers/campus-admin-speakers.component';
+import { FilesAdminService } from './services/admin/files-admin.service';
+
 
 @NgModule({
 	declarations: [
@@ -201,6 +203,7 @@ import { CampusAdminSpeakersComponent } from './components/admin/campus-admin/ca
 		RolesAdminService,
 		StaticContentAdminService,
 		DatasetsAdminService,
+		FilesAdminService,
 		TopicsAdminService,
 		OrganizationsAdminService,
 		CampusAdminService,

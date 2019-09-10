@@ -19,6 +19,7 @@ import { UtilsService } from '../../services/web/utils.service';
 export class LoginComponent implements OnInit {
 
     openedMenu: boolean;
+    assetsUrl: string;
 
     organization: OrganizationAdmin = new OrganizationAdmin();
     dataset: Dataset = new Dataset();
@@ -42,6 +43,7 @@ export class LoginComponent implements OnInit {
         private utilsService: UtilsService){
 
             this.getOpenedMenu();
+            this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
         }
 
     ngOnInit() {

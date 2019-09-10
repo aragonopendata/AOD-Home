@@ -123,7 +123,8 @@ export class OrganizationsAdminEditComponent implements OnInit {
     var orgName = this.org.title.toLowerCase();
     this.org.name = orgName.split(' ').join('-').split('ñ').join('n')
                   .split('á').join('a').split('é').join('e').split('í').join('i').split('ó').join('o').split('ú').join('u')
-                  .split('ä').join('a').split('ë').join('e').split('ï').join('i').split('ö').join('o').split('ü').join('u');
+                  .split('ä').join('a').split('ë').join('e').split('ï').join('i').split('ö').join('o').split('ü').join('u')
+                  .split(',').join('');
   }
 
   saveOrganization(): void{

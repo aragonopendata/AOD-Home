@@ -21,10 +21,10 @@
 	<h1 class="globaltitle col-10">{{dataset.title}}</h1>
 	<div *ngIf="datasetLoaded" class="social col-2">
 		<a href="{{routerLinkFacebookShare}}" target="_blank" title="Compartir en Facebook">
-		  <img src="/static/public/contenido-general/social/facebookIcon.png" alt="compartir-en-Facebook">
+		  <img src="{{assetsUrl}}/public/contenido-general/social/facebookIcon.png" alt="compartir-en-Facebook">
 		</a>
 		<a href="{{routerLinkTwitterShare}}" target="_blank" title="Compartir en Twitter">
-		  <img src="/static/public/contenido-general/social/twitterIcon.png" alt="compartir-en-Twitter">
+		  <img src="{{assetsUrl}}/public/contenido-general/social/twitterIcon.png" alt="compartir-en-Twitter">
 		</a>
 	</div>
 </div>
@@ -120,6 +120,10 @@
 				<a *ngFor="let dic of extraDictionaryURL; let i = index" class="tags" (click)="openUrl(dic);"
 				pButton type="button" label="[{{i+1}}] Documento de diccionario de datos"
 				style="margin: 2px;"></a>
+			</div>
+			<div *ngIf="showMapLink">
+				<!-- <h4 *ngIf="showMapLink && !extraDictionary" class="card-title">Diccionario de datos</h4> -->
+				<a href="javascript:;" (click)="downloadMapFileAsCSV($event)">Relación entre la estructura de datos del recurso</a> y la Estructura de Información Interoperable de Aragón <a target="_blank" href="https://opendata.aragon.es/def/ei2a/">(EI2A)</a>
 			</div>
 		</div>
 	</div>

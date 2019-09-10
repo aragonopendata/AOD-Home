@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Constants } from '../../../../../app.constants';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DatasetsAdminService } from 'app/services/admin/datasets-admin.service';
+import { FilesAdminService } from 'app/services/admin/files-admin.service';
 import { AuthenticationService } from 'app/services/security/authentication.service';
 import { DatasetsUtils } from '../../../../../utils/DatasetsUtils';
 declare var jQuery:any;
@@ -69,12 +70,16 @@ export class DatasetsAdminShowComponent implements OnInit {
 	datasetListErrorTitle: string;
 	datasetListErrorMessage: string;
 
+	// Show Map file link
+	showMapLink = false;
+
 
 	constructor(private datasetsService: DatasetsService,
 		private activatedRoute: ActivatedRoute,
 		public sanitizer: DomSanitizer,
 		public router: Router,
-		public autenticationService: AuthenticationService) {
+		public autenticationService: AuthenticationService,
+		private filesAdminService: FilesAdminService) {
 			
 		this.datasetListErrorTitle = Constants.DATASET_LIST_ERROR_TITLE;
 		this.datasetListErrorMessage = Constants.DATASET_LIST_ERROR_MESSAGE;
@@ -123,6 +128,14 @@ export class DatasetsAdminShowComponent implements OnInit {
 				this.getExtrasIAEST();
 				this.checkExtrasIAESTEmpty();
 				dt.makeFileSourceList(this.dataset, this.resourcesAux);
+				this.filesAdminService.downloadFile(this.dataset.id).
+				subscribe(
+					response => {
+						console.log(response);
+						if(response.headers.get('Content-Type') === 'application/vnd.ms-excel.sheet.macroEnabled.12'){
+							this.showMapLink = true;
+						}
+				});
 			}else {
 				console.error("Error: loadDataset() - datasets-detail.component.ts");
 				this.errorTitle = this.datasetListErrorTitle;
@@ -250,9 +263,32 @@ export class DatasetsAdminShowComponent implements OnInit {
 	openUrl(url: string){
 		if(url.substring(0,4)=='http'){
 			window.open(url,'_blank');
+		}else if(url.substring(url.length-15) === 'mapeo_ei2a.xlsm'){
+			let urlAbsolute = 'http://'+url+'?q='+Date.now();
+			window.open(urlAbsolute,'_blank');
 		}else{
 			let urlAbsolute = 'http://'+url;
 			window.open(urlAbsolute,'_blank');
 		}
 	}
+
+	downloadMapFile($event) {
+		this.filesAdminService.downloadFile(this.dataset.id).
+		subscribe(
+			response => {
+				console.log(response);
+				if(response.headers.get('Content-Type') === 'application/vnd.ms-excel.sheet.macroEnabled.12'){
+					let url = Constants.AOD_BASE_URL + Constants.XLMS_PATH + this.dataset.id + '/mapeo_ei2a.xlsm?q=' + Date.now();
+					console.log(url);
+					window.open(url, '_blank');
+				}
+		});
+
+	}
+
+	downloadMapFileAsCSV($event) {
+		let url = Constants.AOD_BASE_URL + Constants.XLMS_PATH + this.dataset.id + '/mapeo_ei2a.csv?q=' + Date.now();
+		window.open(url, '_blank');
+	}
+
 }

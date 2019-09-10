@@ -24,7 +24,7 @@
     <p-footer>
       <div class="ui-helper-clearfix" style="width:100%">
         <button type="button" pButton icon="fas fa-plus" style="float:left" (click)="showDialog(null, false, true)" label="Nuevo portal"></button>
-        <button type="button" pButton icon="fas fa-redo-alt" style="float:right" (click)="reloadLogstash()" label="Recargar Portales"></button>
+        <button *ngIf="showRecargarPortalesButton" type="button" pButton icon="fas fa-redo-alt" style="float:right" (click)="reloadLogstash()" label="Recargar Portales"></button>
       </div>
     </p-footer>
   </p-dataTable>

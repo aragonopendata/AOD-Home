@@ -19,6 +19,17 @@
 		</p-footer>
 	</p-dialog>
 
+	<p-dialog header="¿Desea eliminar el dataset y salir?" [(visible)]="displayAutoSavedDeleteDialog">
+			<p>El dataset ha sido guardado automáticamente. Se va a proceder a volver al listado. Puede eliminar el datset o mantenerlo sin guardar los cambios.
+				<b>{{datasetTitleDelete}}</b>
+			</p>
+			<p>¿Qué desea hacer?</p>
+			<p-footer>
+				<button type="button" pButton icon="fas fa-check" (click)="deleteDatasetAndExit()" label="Eliminar y salir"></button>
+				<button type="button" pButton icon="fas fa-times" (click)="cancelDataset()" label="Mantener y salir"></button>
+			</p-footer>
+		</p-dialog>
+
 	<div class="modal fade modalAddResource" tabindex="-1" id="modalAddResource" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
@@ -227,6 +238,7 @@
 							</div>
 						</div>
 					</div>
+					
 				</form>
 			</div>
 		</div>
@@ -240,31 +252,16 @@
 		<div class=" col-md-12">
 			<ul class="nav nav-tabs nav-fill" role="tablist">
 				<li class="nav-item">
-					<a class="nav-link active" data-toggle="tab" href="#tit_desc" role="tab">Nombre y descripción *</a>
+					<a class="nav-link active" [class.disabled]="!activeTab[0]" (click)="checkAndNextTab(0, false)" data-toggle="tab" href="#content_tab" role="tab">1º - Contenido *</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" data-toggle="tab" href="#tem_tag" role="tab">Temática y etiquetas *</a>
+					<a class="nav-link" [class.disabled]="!activeTab[1]" (click)="checkAndNextTab(1, false)" data-toggle="tab" href="#context_tab" role="tab">2º - Contexto *</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" data-toggle="tab" href="#geo" role="tab">Cobertura geográfica *</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" data-toggle="tab" href="#tmp" role="tab">Cobertura temporal</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" data-toggle="tab" href="#lang" role="tab">Idiomas</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" data-toggle="tab" href="#extra" role="tab">Extras</a>
+					<a class="nav-link enabled" [class.disabled]="!activeTab[2]" (click)="checkAndNextTab(2, false)" data-toggle="tab" href="#structure_tab" role="tab">3º - Estructura *</a>
 				</li>
 				<li *ngIf="isIAESTDataset" class="nav-item">
-					<a class="nav-link" data-toggle="tab" href="#extra_iaest" role="tab">Extras IAEST</a>
-				</li> 
-				<li class="nav-item">
-					<a class="nav-link" data-toggle="tab" href="#pub_lic" role="tab">Publicador y licencia *</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" data-toggle="tab" href="#files" role="tab">Ficheros de datos *</a>
+						<a class="nav-link" data-toggle="tab" href="#extra_iaest" role="tab">4º - Extras IAEST</a>
 				</li>
 			</ul>
 		</div>
@@ -273,15 +270,16 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="tab-content" style="padding-bottom: 5%;">
-				<div class="tab-pane active" id="tit_desc" role="tabpanel">
+
+				<!-- Content Tab -->
+				<div class="tab-pane active" id="content_tab" role="tabpanel">
 					<div class="col-12" style="padding: 1%; text-align: justify;">
 						<div style="margin-top: 2%;">
-							<h3>Titulo *</h3>
+							<h3>Título *</h3>
 							<p>
-								Por favor, dale un nombre a tu conjunto de datos. El nombre que des al conjunto de datos es importante porque se convierte
-								en su identificador.
+									Por favor, dale una denominación del conjunto de datos. El nombre que des al conjunto de datos es importante porque se convierte en su identificador.
 							</p>
-							<input class="col-12 form-control" type="text" (keyup)="createUrl()" placeholder="Titulo" [(ngModel)]="inputDatasetTitle">
+							<input class="col-12 form-control" type="text" (keyup)="createUrl()" placeholder="Título" [(ngModel)]="inputDatasetTitle">
 						</div>
 						<div style="margin-top: 2%;">
 							<h3 style="margin-top: 2%;">URL</h3>
@@ -296,18 +294,15 @@
 							la realidad del dato.
 						</p>
 						<textarea class="col-12 form-control" [(ngModel)]="inputDatasetDescription" rows="5" cols="150"></textarea>
-					</div>
-				</div>
-				<div class="tab-pane" id="tem_tag" role="tabpanel">
-					<div class="col-12" style="padding: 1%; text-align: justify;">
 						<h3 style="margin-top: 2%;">Temática *</h3>
 						<p>
-							Por favor, escoge la temática que crees que se adapta mejor a la información que contiene tu conjunto de datos.
+							Estos son los temas conforme a la Norma Técnica de Interoperabilidad: elige el que crea que se adapta mejor a la información que contiene tu conjunto de datos.
 						</p>
 						
 						<select class="form-control" [(ngModel)]="selectedTopic">
 							<option *ngFor="let topSel of topicsSelect" [ngValue]="topSel.value">{{topSel.label}}</option>
 						</select>
+						
 						<h3 style="margin-top: 2%;">Etiquetas</h3>
 						<p>
 							Por favor, introduce un listado de etiquetas que describan el contenido de tu conjunto de datos. Utiliza palabras comunes
@@ -335,10 +330,40 @@
 								</span>
 							</h3>
 						</div>
-					</div>
-				</div>
-				<div class="tab-pane" id="geo" role="tabpanel">
-					<div class="col-12" style="padding: 1%; text-align: justify;">
+						
+						<h3 style="margin-top: 2%;">Frecuencia de actualización</h3>
+						<p>
+							Por favor, indica la frecuencia con la que se actualiza la información del conjunto de datos:
+						</p>
+						<select class="form-control" [(ngModel)]="extraFrequency">
+							<option *ngFor="let fre of freq" [ngValue]="fre.value">{{fre.label}}</option>
+						</select>
+
+						<h3 style="margin-top: 2%;">Cobertura temporal del conjunto de datos</h3>
+						<p>
+							Por favor, indica en este campo el periodo temporal del que contiene información tu conjunto de datos. Si tu conjunto de
+							datos está vivo y se va refrescando a medida que pasa el tiempo, deja seleccionada la casilla de selección que aparece
+							en la parte de "hasta…". En ese caso entenderemos que tu conjunto de datos contiene información desde la fecha que
+							indiques hasta la actualidad.
+						</p>
+						<div class="row">
+							<div class="col-5">
+								<div class="form-group">
+									<label>Este conjunto de datos contiene información desde:</label>
+									<div class="input-group">
+										<input type="text" class="form-control" [(ngModel)]="extraTemporalFrom" placeholder="2018-01-01">
+									</div>
+								</div>
+							</div>
+							<div class="col-5">
+								<div class="form-group">
+									<label>hasta:</label>
+									<div class="input-group">
+										<input type="text" class="form-control" [(ngModel)]="extraTemporalUntil" placeholder="2018-12-31">
+									</div>
+								</div>
+							</div>
+						</div>
 						<fieldset class="form-group">
 							<h3 style="margin-top: 2%;">Cobertura geográfica *</h3>
 							<p>Por favor introduce el ámbito geográfico del que tu conjunto de datos contiene información. Únicamente es posible
@@ -385,310 +410,297 @@
 								</div>
 							</div>
 						</fieldset>
-					</div>
-				</div>
-				<div class="tab-pane" id="tmp" role="tabpanel">
-					<h3 style="margin-top: 2%;">Fecha de la primera publicación del conjunto de datos</h3>
-					<p>
-						Fecha de primera publicación del conjunto de datos (esta información la rellena automáticamente el sistema).
-					</p>
-					<b>{{dataset?.metadata_created | date: 'dd/MM/yyyy'}}</b>
-					
-					<h3 style="margin-top: 2%;">Fecha de la última modificación del conjunto de datos</h3>
-					<p>
-						Fecha de última modificación del conjunto de datos (esta información la rellena automáticamente el sistema).
-					</p>
-					<b>{{dataset?.metadata_modified | date: 'dd/MM/yyyy'}}</b>
 
-					<h3 style="margin-top: 2%;">Frecuencia de actualización</h3>
-					<p>
-						Por favor, indica la frecuencia con la que se actualiza la información del conjunto de datos:
-					</p>
-					<select class="form-control" [(ngModel)]="extraFrequency">
-						<option *ngFor="let fre of freq" [ngValue]="fre.value">{{fre.label}}</option>
-					</select>
-
-					<h3 style="margin-top: 2%;">Cobertura temporal del conjunto de datos</h3>
-					<p>
-						Por favor, indica en este campo el periodo temporal del que contiene información tu conjunto de datos. Si tu conjunto de
-						datos está vivo y se va refrescando a medida que pasa el tiempo, deja seleccionada la casilla de selección que aparece
-						en la parte de "hasta…". En ese caso entenderemos que tu conjunto de datos contiene información desde la fecha que
-						indiques hasta la actualidad.
-					</p>
-					<div class="row">
-						<div class="col-5">
-							<div class="form-group">
-								<label>Este conjunto de datos contiene información desde:</label>
-								<div class="input-group">
-									<input type="text" class="form-control" [(ngModel)]="extraTemporalFrom" placeholder="2018-01-01">
-								</div>
+						<h3 style="margin-top: 2%;">Idiomas</h3>
+						<p>
+							Por favor, selecciona el idioma o idiomas en los que existe información en tu conjunto de datos.
+						</p>
+						<div class="col-12">
+							<div class="form-check">
+								<label class="checkboxLanguage col-12">
+									<input type="checkbox" aria-label="Checkbox for following text input" [checked]="checkLangBoolEs" (change)="changeCheckBoxLang('Español')"> Español
+								</label>
+								<label class="checkboxLanguage col-12">
+									<input type="checkbox" aria-label="Checkbox for following text input" [checked]="checkLangBoolEn" (change)="changeCheckBoxLang('Inglés')"> Inglés
+								</label>
+								<label class="checkboxLanguage col-12">
+									<input type="checkbox" aria-label="Checkbox for following text input" [checked]="checkLangBoolFr" (change)="changeCheckBoxLang('Francés')"> Francés
+								</label>
+								<label class="checkboxLanguage col-12">
+									<input type="checkbox" aria-label="Checkbox for following text input" [checked]="checkLangBoolArg_Lng" (change)="changeCheckBoxLang('Lenguas aragonesas')"> Lenguas aragonesas
+								</label>
+								<label class="checkboxLanguage col-12">
+									<input type="checkbox" aria-label="Checkbox for following text input" [checked]="checkLangBoolOther" (change)="changeCheckBoxLang('Otro')"> Otro
+								</label>
 							</div>
+							<input type="text" class="form-control" [(ngModel)]="checkLangOther" placeholder="Otro" #otherLangInput>
 						</div>
-						<div class="col-5">
-							<div class="form-group">
-								<label>hasta:</label>
-								<div class="input-group">
-									<input type="text" class="form-control" [(ngModel)]="extraTemporalUntil" placeholder="2018-12-31">
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="tab-pane" id="lang" role="tabpanel">
-					<h3 style="margin-top: 2%;">Idiomas</h3>
-					<p>
-						Por favor, selecciona el idioma o idiomas en los que existe información en tu conjunto de datos.
-					</p>
-					<div class="col-12">
-						<div class="form-check">
-							<label class="checkboxLanguage col-12">
-								<input type="checkbox" aria-label="Checkbox for following text input" [checked]="checkLangBoolEs" (change)="changeCheckBoxLang('Español')"> Español
-							</label>
-							<label class="checkboxLanguage col-12">
-								<input type="checkbox" aria-label="Checkbox for following text input" [checked]="checkLangBoolEn" (change)="changeCheckBoxLang('Inglés')"> Inglés
-							</label>
-							<label class="checkboxLanguage col-12">
-								<input type="checkbox" aria-label="Checkbox for following text input" [checked]="checkLangBoolFr" (change)="changeCheckBoxLang('Francés')"> Francés
-							</label>
-							<label class="checkboxLanguage col-12">
-								<input type="checkbox" aria-label="Checkbox for following text input" [checked]="checkLangBoolArg_Lng" (change)="changeCheckBoxLang('Lenguas aragonesas')"> Lenguas aragonesas
-							</label>
-							<label class="checkboxLanguage col-12">
-								<input type="checkbox" aria-label="Checkbox for following text input" [checked]="checkLangBoolOther" (change)="changeCheckBoxLang('Otro')"> Otro
-							</label>
-						</div>
-						<input type="text" class="form-control" [(ngModel)]="checkLangOther" placeholder="Otro" #otherLangInput>
-					</div>
-				</div>
-				<div class="tab-pane" id="extra" role="tabpanel">
-					<h3 style="margin-top: 2%;">Nivel de detalle</h3>
-					<p>
-						Este campo debe indicar el menor nivel de detalle al que se refiere el conjunto de datos. El menor nivel de detalle se puede
-						referir a diferentes "dimensiones" del conjunto de datos si es que este las tuviera, por lo que en este campo se admite
-						más de una palabra.
-					</p>
-					<p>
-						Por ejemplo el menor nivel de detalle dentro de una "dimensión" temporal podrían ser segundos, minutos, horas…; en la "dimensión"
-						espacial podría ser calle, código postal, municipio…; en la "dimensión" de entidades podría ser persona, escuela, parque
-						natural…
-					</p>
-					<p>
-						Escribe la primera letra de cada nivel de detalle en mayúscula y el resto en minúscula.
-					</p>
-					<input type="text" class="form-control" [(ngModel)]="extraGranularity" placeholder="Nivel de detalle">
-					<h3 style="margin-top: 2%;">Calidad del dato</h3>
-					<p>
-						Si has utilizado alguna metodología para controlar la calidad de los datos este es el lugar para explicarla.
-					</p>
-					<textarea class="col-12" rows="10" [(ngModel)]="extraDataQuality" placeholder="Calidad del dato" cols="150" pInputTextarea></textarea>
-					<p>
-						Si tus metodologías de control de calidad están explicadas en un enlace externo copia aquí la dirección o direcciones.
-					</p>
-					<div class="col-12" *ngFor="let urlCalidad of urlsCalidad; let i of index">
-						<input type="text" size="50" placeholder="URL de acceso" pInputText>
-						<button type="button" (click)="quitUrl()" pButton label="Quitar"></button>
-					</div>
-					<ul class="list-group">
-						<li class="list-group-item justify-content-between col-12" *ngFor="let urlDic of extraDataQualityURL; let i of index">
-							<div class="form-group row">
-								<label for="inputFile" class="col-sm-1 col-form-label">URL :</label>
-								<div class="col-sm-9">
-									<p>{{urlDic}}</p>
-								</div>
-								<button class="col-sm-2 btn btn-danger" type="button" (click)="removeUrl('quality', urlDic)">Quitar
-									<i class="fas fa-times"></i>
-								</button>
-							</div>
-						</li>
-						<li class="list-group-item active">
-							<div class="form-group row">
-								<label for="inputFile" class="col-sm-1 col-form-label">URL:</label>
-								<div class="col-sm-9">
-									<input type="text" class="form-control" placeholder="Introduzca URL" #inputUrlQuality>
-								</div>
-								<button type="button" (click)="addUrl('quality', inputUrlQuality.value);inputUrlQuality.value=''" class="col-sm-2 btn btn-primary">Añadir
-									<i class="fas fa-plus"></i>
-								</button>
-							</div>
-						</li>
-					</ul>
-					<h3 style="margin-top: 2%;">Diccionario de datos</h3>
-					<p>
-						En este campo puedes comentar y añadir cualquier clase de información que ayude a la comprensión del conjunto de datos. De
-						manera más amplia que en el campo descripción puedes incorporar aquí comentarios y enlaces de interés.
-					</p>
-					<textarea class="col-12" rows="10" [(ngModel)]="extraDictionary" placeholder="Diccionario de datos" cols="150" pInputTextarea></textarea>
-					<p>
-						Si la información de interés se encuentra publicada en un enlace externo copia aquí la dirección o direcciones.
-					</p>
-					<ul class="list-group">
-						<li class="list-group-item justify-content-between col-12" *ngFor="let urlDic of extraDictionaryURL; let i of index">
-							<div class="form-group row">
-								<label for="inputFile" class="col-sm-1 col-form-label">URL :</label>
-								<div class="col-sm-9">
-									<p>{{urlDic}}</p>
-								</div>
-								<button class="col-sm-2 btn btn-danger" type="button" (click)="removeUrl('dictionary', urlDic)">Quitar
-									<i class="fas fa-times"></i>
-								</button>
-							</div>
-						</li>
-						<li class="list-group-item active">
-							<div class="form-group row">
-								<label for="inputFile" class="col-sm-1 col-form-label">URL:</label>
-								<div class="col-sm-9">
-									<input type="text" class="form-control" placeholder="Introduzca URL" #inputUrlDictionary>
-								</div>
-								<button type="button" (click)="addUrl('dictionary', inputUrlDictionary.value);inputUrlDictionary.value=''" class="col-sm-2 btn btn-primary">Añadir
-									<i class="fas fa-plus"></i>
-								</button>
-							</div>
-						</li>
-					</ul>
-				</div>
-				<div *ngIf="isIAESTDataset" class="tab-pane" id="extra_iaest" role="tabpanel">
-					<h3 style="margin-top: 2%;">Tema Estadístico</h3>
-					<input type="text" class="form-control" [(ngModel)]="extraIAESTTemaEstadistico" placeholder="Tema Estadístico">
 
-					<h3 style="margin-top: 2%;">Unidad Estadística</h3>
-					<input type="text" class="form-control" [(ngModel)]="extraIAESTUnidadEstadistica" placeholder="Unidad Estadística">
-
-					<h3 style="margin-top: 2%;">Población Estadística</h3>
-					<input type="text" class="form-control" [(ngModel)]="extraIAESTPoblacionEstadistica" placeholder="Población Estadística">
-
-					<h3 style="margin-top: 2%;">Unidad de medida</h3>
-					<input type="text" class="form-control" [(ngModel)]="extraIAESTUnidadMedida" placeholder="Unidad de medida">
-
-					<h3 style="margin-top: 2%;">Periodo base</h3>
-					<input type="text" class="form-control" [(ngModel)]="extraIAESTPeriodoBase" placeholder="Periodo base">
-
-					<h3 style="margin-top: 2%;">Tipo de operación</h3>
-					<input type="text" class="form-control" [(ngModel)]="extraIAESTTipoOperacion" placeholder="Tipo de operación">
-
-					<h3 style="margin-top: 2%;">Tipología de datos de origen</h3>
-					<input type="text" class="form-control" [(ngModel)]="extraIAESTTipologiaDatosOrigen" placeholder="Tipología de datos de origen">
-
-					<h3 style="margin-top: 2%;">IAEST Fuente</h3>
-					<input type="text" class="form-control" [(ngModel)]="extraIAESTFuente" placeholder="IAEST Fuente">
-
-					<h3 style="margin-top: 2%;">Tratamiento Estadístico</h3>
-					<input type="text" class="form-control" [(ngModel)]="extraIAESTTratamientoEstadistico" placeholder="Tratamiento Estadístico">
-
-					<h3 style="margin-top: 2%;">IAEST Legislación UE</h3>
-					<input type="text" class="form-control" [(ngModel)]="extraIAESTLegislacionUE" placeholder="IAEST Legislación UE">
-				</div>
-				<div class="tab-pane" id="pub_lic" role="tabpanel">
-					<h3 style="margin-top: 2%;">Publicador *</h3>
-					<p>
-						Seleccione una organización entre las disponibles:
-					</p>
-					<select class="form-control" [(ngModel)]="selectedOrg">
-						<option *ngFor="let orgSel of orgsSelect" [ngValue]="orgSel.value">{{orgSel.label}}</option>
-					</select>
-					<p>
-						En esta sección se muestran la organización encargada de la publicación de este conjunto de datos tal y cómo se facilitarán
-						a los usuarios.
-					</p>
-					<p>
-						Esta información se ha confeccionado con los datos aportados al dar de alta la organización publicadora, para modificarla
-						utiliza la pizarra de administración de tu organización.
-					</p>
-					<ul>
-						<li>
-							Publicado por:
-							<span>{{dataset?.organization?.title}}</span>
-						</li>
-						<li>
-							Enlace a la pizarra de administración:
-							<span>
-								<button type="button" routerLink="../../../../" pButton label="Pizarra"></button>
-							</span>
-						</li>
-					</ul>
-					<h3 style="margin-top: 2%;">Licencia</h3>
-					<p>
-						Para promover la máxima reutilización, en Aragón Open Data establecemos por defecto una licencia Creative Commons Attribution
-						4.0 según se expone en la sección "Términos de uso" (
-						<a href="http://opendata.aragon.es/terminos">http://opendata.aragon.es/terminos</a>). Si tu conjunto de datos por alguna razón legal, contractual o de otro tipo
-						no puede ser ofrecido con esta licencia escríbenos a opendata@aragon.es y la modificaremos.
-					</p>
-
-					<h3 style="margin-top: 2%;">Visibilidad *</h3>
-					<p>Seleccione el estado del dataset. Por defecto Público</p>
-					<select class="form-control" [(ngModel)]="selectedState">
-						<option value="public">Público</option>
-						<option value="private">Privado</option>
-					</select>
-				</div>
-				<div class="tab-pane" id="files" role="tabpanel">
-					<h3 style="margin-top: 2%;">Ficheros de datos *</h3>
-					<ul>
-						<li>
-							Nombre del recurso: Introduce un nombre descriptivo del archivo descargable, puedes utilizar el mismo nombre que para el
-							conjunto de datos.
-						</li>
-						<li>
-							Modo de acceso: Si a tu descargable se accede a través de algún formato intermedio (por ejemplo, a través de una página web
-							=> HTML, de un fichero comprimido => ZIP…) indícanoslo en este campo. Si no existe un formato intermedio deja este
-							campo en blanco.
-						</li>
-						<li>
-							Formato de descarga: Introduce el formato del recurso que contiene la información.
-						</li>
-						<li>
-							Acceso al recurso: Elige si enlazar a una URL de descarga, conectar con una vista de base de datos o subir un recurso a nuestro
-							servidor (este último caso lo desaconsejamos y sólo se realizará si no existe otra forma de suministrar la información).
-						</li>
-					</ul>
-					<p-dataTable [loading]="false" [value]="resources" [responsive]="false" emptyMessage="No se han encontrado recursos." [rows]="10" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]">
-						<p-column field="name" header="Nombre" sortable="custom" [sortable]="false"></p-column>
-						<p-column field="resource_type" header="Tipo" sortable="custom" [sortable]="false">
-							<ng-template pTemplate="body" let-resource="rowData">
-								<div *ngIf="resource.resource_type == 'view'"><i class="fas fa-database"></i> Vista BBDD</div>
-								<div *ngIf="resource.resource_type == 'file'"><i class="fas fa-file"></i> Fichero</div>
-								<div *ngIf="resource.resource_type == 'url'"><i class="fas fa-external-link-alt"></i> Url Externa</div>
-							</ng-template>
-						</p-column>
-						<p-column field="format" header="Formato" sortable="custom" [sortable]="false"></p-column>
-						<p-column header="Edición" [style]="{'width':'14%'}">
-							<ng-template pTemplate="body" let-resource="rowData">
-								<button type="button" class="btn btn-primary" data-toggle="modal" (click)="openShowResource(resource)" data-target=".modalShowResource"><i class="fas fa-search"></i></button>
-								<button type="button" class="btn btn-primary" data-toggle="modal" (click)="openEditResource(resource)" data-target=".modalEditResource"><i class="fas fa-edit"></i></button>
-								<button type="button" class="btn btn-primary" data-toggle="modal" (click)="openRemoveResource(resource)" data-target=".modalRemoveResource"><i class="fas fa-trash-alt"></i></button>
-							</ng-template>
-						</p-column>
-						<p-footer>
-							<div class="ui-helper-clearfix" style="width:100%">
-								<button type="button" class="btn btn-primary" data-toggle="modal" style="float:left" data-target=".modalAddResource" (click)="resetAddResourceModal()">
-								<i class="fas fa-plus"></i> Añadir</button>
-							</div>
-						</p-footer>
-						</p-dataTable>
+						<h3 style="margin-top: 2%;">Nivel de detalle</h3>
+						<p>
+							Este campo debe indicar el menor nivel de detalle al que se refiere el conjunto de datos. El menor nivel de detalle se puede
+							referir a diferentes "dimensiones" del conjunto de datos si es que este las tuviera, por lo que en este campo se admite
+							más de una palabra.
+						</p>
+						<p>
+							Por ejemplo el menor nivel de detalle dentro de una "dimensión" temporal podrían ser segundos, minutos, horas…; en la "dimensión"
+							espacial podría ser calle, código postal, municipio…; en la "dimensión" de entidades podría ser persona, escuela, parque
+							natural…
+						</p>
+						<p>
+							Escribe la primera letra de cada nivel de detalle en mayúscula y el resto en minúscula.
+						</p>
+						<input type="text" class="form-control col-6" [(ngModel)]="extraGranularity" placeholder="Nivel de detalle">
 						
-					<p>
-						Importante:
-					</p>
-					<ul>
-						<li>
-							No introduzcas nada en formato PDF, ya que no es reutilizable y lo eliminaremos en cuanto lo detectemos.
-						</li>
-						<li>
-							Los formatos más habituales y preferidos por nosotros y por los reutilizadores son CSV, XML, JSON y RDF.
-						</li>
-						<li>
-							Introduce sólo los enlaces que permitan la descarga del conjunto de datos, cualquier otro enlace de interés para el usuario
-							lo puedes introducir en la sección "Extras".
-						</li>
-					</ul>
+						<div class="tab-pane" id="tmp" role="tabpanel" style="display: none">
+							<h3 style="margin-top: 2%;">Fecha de la primera publicación del conjunto de datos</h3>
+							<p>
+								Fecha de primera publicación del conjunto de datos (esta información la rellena automáticamente el sistema).
+							</p>
+							<b>{{dataset?.metadata_created | date: 'dd/MM/yyyy'}}</b>
+							
+							<h3 style="margin-top: 2%;">Fecha de la última modificación del conjunto de datos</h3>
+							<p>
+								Fecha de última modificación del conjunto de datos (esta información la rellena automáticamente el sistema).
+							</p>
+							<b>{{dataset?.metadata_modified | date: 'dd/MM/yyyy'}}</b>
+		
+						</div>
+
+					</div>
 				</div>
+
+				<!-- Context Tab -->
+				<div class="tab-pane" id="context_tab" role="tabpanel">
+					<div class="col-12" style="padding: 1%; text-align: justify;">
+				
+						<h3 style="margin-top: 2%;">Publicador *</h3>
+						<p>
+							Seleccione una organización entre las disponibles:
+						</p>
+						<select class="form-control" [(ngModel)]="selectedOrg">
+							<option *ngFor="let orgSel of orgsSelect" [ngValue]="orgSel.value">{{orgSel.label}}</option>
+						</select>
+						<p>
+							En esta sección se muestran la organización encargada de la publicación de este conjunto de datos tal y cómo se facilitarán
+							a los usuarios.
+						</p>
+						<p>
+							Esta información se ha confeccionado con los datos aportados al dar de alta la organización publicadora, para modificarla
+							utiliza la pizarra de administración de tu organización.
+						</p>
+						<h3 style="margin-top: 2%;">Calidad del dato</h3>
+						<p>
+							Si has utilizado alguna metodología para controlar la calidad de los datos este es el lugar para explicarla, por ejemplo normas ISO, normas concretas… etc
+						</p>
+						<textarea class="col-12" rows="2" [(ngModel)]="extraDataQuality" placeholder="Calidad del dato" cols="150" pInputTextarea></textarea>
+						<p>
+							Si tus metodologías de control de calidad están explicadas en un enlace externo copia aquí la dirección o direcciones.
+						</p>
+						<div class="col-12" *ngFor="let urlCalidad of urlsCalidad; let i of index">
+							<input type="text" size="50" placeholder="URL de acceso" pInputText>
+							<button type="button" (click)="quitUrl()" pButton label="Quitar"></button>
+						</div>
+						<ul class="list-group">
+							<li class="list-group-item justify-content-between col-12" *ngFor="let urlDic of extraDataQualityURL; let i of index">
+								<div class="form-group row">
+									<label for="inputFile" class="col-sm-1 col-form-label">URL :</label>
+									<div class="col-sm-9">
+										<p>{{urlDic}}</p>
+									</div>
+									<button class="col-sm-2 btn btn-danger" type="button" (click)="removeUrl('quality', urlDic)">Quitar
+										<i class="fas fa-times"></i>
+									</button>
+								</div>
+							</li>
+							<li class="list-group-item active">
+								<div class="form-group row">
+									<label for="inputFile" class="col-sm-1 col-form-label">URL:</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" placeholder="Introduzca URL" #inputUrlQuality>
+									</div>
+									<button type="button" (click)="addUrl('quality', inputUrlQuality.value);inputUrlQuality.value=''" class="col-sm-2 btn btn-primary">Añadir
+										<i class="fas fa-plus"></i>
+									</button>
+								</div>
+							</li>
+						</ul>
+						<h3 style="margin-top: 2%;">Diccionario de datos</h3>
+						<p>
+							En este campo puedes comentar y añadir cualquier clase de información que ayude a la comprensión del conjunto de datos.
+						</p>
+						<textarea class="col-12" rows="2" [(ngModel)]="extraDictionary" placeholder="Diccionario de datos" cols="150" pInputTextarea></textarea>
+						<p>
+							Si la información de interés se encuentra publicada en un enlace externo copia aquí la dirección o direcciones.
+						</p>
+						<ul class="list-group">
+							<li class="list-group-item justify-content-between col-12" *ngFor="let urlDic of extraDictionaryURL; let i of index">
+								<div class="form-group row">
+									<label for="inputFile" class="col-sm-1 col-form-label">URL :</label>
+									<div class="col-sm-9">
+										<p>{{urlDic}}</p>
+									</div>
+									<button class="col-sm-2 btn btn-danger" type="button" (click)="removeUrl('dictionary', urlDic)">Quitar
+										<i class="fas fa-times"></i>
+									</button>
+								</div>
+							</li>
+							<li class="list-group-item active">
+								<div class="form-group row">
+									<label for="inputFile" class="col-sm-1 col-form-label">URL:</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" placeholder="Introduzca URL" #inputUrlDictionary>
+									</div>
+									<button type="button" (click)="addUrl('dictionary', inputUrlDictionary.value);inputUrlDictionary.value=''" class="col-sm-2 btn btn-primary">Añadir
+										<i class="fas fa-plus"></i>
+									</button>
+								</div>
+							</li>
+						</ul>
+
+						<h3 style="margin-top: 2%;">Licencia</h3>
+						<p>
+							Para promover la máxima reutilización, en Aragón Open Data establecemos por defecto una licencia Creative Commons Attribution
+							4.0 según se expone en la sección "Términos de uso" (
+							<a href="http://opendata.aragon.es/terminos">http://opendata.aragon.es/terminos</a>). Si tu conjunto de datos por alguna razón legal, contractual o de otro tipo
+							no puede ser ofrecido con esta licencia escríbenos a opendata@aragon.es y la modificaremos.
+						</p>
+	
+						<h3 style="margin-top: 2%;">Visibilidad *</h3>
+						<p>Seleccione el estado del dataset. Por defecto Público</p>
+						<select class="form-control" [(ngModel)]="selectedState">
+							<option value="public">Público</option>
+							<option value="private">Privado</option>
+						</select>
+					</div>
+				</div>
+				
+				<!-- Structure tab -->
+				<div class="tab-pane" id="structure_tab" role="tabpanel">
+						<h3 style="margin-top: 2%;">Ficheros de datos *</h3>
+						<ul>
+							<li>
+								Acceso al recurso: Seleccione la forma de cómo se va a obtener el recurso.
+							</li>
+							<li>
+								Nombre: Introduce un nombre descriptivo puedes utilizar el mismo nombre que para el conjunto de datos.
+							</li>
+
+							<li>
+								Descripción: Si deseas dar más detalle sobre los datos
+							</li>
+							<li>
+								Formato: Introduce el formato del recurso que contiene la información Los formatos más aconsejables son CSV, XML, JSON y RDF. No introduzca PDF.
+							</li>
+						</ul>
+						<p-dataTable [loading]="false" [value]="resources" [responsive]="false" emptyMessage="No se han encontrado recursos." [rows]="10" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]">
+							<p-column field="name" header="Nombre" sortable="custom" [sortable]="false"></p-column>
+							<p-column field="resource_type" header="Tipo" sortable="custom" [sortable]="false">
+								<ng-template pTemplate="body" let-resource="rowData">
+									<div *ngIf="resource.resource_type == 'view'"><i class="fas fa-database"></i> Vista BBDD</div>
+									<div *ngIf="resource.resource_type == 'file'"><i class="fas fa-file"></i> Fichero</div>
+									<div *ngIf="resource.resource_type == 'url'"><i class="fas fa-external-link-alt"></i> Url Externa</div>
+								</ng-template>
+							</p-column>
+							<p-column field="format" header="Formato" sortable="custom" [sortable]="false"></p-column>
+							<p-column header="Edición" [style]="{'width':'14%'}">
+								<ng-template pTemplate="body" let-resource="rowData">
+									<button type="button" class="btn btn-primary" data-toggle="modal" (click)="openShowResource(resource)" data-target=".modalShowResource"><i class="fas fa-search"></i></button>
+									<button type="button" class="btn btn-primary" data-toggle="modal" (click)="openEditResource(resource)" data-target=".modalEditResource"><i class="fas fa-edit"></i></button>
+									<button type="button" class="btn btn-primary" data-toggle="modal" (click)="openRemoveResource(resource)" data-target=".modalRemoveResource"><i class="fas fa-trash-alt"></i></button>
+								</ng-template>
+							</p-column>
+							<p-footer>
+								<div *ngIf="!previouslySaved" class="row">
+									<div class="col-md-12">
+										<p>Si añades el recurso, <b>el dataset se guardará automáticamente</b></p>
+									</div>
+								</div>
+								<div class="ui-helper-clearfix" style="width:100%">
+									<button type="button" class="btn btn-primary" data-toggle="modal" style="float:left" data-target=".modalAddResource" (click)="resetAddResourceModal()">
+									<i class="fas fa-plus"></i> Añadir</button>
+								</div>
+							</p-footer>
+							</p-dataTable>
+
+						<!-- <div class="row">
+							<div class="col-md-12">
+								<p>Sube el fichero mapeo_ei2a.xlsm modificado:</p>
+							</div>
+						</div> -->
+						<div class="row">
+							<div class="col-md-12">
+								<p style="margin-top: 2%">
+										<b>Importante una vez que haya incorporado datos,</b> relacione sus datos con la Estructura de información interoperable de Aragón EI2A, para ello:
+									</p>
+									<ul>
+										<li>
+											1. Descargue el archivo excel <a href="https://opendata.aragon.es/public/documentos/mapeo_ei2a.xlsm" target="_blank">mapeo_ei2a.xlsm</a> y habilite su edición y contenido.
+										</li>
+										<li>
+											2. Cumplimente en la fila inicial la cabecera con la denominación de los campos de sus datos y seleccione en las siguientes filas los elementos y entidades acordes del EI2A a los que correspondan. Tenga en cuenta en incluir solo los campos representativos de sus datos, evite códigos internos de bases de datos y para cualquier ayuda o petición contacte con <a href="mailto:opendata@aragon.es">opendata@aragon.es</a>
+										</li>
+										<li>
+											3. Una vez cumplimentado y guardado, suba el fichero con la siguiente opción:  <input class="primary" type="file" #uploader (change)="uploadFileTmp($event)">
+										</li>
+									</ul>
+							</div>
+						</div>
+						<!-- <div class="row">
+							<div class="col-md-12">
+								
+							</div>
+						</div> -->
+						<div *ngIf="showMapLink" class="row" style="margin-top: 1%">
+							<div class="col-md-12">
+								<p>Descargar fichero de mapeo modificado:</p>
+							</div>
+						</div>
+						<div *ngIf="showMapLink" class="row">
+							<div class="col-md-12">
+								<button type="button" pButton icon="fas fa-download" (click)="downloadMapFile($event)" aria-hidden="true"></button> mapeo_ei2a.xlsm
+							</div>
+						</div>
+
+				</div>
+
+				<div *ngIf="isIAESTDataset" class="tab-pane" id="extra_iaest" role="tabpanel">
+						<h3 style="margin-top: 2%;">Tema Estadístico</h3>
+						<input type="text" class="form-control" [(ngModel)]="extraIAESTTemaEstadistico" placeholder="Tema Estadístico">
+	
+						<h3 style="margin-top: 2%;">Unidad Estadística</h3>
+						<input type="text" class="form-control" [(ngModel)]="extraIAESTUnidadEstadistica" placeholder="Unidad Estadística">
+	
+						<h3 style="margin-top: 2%;">Población Estadística</h3>
+						<input type="text" class="form-control" [(ngModel)]="extraIAESTPoblacionEstadistica" placeholder="Población Estadística">
+	
+						<h3 style="margin-top: 2%;">Unidad de medida</h3>
+						<input type="text" class="form-control" [(ngModel)]="extraIAESTUnidadMedida" placeholder="Unidad de medida">
+	
+						<h3 style="margin-top: 2%;">Periodo base</h3>
+						<input type="text" class="form-control" [(ngModel)]="extraIAESTPeriodoBase" placeholder="Periodo base">
+	
+						<h3 style="margin-top: 2%;">Tipo de operación</h3>
+						<input type="text" class="form-control" [(ngModel)]="extraIAESTTipoOperacion" placeholder="Tipo de operación">
+	
+						<h3 style="margin-top: 2%;">Tipología de datos de origen</h3>
+						<input type="text" class="form-control" [(ngModel)]="extraIAESTTipologiaDatosOrigen" placeholder="Tipología de datos de origen">
+	
+						<h3 style="margin-top: 2%;">IAEST Fuente</h3>
+						<input type="text" class="form-control" [(ngModel)]="extraIAESTFuente" placeholder="IAEST Fuente">
+	
+						<h3 style="margin-top: 2%;">Tratamiento Estadístico</h3>
+						<input type="text" class="form-control" [(ngModel)]="extraIAESTTratamientoEstadistico" placeholder="Tratamiento Estadístico">
+	
+						<h3 style="margin-top: 2%;">IAEST Legislación UE</h3>
+						<input type="text" class="form-control" [(ngModel)]="extraIAESTLegislacionUE" placeholder="IAEST Legislación UE">
+					</div>
+				
 			</div>
 			<p>Los campos marcados con este asterisco * son obligatorios, recuerda rellenarlos</p>
-			<p>Si pasas con el ratón encima de los lugares en los que aparece esta I parecerán dos ejemplos para que sepas cómo rellenar
-				cada metadato.</p>
-			<div class="row justify-content-end pb-5">
+			<div *ngIf="currentTab === 2" class="row justify-content-end pb-5">
 				<div class="btn-group" role="group" aria-label="Action Buttons">
-					<button id="saveAndContinueB" type="button" (click)="saveDataset(false)" class="btn btn-primary">Guarda y sigue</button>
-					<button id="saveAndFinishB" type="button" (click)="saveDatasetEnd()" class="btn btn-primary">Guarda y finaliza</button>
+					<button id="saveAndFinishB" type="button" (click)="checkAndNextTab(currentTab, true)" class="btn btn-primary">Guardar</button>
 					<button type="button" (click)="showCancelDialog(dataset.title,dataset.name)" class="btn btn-danger">Cancelar</button>
 				</div>
 			</div>

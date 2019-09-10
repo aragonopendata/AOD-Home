@@ -21,10 +21,10 @@
 	<h1 tabindex="{{openedMenu ? -1 : 0}}" class="globaltitle col-10">{{dataset.title}}</h1>
 	<div class="social col-2">
 		<a tabindex="{{openedMenu ? -1 : 0}}" href="{{routerLinkFacebookShare}}" target="_blank" title="Compartir en Facebook">
-		  <img src="/static/public/contenido-general/social/facebookIcon.png" alt="compartir-en-Facebook">
+		  <img src="{{assetsUrl}}/public/contenido-general/social/facebookIcon.png" alt="compartir-en-Facebook">
 		</a>
 		<a tabindex="{{openedMenu ? -1 : 0}}" href="{{routerLinkTwitterShare}}" target="_blank" title="Compartir en Twitter">
-		  <img src="/static/public/contenido-general/social/twitterIcon.png" alt="compartir-en-Twitter">
+		  <img src="{{assetsUrl}}/public/contenido-general/social/twitterIcon.png" alt="compartir-en-Twitter">
 		</a>
 	</div>
 </div>
@@ -115,6 +115,9 @@
 				<a tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let dic of extraDictionaryURL; let i = index" class="tags" (click)="submitEvent(dic,'EXTRA');openUrl(dic);"
 				pButton (keydown.enter)="submitEvent(dic,'EXTRA');openUrl(dic);" type="button" label="[{{i+1}}] Documento de diccionario de datos"
 				style="margin: 2px;"></a>
+			</div>
+			<div *ngIf="showMapLink">
+				<a href="javascript:;" (click)="downloadMapFileAsCSV($event)">Relación entre la estructura de datos del recurso</a> y la Estructura de Información Interoperable de Aragón <a target="_blank" href="https://opendata.aragon.es/def/ei2a/">(EI2A)</a>
 			</div>
 		</div>
 	</div>
@@ -231,10 +234,10 @@
 	<h1 tabindex="{{openedMenu ? -1 : 0}}" *ngIf="datasetHomer.title" class="globaltitle col-10">{{datasetHomer.title}}</h1>
 	<div class="social col-2">
 		<a tabindex="{{openedMenu ? -1 : 0}}" href="{{routerLinkFacebookShare}}" target="_blank" title="Compartir en Facebook">
-		  <img src="/static/public/contenido-general/social/facebookIcon.png" alt="compartir-en-Facebook">
+		  <img src="{{assetsUrl}}/public/contenido-general/social/facebookIcon.png" alt="compartir-en-Facebook">
 		</a>
 		<a tabindex="{{openedMenu ? -1 : 0}}" href="{{routerLinkTwitterShare}}" target="_blank" title="Compartir en Twitter">
-		  <img src="/static/public/contenido-general/social/twitterIcon.png" alt="compartir-en-Twitter">
+		  <img src="{{assetsUrl}}/public/contenido-general/social/twitterIcon.png" alt="compartir-en-Twitter">
 		</a>
 	</div>
 </div>

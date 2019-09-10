@@ -35,6 +35,7 @@ export class FooterComponent implements OnInit {
 	oasiTwitterUrl: string;
 	oasiYoutubeUrl: string;
 	aodMail: string;
+	assetsUrl: string;
 
 	constructor(private constants: Constants, private utilsService: UtilsService) { 
 		this.aodBaseUrl = Constants.AOD_BASE_URL;
@@ -59,6 +60,7 @@ export class FooterComponent implements OnInit {
 		this.oasiTwitterUrl = Constants.OASI_TWITTER_URL;
 		this.oasiYoutubeUrl = Constants.OASI_YOUTUBE_URL;
 		this.aodMail = Constants.AOD_MAIL;
+		this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
 
 		this.getOpenedMenu();
 	}

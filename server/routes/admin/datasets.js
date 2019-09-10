@@ -7,12 +7,37 @@ const dbQueries = require('../../db/db-queries');
 const http = require('http');
 const proxy = require('../../conf/proxy-conf');
 const request = require('request');
+const path = require('path');
+var xlsx = require('node-xlsx');
+
 //Multer for receive form-data
-const multer  = require('multer')
-var storage = multer.memoryStorage()
-var upload = multer({ storage: storage })
+const multer  = require('multer');
+var storage = multer.memoryStorage();
+var upload = multer({ storage: storage });
+
+// Multer to save files to disk
+var disk_storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        const dir = constants.XLSM_PATH + req.body.datasetid;
+        console.log(dir);
+        try {
+            if (!fs.existsSync(dir)){
+              fs.mkdirSync(dir)
+            }
+          } catch (err) {
+            console.error(err)
+          }
+      cb(null, dir);   
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname);
+    }
+  })
+   
+var disk_upload = multer({ storage: disk_storage });
+
 // FormData for send form-data
-const formData = require('form-data');
+const formData = require('form-data');  
 const fs = require('fs');
 //DB SETTINGS
 const db = require('../../db/db-connection');
@@ -252,6 +277,7 @@ router.put(constants.API_URL_ADMIN_DATASET, function (req, res, next) {
 router.delete(constants.API_URL_ADMIN_DATASET, function (req, res, next) {
     try {
         var dataset = req.body;
+        console.log(req.body);
         logger.notice('Dataset a borrar: ' + JSON.stringify(dataset.name));
         //0. CHECKING REQUEST PARAMETERS
         if(dataset.name != ''){
@@ -269,6 +295,23 @@ router.delete(constants.API_URL_ADMIN_DATASET, function (req, res, next) {
                                 'result':'BORRADO DE DATASETS - Dataset borrado correctamente'
                             };
                             res.json(successJson);
+
+                            // Clean map file if exists
+                            const dir = constants.XLSM_PATH + req.body.datasetid;
+                            const file1 = dir + '/mapeo_ei2a.xlsm';
+                            const file2 = dir + '/mapeo_ei2a.csv';
+                            console.log(dir);
+
+                            try {
+                                if (fs.existsSync(file1)){
+                                    fs.unlinkSync(file1);
+                                    fs.unlinkSync(file2);
+                                    fs.rmdirSync(dir);
+                                }
+                            } catch (err) {
+                                console.error(err)
+                            }
+
                         }else{
                           
                             logger.error('BORRADO DE DATASETS - Error al borrar el dataset en CKAN: ' + JSON.stringify(deleteCkanResponse));
@@ -290,6 +333,7 @@ router.delete(constants.API_URL_ADMIN_DATASET, function (req, res, next) {
                         res.json({ 'status': constants.REQUEST_ERROR_BAD_DATA, 'error': 'BORRADO DE DATASETS - Respuesta del servidor errónea' });
                         return;
                     });
+
             } else {
                 logger.error('BORRADO DE DATASETS - Usuario no autorizado: ', error);
                 res.json({ 'status': constants.REQUEST_ERROR_FORBIDDEN, 'error': 'BORRADO DE DATASETS - Usuario no autorizado' });
@@ -467,57 +511,120 @@ router.delete(constants.API_URL_ADMIN_RESOURCE, function (req, res, next) {
     }
 })
 
-/** GET DATASETS RESOURCE_VIEW */
-router.get(constants.API_URL_DATASETS_RESOURCE_VIEW, function (req, res, next) {
+/** CREATE FILE */
+router.post(constants.API_URL_ADMIN_RESOURCE, upload.single('file'), function (req, res, next) {
     try {
-
-        logger.debug('Servicio: Obtener vistas de los recursos');
-        let serviceBaseUrl = constants.CKAN_API_BASE_URL;
-        let serviceName = constants.DATASETS_RESOURCE_VIEW;
-        let serviceRequestUrl = serviceBaseUrl + serviceName + '?id=' + req.query.resId;
-
-        var query = '';
-        let resParams = [];
-
-        logger.notice('URL de petición: ' + serviceRequestUrl);
-
+        var resource = req.body;
         let apiKey = utils.getApiKey(req.get('Authorization'));
         if (apiKey) {
             logger.info('API KEY del usuario recuperada: ' + apiKey);
-            var httpRequestOptions = {
-                url: serviceRequestUrl,
-                method: constants.HTTP_REQUEST_METHOD_GET,
-                headers: {
-                    'Content-Type': constants.HTTP_REQUEST_HEADER_CONTENT_TYPE_JSON,
-                    'User-Agent': constants.HTTP_REQUEST_HEADER_USER_AGENT_NODE_SERVER_REQUEST,
-                    'Authorization': apiKey
-                }
-            };
-            request(httpRequestOptions, function (err, response, body) {
-                if (err) {
-                    utils.errorHandler(err, res, serviceName);
-                }
-                if (response) {
-                    if (response.statusCode == 200) {
-                        res.json(body);
+            if (resource.resource_type != 'view'){
+                //2. ADD RESOURCE IN CKAN
+                insertResourceInCKAN(apiKey, req)
+                .then( insertCkanResponse => {
+                    res.json(JSON.parse(insertCkanResponse));
+                });
+            } else {
+                let resourceJSON = req;
+                resourceJSON.body.format = 'JSON';
+                resourceJSON.body.url = constants.GA_OD_CORE_BASE_URL+'/download?view_id='+resourceJSON.body.view_id+'&formato=json';
+                //2. ADD RESOURCE IN CKAN
+                insertResourceInCKAN(apiKey, resourceJSON)
+                .then( insertCkanResponseJson => {
+                    if (insertCkanResponseJson) {
+                        let resourceCSV = req;
+                        resourceCSV.body.format = 'CSV';
+                        resourceCSV.body.url = constants.GA_OD_CORE_BASE_URL+'/download?view_id='+resourceCSV.body.view_id+'&formato=csv';
+                        insertResourceInCKAN(apiKey, resourceCSV)
+                        .then( insertCkanResponseCsv => {
+                            if ( insertCkanResponseCsv){
+                                let resourceXML = req;
+                                resourceXML.body.format = 'XML';
+                                resourceXML.body.url = constants.GA_OD_CORE_BASE_URL+'/download?view_id='+resourceXML.body.view_id+'&formato=xml';
+                        
+                                insertResourceInCKAN(apiKey, resourceXML)
+                                .then( insertCkanResponseXml => {
+                                    if(insertCkanResponseXml){
+                                        res.json(JSON.parse(insertCkanResponseXml));
+                                    }else{
+                                        logger.error('CREACCION DE RECURSOS - Error al Insertar XML: ', error);
+                                        res.json({ 'status': constants.REQUEST_ERROR_FORBIDDEN, 'error': 'CREACCION DE RECURSOS - Error al Insertar XML' });
+                                    }
+                                });
+                            } else {
+                                logger.error('CREACCION DE RECURSOS - Error al Insertar CSV: ', error);
+                                res.json({ 'status': constants.REQUEST_ERROR_FORBIDDEN, 'error': 'CREACCION DE RECURSOS - Error al Insertar CSV' });
+                            }
+                        });
                     } else {
-                        res.json(JSON.stringify(res.statusCode) + ' - ' + JSON.stringify(res.statusMessage));
+                        logger.error('CREACCION DE RECURSOS - Error al Insertar JSON: ', error);
+                        res.json({ 'status': constants.REQUEST_ERROR_FORBIDDEN, 'error': 'CREACCION DE RECURSOS - Error al Insertar JSON' });
                     }
-                } else {
-                    res.json({ 'status': constants.REQUEST_ERROR_FORBIDDEN, 'error': 'OBTENER VISTAS DE RECURSO - Error al obtener las vistas de los recursos' });
-                }
-            }).on('error', function (err) {
-                utils.errorHandler(err, res, serviceName);
-            });
+                });
+            }
         } else {
-            logger.error('OBTENER VISTAS DE RECURSO - Usuario no autorizado');
-            res.json({ 'status': constants.REQUEST_ERROR_FORBIDDEN, 'error': 'OBTENER VISTAS DE RECURSO - API KEY incorrecta' });
+            logger.error('CREACCION DE RECURSOS - Usuario no autorizado: ', error);
+            res.json({ 'status': constants.REQUEST_ERROR_FORBIDDEN, 'error': 'CREACCION DE RECURSOS - Usuario no autorizado' });
             return;
         }
     } catch (error) {
-        logger.error('Error in route' + constants.API_URL_DATASETS_RESOURCE_VIEW);
+        logger.error('CREACCION DE RECURSOS - Error al crear el recurso: ', error);
+        res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'CREACCION DE RECURSOS - Error al crear el recurso' });
+        return;
+    }    
+  })
+
+/** POST DATASETS RESOURCE XLSM UPLOAD */
+router.post(constants.API_URL_ADMIN_CREATE_FILE, disk_upload.single('file'), function (req, res, next) {
+    try {
+        const file = req.file;
+
+        if (!file) {
+            res.json({ 'status': constants.REQUEST_ERROR_BAD_DATA, 'success': false, 'message': 'Please, upload a file.' });
+          }
+
+        // Parse XLSM to CSV
+        const dir = constants.XLSM_PATH + req.body.datasetid;
+        const fx = dir + '/mapeo_ei2a';
+        console.log(dir);
+
+        var obj = xlsx.parse(fx + '.xlsm');
+        var rows = [];
+        var writeStr = "";
+
+        var sheet = obj[0];
+        
+        let max_val = sheet['data'][1].length
+        for (let index = 2; index < 7; index++) {
+            let max_val_tmp = sheet['data'][index].length;
+            if(max_val_tmp > max_val){
+                max_val = max_val_tmp
+            }
+        }
+
+        rows.push(sheet['data'][0].slice(0, max_val))
+        rows.push(sheet['data'][7].slice(0, max_val))
+
+        // Creates the csv string to write it to a file
+        for(var i = 0; i < rows.length; i++)
+        {
+            writeStr += rows[i].join(",") + "\n";
+        }
+
+        // Write to file
+        fs.writeFile(fx + ".csv", writeStr, function(err) {
+            if(err) {
+                return console.log(err);
+            }
+            console.log("mapeo_ei2a.csv was saved correctly");
+        });
+
+        res.json({ 'status': constants.REQUEST_REQUEST_OK, 'success': true, 'filename': req.file.filename, 'message': 'File uploaded succesfully.' });
+    } catch (error) {
+        console.log(error);
     }
-});
+
+  })
 
 /** GET USER PERMISSIONS FUNCTION */
 var getUserPermissions = function checkUserPermissions(userId, userName) {
