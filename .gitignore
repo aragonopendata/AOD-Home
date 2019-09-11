@@ -24,3 +24,6 @@ dist/
 
 # Angular images (performance)
 #client/src/assets/
+
+client/src/app/app.constants.ts
+server/util/constants.js
