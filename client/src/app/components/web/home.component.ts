@@ -64,7 +64,7 @@ export class HomeComponent implements OnInit {
 		this.routerLinkToolsApis = Constants.ROUTER_LINK_TOOLS_APIS;
 		this.routerLinkToolsGithub = Constants.AOD_GITHUB_URL;
 		this.routerLinkSparql = Constants.ROUTER_LINK_SPARQL;
-		this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
+		this.assetsUrl = window["config"]["AOD_ASSETS_BASE_URL"];
 		this.getOpenedMenu();
 		
 	}
@@ -127,21 +127,21 @@ export class HomeComponent implements OnInit {
 		let fullUrl = '';
 		if (url && url != undefined && url != '') {
 			if (this.routerLinkServicesAragopedia === url) {
-				fullUrl += Constants.AOD_BASE_URL + '/' + url;
+				fullUrl += window["config"]["AOD_BASE_URL"] + '/' + url;
 				window.location.href = fullUrl;
 			} else if (this.routerLinkServicesPresupuestos === url) {
-				fullUrl += Constants.PRESUPUESTOS_BASE_URL;
+				fullUrl += window["config"]["PRESUPUESTOS_BASE_URL"];
 				window.location.href = fullUrl;
 			} else if (this.routerLinkServicesSocialData === url) {
-				fullUrl += Constants.AOD_BASE_URL + '/' + url;
+				fullUrl += window["config"]["AOD_BASE_URL"] + '/' + url;
 				window.location.href = fullUrl;
 			} else if (this.routerLinkServicesCras === url) {
-				fullUrl += Constants.AOD_BASE_URL + '/' + url;
+				fullUrl += window["config"]["AOD_BASE_URL"] + '/' + url;
 				window.location.href = fullUrl;
 			} else if (this.routerLinkToolsGithub === url) {
 				window.location.href = url;
 			} else {
-				fullUrl += Constants.AOD_BASE_URL + '/' + Constants.ROUTER_LINK_404;
+				fullUrl += window["config"]["AOD_BASE_URL"] + '/' + Constants.ROUTER_LINK_404;
 				window.location.href = url;
 			}
 		} else {

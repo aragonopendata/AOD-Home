@@ -17,7 +17,7 @@ export class AuthenticationService {
 	login(username: string, password: string): Observable<boolean> {
 		var headers = new Headers();
 		headers.append('Content-Type', ' application/json');
-		let fullUrl = Constants.AOD_API_SECURITY_BASE_URL + Constants.SERVER_API_LINK_AUTHENTICATE;
+		let fullUrl = window["config"]["AOD_API_SECURITY_BASE_URL"] + Constants.SERVER_API_LINK_AUTHENTICATE;
 		return this.http.post(fullUrl, JSON.stringify({ username: username, password: password }), { headers: headers }).pipe(map(res => {
 			// login successful if there's a jwt token in the response
 			let userToken = res.json() && res.json().token;

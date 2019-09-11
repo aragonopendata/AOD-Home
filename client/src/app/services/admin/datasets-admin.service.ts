@@ -52,7 +52,7 @@ export class DatasetsAdminService {
 
 	public getDatasetByName(datasetName: string) {
 		this.refreshUser();
-		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_DATASETS 
+		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_DATASETS 
 						+ '/' + datasetName;
 		let headers = this.buildRequestHeaders();
 		return this.http.get(fullUrl, { headers: headers }).pipe(map(res => res.json()));
@@ -60,7 +60,7 @@ export class DatasetsAdminService {
 
 	public getDatasets(sort: string, page: number, rows: number, orgs: string) {
 		this.refreshUser();
-		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_DATASETS 
+		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_DATASETS 
 						+ '?' + Constants.SERVER_API_LINK_PARAM_SORT + '=' + sort 
 						+ '&' + Constants.SERVER_API_LINK_PARAM_PAGE + '=' + page.toString()
 						+ '&' + Constants.SERVER_API_LINK_PARAM_ROWS + '=' + rows.toString()
@@ -70,7 +70,7 @@ export class DatasetsAdminService {
 	}
 
 	public getDatasetsByText(sort: string, page: number, rows: number, text: string) {
-		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS 
+		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_DATASETS 
 						+ '?' + Constants.SERVER_API_LINK_PARAM_SORT + '=' + sort 
 						+ '&' + Constants.SERVER_API_LINK_PARAM_PAGE + '=' + page.toString() 
 						+ '&' + Constants.SERVER_API_LINK_PARAM_ROWS + '=' + rows.toString()
@@ -87,7 +87,7 @@ export class DatasetsAdminService {
 	}
 
 	public getDatasetResourceView(resoruce_id:string) {
-		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_URL_DATASETS_RESOURCE_VIEW 
+		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_URL_DATASETS_RESOURCE_VIEW 
 						+ '?' + Constants.SERVER_API_LINK_PARAM_RESOURCE_ID + '=' + resoruce_id 
 		
 		let headers = this.buildRequestHeaders();
@@ -95,13 +95,13 @@ export class DatasetsAdminService {
 	}
 
 	public getDatasetRDF(datasetName: string) {
-		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS_RDF 
+		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_DATASETS_RDF 
 						+ '/' + datasetName;
 		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
 
 	public getTags(query: string) {
-		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_TAGS;
+		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_TAGS;
 		if (query) {
 			fullUrl += '?q=' + query;
 		}
@@ -111,7 +111,7 @@ export class DatasetsAdminService {
 
 	public removeDataset(dataset_name: string, user_name:string, user_id: number, dataset_id: string) {
 
-		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_DATASET_CUD_OPERATIONS;
+		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_ADMIN_DATASET_CUD_OPERATIONS;
 		let requestBodyParams = {
 			requestUserId: user_id,
 			requestUserName: user_name,
@@ -124,21 +124,21 @@ export class DatasetsAdminService {
 	}
 
 	public createDataset(newDataset: any) {
-		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_DATASET_CUD_OPERATIONS;
+		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_ADMIN_DATASET_CUD_OPERATIONS;
 		let headers = this.buildRequestHeaders();
 		let requestBodyParams: any = newDataset;
 		return this.http.post(fullUrl, JSON.stringify(requestBodyParams), {headers: headers}).pipe(map(res => res.json()));
 	}
 	
 	public updateDataset(updatedDataset: any) {
-		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_DATASET_CUD_OPERATIONS;
+		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_ADMIN_DATASET_CUD_OPERATIONS;
 		let headers = this.buildRequestHeaders();
 		let requestBodyParams: any = updatedDataset;
 		return this.http.put(fullUrl, JSON.stringify(requestBodyParams), {headers: headers}).pipe(map(res => res.json()));
 	}
 
 	public createResource(file: any,newResource: any) {
-		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_RESOURCE_CUD_OPERATIONS;
+		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_ADMIN_RESOURCE_CUD_OPERATIONS;
 
 		let formData:FormData = new FormData();  
 		if (file != null) {
@@ -163,14 +163,14 @@ export class DatasetsAdminService {
 	}
 
 	public updateResource(updatedResource: any) {
-		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_RESOURCE_CUD_OPERATIONS;
+		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_ADMIN_RESOURCE_CUD_OPERATIONS;
 		let headers = this.buildRequestHeaders();
 		let requestBodyParams: any = updatedResource;
 		return this.http.put(fullUrl, JSON.stringify(requestBodyParams), {headers: headers}).pipe(map(res => res.json()));
 	}
 
 	public removeResource(resource_id: string) {
-		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_RESOURCE_CUD_OPERATIONS;
+		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_ADMIN_RESOURCE_CUD_OPERATIONS;
 		let requestBodyParams = {
 			id: resource_id
 		};

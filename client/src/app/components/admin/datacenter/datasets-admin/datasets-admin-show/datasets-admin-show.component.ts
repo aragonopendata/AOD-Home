@@ -90,7 +90,7 @@ export class DatasetsAdminShowComponent implements OnInit {
 		this.routerLinkDataOrgs = Constants.ROUTER_LINK_DATA_ORGANIZATIONS;
 		this.routerLinkFacebookShare = Constants.SHARE_FACEBOOK + window.location.href;
 		this.routerLinkTwitterShare = Constants.SHARE_TWITTER + window.location.href;
-		this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
+		this.assetsUrl = window["config"]["AOD_ASSETS_BASE_URL"];
 	}
 
 	ngOnInit() {
@@ -238,7 +238,7 @@ export class DatasetsAdminShowComponent implements OnInit {
 			for (var i = 0; i < this.resourceView.length; i++) {
 				if (this.resourceView[i] && this.resourceView[i].resource_id  && this.resourceView[i].resource_id == res) {
 					if (format != 'HTML'){
-						this.iframeRes = Constants.AOD_API_CKAN_BASE_URL+Constants.DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_DATASET+this.dataset.name+Constants.DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_RESOURCE+this.resourceView[i].resource_id+Constants.DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_VIEW+this.resourceView[i].id;
+						this.iframeRes = window["config"]["AOD_API_CKAN_BASE_URL"]+Constants.DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_DATASET+this.dataset.name+Constants.DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_RESOURCE+this.resourceView[i].resource_id+Constants.DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_VIEW+this.resourceView[i].id;
 					} else {
 						this.iframeRes = source;
 					}
@@ -278,7 +278,7 @@ export class DatasetsAdminShowComponent implements OnInit {
 			response => {
 				console.log(response);
 				if(response.headers.get('Content-Type') === 'application/vnd.ms-excel.sheet.macroEnabled.12'){
-					let url = Constants.AOD_BASE_URL + Constants.XLMS_PATH + this.dataset.id + '/mapeo_ei2a.xlsm?q=' + Date.now();
+					let url = window["config"]["AOD_BASE_URL"] + Constants.XLMS_PATH + this.dataset.id + '/mapeo_ei2a.xlsm?q=' + Date.now();
 					console.log(url);
 					window.open(url, '_blank');
 				}
@@ -287,7 +287,7 @@ export class DatasetsAdminShowComponent implements OnInit {
 	}
 
 	downloadMapFileAsCSV($event) {
-		let url = Constants.AOD_BASE_URL + Constants.XLMS_PATH + this.dataset.id + '/mapeo_ei2a.csv?q=' + Date.now();
+		let url = window["config"]["AOD_BASE_URL"] + Constants.XLMS_PATH + this.dataset.id + '/mapeo_ei2a.csv?q=' + Date.now();
 		window.open(url, '_blank');
 	}
 

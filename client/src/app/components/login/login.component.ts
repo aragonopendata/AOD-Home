@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
         private utilsService: UtilsService){
 
             this.getOpenedMenu();
-            this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
+            this.assetsUrl = window["config"]["AOD_ASSETS_BASE_URL"];
         }
 
     ngOnInit() {

@@ -22,7 +22,7 @@ export class AnalyticsComponent {
 
 	constructor(private logstashService: AnalyticsService,
 		private utilsService: UtilsService) {
-		this.aodBaseUrl = Constants.AOD_BASE_URL;
+		this.aodBaseUrl = window["config"]["AOD_BASE_URL"];
 		this.routerLinkDataCatalogDataset = Constants.ROUTER_LINK_DATA_CATALOG_DATASET
 		this.getOpenedMenu();
 	}
@@ -35,17 +35,17 @@ export class AnalyticsComponent {
 		jQuery("#analytics").attr('src', get_url(get_time(days), get_filter(portal)));
 		jQuery("#sevendays").attr('src', get_url_seven(get_time('now-30d/d'), get_filter(portal)));
 
-		jQuery(".browsers.json").attr('href', get_url_export(Constants.ELASTIC_BROWSERS, "json", days, portal));
-		jQuery(".browsers.csv").attr('href', get_url_export(Constants.ELASTIC_BROWSERS, "csv", days, portal));
+		jQuery(".browsers.json").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_BROWSERS, "json", days, portal));
+		jQuery(".browsers.csv").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_BROWSERS, "csv", days, portal));
 
-		jQuery(".pages.json").attr('href', get_url_export(Constants.ELASTIC_PAGES, "json", days, portal));
-		jQuery(".pages.csv").attr('href', get_url_export(Constants.ELASTIC_PAGES, "csv", days, portal));
+		jQuery(".pages.json").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_PAGES, "json", days, portal));
+		jQuery(".pages.csv").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_PAGES, "csv", days, portal));
 
-		jQuery(".files.json").attr('href', get_url_export(Constants.ELASTIC_FILES, "json", days, portal));
-		jQuery(".files.csv").attr('href', get_url_export(Constants.ELASTIC_FILES, "csv", days, portal));
+		jQuery(".files.json").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_FILES, "json", days, portal));
+		jQuery(".files.csv").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_FILES, "csv", days, portal));
 
-		jQuery(".countries.json").attr('href', get_url_export(Constants.ELASTIC_COUNTRIES, "json", days, portal));
-		jQuery(".countries.csv").attr('href', get_url_export(Constants.ELASTIC_COUNTRIES, "csv", days, portal));
+		jQuery(".countries.json").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_COUNTRIES, "json", days, portal));
+		jQuery(".countries.csv").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_COUNTRIES, "csv", days, portal));
 
 		jQuery('.iframeAnalytics').on("click", ".timeAnalytics", function (event) {
 			event.preventDefault();
@@ -53,17 +53,17 @@ export class AnalyticsComponent {
 			days = jQuery(this).val();
 			jQuery("#analytics").attr('src', get_url(get_time(days), get_filter(portal)));
 
-			jQuery(".browsers.json").attr('href', get_url_export(Constants.ELASTIC_BROWSERS, "json", days, portal));
-			jQuery(".browsers.csv").attr('href', get_url_export(Constants.ELASTIC_BROWSERS, "csv", days, portal));
+			jQuery(".browsers.json").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_BROWSERS, "json", days, portal));
+			jQuery(".browsers.csv").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_BROWSERS, "csv", days, portal));
 	
-			jQuery(".pages.json").attr('href', get_url_export(Constants.ELASTIC_PAGES, "json", days, portal));
-			jQuery(".pages.csv").attr('href', get_url_export(Constants.ELASTIC_PAGES, "csv", days, portal));
+			jQuery(".pages.json").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_PAGES, "json", days, portal));
+			jQuery(".pages.csv").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_PAGES, "csv", days, portal));
 	
-			jQuery(".files.json").attr('href', get_url_export(Constants.ELASTIC_FILES, "json", days, portal));
-			jQuery(".files.csv").attr('href', get_url_export(Constants.ELASTIC_FILES, "csv", days, portal));
+			jQuery(".files.json").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_FILES, "json", days, portal));
+			jQuery(".files.csv").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_FILES, "csv", days, portal));
 	
-			jQuery(".countries.json").attr('href', get_url_export(Constants.ELASTIC_COUNTRIES, "json", days, portal));
-			jQuery(".countries.csv").attr('href', get_url_export(Constants.ELASTIC_COUNTRIES, "csv", days, portal));
+			jQuery(".countries.json").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_COUNTRIES, "json", days, portal));
+			jQuery(".countries.csv").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_COUNTRIES, "csv", days, portal));
 		});
 
 		jQuery('.iframeAnalytics').on("click", ".portalAnalytics", function (event) {
@@ -73,17 +73,17 @@ export class AnalyticsComponent {
 			jQuery("#analytics").attr('src', get_url(get_time(days), get_filter(portal)));
 			jQuery("#sevendays").attr('src', get_url_seven(get_time('now-30d/d'), get_filter(portal)));
 
-			jQuery(".browsers.json").attr('href', get_url_export(Constants.ELASTIC_BROWSERS, "json", days, portal));
-			jQuery(".browsers.csv").attr('href', get_url_export(Constants.ELASTIC_BROWSERS, "csv", days, portal));
+			jQuery(".browsers.json").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_BROWSERS, "json", days, portal));
+			jQuery(".browsers.csv").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_BROWSERS, "csv", days, portal));
 	
-			jQuery(".pages.json").attr('href', get_url_export(Constants.ELASTIC_PAGES, "json", days, portal));
-			jQuery(".pages.csv").attr('href', get_url_export(Constants.ELASTIC_PAGES, "csv", days, portal));
+			jQuery(".pages.json").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_PAGES, "json", days, portal));
+			jQuery(".pages.csv").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_PAGES, "csv", days, portal));
 	
-			jQuery(".files.json").attr('href', get_url_export(Constants.ELASTIC_FILES, "json", days, portal));
-			jQuery(".files.csv").attr('href', get_url_export(Constants.ELASTIC_FILES, "csv", days, portal));
+			jQuery(".files.json").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_FILES, "json", days, portal));
+			jQuery(".files.csv").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_FILES, "csv", days, portal));
 	
-			jQuery(".countries.json").attr('href', get_url_export(Constants.ELASTIC_COUNTRIES, "json", days, portal));
-			jQuery(".countries.csv").attr('href', get_url_export(Constants.ELASTIC_COUNTRIES, "csv", days, portal));
+			jQuery(".countries.json").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_COUNTRIES, "json", days, portal));
+			jQuery(".countries.csv").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_COUNTRIES, "csv", days, portal));
 		});
 
 		function get_time(days) {
@@ -128,7 +128,7 @@ export class AnalyticsComponent {
 		}
 
 		function get_url(time, filter) {
-			var url = Constants.KIBANA_URL;
+			var url = window["config"]["AOD_BASE_URL"] + Constants.KIBANA_URL;
 			url = url + "?embed=true";
 			url = url + "&_g=("
 				+ "refreshInterval:("
@@ -153,7 +153,7 @@ export class AnalyticsComponent {
 		}
 
 		function get_url_seven(time, filter) {
-			var url = Constants.KIBANA_URL_SEVEN;
+			var url = window["config"]["AOD_BASE_URL"] + window["config"]["AOD_BASE_URL"] + Constants.KIBANA_URL_SEVEN;
 			url = url + "?embed=true";
 			url = url + "&_g=("
 				+ "refreshInterval:("

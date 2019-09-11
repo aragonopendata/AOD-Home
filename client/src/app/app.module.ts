@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -91,7 +91,11 @@ import { UtilsService } from './services/web/utils.service';
 import { TinyMceModule } from 'angular-tinymce';
 import { tinymceDefaultSettings } from 'angular-tinymce';
 import { FilesAdminService } from './services/admin/files-admin.service';
+import { AppInitService } from './app-init.service';
 
+export function init_app(appLoadService: AppInitService) {
+	return () => appLoadService.init();
+}
 
 @NgModule({
 	declarations: [
@@ -190,6 +194,13 @@ import { FilesAdminService } from './services/admin/files-admin.service';
 		TinyMceModule.forRoot(tinymceDefaultSettings())
 	],
 	providers: [
+		AppInitService,
+		{
+			provide: APP_INITIALIZER,
+			useFactory: init_app,
+			deps: [AppInitService],
+			multi: true
+		},
 		Logger,
 		Constants,
 		AuthenticationService,

@@ -17,7 +17,7 @@ export class VisualDataComponent implements OnInit {
     user: any;
 
     constructor(private domSanitizer : DomSanitizer, private usersAdminService: UsersAdminService, private authenticationService: AuthenticationService, private loginService: LoginService, private router: Router) {
-        this.srcIframe = this.domSanitizer.bypassSecurityTrustResourceUrl(Constants.AOD_BASE_URL + '/servicios/visualdata/adminPanel');
+        this.srcIframe = this.domSanitizer.bypassSecurityTrustResourceUrl(window["config"]["AOD_BASE_URL"] + '/servicios/visualdata/adminPanel');
     }
 
     ngOnInit() {

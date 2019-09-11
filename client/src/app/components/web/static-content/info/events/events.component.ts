@@ -100,7 +100,7 @@ export class EventsComponent implements OnInit {
     public provisionServicesRegistration(value){
         var headers = new Headers();
         headers.append('Content-Type', ' application/json');
-        let fullURL = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_REGISTRATION_EVENT_PRESTACION_PUBLI;
+        let fullURL = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_REGISTRATION_EVENT_PRESTACION_PUBLI;
         this.http.post(fullURL, JSON.stringify(value), { headers: headers }).subscribe(result => {
             if(result.json().status == 200){
                 jQuery('#success').show();

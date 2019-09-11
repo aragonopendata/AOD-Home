@@ -20,7 +20,7 @@ export class CollaborationComponent {
   }
   ngOnInit() {
       this.routerLinkCollaborationService = this.domSanitizer.bypassSecurityTrustResourceUrl(Constants.AOD_COLLABORATION_URL);
-      this.imgSrc = Constants.AOD_ASSETS_BASE_URL + '/public/colabora/participa-opendata.jpg';
+      this.imgSrc = window["config"]["AOD_ASSETS_BASE_URL"] + '/public/colabora/participa-opendata.jpg';
   }
 }
 

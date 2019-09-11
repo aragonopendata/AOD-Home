@@ -49,7 +49,7 @@ export class CampusDetailComponent implements OnInit {
     this.contentPlatformVimeo = Constants.CAMPUS_CONTENT_PLATFORM_VIMEO;
     this.contentPlatformYoutube = Constants.CAMPUS_CONTENT_PLATFORM_YOUTUBE;
     this.contentPlatformLink = Constants.CAMPUS_CONTENT_PLATFORM_LINK;
-    this.contentAssetsBaseURL = Constants.AOD_ASSETS_BASE_URL;
+    this.contentAssetsBaseURL = window["config"]["AOD_ASSETS_BASE_URL"];
     this.getOpenedMenu();
   }
 

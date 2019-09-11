@@ -31,7 +31,7 @@ export class AodCoreAdminService {
     }
 
     public getViews(){
-        let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_GA_OD_CORE + Constants.SERVER_API_LINK_GA_OD_CORE_VIEWS 
+        let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_GA_OD_CORE + Constants.SERVER_API_LINK_GA_OD_CORE_VIEWS 
         let headers = this.buildRequestHeaders();
         return this.http.get(fullUrl, { headers: headers }).pipe(map(res => res.json()));
     }

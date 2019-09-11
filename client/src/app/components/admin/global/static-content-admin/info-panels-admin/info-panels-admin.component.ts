@@ -45,9 +45,9 @@ export class InfoPanelsAdminComponent implements OnInit {
 
         this.settings = {
             selector: '#editor',
-            theme_url: Constants.AOD_ASSETS_BASE_URL + '/public/plugins/tinymce/themes/modern/theme.js',
-            skin_url: Constants.AOD_ASSETS_BASE_URL + '/public/plugins/tinymce/skins/lightgray',
-            baseURL: Constants.AOD_ASSETS_BASE_URL + '/public/plugins/tinymce',
+            theme_url: window["config"]["AOD_ASSETS_BASE_URL"] + '/public/plugins/tinymce/themes/modern/theme.js',
+            skin_url: window["config"]["AOD_ASSETS_BASE_URL"] + '/public/plugins/tinymce/skins/lightgray',
+            baseURL: window["config"]["AOD_ASSETS_BASE_URL"] + '/public/plugins/tinymce',
             plugins: [' advlist, lists, table, textcolor, image, link '],
             style_formats: [
                 {title: 'Título 1', format: 'h1'},

@@ -43,7 +43,7 @@ export class FilesAdminService {
 	}
 
 	public createFile(newFile: any, datasetid) {
-		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_CREATE_FILE;
+		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_CREATE_FILE;
 		let headers = this.buildRequestHeaders();
 		let formData:FormData = new FormData();
 		if(newFile != null){
@@ -55,7 +55,7 @@ export class FilesAdminService {
 	}
 	
 	public downloadFile(fileid) {
-		let fullUrl = Constants.AOD_BASE_URL + Constants.XLMS_PATH + fileid + '/mapeo_ei2a.xlsm?q=' + Date.now();
+		let fullUrl = window["config"]["AOD_BASE_URL"] + Constants.XLMS_PATH + fileid + '/mapeo_ei2a.xlsm?q=' + Date.now();
 		let headers = this.buildRequestHeaders();
 		let options = new RequestOptions({ headers: headers});
 		return this.http.options(fullUrl, options);

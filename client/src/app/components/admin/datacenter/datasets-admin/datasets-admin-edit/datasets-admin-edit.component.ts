@@ -334,7 +334,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 			response => {
 				console.log(response);
 				if(response.headers.get('Content-Type') === 'application/vnd.ms-excel.sheet.macroEnabled.12'){
-					let url = Constants.AOD_BASE_URL + Constants.XLMS_PATH + this.dataset.id + '/mapeo_ei2a.xlsm?q=' + Date.now();
+					let url = window["config"]["AOD_BASE_URL"] + Constants.XLMS_PATH + this.dataset.id + '/mapeo_ei2a.xlsm?q=' + Date.now();
 					console.log(url);
 					window.open(url, '_blank');
 				}else{
@@ -1155,7 +1155,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 	}
 
 	addMapFileToExtraDictionary(save) {
-		let url = Constants.AOD_BASE_URL + Constants.XLMS_PATH + this.dataset.id + '/mapeo_ei2a.xlsm';
+		let url = window["config"]["AOD_BASE_URL"] + Constants.XLMS_PATH + this.dataset.id + '/mapeo_ei2a.xlsm';
 		console.log(url);
 		if(this.extraDictionaryURL.findIndex(item => item === url) === -1){
 			console.log('Adding ' + url + ' to extraDictionaryURL');
@@ -1607,7 +1607,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 		} else if(this.resource.resource_type == 'file'){
 			this.resourceType = Constants.ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_TYPES_FILE.label;
 		} else{
-			if(this.resource.url.includes(Constants.AOD_BASE_URL)){
+			if(this.resource.url.includes(window["config"]["AOD_BASE_URL"])){
 				var GA_OD_CoreString = "GA_OD_Core";
 				if(this.resource.url.includes(GA_OD_CoreString)) { this.resourceType = Constants.ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_TYPES_DATABASE_VIEW.label; }
 				else { this.resourceType = Constants.ADMIN_DATASET_EDIT_DROPDOWN_RESOURCE_ACCESS_TYPES_FILE.label; }

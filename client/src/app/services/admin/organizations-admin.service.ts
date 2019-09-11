@@ -55,14 +55,14 @@ export class OrganizationsAdminService {
 
 	public getOrganizations() {
 		this.refreshUser();
-		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_ORGANIZATIONS;
+		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_ORGANIZATIONS;
 		let headers = this.buildRequestHeaders();
 		return this.http.get(fullUrl, { headers: headers }).pipe(map(res => res.json()));
 	}
 
 	public getOrganizationByName(organizationName: string) {
 		this.refreshUser();
-		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_ORGANIZATIONS 
+		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_ORGANIZATIONS 
 						+ '/' + organizationName;
 		let headers = this.buildRequestHeaders();
 		return this.http.get(fullUrl, { headers: headers }).pipe(map(res => res.json()));
@@ -70,7 +70,7 @@ export class OrganizationsAdminService {
 
 	public createOrganization(image: any, organization: OrganizationAdmin, webpage: string, address: string, person: string) {
 		this.refreshUser();
-		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_ORGANIZATION_CUD_OPERATIONS;
+		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_ADMIN_ORGANIZATION_CUD_OPERATIONS;
 		
 		let formData:FormData = new FormData();  
 		let extras = [];
@@ -114,14 +114,14 @@ export class OrganizationsAdminService {
     }
 
 	public updateOrganization(organization: OrganizationAdmin){
-	    let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_ORGANIZATION_CUD_OPERATIONS;
+	    let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_ADMIN_ORGANIZATION_CUD_OPERATIONS;
 		let headers = this.buildRequestHeaders();
 		let requestBodyParams: any = organization;
 		return this.http.put(fullUrl, JSON.stringify(requestBodyParams), { headers: headers }).pipe(map(res => res.json()));
 	}
 
 	public removeOrganization(organization_name: string, user_id: number,  user_name:string) {
-		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_ORGANIZATION_CUD_OPERATIONS;
+		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_ADMIN_ORGANIZATION_CUD_OPERATIONS;
 		let requestBodyParams = {
 			name:organization_name
 		};

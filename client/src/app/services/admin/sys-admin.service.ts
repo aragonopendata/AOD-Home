@@ -29,19 +29,19 @@ export class SysAdminService {
     }
 
     public getLogFileData() {
-        let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_SYS;
+        let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_ADMIN_SYS;
 		let headers = this.buildRequestHeaders();
 		return this.http.get(fullUrl, { headers: headers }).pipe(map(res => res.json()));
     }
 
     public getEmailRevision() {
-        let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_SYS + '/emailRevision';
+        let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_ADMIN_SYS + '/emailRevision';
 		let headers = this.buildRequestHeaders();
 		return this.http.get(fullUrl, { headers: headers }).pipe(map(res => res.json()));
     }
 
     public changeEmailRevision(checked) {
-        let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_SYS + '/emailRevision';
+        let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_ADMIN_SYS + '/emailRevision';
 		let headers = this.buildRequestHeaders();
 		let requestBodyParams: any = {
             "emailRevision": checked

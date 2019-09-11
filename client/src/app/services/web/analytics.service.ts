@@ -9,7 +9,7 @@ export class AnalyticsService {
     constructor(private http: Http) { }
 
     public getFiles() {
-        let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_WEB_ANALYTICS;
+        let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_WEB_ANALYTICS;
         return this.http.get(fullUrl).pipe(map((res: Response) => res.json()));
     }
 }

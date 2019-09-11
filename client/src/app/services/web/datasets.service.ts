@@ -28,7 +28,7 @@ export class DatasetsService {
 	}
 
 	public getDatasets(sort: string, page: number, rows: number, type: string) {
-		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS 
+		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_DATASETS 
 						+ '?' + Constants.SERVER_API_LINK_PARAM_SORT + '=' + sort 
 						+ '&' + Constants.SERVER_API_LINK_PARAM_PAGE + '=' + page.toString() 
 						+ '&' + Constants.SERVER_API_LINK_PARAM_ROWS + '=' + rows.toString() 
@@ -37,7 +37,7 @@ export class DatasetsService {
 	}
 
 	public getDatasetsByText(sort: string, page: number, rows: number, text: string) {
-		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS 
+		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_DATASETS 
 						+ '?' + Constants.SERVER_API_LINK_PARAM_SORT + '=' + sort 
 						+ '&' + Constants.SERVER_API_LINK_PARAM_PAGE + '=' + page.toString() 
 						+ '&' + Constants.SERVER_API_LINK_PARAM_ROWS + '=' + rows.toString()
@@ -46,19 +46,19 @@ export class DatasetsService {
 	}
 
 	public getDatasetByName(datasetName: string) {
-		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS 
+		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_DATASETS 
 						+ '/' + datasetName;
 		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
 
 	public getDatasetHomerByPackageId(datasetHomerName: string) {
-		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS_HOMER 
+		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_DATASETS_HOMER 
 						+ '/' + datasetHomerName;
 		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
 
 	public getDatasetsByTopic(topicName: string, sort: string, page: number, rows: number, type: string) {
-		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS_TOPIC 
+		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_DATASETS_TOPIC 
 						+ '/' + topicName 
 						+ '?' + Constants.SERVER_API_LINK_PARAM_SORT + '=' + sort 
 						+ '&' + Constants.SERVER_API_LINK_PARAM_PAGE + '=' + page.toString() 
@@ -68,7 +68,7 @@ export class DatasetsService {
 	}
 
 	public getDatasetsByOrganization(organizationName: string, sort: string, page: number, rows: number, type: string) {
-		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS_ORGANIZATION 
+		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_DATASETS_ORGANIZATION 
 						+ '/' + organizationName 
 						+ '?' + Constants.SERVER_API_LINK_PARAM_SORT + '=' + sort 
 						+ '&' + Constants.SERVER_API_LINK_PARAM_PAGE + '=' + page.toString() 
@@ -85,7 +85,7 @@ export class DatasetsService {
 			tagsQuery += '+"' + tag.name + '"';
 		});
 
-		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS_TAGS 
+		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_DATASETS_TAGS 
 						+ '?' + Constants.SERVER_API_LINK_PARAM_SORT + '=' + sort 
 						+ '&' + Constants.SERVER_API_LINK_PARAM_PAGE + '=' + page.toString() 
 						+ '&' + Constants.SERVER_API_LINK_PARAM_ROWS + '=' + rows.toString() 
@@ -94,7 +94,7 @@ export class DatasetsService {
 	}
 
 	public getDatasetsByStats(sort: string, page: number, rows: number, groupName: string) {
-		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS_STATS_SEARCH 
+		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_DATASETS_STATS_SEARCH 
 						+ '/' + groupName 
 						+ '?' + Constants.SERVER_API_LINK_PARAM_SORT + '=' + sort 
 						+ '&' + Constants.SERVER_API_LINK_PARAM_PAGE + '=' + page.toString() 
@@ -103,33 +103,33 @@ export class DatasetsService {
 	}
 
 	public getDatasetResourceView(resoruce_id:string) {
-		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_URL_DATASETS_RESOURCE_VIEW 
+		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_URL_DATASETS_RESOURCE_VIEW 
 						+ '?' + Constants.SERVER_API_LINK_PARAM_RESOURCE_ID + '=' + resoruce_id 
 		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
 
 	public getNewestDataset() {
-		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS_NEWEST;
+		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_DATASETS_NEWEST;
 		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
 
 	public getDownloadedDataset() {
-		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS_DOWNLOADED;
+		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_DATASETS_DOWNLOADED;
 		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
 
 	public getDatasetsNumber() {
-		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS_COUNT;
+		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_DATASETS_COUNT;
 		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
 
 	public getResourcesNumber() {
-		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_RESOURCES_COUNT;
+		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_RESOURCES_COUNT;
 		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
 
 	public getDatasetsAutocomplete(text: string, limit: number) {
-		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS_AUTOCOMPLETE 
+		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_DATASETS_AUTOCOMPLETE 
 						+ '?' + Constants.SERVER_API_LINK_PARAM_TEXT + '=' + text 
 						+ '&' + Constants.SERVER_API_LINK_PARAM_LIMIT + '=' + limit.toString();
 		return this.http.get(fullUrl).pipe(map(res => res.json()));
@@ -148,7 +148,7 @@ export class DatasetsService {
 	}
 
 	public getTags(query: string) {
-		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_TAGS;
+		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_TAGS;
 		if (query) {
 			fullUrl += '?q=' + query;
 		}
@@ -164,7 +164,7 @@ export class DatasetsService {
 	 * @param rows - Rows per page.
 	 */
 	public getDatasetsHomer(sort: string, page: number, rows: number, text: string, lang: string) {
-		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS_HOMER 
+		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_DATASETS_HOMER 
 		+ '?' + Constants.SERVER_API_LINK_PARAM_SORT + '=' + sort 
 		+ '&' + Constants.SERVER_API_LINK_PARAM_PAGE + '=' + page.toString() 
 		+ '&' + Constants.SERVER_API_LINK_PARAM_ROWS + '=' + rows.toString()
@@ -174,7 +174,7 @@ export class DatasetsService {
 	}
 
 	public getDatasetRDF(datasetName: string) {
-		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS_RDF 
+		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_DATASETS_RDF 
 						+ '/' + datasetName;
 		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
@@ -187,7 +187,7 @@ export class DatasetsService {
 	public trackingDataset(datasetName: string){
 		var headers = new Headers();
 		headers.append('Content-Type', ' application/json');
-		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_TRACKING;
+		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_TRACKING;
 		return this.http.post(fullUrl, JSON.stringify({ user_key: this.currentUserKey, url: '/dataset/' + datasetName }), { headers: headers }).pipe(map(res => {
 			let status = res.status;
 			if(status == 200){

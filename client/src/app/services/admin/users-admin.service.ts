@@ -37,7 +37,7 @@ export class UsersAdminService {
 	}
 
 	public getUsers(sort: string, page: number, rows: number) {
-		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_USERS
+		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_ADMIN_USERS
 			+ '?' + Constants.SERVER_API_LINK_PARAM_SORT + '=' + sort
 			+ '&' + Constants.SERVER_API_LINK_PARAM_PAGE + '=' + page.toString()
 			+ '&' + Constants.SERVER_API_LINK_PARAM_ROWS + '=' + rows.toString();
@@ -46,7 +46,7 @@ export class UsersAdminService {
 	}
 
 	public getUser(userId: number) {
-		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL  + Constants.SERVER_API_LINK_ADMIN_USERS 
+		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"]  + Constants.SERVER_API_LINK_ADMIN_USERS 
 			+ '/' + userId;
 		let headers = this.buildRequestHeaders();
 		return this.http.get(fullUrl, { headers:  headers }).pipe(map(res  =>  res.json()));
@@ -55,7 +55,7 @@ export class UsersAdminService {
 	public getOrganizationsByCurrentUser() {
 		this.refreshUser();
 		if (this.currentUser != undefined){
-			let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_USERS 
+			let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_ADMIN_USERS 
 			+ '/' + this.currentUser.id + Constants.SERVER_API_LINK_ADMIN_USER_ORGANIZATIONS;
 			let headers = this.buildRequestHeaders();
 			return this.http.get(fullUrl, { headers: headers }).pipe(map(res => res.json()));
@@ -65,7 +65,7 @@ export class UsersAdminService {
 	public getOrganizationsForUserByID( user: any ) {
 		this.refreshUser();
 		if (this.currentUser != undefined){
-			let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_USERS 
+			let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_ADMIN_USERS 
 			+ '/' + user.id + Constants.SERVER_API_LINK_ADMIN_USER_ORGANIZATIONS;
 			let headers = this.buildRequestHeaders();
 			let requestBodyParams: any = user;
@@ -74,7 +74,7 @@ export class UsersAdminService {
 	}
 
 	public createUser(user: any) {
-		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_USERS;
+		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_ADMIN_USERS;
 		let requestBodyParams = user;
 		requestBodyParams.role = user.role[0].id;
 		let headers = this.buildRequestHeaders();
@@ -82,7 +82,7 @@ export class UsersAdminService {
 	}
 
 	public updateUser(user: User) {
-		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_USERS
+		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_ADMIN_USERS
 			+ '/' + user.id;
 		let headers = this.buildRequestHeaders();
 		let requestBodyParams: any = user;
@@ -90,7 +90,7 @@ export class UsersAdminService {
 	}
 
 	public removeUser(user: User) {
-		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_ADMIN_USERS+ '/' + user.id;
+		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_ADMIN_USERS+ '/' + user.id;
 		let requestBodyParams = {
 			userNameCkan: user.name
 		};

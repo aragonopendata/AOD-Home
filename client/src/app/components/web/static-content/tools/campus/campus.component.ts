@@ -48,7 +48,7 @@ export class CampusComponent implements OnInit {
         this.pageRows = Constants.CAMPUS_EVENTS_PER_PAGE;
         this.campusErrorTitle = Constants.CAMPUS_EVENTS_ERROR_TITLE;
         this.campusErrorMessage = Constants.CAMPUS_EVENTS_ERROR_MESSAGE;
-        this.cursoIniciacionLink = Constants.AOD_ASSETS_BASE_URL + Constants.CAMPUS_CURSO_INICIACION;
+        this.cursoIniciacionLink = window["config"]["AOD_ASSETS_BASE_URL"] + Constants.CAMPUS_CURSO_INICIACION;
         this.campusNoRows = false;
         this.campusNoRowsMessage = Constants.CAMPUS_EVENTS_EMPTY;
         this.getOpenedMenu();

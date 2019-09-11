@@ -35,13 +35,13 @@ export class TopicsAdminService {
 	}
 
 	public getTopics() {
-		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_TOPICS;
+		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_TOPICS;
 		let headers = this.buildRequestHeaders();
 		return this.http.get(fullUrl, { headers: headers }).pipe(map(res => res.json()));
 	}
 
 	public getTopicByName(topicName: string) {
-		let fullUrl = Constants.AOD_API_ADMIN_BASE_URL + Constants.SERVER_API_LINK_TOPICS 
+		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_TOPICS 
 						+ '/' + topicName;
 		let headers = this.buildRequestHeaders();
 		return this.http.get(fullUrl, { headers: headers }).pipe(map(res => res.json()));

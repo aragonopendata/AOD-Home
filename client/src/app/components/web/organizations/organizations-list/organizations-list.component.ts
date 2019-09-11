@@ -38,7 +38,7 @@ export class OrganizationsListComponent implements OnInit {
 		private utilsService: UtilsService,
 		private router: Router) {
 		this.routerLinkDataOrganizations = Constants.ROUTER_LINK_DATA_ORGANIZATIONS;
-		this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
+		this.assetsUrl = window["config"]["AOD_ASSETS_BASE_URL"];
 		this.routerLinkFacebookShare = Constants.SHARE_FACEBOOK + window.location.href;
 		this.routerLinkTwitterShare = Constants.SHARE_TWITTER + window.location.href;
 		this.getOpenedMenu();

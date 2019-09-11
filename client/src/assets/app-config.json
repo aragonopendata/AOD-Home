@@ -1,0 +1,9 @@
+{
+    "AOD_BASE_URL": "http://localhost:7030",
+    "PRESUPUESTOS_BASE_URL": "http://miv-aodfront-01.aragon.local:7031",
+    "AOD_ASSETS_BASE_URL": "http://localhost:3000/assets",
+    "AOD_API_WEB_BASE_URL": "http://localhost:4200/aod/services/web",
+    "AOD_API_ADMIN_BASE_URL": "http://localhost:4200/aod/services/admin",
+    "AOD_API_SECURITY_BASE_URL": "http://localhost:4200/aod/services/security",
+    "AOD_API_CKAN_BASE_URL": "http://localhost:5000"
+}

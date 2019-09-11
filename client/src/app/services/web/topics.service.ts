@@ -13,7 +13,7 @@ export class TopicsService {
 	constructor(private http: Http) { }
 
 	public getTopics() {
-		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_TOPICS;
+		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_TOPICS;
 		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
 

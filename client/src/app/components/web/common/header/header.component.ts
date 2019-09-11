@@ -59,8 +59,8 @@ export class HeaderComponent implements OnInit {
     constructor(private locale: AppComponent, private constants: Constants,
             private datasetService: DatasetsService, private router: Router,
             private route: ActivatedRoute, private utilsService: UtilsService) { 
-        this.aodBaseUrl = Constants.AOD_BASE_URL;
-        this.presupuestosBaseUrl = Constants.PRESUPUESTOS_BASE_URL;
+        this.aodBaseUrl = window["config"]["AOD_BASE_URL"];
+        this.presupuestosBaseUrl = window["config"]["PRESUPUESTOS_BASE_URL"];
         this.transparenciaWebUrl = Constants.TRANSPARENCIA_WEB_URL;
         this.aragonParticipaWebUrl = Constants.ARAGON_PARTICIPA_WEB_URL;
         this.resultsLimit = Constants.DATASET_AUTOCOMPLETE_HEADER_LIMIT_RESULTS;
@@ -85,7 +85,7 @@ export class HeaderComponent implements OnInit {
 		this.routerLinkToolsApis = Constants.ROUTER_LINK_TOOLS_APIS;
         this.routerLinkToolsGithub = Constants.AOD_GITHUB_URL;
         this.routerLinkSparql = Constants.ROUTER_LINK_SPARQL;
-        this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
+        this.assetsUrl = window["config"]["AOD_ASSETS_BASE_URL"];
 
         this.srcMenu = this.assetsUrl + '/public/header/images/Boton-Menu-Responsive-OFF.png';
         this.srcLogin = this.assetsUrl + '/public/header/images/Boton-Acceso-Usuarios-OFF.png';

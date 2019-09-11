@@ -35,7 +35,7 @@ export class TopicsListComponent implements OnInit {
 		private router: Router) {
 		this.topics = [];
 		this.routerLinkDataTopics = Constants.ROUTER_LINK_DATA_CATALOG_TOPICS;
-		this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
+		this.assetsUrl = window["config"]["AOD_ASSETS_BASE_URL"];
 		this.routerLinkFacebookShare = Constants.SHARE_FACEBOOK + window.location.href;
 		this.routerLinkTwitterShare = Constants.SHARE_TWITTER + window.location.href;
 		this.aodMail = Constants.AOD_MAIL;

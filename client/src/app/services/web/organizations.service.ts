@@ -13,13 +13,13 @@ export class OrganizationsService {
 	constructor(private http: Http) { }
 
 	public getOrganizationByName(organizationName: string) {
-		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_ORGANIZATIONS 
+		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_ORGANIZATIONS 
 						+ '/' + organizationName;
 		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
 
 	public getOrganizations() {
-		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_ORGANIZATIONS;
+		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_ORGANIZATIONS;
 		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
 
@@ -28,7 +28,7 @@ export class OrganizationsService {
 	}
 
 	public getOrganization() {
-		let fullUrl = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_ORGANIZATIONS 
+		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_ORGANIZATIONS 
 						+ '/' + this.organization.name;
 		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}

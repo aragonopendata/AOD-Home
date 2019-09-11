@@ -100,7 +100,7 @@ export class DatasetsDetailComponent implements OnInit {
 		this.routerLinkDataOrgs = Constants.ROUTER_LINK_DATA_ORGANIZATIONS;
 		this.routerLinkFacebookShare = Constants.SHARE_FACEBOOK + window.location.href;
 		this.routerLinkTwitterShare = Constants.SHARE_TWITTER + window.location.href;
-		this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
+		this.assetsUrl = window["config"]["AOD_ASSETS_BASE_URL"];
 
 		this.getOpenedMenu();
 
@@ -380,7 +380,7 @@ export class DatasetsDetailComponent implements OnInit {
 				resourceCSV.name = resourceCSV.name.replace("px","csv");
 				resourceCSV.formats = ["CSV"];
 				let url = resourceCSV.sources[0].substring(resourceCSV.sources[0].indexOf("iaeaxi_docs")+("iaeaxi_docs".length+1));
-				url = Constants.AOD_BASE_URL + "/aod/services/web/datasets/" + this.dataset.name + "/resourceCSV/" + url.replace(new RegExp("/", 'g'), "-")		
+				url = window["config"]["AOD_BASE_URL"] + "/aod/services/web/datasets/" + this.dataset.name + "/resourceCSV/" + url.replace(new RegExp("/", 'g'), "-")		
 				resourceCSV.sources = [url];
 			}
 		})
@@ -424,7 +424,7 @@ export class DatasetsDetailComponent implements OnInit {
 			for (var i = 0; i < this.resourceView.length; i++) {
 				if (this.resourceView[i] && this.resourceView[i].resource_id && this.resourceView[i].resource_id == res) {
 					if (format != 'HTML') {
-						this.iframeRes = Constants.AOD_API_CKAN_BASE_URL + Constants.DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_DATASET + this.dataset.name + Constants.DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_RESOURCE + this.resourceView[i].resource_id + Constants.DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_VIEW + this.resourceView[i].id;
+						this.iframeRes = window["config"]["AOD_API_CKAN_BASE_URL"] + Constants.DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_DATASET + this.dataset.name + Constants.DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_RESOURCE + this.resourceView[i].resource_id + Constants.DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_VIEW + this.resourceView[i].id;
 					} else {
 						this.iframeRes = source;
 					}
@@ -463,7 +463,7 @@ export class DatasetsDetailComponent implements OnInit {
 		var path = href;
 
 		if (format == "RDF") {
-			path = Constants.AOD_API_WEB_BASE_URL + Constants.SERVER_API_LINK_DATASETS_RDF + '/' + href;
+			path = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_DATASETS_RDF + '/' + href;
 		}
 
 		if (path.substring(0, 4) != 'http') {
@@ -476,7 +476,7 @@ export class DatasetsDetailComponent implements OnInit {
 		path = urlHack.pathname;
 
 		var urlAux = document.createElement('a');
-		urlAux.href = Constants.AOD_BASE_URL;
+		urlAux.href = window["config"]["AOD_BASE_URL"];
 
 		if (urlHack.host == urlAux.host) {
 
@@ -534,7 +534,7 @@ export class DatasetsDetailComponent implements OnInit {
 			response => {
 				console.log(response);
 				if(response.headers.get('Content-Type') === 'application/vnd.ms-excel.sheet.macroEnabled.12'){
-					let url = Constants.AOD_BASE_URL + Constants.XLMS_PATH + this.dataset.id + '/mapeo_ei2a.xlsm?q=' + Date.now();
+					let url = window["config"]["AOD_BASE_URL"] + Constants.XLMS_PATH + this.dataset.id + '/mapeo_ei2a.xlsm?q=' + Date.now();
 					console.log(url);
 					window.open(url, '_blank');
 				}
@@ -543,7 +543,7 @@ export class DatasetsDetailComponent implements OnInit {
 	}
 
 	downloadMapFileAsCSV($event) {
-		let url = Constants.AOD_BASE_URL + Constants.XLMS_PATH + this.dataset.id + '/mapeo_ei2a.csv?q=' + Date.now();
+		let url = window["config"]["AOD_BASE_URL"] + Constants.XLMS_PATH + this.dataset.id + '/mapeo_ei2a.csv?q=' + Date.now();
 		window.open(url, '_blank');
 	}
 

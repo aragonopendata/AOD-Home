@@ -70,7 +70,7 @@ export class StaticContentAdminService {
 		}else {
 			auxUrl = Constants.SERVER_API_LINK_STATIC_CONTENT_TOOLS;
 		}
-		return Constants.AOD_API_WEB_BASE_URL + auxUrl + '/' + sectionName;
+		return window["config"]["AOD_API_WEB_BASE_URL"] + auxUrl + '/' + sectionName;
 	}
 
 	getAdminURL(sectionName: String){
@@ -81,7 +81,7 @@ export class StaticContentAdminService {
 		}else {
 			auxUrl = Constants.SERVER_API_LINK_ADMIN_STATIC_CONTENT_TOOLS;
 		}
-		return Constants.AOD_API_ADMIN_BASE_URL + auxUrl;
+		return window["config"]["AOD_API_ADMIN_BASE_URL"] + auxUrl;
 	}
 
 }

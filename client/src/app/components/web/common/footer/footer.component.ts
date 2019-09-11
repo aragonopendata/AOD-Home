@@ -38,7 +38,7 @@ export class FooterComponent implements OnInit {
 	assetsUrl: string;
 
 	constructor(private constants: Constants, private utilsService: UtilsService) { 
-		this.aodBaseUrl = Constants.AOD_BASE_URL;
+		this.aodBaseUrl = window["config"]["AOD_BASE_URL"];
 		this.routerLinkInfoOpenData = Constants.ROUTER_LINK_INFORMATION_OPEN_DATA;
 		this.routerLinkDataCatalog = Constants.ROUTER_LINK_DATA_CATALOG;
 		this.routerLinkServicesOpenDataPool = Constants.ROUTER_LINK_SERVICES_POOL;
@@ -60,7 +60,7 @@ export class FooterComponent implements OnInit {
 		this.oasiTwitterUrl = Constants.OASI_TWITTER_URL;
 		this.oasiYoutubeUrl = Constants.OASI_YOUTUBE_URL;
 		this.aodMail = Constants.AOD_MAIL;
-		this.assetsUrl = Constants.AOD_ASSETS_BASE_URL;
+		this.assetsUrl = window["config"]["AOD_ASSETS_BASE_URL"];
 
 		this.getOpenedMenu();
 	}
