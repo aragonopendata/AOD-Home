@@ -35,7 +35,6 @@ var sysAdmin = require('./server/routes/admin/sys-admin');
 var mailer = require('./server/routes/web/mailer');
 var analytics = require('./server/routes/web/analytics');
 
-
 // API ROUTES 
 var authenticate = require('./server/routes/authenticate'); 
 var verifyToken = require('./server/util/verifyToken'); 
