@@ -424,6 +424,7 @@ export class Constants {
     public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_XLSX = { label: 'XLSX', value: '24' };
     public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_XML = { label: 'XML', value: '25' };
     public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_ZIP = { label: 'ZIP', value: '26' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_TTL = { label: 'TTL', value: '27' };
     
     
     public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_CSV = { label: 'CSV', value: '1' };
@@ -452,6 +453,7 @@ export class Constants {
     public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_XLSX = { label: 'XLSX', value: '24' };
     public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_XML = { label: 'XML', value: '25' };
     public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_ZIP = { label: 'ZIP', value: '26' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_TTL = { label: 'TTL', value: '27' };
 
     public static ADMIN_DATASET_ERR_LOAD_DATASET = '200 - undefined';
 

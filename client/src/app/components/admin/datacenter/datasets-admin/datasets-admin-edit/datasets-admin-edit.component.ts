@@ -411,7 +411,8 @@ export class DatasetsAdminEditComponent implements OnInit {
 			{ label: Constants.ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_XLS.label, value: Constants.ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_XLS.value },
 			{ label: Constants.ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_XLSX.label, value: Constants.ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_XLSX.value },
 			{ label: Constants.ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_XML.label, value: Constants.ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_XML.value },
-			{ label: Constants.ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_ZIP.label, value: Constants.ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_ZIP.value }
+			{ label: Constants.ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_ZIP.label, value: Constants.ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_ZIP.value },
+			{ label: Constants.ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_TTL.label, value: Constants.ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_TTL.value }
 		];
 		this.accessModes = [
 			{ label: Constants.ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_CSV.label, value: Constants.ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_CSV.value },
@@ -439,7 +440,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 			{ label: Constants.ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_XLS.label, value: Constants.ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_XLS.value },
 			{ label: Constants.ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_XLSX.label, value: Constants.ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_XLSX.value },
 			{ label: Constants.ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_XML.label, value: Constants.ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_XML.value },
-			{ label: Constants.ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_ZIP.label, value: Constants.ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_ZIP.value }
+			{ label: Constants.ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_TTL.label, value: Constants.ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_TTL.value }
 		];
 
 	}
