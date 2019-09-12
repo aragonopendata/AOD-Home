@@ -236,6 +236,15 @@ exports.SERVER_API_LINK_PARAM_TYPE_PLAIN_TEXT_QUERY = '&q=(((res_format:XLS OR r
 //Results per page in campus
 exports.CAMPUS_EVENTS_PER_PAGE = 10;
 
+/*  SPARQL */
+exports.SPARQL_API_BASE_URL = process.env.SPARQL_API_BASE_URL;
+exports.SPARQL_API_QUERY_URL_ALL_GRAPHS = '?query=SELECT  DISTINCT ?g WHERE  { GRAPH ?g {?s ?p ?o} } ORDER BY ?g &format=json';
+exports.SPARQL_API_LINK_PARAM_GRAPH = '?default-graph-uri=';
+exports.SPARQL_API_LINK_PARAM_QUERY = '&query=';
+exports.SPARQL_API_LINK_PARAM_FORMAT = '&format=';
+exports.SPARQL_API_LINK_PARAM_TIMEOUT = '&timeout=';
+exports.SPARQL_API_LINK_PARAM_DEBUG = '&debug=';
+
 /* ******************* */
 /* DATABASE PROPERTIES */
 exports.DB_HOST = process.env.DB_HOST;
