@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, URLSearchParams, RequestOptions, Headers} from '@angular/http';
+import { Http, Response, URLSearchParams, RequestOptions, Headers, ResponseOptions} from '@angular/http';
 import { Constants } from 'app/app.constants';
 import { map } from 'rxjs/operators';
 
@@ -59,6 +59,14 @@ export class FilesAdminService {
 		let headers = this.buildRequestHeaders();
 		let options = new RequestOptions({ headers: headers});
 		return this.http.options(fullUrl, options);
+	}
+
+	public deleteMapFile(fileid) {
+		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_CREATE_FILE;
+		let headers = this.buildRequestHeaders();
+		headers.append('fileid', fileid);
+		let options = new ResponseOptions({ headers: headers });
+		return this.http.delete(fullUrl, options).pipe(map(res => res.json()));
 	}
 
 }
