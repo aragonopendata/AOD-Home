@@ -61,11 +61,4 @@ export class FilesAdminService {
 		return this.http.options(fullUrl, options);
 	}
 
-	public deleteMapFile(fileid) {
-		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_CREATE_FILE + '?fileid=' + fileid;
-		let headers = this.buildRequestHeaders();
-		let options = new ResponseOptions({ headers: headers });
-		return this.http.delete(fullUrl, options).pipe(map(res => res.json()));
-	}
-
 }

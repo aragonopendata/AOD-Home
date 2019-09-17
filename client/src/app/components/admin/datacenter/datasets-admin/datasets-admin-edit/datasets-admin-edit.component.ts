@@ -344,18 +344,6 @@ export class DatasetsAdminEditComponent implements OnInit {
 
 	}
 
-	deleteMapFile($event) {
-		this.filesAdminService.deleteMapFile(this.dataset.id).
-		subscribe( response => {
-			if(response.success) {
-				this.showMapLink = false;
-				this.msgs.push({severity:'success', summary:'Fichero eliminado con éxito', detail:'El fichero se ha eliminado correctamente.'});
-			}else{
-				this.msgs.push({severity:'warn', summary:'Error eliminando fichero', detail:'Ha ocurrido un error al eliminar el fichero'});
-			}
-		});
-	}
-
 	initializeDataset() {
 		this.createEmptyDataset();
 		this.loadDropdowns();
