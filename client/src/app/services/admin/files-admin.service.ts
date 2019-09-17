@@ -62,9 +62,8 @@ export class FilesAdminService {
 	}
 
 	public deleteMapFile(fileid) {
-		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_CREATE_FILE;
+		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_CREATE_FILE + '?fileid=' + fileid;
 		let headers = this.buildRequestHeaders();
-		headers.append('fileid', fileid);
 		let options = new ResponseOptions({ headers: headers });
 		return this.http.delete(fullUrl, options).pipe(map(res => res.json()));
 	}

@@ -631,7 +631,7 @@ router.delete(constants.API_URL_ADMIN_CREATE_FILE, function (req, res, next) {
     try {
 
         // Clean map file if exists
-        const dir = constants.XLSM_PATH + req.get('fileid');
+        const dir = constants.XLSM_PATH + req.query.fileid;
         const file1 = dir + '/mapeo_ei2a.xlsm';
         const file2 = dir + '/mapeo_ei2a.csv';
         console.log(dir);
