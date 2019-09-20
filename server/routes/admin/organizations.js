@@ -310,6 +310,9 @@ var insertOrganizationInCkan = function insertOrganizationInCkan(apiKey, organiz
                     if (organization.extras[index].key == 'person') {
                         create_organization_post_data.extras.push({"key": organization.extras[index].key, "value": organization.extras[index].value});
                     }
+                    if (organization.extras[index].key == 'siuCode') {
+                        create_organization_post_data.extras.push({"key": organization.extras[index].key, "value": organization.extras[index].value});
+                    }
                 }
             }          
             var httpRequestOptions = {

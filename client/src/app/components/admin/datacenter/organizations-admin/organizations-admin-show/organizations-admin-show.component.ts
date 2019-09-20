@@ -23,6 +23,7 @@ export class OrganizationsAdminShowComponent implements OnInit {
   webpage: Extra = new Extra();
   address: Extra = new Extra();
   person: Extra = new Extra();
+  siuCode: Extra = new Extra();
 
   org: OrganizationAdmin = new OrganizationAdmin();
   sort: string;
@@ -39,6 +40,7 @@ export class OrganizationsAdminShowComponent implements OnInit {
     this.webpage.key = Constants.ORGANIZATION_EXTRA_WEBPAGE;
     this.address.key = Constants.ORGANIZATION_EXTRA_ADDRESS;
     this.person.key = Constants.ORGANIZATION_EXTRA_PERSON;
+    this.siuCode.key = Constants.ORGANIZATION_EXTRA_SIUCODE;
   }
 
   ngOnInit() {
@@ -61,7 +63,10 @@ export class OrganizationsAdminShowComponent implements OnInit {
           this.address.value = extra.value;
         } else if (extra.key === Constants.ORGANIZATION_EXTRA_PERSON) {
           this.person.value = extra.value;
+        } else if (extra.key === Constants.ORGANIZATION_EXTRA_SIUCODE) {
+          this.siuCode.value = extra.value;
         }
+        
       }
     }
   }

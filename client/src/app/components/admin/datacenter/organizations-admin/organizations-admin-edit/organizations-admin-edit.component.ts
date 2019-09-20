@@ -24,10 +24,12 @@ export class OrganizationsAdminEditComponent implements OnInit {
   webpage: Extra = new Extra();
   address: Extra = new Extra();
   person: Extra = new Extra();
+  siuCode: Extra = new Extra();
 
   extraWebpageExist: boolean = false;
   extraAddressExist: boolean = false;
   extraPersonExist: boolean = false;
+  extraSiuCodeExist: boolean = false;
 
   fileList: FileList;
 
@@ -47,6 +49,7 @@ export class OrganizationsAdminEditComponent implements OnInit {
             this.webpage.key = Constants.ORGANIZATION_EXTRA_WEBPAGE;
             this.address.key = Constants.ORGANIZATION_EXTRA_ADDRESS;
             this.person.key = Constants.ORGANIZATION_EXTRA_PERSON;
+            this.siuCode.key = Constants.ORGANIZATION_EXTRA_SIUCODE;
   }
 
   ngOnInit() {
@@ -72,6 +75,8 @@ export class OrganizationsAdminEditComponent implements OnInit {
 					this.address.value = extra.value;
 				} else if (extra.key === this.person.key) {
 					this.person.value = extra.value;
+        } else if (extra.key === this.siuCode.key) {
+          this.siuCode.value = extra.value;
         }
 			}
 		}
@@ -141,7 +146,7 @@ export class OrganizationsAdminEditComponent implements OnInit {
         file = null;
       }
         //CALL TO POST METHOD ON SERVICE
-        this.organizationsAdminService.createOrganization(file, this.org, this.webpage.value, this.address.value, this.person.value).subscribe(result => {
+        this.organizationsAdminService.createOrganization(file, this.org, this.webpage.value, this.address.value, this.person.value, this.siuCode.value).subscribe(result => {
           if (result.success) {
             this.organizationAdminMessages = [];
             this.organizationAdminMessages.push({severity:Constants.GROWL_SEVERITY_SUCCESS, summary:Constants.GROWL_CREATE_ORGANIZATION_SUMMARY
@@ -182,6 +187,10 @@ export class OrganizationsAdminEditComponent implements OnInit {
           this.org.extras[index].value = this.person.value;
           this.extraPersonExist = true;
         }
+        if(this.org.extras[index].key == Constants.ORGANIZATION_EXTRA_SIUCODE){
+          this.org.extras[index].value = this.siuCode.value;
+          this.extraSiuCodeExist = true;
+        }
       }
       if(!this.extraWebpageExist && this.webpage.value != undefined){
         this.org.extras.push(this.webpage);
@@ -191,6 +200,9 @@ export class OrganizationsAdminEditComponent implements OnInit {
       }
       if(!this.extraPersonExist && this.person.value != undefined){
         this.org.extras.push(this.person);
+      }
+      if(!this.extraSiuCodeExist && this.siuCode.value != undefined){
+        this.org.extras.push(this.siuCode);
       }
       this.organizationsAdminService.updateOrganization(this.org).subscribe(result => {
           if (result.success) {
