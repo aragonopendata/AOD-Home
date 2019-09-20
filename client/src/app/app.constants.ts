@@ -280,6 +280,7 @@ export class Constants {
     public static ORGANIZATION_EXTRA_WEBPAGE = 'webpage';
     public static ORGANIZATION_EXTRA_ADDRESS = 'address';
     public static ORGANIZATION_EXTRA_PERSON = 'person';
+    public static ORGANIZATION_EXTRA_SIUCODE = 'siuCode';
     public static DATASET_EXTRA_DATA_DICTIONARY = 'Data Dictionary';
     public static DATASET_EXTRA_DATA_DICTIONARY_DEFAULT = 'El diccionario del dato se encuentra en la siguiente url';
     public static DATASET_EXTRA_DATA_DICTIONARY_URL = 'Data Dictionary URL';
