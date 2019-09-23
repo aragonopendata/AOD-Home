@@ -56,6 +56,8 @@ export class DatasetsListComponent implements OnInit {
     filteredTagsMultiple: any[];
     hideLastUpdateColumn: boolean;
     hideAccessNumberColumn: boolean;
+    siuTopic: string[];
+    siuOrganization: string[];
 
     @Input() topics: Topic[];
     topic: Topic;
@@ -105,6 +107,7 @@ export class DatasetsListComponent implements OnInit {
     datasetSearchOptionTags: string;
     datasetSearchOptionStats: string;
     datasetSearchOptionHomer: string;
+    datasetSearchOptionSiu: string;
     //Dynamic URL build parameters
     routerLinkPageNotFound: string;
     routerLinkDataCatalog: string;
@@ -114,6 +117,7 @@ export class DatasetsListComponent implements OnInit {
     routerLinkDataCatalogSearchOrganizations: string;
     routerLinkDataCatalogTags: string;
     routerLinkDataCatalogDatasetHomer: string;
+    routerLinkDataCatalogSiu: string;
     //Pagination Params
     pages: number[];
     actualPage: number;
@@ -140,12 +144,14 @@ export class DatasetsListComponent implements OnInit {
         this.routerLinkDataCatalogOrganizations = Constants.ROUTER_LINK_DATA_CATALOG_ORGANIZATIONS;
         this.routerLinkDataCatalogSearchOrganizations = Constants.ROUTER_LINK_DATA_CATALOG_SEARCH;
         this.routerLinkDataCatalogTags = Constants.ROUTER_LINK_DATA_CATALOG_TAGS;
+        this.routerLinkDataCatalogSiu = Constants.ROUTER_LINK_DATA_CATALOG_SIU;
         this.datasetSearchOptionFreeSearch = Constants.DATASET_LIST_SEARCH_OPTION_FREE_SEARCH;
         this.datasetSearchOptionTopics = Constants.DATASET_LIST_SEARCH_OPTION_TOPICS;
         this.datasetSearchOptionOrganizations = Constants.DATASET_LIST_SEARCH_OPTION_ORGANIZATIONS;
         this.datasetSearchOptionTags = Constants.DATASET_LIST_SEARCH_OPTION_TAGS;
         this.datasetSearchOptionStats = Constants.DATASET_LIST_SEARCH_OPTION_STATS;
         this.datasetSearchOptionHomer = Constants.DATASET_LIST_SEARCH_OPTION_HOMER;
+        this.datasetSearchOptionSiu = Constants.DATASET_LIST_SEARCH_OPTION_ORGANIZATION_TOPIC;
         this.routerLinkDataCatalogDatasetHomer = Constants.ROUTER_LINK_DATA_CATALOG_HOMER_DATASET;
         this.emptyMessage = Constants.DATASET_LIST_EMPTY;
 
@@ -153,6 +159,8 @@ export class DatasetsListComponent implements OnInit {
             this.selectedSearchOption = this.datasetSearchOptionTopics;
         } else if(router.url.indexOf(Constants.ROUTER_LINK_DATA_PARAM_TAG)>-1){
             this.selectedSearchOption = this.datasetSearchOptionTags;
+        } else if(router.url.indexOf(Constants.ROUTER_LINK_DATA_CATALOG_SIU) > -1){
+            this.selectedSearchOption = this.datasetSearchOptionSiu; 
         } else if(router.url.indexOf(Constants.ROUTER_LINK_DATA_CATALOG_SEARCH) > -1){
             this.selectedSearchOption = this.datasetSearchOptionOrganizations; 
         } else if(router.url.indexOf(Constants.ROUTER_LINK_DATA_CATALOG_STATS) > -1){
@@ -181,19 +189,26 @@ export class DatasetsListComponent implements OnInit {
     ngOnInit() {
         this.activatedRoute.queryParams.subscribe(params => {
             try {
-                this.textSearch = params[Constants.ROUTER_LINK_DATA_PARAM_TEXT];
-                this.selectedType = params[Constants.ROUTER_LINK_DATA_PARAM_TYPE];
-                if (params[Constants.ROUTER_LINK_DATA_PARAM_TAG]) {
-                    let tagParams: string = '' + params[Constants.ROUTER_LINK_DATA_PARAM_TAG];
-                    let tags = [] = tagParams.split(',');
-                    let filtered = [];
-                    for (let i = 0; i < tags.length; i++) {
-                        filtered.push({ name: tags[i], value: tags[i] });
+                if(this.selectedSearchOption === this.datasetSearchOptionSiu) {
+                    this.siuOrganization = params["org"].split(' ');
+                    this.siuTopic = params["tema"].split(' ');
+                    console.log(this.siuOrganization);
+                    console.log(this.siuTopic);
+                }else {
+                    this.textSearch = params[Constants.ROUTER_LINK_DATA_PARAM_TEXT];
+                    this.selectedType = params[Constants.ROUTER_LINK_DATA_PARAM_TYPE];
+                    if (params[Constants.ROUTER_LINK_DATA_PARAM_TAG]) {
+                        let tagParams: string = '' + params[Constants.ROUTER_LINK_DATA_PARAM_TAG];
+                        let tags = [] = tagParams.split(',');
+                        let filtered = [];
+                        for (let i = 0; i < tags.length; i++) {
+                            filtered.push({ name: tags[i], value: tags[i] });
+                        }
+                        this.tags = filtered;
                     }
-                    this.tags = filtered;
+                    this.selectedLang = params[Constants.ROUTER_LINK_DATA_PARAM_LANG];
+                    this.textSearchHomer = params[Constants.ROUTER_LINK_DATA_PARAM_TEXT_HOMER];
                 }
-                this.selectedLang = params[Constants.ROUTER_LINK_DATA_PARAM_LANG];
-                this.textSearchHomer = params[Constants.ROUTER_LINK_DATA_PARAM_TEXT_HOMER];
             } catch (error) {
                 console.error('Error: ngOnInit() queryParams - datasets-list.component.ts');
             }
@@ -256,9 +271,10 @@ export class DatasetsListComponent implements OnInit {
                 this.selectedGroup = undefined;
                 this.selectedSubGroup = undefined;
                 this.changeType();
-                
                 this.selectedSearchOption = this.datasetSearchOptionTopics;
-            } else if (Constants.DATASET_LIST_SEARCH_OPTION_ORGANIZATIONS === this.selectedSearchOption) {
+            } else if (Constants.DATASET_LIST_SEARCH_OPTION_ORGANIZATION_TOPIC === this.selectedSearchOption) {
+                this.getDatasetByOrganizationTopic(null, null);
+            }else if (Constants.DATASET_LIST_SEARCH_OPTION_ORGANIZATIONS === this.selectedSearchOption) {
                 this.selectedTopic = undefined;
                 this.selectedType = undefined;
                 this.tags = [];
@@ -364,7 +380,9 @@ export class DatasetsListComponent implements OnInit {
 
     changeType() {
         if (this.selectedTopic) {
-            if (this.selectedType) {
+            if (this.selectedOrg) {
+                console.log("Prueba");
+            } else if (this.selectedType) {
                 this.router.navigate(['/' + this.routerLinkDataCatalogTopics + '/' + this.selectedTopic], { queryParams: { tipo: this.selectedType } });
                 this.location.go('/' + this.routerLinkDataCatalogTopics + '/' + this.selectedTopic
                     + '?' + Constants.ROUTER_LINK_DATA_PARAM_TYPE + '=' + this.selectedType);
@@ -616,6 +634,25 @@ export class DatasetsListComponent implements OnInit {
                 this.errorMessage = this.datasetListErrorMessage;
             }
         });
+    }
+
+    getDatasetByOrganizationTopic(page: number, rows: number): void {
+        this.datasets = [];
+        var pageNumber = (page != null ? page : 0);
+        var rowsNumber = (rows != null ? rows : this.pageRows);
+
+        this.datasetsService.getDatasetsByOrganizationTopic(this.sort, pageNumber, rowsNumber, this.siuOrganization, this.siuTopic).subscribe(datasets => {
+            try {
+                this.datasets = JSON.parse(datasets).result.results;
+                this.numDatasets = JSON.parse(datasets).result.count;
+                this.setPagination(pageNumber, this.numDatasets);
+            } catch (error) {
+                console.error('Error: getDatasetsByTags() - datasets-list.component.ts');
+                this.errorTitle = this.datasetListErrorTitle;
+                this.errorMessage = this.datasetListErrorMessage;
+            }
+        });
+
     }
 
     setTopicsDropdown() {

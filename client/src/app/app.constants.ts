@@ -101,6 +101,7 @@ export class Constants {
     public static DATASET_LIST_SEARCH_OPTION_TAGS = 'etiquetas';
     public static DATASET_LIST_SEARCH_OPTION_STATS = 'informacion-estadistica';
     public static DATASET_LIST_SEARCH_OPTION_HOMER = 'buscador-homer';
+    public static DATASET_LIST_SEARCH_OPTION_ORGANIZATION_TOPIC = 'organizacion-tema';
 
     public static DATASET_LIST_DROPDOWN_SEARCH_FREE_SEARCH_VALUE_LABEL = 'Búsqueda libre';
     public static DATASET_LIST_DROPDOWN_SEARCH_TOPICS_LABEL = 'Tema y tipo';
@@ -495,6 +496,7 @@ export class Constants {
     public static ROUTER_LINK_DATA_CATALOG = 'datos/catalogo';
     public static ROUTER_LINK_DATA_CATALOG_TOPICS = 'datos/catalogo/temas';
     public static ROUTER_LINK_DATA_CATALOG_ORGANIZATIONS = 'datos/catalogo/publicadores';
+    public static ROUTER_LINK_DATA_CATALOG_SIU = 'datos/catalogo/busqueda/siu';
     public static ROUTER_LINK_DATA_CATALOG_SEARCH = 'datos/catalogo/busqueda';
     public static ROUTER_LINK_DATA_CATALOG_TAGS = 'datos/catalogo/etiquetas';
     public static ROUTER_LINK_DATA_CATALOG_STATS = 'datos/catalogo/estadisticas';
@@ -620,6 +622,7 @@ export class Constants {
     public static SERVER_API_LINK_RESOURCES_COUNT = '/datasets/countResources';
     public static SERVER_API_LINK_DATASETS_RDF = '/datasets/rdf';
     public static SERVER_API_LINK_DATASETS_STATS_SEARCH = '/datasets/stats';
+    public static SERVER_API_LINK_DATASETS_SIU = '/datasets-siu';
     public static SERVER_API_URL_DATASETS_RESOURCE_VIEW = '/resourceView';
     public static SERVER_API_LINK_DATASETS_HOMER = '/homer';
     public static SERVER_API_LINK_TOPICS = '/topics';
@@ -671,6 +674,7 @@ export class Constants {
     public static SERVER_API_LINK_PARAM_LANG = 'lang';
     public static SERVER_API_LINK_PARAM_LIMIT = 'limit';
     public static SERVER_API_LINK_PARAM_ORGS = 'orgs';
+    public static SERVER_API_LINK_PARAM_TOPIC = 'tema';
     public static SERVER_API_LINK_PARAM_RESOURCE_ID = 'resId';
     public static SERVER_API_LINK_PARAM_SORT_DEFAULT_VALUE = 'relevance,-metadata_modified';
     public static SERVER_API_LINK_PARAM_SORT_HOMER_DEFAULT_VALUE = 'title';

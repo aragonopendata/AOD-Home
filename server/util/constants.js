@@ -42,6 +42,7 @@ exports.API_URL_DATASETS_COUNT = '/datasets/countDatasets';
 exports.API_URL_RESOURCES_COUNT = '/datasets/countResources';
 exports.API_URL_DATASETS_TOPIC = '/datasets/topic';
 exports.API_URL_DATASETS_ORGANIZATION = '/datasets/organization';
+exports.API_URL_DATASETS_SIU = '/datasets-siu';
 exports.API_URL_DATASETS_STATS_SEARCH = '/datasets/stats';
 exports.API_URL_DATASETS_RESOURCE_VIEW = '/resourceView';
 exports.API_URL_DATASETS_RDF = '/datasets/rdf';

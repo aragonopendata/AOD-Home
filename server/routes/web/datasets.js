@@ -16,6 +16,7 @@ const pool = db.getCkanPool();
 const logConfig = require('../../conf/log-conf');
 const loggerSettings = logConfig.getLogSettings();
 const logger = require('js-logging').dailyFile([loggerSettings]);
+const atob = require('atob');
 
 /** GET DATASETS PAGINATED */
 router.get(constants.API_URL_DATASETS, function (req, res, next) {
@@ -593,6 +594,167 @@ router.get(constants.API_URL_DATASETS_STATS_SEARCH + '/:groupName', function (re
         });
     } catch (error) {
         logger.error('Error in route' + constants.API_URL_DATASETS_STATS_SEARCH);
+    }
+});
+
+
+/** GET DATASETS BY ORGS AND TOPIC  */
+router.get(constants.API_URL_DATASETS_SIU, function (req, res, next) {
+    console.log('Request received: orgs: ' + req.query.orgs);
+    console.log('Request received: tema: ' + req.query.tema);
+    let names = [];
+    let topics = [];
+
+    try {
+        function getOrgsBySiuCode(){
+            return new Promise(resolve => {
+                let serviceRequestUrl = constants.CKAN_API_BASE_URL + 'organization_list?all_fields=true&include_extras=true';
+                map_dictionary = {};
+
+                //Proxy checking
+                let httpConf = null;
+                if (constants.REQUESTS_NEED_PROXY == true) {
+                    logger.warning('Realizando petición a través de proxy');
+                    let httpProxyConf = proxy.getproxyOptions(serviceRequestUrl);
+                    httpConf = httpProxyConf;
+                } else {
+                    httpConf = serviceRequestUrl;
+                }
+                
+                http.get(httpConf, function (results) {
+                    var body = '';
+                    results.on('data', function (chunk) {
+                        body += chunk;
+                    });
+                    results.on('end', function () {
+                        jsonObj = JSON.parse(body);
+
+                        if (jsonObj.success && jsonObj.result){
+                            jsonObj.result.forEach(element => {
+                                if(element.extras){
+                                    element.extras.forEach(e => {
+                                        e.key === 'siuCode' ? map_dictionary[e.value] = element.name : undefined
+                                    });
+                                }
+                            });
+                        }
+
+                        req.query.orgs.split(' ').forEach(org => {
+                            if(map_dictionary[org] !== undefined){
+                                names.push(map_dictionary[org]);
+                            }
+                        });
+                        names = [...new Set(names)];
+                        resolve(true);
+                    });
+                }).on('error', function (err) {
+                    utils.errorHandler(err, res, serviceName);
+                    resolve(false);
+                });
+            });
+        }
+
+        function getTopicsByAragonTopic() {
+            return new Promise(resolve => {
+                let serviceRequestUrl = constants.CKAN_API_BASE_URL + 'group_list?all_fields=true&include_extras=true';
+                aragon_topics = req.query.tema.split(' ');
+
+                //Proxy checking
+                let httpConf = null;
+                if (constants.REQUESTS_NEED_PROXY == true) {
+                    logger.warning('Realizando petición a través de proxy');
+                    let httpProxyConf = proxy.getproxyOptions(serviceRequestUrl);
+                    httpConf = httpProxyConf;
+                } else {
+                    httpConf = serviceRequestUrl;
+                }
+                
+                http.get(httpConf, function (results) {
+                    var body = '';
+                    results.on('data', function (chunk) {
+                        body += chunk;
+                    });
+                    results.on('end', function () {
+                        jsonObj = JSON.parse(body);
+                        if (jsonObj.success && jsonObj.result){
+                            jsonObj.result.forEach(element => {
+                                if(element.extras){
+                                    element.extras.forEach(e => {
+                                        if(e.key === 'aragonTopic') {
+                                            let values = e.value.split(',').map(el => { return el.trim() });
+                                            values.forEach(aTopic => {
+                                                aragon_topics.find(t => {return t === aTopic}) === aTopic ? topics.push(element.name) : undefined
+                                            })
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                        topics = [...new Set(topics)];
+                        resolve(true);
+                    });
+                }).on('error', function (err) {
+                    utils.errorHandler(err, res, serviceName);
+                    resolve(false);
+                });
+            });
+        }
+
+        function getDatsetsByOrgsTopic() {
+            logger.debug('Servicio: Listado de datasets por organización y tema');
+            let serviceBaseUrl = constants.CKAN_API_BASE_URL;
+            let serviceName = constants.DATASETS_SEARCH;
+            serviceRequestUrl = serviceBaseUrl + serviceName;
+
+            //Proxy checking
+            let httpConf = null;
+            if (constants.REQUESTS_NEED_PROXY == true) {
+                logger.warning('Realizando petición a través de proxy');
+                let httpProxyConf = proxy.getproxyOptions(serviceRequestUrl);
+                httpConf = httpProxyConf;
+            } else {
+                httpConf = serviceRequestUrl;
+            }
+    
+            let groups = topics.join(" OR ");
+            let orgs = names.join(" OR ");
+    
+            serviceRequestUrl += '?fq=(groups:(' + groups + ') AND (organization:(' + orgs + ')))&rows=2&start=0';
+    
+            logger.notice('URL de petición: ' + serviceRequestUrl);
+            console.log(serviceRequestUrl);
+    
+            http.get(httpConf, function (results) {
+                var body = '';
+                results.on('data', function (chunk) {
+                    body += chunk;
+                });
+                results.on('end', function () {
+                    res.json(body);
+                });
+            }).on('error', function (err) {
+                utils.errorHandler(err, res, serviceName);
+            });
+        }
+
+        const promises = [];
+
+        promises.push(getOrgsBySiuCode());
+        promises.push(getTopicsByAragonTopic());
+
+        const runPromises = Promise.all(promises).then(result => {
+            console.log(names);
+            console.log(topics);
+        });
+
+        (async function() {
+            await runPromises;
+            getDatsetsByOrgsTopic();
+        })();
+
+    } catch (error) {
+        logger.error('Error in route' + constants.API_URL_DATASETS_SIU);
+        logger.error(error);
     }
 });
 

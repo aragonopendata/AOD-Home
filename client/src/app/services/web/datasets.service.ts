@@ -102,6 +102,18 @@ export class DatasetsService {
 		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
 
+	public getDatasetsByOrganizationTopic(sort: string, page: number, rows: number, orgs: string[], topics: string[]) {
+		
+		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_DATASETS_SIU
+						+ '?' + Constants.SERVER_API_LINK_PARAM_ORGS + '=' + orgs.join('+')
+						+ '&' + Constants.SERVER_API_LINK_PARAM_TOPIC + '=' + topics.join('+')
+						+ '&' + Constants.SERVER_API_LINK_PARAM_SORT + '=' + sort 
+						+ '&' + Constants.SERVER_API_LINK_PARAM_PAGE + '=' + page.toString() 
+						+ '&' + Constants.SERVER_API_LINK_PARAM_ROWS + '=' + rows.toString(); 
+		console.log(fullUrl);
+		return this.http.get(fullUrl).pipe(map(res => res.json()));
+	}
+
 	public getDatasetResourceView(resoruce_id:string) {
 		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_URL_DATASETS_RESOURCE_VIEW 
 						+ '?' + Constants.SERVER_API_LINK_PARAM_RESOURCE_ID + '=' + resoruce_id 
