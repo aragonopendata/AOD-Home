@@ -34,6 +34,7 @@ export class UsersAdminComponent implements OnInit {
 	organizationAdress: string;
 	organizationPerson: string;
 	organizationEmail: string;
+	organizationSiuCode: string;
 	fileList: FileList;
 
 	displayViewDialog: boolean;
@@ -282,7 +283,7 @@ export class UsersAdminComponent implements OnInit {
 				this.newOrg.description = this.organizationDescription;	
 			}
 			try {
-				this.organizationsAdminService.createOrganization(file, this.newOrg, this.organizationWeb, this.organizationAdress, this.organizationPerson).subscribe(result => {
+				this.organizationsAdminService.createOrganization(file, this.newOrg, this.organizationWeb, this.organizationAdress, this.organizationPerson, this.organizationSiuCode).subscribe(result => {
 					if (result.status == 200 && result.success == true){
 						this.userAdminMessages = [];
 						this.userAdminMessages.push({ severity: 'success', summary: 'Alta de organización', detail: 'Organización creada correctamente' });

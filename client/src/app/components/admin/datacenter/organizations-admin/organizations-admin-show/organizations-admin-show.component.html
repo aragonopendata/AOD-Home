@@ -6,6 +6,12 @@
     </div>
   </div>
   <div class="form-group row">
+    <label for="siuCode-input" class="col-4 col-form-label">SIU CODE</label>
+    <div class="col-8">
+      <input class="form-control" readonly="readonly" type="text" value="{{siuCode.value}}" id="siuCode" [(ngModel)]="siuCode.value">
+    </div>
+  </div>
+  <div class="form-group row">
     <label for="webPage-input" class="col-4 col-form-label">PÁGINA WEB DE LA ORGANIZACIÓN</label>
     <div class="col-8">
       <input class="form-control" readonly="readonly" type="text" value="{{webpage.value}}" id="webPage" [(ngModel)]="webpage.value">

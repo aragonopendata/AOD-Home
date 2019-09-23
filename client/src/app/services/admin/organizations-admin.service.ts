@@ -68,7 +68,7 @@ export class OrganizationsAdminService {
 		return this.http.get(fullUrl, { headers: headers }).pipe(map(res => res.json()));
 	}
 
-	public createOrganization(image: any, organization: OrganizationAdmin, webpage: string, address: string, person: string) {
+	public createOrganization(image: any, organization: OrganizationAdmin, webpage: string, address: string, person: string, siuCode: string) {
 		this.refreshUser();
 		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_ADMIN_ORGANIZATION_CUD_OPERATIONS;
 		
@@ -105,6 +105,14 @@ export class OrganizationsAdminService {
 				value: person
 			}
 			extras.push(personNotEmpty);
+		}
+
+		if(siuCode != undefined){
+			var siuCodeNotEmpty = {
+				key: Constants.ORGANIZATION_EXTRA_SIUCODE,
+				value: siuCode
+			}
+			extras.push(siuCodeNotEmpty);
 		}
 
 		formData.append('extras', JSON.stringify(extras));
