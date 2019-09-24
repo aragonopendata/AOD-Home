@@ -102,8 +102,7 @@ export class DatasetsService {
 		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
 
-	public getDatasetsByOrganizationTopic(sort: string, page: number, rows: number, orgs: string[], topics: string[]) {
-		
+	public getDatasetsByOrganizationTopic(sort: string, page: number, rows: number, orgs: string[] = [], topics: string[] = []) {
 		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_DATASETS_SIU
 						+ '?' + Constants.SERVER_API_LINK_PARAM_ORGS + '=' + orgs.join('+')
 						+ '&' + Constants.SERVER_API_LINK_PARAM_TOPIC + '=' + topics.join('+')

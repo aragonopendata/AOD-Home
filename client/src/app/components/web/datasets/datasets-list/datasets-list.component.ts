@@ -34,6 +34,7 @@ export class DatasetsListComponent implements OnInit {
     selectedLang: string;
     selectedSearchOption: string;
     selectedSubGroup: string;
+    selectedOrgTopic: boolean;
     sort: string;
     sortHomer: string;
     datasets: Dataset[];
@@ -190,10 +191,8 @@ export class DatasetsListComponent implements OnInit {
         this.activatedRoute.queryParams.subscribe(params => {
             try {
                 if(this.selectedSearchOption === this.datasetSearchOptionSiu) {
-                    this.siuOrganization = params["org"].split(' ');
-                    this.siuTopic = params["tema"].split(' ');
-                    console.log(this.siuOrganization);
-                    console.log(this.siuTopic);
+                    this.siuOrganization = params["org"] !== undefined ? params["org"].split(' ') : [];
+                    this.siuTopic = params["tema"] !== undefined ? params["tema"].split(' ') : [];
                 }else {
                     this.textSearch = params[Constants.ROUTER_LINK_DATA_PARAM_TEXT];
                     this.selectedType = params[Constants.ROUTER_LINK_DATA_PARAM_TYPE];
@@ -261,9 +260,11 @@ export class DatasetsListComponent implements OnInit {
                 this.tags = [];
                 this.selectedGroup = undefined;
                 this.selectedSubGroup = undefined;
+                this.selectedOrgTopic = false;
                 this.location.go('/' + this.routerLinkDataCatalog);
                 this.getDatasets(null, null);
             } else if (Constants.DATASET_LIST_SEARCH_OPTION_TOPICS === this.selectedSearchOption) {
+                this.selectedOrgTopic = false;
                 this.textSearch = "";
                 this.selectedOrg = undefined;
                 this.selectedType = undefined;
@@ -273,8 +274,11 @@ export class DatasetsListComponent implements OnInit {
                 this.changeType();
                 this.selectedSearchOption = this.datasetSearchOptionTopics;
             } else if (Constants.DATASET_LIST_SEARCH_OPTION_ORGANIZATION_TOPIC === this.selectedSearchOption) {
+                this.textSearch = "";
+                this.selectedOrgTopic = true;
                 this.getDatasetByOrganizationTopic(null, null);
             }else if (Constants.DATASET_LIST_SEARCH_OPTION_ORGANIZATIONS === this.selectedSearchOption) {
+                this.selectedOrgTopic = false;
                 this.selectedTopic = undefined;
                 this.selectedType = undefined;
                 this.tags = [];
@@ -285,6 +289,7 @@ export class DatasetsListComponent implements OnInit {
                 this.selectedSearchOption = this.datasetSearchOptionOrganizations;
             } else if (Constants.DATASET_LIST_SEARCH_OPTION_TAGS === this.selectedSearchOption) {
                 this.selectedTopic = undefined;
+                this.selectedOrgTopic = false;
                 this.selectedOrg = undefined;
                 this.selectedType = undefined;
                 this.textSearch = "";
@@ -294,6 +299,7 @@ export class DatasetsListComponent implements OnInit {
                 this.selectedSearchOption = this.datasetSearchOptionTags;
             } else if (this.selectedSearchOption == this.datasetSearchOptionHomer) {
                 this.selectedTopic = undefined;
+                this.selectedOrgTopic = false;
                 this.selectedOrg = undefined;
                 this.selectedType = undefined;
                 this.textSearch = "";
@@ -304,6 +310,7 @@ export class DatasetsListComponent implements OnInit {
                 this.getDatasetsByHomer(null, null);
             } else if (this.selectedSearchOption == this.datasetSearchOptionStats) {
                 this.selectedSearchOption = this.datasetSearchOptionStats;
+                this.selectedOrgTopic = false;
                 this.selectedTopic = undefined;
                 this.selectedOrg = undefined;
                 this.selectedType = undefined;
@@ -354,6 +361,9 @@ export class DatasetsListComponent implements OnInit {
         --page;
         if (this.textSearch) {
             this.getDatasetsBySearch(page, this.pageRows, this.textSearch);
+        } else if (this.selectedOrgTopic) {
+            this.selectedSearchOption = this.datasetSearchOptionSiu;
+            this.getDatasetByOrganizationTopic(page, this.pageRows);
         } else if (this.selectedTopic) {
             this.getDatasetsByTopic(this.selectedTopic, page, this.pageRows, this.selectedType);
             this.selectedSearchOption = this.datasetSearchOptionTopics;

@@ -644,6 +644,7 @@ router.get(constants.API_URL_DATASETS_SIU, function (req, res, next) {
                                 names.push(map_dictionary[org]);
                             }
                         });
+                        console.log(map_dictionary);
                         names = [...new Set(names)];
                         resolve(true);
                     });
@@ -702,9 +703,20 @@ router.get(constants.API_URL_DATASETS_SIU, function (req, res, next) {
 
         function getDatsetsByOrgsTopic() {
             logger.debug('Servicio: Listado de datasets por organización y tema');
-            let serviceBaseUrl = constants.CKAN_API_BASE_URL;
-            let serviceName = constants.DATASETS_SEARCH;
-            serviceRequestUrl = serviceBaseUrl + serviceName;
+            serviceRequestUrl = constants.CKAN_API_BASE_URL + constants.DATASETS_SEARCH;
+
+            let groups = topics.join(" OR ");
+            let orgs = names.join(" OR ");
+            let pageNumber = (req.query.page !== undefined ? req.query.page : 0);
+            let rowsNumber = (req.query.rows !== undefined ? req.query.rows : 20);
+            
+            if(groups === '') {
+                serviceRequestUrl += '?fq=(organization:(' + orgs + '))&rows=' + rowsNumber + '&start=' + pageNumber*rowsNumber;            
+            }else if (orgs === '') {
+                serviceRequestUrl += '?fq=(groups:(' + groups + '))&rows=' + rowsNumber + '&start=' + pageNumber*rowsNumber;            
+            }else {
+                serviceRequestUrl += '?fq=(groups:(' + groups + ') AND (organization:(' + orgs + ')))&rows=' + rowsNumber + '&start=' + pageNumber*rowsNumber;            
+            }
 
             //Proxy checking
             let httpConf = null;
@@ -716,15 +728,10 @@ router.get(constants.API_URL_DATASETS_SIU, function (req, res, next) {
                 httpConf = serviceRequestUrl;
             }
     
-            let groups = topics.join(" OR ");
-            let orgs = names.join(" OR ");
-    
-            serviceRequestUrl += '?fq=(groups:(' + groups + ') AND (organization:(' + orgs + ')))&rows=2&start=0';
-    
             logger.notice('URL de petición: ' + serviceRequestUrl);
             console.log(serviceRequestUrl);
-    
-            http.get(httpConf, function (results) {
+            console.log(httpConf);
+            http.get(serviceRequestUrl, function (results) {
                 var body = '';
                 results.on('data', function (chunk) {
                     body += chunk;
