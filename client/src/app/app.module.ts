@@ -16,6 +16,8 @@ import { Logger, Options } from 'angular2-logger/core';
 import { Constants } from './app.constants';
 // Components
 import { AppComponent } from './app.component';
+import { DatasetSearchComponent } from './components/web/datasets/datasets-list/dataset-search/dataset-search.component';
+import { SearchItemComponent } from './components/web/datasets/datasets-list/dataset-search/search-item/search-item.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/web/home.component';
 import { PageNotFoundComponent } from './components/error/page-not-found/page-not-found.component';
@@ -92,8 +94,6 @@ import { TinyMceModule } from 'angular-tinymce';
 import { tinymceDefaultSettings } from 'angular-tinymce';
 import { FilesAdminService } from './services/admin/files-admin.service';
 import { AppInitService } from './app-init.service';
-import { DatasetSearchComponent } from './components/web/datasets/datasets-list/dataset-search/dataset-search.component';
-import { SearchItemComponent } from './components/web/datasets/datasets-list/dataset-search/search-item/search-item.component';
 
 export function init_app(appLoadService: AppInitService) {
 	return () => appLoadService.init();
@@ -102,6 +102,8 @@ export function init_app(appLoadService: AppInitService) {
 @NgModule({
 	declarations: [
 		AppComponent,
+		DatasetSearchComponent,
+		SearchItemComponent,
 		LoginComponent,
 		PageNotFoundComponent,
 		HomeComponent,
@@ -158,9 +160,7 @@ export function init_app(appLoadService: AppInitService) {
 		InfoListAdminComponent,
 		CampusAdminEventsComponent,
 		CampusAdminEntriesComponent,
-		CampusAdminSpeakersComponent,
-		DatasetSearchComponent,
-		SearchItemComponent
+		CampusAdminSpeakersComponent
   	],
   	imports: [
 		BrowserModule,
