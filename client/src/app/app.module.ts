@@ -92,6 +92,8 @@ import { TinyMceModule } from 'angular-tinymce';
 import { tinymceDefaultSettings } from 'angular-tinymce';
 import { FilesAdminService } from './services/admin/files-admin.service';
 import { AppInitService } from './app-init.service';
+import { DatasetSearchComponent } from './components/web/datasets/datasets-list/dataset-search/dataset-search.component';
+import { SearchItemComponent } from './components/web/datasets/datasets-list/dataset-search/search-item/search-item.component';
 
 export function init_app(appLoadService: AppInitService) {
 	return () => appLoadService.init();
@@ -156,7 +158,9 @@ export function init_app(appLoadService: AppInitService) {
 		InfoListAdminComponent,
 		CampusAdminEventsComponent,
 		CampusAdminEntriesComponent,
-		CampusAdminSpeakersComponent
+		CampusAdminSpeakersComponent,
+		DatasetSearchComponent,
+		SearchItemComponent
   	],
   	imports: [
 		BrowserModule,

@@ -18,7 +18,7 @@
 <div class="container" *ngIf="!errorTitle">
     <h1 tabindex="{{openedMenu ? -1 : 0}}">BANCO DE DATOS</h1>
     <!-- Search -->
-    <div class="row">
+    <div class="row" style="margin-top: 1%">
         <div class="col-12 order-12 order-md-1 col-md-8" *ngIf="selectedSearchOption == datasetSearchOptionFreeSearch">
             <div class="form-group">
                 <label for="exampleSelect1" tabindex="{{openedMenu ? -1 : 0}}">Datos Sobre:</label>
@@ -155,6 +155,9 @@
                     <option tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let search of searchOptions" [ngValue]="search.value">{{search.label}}</option>
                 </select>
             </div>
+        </div>
+        <div class="col" *ngIf="selectedSearchOption === datasetSearchOptionSiu">
+            <app-dataset-search [f1_title]="f1_title" [f2_title]="f2_title" [f1]="orgsSelect" [f2]="topicsSelect" [callback]="callbackOrgTopic.bind(this)"></app-dataset-search>
         </div>
     </div>
     <!-- End Search -->

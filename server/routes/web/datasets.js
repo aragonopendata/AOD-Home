@@ -710,9 +710,11 @@ router.get(constants.API_URL_DATASETS_SIU, function (req, res, next) {
             let pageNumber = (req.query.page !== undefined ? req.query.page : 0);
             let rowsNumber = (req.query.rows !== undefined ? req.query.rows : 20);
             
-            if(groups === '') {
+            if ((groups === '' || groups === undefined) && (orgs === '' || orgs === undefined)) {
+                serviceRequestUrl += '?rows=' + rowsNumber + '&start=' + pageNumber*rowsNumber;            
+            } else if(groups === '' || groups === undefined) {
                 serviceRequestUrl += '?fq=(organization:(' + orgs + '))&rows=' + rowsNumber + '&start=' + pageNumber*rowsNumber;            
-            }else if (orgs === '') {
+            }else if (orgs === '' || groups === undefined) {
                 serviceRequestUrl += '?fq=(groups:(' + groups + '))&rows=' + rowsNumber + '&start=' + pageNumber*rowsNumber;            
             }else {
                 serviceRequestUrl += '?fq=(groups:(' + groups + ') AND (organization:(' + orgs + ')))&rows=' + rowsNumber + '&start=' + pageNumber*rowsNumber;            
@@ -746,18 +748,25 @@ router.get(constants.API_URL_DATASETS_SIU, function (req, res, next) {
 
         const promises = [];
 
-        promises.push(getOrgsBySiuCode());
-        promises.push(getTopicsByAragonTopic());
+        if (req.query.orgs !== undefined && req.query.orgs[0] !== undefined && req.query.orgs[0].includes('ORG')) {
+            promises.push(getOrgsBySiuCode());
+            promises.push(getTopicsByAragonTopic());
 
-        const runPromises = Promise.all(promises).then(result => {
-            console.log(names);
-            console.log(topics);
-        });
+            const runPromises = Promise.all(promises).then(result => {
+                console.log(names);
+                console.log(topics);
+            });
+    
+            (async function() {
+                await runPromises;
+                getDatsetsByOrgsTopic();
+            })();
 
-        (async function() {
-            await runPromises;
+        } else {
+            names = req.query.orgs.split(' ');
+            topics = req.query.tema.split(' ');
             getDatsetsByOrgsTopic();
-        })();
+        }
 
     } catch (error) {
         logger.error('Error in route' + constants.API_URL_DATASETS_SIU);

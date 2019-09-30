@@ -109,6 +109,7 @@ export class Constants {
     public static DATASET_LIST_DROPDOWN_SEARCH_TAGS_LABEL = 'Etiquetas';
     public static DATASET_LIST_DROPDOWN_SEARCH_STATS_LABEL = 'Información estadística';
     public static DATASET_LIST_DROPDOWN_SEARCH_HOMER_LABEL = 'Buscador Homer';
+    public static DATASET_LIST_DROPDOWN_SEARCH_SIU_LABEL = 'Organización y Tema';
 
     public static DATASET_LIST_DROPDOWN_LANG_ALL = 'Todos los idiomas';
     public static DATASET_LIST_DROPDOWN_LANG_ES_LABEL = 'Español';

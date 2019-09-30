@@ -1,0 +1,12 @@
+<div class="row" style="margin-bottom: 3%">
+  <div class="col-md">
+    <label>{{f1_title}}: </label>
+  </div>
+  <div class="col-md">
+    <label> {{f2_title}}: </label>
+  </div>
+  <div class="col-md">
+    <label>Añadir / Aplicar / Eliminar filtros: </label>
+  </div>
+</div>
+<app-search-item *ngFor="let filter of filters" [index]="filter.index" [lastIndex]="lastIndex" [f1]="f1" [f2]="f2" (addFilterEE)="addFilter()" (updateFilterEE)="updateFilter($event)" (removeFilterEE)="removeFilter($event)" (applyFilterEE)="applyFilter()"></app-search-item>

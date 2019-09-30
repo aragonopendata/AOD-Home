@@ -1,0 +1,25 @@
+<div class="row" style="margin-bottom: 1%">
+  <div class="col-md">
+        <select class="form-control" [(ngModel)]="selectedValueF1" (change)="updateFilter()">
+                <option *ngFor="let f of f1" [ngValue]="f.value">{{f.label}}</option>
+        </select>
+  </div>
+  <div class="col-md">
+        <select class="form-control" tabindex="-1" [(ngModel)]="selectedValueF2" (change)="updateFilter()">
+                <option *ngFor="let f of f2" [ngValue]="f.value">{{f.label}}</option>
+        </select>
+  </div>
+  <div class="col-md">
+    <div class="row">
+      <div class="col-sm-1">
+        <i *ngIf="index === lastIndex" class="fas fa-plus-square" (click)="addFilter()"></i>
+      </div>
+      <div class="col-sm-1">
+          <i *ngIf="index === lastIndex" class="fas fa-search" (click)="applyFilter()"></i>
+      </div>
+      <div class="col-sm-1">
+        <i class="fas fa-trash-alt" (click)="removeFilter()"></i>
+      </div>
+    </div>
+  </div>
+</div>

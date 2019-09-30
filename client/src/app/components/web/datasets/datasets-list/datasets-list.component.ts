@@ -130,6 +130,8 @@ export class DatasetsListComponent implements OnInit {
     errorMessage: string;
     datasetListErrorTitle: string;
     datasetListErrorMessage: string;
+    f1_title: string = "Organizaciones";
+    f2_title: string = "Temas";
 
     constructor(private datasetsService: DatasetsService, private topicsService: TopicsService
             , private orgsService: OrganizationsService, private router: Router
@@ -276,7 +278,7 @@ export class DatasetsListComponent implements OnInit {
             } else if (Constants.DATASET_LIST_SEARCH_OPTION_ORGANIZATION_TOPIC === this.selectedSearchOption) {
                 this.textSearch = "";
                 this.selectedOrgTopic = true;
-                this.getDatasetByOrganizationTopic(null, null);
+                this.getDatasetByOrganizationTopic(this.siuOrganization, this.siuTopic, null, null);
             }else if (Constants.DATASET_LIST_SEARCH_OPTION_ORGANIZATIONS === this.selectedSearchOption) {
                 this.selectedOrgTopic = false;
                 this.selectedTopic = undefined;
@@ -363,7 +365,7 @@ export class DatasetsListComponent implements OnInit {
             this.getDatasetsBySearch(page, this.pageRows, this.textSearch);
         } else if (this.selectedOrgTopic) {
             this.selectedSearchOption = this.datasetSearchOptionSiu;
-            this.getDatasetByOrganizationTopic(page, this.pageRows);
+            this.getDatasetByOrganizationTopic(this.siuOrganization, this.siuTopic, page, this.pageRows);
         } else if (this.selectedTopic) {
             this.getDatasetsByTopic(this.selectedTopic, page, this.pageRows, this.selectedType);
             this.selectedSearchOption = this.datasetSearchOptionTopics;
@@ -456,6 +458,19 @@ export class DatasetsListComponent implements OnInit {
             this.location.go('/' + this.routerLinkDataCatalog);
             this.getDatasets(null, null);
         }
+    }
+
+    callbackOrgTopic(filters){
+        this.textSearch = "";
+        this.selectedOrgTopic = true;
+
+        let orgs = filters.map(x => {return x.f1}).filter(x => {return x !== undefined && x !== ''});
+        let topics = filters.map(x => {return x.f2}).filter(x => {return x !== undefined && x !== ''});
+
+        this.siuOrganization = orgs;
+        this.siuTopic = topics;
+
+        this.getDatasetByOrganizationTopic(orgs, topics, null, null);
     }
 
     resetSubGroupSearch() {
@@ -646,12 +661,12 @@ export class DatasetsListComponent implements OnInit {
         });
     }
 
-    getDatasetByOrganizationTopic(page: number, rows: number): void {
+    getDatasetByOrganizationTopic(orgs, topics, page: number, rows: number): void {
         this.datasets = [];
         var pageNumber = (page != null ? page : 0);
         var rowsNumber = (rows != null ? rows : this.pageRows);
 
-        this.datasetsService.getDatasetsByOrganizationTopic(this.sort, pageNumber, rowsNumber, this.siuOrganization, this.siuTopic).subscribe(datasets => {
+        this.datasetsService.getDatasetsByOrganizationTopic(this.sort, pageNumber, rowsNumber, orgs, topics).subscribe(datasets => {
             try {
                 this.datasets = JSON.parse(datasets).result.results;
                 this.numDatasets = JSON.parse(datasets).result.count;
@@ -727,6 +742,7 @@ export class DatasetsListComponent implements OnInit {
         this.searchOptions.push({ label: Constants.DATASET_LIST_DROPDOWN_SEARCH_TAGS_LABEL, value: this.datasetSearchOptionTags });
         this.searchOptions.push({ label: Constants.DATASET_LIST_DROPDOWN_SEARCH_STATS_LABEL, value: this.datasetSearchOptionStats });
         this.searchOptions.push({ label: Constants.DATASET_LIST_DROPDOWN_SEARCH_HOMER_LABEL, value: this.datasetSearchOptionHomer });
+        this.searchOptions.push({ label: Constants.DATASET_LIST_DROPDOWN_SEARCH_SIU_LABEL, value: this.datasetSearchOptionSiu });
     }
 
     setLanguagesDropdown() {
