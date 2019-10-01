@@ -748,7 +748,7 @@ router.get(constants.API_URL_DATASETS_SIU, function (req, res, next) {
 
         const promises = [];
 
-        if (req.query.orgs !== undefined && req.query.orgs[0] !== undefined && req.query.orgs[0].includes('ORG')) {
+        if (req.query.orgs !== undefined && req.query.orgs.includes('ORG')) {
             promises.push(getOrgsBySiuCode());
             promises.push(getTopicsByAragonTopic());
 
