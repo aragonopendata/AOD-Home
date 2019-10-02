@@ -157,6 +157,16 @@
             </div>
         </div>
         <div class="col" *ngIf="selectedSearchOption === datasetSearchOptionSiu">
+            <div class="form-group">
+                <label for="exampleSelect1" tabindex="{{openedMenu ? -1 : 0}}">Datos Sobre:</label>
+                <div class="input-group">
+                    <input tabindex="{{openedMenu ? -1 : 0}}" type="text" class="form-control" placeholder="Buscar por..." [(ngModel)]="textSearch" (keyup.enter)="searchDatasetsByText()"
+                        #searchInput>
+                    <span class="input-group-btn">
+                        <button tabindex="{{openedMenu ? -1 : 0}}" class="btn btn-secondary" type="button" (click)="searchDatasetsByText()" ><i class="fas fa-search" aria-hidden="true"></i></button>
+                    </span>
+                </div>
+              </div>
             <app-dataset-search [f1_title]="f1_title" [f2_title]="f2_title" [f1]="orgsSelect" [f2]="topicsSelect" [callback]="callbackOrgTopic.bind(this)"></app-dataset-search>
         </div>
     </div>
