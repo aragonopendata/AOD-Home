@@ -10,6 +10,7 @@
   "author": "Open Data DGA",
   "license": "ISC",
   "dependencies": {
+    "@elastic/elasticsearch": "^6.8.2",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.17.2",
     "crypto-js": "^3.1.9-1",
@@ -33,5 +34,7 @@
     "request": "^2.83.0",
     "unidecode": "0.1.8"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "eslint": "^6.5.1"
+  }
 }
