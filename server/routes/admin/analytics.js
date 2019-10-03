@@ -5,7 +5,7 @@ const logstashUtils = require('../../util/logstash');
 const elasticUtils = require('../../util/elasticsearch');
 
 /** GET ALL LOGSTASH CONFIG */
-router.get('/logstash/files', function (req, res) {
+router.get('/logstash', function (req, res) {
     try {
         logstashUtils.getAllFilesDB().then(files => {
             res.json({
@@ -24,7 +24,7 @@ router.get('/logstash/files', function (req, res) {
 });
 
 /** NEW LOGSTASH */
-router.post('/logstash/insert', function (req, res) {
+router.post('/logstash', function (req, res) {
     try {
         logstashUtils.insertLogstashDB(req.body).then((id) => {
             logstashUtils.createPipeline(req.body, id);
@@ -44,13 +44,11 @@ router.post('/logstash/insert', function (req, res) {
 });
 
 /** UPDATE LOGSTASH */
-router.put('/logstash/insert/:logid', function (req, res) {
+router.put('/logstash/:logid', function (req, res) {
     try {
-        var portal = req.body;
-        var id = req.params.logid;
-        logstashUtils.updateLogstashDB(portal, id).then(() => {
-            logstashUtils.createPipeline(portal, id);
-            elasticUtils.updatePortal(portal, id);
+        logstashUtils.updateLogstashDB(req.body, req.params.logid).then(() => {
+            logstashUtils.createPipeline(req.body, req.params.logid);
+            elasticUtils.updatePortal(req.body, req.params.logid);
             res.json({
                 'status': constants.REQUEST_REQUEST_OK,
                 'message': 'OK'
@@ -67,7 +65,7 @@ router.put('/logstash/insert/:logid', function (req, res) {
 });
 
 /** ENABLE LOGSTASH */
-router.get('/logstash/enable/:logid', function (req, res) {
+router.get('/logstash/:logid/enable', function (req, res) {
     try {
         var id = req.params.logid;
         logstashUtils.enableLogstashDB(id).then(() => {
@@ -92,7 +90,7 @@ router.get('/logstash/enable/:logid', function (req, res) {
 });
 
 /** DISABLE LOGSTASH */
-router.get('/logstash/disable/:logid', function (req, res) {
+router.get('/logstash/:logid/disable', function (req, res) {
     try {
         var id = req.params.logid;
         logstashUtils.disableLogstashDB(id).then(() => {
@@ -117,7 +115,7 @@ router.get('/logstash/disable/:logid', function (req, res) {
 });
 
 /** DELETE LOGSTASH */
-router.delete('/logstash/delete/:logid', function (req, res) {
+router.delete('/logstash/:logid', function (req, res) {
     try {
         var id = req.params.logid;
         logstashUtils.deleteLogstashDB(id).then(() => {
@@ -144,18 +142,19 @@ router.delete('/logstash/delete/:logid', function (req, res) {
 });
 
 /** RELOAD DAYS  */
-router.post('/logstash/reload', function (req, res) {
+router.post('/logstash/:logid/reload', function (req, res) {
     try {
-        var id = req.body.id;
+        var id = req.params.logid;
         var fromT = req.body.from;
         var toT = req.body.to;
 
-        var from = new Date(fromT);
-        var to = new Date(toT);
+        var from = new Date(parseInt(fromT));
+        var to = new Date(parseInt(toT));
 
         logstashUtils.getFileDB(id).then(portal => {
             for (var date = from; date <= to; date.setDate(date.getDate() + 1)) {
-                elasticUtils.reloadPortal(portal, date);
+                if (portal.length > 0)
+                    elasticUtils.reloadPortal(portal[0], date);
             }
         }).catch(() => {
         });

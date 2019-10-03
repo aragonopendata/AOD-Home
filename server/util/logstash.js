@@ -9,14 +9,14 @@ const pool = db.getPool();
 module.exports = {
     createPipeline: function (portal, id) {
         var logstashPath = constants.ANALYTICS_LOGSTASH_PATH;
-        var templatePath = path.join(__dirname, '..', '..', 'conf', 'analytics_templates');
+        var templatePath = path.join(__dirname, '..', 'conf', 'analytics_templates');
 
         var pipelineTemplate;
         if (portal.type == 'urchin') {
-            pipelineTemplate = fs.readFileSync(String(templatePath) + '/Urchin_template_v2.conf');
+            pipelineTemplate = fs.readFileSync(String(templatePath) + '/urchin_template_v2.conf');
         }
         if (portal.type == 'analytics') {
-            pipelineTemplate = fs.readFileSync(String(templatePath) + '/Analytics_template_v2.conf');
+            pipelineTemplate = fs.readFileSync(String(templatePath) + '/analytics_template_v2.conf');
         }
 
         var compiledTemplate = Handlebars.compile(String(pipelineTemplate));
@@ -44,19 +44,19 @@ module.exports = {
 
     reloadPipelinesConf: function (portals) {
         var logstashPath = constants.ANALYTICS_LOGSTASH_PATH;
-        var templatePath = path.join(__dirname, '..', '..', 'conf', 'analytics_templates');
+        var templatePath = path.join(__dirname, '..', 'conf', 'analytics_templates');
 
         var pipelineTemplate = fs.readFileSync(String(templatePath) + '/pipelines_template_v2.yml');
 
         var compiledTemplate = Handlebars.compile(String(pipelineTemplate));
 
         var data = {
-            "logstashs": portals
+            "logstashs": portals,
         };
 
         var pipeline = compiledTemplate(data);
 
-        fs.writeFile(logstashPath + '/LogStashApp/config/pipelines.yml', pipeline);
+        fs.writeFileSync(logstashPath + '/LogStashApp/config/pipelines.yml', pipeline) ;
     },
 
     insertLogstashDB: function (portal) {
@@ -100,7 +100,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             try {
                 //var portal_name = logstash.portal_name.toLowerCase().charAt(0).toUpperCase() + logstash.portal_name.toLowerCase().slice(1);
-                var portal = portal.portal_name;
+                var portal_name = portal.portal_name;
 
                 var type = portal.type;
                 var view = portal.view;
@@ -115,7 +115,7 @@ module.exports = {
 
                     const queryDb = {
                         text: dbQueries.DB_ADMIN_UPDATE_LOGSTASH,
-                        values: [portal, type, view, delay, url, id]
+                        values: [portal_name, type, view, delay, url, id]
                     };
                     if (client) {
                         client.query(queryDb, (dberror, response) => {

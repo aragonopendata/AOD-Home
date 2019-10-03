@@ -1,5 +1,5 @@
 const { Client } = require('@elastic/elasticsearch')
-const client = new Client({ node: 'http://biv-aodback-01.aragon.local:9200' })
+const client = new Client({ node: 'http://localhost:9201' })
 const http = require('http');
 
 var gapiUrl = 'http://localhost:50053';
@@ -10,6 +10,8 @@ module.exports = {
             index: 'logstash-reports-*-' + id,
             ignore_unavailable: true,
             allow_no_indices: true,
+        }).then().catch((error) => {
+            console.log(error);
         })
     },
     updatePortal: function (portal, id) {
@@ -17,10 +19,13 @@ module.exports = {
             index: 'logstash-reports-*-' + id,
             refresh: 'true',
             body: '"script": { "inline": "ctx._source.portal = \'' + portal.url + '\'"}'
+        }).then().catch((error) => {
+            console.log(error);
         })
     },
     reloadPortal: function (portal, date) {
-        delete_date(date, portal.id)
+
+        delete_date(date, portal.id_logstash)
         if (portal.type == 'urchin') {
             browsers_urchin(portal, date);
             pages_urchin(portal, date);
@@ -36,7 +41,7 @@ module.exports = {
     }
 };
 
-function browsers_urchin(portal, date) {
+async function browsers_urchin(portal, date) {
     var requestUrl = gapiUrl + '/browsers_urchin?view=' + portal.view + '&date=' + date.getTime();
 }
 
@@ -44,25 +49,26 @@ function pages_urchin(portal, date) {
     var requestUrl = gapiUrl + '/pages_urchin?view=' + portal.view + '&date=' + date.getTime();
 }
 
-function files_urchin(portal, date) {
+async function files_urchin(portal, date) {
     var requestUrl = gapiUrl + '/files_urchin?view=' + portal.view + '&date=' + date.getTime();
 }
 
-function countries_urchin(portal, date) {
+async function countries_urchin(portal, date) {
     var requestUrl = gapiUrl + '/countries_urchin?view=' + portal.view + '&date=' + date.getTime();
 }
 
-function browsers_ga(portal, date) {
-    var requestUrl = gapiUrl + '/browsers_ga?view=' + portal.view + '&date=' + date.getTime();
+async function browsers_ga(portal, date) {
+    var requestUrl = gapiUrl + '/browsers_ga?view=' + portal.view + '&date=' + date.getTime()/1000;
 
-    http.get(requestUrl, (resp) => {
+    await http.get(requestUrl, (resp) => {
         let data = '';
         resp.on('data', (chunk) => {
             data += chunk;
         });
         resp.on('end', () => {
             var response = JSON.parse(data);
-            response.reports.report.forEach(element => {
+            var indexdate = new Date(resp.headers['custom-date']);
+            response.reports[0].report.forEach(element => {
                 var browser = element.browser;
                 if (browser === '(not set)' || browser === '(unknown)') {
                     browser = 'Desconocido';
@@ -82,15 +88,19 @@ function browsers_ga(portal, date) {
                     "device": deviceCategory,
                     "visits": parseInt(element.sessions),
                     "browser_name": deviceCategory,
-                    "@timestamp": date,
+                    "@timestamp": indexdate,
+                    "type": 'pages',
                     "portal": portal.url,
                     "platform_name": operatingSystem
                 };
 
-                client.create({
-                    index: 'logstash-reports-browsers-' + portal.id,
+                client.index({
+                    index: 'logstash-reports-browsers-' + portal.id_logstash,
                     type: 'browsers',
+                    refresh: true,
                     body: value
+                }).then().catch((error) => {
+                    console.log(error);
                 });
             });
         });
@@ -101,17 +111,18 @@ function browsers_ga(portal, date) {
 
 }
 
-function pages_ga(portal, date) {
-    var requestUrl = gapiUrl + '/pages_ga?view=' + portal.view + '&date=' + date.getTime();
+async function pages_ga(portal, date) {
+    var requestUrl = gapiUrl + '/pages_ga?view=' + portal.view + '&date=' + date.getTime()/1000;
 
-    http.get(requestUrl, (resp) => {
+    await http.get(requestUrl, (resp) => {
         let data = '';
         resp.on('data', (chunk) => {
             data += chunk;
         });
         resp.on('end', () => {
             var response = JSON.parse(data);
-            response.reports.report.forEach(element => {
+            var indexdate = new Date(resp.headers['custom-date']);
+            response.reports[0].report.forEach(element => {
                 var hostname = element.hostname;
                 if (hostname === '(not set)' || hostname === '(unknown)') {
                     hostname = 'Desconocido';
@@ -129,16 +140,20 @@ function pages_ga(portal, date) {
 
                 var value = {
                     "visits": parseInt(element.sessions),
-                    "@timestamp": date,
+                    "@timestamp": indexdate,
                     "path": pagePath,
                     "title": pageTitle,
+                    "type": 'pages',
                     "portal": portal.url
                 };
 
-                client.create({
-                    index: 'logstash-reports-pages-' + portal.id,
+                client.index({
+                    index: 'logstash-reports-pages-' + portal.id_logstash,
                     type: 'pages',
+                    refresh: true,
                     body: value
+                }).then().catch((error) => {
+                    console.log(error);
                 });
             });
         });
@@ -148,17 +163,18 @@ function pages_ga(portal, date) {
     });
 }
 
-function files_ga(portal, date) {
-    var requestUrl = gapiUrl + '/files_ga?view=' + portal.view + '&date=' + date.getTime();
+async function files_ga(portal, date) {
+    var requestUrl = gapiUrl + '/files_ga?view=' + portal.view + '&date=' + date.getTime()/1000;
 
-    http.get(requestUrl, (resp) => {
+    await http.get(requestUrl, (resp) => {
         let data = '';
         resp.on('data', (chunk) => {
             data += chunk;
         });
         resp.on('end', () => {
             var response = JSON.parse(data);
-            response.reports.report.forEach(element => {
+            var indexdate = new Date(resp.headers['custom-date']);
+            response.reports[0].report.forEach(element => {
                 var eventAction = element.eventAction;
                 if (eventAction === '(not set)' || eventAction === '(unknown)') {
                     eventAction = 'Desconocido';
@@ -171,16 +187,20 @@ function files_ga(portal, date) {
 
                 var value = {
                     "extension": eventAction,
-                    "@timestamp": date,
+                    "@timestamp": indexdate,
                     "path": eventLabel,
+                    "type": 'pages',
                     "downloads": parseInt(element.totalEvents),
                     "portal": portal.url
                 };
 
-                client.create({
-                    index: 'logstash-reports-files-' + portal.id,
+                client.index({
+                    index: 'logstash-reports-files-' + portal.id_logstash,
                     type: 'files',
+                    refresh: true,
                     body: value
+                }).then().catch((error) => {
+                    console.log(error);
                 });
             });
         });
@@ -190,17 +210,18 @@ function files_ga(portal, date) {
 
 }
 
-function countries_ga(portal, date) {
-    var requestUrl = gapiUrl + '/countries_ga?view=' + portal.view + '&date=' + date.getTime();
+async function countries_ga(portal, date) {
+    var requestUrl = gapiUrl + '/countries_ga?view=' + portal.view + '&date=' + date.getTime()/1000;
 
-    http.get(requestUrl, (resp) => {
+    await http.get(requestUrl, (resp) => {
         let data = '';
         resp.on('data', (chunk) => {
             data += chunk;
         });
         resp.on('end', () => {
             var response = JSON.parse(data);
-            response.reports.report.forEach(element => {
+            var indexdate = new Date(resp.headers['custom-date']);
+            response.reports[0].report.forEach(element => {
                 var city = element.city;
                 if (city === '(not set)' || city === '(unknown)') {
                     city = 'Desconocido';
@@ -226,15 +247,19 @@ function countries_ga(portal, date) {
                     },
                     "city": city,
                     "region": region,
-                    "@timestamp": date,
+                    "@timestamp": indexdate,
+                    "type": 'pages',
                     "portal": portal.url,
                     "country": country
                 };
 
-                client.create({
-                    index: 'logstash-reports-countries-' + portal.id,
+                client.index({
+                    index: 'logstash-reports-countries-' + portal.id_logstash,
                     type: 'countries',
+                    refresh: true,
                     body: value
+                }).then().catch((error) => {
+                    console.log(error);
                 });
             });
         });
@@ -244,8 +269,8 @@ function countries_ga(portal, date) {
     });
 }
 
-function delete_date(date, id) {
-    client.deleteByQuery({
+async function delete_date(date, id) {
+    await client.deleteByQuery({
         index: 'logstash-reports-*-' + id,
         body: {
             "query": {
@@ -257,7 +282,7 @@ function delete_date(date, id) {
                 }
             }
         }
-    }, function (error, response) {
-        console.log(response);
+    }).then().catch((error) => {
+        console.log(error);
     });
 }
