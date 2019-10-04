@@ -55,30 +55,6 @@ router.get(constants.API_URL_DATASETS, function (req, res, next) {
                 }
             }
             serviceRequestUrl += ')';
-            
-
-            /*serviceRequestUrl += '&q=';
-            for(var i = 0; i < text_n.length; i++){
-                if (encodeURIComponent(text_n[i]) === encodeURIComponent(text_ny[i])) {
-                    serviceRequestUrl += encodeURIComponent(text_n[i]);
-                } else {
-                    serviceRequestUrl += encodeURIComponent(text_n[i]) + '+' + encodeURIComponent(text_ny[i]);
-                }                
-                if(i != text_n.length-1){
-                    serviceRequestUrl += '+';
-                }
-            }*/
-            /*serviceRequestUrl += '&q=(';
-            for(var i = 0; i < text_n.length; i++){
-                serviceRequestUrl += '(name:*' + encodeURIComponent(text_n[i]) + 
-                '* OR name:*' + encodeURIComponent(text_ny[i]) + '*) OR (res_name:*' + 
-                encodeURIComponent(text_n[i]) + '* OR res_name:*' + encodeURIComponent(text_ny[i]) + '*)';
-                if(i != text_n.length-1){
-                    serviceRequestUrl += ') AND (';
-                }
-            }
-            serviceRequestUrl += ')';
-            */
         }
         logger.notice('URL de petición: ' + serviceRequestUrl);
 
@@ -604,6 +580,8 @@ router.get(constants.API_URL_DATASETS_SIU, function (req, res, next) {
     console.log('Request received: tema: ' + req.query.tema);
     let names = [];
     let topics = [];
+    let topic_search = false;
+    let org_search = false;
 
     try {
         function getOrgsBySiuCode(){
@@ -646,6 +624,9 @@ router.get(constants.API_URL_DATASETS_SIU, function (req, res, next) {
                         });
                         console.log(map_dictionary);
                         names = [...new Set(names)];
+                        if (req.query.orgs === 'ALL') {
+                            names.push('ALL');
+                        }
                         resolve(true);
                     });
                 }).on('error', function (err) {
@@ -703,21 +684,28 @@ router.get(constants.API_URL_DATASETS_SIU, function (req, res, next) {
 
         function getDatsetsByOrgsTopic() {
             logger.debug('Servicio: Listado de datasets por organización y tema');
-            serviceRequestUrl = constants.CKAN_API_BASE_URL + constants.DATASETS_SEARCH;
+            // serviceRequestUrl = constants.CKAN_API_BASE_URL + constants.DATASETS_SEARCH;
+
+            let serviceBaseUrl = constants.CKAN_API_BASE_URL;
+            let serviceName = constants.DATASETS_SEARCH;
+            let serviceRequestUrl = serviceBaseUrl + serviceName + utils.getRequestCommonParams(req);
 
             let groups = topics.join(" OR ");
             let orgs = names.join(" OR ");
+
             let pageNumber = (req.query.page !== undefined ? req.query.page : 0);
             let rowsNumber = (req.query.rows !== undefined ? req.query.rows : 20);
             
-            if ((groups === '' || groups === undefined) && (orgs === '' || orgs === undefined)) {
-                serviceRequestUrl += '?rows=' + rowsNumber + '&start=' + pageNumber*rowsNumber;            
-            } else if(groups === '' || groups === undefined) {
-                serviceRequestUrl += '?fq=(organization:(' + orgs + '))&rows=' + rowsNumber + '&start=' + pageNumber*rowsNumber;            
-            }else if (orgs === '' || groups === undefined) {
-                serviceRequestUrl += '?fq=(groups:(' + groups + '))&rows=' + rowsNumber + '&start=' + pageNumber*rowsNumber;            
-            }else {
-                serviceRequestUrl += '?fq=(groups:(' + groups + ') AND (organization:(' + orgs + ')))&rows=' + rowsNumber + '&start=' + pageNumber*rowsNumber;            
+            if (topic_search) {
+                serviceRequestUrl += '&fq=(groups:(' + groups + '))';
+            } else if (org_search) {
+                serviceRequestUrl += '&fq=(organization:(' + orgs + '))';
+            } else if ((groups === '' || groups === undefined) || (orgs === '' || orgs === undefined)) {
+                serviceRequestUrl += '&fq=(groups:( null ) AND (organization:( null )))';
+            } else if (orgs === 'ALL') {
+                serviceRequestUrl += '&fq=(groups:(' + groups + '))';            
+            } else {                
+                serviceRequestUrl += '&fq=(groups:(' + groups + ') AND (organization:(' + orgs + ')))';            
             }
 
             //Proxy checking
@@ -748,13 +736,27 @@ router.get(constants.API_URL_DATASETS_SIU, function (req, res, next) {
 
         const promises = [];
 
-        if (req.query.orgs !== undefined && req.query.orgs.includes('ORG')) {
+        if ((req.query.orgs !== undefined && (req.query.orgs.includes('ORG') || req.query.orgs === 'ALL')) ||
+            (req.query.tema !== undefined)) {
+
+            if ((req.query.orgs.split(' ')[0].trim() === '' ||
+                 req.query.orgs.split(' ')[0].trim() === undefined) &&
+                (req.query.tema.split(' ')[0].trim() != '' &&
+                 req.query.tema.split(' ')[0].trim() != undefined) ) {
+                topic_search = true;
+            } else if ((req.query.tema.split(' ')[0].trim() === '' ||
+                        req.query.tema.split(' ')[0].trim() === undefined) &&
+                       (req.query.orgs.split(' ')[0].trim() != '' &&
+                        req.query.orgs.split(' ')[0].trim() != undefined) ) {
+                org_search = true;
+            }
+
             promises.push(getOrgsBySiuCode());
             promises.push(getTopicsByAragonTopic());
 
             const runPromises = Promise.all(promises).then(result => {
-                console.log(names);
-                console.log(topics);
+                console.log('names:' + names);
+                console.log('topics:' + topics);
             });
     
             (async function() {
@@ -765,6 +767,7 @@ router.get(constants.API_URL_DATASETS_SIU, function (req, res, next) {
         } else {
             names = req.query.orgs.split(' ');
             topics = req.query.tema.split(' ');
+
             getDatsetsByOrgsTopic();
         }
 
