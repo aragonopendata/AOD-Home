@@ -32,7 +32,8 @@
     "nodemon": "^1.11.0",
     "pg": "^7.2.0",
     "request": "^2.83.0",
-    "unidecode": "0.1.8"
+    "unidecode": "0.1.8",
+    "xml2js": "^0.4.22"
   },
   "devDependencies": {
     "eslint": "^6.5.1"

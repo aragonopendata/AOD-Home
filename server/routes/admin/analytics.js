@@ -13,7 +13,7 @@ router.get('/logstash', function (req, res) {
                 'message': JSON.stringify(files)
             });
         }).catch(error => {
-            throw error;
+            throw new Error(error);
         });
     } catch (error) {
         res.json({
@@ -33,7 +33,7 @@ router.post('/logstash', function (req, res) {
                 'message': 'Correcto'
             });
         }).catch(error => {
-            throw error;
+            throw new Error(error);
         });
     } catch (error) {
         res.json({
@@ -54,7 +54,7 @@ router.put('/logstash/:logid', function (req, res) {
                 'message': 'OK'
             });
         }).catch(error => {
-            throw error;
+            throw new Error(error);
         });
     } catch (error) {
         res.json({
@@ -76,10 +76,10 @@ router.get('/logstash/:logid/enable', function (req, res) {
                     'message': 'OK'
                 });
             }).catch(error => {
-                throw error;
+                throw new Error(error);
             });
         }).catch(error => {
-            throw error;
+            throw new Error(error);
         });
     } catch (error) {
         res.json({
@@ -101,10 +101,10 @@ router.get('/logstash/:logid/disable', function (req, res) {
                     'message': 'OK'
                 });
             }).catch(error => {
-                throw error;
+                throw new Error(error);
             });
         }).catch(error => {
-            throw error;
+            throw new Error(error);
         });
     } catch (error) {
         res.json({
@@ -128,10 +128,10 @@ router.delete('/logstash/:logid', function (req, res) {
                     'message': 'OK'
                 });
             }).catch(error => {
-                throw error;
+                throw new Error(error);
             });
         }).catch(error => {
-            throw error;
+            throw new Error(error);
         });
     } catch (error) {
         res.json({
@@ -156,7 +156,8 @@ router.post('/logstash/:logid/reload', function (req, res) {
                 if (portal.length > 0)
                     elasticUtils.reloadPortal(portal[0], date);
             }
-        }).catch(() => {
+        }).catch((error) => {
+            throw new Error(error);
         });
 
         res.json({

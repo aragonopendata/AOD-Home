@@ -25,7 +25,8 @@ module.exports = {
             "delay": String(portal.delay),
             "view": String(portal.view),
             "url": String(portal.url),
-            "id": String(id)
+            "id": String(id),
+            "eurl": constants.ANALYTICS_ELASTIC_URL
         };
 
         var pipeline = compiledTemplate(data);
@@ -39,7 +40,10 @@ module.exports = {
 
     deletePipeline: function (id) {
         var logstashPath = constants.ANALYTICS_LOGSTASH_PATH;
-        fs.unlinkSync(logstashPath + '/LogStashPipelines/' + id + '.conf')
+        var filePath = logstashPath + '/LogStashPipelines/' + id + '.conf';
+        if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath)
+        }
     },
 
     reloadPipelinesConf: function (portals) {
@@ -56,13 +60,12 @@ module.exports = {
 
         var pipeline = compiledTemplate(data);
 
-        fs.writeFileSync(logstashPath + '/LogStashApp/config/pipelines.yml', pipeline) ;
+        fs.writeFileSync(logstashPath + '/LogStashApp/config/pipelines.yml', pipeline);
     },
 
     insertLogstashDB: function (portal) {
         return new Promise((resolve, reject) => {
             try {
-                //var portal_name = logstash.portal_name.toLowerCase().charAt(0).toUpperCase() + logstash.portal_name.toLowerCase().slice(1);
                 var name = portal.portal_name;
                 var type = portal.type;
                 var view = portal.view;
@@ -99,7 +102,6 @@ module.exports = {
     updateLogstashDB: function (portal, id) {
         return new Promise((resolve, reject) => {
             try {
-                //var portal_name = logstash.portal_name.toLowerCase().charAt(0).toUpperCase() + logstash.portal_name.toLowerCase().slice(1);
                 var portal_name = portal.portal_name;
 
                 var type = portal.type;
