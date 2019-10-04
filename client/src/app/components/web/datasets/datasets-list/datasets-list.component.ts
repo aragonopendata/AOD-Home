@@ -276,6 +276,16 @@ export class DatasetsListComponent implements OnInit {
                 this.changeType();
                 this.selectedSearchOption = this.datasetSearchOptionTopics;
             } else if (Constants.DATASET_LIST_SEARCH_OPTION_ORGANIZATION_TOPIC === this.selectedSearchOption) {
+                
+                // Browser static URLs
+                if (this.siuOrganization.length > 0 && this.siuTopic.length > 0) {
+                    this.location.go('/' + this.routerLinkDataCatalogSiu + '?org=' + this.siuOrganization.join('+') + '&tema=' + this.siuTopic.join('+'));
+                } else if (this.siuOrganization.length > 0) {
+                    this.location.go('/' + this.routerLinkDataCatalogSiu + '?org=' + this.siuOrganization.join('+'));
+                } else if (this.siuTopic.length > 0) {
+                    this.location.go('/' + this.routerLinkDataCatalogSiu + '?tema=' + this.siuTopic.join('+'));
+                }
+
                 this.textSearch = "";
                 this.selectedOrgTopic = true;
                 this.getDatasetByOrganizationTopic(this.siuOrganization, this.siuTopic, null, null);
