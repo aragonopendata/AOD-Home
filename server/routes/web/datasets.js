@@ -55,30 +55,6 @@ router.get(constants.API_URL_DATASETS, function (req, res, next) {
                 }
             }
             serviceRequestUrl += ')';
-            
-
-            /*serviceRequestUrl += '&q=';
-            for(var i = 0; i < text_n.length; i++){
-                if (encodeURIComponent(text_n[i]) === encodeURIComponent(text_ny[i])) {
-                    serviceRequestUrl += encodeURIComponent(text_n[i]);
-                } else {
-                    serviceRequestUrl += encodeURIComponent(text_n[i]) + '+' + encodeURIComponent(text_ny[i]);
-                }                
-                if(i != text_n.length-1){
-                    serviceRequestUrl += '+';
-                }
-            }*/
-            /*serviceRequestUrl += '&q=(';
-            for(var i = 0; i < text_n.length; i++){
-                serviceRequestUrl += '(name:*' + encodeURIComponent(text_n[i]) + 
-                '* OR name:*' + encodeURIComponent(text_ny[i]) + '*) OR (res_name:*' + 
-                encodeURIComponent(text_n[i]) + '* OR res_name:*' + encodeURIComponent(text_ny[i]) + '*)';
-                if(i != text_n.length-1){
-                    serviceRequestUrl += ') AND (';
-                }
-            }
-            serviceRequestUrl += ')';
-            */
         }
         logger.notice('URL de petición: ' + serviceRequestUrl);
 
@@ -708,26 +684,28 @@ router.get(constants.API_URL_DATASETS_SIU, function (req, res, next) {
 
         function getDatsetsByOrgsTopic() {
             logger.debug('Servicio: Listado de datasets por organización y tema');
-            serviceRequestUrl = constants.CKAN_API_BASE_URL + constants.DATASETS_SEARCH;
+            // serviceRequestUrl = constants.CKAN_API_BASE_URL + constants.DATASETS_SEARCH;
+
+            let serviceBaseUrl = constants.CKAN_API_BASE_URL;
+            let serviceName = constants.DATASETS_SEARCH;
+            let serviceRequestUrl = serviceBaseUrl + serviceName + utils.getRequestCommonParams(req);
 
             let groups = topics.join(" OR ");
             let orgs = names.join(" OR ");
-            console.log('Groups: ' + groups);
-            console.log('Orgs: ' + orgs);
+
             let pageNumber = (req.query.page !== undefined ? req.query.page : 0);
             let rowsNumber = (req.query.rows !== undefined ? req.query.rows : 20);
             
             if (topic_search) {
-                serviceRequestUrl += '?fq=(groups:(' + groups + '))&rows=' + rowsNumber + '&start=' + pageNumber*rowsNumber;
+                serviceRequestUrl += '&fq=(groups:(' + groups + '))';
             } else if (org_search) {
-                serviceRequestUrl += '?fq=(organization:(' + orgs + '))&rows=' + rowsNumber + '&start=' + pageNumber*rowsNumber;
+                serviceRequestUrl += '&fq=(organization:(' + orgs + '))';
             } else if ((groups === '' || groups === undefined) || (orgs === '' || orgs === undefined)) {
-                serviceRequestUrl += '?fq=(groups:( null ) AND (organization:( null )))&rows=' + rowsNumber + '&start=' + pageNumber*rowsNumber;            
-                // }else if (orgs === '' || orgs === undefined) {
+                serviceRequestUrl += '&fq=(groups:( null ) AND (organization:( null )))';
             } else if (orgs === 'ALL') {
-                serviceRequestUrl += '?fq=(groups:(' + groups + '))&rows=' + rowsNumber + '&start=' + pageNumber*rowsNumber;            
-            } else {
-                serviceRequestUrl += '?fq=(groups:(' + groups + ') AND (organization:(' + orgs + ')))&rows=' + rowsNumber + '&start=' + pageNumber*rowsNumber;            
+                serviceRequestUrl += '&fq=(groups:(' + groups + '))';            
+            } else {                
+                serviceRequestUrl += '&fq=(groups:(' + groups + ') AND (organization:(' + orgs + ')))';            
             }
 
             //Proxy checking
@@ -760,8 +738,6 @@ router.get(constants.API_URL_DATASETS_SIU, function (req, res, next) {
 
         if ((req.query.orgs !== undefined && (req.query.orgs.includes('ORG') || req.query.orgs === 'ALL')) ||
             (req.query.tema !== undefined)) {
-
-            console.log('entra');
 
             if ((req.query.orgs.split(' ')[0].trim() === '' ||
                  req.query.orgs.split(' ')[0].trim() === undefined) &&
