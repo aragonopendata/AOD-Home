@@ -178,7 +178,7 @@ export class AnalyticsComponent {
 		}
 
 		function get_url_export(path, format, days, portal) {
-			var url_return = path + "?format=" + format + "&portal=" + portal + "&days=" + encodeURIComponent(days);
+			var url_return = path + "?extension=" + format + "&portal=" + portal + "&days=" + encodeURIComponent(days);
 			return url_return;
 		}
 
