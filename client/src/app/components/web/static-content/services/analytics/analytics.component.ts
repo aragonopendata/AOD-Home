@@ -55,13 +55,13 @@ export class AnalyticsComponent {
 
 			jQuery(".browsers.json").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_BROWSERS, "json", days, portal));
 			jQuery(".browsers.csv").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_BROWSERS, "csv", days, portal));
-	
+
 			jQuery(".pages.json").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_PAGES, "json", days, portal));
 			jQuery(".pages.csv").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_PAGES, "csv", days, portal));
-	
+
 			jQuery(".files.json").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_FILES, "json", days, portal));
 			jQuery(".files.csv").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_FILES, "csv", days, portal));
-	
+
 			jQuery(".countries.json").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_COUNTRIES, "json", days, portal));
 			jQuery(".countries.csv").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_COUNTRIES, "csv", days, portal));
 		});
@@ -75,13 +75,13 @@ export class AnalyticsComponent {
 
 			jQuery(".browsers.json").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_BROWSERS, "json", days, portal));
 			jQuery(".browsers.csv").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_BROWSERS, "csv", days, portal));
-	
+
 			jQuery(".pages.json").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_PAGES, "json", days, portal));
 			jQuery(".pages.csv").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_PAGES, "csv", days, portal));
-	
+
 			jQuery(".files.json").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_FILES, "json", days, portal));
 			jQuery(".files.csv").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_FILES, "csv", days, portal));
-	
+
 			jQuery(".countries.json").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_COUNTRIES, "json", days, portal));
 			jQuery(".countries.csv").attr('href', get_url_export(window["config"]["AOD_BASE_URL"] + Constants.ELASTIC_COUNTRIES, "csv", days, portal));
 		});
@@ -189,11 +189,7 @@ export class AnalyticsComponent {
 	getFiles() {
 		this.logstashs = [];
 		this.logstashService.getFiles().subscribe(logstashs => {
-			try {
-				this.logstashs = JSON.parse(logstashs);
-			} catch (error) {
-				console.error('Error: getFiles() - logstash.component.ts', error);
-			}
+			this.logstashs = logstashs.message;
 		});
 	}
 

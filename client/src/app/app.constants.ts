@@ -652,10 +652,7 @@ export class Constants {
     public static SERVER_API_LINK_ADMIN_SYS = '/sysadmin';
     public static SERVER_API_LINK_ADMIN_ROLES_LIST = '/roles';
     public static SERVER_API_LINK_ADMIN_GET_ROLE = '/role';
-    public static SERVER_API_LINK_ADMIN_LOGSTASH_FILES = '/logstash/files';
-    public static SERVER_API_LINK_ADMIN_LOGSTASH_INSERT = '/logstash/insert';
-    public static SERVER_API_LINK_ADMIN_LOGSTASH_DELETE = '/logstash/delete';
-    public static SERVER_API_LINK_ADMIN_LOGSTASH_RELOAD = '/logstash/reload';
+    public static SERVER_API_LINK_ADMIN_LOGSTASH = '/logstash';
     public static SERVER_API_LINK_ADMIN_USER_CUD_OPERATIONS = '/users';
     public static SERVER_API_LINK_ADMIN_USER_ORGANIZATIONS = '/organizations';
     public static SERVER_API_LINK_ADMIN_ORGANIZATION_CUD_OPERATIONS = '/organization';

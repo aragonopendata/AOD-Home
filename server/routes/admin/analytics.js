@@ -10,7 +10,7 @@ router.get('/logstash', function (req, res) {
         logstashUtils.getAllFilesDB().then(files => {
             res.json({
                 'status': constants.REQUEST_REQUEST_OK,
-                'message': JSON.stringify(files)
+                'message': files
             });
         }).catch(error => {
             throw new Error(error);

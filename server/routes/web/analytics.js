@@ -9,7 +9,7 @@ router.get('/analytics/files', function (req, res) {
         logstashUtils.getAllFilesEnabledDB().then(files => {
             res.json({
                 'status': constants.REQUEST_REQUEST_OK,
-                'message': JSON.stringify(files)
+                'message': files
             });
         }).catch(error => {
             throw error;
