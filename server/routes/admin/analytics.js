@@ -142,7 +142,7 @@ router.delete('/logstash/:logid', function (req, res) {
 });
 
 /** RELOAD DAYS  */
-router.post('/logstash/:logid/reload', function (req, res) {
+router.post('/logstash/:logid/reload', async function (req, res) {
     try {
         var id = req.params.logid;
         var fromT = req.body.from;
@@ -151,14 +151,13 @@ router.post('/logstash/:logid/reload', function (req, res) {
         var from = new Date(parseInt(fromT));
         var to = new Date(parseInt(toT));
 
-        logstashUtils.getFileDB(id).then(portal => {
-            for (var date = from; date <= to; date.setDate(date.getDate() + 1)) {
-                if (portal.length > 0)
-                    elasticUtils.reloadPortal(portal[0], date);
-            }
-        }).catch((error) => {
-            throw new Error(error);
-        });
+        var portal = await logstashUtils.getFileDB(id)
+
+        for (var date = from; date <= to; date.setDate(date.getDate() + 1)) {
+            if (portal.length > 0)
+                await elasticUtils.reloadPortal(portal[0], date);
+        }
+        console.log('Portal Recargado');
 
         res.json({
             'status': constants.REQUEST_REQUEST_OK,
