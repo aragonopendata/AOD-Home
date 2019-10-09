@@ -55,8 +55,11 @@ export class AnalyticsComponent {
 		}
 	]
 
+	sanitizer: DomSanitizer
+
 	constructor(private analyticsService: AnalyticsService,
-		private sanitizer: DomSanitizer) {
+		private s: DomSanitizer) {
+		this.sanitizer = s;
 		this.currentPortal = this.allPortal;
 		this.currentDay = this.days[4];
 		this.portales = [];
