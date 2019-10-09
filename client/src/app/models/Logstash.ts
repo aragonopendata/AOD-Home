@@ -1,5 +1,5 @@
 export class Logstash {
-    id_logstash: number
+    id_logstash: string
     portal_name: string;
     type: string;
     view: string;

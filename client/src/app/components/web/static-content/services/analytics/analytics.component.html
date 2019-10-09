@@ -1,7 +1,7 @@
 <div class="headerSeparator"></div>
 <div class="pagina">
-	<h1 tabindex="{{openedMenu ? -1 : 0}}">OPEN ANALYTICS DATA</h1>
-	<div tabindex="{{openedMenu ? -1 : 0}}">
+	<h1>OPEN ANALYTICS DATA</h1>
+	<div>
 		Open Analytics Data ofrece algunas estadísticas de uso de los portales más importantes del Gobierno de Aragón <b>del año en curso</b>. Este servicio
 		ofrece de manera pública los datos más útiles en cuanto a la interacción de la ciudadanía con las páginas webs institucionales
 		del Gobierno de Aragón y aporta de manera sencilla su uso, acceso e impacto, además también estos datos están disponibles
@@ -9,76 +9,64 @@
 	</div>
 </div>
 <div class="iframeAnalytics">
-	<iframe tabindex="{{openedMenu ? -1 : 0}}" id="sevendays" src="" marginwidth=0 marginheight=0 frameborder=0 scrolling="no"></iframe>
-	<div class="btn-group float-left" id="btng-portal-analytics">
-		<button tabindex="{{openedMenu ? -1 : 0}}" type="button" class="btn btn-primary dropdown-toggle portalAnalyticsPral" data-toggle="dropdown" aria-haspopup="true"
+	<iframe id="sevendays" [src]="sanitizer.bypassSecurityTrustResourceUrl(sevenurl)" marginwidth=0 marginheight=0 frameborder=0 scrolling="no"></iframe>
+	<div class="btn-group float-left">
+		<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
 		 aria-expanded="false">
-			Todos
+			{{ currentPortal.url }}
 			<span class="caret"></span>
 		</button>
 		<ul class="dropdown-menu scrollable-menu" role="menu">
 			<li>
-				<button tabindex="{{openedMenu ? -1 : 0}}" class="dropdown-item portalAnalytics" value="Todos">Todos</button>
+				<button class="dropdown-item" (click) = "changePortal(allPortal)" >{{ allPortal.portal_name }}</button>
 			</li>
 			<div class="dropdown-divider"></div>
-			<li *ngFor="let logstash of logstashs">
-				<button tabindex="{{openedMenu ? -1 : 0}}" class="dropdown-item portalAnalytics" value="{{ logstash.url }}">{{ logstash.portal_name }}</button>
+			<li *ngFor="let portal of portales">
+				<button class="dropdown-item" (click) = "changePortal(portal)">{{ portal.portal_name }}</button>
 			</li>
 		</ul>
 	</div>
-	<div class="btn-group float-right" id="btng-time-analytics">
-		<button tabindex="{{openedMenu ? -1 : 0}}" type="button" class="btn btn-primary dropdown-toggle timeAnalyticsPral" data-toggle="dropdown" aria-haspopup="true"
+	<div class="btn-group float-right">
+		<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
 		 aria-expanded="false">
-		 	Año actual
+		 	{{ currentDay.name }}
 			<span class="caret"></span>
 		</button>
 		<ul class="dropdown-menu" role="menu">
-			<li>
-				<button class="dropdown-item timeAnalytics" value="now-1d/d">Ayer</button>
-			</li>
-			<li>
-				<button class="dropdown-item timeAnalytics" value="now-7d/d">7 días</button>
-			</li>
-			<li>
-				<button class="dropdown-item timeAnalytics" value="now-15d/d">15 días</button>
-			</li>
-			<li>
-				<button class="dropdown-item timeAnalytics" value="now-30d/d">30 días</button>
-			</li>
-			<li>
-				<button class="dropdown-item timeAnalytics" value="now/y">Año actual</button>
+			<li *ngFor="let day of days">
+				<button class="dropdown-item" (click)="changeTime(day)">{{ day.name }}</button>
 			</li>
 		</ul>
 	</div>
-	<iframe tabindex="{{openedMenu ? -1 : 0}}" id="analytics" src="" marginwidth=0 marginheight=0 frameborder=0 scrolling="no"></iframe>
+	<iframe id="analytics" [src]="sanitizer.bypassSecurityTrustResourceUrl(globalurl)" marginwidth=0 marginheight=0 frameborder=0 scrolling="no"></iframe>
 	<div class="pagina">
-		<span tabindex="{{openedMenu ? -1 : 0}}" class="panel-export-title">
+		<span class="panel-export-title">
 			Descarga de datos abiertos
 		</span>
 		<div class="export">
 			<ul>
-				<li tabindex="{{openedMenu ? -1 : 0}}">
+				<li>
 					Páginas más vistas año en curso:
-					<a tabindex="{{openedMenu ? -1 : 0}}" class="pages csv" href="">CSV</a>
-					<a tabindex="{{openedMenu ? -1 : 0}}" class="pages json" href="">JSON</a>
+					<a [attr.href]="exportPages('csv')" target="_blank">CSV</a>
+					<a [attr.href]="exportPages('json')" target="_blank">JSON</a>
 				</li>
-				<li tabindex="{{openedMenu ? -1 : 0}}">
+				<li>
 					Navegadores año en curso:
-					<a tabindex="{{openedMenu ? -1 : 0}}" class="browsers csv" href="">CSV</a>
-					<a tabindex="{{openedMenu ? -1 : 0}}" class="browsers json" href="">JSON</a>
+					<a [attr.href]="exportBrowsers('csv')" target="_blank">CSV</a>
+					<a [attr.href]="exportBrowsers('json')" target="_blank">JSON</a>
 				</li>
-				<li tabindex="{{openedMenu ? -1 : 0}}">
+				<li>
 					Archivos descargados año en curso:
-					<a tabindex="{{openedMenu ? -1 : 0}}" class="files csv" href="">CSV</a>
-					<a tabindex="{{openedMenu ? -1 : 0}}" class="files json" href="">JSON</a>
+					<a [attr.href]="exportFiles('csv')" target="_blank">CSV</a>
+					<a [attr.href]="exportFiles('json')" target="_blank">JSON</a>
 				</li>
-				<li tabindex="{{openedMenu ? -1 : 0}}">
+				<li>
 					Geolocalización año en curso:
-					<a tabindex="{{openedMenu ? -1 : 0}}" class="countries csv" href="">CSV</a>
-					<a tabindex="{{openedMenu ? -1 : 0}}" class="countries json" href="">JSON</a>
+					<a [attr.href]="exportCountries('csv')" target="_blank">CSV</a>
+					<a [attr.href]="exportCountries('json')" target="_blank">JSON</a>
 				</li>
-				<li tabindex="{{openedMenu ? -1 : 0}}">
-					<a tabindex="{{openedMenu ? -1 : 0}}" class="stats" href="{{aodBaseUrl}}/{{routerLinkDataCatalogDataset}}/estadisticas-de-uso-de-los-portales-y-webs-mas-importantes-del-gobierno-de-aragon" target="_blank">Estadísticas de años anteriores</a>
+				<li>
+					<a class="stats" href="{{aodBaseUrl}}/{{routerLinkDataCatalogDataset}}/estadisticas-de-uso-de-los-portales-y-webs-mas-importantes-del-gobierno-de-aragon" target="_blank">Estadísticas de años anteriores</a>
 				</li>
 			</ul>
 		</div>
