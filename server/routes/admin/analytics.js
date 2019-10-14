@@ -151,19 +151,17 @@ router.post('/logstash/:logid/reload', async function (req, res) {
         var from = new Date(parseInt(fromT));
         var to = new Date(parseInt(toT));
 
-        var portal = await logstashUtils.getFileDB(id)
-
-        for (var date = from; date <= to; date.setDate(date.getDate() + 1)) {
-            if (portal.length > 0)
-                await elasticUtils.reloadPortal(portal[0], date);
-        }
-        console.log('Portal Recargado');
+        var portal = await logstashUtils.getFileDB(id);
 
         res.json({
             'status': constants.REQUEST_REQUEST_OK,
             'message': 'OK'
         });
 
+        for (var date = from; date <= to; date.setDate(date.getDate() + 1)) {
+            if (portal.length > 0)
+                await elasticUtils.reloadPortal(portal[0], date);
+        }
     } catch (error) {
         res.json({
             'status': constants.REQUEST_ERROR_INTERNAL_ERROR,

@@ -32,16 +32,16 @@ module.exports = {
     reloadPortal: async function (portal, reloadDate) {
         await delete_date(reloadDate, portal.id_logstash)
         if (portal.type == 'urchin') {
-            browsers_urchin(portal, reloadDate);
-            pages_urchin(portal, reloadDate);
-            files_urchin(portal, reloadDate);
-            countries_urchin(portal, reloadDate);
+            await browsers_urchin(portal, reloadDate);
+            await pages_urchin(portal, reloadDate);
+            await files_urchin(portal, reloadDate);
+            await countries_urchin(portal, reloadDate);
         }
         if (portal.type == 'analytics') {
-            browsers_ga(portal, reloadDate);
-            pages_ga(portal, reloadDate);
-            files_ga(portal, reloadDate);
-            countries_ga(portal, reloadDate);
+            await browsers_ga(portal, reloadDate);
+            await pages_ga(portal, reloadDate);
+            await files_ga(portal, reloadDate);
+            await countries_ga(portal, reloadDate);
         }
     }
 };
