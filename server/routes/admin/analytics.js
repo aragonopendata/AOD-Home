@@ -4,6 +4,11 @@ const constants = require('../../util/constants');
 const logstashUtils = require('../../util/logstash');
 const elasticUtils = require('../../util/elasticsearch');
 
+//LOG SETTINGS
+const logConfig = require('../../conf/log-conf');
+const loggerSettings = logConfig.getLogSettings();
+const logger = require('js-logging').dailyFile([loggerSettings]);
+
 /** GET ALL LOGSTASH CONFIG */
 router.get('/logstash', function (req, res) {
     try {
@@ -157,10 +162,11 @@ router.post('/logstash/:logid/reload', async function (req, res) {
             'status': constants.REQUEST_REQUEST_OK,
             'message': 'OK'
         });
-
-        for (var date = from; date <= to; date.setDate(date.getDate() + 1)) {
-            if (portal.length > 0)
+        if (portal.length > 0) {
+            for (var date = from; date <= to; date.setDate(date.getDate() + 1)) {
+                logger.info("Recargando dia - " + date);
                 await elasticUtils.reloadPortal(portal[0], date);
+            }
         }
     } catch (error) {
         res.json({
