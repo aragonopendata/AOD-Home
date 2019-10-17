@@ -587,7 +587,7 @@ router.get(constants.API_URL_DATASETS_SIU, function (req, res, next) {
         function getOrgsBySiuCode(){
             return new Promise(resolve => {
                 let serviceRequestUrl = constants.CKAN_API_BASE_URL + 'organization_list?all_fields=true&include_extras=true';
-                map_dictionary = {};
+                siu_codes = req.query.orgs.split(' ');
 
                 //Proxy checking
                 let httpConf = null;
@@ -611,18 +611,17 @@ router.get(constants.API_URL_DATASETS_SIU, function (req, res, next) {
                             jsonObj.result.forEach(element => {
                                 if(element.extras){
                                     element.extras.forEach(e => {
-                                        e.key === 'siuCode' ? map_dictionary[e.value] = element.name : undefined
+                                        if(e.key === 'siuCode') {
+                                            let values = e.value.split(',').map(el => { return el.trim() });
+                                            values.forEach(aOrg => {
+                                                siu_codes.find(t => {return t === aOrg}) === aOrg ? names.push(element.name) : undefined
+                                            })
+                                        }
                                     });
                                 }
                             });
                         }
 
-                        req.query.orgs.split(' ').forEach(org => {
-                            if(map_dictionary[org] !== undefined){
-                                names.push(map_dictionary[org]);
-                            }
-                        });
-                        console.log(map_dictionary);
                         names = [...new Set(names)];
                         if (req.query.orgs === 'ALL') {
                             names.push('ALL');
@@ -757,6 +756,9 @@ router.get(constants.API_URL_DATASETS_SIU, function (req, res, next) {
             const runPromises = Promise.all(promises).then(result => {
                 console.log('names:' + names);
                 console.log('topics:' + topics);
+                if (names.length === 0) {
+                    org_search = false;
+                }
             });
     
             (async function() {
