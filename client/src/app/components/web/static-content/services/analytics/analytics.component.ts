@@ -153,7 +153,7 @@ export class AnalyticsComponent {
 		}
 
 		function get_url_seven(time, filter) {
-			var url = window["config"]["AOD_BASE_URL"] + window["config"]["AOD_BASE_URL"] + Constants.KIBANA_URL_SEVEN;
+			var url = window["config"]["AOD_BASE_URL"] + Constants.KIBANA_URL_SEVEN;
 			url = url + "?embed=true";
 			url = url + "&_g=("
 				+ "refreshInterval:("
