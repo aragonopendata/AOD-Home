@@ -608,7 +608,7 @@ router.post(constants.API_URL_ADMIN_CREATE_FILE, disk_upload.single('file'), fun
         // Creates the csv string to write it to a file
         for(var i = 0; i < rows.length; i++)
         {
-            writeStr += rows[i].join(",") + "\n";
+            writeStr += '"' + rows[i].join('";"') + '"\n';
         }
 
         // Write to file
