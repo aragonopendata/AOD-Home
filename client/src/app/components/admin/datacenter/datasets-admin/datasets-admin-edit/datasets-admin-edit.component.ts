@@ -244,9 +244,36 @@ export class DatasetsAdminEditComponent implements OnInit {
 		}
 	}
 
-	checkTab0(){
+	checkTabCreationMode(){
+		let msg = ['Titulo', 'Descripción', 'Temática', 'Cobertura Geográfica'];
+		let requiredObj = [this.inputDatasetTitle, this.inputDatasetDescription, this.selectedTopic, this.checkGeoCoverage()];
+
+		// Check first tab required params
+		if(requiredObj.slice(0,4).every( obj => obj !== undefined && obj !== '') && requiredObj[4] == undefined){
+			this.activeTab = [true, true, false];
+			this.unlockedTabs = 1;
+		}else{
+			this.activeTab = [true, false, false];
+		}
+	}
+
+	checkTab2CreationMode(){
 		let msg = ['Titulo', 'Descripción', 'Temática', 'Cobertura Geográfica', 'Publicador'];
 		let requiredObj = [this.inputDatasetTitle, this.inputDatasetDescription, this.selectedTopic, this.checkGeoCoverage(), this.selectedOrg];
+
+		// Check second tab required params
+		if(requiredObj.every( obj => obj !== undefined && obj !== '')){
+			this.activeTab = [true, true, true];
+			this.unlockedTabs = 2;
+		}else{
+			this.activeTab = [true, true, false];
+		}
+		return false;
+	}
+
+	checkTab0(){
+		let msg = ['Titulo', 'Descripción', 'Temática', 'Cobertura Geográfica'];
+		let requiredObj = [this.inputDatasetTitle, this.inputDatasetDescription, this.selectedTopic, this.checkGeoCoverage()];
 
 		// Check first tab required params
 		if(requiredObj.slice(0,4).every( obj => obj !== undefined && obj !== '') && requiredObj[4] == undefined){
@@ -272,7 +299,6 @@ export class DatasetsAdminEditComponent implements OnInit {
 
 	// Checks that required params are set before saving dataset and enables following tabs when previous are completed
 	checkAndNextTab(nextTab, save: boolean){
-
 		this.msgs = [];
 
 		if(this.unlockedTabs === 0){
@@ -281,11 +307,13 @@ export class DatasetsAdminEditComponent implements OnInit {
 					this.activeTab = [true, true, false];
 					this.unlockedTabs = 1;
 				}
+				this.checkTabCreationMode();
 			}else if(nextTab === 2){
 				if(this.checkTab1()){
 					this.activeTab = [true, true, true];
 					this.unlockedTabs = 2;
 				}
+				this.checkTab2CreationMode();
 			}
 		}else if(this.unlockedTabs === 1){
 			if(nextTab === 2){
@@ -294,6 +322,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 					this.unlockedTabs = 2;
 				}
 			}
+			this.checkTab2CreationMode();
 		}else if(this.unlockedTabs === 2){
 			if(this.checkTab1() && save){
 				this.saveDataset(true);
@@ -542,6 +571,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 				this.inputDatasetUrl = encodeURI(url);
 			}
 		}
+		this.checkTabCreationMode();
 	}
 
 	setPublicadores(organizations: Organization[]) {
@@ -904,6 +934,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 			default:
 				break;
 		}
+		this.checkTabCreationMode();
 
 	}
 
