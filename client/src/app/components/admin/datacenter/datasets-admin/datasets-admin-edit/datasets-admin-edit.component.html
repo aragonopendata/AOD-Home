@@ -293,13 +293,13 @@
 							algunos casos los usuarios ayudan a mejorar la información, así que no desaproveches la oportunidad de acercarles
 							la realidad del dato.
 						</p>
-						<textarea class="col-12 form-control" [(ngModel)]="inputDatasetDescription" rows="5" cols="150"></textarea>
+						<textarea class="col-12 form-control" (keyup)="checkTabCreationMode()" [(ngModel)]="inputDatasetDescription" rows="5" cols="150"></textarea>
 						<h3 style="margin-top: 2%;">Temática *</h3>
 						<p>
 							Estos son los temas conforme a la Norma Técnica de Interoperabilidad: elige el que crea que se adapta mejor a la información que contiene tu conjunto de datos.
 						</p>
 						
-						<select class="form-control" [(ngModel)]="selectedTopic">
+						<select class="form-control" (change)="checkTabCreationMode()" [(ngModel)]="selectedTopic">
 							<option *ngFor="let topSel of topicsSelect" [ngValue]="topSel.value">{{topSel.label}}</option>
 						</select>
 						
@@ -382,7 +382,7 @@
 									<input type="radio" class="form-check-input" name="coberturaGeo" id="provinciaRadio" [checked]="provinciaRadioValue" (change)="changeRadioGeo('provincia')" > Provincia de:
 								</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" [(ngModel)]="provinciaInput" placeholder="Provincia">
+									<input type="text" class="form-control" (change)="checkTabCreationMode()" [(ngModel)]="provinciaInput" placeholder="Provincia">
 								</div>
 							</div>
 							<div class="form-group row">
@@ -390,7 +390,7 @@
 									<input type="radio" class="form-check-input" name="coberturaGeo" id="comarcaRadio" [checked]="comarcaRadioValue" (change)="changeRadioGeo('comarca')" > Comarca de:
 								</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" [(ngModel)]="comarcaInput" placeholder="Comarca">
+									<input type="text" class="form-control" (change)="checkTabCreationMode()" [(ngModel)]="comarcaInput" placeholder="Comarca">
 								</div>
 							</div>
 							<div class="form-group row">
@@ -398,7 +398,7 @@
 									<input type="radio" class="form-check-input" name="coberturaGeo" id="municipioRadio" [checked]="municipioRadioValue" (change)="changeRadioGeo('municipio')" > Municipio de:
 								</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" [(ngModel)]="municipioInput" placeholder="Municipio">
+									<input type="text" class="form-control" (change)="checkTabCreationMode()" [(ngModel)]="municipioInput" placeholder="Municipio">
 								</div>
 							</div>
 							<div class="form-group row">
@@ -406,7 +406,7 @@
 									<input type="radio" class="form-check-input" name="coberturaGeo" id="otroRadio" [checked]="otherRadioValue" (change)="changeRadioGeo('otro')" > Otro:
 								</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" id="otherInputGeo" [(ngModel)]="otherInputGeo" placeholder="Otro">
+									<input type="text" class="form-control" id="otherInputGeo" (change)="checkTabCreationMode()" [(ngModel)]="otherInputGeo" placeholder="Otro">
 								</div>
 							</div>
 						</fieldset>
@@ -478,7 +478,7 @@
 						<p>
 							Seleccione una organización entre las disponibles:
 						</p>
-						<select class="form-control" [(ngModel)]="selectedOrg">
+						<select class="form-control" (change)="checkTab2CreationMode()" [(ngModel)]="selectedOrg">
 							<option *ngFor="let orgSel of orgsSelect" [ngValue]="orgSel.value">{{orgSel.label}}</option>
 						</select>
 						<p>
@@ -658,7 +658,8 @@
 						</div>
 						<div *ngIf="showMapLink" class="row">
 							<div class="col-md-12">
-								<button type="button" pButton icon="fas fa-trash-alt" (click)="deleteMapFile($event)" aria-hidden="true"></button><button type="button" pButton icon="fas fa-download" (click)="downloadMapFile($event)" aria-hidden="true"></button> mapeo_ei2a.xlsm
+								<!--<button type="button" pButton icon="fas fa-trash-alt" (click)="deleteMapFile($event)" aria-hidden="true"></button>-->
+								<button type="button" pButton icon="fas fa-download" (click)="downloadMapFile($event)" aria-hidden="true"></button> mapeo_ei2a.xlsm
 							</div>
 						</div>
 
