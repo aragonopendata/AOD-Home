@@ -32,10 +32,10 @@ module.exports = {
     reloadPortal: async function (portal, reloadDate) {
         await delete_date(reloadDate, portal.id_logstash)
         if (portal.type == 'urchin') {
-            await browsers_urchin(portal, reloadDate);
-            await pages_urchin(portal, reloadDate);
-            await files_urchin(portal, reloadDate);
-            await countries_urchin(portal, reloadDate);
+            setTimeout(await browsers_urchin(portal, reloadDate), 3000);
+            setTimeout(await pages_urchin(portal, reloadDate), 3000);
+            setTimeout(await files_urchin(portal, reloadDate), 3000);
+            setTimeout(await countries_urchin(portal, reloadDate), 3000);
         }
         if (portal.type == 'analytics') {
             await browsers_ga(portal, reloadDate);
