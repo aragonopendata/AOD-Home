@@ -58,26 +58,28 @@ async function browsers_urchin(portal, date) {
                 xml.parseString(data, function (err, result) {
                     var indexdate = new Date(resp.headers['custom-date']);
                     var r = [];
-                    if (result['tns:getDataResponse'] && result['tns:getDataResponse'].record){
+                    if (result['tns:getDataResponse'] && result['tns:getDataResponse'].record) {
                         if (result['tns:getDataResponse'].record.length > 0) {
                             result['tns:getDataResponse'].record.forEach(element => {
-                                var browser = element.dimensions[0].dimension[0]._;
-                                if (browser === '(not set)' || browser === '(unknown)') {
-                                    browser = 'Desconocido';
+                                if (element.dimensions && element.dimensions[0].dimension && element.metrics) {
+                                    var browser = element.dimensions[0].dimension[0]._;
+                                    if (browser === '(not set)' || browser === '(unknown)') {
+                                        browser = 'Desconocido';
+                                    }
+                                    var operatingSystem = element.dimensions[0].dimension[1]._;
+                                    if (operatingSystem === '(not set)' || operatingSystem === '(unknown)') {
+                                        operatingSystem = 'Desconocido';
+                                    }
+                                    var value = {
+                                        "visits": parseInt(element.metrics[0]['u:visits'][0]._),
+                                        "browser_name": browser,
+                                        "@timestamp": indexdate,
+                                        "portal": portal.url,
+                                        "platform_name": operatingSystem,
+                                        "type": "browsers"
+                                    };
+                                    r.push(value)
                                 }
-                                var operatingSystem = element.dimensions[0].dimension[1]._;
-                                if (operatingSystem === '(not set)' || operatingSystem === '(unknown)') {
-                                    operatingSystem = 'Desconocido';
-                                }
-                                var value = {
-                                    "visits": parseInt(element.metrics[0]['u:visits'][0]._),
-                                    "browser_name": browser,
-                                    "@timestamp": indexdate,
-                                    "portal": portal.url,
-                                    "platform_name": operatingSystem,
-                                    "type": "browsers"
-                                };
-                                r.push(value)
                             });
                         }
                     }
@@ -109,21 +111,23 @@ async function pages_urchin(portal, date) {
                 xml.parseString(data, function (err, result) {
                     var indexdate = new Date(resp.headers['custom-date']);
                     var r = [];
-                    if (result['tns:getDataResponse'] && result['tns:getDataResponse'].record){
+                    if (result['tns:getDataResponse'] && result['tns:getDataResponse'].record) {
                         if (result['tns:getDataResponse'].record.length > 0) {
                             result['tns:getDataResponse'].record.forEach(element => {
-                                var pagePath = element.dimensions[0].dimension[0]._;
-                                if (pagePath === '(not set)' || pagePath === '(unknown)') {
-                                    pagePath = 'Desconocido';
+                                if (element.dimensions && element.dimensions[0].dimension && element.metrics) {
+                                    var pagePath = element.dimensions[0].dimension[0]._;
+                                    if (pagePath === '(not set)' || pagePath === '(unknown)') {
+                                        pagePath = 'Desconocido';
+                                    }
+                                    var value = {
+                                        "visits": parseInt(element.metrics[0]['u:visits'][0]._),
+                                        "@timestamp": indexdate,
+                                        "path": pagePath,
+                                        "portal": portal.url,
+                                        "type": "pages"
+                                    };
+                                    r.push(value);
                                 }
-                                var value = {
-                                    "visits": parseInt(element.metrics[0]['u:visits'][0]._),
-                                    "@timestamp": indexdate,
-                                    "path": pagePath,
-                                    "portal": portal.url,
-                                    "type": "pages"
-                                };
-                                r.push(value);
                             });
                         }
                     }
@@ -155,26 +159,28 @@ async function files_urchin(portal, date) {
                 xml.parseString(data, function (err, result) {
                     var indexdate = new Date(resp.headers['custom-date']);
                     var r = [];
-                    if (result['tns:getDataResponse'] && result['tns:getDataResponse'].record){
+                    if (result['tns:getDataResponse'] && result['tns:getDataResponse'].record) {
                         if (result['tns:getDataResponse'].record.length > 0) {
                             result['tns:getDataResponse'].record.forEach(element => {
-                                var eventAction = element.dimensions[0].dimension[0]._;
-                                if (eventAction === '(not set)' || eventAction === '(unknown)') {
-                                    eventAction = 'Desconocido';
+                                if (element.dimensions && element.dimensions[0].dimension && element.metrics) {
+                                    var eventAction = element.dimensions[0].dimension[0]._;
+                                    if (eventAction === '(not set)' || eventAction === '(unknown)') {
+                                        eventAction = 'Desconocido';
+                                    }
+                                    var eventLabel = element.dimensions[0].dimension[1]._;
+                                    if (eventLabel === '(not set)' || eventLabel === '(unknown)') {
+                                        eventLabel = 'Desconocido';
+                                    }
+                                    var value = {
+                                        "extension": eventAction,
+                                        "@timestamp": indexdate,
+                                        "path": eventLabel,
+                                        "downloads": parseInt(element.metrics[0]['u:validhits'][0]._),
+                                        "portal": portal.url,
+                                        "type": "files"
+                                    };
+                                    r.push(value);
                                 }
-                                var eventLabel = element.dimensions[0].dimension[1]._;
-                                if (eventLabel === '(not set)' || eventLabel === '(unknown)') {
-                                    eventLabel = 'Desconocido';
-                                }
-                                var value = {
-                                    "extension": eventAction,
-                                    "@timestamp": indexdate,
-                                    "path": eventLabel,
-                                    "downloads": parseInt(element.metrics[0]['u:validhits'][0]._),
-                                    "portal": portal.url,
-                                    "type": "files"
-                                };
-                                r.push(value);
                             });
                         }
                     }
@@ -208,35 +214,37 @@ async function countries_urchin(portal, date) {
                     if (result['tns:getDataResponse'] && result['tns:getDataResponse'].record) {
                         if (result['tns:getDataResponse'].record.length > 0) {
                             result['tns:getDataResponse'].record.forEach(element => {
-                                var city = element.dimensions[0].dimension[0]._;
-                                if (city === '(not set)' || city === '(unknown)') {
-                                    city = 'Desconocido';
-                                }
-                                var country = element.dimensions[0].dimension[0]._;
-                                if (country === '(not set)' || country === '(unknown)') {
-                                    country = 'Desconocido';
-                                }
+                                if (element.dimensions && element.dimensions[0].dimension && element.metrics) {
+                                    var city = element.dimensions[0].dimension[0]._;
+                                    if (city === '(not set)' || city === '(unknown)') {
+                                        city = 'Desconocido';
+                                    }
+                                    var country = element.dimensions[0].dimension[0]._;
+                                    if (country === '(not set)' || country === '(unknown)') {
+                                        country = 'Desconocido';
+                                    }
 
-                                var region = element.dimensions[0].dimension[1]._;
-                                if (region === '(not set)' || region === '(unknown)') {
-                                    region = 'Desconocido';
+                                    var region = element.dimensions[0].dimension[1]._;
+                                    if (region === '(not set)' || region === '(unknown)') {
+                                        region = 'Desconocido';
+                                    }
+                                    var value = {
+                                        "visits": parseInt(element.metrics[0]['u:visits'][0]._),
+                                        "geoip": {
+                                            "location": {
+                                                "lon": parseFloat(element.dimensions[0].dimension[4]._) / 10000,
+                                                "lat": parseFloat(element.dimensions[0].dimension[3]._) / 10000
+                                            }
+                                        },
+                                        "city": city,
+                                        "region": region,
+                                        "@timestamp": indexdate,
+                                        "portal": portal.url,
+                                        "country": country,
+                                        "type": "countries"
+                                    };
+                                    r.push(value);
                                 }
-                                var value = {
-                                    "visits": parseInt(element.metrics[0]['u:visits'][0]._),
-                                    "geoip": {
-                                        "location": {
-                                            "lon": parseFloat(element.dimensions[0].dimension[4]._) / 10000,
-                                            "lat": parseFloat(element.dimensions[0].dimension[3]._) / 10000
-                                        }
-                                    },
-                                    "city": city,
-                                    "region": region,
-                                    "@timestamp": indexdate,
-                                    "portal": portal.url,
-                                    "country": country,
-                                    "type": "countries"
-                                };
-                                r.push(value);
                             });
                         }
                     }
@@ -263,7 +271,11 @@ async function browsers_ga(portal, date) {
                 data += chunk;
             });
             resp.on('end', () => {
-                var response = JSON.parse(data);
+                try {
+                    var response = JSON.parse(data);
+                } catch (error) {
+                    resolve([]);
+                }
                 var indexdate = new Date(resp.headers['custom-date']);
                 var r = [];
                 if (response.reports && response.reports.length > 0) {
@@ -314,7 +326,11 @@ async function pages_ga(portal, date) {
                 data += chunk;
             });
             resp.on('end', async () => {
-                var response = JSON.parse(data);
+                try {
+                    var response = JSON.parse(data);
+                } catch (error) {
+                    resolve([]);
+                }
                 var indexdate = new Date(resp.headers['custom-date']);
                 var r = [];
                 if (response.reports && response.reports.length > 0) {
@@ -364,7 +380,11 @@ async function files_ga(portal, date) {
                 data += chunk;
             });
             resp.on('end', () => {
-                var response = JSON.parse(data);
+                try {
+                    var response = JSON.parse(data);
+                } catch (error) {
+                    resolve([]);
+                }
                 var indexdate = new Date(resp.headers['custom-date']);
                 var r = [];
                 if (response.reports && response.reports.length > 0) {
@@ -410,7 +430,11 @@ async function countries_ga(portal, date) {
                 data += chunk;
             });
             resp.on('end', () => {
-                var response = JSON.parse(data);
+                try {
+                    var response = JSON.parse(data);
+                } catch (error) {
+                    resolve([]);
+                }
                 var indexdate = new Date(resp.headers['custom-date']);
                 var r = [];
                 if (response.reports && response.reports.length > 0) {
