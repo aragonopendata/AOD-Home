@@ -162,17 +162,18 @@ router.post('/logstash/:logid/reload', async function (req, res) {
             'status': constants.REQUEST_REQUEST_OK,
             'message': 'OK'
         });
-        if (portal.length > 0) {
-            for (var date = from; date <= to; date.setDate(date.getDate() + 1)) {
-                logger.info("Recargando dia - " + date);
-                await elasticUtils.reloadPortal(portal[0], date);
-            }
-        }
     } catch (error) {
         res.json({
             'status': constants.REQUEST_ERROR_INTERNAL_ERROR,
             'message': error
         });
+    }
+
+    if (portal.length > 0) {
+        for (var date = from; date <= to; date.setDate(date.getDate() + 1)) {
+            logger.info("Recargando dia - " + date);
+            await elasticUtils.reloadPortal(portal[0], date);
+        }
     }
 });
 
