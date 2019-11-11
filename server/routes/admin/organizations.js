@@ -300,21 +300,23 @@ var insertOrganizationInCkan = function insertOrganizationInCkan(apiKey, organiz
             }
 
             if(organization.extras != undefined){
-                for(var index=0;index<organization.extras.length; index++){
-                    if(organization.extras[index].key =='webpage'){
-                        create_organization_post_data.extras.push({"key": organization.extras[index].key, "value": organization.extras[index].value});
+                var extras = JSON.parse(organization.extras);
+        
+                for(var index=0; index<extras.length; index++){
+                    if(extras[index].key =='webpage'){
+                        create_organization_post_data.extras.push({"key": extras[index].key, "value": extras[index].value});
                     }
-                    if (organization.extras[index].key == 'address') {
-                        create_organization_post_data.extras.push({"key": organization.extras[index].key, "value": organization.extras[index].value});
+                    if (extras[index].key == 'address') {
+                        create_organization_post_data.extras.push({"key": extras[index].key, "value": extras[index].value});
                     }
-                    if (organization.extras[index].key == 'person') {
-                        create_organization_post_data.extras.push({"key": organization.extras[index].key, "value": organization.extras[index].value});
+                    if (extras[index].key == 'person') {
+                        create_organization_post_data.extras.push({"key": extras[index].key, "value": extras[index].value});
                     }
-                    if (organization.extras[index].key == 'siuCode') {
-                        create_organization_post_data.extras.push({"key": organization.extras[index].key, "value": organization.extras[index].value});
+                    if (extras[index].key == 'siuCode') {
+                        create_organization_post_data.extras.push({"key": extras[index].key, "value": extras[index].value});
                     }
                 }
-            }          
+            }
             var httpRequestOptions = {
                 url: constants.CKAN_API_BASE_URL + constants.CKAN_URL_PATH_ORGANIZATION_CREATE,
                 method: constants.HTTP_REQUEST_METHOD_POST,
