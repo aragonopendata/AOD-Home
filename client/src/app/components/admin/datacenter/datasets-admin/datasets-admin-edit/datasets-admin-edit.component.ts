@@ -138,7 +138,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 	publishDateInput: Date;
 	updateDateInput: Date;
 
-	tags: Tag[];
+	tags: Tag[] = [];
 	filteredTagsMultiple: Tag[];
 
 	freq: SelectItem[];
@@ -382,7 +382,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 		this.dataset = new Dataset();
 		this.dataset.extras = new Array ();
 		this.dataset.groups = new Array ();
-		this.tags = [];
+		this.dataset.tags = new Array ();
 		this.extraDictionaryURL = [];
 		this.extraDataQualityURL = [];
 	}
