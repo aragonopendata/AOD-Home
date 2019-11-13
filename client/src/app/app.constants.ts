@@ -652,10 +652,7 @@ export class Constants {
     public static SERVER_API_LINK_ADMIN_SYS = '/sysadmin';
     public static SERVER_API_LINK_ADMIN_ROLES_LIST = '/roles';
     public static SERVER_API_LINK_ADMIN_GET_ROLE = '/role';
-    public static SERVER_API_LINK_ADMIN_LOGSTASH_FILES = '/logstash/files';
-    public static SERVER_API_LINK_ADMIN_LOGSTASH_INSERT = '/logstash/insert';
-    public static SERVER_API_LINK_ADMIN_LOGSTASH_DELETE = '/logstash/delete';
-    public static SERVER_API_LINK_ADMIN_LOGSTASH_RELOAD = '/logstash/reload';
+    public static SERVER_API_LINK_ADMIN_LOGSTASH = '/logstash';
     public static SERVER_API_LINK_ADMIN_USER_CUD_OPERATIONS = '/users';
     public static SERVER_API_LINK_ADMIN_USER_ORGANIZATIONS = '/organizations';
     public static SERVER_API_LINK_ADMIN_ORGANIZATION_CUD_OPERATIONS = '/organization';
@@ -688,11 +685,11 @@ export class Constants {
     public static SERVER_API_LINK_PARAM_SORT_HOMER_LANGUAGE = 'language';
     public static SERVER_API_LINK_REGISTRATION_EVENT_PRESTACION_PUBLI = '/inscripcionPrestacionServPubli';
 
-    public static KIBANA_URL = "/elastic/app/kibana#/dashboard/e6433860-d68c-11e7-a49d-f956d0989e2c";
-    public static KIBANA_URL_SEVEN = "/elastic/app/kibana#/dashboard/6b50d7f0-e589-11e7-bac3-69701294f3ab";
+    // public static KIBANA_URL = "/elastic/app/kibana#/dashboard/e6433860-d68c-11e7-a49d-f956d0989e2c";
+    // public static KIBANA_URL_SEVEN = "/elastic/app/kibana#/dashboard/6b50d7f0-e589-11e7-bac3-69701294f3ab";
 
-    public static ELASTIC_BROWSERS = "/gapi/get_browsers_elastic";
-    public static ELASTIC_FILES = "/gapi/get_files_elastic";
-    public static ELASTIC_PAGES = "/gapi/get_pages_elastic";
-    public static ELASTIC_COUNTRIES = "/gapi/get_countries_elastic";
+    public static ELASTIC_BROWSERS = "/gapi/export_browsers";
+    public static ELASTIC_FILES = "/gapi/export_files";
+    public static ELASTIC_PAGES = "/gapi/export_pages";
+    public static ELASTIC_COUNTRIES = "/gapi/export_countries";
 }

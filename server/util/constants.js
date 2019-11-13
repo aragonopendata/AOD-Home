@@ -283,6 +283,7 @@ exports.SMTP_PORT = process.env.SMTP_PORT;
 /* ******************* */
 /* ANALYTICS CONF */
 exports.ANALYTICS_LOGSTASH_PATH = '/data/apps/LogStash'
+exports.ANALYTICS_ELASTIC_URL = 'http://' + process.env.DB_HOST + ':9200'
 
 /* ******************* */
 /* SPIDER LOG FILE */
