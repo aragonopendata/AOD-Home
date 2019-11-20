@@ -122,34 +122,63 @@ export class AnalyticsComponent {
 	}
 
 	filterPortal() {
-		if (this.currentPortal.url == "Todos") {
-			return "";
+
+		var portal = this.currentPortal.url;
+		var params = portal;
+		var value = portal;
+		var query = "("
+						+ "match_phrase:("
+							+ "portal.keyword:" + portal
+						+")"
+					+ ")";
+
+		if (portal == "Todos") {
+			params = '';
+			value = '';
+			query = '';
+			this.portales.forEach(cportal => {
+				params = params + ',' + cportal.url;
+				value = value + ',+' + cportal.url;
+				query = query + ',' + "("
+										+ "match_phrase:("
+											+ "portal.keyword:" + cportal.url
+										+")"
+									+ ")";
+			});
+			if (params.length > 0){
+				params.substr(1, params.length);
+			}
+			if (value.length > 0){
+				value.substr(2, value.length);
+			}
+			if (query.length > 0){
+				query.substr(1, query.length);
+			}
 		}
 		var filter = "("
-			+ "'$state':("
-			+ "store:appState"
-			+ "),"
-			+ "meta:("
-			+ "alias:!n,"
-			+ "disabled:!f,"
-			+ "index:'3c2d80f0-d5ed-11e7-a49d-f956d0989e2c',"
-			+ "key:portal.keyword,"
-			+ "negate:!f,"
-			+ "params:("
-			+ "query:" + this.currentPortal.url + ","
-			+ "type:phrase"
-			+ "),"
-			+ "type:phrase,"
-			+ "value:" + this.currentPortal.url
-			+ "),query:("
-			+ "match:("
-			+ "portal.keyword:("
-			+ "query:" + this.currentPortal.url + ","
-			+ "type:phrase"
-			+ ")"
-			+ ")"
-			+ ")"
-			+ ")";
+						+ "'$state':("
+							+ "store:appState"
+						+ "),"
+						+ "meta:("
+							+ "alias:!n,"
+							+ "disabled:!f,"
+							+ "index:'3c2d80f0-d5ed-11e7-a49d-f956d0989e2c',"
+							+ "key:portal.keyword,"
+							+ "negate:!f,"
+							+ "params:!("
+								+ params
+							+ "),"
+							+ "type:phrases,"
+							+ "value:'" + value + "'"
+						+ "),query:("
+							+ "bool:("
+								+ "minimum_should_match:1,"
+								+ "should:!("
+									+ query
+								+ ")"
+							+ ")"
+						+ ")"
+					+ ")";
 
 		return filter;
 	}
