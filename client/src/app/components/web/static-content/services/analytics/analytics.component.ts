@@ -94,22 +94,59 @@ export class AnalyticsComponent {
 	}
 
 	exportPages(type: string) {
-		let url = this.aodBaseUrl + Constants.ELASTIC_PAGES + "?extension=" + type + "&portal=" + this.currentPortal.id_logstash + "&days=" + encodeURIComponent(this.currentDay.value);
+		var eportal = "&portal=" + this.currentPortal.id_logstash;
+
+		if (eportal == '&portal=*') {
+			eportal = '';
+			this.portales.forEach((p) => {
+				eportal = eportal + "&portal=" +p.id_logstash;
+			})
+		}
+
+		let url = this.aodBaseUrl + Constants.ELASTIC_PAGES + "?extension=" + type + eportal + "&days=" + encodeURIComponent(this.currentDay.value);
 		return this.sanitizer.bypassSecurityTrustResourceUrl(url);
 	}
 
 	exportBrowsers(type: string) {
-		let url = this.aodBaseUrl + Constants.ELASTIC_BROWSERS + "?extension=" + type + "&portal=" + this.currentPortal.id_logstash + "&days=" + encodeURIComponent(this.currentDay.value);
+		var eportal = "&portal=" + this.currentPortal.id_logstash;
+
+		if (eportal == '&portal=*') {
+			eportal = '';
+			this.portales.forEach((p) => {
+				eportal = eportal + "&portal=" +p.id_logstash;
+			})
+		}
+
+		let url = this.aodBaseUrl + Constants.ELASTIC_BROWSERS + "?extension=" + type + eportal + "&days=" + encodeURIComponent(this.currentDay.value);
 		return this.sanitizer.bypassSecurityTrustResourceUrl(url);
 	}
 
 	exportFiles(type: string) {
-		let url = this.aodBaseUrl + Constants.ELASTIC_FILES + "?extension=" + type + "&portal=" + this.currentPortal.id_logstash + "&days=" + encodeURIComponent(this.currentDay.value);
+		var eportal = "&portal=" + this.currentPortal.id_logstash;
+
+		if (eportal == '&portal=*') {
+			eportal = '';
+			this.portales.forEach((p) => {
+				eportal = eportal + "&portal=" +p.id_logstash;
+			})
+		}
+
+		let url = this.aodBaseUrl + Constants.ELASTIC_FILES + "?extension=" + type + eportal + "&days=" + encodeURIComponent(this.currentDay.value);
 		return this.sanitizer.bypassSecurityTrustResourceUrl(url);
 	}
 
 	exportCountries(type: string) {
-		let url = this.aodBaseUrl + Constants.ELASTIC_COUNTRIES + "?extension=" + type + "&portal=" + this.currentPortal.id_logstash + "&days=" + encodeURIComponent(this.currentDay.value);
+
+		var eportal = "&portal=" + this.currentPortal.id_logstash;
+
+		if (eportal == '&portal=*') {
+			eportal = '';
+			this.portales.forEach((p) => {
+				eportal = eportal + "&portal=" +p.id_logstash;
+			})
+		}
+
+		let url = this.aodBaseUrl + Constants.ELASTIC_COUNTRIES + "?extension=" + type + eportal + "&days=" + encodeURIComponent(this.currentDay.value);
 		return this.sanitizer.bypassSecurityTrustResourceUrl(url);
 	}
 
