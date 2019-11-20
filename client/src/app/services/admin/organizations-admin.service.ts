@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Http, Response, Headers, URLSearchParams, RequestOptions } from '@angular/http';
 import { Constants } from '../../app.constants';
+import { Extra } from '../../models/Extra';
 
 @Injectable()
 export class OrganizationsAdminService {
@@ -73,7 +74,8 @@ export class OrganizationsAdminService {
 		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_ADMIN_ORGANIZATION_CUD_OPERATIONS;
 		
 		let formData:FormData = new FormData();  
-		let extras = [];
+		let extras:Extra[] = [];
+		
 		if (image != null) {
 			formData.append('file', image, image.name);
 		}
@@ -85,33 +87,33 @@ export class OrganizationsAdminService {
 		}
 
 		if(webpage != undefined){
-			var webpageNotEmpty = {
-				key: Constants.ORGANIZATION_EXTRA_WEBPAGE,
-				value: webpage
-			}
+			let webpageNotEmpty:Extra = new Extra();
+			webpageNotEmpty.key = Constants.ORGANIZATION_EXTRA_WEBPAGE;
+			webpageNotEmpty.value = webpage;
+
 			extras.push(webpageNotEmpty);
 			
 		}
 		if(address != undefined){
-			var addressNotEmpty = {
-				key: Constants.ORGANIZATION_EXTRA_ADDRESS,
-				value: address
-			}
+			let addressNotEmpty:Extra = new Extra();
+			addressNotEmpty.key = Constants.ORGANIZATION_EXTRA_ADDRESS;
+			addressNotEmpty.value = address;
+
 			extras.push(addressNotEmpty);
 		}
 		if(person != undefined){
-			var personNotEmpty = {
-				key: Constants.ORGANIZATION_EXTRA_PERSON,
-				value: person
-			}
+			let personNotEmpty:Extra = new Extra();
+			personNotEmpty.key = Constants.ORGANIZATION_EXTRA_PERSON;
+			personNotEmpty.value = person;
+
 			extras.push(personNotEmpty);
 		}
 
 		if(siuCode != undefined){
-			var siuCodeNotEmpty = {
-				key: Constants.ORGANIZATION_EXTRA_SIUCODE,
-				value: siuCode
-			}
+			let siuCodeNotEmpty:Extra = new Extra();
+			siuCodeNotEmpty.key = Constants.ORGANIZATION_EXTRA_SIUCODE;
+			siuCodeNotEmpty.value = siuCode;
+
 			extras.push(siuCodeNotEmpty);
 		}
 
