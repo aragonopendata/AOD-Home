@@ -71,13 +71,13 @@ export class AnalyticsComponent {
 
 	ngOnInit() {
 		this.getFiles();
-		this.sevenurl = this.sevenFilter();
-		this.globalurl = this.globalfilter();
 	}
 
 	getFiles() {
 		this.analyticsService.getFiles().subscribe(logstashs => {
 			this.portales = logstashs.message;
+			this.sevenurl = this.sevenFilter();
+			this.globalurl = this.globalfilter();
 		});
 	}
 
@@ -146,13 +146,13 @@ export class AnalyticsComponent {
 									+ ")";
 			});
 			if (params.length > 0){
-				params.substr(1, params.length);
+				params = params.substr(1, params.length);
 			}
 			if (value.length > 0){
-				value.substr(2, value.length);
+				value = value.substr(2, value.length);
 			}
 			if (query.length > 0){
-				query.substr(1, query.length);
+				query = query.substr(1, query.length);
 			}
 		}
 		var filter = "("
