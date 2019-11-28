@@ -46,24 +46,19 @@
 		<div class="export">
 			<ul>
 				<li>
-					Páginas más vistas año en curso:
+					Total visitas por usuario único (Geolocalización):
+					<a [attr.href]="exportCountries('csv')" target="_blank">CSV</a>
+					<a [attr.href]="exportCountries('json')" target="_blank">JSON</a>
+				</li>
+				<li>
+					Páginas más vistas (primer acceso):
 					<a [attr.href]="exportPages('csv')" target="_blank">CSV</a>
 					<a [attr.href]="exportPages('json')" target="_blank">JSON</a>
 				</li>
 				<li>
-					Navegadores año en curso:
+					Navegadores utilizados (primer acceso):
 					<a [attr.href]="exportBrowsers('csv')" target="_blank">CSV</a>
 					<a [attr.href]="exportBrowsers('json')" target="_blank">JSON</a>
-				</li>
-				<li>
-					Archivos descargados año en curso:
-					<a [attr.href]="exportFiles('csv')" target="_blank">CSV</a>
-					<a [attr.href]="exportFiles('json')" target="_blank">JSON</a>
-				</li>
-				<li>
-					Geolocalización año en curso:
-					<a [attr.href]="exportCountries('csv')" target="_blank">CSV</a>
-					<a [attr.href]="exportCountries('json')" target="_blank">JSON</a>
 				</li>
 				<li>
 					<a class="stats" href="{{aodBaseUrl}}/{{routerLinkDataCatalogDataset}}/estadisticas-de-uso-de-los-portales-y-webs-mas-importantes-del-gobierno-de-aragon" target="_blank">Estadísticas de años anteriores</a>
