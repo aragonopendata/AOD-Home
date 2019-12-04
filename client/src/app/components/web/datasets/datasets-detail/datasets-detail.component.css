@@ -241,6 +241,10 @@ a:hover {
     width: 400px;
 }
 
+.accesibility {
+    text-decoration: underline !important;
+}
+
 @media screen and (min-width: 1240px) and (max-width: 1540px){
 	.tarjetaContainer {
         width: 320px;
