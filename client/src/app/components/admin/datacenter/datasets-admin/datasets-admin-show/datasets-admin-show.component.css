@@ -28,3 +28,7 @@ a:hover {
 	text-decoration: none  !important;
 	font-weight: bold;
 }
+
+.accesibility {
+	text-decoration: underline !important;
+}
