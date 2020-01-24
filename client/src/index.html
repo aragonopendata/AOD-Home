@@ -114,6 +114,54 @@
 		ga('create', 'UA-36118896-2', 'auto');
 	</script>
 	<!-- End Google Analytics -->
+	<script>
+		$(function() {
+			$(document).on('click','#enviarBtn',function(){
+				var name = $('#name').val();
+				var surname = $('#surname').val();
+				var email = $('#email').val();
+				var orgEmpresa = $('#orgEmpresa').val();
+				var puesto = $('#puesto').val();
+
+				$('#error').hide();
+				$('#success').hide();
+
+				$('#nameError').hide();
+				$('#surnameError').hide();
+				$('#emailError').hide();
+				$('#orgEmpresaError').hide();
+				$('#puestoError').hide();
+
+				var emailValidator = /^\w+([-+.'][^\s]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+
+				if(name == "" || name == " "){
+					$('#nameError').show();
+					$('#nameError').html('El campo <b>Nombre</b> no puede estar vacio / The field <b>Name</b> can not be empty');
+				}else if(surname == "" || surname == " "){
+					$('#surnameError').show();
+					$('#surnameError').html('El campo <b>Apellidos</b> no puede estar vacio / The field <b>Surname</b> can not be empty');
+				}else if(email == "" || email == " "){
+					$('#emailError').show();
+					$('#emailError').html('El campo <b>E-mail</b> no puede estar vacio / The field <b>E-mail</b> can not be empty');
+				}else if(orgEmpresa == "" || orgEmpresa == " "){
+					$('#orgEmpresaError').show();
+					$('#orgEmpresaError').html('El campo <b>Organización - Empresa</b> no puede estar vacio / The field <b>Organization - Company</b> can not be empty');
+				}else if(puesto == "" || puesto == " "){
+					$('#puestoError').show();
+					$('#puestoError').html('El campo <b>Puesto que desempeña</b> no puede estar vacio / The field <b>Corporate title - Business title</b> can not be empty');
+				} else {
+					if(emailValidator.test(email)){
+						var data = {"name": name, "surname": surname, "email": email, "orgEmpresa": orgEmpresa, "puesto": puesto};
+						window.angularComponentReference.zone.run(() =>
+						{window.angularComponentReference.componentFn(data);});
+					}else{
+						$('#emailError').show();
+						$('#emailError').html('El formato del e-mail no es correcto / The format of e-mail is not correct');
+					}
+				}
+			});
+		});
+	</script>
 </body>
 
 </html>
