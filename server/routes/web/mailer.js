@@ -21,7 +21,7 @@ router.post('/inscripcionPrestacionServPubli', function (req, res, next) {
         var message	= {
             from:	    "opendata@aragon.es", 
             to:		    "opendata@aragon.es",
-            subject:	"[Inscripción] Prestación de Servicios Públicos en el Mundo Digital",
+            subject:	"[Inscripción] HACKAGRON: Hackathon con los datos del sector agroalimentario aragonés",
             attachment: 
             [
                 {data:"<html><table style='border: 1px solid #ddd;'><tbody><tr style='font-weight: bold; background-color: aliceblue;'><td style='padding: 15px;'>Nombre</td><td style='padding: 15px;'>Apellidos</td><td style='padding: 15px;'>e-mail</td><td style='padding: 15px;'>Organización - Empresa</td><td style='padding: 15px;'>Puesto que desempeña</td></tr><tr><td style='padding: 15px;text-align: left;'>"+ req.body.name +"</td><td style='padding: 15px;text-align: left;'>"+ req.body.surname +"</td><td style='padding: 15px;text-align: left;'>"+ req.body.email +"</td><td style='padding: 15px;text-align: left;'>"+ req.body.orgEmpresa +"</td><td style='padding: 15px;text-align: left;'>"+ req.body.puesto +"</td></tr></tbody></table></html>", 

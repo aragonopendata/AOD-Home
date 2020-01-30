@@ -114,6 +114,54 @@
 		ga('create', 'UA-36118896-2', 'auto');
 	</script>
 	<!-- End Google Analytics -->
+	<script>
+		$(function() {
+			$(document).on('click','#enviarBtn',function(){
+				var name = $('#name').val();
+				var surname = $('#surname').val();
+				var email = $('#email').val();
+				var orgEmpresa = $('#orgEmpresa').val();
+				var puesto = $('#puesto').val();
+
+				$('#error').hide();
+				$('#success').hide();
+
+				$('#nameError').hide();
+				$('#surnameError').hide();
+				$('#emailError').hide();
+				$('#orgEmpresaError').hide();
+				$('#puestoError').hide();
+
+				var emailValidator = /^\w+([-+.'][^\s]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+
+				if(name == "" || name == " "){
+					$('#nameError').show();
+					$('#nameError').html('El campo <b>Nombre</b> no puede estar vacio');
+				}else if(surname == "" || surname == " "){
+					$('#surnameError').show();
+					$('#surnameError').html('El campo <b>Apellidos</b> no puede estar vacio');
+				}else if(email == "" || email == " "){
+					$('#emailError').show();
+					$('#emailError').html('El campo <b>E-mail</b> no puede estar vacio');
+				}else if(orgEmpresa == "" || orgEmpresa == " "){
+					$('#orgEmpresaError').show();
+					$('#orgEmpresaError').html('El campo <b>Curso y Estudios</b> no puede estar vacio');
+				}else if(puesto == "" || puesto == " "){
+					$('#puestoError').show();
+					$('#puestoError').html('El campo <b>Perfil que te identifica</b> no puede estar vacio');
+				} else {
+					if(emailValidator.test(email)){
+						var data = {"name": name, "surname": surname, "email": email, "orgEmpresa": orgEmpresa, "puesto": puesto};
+						window.angularComponentReference.zone.run(() =>
+						{window.angularComponentReference.componentFn(data);});
+					}else{
+						$('#emailError').show();
+						$('#emailError').html('El formato del e-mail no es correcto');
+					}
+				}
+			});
+		});
+	</script>
 </body>
 
 </html>

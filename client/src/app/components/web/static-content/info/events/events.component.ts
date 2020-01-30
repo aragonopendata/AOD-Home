@@ -105,7 +105,7 @@ export class EventsComponent implements OnInit {
             if(result.json().status == 200){
                 jQuery('#success').show();
                 jQuery('#registrationForm')[0].reset();
-                jQuery('#success').html('Bienvenido a #tudigitalhub - Pronto recibirá confirmación.');
+                jQuery('#success').html('Bienvenido a #hackagron - Pronto recibirá confirmación.');
             }else if(result.json().status != 200){
                 jQuery('#error').show();
                 jQuery('#error').html('No se ha podido realizar el registro. Vuelva a intentarlo más tarde.');
