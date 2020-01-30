@@ -136,19 +136,19 @@
 
 				if(name == "" || name == " "){
 					$('#nameError').show();
-					$('#nameError').html('El campo <b>Nombre</b> no puede estar vacio / The field <b>Name</b> can not be empty');
+					$('#nameError').html('El campo <b>Nombre</b> no puede estar vacio');
 				}else if(surname == "" || surname == " "){
 					$('#surnameError').show();
-					$('#surnameError').html('El campo <b>Apellidos</b> no puede estar vacio / The field <b>Surname</b> can not be empty');
+					$('#surnameError').html('El campo <b>Apellidos</b> no puede estar vacio');
 				}else if(email == "" || email == " "){
 					$('#emailError').show();
-					$('#emailError').html('El campo <b>E-mail</b> no puede estar vacio / The field <b>E-mail</b> can not be empty');
+					$('#emailError').html('El campo <b>E-mail</b> no puede estar vacio');
 				}else if(orgEmpresa == "" || orgEmpresa == " "){
 					$('#orgEmpresaError').show();
-					$('#orgEmpresaError').html('El campo <b>Organización - Empresa</b> no puede estar vacio / The field <b>Organization - Company</b> can not be empty');
+					$('#orgEmpresaError').html('El campo <b>Curso y Estudios</b> no puede estar vacio');
 				}else if(puesto == "" || puesto == " "){
 					$('#puestoError').show();
-					$('#puestoError').html('El campo <b>Puesto que desempeña</b> no puede estar vacio / The field <b>Corporate title - Business title</b> can not be empty');
+					$('#puestoError').html('El campo <b>Perfil que te identifica</b> no puede estar vacio');
 				} else {
 					if(emailValidator.test(email)){
 						var data = {"name": name, "surname": surname, "email": email, "orgEmpresa": orgEmpresa, "puesto": puesto};
@@ -156,7 +156,7 @@
 						{window.angularComponentReference.componentFn(data);});
 					}else{
 						$('#emailError').show();
-						$('#emailError').html('El formato del e-mail no es correcto / The format of e-mail is not correct');
+						$('#emailError').html('El formato del e-mail no es correcto');
 					}
 				}
 			});
