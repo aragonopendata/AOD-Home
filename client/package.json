@@ -46,7 +46,7 @@
     "rxjs": "6.2.0",
     "rxjs-compat": "6.1.0",
     "tether": "1.4.3",
-    "tinymce": "4.7.4",
+    "tinymce": "5.1.6",
     "ts-helpers": "1.1.2",
     "zone.js": "0.8.26"
   },
