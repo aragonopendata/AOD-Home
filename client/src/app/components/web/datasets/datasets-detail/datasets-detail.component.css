@@ -245,6 +245,10 @@ a:hover {
     text-decoration: underline !important;
 }
 
+.social{
+    margin-bottom: 5%;
+}
+
 @media screen and (min-width: 1240px) and (max-width: 1540px){
 	.tarjetaContainer {
         width: 320px;
@@ -458,5 +462,11 @@ a:hover {
     .recommendedCard p {
         font-size: 10px;
         line-height: 13px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .container{
+        margin-top: 10vh;
     }
 }
