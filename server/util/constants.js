@@ -289,3 +289,23 @@ exports.ANALYTICS_ELASTIC_URL = 'http://' + process.env.DB_HOST + ':9200'
 /* SPIDER LOG FILE */
 exports.SPIDER_LOG_PATH = '/data/logs/spider/spider.log';
 exports.SPIDER_EMAIL_REVISION_PATH = '/data/scripts/procesos/spider/emailRevision.json';
+
+
+
+/* ******************* */
+/* FOCUS */
+
+exports.API_URL_FOCUS_HISTORIES = '/focus/histories';
+exports.API_URL_FOCUS_CONTENTS = '/focus/contents';
+exports.API_URL_FOCUS_CONTENTS_HISTORY = '/focus/contents/history';
+exports.API_URL_FOCUS_SAVE_HISTORY = '/focus/saveHistory';
+exports.API_URL_FOCUS_SAVE_CONTENT = '/focus/saveContent';
+exports.API_URL_FOCUS_UPDATE_HISTORY = '/focus/updateHistory';
+exports.API_URL_FOCUS_UPDATE_CONTENT = '/focus/updateContent';
+exports.API_URL_FOCUS_UPDATE_STATE_HISTORY = '/focus/stateHistory';
+exports.API_URL_FOCUS_DELETE_HISTORY='/focus/deleteHistory';
+exports.API_URL_FOCUS_DELETE_CONTENT='/focus/deleteContent'
+
+
+
+
