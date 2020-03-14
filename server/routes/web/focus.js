@@ -39,6 +39,78 @@ const logConfig = require('../../conf/log-conf');
 const loggerSettings = logConfig.getLogSettings();
 const logger = require('js-logging').dailyFile([loggerSettings]);
 
+/**
+ ********** SAVE ENTIRE HISTORY  **********
+ */
+router.post(constants.API_URL_FOCUS_SAVE_ENTIRE_HISTORY, function (req, res, next) {
+    var content = req.body;
+
+    //Comprobación sobre elementos de historia
+    if (!correctNewHistory(content)) {
+        logger.error('Input Error', ' title of the history or some part of content don found not found');
+        res.json({ status: 400, error: 'Incorrect Input, title not found' });
+        return;
+    }
+
+    try {
+        //Se genera un token ÚNICO y NO EXISTENTE para la historia
+        generateToken().then(id => {
+            //Una vez se tiene el token, se guardará la historia en la BBDD
+            createHistory(id, content.state , content.title, content.description ,content.email, content.id_reference, content.main_category, content.secondary_categories).then(createHistory => {
+                if (createHistory) {
+                    logger.info('CREACION DE UNA HISTORIA COMPLETA- Elemento historia (sin contenidos) en la base de datos creada correctamente')
+                    //Si hay contenidos se guardarán, sino se habrá finalizado
+                    if(content.contents){
+                        //Una vez se crea la historia, se guardarán cada uno de los contenidos que lo acompañan
+                        createContents(content.contents, 0, id).then(allCreate => {
+                            //Si es true, se habrán generado correctamente tanto las historias, como sus contenidos
+                            if (allCreate) {
+                                logger.info('CREACION DE UNA HISTORIA COMPLETA- Contenidos de la historia creados en la base de datos creada correctamente')
+                                logger.info('CREACION DE UNA HISTORIA COMPLETA- Historia completa creada en la base de datos creada correctamente')
+                                res.json({
+                                    'status': constants.REQUEST_REQUEST_OK,
+                                    'success': true,
+                                    'result': 'CREACION DE UNA HISTORIA COMPLETA- Contenido creado correctamente',
+                                    'id': id
+                                });
+                            } else {
+                                logger.error('CREACION DE UNA HISTORIA COMPLETA - Error al crear el contenido en base de datos: ', error);
+                                res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'CREACION DE UNA HISTORIA - Error al crear la historia en base de datos' });
+                                return;
+                            }
+                        }).catch(error => {
+                            logger.error('CREACION DE UNA HISTORIA COMPLETA - Error al crear el contenido en base de datos: ', error);
+                            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'CREACION DE UN CONTENIDO- Error al crear el contenido en base de datos' });
+                            return;
+                        });
+                    }else{
+                        logger.info('CREACION DE UNA HISTORIA COMPLETA- Historia completa creada en la base de datos creada correctamente')
+                        res.json({
+                            'status': constants.REQUEST_REQUEST_OK,
+                            'success': true,
+                            'result': 'CREACION DE UNA HISTORIA- Historia creada correctamente',
+                            'token': id
+                        });
+                    }
+                } else{
+                    logger.error('CREACION DE UNA HISTORIA COMPLETA - Error al crear el evento en base de datos: ', error);
+                    res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'CREACION DE UNA HISTORIA - Error al crear la historia en base de datos' });
+                    return;
+                }
+            }).catch(error => {
+                logger.error('CREACION DE UNA HISTORIA COMPLETA - Error al crear la historia en base de datos: ', error);
+                res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'CREACION DE UNA HISTORIA - Error al crear la historia en base de datos' });
+                return;
+            });
+        }).catch(error => {
+            logger.error('CREACION DE UNA HISTORIA COMPLETA - Error al crear el token/id de la historia historia: ', error);
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'CREACIÓN DE UNA HISTORIA VERIFICANDO TOKEN - Error al consultar si el token (id) existía previamente en base de datos' });
+            return;
+        });
+    }catch (error) {
+        logger.error('CREACION DE UNA HISTORIA COMPLETA - Error creando la nueva historia: ', error);
+    }
+});
 
 
 
@@ -98,7 +170,6 @@ router.get(constants.API_URL_FOCUS_CONTENTS, function (req, res, next) {try {
  */
 router.get(constants.API_URL_FOCUS_CONTENTS_HISTORY, function (req, res, next) {
     var content = req.body;
-    content.id_history="xynFy1nIxg";
     try {
         listContentHistories(content.id_history).then(contentHistories => {
             if (contentHistories) {
@@ -120,69 +191,81 @@ router.get(constants.API_URL_FOCUS_CONTENTS_HISTORY, function (req, res, next) {
     }
 });
 
-
 /**
- ********** SAVE HISTORY **********
+ ********** LIST CONTENTS A SPECIFIC HISTORY**********
  */
-router.get(constants.API_URL_FOCUS_SAVE_HISTORY, function (req, res, next) {
+router.get(constants.API_URL_FOCUS_HISTORY, function (req, res, next) {
     var content = req.body;
-    content.state=5
-    content.title="titulo prueba"
-    content.description="descripcion prueba"
-    content.main_category=1
-    content.secondary_categories=[2,3]
-    content.email="email@example.com"
-    //content.id_reference="xynFy1nIxg"
-    
-    /*
-    if (!content.state || !content.title || !content.description || !content.category || !content.email) {
-        logger.error('Input Error', 'state, title, description or category not found');
-        res.json({ status: 400, error: 'Incorrect Input, state, title, description or category not found' });
-        return;
-    }
-    */
-
-   if (!content.title) {
-    logger.error('Input Error', ' title not found');
-    res.json({ status: 400, error: 'Incorrect Input, title not found' });
-    return;
-   }
-
     try {
-        createHistory(makeToken(10), content.state , content.title, content.description ,content.email, content.id_reference, content.main_category, content.secondary_categories).then(createHistory => {
-            if (createHistory) {
-                logger.info('CREACION DE UNA HISTORIA- Historia creada correctamente')
-                res.json({
-                    'status': constants.REQUEST_REQUEST_OK,
-                    'success': true,
-                    'result': 'CREACION DE UNA HISTORIA- Historia creada correctamente',
-                    'token': createHistory
-                });
+        listHistory(content.id_history).then(history => {
+            if (history) {
+                logger.info('LISTADO DE CONTENIDO DE UNA HISTORIA- Listado de contenido de una historia correcto')
+                res.json(history.rows);
             } else {
-                logger.error('CREACION DE UNA HISTORIA - Error al crear el evento en base de datos: ', error);
-                res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'CREACION DE UNA HISTORIA - Error al crear la historia en base de datos' });
+                logger.error('LISTADO DE CONTENIDO DE UNA HISTORIA - Error al listar los contenidos de una historia: ', error);
+                res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'LISTADO DE CONTENIDO DE UNA HISTORIA - Error al consultar los contenidos de la historia en base de datos' });
                 return;
             }
         }).catch(error => {
-            logger.error('CREACION DE UNA HISTORIA - Error al crear la historia en base de datos: ', error);
-            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'CREACION DE UNA HISTORIA - Error al crear la historia en base de datos' });
+            logger.error('LISTADO DE CONTENIDO DE UNA HISTORIA - Error al listar los contenidos de una historia: ', error);
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'LISTADO DE CONTENIDO DE UNA HISTORIA - Error al consultar los contenidos de la historia en base de datos' });
             return;
         });
         
+    } catch (error) {
+        logger.error('LISTADO DE CONTENIDO DE UNA HISTORIA - Error obteniendo el listado: ', error);
+    }
+});
+
+
+/**
+ ********** SAVE NEW HISTORY **********
+ */
+router.post(constants.API_URL_FOCUS_SAVE_HISTORY, function (req, res, next) {
+    var content = req.body;
+    
+    if (!correctNewHistory(content)) {
+        logger.error('Input Error', ' title not found');
+        res.json({ status: 400, error: 'Incorrect Input, title not found' });
+        return;
+    }
+
+    try {
+       generateToken().then(id => {
+           createHistory(id, content.state , content.title, content.description ,content.email, content.id_reference, content.main_category, content.secondary_categories).then(createHistory => {
+               if (createHistory) {
+                   logger.info('CREACION DE UNA HISTORIA- Historia creada correctamente')
+                   res.json({
+                       'status': constants.REQUEST_REQUEST_OK,
+                       'success': true,
+                       'result': 'CREACION DE UNA HISTORIA- Historia creada correctamente',
+                       'token': createHistory
+                    });
+                } else {
+                    logger.error('CREACION DE UNA HISTORIA - Error al crear el evento en base de datos: ', error);
+                    res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'CREACION DE UNA HISTORIA - Error al crear la historia en base de datos' });
+                    return;
+                }
+            }).catch(error => {
+                logger.error('CREACION DE UNA HISTORIA - Error al crear la historia en base de datos: ', error);
+                res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'CREACION DE UNA HISTORIA - Error al crear la historia en base de datos' });
+                return;
+            });
+        }).catch(error => {
+            logger.error('CREACIÓN DE UNA HISTORIA VERIFICANDO TOKEN - Error al listar los contenidos de una historia: ', error);
+            res.json({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'CREACIÓN DE UNA HISTORIA VERIFICANDO TOKEN - Error al consultar si el token (id) existía previamente en base de datos' });
+            return;
+        });
     } catch (error) {
         logger.error('CREACION DE UNA HISTORIA - Error creando la historia: ', error);
     }
 });
 
 /**
- ********** SAVE CONTENT **********
+ ********** SAVE NEW CONTENT **********
  */
-router.get(constants.API_URL_FOCUS_SAVE_CONTENT, function (req, res, next) {
+router.post(constants.API_URL_FOCUS_SAVE_CONTENT, function (req, res, next) {
     var content = req.body;
-    content.title="titulo prueba"
-    content.description="descripcion prueba"
-    content.id_graph="xxxxID_GRAPHxxxxx"
-    content.id_history="xynFy1nIxg"
 
     if (!content.title || !content.description || !content.id_graph || !content.id_history) {
         logger.error('Input Error', 'title, description, id_graph, id_history not found');
@@ -219,28 +302,14 @@ router.get(constants.API_URL_FOCUS_SAVE_CONTENT, function (req, res, next) {
 /**
  ********** UPDATE HISTORY **********
  */
-router.get(constants.API_URL_FOCUS_UPDATE_HISTORY, function (req, res, next) {
+router.put(constants.API_URL_FOCUS_UPDATE_HISTORY, function (req, res, next) {
     var content = req.body;
-    content.state=4
-    content.title="ACTUALIZADO"
-    content.description="descripcion prueba"
-    content.main_category=4
-    content.secondary_categories=[5,3],
-    content.email="email@example.com"
-    content.id="u3zdvXU4P5"
-
-    /*
-    if (!content.state || !content.title || !content.description || !content.category || !content.email || !content.id ) {
-        logger.error('Input Error', 'state, title, description, id or category not found');
-        res.json({ status: 400, error: 'Incorrect Input, state, title, description, id or category not found' });
+    
+    if (!content.id) {
+        logger.error('Input Error', ' id not found');
+        res.json({ status: 400, error: 'Incorrect Input, title not found' });
         return;
     }
-    */
-   if (!content.title) {
-    logger.error('Input Error', ' title not found');
-    res.json({ status: 400, error: 'Incorrect Input, title not found' });
-    return;
-   }
     
     updateHistory(content.state , content.title, content.description , content.email, content.id, content.id_reference, content.main_category, content.secondary_categories).then(updateEvent => {
         if (updateEvent) {
@@ -266,17 +335,12 @@ router.get(constants.API_URL_FOCUS_UPDATE_HISTORY, function (req, res, next) {
 /**
  ********** UPDATE CONTENT **********
  */
-router.get(constants.API_URL_FOCUS_UPDATE_CONTENT, function (req, res, next) {
+router.put(constants.API_URL_FOCUS_UPDATE_CONTENT, function (req, res, next) {
     var content = req.body;
-    content.title="titulo prueba"
-    content.description="descripcion prueba"
-    content.id_graph="GRAP_ACTUALIZA"
-    content.id_history="xynFy1nIxg"
-    content.id=11;
-
-    if (!content.title || !content.description || !content.id_graph || !content.id_history) {
-        logger.error('Input Error', 'title, description, id_graph, id_history not found');
-        res.json({ status: 400, error: 'Incorrect Input, title, description, id_graph, id_history not found' });
+    
+    if (!content.id ) {
+        logger.error('Input Error', 'id not found');
+        res.json({ status: 400, error: 'Incorrect Input,  id not found' });
         return;
     }
 
@@ -309,9 +373,8 @@ router.get(constants.API_URL_FOCUS_UPDATE_CONTENT, function (req, res, next) {
 /**
  ********** DELETE HISTORY **********
  */
-router.get(constants.API_URL_FOCUS_DELETE_HISTORY, function (req, res, next) {
+router.delete(constants.API_URL_FOCUS_DELETE_HISTORY, function (req, res, next) {
     var content = req.body;
-    content.id="xynFy1nIxg";
 
     if (!content.id) {
         logger.error('Input Error', 'id not found');
@@ -346,9 +409,8 @@ router.get(constants.API_URL_FOCUS_DELETE_HISTORY, function (req, res, next) {
 /**
  ********** DELETE CONTENT **********
  */
-router.get(constants.API_URL_FOCUS_DELETE_CONTENT, function (req, res, next) {
+router.delete(constants.API_URL_FOCUS_DELETE_CONTENT, function (req, res, next) {
     var content = req.body;
-    content.id=11;
 
     if (!content.id) {
         logger.error('Input Error', 'id not found');
@@ -426,6 +488,46 @@ var listHistories = function listHistories() {
         
         } catch (error) {
             logger.error('Error listando historias:', error);
+            reject(error);
+        }
+    });
+};
+
+var listHistory = function listHistory(id) {
+    return new Promise((resolve, reject) => {
+        try {
+            pool.connect((err, client, done) => {
+                const shouldAbort = (err) => {
+                    if (err) {
+                        client.query('ROLLBACK', (err) => {
+                            if (err) {
+                                console.error('Error rolling back client', err.stack)
+                            }
+                            done();
+                        })
+                    }
+                    return !!err;
+                }
+                logger.notice('Se inicia la transacción de obtención de una historia de la base de datos FOCUS');
+
+                const queryDb = {
+                    text: dbQueries.DB_FOCUS_GET_HISTORY,
+                    values: [id],
+                    rowMode: constants.SQL_RESULSET_FORMAT_JSON
+                };
+
+                client.query(queryDb, function (err, result) {
+                    done()
+                    if (err) {
+                        logger.error('OBTENER HISTORIA - Error obteniendo la historia: ', err);
+                        resolve({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'OBTENER HISTORIA - Error obteniendo el listado' });
+                    }
+                    resolve(result)
+                });
+            });
+        
+        } catch (error) {
+            logger.error('Error obteniendo la historia:', error);
             reject(error);
         }
     });
@@ -516,6 +618,95 @@ var listContentHistories = function listContentHistories(id) {
 
 
 
+var historyExist = function historyExist(id) {
+    return new Promise((resolve, reject) => {
+        try {
+            pool.connect((err, client, done) => {
+                const shouldAbort = (err) => {
+                    if (err) {
+                        client.query('ROLLBACK', (err) => {
+                            if (err) {
+                                console.error('Error rolling back client', err.stack)
+                            }
+                            done();
+                        })
+                    }
+                    return !!err;
+                }
+
+                logger.notice('Se inicia la transacción de determinar si una historia existe en la base de datos FOCUS');
+
+                const queryDb = {
+                    text: dbQueries.DB_FOCUS_EXIST_HISTORY,
+                    values: [id]
+                };
+                client.query(queryDb, function (err, result) {
+                    done()
+                    if (err) {
+                        logger.error('OBTENER HISTORIA - Error obteniendo el listado: ', err);
+                        resolve({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'OBTENER HISTORIA - Error obteniendo el listado' });
+                    }else{
+                        if(result.rowCount!=0){
+                            resolve(true)
+                        }else{
+                            resolve(false)
+                        }
+
+                    }
+                });
+            });
+        } catch (error) {
+            logger.error('Error insertando historia:', error);
+            reject(error);
+        }
+    });
+}
+
+
+var generateToken = function generateToken() {
+    return new Promise((resolve, reject) => {
+        try {
+            var id= makeToken(10);
+            pool.connect((err, client, done) => {
+                const shouldAbort = (err) => {
+                    if (err) {
+                        client.query('ROLLBACK', (err) => {
+                            if (err) {
+                                console.error('Error rolling back client', err.stack)
+                            }
+                            done();
+                        })
+                    }
+                    return !!err;
+                }
+
+                logger.notice('Se inicia la transacción de determinar si una historia existe en la base de datos FOCUS');
+
+                const queryDb = {
+                    text: dbQueries.DB_FOCUS_EXIST_HISTORY,
+                    values: [id]
+                };
+                client.query(queryDb, function (err, result) {
+                    done()
+                    if (err) {
+                        logger.error('OBTENER HISTORIA - Error obteniendo el listado: ', err);
+                        resolve({ 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 'error': 'OBTENER HISTORIA - Error obteniendo el listado' });
+                    }else{
+                        if(result.rowCount!=0){
+                            resolve(generateToken())
+                        }else{
+                            resolve(id)
+                        }
+                    }
+                });
+            });
+        } catch (error) {
+            logger.error('Error insertando historia:', error);
+            reject(error);
+        }
+    });
+}
+
 
 
 var createHistory = function createHistory(id, state , title, description , email, id_reference, main_category, secondary_categories ) {
@@ -555,7 +746,8 @@ var createHistory = function createHistory(id, state , title, description , emai
                                     reject(commitError);
                                 } else {
                                     logger.notice('Insercion de la historia completada');
-                                    resolve(resultEvent.rows[0].id);
+                                    //resolve(resultEvent.rows[0].id);
+                                    resolve(true)
                                 }
                             });
                         });
@@ -568,6 +760,59 @@ var createHistory = function createHistory(id, state , title, description , emai
         }
     });
 }
+
+var createContents = function createContents(contents,position, id_history) {
+    return new Promise((resolve, reject) => {
+        try {
+            pool.connect((err, client, done) => {
+                const shouldAbort = (err) => {
+                    if (err) {
+                        client.query('ROLLBACK', (err) => {
+                            if (err) {
+                                console.error('Error rolling back client', err.stack)
+                            }
+                            done();
+                        })
+                    }
+                    return !!err;
+                }
+
+                logger.notice('Se inicia la transacción de insercion de un nuevo contenido en la base de datos CAMPUS');
+                const queryEvent = {
+                    text: dbQueries.DB_FOCUS_INSERT_FOCUS_CONTENTS_HISTORY,
+                    values: [contents[position].title, contents[position].description, contents[position].id_graph, id_history]
+                };
+                client.query('BEGIN', (err) => {
+                    if (shouldAbort(err)) {
+                        reject(err);
+                    } else {
+                        client.query(queryEvent, (err, resultEvent) => {
+                            if (shouldAbort(err)) {
+                                reject(err);
+                            } 
+                            logger.notice('Contenido insertado');
+                            client.query('COMMIT', (commitError) => {
+                                done()
+                                if (commitError) {
+                                    reject(commitError);
+                                } else if(((contents.length)-1)!=position){
+                                    resolve(createContents(contents, (position+1), id_history));
+                                } else {
+                                    logger.notice('Insercion del contenido completada');
+                                    resolve(true);
+                                }
+                            });
+                        });
+                    }
+                });
+            });
+        } catch (error) {
+            logger.error('Error insertando contenido:', error);
+            reject(error);
+        }
+    });
+}
+
 
 var createContent = function createContent(title, description, id_graph, id_history ) {
     return new Promise((resolve, reject) => {
@@ -815,6 +1060,29 @@ var deleteContent = function deleteContent(id) {
 };
 
 
+/*--------------------------------------------*/
+
+var correctNewHistory = function correctNewHistory(history) {
+    if(!history.title){
+        return false;
+    }else{
+        return true;
+    }
+}
+
+var correctNewContents = function correctNewContents(history) {
+    var isValid=true;
+    if(history.contents){
+        history.contents.forEach(function callback(individualContent, index, array) {
+            if (!individualContent.title || !individualContent.description || !individualContent.id_graph) {
+                allValid=false;
+                console.log('dentro del forEAch' + allValid)
+            }
+        });
+    }
+    console.log('voy a devolver')
+    return isValid;
+}
 
 
 module.exports = router;

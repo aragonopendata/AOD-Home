@@ -296,9 +296,11 @@ exports.SPIDER_EMAIL_REVISION_PATH = '/data/scripts/procesos/spider/emailRevisio
 /* FOCUS */
 
 exports.API_URL_FOCUS_HISTORIES = '/focus/histories';
+exports.API_URL_FOCUS_HISTORY = '/focus/history';
 exports.API_URL_FOCUS_CONTENTS = '/focus/contents';
 exports.API_URL_FOCUS_CONTENTS_HISTORY = '/focus/contents/history';
 exports.API_URL_FOCUS_SAVE_HISTORY = '/focus/saveHistory';
+exports.API_URL_FOCUS_SAVE_ENTIRE_HISTORY = '/focus/entire/history';
 exports.API_URL_FOCUS_SAVE_CONTENT = '/focus/saveContent';
 exports.API_URL_FOCUS_UPDATE_HISTORY = '/focus/updateHistory';
 exports.API_URL_FOCUS_UPDATE_CONTENT = '/focus/updateContent';

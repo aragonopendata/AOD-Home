@@ -198,6 +198,10 @@ exports.DB_ADMIN_UPDATE_CAMPUS_SPEAKERS =  'UPDATE campus.speakers SET ' +
 									   
 exports.DB_FOCUS_GET_HISTORIES = 'SELECT id, state, title, description, email, id_reference, main_category, secondary_categories FROM focus.histories';
 
+exports.DB_FOCUS_GET_HISTORY = 'SELECT id, state, title, description, email, id_reference, main_category, secondary_categories FROM focus.histories WHERE id = $1';
+
+exports.DB_FOCUS_EXIST_HISTORY = 'SELECT id FROM focus.histories WHERE id = $1';
+
 exports.DB_FOCUS_GET_CONTENTS_HISTORIES = 'SELECT id, title, description, id_graph, id_history FROM focus.contents_histories';
 
 exports.DB_FOCUS_GET_CONTENTS_HISTORIES_PARTICULAR_HISTORY = 'SELECT id, title, description, id_graph, id_history FROM focus.contents_histories WHERE id_history = $1';
