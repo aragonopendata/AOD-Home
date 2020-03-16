@@ -69,3 +69,15 @@ a:focus {
     border-bottom: 1px solid #5ea2ba;
     transition: 0.3s;
 }
+
+@media screen and (max-width: 768px) {
+    .container {
+        margin-top: 10vh;
+    }
+    h1 {
+        font-size: 4vh;
+    }
+    h3 {
+        font-size: 3vh;
+    }
+}

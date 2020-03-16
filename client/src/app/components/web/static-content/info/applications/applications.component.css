@@ -56,3 +56,15 @@ p {
 .textContent /deep/ a:hover:after {
     width: 100%;
 }
+
+@media screen and (max-width: 768px) {
+    .container {
+        margin-top: 10vh;
+    }
+    h1 {
+        font-size: 4vh;
+    }
+    h3 {
+        font-size: 3vh;
+    }
+}

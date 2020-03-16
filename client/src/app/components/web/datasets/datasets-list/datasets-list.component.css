@@ -252,4 +252,7 @@ p-autocomplete{
     .container>h1:first-child{
         font-size: 1.75rem;
     }
+    .container {
+        margin-top: 10vh;
+    }
 }

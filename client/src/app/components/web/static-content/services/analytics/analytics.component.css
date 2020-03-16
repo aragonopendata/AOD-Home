@@ -87,3 +87,9 @@
     max-height: 350px;
     overflow-x: hidden;
 }
+
+@media screen and (max-width: 768px) {
+    .headerSeparator {
+        margin-top: 10vh;
+    }
+}
