@@ -93,3 +93,13 @@ b {
     color: #5EA2BA;
     font-weight: 300;   
 }
+
+.social{
+    margin-bottom: 5%;
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        margin-top: 10vh;
+    }
+}

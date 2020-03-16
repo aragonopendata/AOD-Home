@@ -164,3 +164,8 @@ a.btn.btn-primary{
 	}
 }
 
+@media screen and (max-width: 768px) {
+    .marginsup {
+        margin-top: 10vh;
+    }
+}

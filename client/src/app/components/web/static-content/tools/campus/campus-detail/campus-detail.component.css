@@ -64,3 +64,12 @@ h1, h2, h3, h4, h5, h6 {
 
 
   }
+
+  @media screen and (max-width: 768px) {
+    .marginsup {
+        margin-top: 10vh;
+    }
+    h1 {
+        font-size: 4vh;
+    }
+}
