@@ -88,8 +88,8 @@ router.post(constants.API_URL_FOCUS_SAVE_ENTIRE_HISTORY, function (req, res, nex
                         res.json({
                             'status': constants.REQUEST_REQUEST_OK,
                             'success': true,
-                            'result': 'CREACION DE UNA HISTORIA- Historia creada correctamente',
-                            'token': id
+                            'result': 'CREACION DE UNA HISTORIA COMPLETA- Contenido creado correctamente',
+                            'id': id
                         });
                     }
                 } else{
