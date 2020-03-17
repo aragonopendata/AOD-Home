@@ -194,4 +194,7 @@ th {
     .container {
         margin-top: 10vh;
     }
+    h1 {
+        font-size: 4vh;
+    }
 }

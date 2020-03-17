@@ -118,3 +118,16 @@ p > a:hover {
     color: #000!important;
     cursor: pointer;
 }
+
+.social{
+    margin-bottom: 5%;
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        margin-top: 10vh;
+    }
+    h1 {
+        font-size: 4vh;
+    }
+}

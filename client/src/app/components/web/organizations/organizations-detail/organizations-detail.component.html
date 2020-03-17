@@ -18,11 +18,11 @@
 </div>
 <div class="container" *ngIf="!errorTitle">
 	<div class="dtHeader row">
-		<div class="globaltitle col-10">
+		<div class="globaltitle col-12 col-md-10">
 			<h1 tabindex="{{openedMenu ? -1 : 0}}">{{org.title}}</h1>
 			<button tabindex="{{openedMenu ? -1 : 0}}" *ngIf="showEdit" class="tags" icon="fas fa-pencil-alt" pButton type="button" label="Editar" style="margin-bottom: 10px;" routerLink="/login/org/{{org.name}}"></button>
 		</div>
-		<div class="social col-2">
+		<div class="social col-12 col-md-2">
 			<a tabindex="{{openedMenu ? -1 : 0}}" href="{{routerLinkFacebookShare}}" target="_blank" title="Compartir en Facebook">
 				<img src="{{assetsUrl}}/public/contenido-general/social/facebookIcon.png" alt="compartir-en-Facebook">
 			</a>
