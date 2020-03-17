@@ -92,4 +92,7 @@
     .headerSeparator {
         margin-top: 10vh;
     }
+    .pagina {
+        max-width: 100vw;
+    }
 }
