@@ -254,5 +254,6 @@ p-autocomplete{
     }
     .container {
         margin-top: 10vh;
+        max-width: 100vw;
     }
 }

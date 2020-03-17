@@ -193,6 +193,7 @@ th {
 @media screen and (max-width: 768px) {
     .container {
         margin-top: 10vh;
+        max-width: 100vw;
     }
     h1 {
         font-size: 4vh;
