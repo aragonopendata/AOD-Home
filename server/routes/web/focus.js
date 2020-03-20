@@ -48,9 +48,8 @@ const logger = require('js-logging').dailyFile([loggerSettings]);
 router.put(constants.API_URL_FOCUS_HISTORY, function (req, res, next) {
     var history = req.body;
 
-    var token=makeToken(10)
     
-    createHistoryInFocus(history, token).then(historyId => {
+    createHistoryInFocus(history).then(historyId => {
         if (historyId) {
             logger.info('CREACIÓN DE UNA HISTORIA - Historia creada correctamente')
             res.json({
@@ -139,6 +138,37 @@ router.get(constants.API_URL_FOCUS_HISTORIES, function (req, res, next) {
 
 });
 
+
+/**
+ * UPDATE HISTORY
+ */
+router.post(constants.API_URL_FOCUS_HISTORY , function (req, res, next) {
+    var history = req.body;
+    updateHistoryInFocus(history).then(idHistory => {
+        if(idHistory){
+            res.json({
+                'status': constants.REQUEST_REQUEST_OK,
+                'success': true,
+                'result': 'ACTUALIZACIÓN DE UNA HISTORIA- Historia actualizada correctamente',
+                'historyUpdate': idHistory
+            });
+        }else{
+            res.json({ 
+                'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 
+                'error': 'ACTUALIZACIÓN DE UNA HISTORIA- Error al actualizar la historia en base de datos' ,
+            });
+            return;
+        }
+    }).catch(error => {
+        logger.error('ACTUALIZACIÓN DE UNA HISTORIA- Error al actualizar la historia en base de datos: ', error);
+        res.json({ 
+            'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 
+            'error': 'ACTUALIZACIÓN DE UNA HISTORIA- Error al actualizar la historia en base de datos' ,
+        });
+        return;
+    });
+});
+
 /**
  * DELETE HISTORY BY ID ROUTE
  */
@@ -171,12 +201,14 @@ router.delete(constants.API_URL_FOCUS_HISTORY + "/:id" , function (req, res, nex
 
 
 
+
+
 /**
  * Función creación de una nueva historia (con contenidos o sin ellos) 
  * @param {*} history 
  * @param {*} id 
  */
-var createHistoryInFocus = function createHistoryInFocus(history, id) {
+var createHistoryInFocus = function createHistoryInFocus(history) {
     return new Promise((resolve, reject) => {
         if (!correctNewHistory(history)) {
             logger.error('Input Error', ' title of the history or some part of content don found not found');
@@ -184,84 +216,90 @@ var createHistoryInFocus = function createHistoryInFocus(history, id) {
             return;
         }
         try {
-            pool.connect((err, client, done) => {
-                if (err) {
-                    logger.error('Error de conexión creando la historia:',err.stack);
-                    reject(err);
-                    return;
-                }
-                const shouldAbort = (err) => {
+            generateToken().then(id => {
+                pool.connect((err, client, done) => {
                     if (err) {
-                        client.query('ROLLBACK', (err) => {
-                            if (err) {
-                                console.error('Error rolling back client', err.stack)
-                            }
-                            done();
-                        })
-                    }
-                    return !!err;
-                }
-
-                logger.notice('Se inicia la transacción de creación de una nueva historia en base de datos FOCUS');
-
-                const queryHistory = {
-                    text: dbQueries.DB_FOCUS_INSERT_FOCUS_HISTORY,
-                    values: [id, history.state, history.title, history.description, history.email, history.id_reference, history.main_category, history.secondary_categories]
-                };
-                client.query('BEGIN', (err) => {
-                    if (shouldAbort(err)) {
+                        logger.error('Error de conexión creando la historia:',err.stack);
                         reject(err);
                         return;
-                    } else {
-                        client.query(queryHistory, (err, resultEvent) => {
-                            if (shouldAbort(err)) {
-                                logger.error('Error creando historia:', err);
-                                reject(err);
-                                return;
-                            } else {
-                                var idHistory=resultEvent.rows[0].id;
-                                logger.notice("Se ha creado la historia en la base de datos 'histories' se procede a la creación de su contenido");
-                                if(history.contents){
-                                    var sqlContents =  dbQueries.DB_FOCUS_INSERT_FOCUS_CONTENTS_HISTORY;
-                                    var valuesContents= (history.contents).map(item => [item.title, item.description, item.id_graph, idHistory])
-                                    client.query(format(sqlContents, valuesContents), (err, resultSites) => {
-                                        if (shouldAbort(err)) {
-                                            logger.error('Error creando historia:', err);
-                                            reject(err);
-                                            return;
-                                        } else {
-                                            logger.notice("Se han creado lso contenidos en la base de datos 'contents_histories'");
-                                            client.query('COMMIT', (commitError) => {
-                                                done();
-                                                if (commitError) {
-                                                    logger.error('Error creando historia:', commitError);
-                                                    reject(commitError);
-                                                    return;
-                                                } else {
-                                                    logger.notice('Creación de historia finalizada (con contenidos contenidos)')
-                                                    resolve(idHistory);
-                                                }
-                                            });
-                                        }
-                                    });
-                                }else{
-                                    client.query('COMMIT', (commitError) => {
-                                        done();
-                                        if (commitError) {
-                                            logger.error('Error creando historia:', commitError);
-                                            reject(commitError);
-                                            return;
-                                        } else {
-                                            logger.notice('Creación de historia finalizada (sin contenidos)')
-                                            resolve(idHistory);
-                                        }
-                                    });
-                                }
-                            }
-                        })
                     }
+                    const shouldAbort = (err) => {
+                        if (err) {
+                            client.query('ROLLBACK', (err) => {
+                                if (err) {
+                                    console.error('Error rolling back client', err.stack)
+                                }
+                                done();
+                            })
+                        }
+                        return !!err;
+                    }
+    
+                    logger.notice('Se inicia la transacción de creación de una nueva historia en base de datos FOCUS');
+    
+                    client.query('BEGIN', (err) => {
+                        if (shouldAbort(err)) {
+                            reject(err);
+                            return;
+                        } else {
+                            const queryHistory = {
+                                text: dbQueries.DB_FOCUS_INSERT_FOCUS_HISTORY,
+                                values: [id, history.state, history.title, history.description, history.email, history.id_reference, history.main_category, history.secondary_categories]
+                            };
+                            client.query(queryHistory, (err, resultEvent) => {
+                                if (shouldAbort(err)) {
+                                    logger.error('Error creando historia:', err);
+                                    reject(err);
+                                    return;
+                                } else {
+                                    var idHistory=resultEvent.rows[0].id;
+                                    logger.notice("Se ha creado la historia en la base de datos 'histories' se procede a la creación de su contenido");
+                                    if(history.contents){
+                                        var sqlContents =  dbQueries.DB_FOCUS_INSERT_FOCUS_CONTENTS_HISTORY;
+                                        var valuesContents= (history.contents).map(item => [item.title, item.description, item.id_graph, idHistory])
+                                        client.query(format(sqlContents, valuesContents), (err, resultSites) => {
+                                            if (shouldAbort(err)) {
+                                                logger.error('Error creando historia:', err);
+                                                reject(err);
+                                                return;
+                                            } else {
+                                                logger.notice("Se han creado lso contenidos en la base de datos 'contents_histories'");
+                                                client.query('COMMIT', (commitError) => {
+                                                    done();
+                                                    if (commitError) {
+                                                        logger.error('Error creando historia:', commitError);
+                                                        reject(commitError);
+                                                        return;
+                                                    } else {
+                                                        logger.notice('Creación de historia finalizada (con contenidos contenidos)')
+                                                        resolve(idHistory);
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }else{
+                                        client.query('COMMIT', (commitError) => {
+                                            done();
+                                            if (commitError) {
+                                                logger.error('Error creando historia:', commitError);
+                                                reject(commitError);
+                                                return;
+                                            } else {
+                                                logger.notice('Creación de historia finalizada (sin contenidos)')
+                                                resolve(idHistory);
+                                            }
+                                        });
+                                    }
+                                }
+                            })
+                        }
+                    });
                 });
+            }).catch(error => {
+                reject(error);
+                return;
             });
+            
         } catch (error) {
             logger.error('Error creando historia:', error);
             reject(error);
@@ -453,6 +491,130 @@ var deleteHistoryInFocus = function deleteHistoryInFocus(id) {
 };
 
 
+/**
+ * Función de actualización de una  historia
+ * @param {*} id 
+ */
+var updateHistoryInFocus = function updateHistoryInFocus(history) {
+    return new Promise((resolve, reject) => {
+        try {
+            pool.connect((err, client, done) => {
+                if (err) {
+                    logger.error('Error de conexión al actualizar la historia:',err.stack);
+                    reject(err);
+                    return;
+                }
+                const shouldAbort = (err) => {
+                    if (err) {
+                        client.query('ROLLBACK', (err) => {
+                            if (err) {
+                                console.error('Error rolling back client', err.stack)
+                            }
+                            done();
+                        })
+                    }
+                    return !!err;
+                }
+
+                logger.notice('Se inicia la transacción de actualización de una historia en base de datos FOCUS');
+
+                //Por análisis se borrará la existente y se introducirá la misma, conservando el id de historia en ambos registros
+                const queryDeleteContents = {
+                    text: dbQueries.DB_ADMIN_DELETE_FOCUS_CONTENT_BY_ID_HISTORY,
+                    values: [history.id]
+                };
+                client.query('BEGIN', (err) => {
+                    if (shouldAbort(err)) {
+                        reject(err);
+                        return;
+                    } else {
+                        client.query(queryDeleteContents, (err, resultEvent) => {
+                            if (shouldAbort(err)) {
+                                logger.error('Error borrando los contenidos de la historia al actualizar la historia:', err);
+                                reject(err);
+                                return;
+                            } else {
+                                logger.notice("Se han borrado los posibles contenidos asociados a una historia, se procede a borrar la historia en la base de datos 'histories' se procede a la creación de su contenido");
+                                const queryDeleteHistory = {
+                                    text: dbQueries.DB_ADMIN_DELETE_FOCUS_HISTORY,
+                                    values: [history.id]
+                                };
+                                client.query(queryDeleteHistory, (err, resultEvent) => {
+                                    if (shouldAbort(err)) {
+                                        logger.error('Error borrando la historia en el proceso de actualización:', err);
+                                        reject(err);
+                                        return;
+                                    } else {
+                                        logger.notice("Se ha borrado la historia en el proceso de actualización:");
+                                        //Se vuelve a insertar con los datos actualizados
+                                        const queryHistory = {
+                                            text: dbQueries.DB_FOCUS_INSERT_FOCUS_HISTORY,
+                                            values: [history.id, history.state, history.title, history.description, history.email, history.id_reference, history.main_category, history.secondary_categories]
+                                        };
+                                        client.query(queryHistory, (err, resultEvent) => {
+                                            if (shouldAbort(err)) {
+                                                logger.error('Error creando historia en el proceso de actualización::', err);
+                                                reject(err);
+                                                return;
+                                            } else {
+                                                var idHistory2=resultEvent.rows[0].id;
+                                                logger.notice("Se ha creado la historia en la base de datos 'histories' se procede a la creación de su contenido");
+                                                if(history.contents){
+                                                    var sqlContents =  dbQueries.DB_FOCUS_INSERT_FOCUS_CONTENTS_HISTORY;
+                                                    var valuesContents= (history.contents).map(item => [item.title, item.description, item.id_graph, idHistory2])
+                                                    client.query(format(sqlContents, valuesContents), (err, resultSites) => {
+                                                        if (shouldAbort(err)) {
+                                                            logger.error('Error creando historia en el proceso de actualización::', err);
+                                                            reject(err);
+                                                            return;
+                                                        } else {
+                                                            logger.notice("Se han creado lso contenidos en la base de datos 'contents_histories' en el proceso de actualización:");
+                                                            client.query('COMMIT', (commitError) => {
+                                                                done();
+                                                                if (commitError) {
+                                                                    logger.error('Error creando historia en el proceso de actualización::', commitError);
+                                                                    reject(commitError);
+                                                                    return;
+                                                                } else {
+                                                                    logger.notice('Creación de historia finalizada (con contenidos contenidos) en el proceso de actualización:')
+                                                                    resolve(idHistory2);
+                                                                }
+                                                            });
+                                                        }
+                                                    });
+                                                }else{
+                                                    client.query('COMMIT', (commitError) => {
+                                                        done();
+                                                        if (commitError) {
+                                                            logger.error('Error creando historia en el proceso de actualización::', commitError);
+                                                            reject(commitError);
+                                                            return;
+                                                        } else {
+                                                            logger.notice('Creación de historia finalizada (sin contenidos) en el proceso de actualización:')
+                                                            resolve(idHistory);
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        })
+                                    }
+                                });
+
+                            }
+                        })
+                    }
+                });
+            });
+        } catch (error) {
+            logger.error('Error actualizando historia:', error);
+            reject(error);
+            return;
+        }
+    });
+    
+};
+
+
 var correctNewHistory = function correctNewHistory(history) {
     if(!history.title){
         return false;
@@ -471,6 +633,44 @@ function makeToken(length) {
        result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
+}
+
+var generateToken = function generateToken() {
+    return new Promise((resolve, reject) => {
+        try {
+            var id= makeToken(10);
+            pool.connect((err, client, done) => {
+                if (err) {
+                    logger.error('Error de conexión generando el token:',err.stack);
+                    reject(err);
+                    return;
+                }
+
+                logger.notice('Se inicia la transacción de determinar si una historia existe en la base de datos FOCUS');
+
+                const queryDb = {
+                    text: dbQueries.DB_FOCUS_EXIST_HISTORY,
+                    values: [id]
+                };
+                pool.query(queryDb, function (err, result) {
+                    if (err) {
+                        logger.error('Error : ', err);
+                        resolve('GENERACIÓN TOKEN HISTORIA - Error generando el token');
+                    }else{
+                        if(result.rowCount!=0){
+                            resolve(generateToken())
+                        }else{
+                            resolve(id)
+                        }
+                    }
+                });
+            });
+        } catch (error) {
+            logger.error('Error generando token :', error);
+            reject(error);
+            return 
+        }
+    });
 }
 
 
