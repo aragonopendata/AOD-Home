@@ -614,7 +614,10 @@ var updateHistoryInFocus = function updateHistoryInFocus(history) {
     
 };
 
-
+/**
+ * Función que comprueba que una historia tiene los requisitos
+ * @param {*} history 
+ */
 var correctNewHistory = function correctNewHistory(history) {
     if(!history.title){
         return false;
@@ -624,7 +627,10 @@ var correctNewHistory = function correctNewHistory(history) {
 }
 
 
-
+/**
+ * Función que crea el token
+ * @param {*} length 
+ */
 function makeToken(length) {
     var result           = '';
     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -635,6 +641,9 @@ function makeToken(length) {
     return result;
 }
 
+/**
+ * Función que encuentra un token no usado en la BBDD
+ */
 var generateToken = function generateToken() {
     return new Promise((resolve, reject) => {
         try {
