@@ -208,7 +208,7 @@ exports.DB_FOCUS_GET_CONTENTS_HISTORIES_PARTICULAR_HISTORY = 'SELECT id, title, 
 
 exports.DB_FOCUS_INSERT_FOCUS_HISTORY = 'INSERT INTO focus.histories (id, state, title, description, email, id_reference, main_category, secondary_categories) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING focus.histories.id'
 
-exports.DB_FOCUS_INSERT_FOCUS_CONTENTS_HISTORY = 'INSERT INTO focus.contents_histories (title, description, id_graph, id_history) VALUES($1, $2, $3, $4) RETURNING focus.contents_histories.id'
+exports.DB_FOCUS_INSERT_FOCUS_CONTENTS_HISTORY = 'INSERT INTO focus.contents_histories (title, description, id_graph, id_history) VALUES %L'
 
 exports.DB_FOCUS_UPDATE_FOCUS_HISTORY = 'UPDATE focus.histories SET state=COALESCE($1, state), title = COALESCE($2, title), ' +
 							'description = COALESCE($3, description),  email = COALESCE($4, email),  id_reference = COALESCE($5, id_reference), main_category = COALESCE($6, main_category),  secondary_categories = COALESCE($7, secondary_categories) WHERE id = $8';
@@ -221,4 +221,7 @@ exports.DB_FOCUS_UPDATE_FOCUS_CONTENTS_HISTORY = 'UPDATE focus.contents_historie
 exports.DB_ADMIN_DELETE_FOCUS_HISTORY = 'DELETE FROM focus.histories WHERE id = $1';
 
 exports.DB_ADMIN_DELETE_FOCUS_CONTENT = 'DELETE FROM focus.contents_histories WHERE id = $1';
+
+exports.DB_ADMIN_DELETE_FOCUS_CONTENT_BY_ID_HISTORY = 'DELETE FROM focus.contents_histories WHERE id_history = $1';
+
 
