@@ -294,24 +294,7 @@ exports.SPIDER_EMAIL_REVISION_PATH = '/data/scripts/procesos/spider/emailRevisio
 
 /* ******************* */
 /* FOCUS */
-/*
-exports.API_URL_FOCUS_HISTORIES = '/focus/histories';
-exports.API_URL_FOCUS_HISTORY = '/focus/history';
-exports.API_URL_FOCUS_CONTENTS = '/focus/contents';
-exports.API_URL_FOCUS_CONTENTS_HISTORY = '/focus/contents/history';
-exports.API_URL_FOCUS_SAVE_HISTORY = '/focus/saveHistory';
-exports.API_URL_FOCUS_SAVE_ENTIRE_HISTORY = '/focus/entire/history';
-exports.API_URL_FOCUS_SAVE_ENTIRE_HISTORY2 = '/focus/entire/history2';
-exports.API_URL_FOCUS_SAVE_ENTIRE_HISTORY3 = '/focus/entire/history3';
-exports.API_URL_FOCUS_SAVE_ENTIRE_HISTORY4 = '/focus/entire/history4';
-exports.API_URL_FOCUS_SAVE_ENTIRE_HISTORY5 = '/focus/entire/history5';
-exports.API_URL_FOCUS_SAVE_CONTENT = '/focus/saveContent';
-exports.API_URL_FOCUS_UPDATE_HISTORY = '/focus/updateHistory';
-exports.API_URL_FOCUS_UPDATE_CONTENT = '/focus/updateContent';
-exports.API_URL_FOCUS_UPDATE_STATE_HISTORY = '/focus/stateHistory';
-exports.API_URL_FOCUS_DELETE_HISTORY='/focus/deleteHistory';
-exports.API_URL_FOCUS_DELETE_CONTENT='/focus/deleteContent'
-*/
+
 
 exports.API_URL_FOCUS_HISTORY = '/focus/history';
 exports.API_URL_FOCUS_HISTORIES = '/focus/histories';
