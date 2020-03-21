@@ -45,14 +45,14 @@ const logger = require('js-logging').dailyFile([loggerSettings]);
 /**
  * CREATE NEW HISTORY ROUTE
  */
-router.put(constants.API_URL_FOCUS_HISTORY, function (req, res, next) {
+router.put(constants.API_URL_FOCUS_HISTORY, function (req, response, next) {
     var history = req.body;
 
     
     createHistoryInFocus(history).then(historyId => {
         if (historyId) {
             logger.info('CREACIÓN DE UNA HISTORIA - Historia creada correctamente')
-            res.json({
+            response.json({
                 'status': constants.REQUEST_REQUEST_OK,
                 'success': true,
                 'result': 'CREACION DE UNA HISTORIA COMPLETA- Historia creada correctamente',
@@ -60,7 +60,7 @@ router.put(constants.API_URL_FOCUS_HISTORY, function (req, res, next) {
             });
         } else {
             logger.error('CREACIÓN DE UNA HISTORIA - Error al crear la historia en base de datos ');
-            res.json({ 
+            response.json({ 
                 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 
                 'error': 'CREACIÓN DE UNA HISTORIA- Error al crear la historia en base de datos' ,
             });
@@ -68,7 +68,7 @@ router.put(constants.API_URL_FOCUS_HISTORY, function (req, res, next) {
         }
     }).catch(error => {
         logger.error('CREACIÓN DE UNA HISTORIA xxx- Error al crear la historia en base de datos : ', error);
-        res.json({ 
+        response.json({ 
             'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 
             'error': 'CREACIÓN DE UNA HISTORIA- Error al crear la historia en base de datos'+error ,
         });
@@ -80,18 +80,18 @@ router.put(constants.API_URL_FOCUS_HISTORY, function (req, res, next) {
 /**
  * GET HISTORY BY ID ROUTE
  */
-router.get(constants.API_URL_FOCUS_HISTORY + "/:id" , function (req, res, next) {
+router.get(constants.API_URL_FOCUS_HISTORY + "/:id" , function (req, response, next) {
     var id = req.params.id
     getHistoryInFocus(id).then(fullHistory => {
         if(fullHistory){
-            res.json({
+            response.json({
                 'status': constants.REQUEST_REQUEST_OK,
                 'success': true,
                 'result': 'OBTENCIÓN DE UNA HISTORIA COMPLETA- Historia obtenida correctamente',
                 'history': fullHistory
             });
         }else{
-            res.json({ 
+            response.json({ 
                 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 
                 'error': 'OBTENCIÓN DE UNA HISTORIA COMPLETA- Error al obtener la historia en base de datos' ,
             });
@@ -99,7 +99,7 @@ router.get(constants.API_URL_FOCUS_HISTORY + "/:id" , function (req, res, next) 
         }
     }).catch(error => {
         logger.error('OBTENCIÓN DE UNA HISTORIA COMPLETA - Error al obtener la historia en base de datos: ', error);
-        res.json({ 
+        response.json({ 
             'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 
             'error': 'OBTENCIÓN DE UNA HISTORIA COMPLETA- Error al obtener la historia en base de datos' ,
         });
@@ -110,18 +110,18 @@ router.get(constants.API_URL_FOCUS_HISTORY + "/:id" , function (req, res, next) 
 /**
  * GET A RESUME OF AN HISTORY (WITHOUT CONTENTS)
  */
-router.get(constants.API_URL_FOCUS_HISTORIES, function (req, res, next) {
+router.get(constants.API_URL_FOCUS_HISTORIES, function (req, response, next) {
 
     getDetailHistoriesInCampus().then(resumeHistories => {
         if(resumeHistories){
-            res.json({
+            response.json({
                 'status': constants.REQUEST_REQUEST_OK,
                 'success': true,
                 'result': 'OBTENCIÓN DE DETALLE DE HISTORIAS - Detalles de historias obtenida correctamente',
                 'history': resumeHistories
             });
         }else{
-            res.json({ 
+            response.json({ 
                 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 
                 'error': 'OBTENCIÓN DE DETALLE DE HISTORIAS - Error al obtener los detalles de historias de la base de datos' ,
             });
@@ -129,7 +129,7 @@ router.get(constants.API_URL_FOCUS_HISTORIES, function (req, res, next) {
         }
     }).catch(error => {
         logger.error( 'OBTENCIÓN DE DETALLE DE HISTORIAS - Error al obtener los detalles de historias de la base de datos:' , error);
-        res.json({ 
+        response.json({ 
             'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 
             'error':  'OBTENCIÓN DE DETALLE DE HISTORIAS - Error al obtener los detalles de historias de la base de datos'  ,
         });
@@ -142,18 +142,18 @@ router.get(constants.API_URL_FOCUS_HISTORIES, function (req, res, next) {
 /**
  * UPDATE HISTORY
  */
-router.post(constants.API_URL_FOCUS_HISTORY , function (req, res, next) {
+router.post(constants.API_URL_FOCUS_HISTORY , function (req, response, next) {
     var history = req.body;
     updateHistoryInFocus(history).then(idHistory => {
         if(idHistory){
-            res.json({
+            response.json({
                 'status': constants.REQUEST_REQUEST_OK,
                 'success': true,
                 'result': 'ACTUALIZACIÓN DE UNA HISTORIA- Historia actualizada correctamente',
                 'historyUpdate': idHistory
             });
         }else{
-            res.json({ 
+            response.json({ 
                 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 
                 'error': 'ACTUALIZACIÓN DE UNA HISTORIA- Error al actualizar la historia en base de datos' ,
             });
@@ -161,7 +161,7 @@ router.post(constants.API_URL_FOCUS_HISTORY , function (req, res, next) {
         }
     }).catch(error => {
         logger.error('ACTUALIZACIÓN DE UNA HISTORIA- Error al actualizar la historia en base de datos: ', error);
-        res.json({ 
+        response.json({ 
             'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 
             'error': 'ACTUALIZACIÓN DE UNA HISTORIA- Error al actualizar la historia en base de datos' ,
         });
@@ -172,18 +172,18 @@ router.post(constants.API_URL_FOCUS_HISTORY , function (req, res, next) {
 /**
  * DELETE HISTORY BY ID ROUTE
  */
-router.delete(constants.API_URL_FOCUS_HISTORY + "/:id" , function (req, res, next) {
+router.delete(constants.API_URL_FOCUS_HISTORY + "/:id" , function (req, response, next) {
     var id = req.params.id
     deleteHistoryInFocus(id).then(idHistory => {
         if(idHistory){
-            res.json({
+            response.json({
                 'status': constants.REQUEST_REQUEST_OK,
                 'success': true,
                 'result': 'BORRADO DE UNA HISTORIA- Historia borrada correctamente',
                 'history': idHistory
             });
         }else{
-            res.json({ 
+            response.json({ 
                 'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 
                 'error': 'BORRADO DE UNA HISTORIA- Error al borrar la historia en base de datos' ,
             });
@@ -191,7 +191,7 @@ router.delete(constants.API_URL_FOCUS_HISTORY + "/:id" , function (req, res, nex
         }
     }).catch(error => {
         logger.error('BORRADO DE UNA HISTORIA- Error al borrar la historia en base de datos: ', error);
-        res.json({ 
+        response.json({ 
             'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 
             'error': 'BORRADO DE UNA HISTORIA- Error al borrar la historia en base de datos' ,
         });
@@ -329,6 +329,7 @@ var getHistoryInFocus = function getHistoryInFocus(id) {
 
                 pool.query(queryHistory, (err, result) => {
                     if (err) {
+                        done()
                         logger.error('Error obteniendo la historia',err.stack);
                         reject(err)
                         return;
@@ -341,6 +342,7 @@ var getHistoryInFocus = function getHistoryInFocus(id) {
                                 values: [historySelect.id]
                             }
                             pool.query(queryContent, (err, result) => {
+                                done()
                                 if (err) {
                                     logger.error('Error obteniendo los contenidos de la historia:',err.stack);
                                     reject(err)
@@ -353,6 +355,7 @@ var getHistoryInFocus = function getHistoryInFocus(id) {
                                 }
                             });
                         }else{
+                            done()
                             logger.error('Error obteniendo la historia, id no encontrado');
                             reject("Id de historia no encontrado")
                             return;
@@ -388,6 +391,7 @@ var getDetailHistoriesInCampus = function getDetailHistoriesInCampus() {
                 }
 
                 pool.query(queryHistories, (err, result) => {
+                    done()
                     if (err) {
                         logger.error('Error obteniendo los detalles de historias:',err.stack);
                         reject(err)
