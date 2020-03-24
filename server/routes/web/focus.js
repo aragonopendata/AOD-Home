@@ -67,12 +67,16 @@ router.get(constants.API_URL_FOCUS_HISTORIES, function (req, response, next) {
  * CREATE NEW HISTORY
  */
 router.put(constants.API_URL_FOCUS_HISTORY, function (req, response, next) {
+
+    console.log('entro')
+
+    console.log(req.body)
     
     var history = req.body;
 
     if ( !history || !history.title ){
         logger.error('Input Error', 'Incorrect input');
-        res.json({ 'status': constants.REQUEST_ERROR_BAD_DATA, error: 'Incorrect Input' });
+        response.json({ 'status': constants.REQUEST_ERROR_BAD_DATA, error: 'Incorrect Input' });
         return;
     }
 
@@ -254,11 +258,11 @@ function inserHistoryTransaction(history){
 
                     client.query('BEGIN', (err) => {
 
-                        if (rollback(client, err)) {
+                        if (rollback(client, done, err)) {
                             logger.error('inserHistoryTransaction - Error creando historia:', err);
                             reject(err);
                         } else {
-                            inserHistory(client, token, history).then( (idHistory) => {
+                            inserHistory(client, done, token, history).then( (idHistory) => {
                                 client.query('COMMIT', (commitError) => {
                                     done();
                                     if (commitError) {
@@ -299,14 +303,14 @@ function updateHistoryTransaction(history){
 
                 client.query('BEGIN', (err) => {
 
-                    if (rollback(client, err)) {
+                    if (rollback(client, done, err)) {
                         reject(err);
                     } else {
                         var id = history.id;
                         history.id = null;
     
-                        deleteHistory(client, id).then( () => {
-                            inserHistory(client, id, history).then( (idHistory) => {
+                        deleteHistory(client, done, id).then( () => {
+                            inserHistory(client, done, id, history).then( (idHistory) => {
                                 client.query('COMMIT', (commitError) => {
                                     done();
                                     if (commitError) {
@@ -347,10 +351,10 @@ function deleteHistoryTransaction(id){
 
                 client.query('BEGIN', (err) => {
 
-                    if (rollback(client, err)) {
+                    if (rollback(client, done, err)) {
                         reject(err);
                     } else {
-                        deleteHistory(client, id).then( () => {
+                        deleteHistory(client, done, id).then( () => {
                             client.query('COMMIT', (commitError) => {
                                 done();
                                 if (commitError) {
@@ -376,7 +380,7 @@ function deleteHistoryTransaction(id){
 
 }
 
-function inserHistory(client, token, history){
+function inserHistory(client, done, token, history){
 
     return new Promise((resolve, reject) => {
 
@@ -387,8 +391,9 @@ function inserHistory(client, token, history){
                 values: [token, history.state, history.title, history.description, history.email, history.id_reference, history.main_category, history.secondary_categories]
             };
 
+
             client.query(queryHistory, (err, resultHistory) => {
-                if (rollback(client, err)) {
+                if (rollback(client, done, err)) {
                     logger.error('inserHistory - Error guardando historia:', err);
                     reject(err);
                 } else {
@@ -396,7 +401,7 @@ function inserHistory(client, token, history){
                         var sqlContents =  dbQueries.DB_FOCUS_INSERT_FOCUS_CONTENTS_HISTORY;
                         var valuesContents= (history.contents).map(item => [item.title, item.description, item.id_graph, token])
                         client.query(format(sqlContents, valuesContents), (err, resultContents) => {
-                            if (rollback(client, err)) {
+                            if (rollback(client, done, err)) {
                                 logger.error('inserHistory - Error insertando la historia:', err);
                                 reject(err);
                             } else {
@@ -419,7 +424,7 @@ function inserHistory(client, token, history){
 
 }
 
-function deleteHistory(client, idHistory){
+function deleteHistory(client, done, idHistory){
 
     return new Promise((resolve, reject) => {
 
@@ -433,7 +438,7 @@ function deleteHistory(client, idHistory){
             //borrar contenidos
             client.query(queryDeleteContents, (err, resultDeleteContents) => {
 
-                if (rollback(client, err)) {
+                if (rollback(client, done, err)) {
                     logger.error('deleteHistory - Error eliminado historia:', err);
                     reject(err);
                 } else {
@@ -445,7 +450,7 @@ function deleteHistory(client, idHistory){
 
                     //borra historia
                     client.query(queryDeleteHistory, (err, resultDeleteHistory) => {
-                        if (rollback(client, err)) {
+                        if (rollback(client, done, err)) {
                             logger.error('deleteHistory - Error eliminado historia:', err);
                             reject(err);
                         } else {
@@ -496,7 +501,7 @@ function newToken() {
 
 }
 
-function rollback(client, err){
+function rollback(client, done, err){
     if (err) {
         client.query('ROLLBACK', (err) => {
             if (err) {
