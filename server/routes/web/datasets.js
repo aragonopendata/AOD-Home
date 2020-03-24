@@ -1097,6 +1097,38 @@ function parsePXFile(data) {
     return results;
   }
 
+//RATING
+router.get(constants.API_URL_DATASETS + "/:datasetName/:rating", function (req, res, next) {
+    try {
+        let datasetName = req.params.datasetName;
+        let rating = req.params.rating;
+        let serviceRequestUrl = "http://miv-aodfront-01.aragon.local:7030/ckan/rating/dataset/"+datasetName+"/"+rating;
+        
+        let httpConf = null;
+        if (constants.REQUESTS_NEED_PROXY == true) {
+            logger.warning('Realizando petición a través de proxy');
+            let httpProxyConf = proxy.getproxyOptions(serviceRequestUrl);
+            httpConf = httpProxyConf;
+        } else {
+            httpConf = serviceRequestUrl;
+        }
 
+        http.get(httpConf, function (results) {
+            console.log(results)
+            var body = '';
+            results.req.res.on('data', function (chunk) {
+                body += chunk;
+            });
+            results.req.res.on('end', function () {
+                res.json({status: results.req.res.statusCode});
+            });
+        }).on('error', function (err) {
+            utils.errorHandler(err, res, serviceName);
+        });
+
+    } catch (error) {
+        logger.error('Error in route' + constants.API_URL_DATASETS_COUNT);
+    }
+});
 
 module.exports = router;

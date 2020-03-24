@@ -551,8 +551,17 @@ export class DatasetsDetailComponent implements OnInit {
 
 	rateDataset(event) {
 		try {
-			this.ngZone.run(() => {
-				this.messageService.add({severity:'success', summary:'Voto registrado: ' + event.value, detail:'Su voto se ha registrado correctamente.'});
+			this.datasetsService.rateDataset(this.dataset.name, event.value).subscribe( response => {
+				if(response.status == 200 || response.status == 302){
+					this.ngZone.run(() => {
+						this.messageService.add({severity:'success', summary:'Voto registrado: ' + event.value, detail:'Su voto se ha registrado correctamente.'});
+					});
+				} else {
+					console.error('Error rateDataset() - datasets-detail.component.ts');
+					this.ngZone.run(() => {
+						this.messageService.add({severity:'error', summary:'Error al registrar el voto.', detail:'Ha ocurrido un error en el registro del voto.'});
+					});
+				}
 			});
 		} catch (error) {
 			console.error('Error rateDataset() - datasets-detail.component.ts');
