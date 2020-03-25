@@ -1102,7 +1102,8 @@ router.get(constants.API_URL_DATASETS + "/:datasetName/:rating", function (req, 
     try {
         let datasetName = req.params.datasetName;
         let rating = req.params.rating;
-        let serviceRequestUrl = "http://miv-aodfront-01.aragon.local:7030/ckan/rating/dataset/"+datasetName+"/"+rating;
+        let serviceRequestUrl = constants.EXPRESS_NODE_REDIRECT_ROUTING_URL + 
+            constants.CKAN_URL_PATH_RATING_DATASET + constants.CKAN_URL_PATH_TRACKING_DATASET + datasetName + "/" + rating;
         
         let httpConf = null;
         if (constants.REQUESTS_NEED_PROXY == true) {

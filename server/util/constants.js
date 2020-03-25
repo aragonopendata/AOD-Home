@@ -128,6 +128,7 @@ exports.CKAN_URL_PATH_GROUP_LIST = 'group_list';
 exports.CKAN_URL_PATH_GROUP_MEMBER_CREATE = 'group_member_create';
 
 /* CKAN ADMIN - DATASETS */
+exports.CKAN_URL_PATH_RATING_DATASET = "/ckan/rating";
 exports.CKAN_URL_PATH_DATASET_CREATE = 'package_create';
 exports.CKAN_URL_PATH_DATASET_UPDATE = 'package_update';
 exports.CKAN_URL_PATH_DATASET_DELETE = 'package_delete';

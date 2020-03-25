@@ -114,23 +114,28 @@ export class DatasetsDetailComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.loadResource();
+	}
+
+	loadResource() {
 		this.activatedRoute.params.subscribe(params => {
 			try {
 				this.showEditButton();
 				this.dataset.name = params[Constants.ROUTER_LINK_DATA_PARAM_DATASET_NAME];
 				this.datasetHomer.package_id = params[Constants.ROUTER_LINK_DATA_PARAM_DATASET_HOMER_NAME];
+				if (this.dataset.name) {
+					this.getDataset(this.dataset);
+					console.log(this.dataset);
+				}
+				if (this.datasetHomer.package_id) {
+					this.loadDatasetHomer(this.datasetHomer);
+				}
 			} catch (error) {
 				console.error("Error: ngOnInit() params - datasets-detail.component.ts");
 				this.errorTitle = this.datasetListErrorTitle;
 				this.errorMessage = this.datasetListErrorMessage;
 			}
 		});
-		if (this.dataset.name) {
-			this.getDataset(this.dataset);
-		}
-		if (this.datasetHomer.package_id) {
-			this.loadDatasetHomer(this.datasetHomer);
-		}
 	}
 
 	initializeDataset() {
@@ -556,6 +561,7 @@ export class DatasetsDetailComponent implements OnInit {
 					this.ngZone.run(() => {
 						this.messageService.add({severity:'success', summary:'Voto registrado: ' + event.value, detail:'Su voto se ha registrado correctamente.'});
 					});
+					this.loadResource();
 				} else {
 					console.error('Error rateDataset() - datasets-detail.component.ts');
 					this.ngZone.run(() => {

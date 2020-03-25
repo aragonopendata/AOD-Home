@@ -211,7 +211,6 @@ export class DatasetsService {
 
 	public rateDataset(datasetName: string, value: number) {
 		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_DATASETS + "/" + datasetName + "/" + value;
-		console.log(fullUrl);
 		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
 }
