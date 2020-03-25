@@ -329,7 +329,7 @@ a:hover {
         font-size: 10px;
         line-height: 13px;
     }
-    >>>.ui-rating a .ui-rating-icon {
+    .ui-rating a .ui-rating-icon {
         font-size: 1em !important;
     }
 }
@@ -479,23 +479,23 @@ a:hover {
 }
 
 @media screen and (min-width: 1200px) and (max-width: 1349px) {
-    >>>.ui-rating a .ui-rating-icon {
+    .ui-rating a .ui-rating-icon {
         font-size: 1.25em !important;
     }
 }
 
 @media screen and (max-width: 1199px) {
-    >>>.ui-rating a .ui-rating-icon {
+    .ui-rating a .ui-rating-icon {
         font-size: 1.5em !important;
     }
 }
 
 @media screen and (min-width: 1350px) {
-    >>>.ui-rating a .ui-rating-icon {
+    .ui-rating a .ui-rating-icon {
         font-size: 1.5em !important;
     }
 }
 
->>>.ui-rating a .ui-rating-icon {
+.ui-rating a .ui-rating-icon {
     color: #5ea2ba !important;
 }

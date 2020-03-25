@@ -125,7 +125,6 @@ export class DatasetsDetailComponent implements OnInit {
 				this.datasetHomer.package_id = params[Constants.ROUTER_LINK_DATA_PARAM_DATASET_HOMER_NAME];
 				if (this.dataset.name) {
 					this.getDataset(this.dataset);
-					console.log(this.dataset);
 				}
 				if (this.datasetHomer.package_id) {
 					this.loadDatasetHomer(this.datasetHomer);
