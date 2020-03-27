@@ -1128,7 +1128,8 @@ router.get(constants.API_URL_DATASETS + "/:datasetName/:rating", function (req, 
         });
 
     } catch (error) {
-        logger.error('Error in route' + constants.API_URL_DATASETS_COUNT);
+        logger.error('Error in rating ' + constants.CKAN_URL_PATH_RATING_DATASET + constants.CKAN_URL_PATH_TRACKING_DATASET + "/" + datasetName + "/" + rating);
+        logger.error(error);
     }
 });
 

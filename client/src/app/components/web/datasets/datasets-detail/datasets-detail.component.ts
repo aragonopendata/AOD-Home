@@ -119,6 +119,8 @@ export class DatasetsDetailComponent implements OnInit {
 
 	loadResource() {
 		this.activatedRoute.params.subscribe(params => {
+			this.datasetsService.clearDataset();
+			this.initializeDataset();
 			try {
 				this.showEditButton();
 				this.dataset.name = params[Constants.ROUTER_LINK_DATA_PARAM_DATASET_NAME];
@@ -397,12 +399,6 @@ export class DatasetsDetailComponent implements OnInit {
 	}
 
 	//Methods called from HTML.
-
-	showDataset(dataset: Dataset) {
-		this.initializeDataset();
-		this.datasetsService.setDataset(dataset);
-		this.getDataset(dataset);
-	}
 
 	downloadRDF(datasetName: string) {
 		this.datasetsService.getDatasetRDF(datasetName).subscribe(result => {

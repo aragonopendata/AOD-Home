@@ -213,4 +213,8 @@ export class DatasetsService {
 		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_DATASETS + "/" + datasetName + "/" + value;
 		return this.http.get(fullUrl).pipe(map(res => res.json()));
 	}
+
+	public clearDataset(){
+		this.dataset = new Dataset();
+	}
 }

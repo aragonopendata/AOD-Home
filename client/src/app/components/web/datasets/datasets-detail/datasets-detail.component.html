@@ -208,7 +208,7 @@
 
 		 <div class="ui-g">
 				<div class="ui-sm-12 ui-md-6 ui-lg-4 tarjetaContainer" *ngFor="let dsRecommended of datasetsRecommended; let i = index">
-					<div tabindex="{{openedMenu ? -1 : 0}}" class="recommendedCard" routerLink="/datos/catalogo/dataset/{{dsRecommended.name}}" (click)="showDataset(dsRecommended)">
+					<div tabindex="{{openedMenu ? -1 : 0}}" class="recommendedCard" routerLink="/datos/catalogo/dataset/{{dsRecommended.name}}">
 						<div class="wrapper" *ngFor="let topic of dsRecommended.groups">							
 							<div class="cardSize">
 								<img class="card-img-top" src="{{topic.image_url}}" alt="{{topic.title | uppercase}}" width="fit-content" height="fit-content">
