@@ -1,3 +1,4 @@
+import { NgZone } from '@angular/core';
 import { ResourceView } from './../../../../models/ResourceView';
 import { Component, OnInit } from '@angular/core';
 import { DatasetsService } from '../../../../services/web/datasets.service';
@@ -17,6 +18,7 @@ import { Extra } from '../../../../models/Extra';
 import { UtilsService } from '../../../../services/web/utils.service';
 import { Resource } from '../../../../models/Resource';
 import { FilesAdminService } from 'app/services/admin/files-admin.service';
+import {MessageService} from 'primeng/api';
 
 @Component({
 	selector: 'app-datasets-detail',
@@ -91,7 +93,7 @@ export class DatasetsDetailComponent implements OnInit {
 		private activatedRoute: ActivatedRoute, public sanitizer: DomSanitizer, private router: Router,
 		public googleAnalyticsEventsService: GoogleAnalyticsEventsService,
 		private utilsService:UtilsService,
-		private filesAdminService: FilesAdminService) {
+		private filesAdminService: FilesAdminService, private messageService: MessageService, private ngZone: NgZone) {
 		this.datasetListErrorTitle = Constants.DATASET_LIST_ERROR_TITLE;
 		this.datasetListErrorMessage = Constants.DATASET_LIST_ERROR_MESSAGE;
 		this.routerLinkDataCatalogDataset = Constants.ROUTER_LINK_DATA_CATALOG_DATASET;
@@ -112,23 +114,27 @@ export class DatasetsDetailComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.loadResource();
+	}
+
+	loadResource() {
 		this.activatedRoute.params.subscribe(params => {
 			try {
 				this.showEditButton();
 				this.dataset.name = params[Constants.ROUTER_LINK_DATA_PARAM_DATASET_NAME];
 				this.datasetHomer.package_id = params[Constants.ROUTER_LINK_DATA_PARAM_DATASET_HOMER_NAME];
+				if (this.dataset.name) {
+					this.getDataset(this.dataset);
+				}
+				if (this.datasetHomer.package_id) {
+					this.loadDatasetHomer(this.datasetHomer);
+				}
 			} catch (error) {
 				console.error("Error: ngOnInit() params - datasets-detail.component.ts");
 				this.errorTitle = this.datasetListErrorTitle;
 				this.errorMessage = this.datasetListErrorMessage;
 			}
 		});
-		if (this.dataset.name) {
-			this.getDataset(this.dataset);
-		}
-		if (this.datasetHomer.package_id) {
-			this.loadDatasetHomer(this.datasetHomer);
-		}
 	}
 
 	initializeDataset() {
@@ -547,4 +553,26 @@ export class DatasetsDetailComponent implements OnInit {
 		window.open(url, '_blank');
 	}
 
+	rateDataset(event) {
+		try {
+			this.datasetsService.rateDataset(this.dataset.name, event.value).subscribe( response => {
+				if(response.status == 200 || response.status == 302){
+					this.ngZone.run(() => {
+						this.messageService.add({severity:'success', summary:'Voto registrado: ' + event.value, detail:'Su voto se ha registrado correctamente.'});
+					});
+					this.loadResource();
+				} else {
+					console.error('Error rateDataset() - datasets-detail.component.ts');
+					this.ngZone.run(() => {
+						this.messageService.add({severity:'error', summary:'Error al registrar el voto.', detail:'Ha ocurrido un error en el registro del voto.'});
+					});
+				}
+			});
+		} catch (error) {
+			console.error('Error rateDataset() - datasets-detail.component.ts');
+			this.ngZone.run(() => {
+				this.messageService.add({severity:'error', summary:'Error al registrar el voto.', detail:'Ha ocurrido un error en el registro del voto.'});
+			});
+		}
+	}
 }

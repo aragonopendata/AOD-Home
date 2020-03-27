@@ -29,7 +29,7 @@
 }
 
 .messageError h1 {
-    font-family: 'Roboto';
+    font-family: 'Roboto', sans-serif;
     color: rgb(153,151,144);
     font-size: 46px;
     font-weight: 100;

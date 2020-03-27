@@ -12,6 +12,9 @@ import {
 	AutoCompleteModule, ProgressBarModule, RadioButtonModule, CheckboxModule, FileUploadModule, 
 	ToolbarModule, TabViewModule, PaginatorModule, AccordionModule, MessagesModule, GrowlModule,
 	ConfirmDialogModule, ConfirmationService } from 'primeng/primeng';
+import {RatingModule} from 'primeng/rating';
+import {ToastModule} from 'primeng/toast';
+import {MessageService} from 'primeng/api';
 import { Logger, Options } from 'angular2-logger/core';
 import { Constants } from './app.constants';
 // Components
@@ -190,6 +193,8 @@ export function init_app(appLoadService: AppInitService) {
 		CheckboxModule,
 		FileUploadModule,
 		TabViewModule,
+		RatingModule,
+		ToastModule,
 		HttpClientModule,
 		PaginatorModule,
 		AccordionModule,
@@ -227,7 +232,8 @@ export function init_app(appLoadService: AppInitService) {
 		AodCoreAdminService,
 		ConfirmationService,
 		GoogleAnalyticsEventsService,
-		UtilsService
+		UtilsService,
+		MessageService
 	],
 	bootstrap: [AppComponent]
 })

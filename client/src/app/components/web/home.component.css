@@ -55,7 +55,7 @@ h1 {
 }
 
 p {
-    font-family: 'Roboto';
+    font-family: 'Roboto', sans-serif;
     line-height: 1;
     font-weight: 300;
     margin: 0 0 0.75em;
