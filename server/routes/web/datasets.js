@@ -1115,7 +1115,6 @@ router.get(constants.API_URL_DATASETS + "/:datasetName/:rating", function (req, 
         }
 
         http.get(httpConf, function (results) {
-            console.log(results)
             var body = '';
             results.req.res.on('data', function (chunk) {
                 body += chunk;
