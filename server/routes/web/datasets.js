@@ -1101,6 +1101,8 @@ function parsePXFile(data) {
 router.get(constants.API_URL_DATASETS + "/:datasetName/:rating", function (req, res, next) {
     try {
         let datasetName = req.params.datasetName;
+        var ip = req.headers['X-Forwarded-For'] || req.connection.remoteAddress;
+        console.log(ip)
         let rating = req.params.rating;
         let serviceRequestUrl = constants.EXPRESS_NODE_REDIRECT_ROUTING_URL + 
             constants.CKAN_URL_PATH_RATING_DATASET + constants.CKAN_URL_PATH_TRACKING_DATASET + "/" + datasetName + "/" + rating;
