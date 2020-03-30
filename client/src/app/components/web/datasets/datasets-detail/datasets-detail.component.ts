@@ -12,7 +12,7 @@ import { AuthenticationService } from 'app/services/security/authentication.serv
 import { UsersAdminService } from 'app/services/admin/users-admin.service';
 import { GoogleAnalyticsEventsService } from "../../../../services/web/google-analytics-events.service";
 import { Organization } from 'app/models/Organization';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { DatasetsUtils } from '../../../../utils/DatasetsUtils';
 import { Extra } from '../../../../models/Extra';
 import { UtilsService } from '../../../../services/web/utils.service';
@@ -87,6 +87,8 @@ export class DatasetsDetailComponent implements OnInit {
 
 	showMapLink = false;
 
+	subscription: Subscription;
+
 	constructor(private datasetsService: DatasetsService,
 		private usersAdminService: UsersAdminService,
 		private authenticationService: AuthenticationService,
@@ -118,9 +120,12 @@ export class DatasetsDetailComponent implements OnInit {
 	}
 
 	loadResource() {
-		this.activatedRoute.params.subscribe(params => {
-			this.datasetsService.clearDataset();
+		if (this.subscription) {
+			this.subscription.unsubscribe();
+		}
+		this.subscription = this.activatedRoute.params.subscribe(params => {
 			this.initializeDataset();
+			this.datasetsService.clearDataset();
 			try {
 				this.showEditButton();
 				this.dataset.name = params[Constants.ROUTER_LINK_DATA_PARAM_DATASET_NAME];
