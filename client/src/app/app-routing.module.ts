@@ -48,6 +48,10 @@ import { InfoListAdminComponent } from './components/admin/global/static-content
 import { CampusAdminEventsComponent } from './components/admin/campus-admin/campus-admin-events/campus-admin-events.component';
 import { CampusAdminEntriesComponent } from './components/admin/campus-admin/campus-admin-entries/campus-admin-entries.component';
 import { CampusAdminSpeakersComponent } from './components/admin/campus-admin/campus-admin-speakers/campus-admin-speakers.component';
+import { FocusComponent } from './components/admin/focus/focus.component';
+import { DashboardFocusComponent } from './components/admin/focus/dashboard-focus/dashboard-focus.component';
+import { HistoriesComponent } from './components/admin/focus/histories/histories.component';
+import { HistoriesListComponent } from './components/admin/focus/histories/histories-list/histories-list.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -96,8 +100,11 @@ const routes: Routes = [
                 { path: Constants.ROUTER_LINK_CONTENT_LISTS + '/:' + Constants.ROUTER_LINK_DATA_PARAM_SECTION_NAME, component: InfoListAdminComponent,canActivate: [AuthGuard] },
             ]},
         ]},
+        //datacenter
         { path: Constants.ROUTER_LINK_DATACENTER, component: DatacenterComponent, canActivate: [AuthGuard], children: [
+            
             { path: '', redirectTo: Constants.ROUTER_LINK_DASHBOARD, pathMatch: 'full' },
+            //dahboard --> /datacenter/dashboard
             { path: Constants.ROUTER_LINK_DASHBOARD, component: DashboardDatacenterComponent, canActivate: [AuthGuard] },
             { path: Constants.ROUTER_LINK_DATASETS, component: DatasetsAdminComponent, canActivate: [AuthGuard], children: [
                 { path: '', redirectTo: Constants.ROUTER_LINK_DATASETS_LIST, canActivate: [AuthGuard], pathMatch: 'full' },
@@ -114,6 +121,19 @@ const routes: Routes = [
                 { path: Constants.ROUTER_LINK_ORGANIZATIONS_EDIT + '/:' + Constants.ROUTER_LINK_DATA_PARAM_ORGANIZATION_NAME, component: OrganizationsAdminEditComponent, canActivate: [AuthGuard] }
             ]}
         ]},
+
+        { path: Constants.ROUTER_LINK_FOCUS, component: FocusComponent, canActivate: [AuthGuard], children: [
+            
+            { path: '', redirectTo: Constants.ROUTER_LINK_DASHBOARD, pathMatch: 'full' },
+            //dahboard --> /datacenter/dashboard
+            //histories
+            { path: Constants.ROUTER_LINK_DASHBOARD, component: DashboardFocusComponent, canActivate: [AuthGuard] },
+            { path: Constants.ROUTER_LINK_HISTORIES, component: HistoriesComponent, canActivate: [AuthGuard], children: [
+                { path: '', redirectTo: Constants.ROUTER_LINK_FOCUS_LIST, canActivate: [AuthGuard], pathMatch: 'full' },
+                { path: Constants.ROUTER_LINK_FOCUS_LIST, component: HistoriesListComponent, canActivate: [AuthGuard] }
+            ]}
+        ]},
+
         { path: Constants.ROUTER_LINK_LOGSTASH, component: LogstashComponent, canActivate: [AuthGuard] },
         { path: Constants.ROUTER_LINK_VISUAL_DATA, component: VisualDataComponent, canActivate: [AuthGuard] },
         { path: Constants.ROUTER_LINK_CAMPUS_ADMIN_EVENTS, component: CampusAdminEventsComponent, canActivate: [AuthGuard] },

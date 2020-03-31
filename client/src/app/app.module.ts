@@ -63,6 +63,11 @@ import { CampusAdminSpeakersComponent } from './components/admin/campus-admin/ca
 import { VisualDataComponent } from './components/admin/visual-data/visual-data.component';
 import { SysAdminComponent } from './components/admin/global/sys-admin/sys-admin.component';
 import { KnowledgeComponent } from './components/web/static-content/info/knowledge/knowledge.component';
+
+import { FocusComponent } from './components/admin/focus/focus.component';
+import { DashboardFocusComponent } from './components/admin/focus/dashboard-focus/dashboard-focus.component';
+import { HistoriesComponent } from './components/admin/focus/histories/histories.component';
+import { HistoriesListComponent } from './components/admin/focus/histories/histories-list/histories-list.component';
 // Pipes
 import { EventSafeHtmlPipe } from './components/web/static-content/info/events/events-safeHTML.pipe';
 import { OpenDataSafeHtmlPipe } from "./components/web/static-content/info/open-data/open-data-safeHTML.pipe";
@@ -160,7 +165,11 @@ export function init_app(appLoadService: AppInitService) {
 		CampusAdminEntriesComponent,
 		CampusAdminSpeakersComponent,
 		DatasetSearchComponent,
-		SearchItemComponent
+		SearchItemComponent,
+		FocusComponent,
+		DashboardFocusComponent,
+		HistoriesComponent,
+		HistoriesListComponent
   	],
   	imports: [
 		BrowserModule,
