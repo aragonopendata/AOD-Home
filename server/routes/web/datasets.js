@@ -1102,6 +1102,7 @@ router.get(constants.API_URL_DATASETS + "/:datasetName/:rating", function (req, 
     try {
         let datasetName = req.params.datasetName;
         var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+        logger.error("IP - " + ip);
         let rating = req.params.rating;
         let serviceRequestUrl = constants.EXPRESS_NODE_REDIRECT_ROUTING_URL + 
             constants.CKAN_URL_PATH_RATING_DATASET + constants.CKAN_URL_PATH_TRACKING_DATASET + "/" + datasetName + "/" + rating;
@@ -1128,7 +1129,7 @@ router.get(constants.API_URL_DATASETS + "/:datasetName/:rating", function (req, 
             if (response) {
                 res.json({statusCode: response.statusCode});
             } else {
-                res.json({ 'status': 500, 'error': 'No se ha podido registrar el voto' });
+                res.json({ statusCode: 500, error: 'No se ha podido registrar el voto' });
             }
         });
 
