@@ -12,7 +12,7 @@ import { AuthenticationService } from 'app/services/security/authentication.serv
 import { UsersAdminService } from 'app/services/admin/users-admin.service';
 import { GoogleAnalyticsEventsService } from "../../../../services/web/google-analytics-events.service";
 import { Organization } from 'app/models/Organization';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { DatasetsUtils } from '../../../../utils/DatasetsUtils';
 import { Extra } from '../../../../models/Extra';
 import { UtilsService } from '../../../../services/web/utils.service';
@@ -87,6 +87,8 @@ export class DatasetsDetailComponent implements OnInit {
 
 	showMapLink = false;
 
+	subscription: Subscription;
+
 	constructor(private datasetsService: DatasetsService,
 		private usersAdminService: UsersAdminService,
 		private authenticationService: AuthenticationService,
@@ -118,7 +120,12 @@ export class DatasetsDetailComponent implements OnInit {
 	}
 
 	loadResource() {
-		this.activatedRoute.params.subscribe(params => {
+		if (this.subscription) {
+			this.subscription.unsubscribe();
+		}
+		this.subscription = this.activatedRoute.params.subscribe(params => {
+			this.initializeDataset();
+			this.datasetsService.clearDataset();
 			try {
 				this.showEditButton();
 				this.dataset.name = params[Constants.ROUTER_LINK_DATA_PARAM_DATASET_NAME];
@@ -398,12 +405,6 @@ export class DatasetsDetailComponent implements OnInit {
 
 	//Methods called from HTML.
 
-	showDataset(dataset: Dataset) {
-		this.initializeDataset();
-		this.datasetsService.setDataset(dataset);
-		this.getDataset(dataset);
-	}
-
 	downloadRDF(datasetName: string) {
 		this.datasetsService.getDatasetRDF(datasetName).subscribe(result => {
 			let blob = new Blob(['\ufeff' + result], { type: Constants.DATASET_RDF_FORMAT_OPTIONS_RDF });
@@ -555,18 +556,21 @@ export class DatasetsDetailComponent implements OnInit {
 
 	rateDataset(event) {
 		try {
-			this.datasetsService.rateDataset(this.dataset.name, event.value).subscribe( response => {
-				if(response.status == 200 || response.status == 302){
-					this.ngZone.run(() => {
-						this.messageService.add({severity:'success', summary:'Voto registrado: ' + event.value, detail:'Su voto se ha registrado correctamente.'});
-					});
-					this.loadResource();
-				} else {
-					console.error('Error rateDataset() - datasets-detail.component.ts');
-					this.ngZone.run(() => {
-						this.messageService.add({severity:'error', summary:'Error al registrar el voto.', detail:'Ha ocurrido un error en el registro del voto.'});
-					});
-				}
+			this.datasetsService.getIpCliente().subscribe((res: any) => {
+				var ip = res.ip;
+				this.datasetsService.rateDataset(this.dataset.name, event.value, ip).subscribe( response => {
+					if(response.statusCode == 200 || response.statusCode == 302){
+						this.ngZone.run(() => {
+							this.messageService.add({severity:'success', summary:'Voto registrado: ' + event.value, detail:'Su voto se ha registrado correctamente.'});
+						});
+						this.loadResource();
+					} else {
+						console.error('Error rateDataset() - datasets-detail.component.ts');
+						this.ngZone.run(() => {
+							this.messageService.add({severity:'error', summary:'Error al registrar el voto.', detail:'Ha ocurrido un error en el registro del voto.'});
+						});
+					}
+				});
 			});
 		} catch (error) {
 			console.error('Error rateDataset() - datasets-detail.component.ts');

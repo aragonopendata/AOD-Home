@@ -1101,6 +1101,7 @@ function parsePXFile(data) {
 router.get(constants.API_URL_DATASETS + "/:datasetName/:rating", function (req, res, next) {
     try {
         let datasetName = req.params.datasetName;
+        var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
         let rating = req.params.rating;
         let serviceRequestUrl = constants.EXPRESS_NODE_REDIRECT_ROUTING_URL + 
             constants.CKAN_URL_PATH_RATING_DATASET + constants.CKAN_URL_PATH_TRACKING_DATASET + "/" + datasetName + "/" + rating;
@@ -1111,24 +1112,29 @@ router.get(constants.API_URL_DATASETS + "/:datasetName/:rating", function (req, 
             let httpProxyConf = proxy.getproxyOptions(serviceRequestUrl);
             httpConf = httpProxyConf;
         } else {
-            httpConf = serviceRequestUrl;
+            var httpRequestOptions = {
+                url: serviceRequestUrl,
+                method: constants.HTTP_REQUEST_METHOD_GET,
+                headers: {
+                    'x-forwarded-for': ip,
+                },
+                encoding: null
+            };
         }
-
-        http.get(httpConf, function (results) {
-            console.log(results)
-            var body = '';
-            results.req.res.on('data', function (chunk) {
-                body += chunk;
-            });
-            results.req.res.on('end', function () {
-                res.json({status: results.req.res.statusCode});
-            });
-        }).on('error', function (err) {
-            utils.errorHandler(err, res, serviceName);
+        request(httpRequestOptions, function (err, response) {
+            if (err) {
+                utils.errorHandler(err, response, serviceName);
+            }
+            if (response) {
+                res.json({statusCode: response.statusCode});
+            } else {
+                res.json({ 'status': 500, 'error': 'No se ha podido registrar el voto' });
+            }
         });
 
     } catch (error) {
-        logger.error('Error in route' + constants.API_URL_DATASETS_COUNT);
+        logger.error('Error in rating ' + constants.CKAN_URL_PATH_RATING_DATASET + constants.CKAN_URL_PATH_TRACKING_DATASET + "/" + datasetName + "/" + rating);
+        logger.error(error);
     }
 });
 
