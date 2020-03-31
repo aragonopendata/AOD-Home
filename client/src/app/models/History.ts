@@ -10,8 +10,8 @@ export class History {
     secondary_categories?: number[];
     contents?: Content[];
 
-    publishDate: Date;
-    lastUpdate: string;
+    create_date: Date;
+    update_date: string;
 
     image?: string;
     constructor() { }
