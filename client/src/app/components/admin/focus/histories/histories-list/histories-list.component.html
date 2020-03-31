@@ -42,14 +42,14 @@
 				{{history.email}}
 			</ng-template>
     	</p-column>
-    	<p-column field="createDate" header="Fecha creacion" [style]="{'width':'15%'}" sortable="custom" sortFunction="orderTable($event)">
+    	<p-column field="create_date" header="Fecha creacion" [style]="{'width':'15%'}" sortable="custom" sortFunction="orderTable($event)">
 			<ng-template pTemplate="body" let-history="rowData">
-        		{{history.fromDate}}
+        		{{history.create_date}}
 			</ng-template>
 		</p-column>
-		<p-column field="lastUpdate" header="Última actualización" [style]="{'width':'15%'}" sortable="custom" sortFunction="orderTable($event)">
+		<p-column field="update_date" header="Última actualización" [style]="{'width':'15%'}" sortable="custom" sortFunction="orderTable($event)">
 			<ng-template pTemplate="body" let-history="rowData">
-				<p>date: 'dd/MM/yyyy'</p>
+				{{history.update_date}}
 			</ng-template>
 		</p-column>
 		<p-column header="edit" header="Edición" [style]="{'width':'15%'}">
