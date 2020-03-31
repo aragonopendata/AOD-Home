@@ -559,7 +559,7 @@ export class DatasetsDetailComponent implements OnInit {
 			this.datasetsService.getIpCliente().subscribe((res: any) => {
 				var ip = res.ip;
 				this.datasetsService.rateDataset(this.dataset.name, event.value, ip).subscribe( response => {
-					if(response.status == 200 || response.status == 302){
+					if(response.statusCode == 200 || response.statusCode == 302){
 						this.ngZone.run(() => {
 							this.messageService.add({severity:'success', summary:'Voto registrado: ' + event.value, detail:'Su voto se ha registrado correctamente.'});
 						});
