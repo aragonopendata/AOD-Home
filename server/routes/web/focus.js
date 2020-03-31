@@ -163,6 +163,12 @@ function getHistoryById(id){
         try {
             pool.connect((err, client, done) => {
 
+                if(err){
+                    logger.error('getHistoryInFocus - No se puede establecer conexión con la BBDD');
+                    reject(err)
+                    return
+                }
+
                 const queryHistory = {
                     text: dbQueries.DB_FOCUS_GET_HISTORY,
                     values: [id]
@@ -219,6 +225,12 @@ function getAllHistories(){
         try {
             pool.connect((err, client, done) => {
 
+                if(err){
+                    logger.error('getAllHistories - No se puede establecer conexión con la BBDD');
+                    reject(err)
+                    return
+                }
+
                 const queryHistories = {
                     text: dbQueries.DB_FOCUS_GET_HISTORIES,
                     rowMode: constants.SQL_RESULSET_FORMAT_JSON
@@ -251,6 +263,12 @@ function inserHistoryTransaction(history){
     return new Promise((resolve, reject) => {
         try {
             pool.connect((err, client, done) => {
+
+                if(err){
+                    logger.error('inserHistoryTransaction - No se puede establecer conexión con la BBDD');
+                    reject(err)
+                    return
+                }
 
                 newToken().then( (token ) => {
 
@@ -299,6 +317,13 @@ function updateHistoryTransaction(history){
         try {
             pool.connect((err, client, done) => {
 
+                if(err){
+                    logger.error('updateHistoryTransaction - No se puede establecer conexión con la BBDD');
+                    reject(err)
+                    return
+                }
+
+
                 logger.notice('Se inicia la transacción de edicion de una historia');
 
                 client.query('BEGIN', (err) => {
@@ -346,6 +371,12 @@ function deleteHistoryTransaction(id){
     return new Promise((resolve, reject) => {
         try {
             pool.connect((err, client, done) => {
+
+                if(err){
+                    logger.error('deleteHistoryTransaction - No se puede establecer conexión con la BBDD');
+                    reject(err)
+                    return
+                }
 
                 logger.notice('Se inicia la transacción de eliminacion de una historia');
 
