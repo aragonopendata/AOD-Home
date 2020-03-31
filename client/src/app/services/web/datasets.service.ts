@@ -217,7 +217,7 @@ export class DatasetsService {
 	}
 
 	public getIpCliente() {
-		return this.http.get('http://api.ipify.org/?format=json').pipe(map(res => res.json()));
+		return this.http.get('https://api.ipify.org/?format=json').pipe(map(res => res.json()));
 	}
 
 	public clearDataset(){
