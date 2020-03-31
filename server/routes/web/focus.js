@@ -382,16 +382,20 @@ function deleteHistoryTransaction(id){
 
 function inserHistory(client, done, token, history){
 
+    if(!history.create_date){
+        history.create_date= new Date().toISOString()
+    }else{
+        history.update_date=new Date().toISOString()
+    }
+
     return new Promise((resolve, reject) => {
 
         try {
 
             const queryHistory = {
                 text: dbQueries.DB_FOCUS_INSERT_FOCUS_HISTORY,
-                values: [token, history.state, history.title, history.description, history.email, history.id_reference, history.main_category, history.secondary_categories]
+                values: [token, history.state, history.title, history.description, history.email, history.id_reference, history.main_category, history.secondary_categories, history.create_date, history.update_date]
             };
-
-
             client.query(queryHistory, (err, resultHistory) => {
                 if (rollback(client, done, err)) {
                     logger.error('inserHistory - Error guardando historia:', err);

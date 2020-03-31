@@ -196,9 +196,9 @@ exports.DB_ADMIN_UPDATE_CAMPUS_SPEAKERS =  'UPDATE campus.speakers SET ' +
 										   'description = COALESCE($2, description) ' +
 										   'WHERE id = $3';
 									   
-exports.DB_FOCUS_GET_HISTORIES = 'SELECT id, state, title, description, email, id_reference, main_category, secondary_categories FROM focus.histories';
+exports.DB_FOCUS_GET_HISTORIES = 'SELECT id, state, title, description, email, id_reference, main_category, secondary_categories, create_date, update_date FROM focus.histories';
 
-exports.DB_FOCUS_GET_HISTORY = 'SELECT id, state, title, description, email, id_reference, main_category, secondary_categories FROM focus.histories WHERE id = $1';
+exports.DB_FOCUS_GET_HISTORY = 'SELECT id, state, title, description, email, id_reference, main_category, secondary_categories, create_date, update_date FROM focus.histories WHERE id = $1';
 
 exports.DB_FOCUS_EXIST_HISTORY = 'SELECT id FROM focus.histories WHERE id = $1';
 
@@ -206,7 +206,7 @@ exports.DB_FOCUS_GET_CONTENTS_HISTORIES = 'SELECT id, title, description, id_gra
 
 exports.DB_FOCUS_GET_CONTENTS_HISTORIES_PARTICULAR_HISTORY = 'SELECT id, title, description, id_graph, id_history FROM focus.contents_histories WHERE id_history = $1';
 
-exports.DB_FOCUS_INSERT_FOCUS_HISTORY = 'INSERT INTO focus.histories (id, state, title, description, email, id_reference, main_category, secondary_categories) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING focus.histories.id'
+exports.DB_FOCUS_INSERT_FOCUS_HISTORY = 'INSERT INTO focus.histories (id, state, title, description, email, id_reference, main_category, secondary_categories, create_date, update_date) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING focus.histories.id'
 
 exports.DB_FOCUS_INSERT_FOCUS_CONTENTS_HISTORY = 'INSERT INTO focus.contents_histories (title, description, id_graph, id_history) VALUES %L'
 
