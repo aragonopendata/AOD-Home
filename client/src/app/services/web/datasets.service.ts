@@ -211,7 +211,7 @@ export class DatasetsService {
 
 	public rateDataset(datasetName: string, value: number, ip: string) {
 		var headers = new Headers();
-		headers.append('X-Forwarded-For', ip);
+		headers.set('X-Forwarded-For', ip);
 		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_DATASETS + "/" + datasetName + "/" + value;
 		return this.http.get(fullUrl, {headers: headers}).pipe(map(res => res.json()));
 	}
