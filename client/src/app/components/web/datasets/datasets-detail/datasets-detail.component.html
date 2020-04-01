@@ -19,9 +19,6 @@
 <div class="container" *ngIf="!errorTitle && datasetHomer.package_id == undefined">
 <div class="dtHeader row">
 	<h1 tabindex="{{openedMenu ? -1 : 0}}" class="globaltitle col-12 col-md-8">{{dataset.title}}</h1>
-	<div class="col-12 col-md-4 col-xl-2">
-		<p-rating [ngModel]="dataset.rating" [cancel]="false" (onRate)="rateDataset($event)"></p-rating>
-	</div>
 	<div class="social col-12 offset-md-8 col-md-4 offset-xl-0 col-xl-2">
 		<a tabindex="{{openedMenu ? -1 : 0}}" href="{{routerLinkFacebookShare}}" target="_blank" title="Compartir en Facebook">
 		  <img src="{{assetsUrl}}/public/contenido-general/social/facebookIcon.png" alt="compartir-en-Facebook">
@@ -151,9 +148,12 @@
 				</div>
 			</div>
 			<div class="section">
-					<h6 tabindex="{{openedMenu ? -1 : 0}}">Metadatos de la colección</h6>
-					<a tabindex="{{openedMenu ? -1 : 0}}" class="tags" (click)="submitEvent(dataset.name,'RDF');downloadRDF(dataset.name);" target="_blank" title="Metadato de la colección en RDF" pButton type="button" label="RDF" style="margin: 2px;"></a>
-				</div>
+				<h6 tabindex="{{openedMenu ? -1 : 0}}">Metadatos de la colección</h6>
+				<a tabindex="{{openedMenu ? -1 : 0}}" class="tags" (click)="submitEvent(dataset.name,'RDF');downloadRDF(dataset.name);" target="_blank" title="Metadato de la colección en RDF" pButton type="button" label="RDF" style="margin: 2px;"></a>
+			</div>
+		</div>
+		<div *ngIf="!extrasIAESTNotEmpty && !isMobileScreen">
+			<p-rating [ngModel]="dataset.rating" [cancel]="false" (onRate)="rateDataset($event)"></p-rating>
 		</div>
 	</div>
 	<div *ngIf="extrasIAESTNotEmpty" class="infodtset col-sm-12 col-md-8" style="margin-top: 5px;">
@@ -202,6 +202,9 @@
 					<p tabindex="{{openedMenu ? -1 : 0}}" class="textContent" [innerHTML]="extraIAESTLegislacionUE"></p>
 				</div>					
 			</div>
+	</div>
+	<div *ngIf="extrasIAESTNotEmpty && isMobileScreen">
+		<p-rating [ngModel]="dataset.rating" [cancel]="false" (onRate)="rateDataset($event)"></p-rating>
 	</div>
 	<div class="recomend col-12" *ngIf="datasetsRecommended">
 		<h4 tabindex="{{openedMenu ? -1 : 0}}">También te pueden interesar estos datos</h4>
