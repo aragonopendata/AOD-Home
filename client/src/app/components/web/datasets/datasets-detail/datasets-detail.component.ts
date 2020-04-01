@@ -1,4 +1,4 @@
-import { NgZone } from '@angular/core';
+import { NgZone, HostListener } from '@angular/core';
 import { ResourceView } from './../../../../models/ResourceView';
 import { Component, OnInit } from '@angular/core';
 import { DatasetsService } from '../../../../services/web/datasets.service';
@@ -88,6 +88,7 @@ export class DatasetsDetailComponent implements OnInit {
 	showMapLink = false;
 
 	subscription: Subscription;
+	isMobileScreen: boolean;
 
 	constructor(private datasetsService: DatasetsService,
 		private usersAdminService: UsersAdminService,
@@ -117,6 +118,15 @@ export class DatasetsDetailComponent implements OnInit {
 
 	ngOnInit() {
 		this.loadResource();
+	}
+
+	@HostListener('window:resize', ['$event'])
+	onResize(event) {
+		if (event.target.innerWidth < 768) {
+			this.isMobileScreen = true;
+		} else {
+			this.isMobileScreen = false;
+		}
 	}
 
 	loadResource() {
