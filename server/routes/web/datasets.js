@@ -1128,7 +1128,7 @@ router.get(constants.API_URL_DATASETS + "/:datasetName/:rating", function (req, 
             if (response) {
                 res.json({statusCode: response.statusCode});
             } else {
-                res.json({ 'status': 500, 'error': 'No se ha podido registrar el voto' });
+                res.json({ statusCode: 500, error: 'No se ha podido registrar el voto' });
             }
         });
 

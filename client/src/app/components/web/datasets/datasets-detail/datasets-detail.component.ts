@@ -559,13 +559,13 @@ export class DatasetsDetailComponent implements OnInit {
 			this.datasetsService.getIpCliente().subscribe((res: any) => {
 				var ip = res.ip;
 				this.datasetsService.rateDataset(this.dataset.name, event.value, ip).subscribe( response => {
+					console.log(response);
 					if(response.statusCode == 200 || response.statusCode == 302){
 						this.ngZone.run(() => {
 							this.messageService.add({severity:'success', summary:'Voto registrado: ' + event.value, detail:'Su voto se ha registrado correctamente.'});
 						});
 						this.loadResource();
 					} else {
-						console.error('Error rateDataset() - datasets-detail.component.ts');
 						this.ngZone.run(() => {
 							this.messageService.add({severity:'error', summary:'Error al registrar el voto.', detail:'Ha ocurrido un error en el registro del voto.'});
 						});
