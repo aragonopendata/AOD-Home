@@ -65,9 +65,7 @@ import { SysAdminComponent } from './components/admin/global/sys-admin/sys-admin
 import { KnowledgeComponent } from './components/web/static-content/info/knowledge/knowledge.component';
 
 import { FocusComponent } from './components/admin/focus/focus.component';
-import { DashboardFocusComponent } from './components/admin/focus/dashboard-focus/dashboard-focus.component';
 import { HistoriesComponent } from './components/admin/focus/histories/histories.component';
-import { HistoriesListComponent } from './components/admin/focus/histories/histories-list/histories-list.component';
 // Pipes
 import { EventSafeHtmlPipe } from './components/web/static-content/info/events/events-safeHTML.pipe';
 import { OpenDataSafeHtmlPipe } from "./components/web/static-content/info/open-data/open-data-safeHTML.pipe";
@@ -167,9 +165,7 @@ export function init_app(appLoadService: AppInitService) {
 		DatasetSearchComponent,
 		SearchItemComponent,
 		FocusComponent,
-		DashboardFocusComponent,
-		HistoriesComponent,
-		HistoriesListComponent
+		HistoriesComponent
   	],
   	imports: [
 		BrowserModule,
