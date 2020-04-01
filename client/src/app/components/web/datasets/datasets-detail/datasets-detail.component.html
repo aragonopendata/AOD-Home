@@ -204,7 +204,9 @@
 			</div>
 	</div>
 	<div class="row" *ngIf="isMobileScreen">
-		<p-rating [ngModel]="dataset.rating" [cancel]="false" (onRate)="rateDataset($event)"></p-rating>
+		<div class="col-12">
+			<p-rating [ngModel]="dataset.rating" [cancel]="false" (onRate)="rateDataset($event)"></p-rating>
+		</div>
 	</div>
 	<div class="recomend col-12" *ngIf="datasetsRecommended">
 		<h4 tabindex="{{openedMenu ? -1 : 0}}">También te pueden interesar estos datos</h4>
