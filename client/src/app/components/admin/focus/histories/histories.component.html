@@ -1,1 +1,96 @@
-<router-outlet></router-outlet>
+<div class="container">
+
+    <!-- Dialogs -->
+    <!--<p-dialog header="¿Está seguro de que deasea borrar el dataset?" [(visible)]="displayDeleteDialog">
+        <p>Se va a proceder a borrar el dataset <b> </b></p>
+        <p>¿Desea continuar?</p>
+             <p-footer>
+                 <button type="button" pButton icon="fas fa-check" (click)="deleteDataset()" label="Sí"></button>
+                 <button type="button" pButton icon="fas fa-times" (click)="undoDeleteDataset()" label="No"></button>
+             </p-footer>
+    </p-dialog>
+    <p-growl [(value)]="msgs"></p-growl>-->
+
+
+    <div class="row">
+        <div class="col-12" >
+            <div class="form-group">
+                <label>Buscar</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Buscar por..." [(ngModel)]="searchValue" (keyup.enter)="searchDatasetsByText(searchInput.value)" #searchInput>
+                        <span class="input-group-btn">
+                            <button class="btn btn-secondary" type="button" (click)="searchDatasetsByText(searchInput.value)" ><i class="fas fa-search" aria-hidden="true"></i></button>
+                        </span>
+                    </div>                
+            </div>
+        </div>
+    </div>
+    
+    <div *ngIf="showProgressBar" class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+    </div>
+
+    <p-dataTable *ngIf="histories" [value]="histories" (onSort)="setOrder($event)" [responsive]="true" #dt>
+        <p-column field="title" [style]="{'width':'50%'}" sortable="custom" sortFunction="orderTable($event)" header="{{histories.length}} conjuntos de datos encontrados">
+            <ng-template pTemplate="body" let-history="rowData">
+                <i  class="fas fa-lock"></i>
+                    {{history.title}}
+                <i class="fas fa-star" id="informacion_content_3_i" style="color: #5ea2ba;"></i>
+            </ng-template>
+        </p-column>
+
+        <p-column field="email" header="Email" [style]="{'width':'25%'}" sortable="custom" sortFunction="orderTable($event)" >
+            <ng-template pTemplate="body" let-history="rowData">                    
+                {{history.email}}
+            </ng-template>
+        </p-column>
+        
+        <p-column field="create_date" header="Fecha creacion" [style]="{'width':'15%'}" sortable="custom" sortFunction="orderTable($event)">
+            <ng-template pTemplate="body" let-history="rowData">
+                {{history.create_date}}
+            </ng-template>
+        </p-column>
+
+        <p-column field="update_date" header="Última actualización" [style]="{'width':'15%'}" sortable="custom" sortFunction="orderTable($event)">
+            <ng-template pTemplate="body" let-history="rowData">
+                {{history.update_date}}
+            </ng-template>
+        </p-column>
+
+        <p-column header="edit" header="Edición" [style]="{'width':'15%'}">
+            <ng-template pTemplate="body" let-history="rowData">
+                <button (click)="previewHistory(history.id)" class="btn btn-primary p-2" type="button"  data-toggle="tooltip" data-placement="top" title="Mostrar"><i class="fas fa-search"></i></button>
+                <button (click)="editHistory(history.id)" class="btn btn-primary p-2" type="button"  data-toggle="tooltip" data-placement="top" title="Editar"><i class="fas fa-edit"></i></button>
+                <button class="btn btn-primary p-2" type="button"  data-toggle="tooltip" data-placement="top" title="Borrar"><i class="fas fa-trash-alt"></i></button>      
+            </ng-template>
+        </p-column>
+        
+    </p-dataTable>
+    <nav aria-label="Pagination" class="m-2">
+        <ul class="pagination justify-content-center">
+            <li [ngClass]="actualPage >= 1 ? 'page-item': 'page-item disabled'">
+                <a class="page-link" (click)="paginate(+pageFirst+1)" aria-label="Primero">
+            <i class="fas fa-fast-backward" ></i>
+            </a>
+            </li>
+            <li [ngClass]="actualPage >= 1 ? 'page-item': 'page-item disabled'">
+                <a class="page-link" (click)="paginate(+actualPage)" aria-label="Anterior">
+            <i class="fas fa-step-backward"></i>
+            </a>
+            </li>
+            <li *ngFor="let pageShow of pagesShow" [ngClass]="pageShow == '-' ? 'page-item disabled' : (pageShow == (+actualPage+1) ? 'page-item active': 'page-item')">
+                <a class="page-link" (click)="paginate(pageShow)">{{pageShow}}</a>
+            </li>
+            <li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
+                <a class="page-link" (click)="paginate(+actualPage+2)" aria-label="Siguiente">
+                <i class="fas fa-step-forward"></i>
+                </a>
+            </li>
+            <li [ngClass]="actualPage < (+pageLast-1) ? 'page-item': 'page-item disabled'">
+                <a class="page-link" (click)="paginate(pageLast)" aria-label="Ultimo">
+                <i class="fas fa-fast-forward"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
