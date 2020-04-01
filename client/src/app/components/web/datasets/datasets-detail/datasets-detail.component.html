@@ -203,7 +203,7 @@
 				</div>					
 			</div>
 	</div>
-	<div *ngIf="isMobileScreen">
+	<div class="row" *ngIf="isMobileScreen">
 		<p-rating [ngModel]="dataset.rating" [cancel]="false" (onRate)="rateDataset($event)"></p-rating>
 	</div>
 	<div class="recomend col-12" *ngIf="datasetsRecommended">
