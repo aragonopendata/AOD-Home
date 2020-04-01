@@ -152,7 +152,7 @@
 				<a tabindex="{{openedMenu ? -1 : 0}}" class="tags" (click)="submitEvent(dataset.name,'RDF');downloadRDF(dataset.name);" target="_blank" title="Metadato de la colección en RDF" pButton type="button" label="RDF" style="margin: 2px;"></a>
 			</div>
 		</div>
-		<div *ngIf="!extrasIAESTNotEmpty && !isMobileScreen">
+		<div *ngIf="!isMobileScreen">
 			<p-rating [ngModel]="dataset.rating" [cancel]="false" (onRate)="rateDataset($event)"></p-rating>
 		</div>
 	</div>
@@ -203,7 +203,7 @@
 				</div>					
 			</div>
 	</div>
-	<div *ngIf="extrasIAESTNotEmpty && isMobileScreen">
+	<div *ngIf="isMobileScreen">
 		<p-rating [ngModel]="dataset.rating" [cancel]="false" (onRate)="rateDataset($event)"></p-rating>
 	</div>
 	<div class="recomend col-12" *ngIf="datasetsRecommended">
