@@ -39,21 +39,10 @@ export class FocusAdminService {
 		headers.append('Content-Type', ' application/json');
 		return headers;
 	}
-	public getHistories() {
+	public getHistories(sort: string, page: number, limit: number) {
 		console.log('en get histories (service)')
-			//this.refreshUser();
-			let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_FOCUS + Constants.SERVER_API_LINK_HISTORIES
-			let headers = this.buildRequestHeaders();
-			return this.http.get(fullUrl, { headers: headers }).pipe(map(res => res.json()));
-	  }
-  /*public getHistories(sort: string, page: number, rows: number) {
-    console.log('en get histories (service)')
-		//this.refreshUser();
-		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_FOCUS + Constants.SERVER_API_LINK_HISTORIES
-								+ '?' + Constants.SERVER_API_LINK_PARAM_SORT + '=' + sort 
-								+ '&' + Constants.SERVER_API_LINK_PARAM_PAGE + '=' + page.toString
-								+ '&' + Constants.SERVER_API_LINK_PARAM_ROWS + '=' + rows.toString
+		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_FOCUS + Constants.SERVER_API_LINK_HISTORIES;
 		let headers = this.buildRequestHeaders();
-		return this.http.get(fullUrl, { headers: headers }).pipe(map(res => res.json()));
-  }*/
+		return this.http.get(fullUrl+'/'+sort+'/'+page+'/'+limit, { headers: headers }).pipe(map(res => res.json()));
+	}
 }

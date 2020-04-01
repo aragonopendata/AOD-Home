@@ -597,7 +597,8 @@ export class Constants {
     public static ROUTER_LINK_SERVICES_CRAS = 'servicios/cras';
     public static ROUTER_LINK_SERVICES_SOCIAL_DATA = 'servicios/open-social-data';
     public static ROUTER_LINK_SERVICES_ANALYTICS = 'servicios/analytics';
-    public static ROUTER_LINK_SERVICES_VISUAL_DATA = 'servicios/visualdata';
+    //public static ROUTER_LINK_SERVICES_VISUAL_DATA = 'servicios/visualdata';
+    public static ROUTER_LINK_SERVICES_FOCUS = 'servicios/focus';
     public static ROUTER_LINK_DATA_PARAM_DATASET_NAME = 'datasetName';
     public static ROUTER_LINK_DATA_PARAM_DATASET_HOMER_NAME = 'datasetHomerName';
     public static ROUTER_LINK_DATA_PARAM_TOPIC_NAME = 'topicName';
@@ -703,4 +704,19 @@ export class Constants {
     public static ELASTIC_FILES = "/gapi/export_files";
     public static ELASTIC_PAGES = "/gapi/export_pages";
     public static ELASTIC_COUNTRIES = "/gapi/export_countries";
+
+    //focus
+    public static FOCUS_SORT_COLUMN_NAME_TITLE = 'title';
+    public static FOCUS_SORT_COLUMN_NAME_EMAIL = 'email';
+    public static FOCUS_SORT_COLUMN_NAME_CREATE_DATE = 'create_date';
+    public static FOCUS_SORT_COLUMN_NAME_UPDATE_DATE = 'update_date';
+
+    public static FOCUS_SORT_COLUMN_TYPE_ASC = 'asc';
+    public static FOCUS_SORT_COLUMN_TYPE_DESC = 'desc';
+
+    public static FOCUS_SORT_DEFAULT_NAME_COLUMN_ = 'create_date';
+    public static FOCUS_SORT_DEFAULT_TYPE_COLUMN = 'desc';
+
+
+
 }
