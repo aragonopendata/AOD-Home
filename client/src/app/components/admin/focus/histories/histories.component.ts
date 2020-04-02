@@ -131,6 +131,8 @@ export class HistoriesComponent implements OnInit {
   setOrder(event) {
 
     event.page = 0;
+    this.showProgressBar = true;
+
 
     switch (event.field) {
         case Constants.FOCUS_SORT_COLUMN_NAME_TITLE:
