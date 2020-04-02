@@ -31,9 +31,15 @@
     </div>
 
     <p-dataTable *ngIf="histories" [value]="histories" (onSort)="setOrder($event)" [responsive]="true" #dt>
-        <p-column field="title" [style]="{'width':'50%'}" sortable="custom" sortFunction="orderTable($event)" header="{{histories.length}} conjuntos de datos encontrados">
+        <p-column field="title" [style]="{'width':'40%'}" sortable="custom" sortFunction="orderTable($event)" header="{{histories.length}} conjuntos de datos encontrados">
             <ng-template pTemplate="body" let-history="rowData">
                 {{history.title}}
+            </ng-template>
+        </p-column>
+
+        <p-column field="state" [style]="{'width':'15%'}" sortable="custom" sortFunction="orderTable($event)" header="Estado">
+            <ng-template pTemplate="body" let-history="rowData">
+                {{stateEnum[history.state]}}
             </ng-template>
         </p-column>
 

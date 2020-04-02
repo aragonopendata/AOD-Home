@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
 import { FocusAdminService } from 'app/services/admin/focus-admin.service';
 import { Constants } from 'app/app.constants';
+import { State } from 'app/models/State';
 
 @Component({
   selector: 'app-histories',
@@ -25,6 +26,7 @@ export class HistoriesComponent implements OnInit {
   pageFirst: number;
   pageLast: number;
   textSearch:string="";
+  stateEnum: typeof State = State;
 
   //Error Params
   errorTitle: string;
@@ -136,6 +138,13 @@ export class HistoriesComponent implements OnInit {
               this.sort = Constants.FOCUS_SORT_COLUMN_NAME_TITLE + ' ' + Constants.FOCUS_SORT_COLUMN_TYPE_DESC
             } else {
               this.sort = Constants.FOCUS_SORT_COLUMN_NAME_TITLE + ' ' + Constants.FOCUS_SORT_COLUMN_TYPE_ASC
+            }
+            break;
+        case Constants.FOCUS_SORT_COLUMN_NAME_STATE:
+            if( this.sort === Constants.FOCUS_SORT_COLUMN_NAME_STATE + ' ' + Constants.FOCUS_SORT_COLUMN_TYPE_ASC ){
+              this.sort = Constants.FOCUS_SORT_COLUMN_NAME_STATE + ' ' + Constants.FOCUS_SORT_COLUMN_TYPE_DESC
+            } else {
+              this.sort = Constants.FOCUS_SORT_COLUMN_NAME_STATE + ' ' + Constants.FOCUS_SORT_COLUMN_TYPE_ASC
             }
             break;
         case Constants.FOCUS_SORT_COLUMN_NAME_EMAIL:

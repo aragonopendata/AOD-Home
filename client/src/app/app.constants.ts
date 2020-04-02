@@ -708,6 +708,7 @@ export class Constants {
 
     //focus
     public static FOCUS_SORT_COLUMN_NAME_TITLE = 'title';
+    public static FOCUS_SORT_COLUMN_NAME_STATE = 'state';
     public static FOCUS_SORT_COLUMN_NAME_EMAIL = 'email';
     public static FOCUS_SORT_COLUMN_NAME_CREATE_DATE = 'create_date';
     public static FOCUS_SORT_COLUMN_NAME_UPDATE_DATE = 'update_date';
