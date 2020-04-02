@@ -198,8 +198,10 @@ exports.DB_ADMIN_UPDATE_CAMPUS_SPEAKERS =  'UPDATE campus.speakers SET ' +
 									   
 exports.DB_FOCUS_GET_HISTORIES = 'SELECT id, state, title, description, email, id_reference, main_category, secondary_categories, create_date, update_date FROM focus.histories';
 
-exports.DB_FOCUS_GET_HISTORIES_PAGINATE = 'SELECT id, state, title, description, email, id_reference, main_category, secondary_categories, create_date, update_date FROM focus.histories';
-exports.DB_FOCUS_GET_HISTORIES_COUNT = 'SELECT count(*) FROM focus.histories';
+exports.DB_FOCUS_GET_HISTORIES_PAGINATE = "SELECT id, state, title, description, email, id_reference, main_category, secondary_categories, create_date, update_date FROM focus.histories WHERE LOWER(title) LIKE $1";
+
+exports.DB_FOCUS_GET_HISTORIES_COUNT = 'SELECT count(*) FROM focus.histories WHERE LOWER(title) LIKE $1';
+
 
 exports.DB_FOCUS_GET_HISTORY = 'SELECT id, state, title, description, email, id_reference, main_category, secondary_categories, create_date, update_date FROM focus.histories WHERE id = $1';
 

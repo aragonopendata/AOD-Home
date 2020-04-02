@@ -16,9 +16,9 @@ const logger = require('js-logging').dailyFile([loggerSettings]);
 /**
  * GET A RESUME OF AN HISTORY (WITHOUT CONTENTS)
  */
-router.get(constants.API_URL_FOCUS_HISTORIES+ "/:sort"+ "/:limit"+ "/:page", function (req, response, next) {
+router.get(constants.API_URL_FOCUS_HISTORIES, function (req, response, next) {
 
-    getAllHistories(req.params.sort, req.params.limit, req.params.page).then(histories => {
+    getAllHistories(req.query.sort, req.query.limit, req.query.page, req.query.text).then(histories => {
         response.json({
             'status': constants.REQUEST_REQUEST_OK,
             'success': true,
@@ -89,7 +89,7 @@ router.delete(constants.API_URL_FOCUS_HISTORY + "/:id", function (req, response,
 
 
 
-function getAllHistories( order, limit, page){
+function getAllHistories( order, limit, page, text){
 
     return new Promise((resolve, reject) => {
         try {
@@ -102,9 +102,11 @@ function getAllHistories( order, limit, page){
                 }
 
                 var offset = limit*page;
+                var search="%"+ text + "%";
 
                 const queryHistories = {
-                    text: dbQueries.DB_FOCUS_GET_HISTORIES_PAGINATE + ' ORDER BY '+ order + ' LIMIT '+limit+ ' OFFSET '+offset,
+                    text: dbQueries.DB_FOCUS_GET_HISTORIES_PAGINATE + ' ORDER BY '+ order + ' LIMIT '+limit+ ' OFFSET '+offset ,
+                    values: [search],
                     rowMode: constants.SQL_RESULSET_FORMAT_JSON
                 }
 
@@ -116,11 +118,11 @@ function getAllHistories( order, limit, page){
                     } else {
                         var histories = {
                             list: result.rows,
-                            numHistories: 14
                         };
 
                         const queryHistoriesCount = {
                             text: dbQueries.DB_FOCUS_GET_HISTORIES_COUNT,
+                            values: [search],
                             rowMode: constants.SQL_RESULSET_FORMAT_JSON
                         }
 

@@ -17,9 +17,9 @@
             <div class="form-group">
                 <label>Buscar</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Buscar por..." [(ngModel)]="searchValue" (keyup.enter)="searchDatasetsByText(searchInput.value)" #searchInput>
+                        <input type="text" class="form-control" placeholder="Buscar por..." [(ngModel)]="searchValue" (keyup.enter)="searchHistoriesByText(searchInput.value)" #searchInput>
                         <span class="input-group-btn">
-                            <button class="btn btn-secondary" type="button" (click)="searchDatasetsByText(searchInput.value)" ><i class="fas fa-search" aria-hidden="true"></i></button>
+                            <button class="btn btn-secondary" type="button" (click)="searchHistoriesByText(searchInput.value)" ><i class="fas fa-search" aria-hidden="true"></i></button>
                         </span>
                     </div>                
             </div>
@@ -33,9 +33,7 @@
     <p-dataTable *ngIf="histories" [value]="histories" (onSort)="setOrder($event)" [responsive]="true" #dt>
         <p-column field="title" [style]="{'width':'50%'}" sortable="custom" sortFunction="orderTable($event)" header="{{histories.length}} conjuntos de datos encontrados">
             <ng-template pTemplate="body" let-history="rowData">
-                <i  class="fas fa-lock"></i>
-                    {{history.title}}
-                <i class="fas fa-star" id="informacion_content_3_i" style="color: #5ea2ba;"></i>
+                {{history.title}}
             </ng-template>
         </p-column>
 
@@ -47,13 +45,13 @@
         
         <p-column field="create_date" header="Fecha creacion" [style]="{'width':'15%'}" sortable="custom" sortFunction="orderTable($event)">
             <ng-template pTemplate="body" let-history="rowData">
-                {{history.create_date}}
+                {{history.create_date | date: 'dd/MM/yyyy'}}
             </ng-template>
         </p-column>
 
         <p-column field="update_date" header="Última actualización" [style]="{'width':'15%'}" sortable="custom" sortFunction="orderTable($event)">
             <ng-template pTemplate="body" let-history="rowData">
-                {{history.update_date}}
+                {{history.update_date | date: 'dd/MM/yyyy'}}
             </ng-template>
         </p-column>
 

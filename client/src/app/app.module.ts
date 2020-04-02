@@ -97,6 +97,8 @@ import { FilesAdminService } from './services/admin/files-admin.service';
 import { AppInitService } from './app-init.service';
 import { DatasetSearchComponent } from './components/web/datasets/datasets-list/dataset-search/dataset-search.component';
 import { SearchItemComponent } from './components/web/datasets/datasets-list/dataset-search/search-item/search-item.component';
+import {DatePipe} from '@angular/common';
+
 
 export function init_app(appLoadService: AppInitService) {
 	return () => appLoadService.init();
@@ -232,7 +234,8 @@ export function init_app(appLoadService: AppInitService) {
 		AodCoreAdminService,
 		ConfirmationService,
 		GoogleAnalyticsEventsService,
-		UtilsService
+		UtilsService,
+		DatePipe
 	],
 	bootstrap: [AppComponent]
 })

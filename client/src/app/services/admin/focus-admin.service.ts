@@ -40,10 +40,17 @@ export class FocusAdminService {
 		return headers;
 	}
 
-	public getHistories(sort: string, page: number, limit: number) {
+	public getHistories(sort: string, limit: number, page: number, text:string) {
+		console.log('en get histories (service)')
 		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_FOCUS + Constants.SERVER_API_LINK_HISTORIES;
+		let params = new URLSearchParams();
+		params.append("sort", sort)
+		params.append("page", page.toString())
+		params.append("limit", limit.toString())
+		params.append("text", text)
+
 		let headers = this.buildRequestHeaders();
-		return this.http.get(fullUrl+'/'+sort+'/'+page+'/'+limit, { headers: headers }).pipe(map(res => res.json()));
+		return this.http.get(fullUrl, {headers: headers, search: params  }).pipe(map((res:Response) => res.json()));
 	}
 
 	public deleteHistory(id: string) {

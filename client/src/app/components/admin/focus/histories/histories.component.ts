@@ -24,6 +24,7 @@ export class HistoriesComponent implements OnInit {
   pagesShow: string[];
   pageFirst: number;
   pageLast: number;
+  textSearch:string="";
 
   //Error Params
   errorTitle: string;
@@ -42,8 +43,7 @@ export class HistoriesComponent implements OnInit {
 
   ngOnInit() {
     //this.sort = Constants.ADMIN_SERVER_API_LINK_PARAM_SORT_DEFAULT_VALUE;
-    this.getHistories(null,null);
-    //this.getHistories(null, null);
+    this.getHistories(null, null);
   }
 
   public getHistories(page: number, rows: number){
@@ -51,7 +51,7 @@ export class HistoriesComponent implements OnInit {
     this.histories = [];
     var pageNumber = (page != null ? page : 0);
     var rowsNumber = (rows != null ? rows : this.pageRows);
-    this.focusAdminService.getHistories(this.sort,rowsNumber,pageNumber).subscribe(result => {
+    this.focusAdminService.getHistories(this.sort,rowsNumber,pageNumber,this.textSearch).subscribe(result => {
         try {
             this.histories = result.histories.list;
             this.numHistories = result.histories.numHistories;
@@ -69,6 +69,12 @@ export class HistoriesComponent implements OnInit {
       console.log(result.history);
       console.log('result.history');
     });
+  }
+
+  searchHistoriesByText(searchText: string){
+    this.histories=[];
+    this.textSearch=searchText;
+    this.getHistories(null, null)
   }
 
   previewHistory(id){
