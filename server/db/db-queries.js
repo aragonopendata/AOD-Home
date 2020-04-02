@@ -215,6 +215,7 @@ exports.DB_ADMIN_DELETE_FOCUS_HISTORY = 'DELETE FROM focus.histories WHERE id = 
 
 exports.DB_ADMIN_DELETE_FOCUS_CONTENT_BY_ID_HISTORY = 'DELETE FROM focus.contents_histories WHERE id_history = $1';
 
+exports.DB_FOCUS_UPDATE_FOCUS_STATE_HISTORY = 'UPDATE focus.histories SET state=COALESCE($1, state) WHERE id = $2';
 
 /*
 
@@ -223,7 +224,7 @@ exports.DB_FOCUS_GET_CONTENTS_HISTORIES = 'SELECT id, title, description, visual
 exports.DB_FOCUS_UPDATE_FOCUS_HISTORY = 'UPDATE focus.histories SET state=COALESCE($1, state), title = COALESCE($2, title), ' +
 							'description = COALESCE($3, description),  email = COALESCE($4, email),  id_reference = COALESCE($5, id_reference), main_category = COALESCE($6, main_category),  secondary_categories = COALESCE($7, secondary_categories) WHERE id = $8';
 
-exports.DB_FOCUS_UPDATE_FOCUS_STATE_HISTORY = 'UPDATE focus.histories SET state=COALESCE($1, state) WHERE id = $2';
+
 
 exports.DB_FOCUS_UPDATE_FOCUS_CONTENTS_HISTORY = 'UPDATE focus.contents_histories SET title = COALESCE($1, title), ' +
 							'description = COALESCE($2, description), visual_content = COALESCE($3, visual_content),  id_history = COALESCE($4, id_history) WHERE id = $5';

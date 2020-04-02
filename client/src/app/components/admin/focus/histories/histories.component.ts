@@ -64,6 +64,13 @@ export class HistoriesComponent implements OnInit {
     });
   }
 
+  public deleteHistory(id){
+    this.focusAdminService.deleteHistory(id).subscribe(result => {
+      console.log(result.history);
+      console.log('result.history');
+    });
+  }
+
   previewHistory(id){
     let url = window["config"]["AOD_BASE_URL"] + '/servicios/focus';
     window.open( url + '/viewHistory/'  +id );
