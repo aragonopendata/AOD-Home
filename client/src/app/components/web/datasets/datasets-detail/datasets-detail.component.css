@@ -499,3 +499,7 @@ a:hover {
 ::ng-deep .ui-rating a .ui-rating-icon {
     color: #5ea2ba !important;
 }
+
+.rating {
+    margin-top: 5%;
+}

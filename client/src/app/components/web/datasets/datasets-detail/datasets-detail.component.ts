@@ -571,7 +571,7 @@ export class DatasetsDetailComponent implements OnInit {
 				this.datasetsService.rateDataset(this.dataset.name, event.value, ip).subscribe( response => {
 					if(response.statusCode != 500){
 						this.ngZone.run(() => {
-							this.messageService.add({severity:'success', summary:'Voto registrado: ' + event.value, detail:'Su voto se ha registrado correctamente.'});
+							this.messageService.add({severity:'success', detail:'¡Gracias por valorar estos datos!'});
 						});
 						this.loadResource();
 					} else {
