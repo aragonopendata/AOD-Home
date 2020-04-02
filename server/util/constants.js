@@ -300,6 +300,17 @@ exports.API_URL_FOCUS_HISTORY = '/focus/history';
 exports.API_URL_FOCUS_HISTORIES = '/focus/histories';
 
 
+exports.statesEnum = {
+    sinDefinir:0,
+    borrador : 1 ,
+    revision : 2,
+    publicada : 3,
+    desactivada : 4,
+    versionada : 5
+}
+
+
+
 
 
 

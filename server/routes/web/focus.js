@@ -15,6 +15,9 @@ const logConfig = require('../../conf/log-conf');
 const loggerSettings = logConfig.getLogSettings();
 const logger = require('js-logging').dailyFile([loggerSettings]);
 
+//Load enums
+const statesEnum =  constants.statesEnum;
+
 /**
  * GET HISTORY BY ID ROUTE
  */
@@ -41,11 +44,11 @@ router.get(constants.API_URL_FOCUS_HISTORY + "/:id" , function (req, response, n
 });
 
 /**
- * GET A RESUME OF AN HISTORY (WITHOUT CONTENTS)
+ * GET RESUMES OF PUBLICS HISTORIWS (WITHOUT CONTENTS)
  */
 router.get(constants.API_URL_FOCUS_HISTORIES, function (req, response, next) {
 
-    getAllHistories().then(resumeHistories => {
+    getAllPublicsHistories().then(resumeHistories => {
         response.json({
             'status': constants.REQUEST_REQUEST_OK,
             'success': true,
@@ -219,20 +222,21 @@ function getHistoryById(id){
 
 }
 
-function getAllHistories(){
+function getAllPublicsHistories(){
 
     return new Promise((resolve, reject) => {
         try {
             pool.connect((err, client, done) => {
 
                 if(err){
-                    logger.error('getAllHistories - No se puede establecer conexión con la BBDD');
+                    logger.error('getAllPublicsHistories - No se puede establecer conexión con la BBDD');
                     reject(err)
                     return
                 }
 
                 const queryHistories = {
-                    text: dbQueries.DB_FOCUS_GET_HISTORIES,
+                    text: dbQueries.DB_FOCUS_GET_HISTORIES_BY_STATE,
+                    values: [statesEnum.publicada],
                     rowMode: constants.SQL_RESULSET_FORMAT_JSON
                 }
 
@@ -240,10 +244,10 @@ function getAllHistories(){
                 pool.query(queryHistories, (err, result) => {
                     done();
                     if (err) {
-                        logger.error('getAllHistories - Error obteniendo los detalles de historias:',err.stack);
+                        logger.error('getAllPublicsHistories - Error obteniendo los detalles de historias:',err.stack);
                         reject(err);
                     } else {
-                        logger.notice('getAllHistories - Obtención de detalles de historias finalizada')
+                        logger.notice('getAllPublicsHistories - Obtención de detalles de historias finalizada')
                         var resumeHistories=result.rows;
                         resolve(resumeHistories);
                     }
