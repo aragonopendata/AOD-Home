@@ -123,37 +123,44 @@
 	</div>
 	
 	<div class="download col-sm-12 col-md-4">
-		<div class="title">
-			<h5 tabindex="{{openedMenu ? -1 : 0}}">Descargas</h5>
-		</div>
-		<div class="container-fluid horizontalFormat">
-			<div class="section" *ngIf="resourcesAux.length != 0">
-				<h6 tabindex="{{openedMenu ? -1 : 0}}">Archivos con los datos</h6>
-				<div *ngFor="let resource of resourcesAux; let j = index">
-					<p>{{resource.name}}</p>
-					<div *ngFor="let url of resource.sources; let i = index">
-						<div class="horizontalFormat" *ngIf="resource.getSourcesSize() != i+1">
-							<a tabindex="{{openedMenu ? -1 : 0}}" class="tags" (click)="submitEvent(url,resource.formats[i]);" href="{{url}}" target="_blank" title="{{resource.name}}" pButton type="button" label="{{resource.formats[i]}}" style="margin: 2px;"></a>
-						</div>
-						<div *ngIf="resource.getSourcesSize() == i+1">
-							<div *ngIf="resource.formats[i]=='px'">
-								<a tabindex="{{openedMenu ? -1 : 0}}" class="tags" (click)="submitEvent(url,resource.formats[i]);" href="{{url}}" target="_blank" title="{{resource.name}}" pButton type="button" label="{{resource.formats[i]}}" style="margin: 2px;"></a>
-								<a tabindex="{{openedMenu ? -1 : 0}}" class="tags" (click)="downloadPxFile(resourceCSVFromPX[j]);" title="{{resourceCSVFromPX[j].name}}" pButton type="button" label="{{resourceCSVFromPX[j].formats[i]}}" style="margin: 2px;"></a>
-							</div>
-							<div *ngIf="resource.formats[i]!='px'">
+		<div class="row">
+			<div class="col-12">
+				<div class="title">
+					<h5 tabindex="{{openedMenu ? -1 : 0}}">Descargas</h5>
+				</div>
+				<div class="container-fluid horizontalFormat">
+					<div class="section" *ngIf="resourcesAux.length != 0">
+						<h6 tabindex="{{openedMenu ? -1 : 0}}">Archivos con los datos</h6>
+						<div *ngFor="let resource of resourcesAux; let j = index">
+							<p>{{resource.name}}</p>
+							<div *ngFor="let url of resource.sources; let i = index">
+								<div class="horizontalFormat" *ngIf="resource.getSourcesSize() != i+1">
 									<a tabindex="{{openedMenu ? -1 : 0}}" class="tags" (click)="submitEvent(url,resource.formats[i]);" href="{{url}}" target="_blank" title="{{resource.name}}" pButton type="button" label="{{resource.formats[i]}}" style="margin: 2px;"></a>
+								</div>
+								<div *ngIf="resource.getSourcesSize() == i+1">
+									<div *ngIf="resource.formats[i]=='px'">
+										<a tabindex="{{openedMenu ? -1 : 0}}" class="tags" (click)="submitEvent(url,resource.formats[i]);" href="{{url}}" target="_blank" title="{{resource.name}}" pButton type="button" label="{{resource.formats[i]}}" style="margin: 2px;"></a>
+										<a tabindex="{{openedMenu ? -1 : 0}}" class="tags" (click)="downloadPxFile(resourceCSVFromPX[j]);" title="{{resourceCSVFromPX[j].name}}" pButton type="button" label="{{resourceCSVFromPX[j].formats[i]}}" style="margin: 2px;"></a>
+									</div>
+									<div *ngIf="resource.formats[i]!='px'">
+											<a tabindex="{{openedMenu ? -1 : 0}}" class="tags" (click)="submitEvent(url,resource.formats[i]);" href="{{url}}" target="_blank" title="{{resource.name}}" pButton type="button" label="{{resource.formats[i]}}" style="margin: 2px;"></a>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
+					<div class="section">
+						<h6 tabindex="{{openedMenu ? -1 : 0}}">Metadatos de la colección</h6>
+						<a tabindex="{{openedMenu ? -1 : 0}}" class="tags" (click)="submitEvent(dataset.name,'RDF');downloadRDF(dataset.name);" target="_blank" title="Metadato de la colección en RDF" pButton type="button" label="RDF" style="margin: 2px;"></a>
+					</div>
 				</div>
 			</div>
-			<div class="section">
-				<h6 tabindex="{{openedMenu ? -1 : 0}}">Metadatos de la colección</h6>
-				<a tabindex="{{openedMenu ? -1 : 0}}" class="tags" (click)="submitEvent(dataset.name,'RDF');downloadRDF(dataset.name);" target="_blank" title="Metadato de la colección en RDF" pButton type="button" label="RDF" style="margin: 2px;"></a>
-			</div>
 		</div>
-		<div *ngIf="!isMobileScreen">
-			<p-rating [ngModel]="dataset.rating" [cancel]="false" (onRate)="rateDataset($event)"></p-rating>
+		<div class="row" *ngIf="!isMobileScreen">
+			<div class="col-12 rating">
+				<h6>Valora estos datos</h6>
+				<p-rating [ngModel]="dataset.rating" [cancel]="false" (onRate)="rateDataset($event)"></p-rating>
+			</div>
 		</div>
 	</div>
 	<div *ngIf="extrasIAESTNotEmpty" class="infodtset col-sm-12 col-md-8" style="margin-top: 5px;">
@@ -203,10 +210,9 @@
 				</div>					
 			</div>
 	</div>
-	<div class="row" *ngIf="isMobileScreen">
-		<div class="col-12">
-			<p-rating [ngModel]="dataset.rating" [cancel]="false" (onRate)="rateDataset($event)"></p-rating>
-		</div>
+	<div class="col-12 rating" *ngIf="isMobileScreen">
+		<h6>Valora estos datos</h6>
+		<p-rating [ngModel]="dataset.rating" [cancel]="false" (onRate)="rateDataset($event)"></p-rating>
 	</div>
 	<div class="recomend col-12" *ngIf="datasetsRecommended">
 		<h4 tabindex="{{openedMenu ? -1 : 0}}">También te pueden interesar estos datos</h4>
