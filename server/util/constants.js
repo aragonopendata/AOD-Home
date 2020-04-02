@@ -39,6 +39,7 @@ exports.API_URL_DATASETS_TAGS = '/datasets/tags';
 exports.API_URL_DATASETS_NEWEST = '/datasets/newest';
 exports.API_URL_DATASETS_DOWNLOADED = '/datasets/downloaded';
 exports.API_URL_DATASETS_COUNT = '/datasets/countDatasets';
+exports.API_URL_DATASETS_VOTES_COUNT = '/datasets/countRating';
 exports.API_URL_RESOURCES_COUNT = '/datasets/countResources';
 exports.API_URL_DATASETS_TOPIC = '/datasets/topic';
 exports.API_URL_DATASETS_ORGANIZATION = '/datasets/organization';
@@ -128,7 +129,6 @@ exports.CKAN_URL_PATH_GROUP_LIST = 'group_list';
 exports.CKAN_URL_PATH_GROUP_MEMBER_CREATE = 'group_member_create';
 
 /* CKAN ADMIN - DATASETS */
-exports.CKAN_URL_PATH_RATING_DATASET = "/ckan/rating";
 exports.CKAN_URL_PATH_DATASET_CREATE = 'package_create';
 exports.CKAN_URL_PATH_DATASET_UPDATE = 'package_update';
 exports.CKAN_URL_PATH_DATASET_DELETE = 'package_delete';

@@ -195,3 +195,6 @@ exports.DB_ADMIN_UPDATE_CAMPUS_SPEAKERS =  'UPDATE campus.speakers SET ' +
 										   'name = COALESCE($1, name), ' +
 										   'description = COALESCE($2, description) ' +
 										   'WHERE id = $3';
+
+exports.DB_CKAN_TOTAL_RATING = 'SELECT package_id, count(package_id) AS total_votes FROM public.review ' + 
+								'GROUP BY package_id ORDER BY total_votes DESC';
