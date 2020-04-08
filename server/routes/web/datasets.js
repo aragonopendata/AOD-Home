@@ -11,6 +11,7 @@ const iconv = require('iconv-lite');
 const crypto = require('crypto')
 //DB SETTINGS 
 const db = require('../../db/db-connection');
+const dbQueries = require('../../db/db-queries');
 const pool = db.getCkanPool();
 //LOG SETTINGS
 const logConfig = require('../../conf/log-conf');
@@ -312,6 +313,38 @@ router.get(constants.API_URL_RESOURCES_COUNT, function (req, res, next) {
     } catch (error) {
         logger.error('Error in route' + constants.API_URL_RESOURCES_COUNT);
     }
+});
+
+router.get(constants.API_URL_DATASETS_VOTES_COUNT, (req, res, next) => {
+    logger.info('Realizando petición de conteo de votos por dataset.');
+    const query = {
+        text: dbQueries.DB_CKAN_TOTAL_RATING,
+        rowMode: constants.SQL_RESULSET_FORMAT_JSON
+    };
+
+    pool.on('error', (err, client) => {
+        logger.error('Error en la conexión con base de datos', err);
+        process.exit(-1);
+    });
+
+    pool.connect((err, client, done) => {
+        if (err) {
+            logger.error(err.stack);
+            res.json({ status: 500, 'error': err });
+            return;
+        }
+        pool.query(query, (err, result) => {
+            done();
+            if (err) {
+                logger.error(err.stack);
+                res.json({ status: 500, 'error': err });
+                return;
+            } else {
+                logger.info('Filas devueltas: ' + result.rows.length);
+                res.json(result.rows);
+            }
+        });
+    });
 });
 
 /** GET DATASETS BY TOPIC */
