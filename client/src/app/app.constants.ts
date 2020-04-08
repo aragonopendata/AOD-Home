@@ -414,20 +414,21 @@ export class Constants {
     public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_JSON = { label: 'JSON', value: '11' };
     public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_KMZ = { label: 'KMZ', value: '12' };
     public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_ODS = { label: 'ODS', value: '13' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_PNG = { label: 'PNG', value: '14' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_PS = { label: 'PS', value: '15' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_RDF = { label: 'RDF', value: '16' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_RSS = { label: 'RSS', value: '17' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_SCORM = { label: 'SCORM', value: '18' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_SHP = { label: 'SHP', value: '19' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_SIG = { label: 'SIG', value: '20' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_TXT = { label: 'TXT', value: '21' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_URL = { label: 'URL', value: '22' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_XLS = { label: 'XLS', value: '23' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_XLSX = { label: 'XLSX', value: '24' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_XML = { label: 'XML', value: '25' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_ZIP = { label: 'ZIP', value: '26' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_TTL = { label: 'TTL', value: '27' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_ODT = { label: 'ODT', value: '14' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_PNG = { label: 'PNG', value: '15' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_PS = { label: 'PS', value: '16' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_RDF = { label: 'RDF', value: '17' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_RSS = { label: 'RSS', value: '18' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_SCORM = { label: 'SCORM', value: '19' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_SHP = { label: 'SHP', value: '20' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_SIG = { label: 'SIG', value: '21' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_TXT = { label: 'TXT', value: '22' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_URL = { label: 'URL', value: '23' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_XLS = { label: 'XLS', value: '24' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_XLSX = { label: 'XLSX', value: '25' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_XML = { label: 'XML', value: '26' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_ZIP = { label: 'ZIP', value: '27' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_TTL = { label: 'TTL', value: '28' };
     
     
     public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_CSV = { label: 'CSV', value: '1' };
