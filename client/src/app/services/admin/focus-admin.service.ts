@@ -41,7 +41,6 @@ export class FocusAdminService {
 	}
 
 	public getHistories(sort: string, limit: number, page: number, text:string) {
-		console.log('en get histories (service)')
 		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_FOCUS + Constants.SERVER_API_LINK_HISTORIES;
 		let params = new URLSearchParams();
 		params.append("sort", sort)

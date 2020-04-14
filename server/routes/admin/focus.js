@@ -67,7 +67,6 @@ router.get(constants.API_URL_FOCUS_HISTORIES, function (req, response, next) {
  * DELETE HISTORY (CHANGE STATE TO HIDDEN)
  */
 router.delete(constants.API_URL_FOCUS_HISTORY + "/:id", function (req, response, next) {
-    console.log('router.delete');
     var id = req.params.id
 
     deleteHistoryTransaction(id).then( () => {
@@ -82,6 +81,29 @@ router.delete(constants.API_URL_FOCUS_HISTORY + "/:id", function (req, response,
         response.json({ 
             'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 
             'error': 'BORRADO DEL ESTADO DE LA HISTORIA - Error al borrar la historia en base de datos' ,
+        });
+        return;
+    });
+});
+
+/**
+ * PUBLISH HISTORY (CHANGE STATE TO HIDDEN)
+ */
+router.post(constants.API_URL_FOCUS_HISTORY, function (req, response, next) {
+    var id = req.body.id;
+
+    publishHistoryTransaction(id).then( () => {
+        response.json({
+            'status': constants.REQUEST_REQUEST_OK,
+            'success': true,
+            'result': 'PUBLICADO DE LA HISTORIA - Historia publicada correctamente',
+            'history': id
+        });
+    }).catch(error => {
+        logger.error('PUBLICADO DE LA HISTORIA - Error al publicar la historia en base de datos: ', error);
+        response.json({ 
+            'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 
+            'error': 'PUBLICADO DE LA HISTORIA - Error al publicar la historia en base de datos' ,
         });
         return;
     });
@@ -320,6 +342,84 @@ function deleteHistory(client, done, idHistory){
     });
 
 }
+
+
+
+function publishHistoryTransaction(id){
+
+    return new Promise((resolve, reject) => {
+        try {
+            pool.connect((err, client, done) => {
+
+                if(err){
+                    logger.error('deleteHistoryTransaction - No se puede establecer conexión con la BBDD');
+                    reject(err)
+                    return
+                }
+
+                logger.notice('Se inicia la transacción de eliminación de una historia');
+
+                client.query('BEGIN', (err) => {
+
+                    if (rollback(client, done, err)) {
+                        reject(err);
+                    } else {
+                        publishHistory(client, done, id).then( () => {
+                            client.query('COMMIT', (commitError) => {
+                                done();
+                                if (commitError) {
+                                    logger.error('deleteHistoryTransaction - Error eliminando la historia:', error);
+                                    reject(commitError);
+                                } else {
+                                    logger.notice('deleteHistoryTransaction - eliminación de la historia finalizada');
+                                    resolve(true);
+                                }
+                            });
+                        }).catch(error => {
+                            logger.error('deleteHistoryTransaction - Error eliminando la historia:', error);
+                            reject(error);
+                        });
+                    }
+                });
+            });
+        } catch (error) {
+            logger.error('deleteHistoryTransaction - Error eliminando la historia:', error);
+            reject(error);
+        }
+    });
+
+}
+
+
+function publishHistory(client, done, idHistory){
+
+    return new Promise((resolve, reject) => {
+
+        try {
+            const queryPublishHistory = {
+                text: dbQueries.DB_FOCUS_UPDATE_FOCUS_STATE_HISTORY,
+                values: [3, idHistory]
+            };
+
+            //Eliminar historia
+            client.query(queryPublishHistory, (err, resultPublishHistory) => {
+                if (rollback(client, done, err)) {
+                    logger.error('deleteHistory - Error eliminando la historia:', err);
+                    reject(err);
+                } else {
+                    logger.notice('deleteHistory - eliminación de la historia finalizada');
+                    resolve(true);
+                }
+            });
+
+        } catch (error) {
+            logger.error('deleteHistory - Error eliminando la historia:', error);
+            reject(error);
+        }
+    });
+
+}
+
 
 
 
