@@ -82,13 +82,13 @@ export class HistoriesComponent implements OnInit {
   }
 
   previewHistory(id){
-    let url = window["config"]["AOD_BASE_URL"] + '/servicios/focus';
-    window.open( url + '/viewHistory/'  +id );
+    let url = window["config"]["AOD_BASE_URL"];
+    window.open( url + '/#/viewHistory/' + id);
   }
 
   editHistory(id){
-    let url = window["config"]["AOD_BASE_URL"] + '/servicios/focus';
-    window.open( url + '/editHistory/'  +id );
+    let url = window["config"]["AOD_BASE_URL"];
+    window.open( url + '/#/editHistory/'  +id );
   }
 
   setPagination(actual: number, total: number) {
