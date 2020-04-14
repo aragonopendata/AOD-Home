@@ -49,13 +49,14 @@ export class HistoriesComponent implements OnInit {
   }
 
   public getHistories(page: number, rows: number){
-    
+    this.showProgressBar = true;
     this.histories = [];
     var pageNumber = (page != null ? page : 0);
     var rowsNumber = (rows != null ? rows : this.pageRows);
     this.focusAdminService.getHistories(this.sort,rowsNumber,pageNumber,this.textSearch).subscribe(result => {
         try {
             this.histories = result.histories.list;
+            console.log(result.histories.numHistories)
             this.numHistories = result.histories.numHistories;
             this.setPagination(pageNumber,this.numHistories);
             this.showProgressBar = false;
@@ -70,6 +71,7 @@ export class HistoriesComponent implements OnInit {
     this.focusAdminService.deleteHistory(id).subscribe(result => {
       console.log(result.history);
       console.log('result.history');
+      this.getHistories(this.actualPage, null)
     });
   }
 
