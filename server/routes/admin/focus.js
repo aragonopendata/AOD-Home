@@ -352,12 +352,12 @@ function publishHistoryTransaction(id){
             pool.connect((err, client, done) => {
 
                 if(err){
-                    logger.error('deleteHistoryTransaction - No se puede establecer conexión con la BBDD');
+                    logger.error('publishHistoryTransaction - No se puede establecer conexión con la BBDD');
                     reject(err)
                     return
                 }
 
-                logger.notice('Se inicia la transacción de eliminación de una historia');
+                logger.notice('Se inicia la transacción de publicaciòn de una historia');
 
                 client.query('BEGIN', (err) => {
 
@@ -368,22 +368,22 @@ function publishHistoryTransaction(id){
                             client.query('COMMIT', (commitError) => {
                                 done();
                                 if (commitError) {
-                                    logger.error('deleteHistoryTransaction - Error eliminando la historia:', error);
+                                    logger.error('publishHistoryTransaction - Error publicando la historia:', error);
                                     reject(commitError);
                                 } else {
-                                    logger.notice('deleteHistoryTransaction - eliminación de la historia finalizada');
+                                    logger.notice('publishHistoryTransaction - publicaciòn de la historia finalizada');
                                     resolve(true);
                                 }
                             });
                         }).catch(error => {
-                            logger.error('deleteHistoryTransaction - Error eliminando la historia:', error);
+                            logger.error('publishHistoryTransaction - Error publicando la historia:', error);
                             reject(error);
                         });
                     }
                 });
             });
         } catch (error) {
-            logger.error('deleteHistoryTransaction - Error eliminando la historia:', error);
+            logger.error('publishHistoryTransaction - Error publicando la historia:', error);
             reject(error);
         }
     });
@@ -404,16 +404,16 @@ function publishHistory(client, done, idHistory){
             //Eliminar historia
             client.query(queryPublishHistory, (err, resultPublishHistory) => {
                 if (rollback(client, done, err)) {
-                    logger.error('deleteHistory - Error eliminando la historia:', err);
+                    logger.error('publishHistory - Error publicando la historia:', err);
                     reject(err);
                 } else {
-                    logger.notice('deleteHistory - eliminación de la historia finalizada');
+                    logger.notice('publishHistory - publicacion de la historia finalizada');
                     resolve(true);
                 }
             });
 
         } catch (error) {
-            logger.error('deleteHistory - Error eliminando la historia:', error);
+            logger.error('publishHistory - Error publicando la historia:', error);
             reject(error);
         }
     });
