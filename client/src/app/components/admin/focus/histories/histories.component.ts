@@ -56,7 +56,6 @@ export class HistoriesComponent implements OnInit {
     this.focusAdminService.getHistories(this.sort,rowsNumber,pageNumber,this.textSearch).subscribe(result => {
         try {
             this.histories = result.histories.list;
-            console.log(result.histories.numHistories)
             this.numHistories = result.histories.numHistories;
             this.setPagination(pageNumber,this.numHistories);
             this.showProgressBar = false;
@@ -64,6 +63,10 @@ export class HistoriesComponent implements OnInit {
             console.error(error);
             console.error('Error: getDatasets() - datasets-admin-list.component.ts');
         }
+    }, err=>{
+      this.histories = [];
+      this.numHistories=0;
+      this.showProgressBar = false;
     });
   }
 
@@ -71,7 +74,14 @@ export class HistoriesComponent implements OnInit {
     this.focusAdminService.deleteHistory(id).subscribe(result => {
       console.log(result.history);
       console.log('result.history');
-      this.getHistories(this.actualPage, null)
+      
+      if(result.success){
+        //Mensajes success
+        this.getHistories(this.actualPage, null);
+      }
+      else{
+        //Mensajes error
+      }
     });
   }
 
