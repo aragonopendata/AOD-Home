@@ -44,11 +44,11 @@ router.get(constants.API_URL_FOCUS_HISTORY + "/:id" , function (req, response, n
 });
 
 /**
- * GET RESUMES OF PUBLICS HISTORIWS (WITHOUT CONTENTS)
+ * GET RESUMES OF PUBLICS HISTORIES BY STATE "PUBLICADA" AND BY SEARCH (WITHOUT CONTENTS)
  */
 router.get(constants.API_URL_FOCUS_HISTORIES, function (req, response, next) {
 
-    getAllPublicsHistories().then(resumeHistories => {
+    getAllPublicsHistories(req.query.text).then(resumeHistories => {
         response.json({
             'status': constants.REQUEST_REQUEST_OK,
             'success': true,
@@ -222,7 +222,7 @@ function getHistoryById(id){
 
 }
 
-function getAllPublicsHistories(){
+function getAllPublicsHistories(text){
 
     return new Promise((resolve, reject) => {
         try {
@@ -234,9 +234,11 @@ function getAllPublicsHistories(){
                     return
                 }
 
+                var search="%"+ text + "%";
+
                 const queryHistories = {
                     text: dbQueries.DB_FOCUS_GET_HISTORIES_BY_STATE,
-                    values: [statesEnum.publicada],
+                    values: [statesEnum.publicada, search],
                     rowMode: constants.SQL_RESULSET_FORMAT_JSON
                 }
 
