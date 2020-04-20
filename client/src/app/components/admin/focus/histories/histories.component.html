@@ -61,11 +61,12 @@
             </ng-template>
         </p-column>
 
-        <p-column header="edit" header="Edición" [style]="{'width':'17%'}">
+        <p-column header="edit" header="Edición" [style]="{'width':'22%'}">
             <ng-template pTemplate="body" let-history="rowData">
                 <button (click)="previewHistory(history.id)" class="btn btn-primary p-2" type="button"  data-toggle="tooltip" data-placement="top" title="Mostrar"><i class="fas fa-search"></i></button>
                 <button *ngIf="history.state!=stateEnum.Borrador" (click)="editHistory(history.id)" class="btn btn-primary p-2" type="button"  data-toggle="tooltip" data-placement="top" title="Editar"><i class="fas fa-edit"></i></button>
-                <button *ngIf="history.state!=stateEnum.Desactivada" (click)="deleteHistory(history.id)" class="btn btn-primary p-2" type="button"  data-toggle="tooltip" data-placement="top" title="Borrar"><i class="fas fa-eye-slash"></i></button>      
+                <button *ngIf="!(history.state==stateEnum.Borrador || history.state==stateEnum.Desactivada)" (click)="deleteHistory(history.id)" class="btn btn-primary p-2" type="button"  data-toggle="tooltip" data-placement="top" title="Ocultar"><i class="fas fa-eye-slash"></i></button>  
+                <button class="btn btn-primary p-2" type="button"  data-toggle="tooltip" data-placement="top" title="Borrar"><i class="fas fa-trash-alt"></i></button>      
             </ng-template>
         </p-column>
         
