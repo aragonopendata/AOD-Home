@@ -428,6 +428,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 			{ label: Constants.ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_JSON.label, value: Constants.ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_JSON.value },
 			{ label: Constants.ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_KMZ.label, value: Constants.ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_KMZ.value },
 			{ label: Constants.ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_ODS.label, value: Constants.ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_ODS.value },
+			{ label: Constants.ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_ODT.label, value: Constants.ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_ODT.value },
 			{ label: Constants.ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_PNG.label, value: Constants.ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_PNG.value },
 			{ label: Constants.ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_PS.label, value: Constants.ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_PS.value },
 			{ label: Constants.ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_RDF.label, value: Constants.ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_RDF.value },
