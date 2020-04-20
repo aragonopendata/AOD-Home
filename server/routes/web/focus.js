@@ -44,11 +44,11 @@ router.get(constants.API_URL_FOCUS_HISTORY + "/:id" , function (req, response, n
 });
 
 /**
- * GET RESUMES OF PUBLICS HISTORIES BY STATE "PUBLICADA" AND BY SEARCH (WITHOUT CONTENTS)
+ * GET RESUMES OF PUBLICS HISTORIES BY STATE "PUBLICADA", BY SEARCH AND BY CATEGORIE (WITHOUT CONTENTS)
  */
 router.get(constants.API_URL_FOCUS_HISTORIES, function (req, response, next) {
 
-    getAllPublicsHistories(req.query.text).then(resumeHistories => {
+    getAllPublicsHistories(req.query.text, req.query.category).then(resumeHistories => {
         response.json({
             'status': constants.REQUEST_REQUEST_OK,
             'success': true,
@@ -222,7 +222,8 @@ function getHistoryById(id){
 
 }
 
-function getAllPublicsHistories(text){
+function getAllPublicsHistories(text, category){
+
 
     return new Promise((resolve, reject) => {
         try {
@@ -234,12 +235,24 @@ function getAllPublicsHistories(text){
                     return
                 }
 
+                var queryHistories="";
+
                 var search="%"+ text + "%";
 
-                const queryHistories = {
-                    text: dbQueries.DB_FOCUS_GET_HISTORIES_BY_STATE,
-                    values: [statesEnum.publicada, search],
-                    rowMode: constants.SQL_RESULSET_FORMAT_JSON
+                if(category==null){
+                    console.log('busco sin categoria')
+                    queryHistories = {
+                        text: dbQueries.DB_FOCUS_GET_HISTORIES_BY_STATE_AND_SEARCH,
+                        values: [statesEnum.publicada, search],
+                        rowMode: constants.SQL_RESULSET_FORMAT_JSON
+                    }
+                }else{
+                    console.log('busco con categoria')
+                    queryHistories = {
+                        text: dbQueries.DB_FOCUS_GET_HISTORIES_BY_STATE_AND_SEARCH_AND_CATEGORY,
+                        values: [statesEnum.publicada, search, category],
+                        rowMode: constants.SQL_RESULSET_FORMAT_JSON
+                    }
                 }
 
                 //Se busca la historia introducida como parámetro en la tabla histories
