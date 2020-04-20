@@ -413,7 +413,7 @@ router.post(constants.API_URL_ADMIN_RESOURCE, upload.single('file'), function (r
   })
 
   /** UPDATE RESOURCE */
-router.put(constants.API_URL_ADMIN_RESOURCE, function (req, res, next) {
+router.put(constants.API_URL_ADMIN_RESOURCE, upload.single('file'), function (req, res, next) {
     try {
         var resource = req.body;
         logger.notice('Recurso que llega desde request: ' + JSON.stringify(resource));
