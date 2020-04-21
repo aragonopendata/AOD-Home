@@ -93,14 +93,15 @@ router.delete(constants.API_URL_FOCUS_HISTORY + "/:id", function (req, response,
  * PUBLISH HISTORY (CHANGE STATE TO HIDDEN)
  */
 router.post(constants.API_URL_FOCUS_HISTORY, function (req, response, next) {
-    var id = req.body.id;
+    var history = req.body.history;
+    console.log(history)
 
-    publishHistoryTransaction(id).then( () => {
+    publishHistoryTransaction(history).then( () => {
         response.json({
             'status': constants.REQUEST_REQUEST_OK,
             'success': true,
             'result': 'PUBLICADO DE LA HISTORIA - Historia publicada correctamente',
-            'history': id
+            'history': history.id
         });
     }).catch(error => {
         logger.error('PUBLICADO DE LA HISTORIA - Error al publicar la historia en base de datos: ', error);
@@ -310,10 +311,10 @@ function hidenHistoryTransaction(id){
 
 
 
-function publishHistoryTransaction(id, history){
+function publishHistoryTransaction(history){
 
     if(history.id_reference!=null){
-        /*
+        
         return new Promise((resolve, reject) => {
             try {
                 pool.connect((err, client, done) => {
@@ -324,37 +325,45 @@ function publishHistoryTransaction(id, history){
                         return
                     }
     
-                    logger.notice('Se inicia la transacción de publicaciòn de una historia');
+                    logger.notice('Se inicia la transacción de publicaciòn de una historia versionada');
     
                     client.query('BEGIN', (err) => {
     
                         if (rollback(client, done, err)) {
                             reject(err);
                         } else {
-                            publishHistory(client, done, id).then( () => {
-                                client.query('COMMIT', (commitError) => {
-                                    done();
-                                    if (commitError) {
-                                        logger.error('publishHistoryTransaction - Error publicando la historia:', error);
-                                        reject(commitError);
-                                    } else {
-                                        logger.notice('publishHistoryTransaction - publicaciòn de la historia finalizada');
-                                        resolve(true);
-                                    }
+                            changeStateHistory(client, done, history.id_reference, statesEnum.versionada).then( (correct) => {ç
+                                logger.notice('publishHistoryTransaction - Publicación de una historia versionada - se ha modificado el estado de la historia a la que versiona');
+                                changeStateHistory(client, done, history.id, statesEnum.publicada).then( (correct) => {
+                                    logger.notice('publishHistoryTransaction - Publicación de una historia versionada - se ha publicado la historia versionada');
+                                    client.query('COMMIT', (commitError) => {
+                                        done();
+                                        if (commitError) {
+                                            logger.error('publishHistoryTransaction - Error publicando la historia versionada:', error);
+                                            reject(commitError);
+                                        } else {
+                                            logger.notice('publishHistoryTransaction - publicaciòn de la historia finalizada');
+                                            resolve(true);
+                                        }
+                                    });
+                                    
+                                }).catch(error => {
+                                    logger.error('publishHistoryTransaction - Error publicando la historia versionada:', error);
+                                    reject(error);
                                 });
                             }).catch(error => {
-                                logger.error('publishHistoryTransaction - Error publicando la historia:', error);
+                                logger.error('publishHistoryTransaction - Error cambiando el estado de la historia a la que versionaba', error);
                                 reject(error);
                             });
                         }
                     });
                 });
             } catch (error) {
-                logger.error('publishHistoryTransaction - Error publicando la historia:', error);
+                logger.error('publishHistoryTransaction - Error publicando la historia versionda', error);
                 reject(error);
             }
         });
-        */
+        
 
     }else{
         return new Promise((resolve, reject) => {
@@ -368,7 +377,7 @@ function publishHistoryTransaction(id, history){
                     }
 
                     logger.notice('Se inicia la transacción de publicaciòn de una historia');
-                        changeStateHistory(client, done, id, statesEnum.publicada).then( (correct) => {
+                        changeStateHistory(client, done, history.id, statesEnum.publicada).then( (correct) => {
                             done();
                             if (correct) {
                                 logger.notice('publishHistoryTransaction - publicaciòn de la historia finalizada');
