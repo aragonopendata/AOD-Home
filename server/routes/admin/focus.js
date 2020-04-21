@@ -332,7 +332,8 @@ function publishHistoryTransaction(history){
                         if (rollback(client, done, err)) {
                             reject(err);
                         } else {
-                            changeStateHistory(client, done, history.id_reference, statesEnum.versionada).then( (correct) => {ç
+                            //console.log('1 :)')
+                            changeStateHistory(client, done, history.id_reference, statesEnum.versionada).then( (correct) => {
                                 logger.notice('publishHistoryTransaction - Publicación de una historia versionada - se ha modificado el estado de la historia a la que versiona');
                                 changeStateHistory(client, done, history.id, statesEnum.publicada).then( (correct) => {
                                     logger.notice('publishHistoryTransaction - Publicación de una historia versionada - se ha publicado la historia versionada');
