@@ -223,6 +223,9 @@ exports.DB_ADMIN_DELETE_FOCUS_CONTENT_BY_ID_HISTORY = 'DELETE FROM focus.content
 
 exports.DB_FOCUS_UPDATE_FOCUS_STATE_HISTORY = 'UPDATE focus.histories SET state=COALESCE($1, state) WHERE id = $2';
 
+exports.DB_FOCUS_UPDATE_FOCUS_HISTORY_ID_VERSION = 'UPDATE focus.histories SET id=COALESCE($1, id) WHERE id = $2';
+
+
 /*
 
 exports.DB_FOCUS_GET_CONTENTS_HISTORIES = 'SELECT id, title, description, visual_content, type_content, id_history FROM focus.contents_histories';

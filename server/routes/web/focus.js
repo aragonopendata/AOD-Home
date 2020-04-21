@@ -345,36 +345,79 @@ function updateHistoryTransaction(history){
 
                 logger.notice('Se inicia la transacción de edicion de una historia');
 
-                client.query('BEGIN', (err) => {
+                if(history.id_reference==history.id){//caso versionado de historia --> cambiar id antigua (actualizando con nueva), y guardado de la nueva 
+                    client.query('BEGIN', (err) => {
+                        if (rollback(client, done, err)) {
+                            reject(err);
+                        } else {
+                            newToken().then( (token ) => {
+                                var id = history.id;
+                                updateForVersion(client, done, id,token).then( () => {
+                                    history.id_reference=token;
+                                    inserHistory(client, done, id, history).then( (idHistory) => {
+                                        client.query('COMMIT', (commitError) => {
+                                            done();
+                                            if (commitError) {
+                                                logger.error('updateHistoryTransaction - Error actualizando la historia con versionado:', commitError);
+                                                reject(commitError);
+                                            } else {
+                                                logger.notice('updateHistoryTransaction - modificación de historia con versionado finalizada')
+                                                resolve(idHistory);
+                                            }
+                                        });
+                                    }).catch(error => {
+                                        logger.error('updateHistoryTransaction - Error actualizando la historia con versionado:', error);
+                                        reject(error);
+                                    });
+                                    
 
-                    if (rollback(client, done, err)) {
-                        reject(err);
-                    } else {
-                        var id = history.id;
-                        history.id = null;
-    
-                        deleteHistory(client, done, id).then( () => {
-                            inserHistory(client, done, id, history).then( (idHistory) => {
-                                client.query('COMMIT', (commitError) => {
-                                    done();
-                                    if (commitError) {
-                                        logger.error('updateHistoryTransaction - Error modificando la historia:', commitError);
-                                        reject(commitError);
-                                    } else {
-                                        logger.notice('updateHistoryTransaction - modificación de historia finalizada')
-                                        resolve(idHistory);
-                                    }
+                                }).catch(error => {
+                                    logger.error('updateHistoryTransaction - Error actualizando la historia con versionado:', error);
+                                    reject(error);
                                 });
+
                             }).catch(error => {
-                                logger.error('updateHistoryTransaction - Error insertando la historia:', error);
+                                logger.error('updateHistoryTransaction - Error actualizando la historia con versionado:', error);
                                 reject(error);
                             });
-                        }).catch(error => {
-                            logger.error('updateHistoryTransaction - Error eliminando la historia:', error);
-                            reject(error);
-                        });
-                    }
-                });
+                            
+                        }
+                    });
+
+                }else{
+                    client.query('BEGIN', (err) => {
+
+                        if (rollback(client, done, err)) {
+                            reject(err);
+                        } else {
+                            var id = history.id;
+                            history.id = null;
+                            deleteHistory(client, done, id).then( () => {
+                                inserHistory(client, done, id, history).then( (idHistory) => {
+                                    client.query('COMMIT', (commitError) => {
+                                        done();
+                                        if (commitError) {
+                                            logger.error('updateHistoryTransaction - Error modificando la historia:', commitError);
+                                            reject(commitError);
+                                        } else {
+                                            logger.notice('updateHistoryTransaction - modificación de historia finalizada')
+                                            resolve(idHistory);
+                                        }
+                                    });
+                                }).catch(error => {
+                                    logger.error('updateHistoryTransaction - Error insertando la historia:', error);
+                                    reject(error);
+                                });
+                            }).catch(error => {
+                                logger.error('updateHistoryTransaction - Error eliminando la historia:', error);
+                                reject(error);
+                            });
+                        }
+                    });
+
+                }
+
+                
                 
             });
         } catch (error) {
@@ -441,7 +484,6 @@ function inserHistory(client, done, token, history){
     return new Promise((resolve, reject) => {
 
         try {
-
             const queryHistory = {
                 text: dbQueries.DB_FOCUS_INSERT_FOCUS_HISTORY,
                 values: [token, history.state, history.title, history.description, history.email, history.id_reference, history.main_category, history.secondary_categories, history.create_date, history.update_date]
@@ -582,6 +624,38 @@ function makeToken(length) {
        result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
+}
+
+
+function updateForVersion(client, done, idHistory, tokenNewForHistory){
+
+    return new Promise((resolve, reject) => {
+
+        try {
+
+            const queryUpdateForVersion = {
+                text: dbQueries.DB_FOCUS_UPDATE_FOCUS_HISTORY_ID_VERSION,
+                values: [tokenNewForHistory,idHistory]
+            };
+
+            //cambio id antiguo
+            client.query(queryUpdateForVersion, (err, resultUpdateIdVersion) => {
+
+                if (rollback(client, done, err)) {
+                    logger.error('updateForVersion - Error cambiando id de la historia:', err);
+                    reject(err);
+                } else {
+                    logger.info('updateForVersion - cambio id antigua por nuevo de '+ idHistory + ' al nuevo id '+ tokenNewForHistory)
+                    resolve(true)
+                }
+            })
+
+        } catch (error) {
+            logger.error('updateForVersion -  Error cambiando id de la historia:', error);
+            reject(error);
+        }
+    });
+
 }
 
 module.exports = router;
