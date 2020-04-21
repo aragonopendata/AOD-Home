@@ -12,6 +12,9 @@ const logConfig = require('../../conf/log-conf');
 const loggerSettings = logConfig.getLogSettings();
 const logger = require('js-logging').dailyFile([loggerSettings]);
 
+//Load enums
+const statesEnum =  constants.statesEnum;
+
 
 /**
  * GET A RESUME OF AN HISTORY (WITHOUT CONTENTS)
@@ -69,7 +72,7 @@ router.get(constants.API_URL_FOCUS_HISTORIES, function (req, response, next) {
 router.delete(constants.API_URL_FOCUS_HISTORY + "/:id", function (req, response, next) {
     var id = req.params.id
 
-    deleteHistoryTransaction(id).then( () => {
+    hidenHistoryTransaction(id).then( () => {
         response.json({
             'status': constants.REQUEST_REQUEST_OK,
             'success': true,
@@ -108,6 +111,7 @@ router.post(constants.API_URL_FOCUS_HISTORY, function (req, response, next) {
         return;
     });
 });
+
 
 
 
@@ -266,77 +270,37 @@ function deleteHistory(client, done, idHistory){
 
 
 
-function deleteHistoryTransaction(id){
+function hidenHistoryTransaction(id){
 
     return new Promise((resolve, reject) => {
         try {
             pool.connect((err, client, done) => {
 
                 if(err){
-                    logger.error('deleteHistoryTransaction - No se puede establecer conexión con la BBDD');
+                    logger.error('hidenHistoryTransaction - No se puede establecer conexión con la BBDD');
                     reject(err)
                     return
                 }
 
                 logger.notice('Se inicia la transacción de eliminación de una historia');
 
-                client.query('BEGIN', (err) => {
+                changeStateHistory(client, done, id, statesEnum.desactivada).then( (correct) => {
+                    done();
+                    if(correct){
+                        logger.notice('hidenHistoryTransaction - eliminación de la historia finalizada');
+                        resolve(true);
+                    }else{
+                        logger.error('hidenHistoryTransaction - Error eliminando la historia:', error);
+                        reject(commitError);
 
-                    if (rollback(client, done, err)) {
-                        reject(err);
-                    } else {
-                        deleteHistory(client, done, id).then( () => {
-                            client.query('COMMIT', (commitError) => {
-                                done();
-                                if (commitError) {
-                                    logger.error('deleteHistoryTransaction - Error eliminando la historia:', error);
-                                    reject(commitError);
-                                } else {
-                                    logger.notice('deleteHistoryTransaction - eliminación de la historia finalizada');
-                                    resolve(true);
-                                }
-                            });
-                        }).catch(error => {
-                            logger.error('deleteHistoryTransaction - Error eliminando la historia:', error);
-                            reject(error);
-                        });
-                    }
+                    }   
+                }).catch(error => {
+                    logger.error('hidenHistoryTransaction - Error eliminando la historia:', error);
+                    reject(error);
                 });
             });
         } catch (error) {
-            logger.error('deleteHistoryTransaction - Error eliminando la historia:', error);
-            reject(error);
-        }
-    });
-
-}
-
-
-function deleteHistory(client, done, idHistory){
-
-    return new Promise((resolve, reject) => {
-
-        try {
-
-            console.log('deleteHistory');
-            const queryDeleteHistory = {
-                text: dbQueries.DB_FOCUS_UPDATE_FOCUS_STATE_HISTORY,
-                values: [4, idHistory]
-            };
-
-            //Eliminar historia
-            client.query(queryDeleteHistory, (err, resultDeleteHistory) => {
-                if (rollback(client, done, err)) {
-                    logger.error('deleteHistory - Error eliminando la historia:', err);
-                    reject(err);
-                } else {
-                    logger.notice('deleteHistory - eliminación de la historia finalizada');
-                    resolve(true);
-                }
-            });
-
-        } catch (error) {
-            logger.error('deleteHistory - Error eliminando la historia:', error);
+            logger.error('hidenHistoryTransaction - Error eliminando la historia:', error);
             reject(error);
         }
     });
@@ -345,63 +309,103 @@ function deleteHistory(client, done, idHistory){
 
 
 
-function publishHistoryTransaction(id){
 
-    return new Promise((resolve, reject) => {
-        try {
-            pool.connect((err, client, done) => {
+function publishHistoryTransaction(id, history){
 
-                if(err){
-                    logger.error('publishHistoryTransaction - No se puede establecer conexión con la BBDD');
-                    reject(err)
-                    return
-                }
-
-                logger.notice('Se inicia la transacción de publicaciòn de una historia');
-
-                client.query('BEGIN', (err) => {
-
-                    if (rollback(client, done, err)) {
-                        reject(err);
-                    } else {
-                        publishHistory(client, done, id).then( () => {
-                            client.query('COMMIT', (commitError) => {
-                                done();
-                                if (commitError) {
-                                    logger.error('publishHistoryTransaction - Error publicando la historia:', error);
-                                    reject(commitError);
-                                } else {
-                                    logger.notice('publishHistoryTransaction - publicaciòn de la historia finalizada');
-                                    resolve(true);
-                                }
+    if(history.id_reference!=null){
+        /*
+        return new Promise((resolve, reject) => {
+            try {
+                pool.connect((err, client, done) => {
+    
+                    if(err){
+                        logger.error('publishHistoryTransaction - No se puede establecer conexión con la BBDD');
+                        reject(err)
+                        return
+                    }
+    
+                    logger.notice('Se inicia la transacción de publicaciòn de una historia');
+    
+                    client.query('BEGIN', (err) => {
+    
+                        if (rollback(client, done, err)) {
+                            reject(err);
+                        } else {
+                            publishHistory(client, done, id).then( () => {
+                                client.query('COMMIT', (commitError) => {
+                                    done();
+                                    if (commitError) {
+                                        logger.error('publishHistoryTransaction - Error publicando la historia:', error);
+                                        reject(commitError);
+                                    } else {
+                                        logger.notice('publishHistoryTransaction - publicaciòn de la historia finalizada');
+                                        resolve(true);
+                                    }
+                                });
+                            }).catch(error => {
+                                logger.error('publishHistoryTransaction - Error publicando la historia:', error);
+                                reject(error);
                             });
+                        }
+                    });
+                });
+            } catch (error) {
+                logger.error('publishHistoryTransaction - Error publicando la historia:', error);
+                reject(error);
+            }
+        });
+        */
+
+    }else{
+        return new Promise((resolve, reject) => {
+            try {
+                pool.connect((err, client, done) => {
+    
+                    if(err){
+                        logger.error('publishHistoryTransaction - No se puede establecer conexión con la BBDD');
+                        reject(err)
+                        return
+                    }
+
+                    logger.notice('Se inicia la transacción de publicaciòn de una historia');
+                        changeStateHistory(client, done, id, statesEnum.publicada).then( (correct) => {
+                            done();
+                            if (correct) {
+                                logger.notice('publishHistoryTransaction - publicaciòn de la historia finalizada');
+                                resolve(true);
+                            } else {
+                                logger.error('publishHistoryTransaction - Error publicando la historia:', error);
+                                reject(commitError);
+                            }
                         }).catch(error => {
                             logger.error('publishHistoryTransaction - Error publicando la historia:', error);
                             reject(error);
                         });
-                    }
                 });
-            });
-        } catch (error) {
-            logger.error('publishHistoryTransaction - Error publicando la historia:', error);
-            reject(error);
-        }
-    });
+            } catch (error) {
+                logger.error('publishHistoryTransaction - Error publicando la historia:', error);
+                reject(error);
+            }
+        });
+
+    }
+
+    
 
 }
 
 
-function publishHistory(client, done, idHistory){
+function changeStateHistory(client, done, idHistory,state){
 
     return new Promise((resolve, reject) => {
 
         try {
             const queryPublishHistory = {
                 text: dbQueries.DB_FOCUS_UPDATE_FOCUS_STATE_HISTORY,
-                values: [3, idHistory]
+                values: [state, idHistory]
             };
 
-            //Eliminar historia
+            //Cambiar el estado de lahistoria
             client.query(queryPublishHistory, (err, resultPublishHistory) => {
                 if (rollback(client, done, err)) {
                     logger.error('publishHistory - Error publicando la historia:', err);
@@ -419,6 +423,7 @@ function publishHistory(client, done, idHistory){
     });
 
 }
+
 
 
 
