@@ -416,6 +416,7 @@ router.post(constants.API_URL_ADMIN_RESOURCE, upload.single('file'), function (r
 router.put(constants.API_URL_ADMIN_RESOURCE, upload.single('file'), function (req, res, next) {
     try {
         var resource = req.body;
+        let file = req.file;
         logger.notice('Recurso que llega desde request: ' + JSON.stringify(resource));
         //0. CHECKING REQUEST PARAMETERS
         if (resource.name != '') {
@@ -423,11 +424,11 @@ router.put(constants.API_URL_ADMIN_RESOURCE, upload.single('file'), function (re
             if (apiKey) {
                 logger.info('API KEY del usuario recuperada: ' + apiKey);
                 //2. INSERTING USER IN CKAN
-                updateResourceInCkan(apiKey, resource)
+                updateResourceInCkan(apiKey, resource, file)
                     .then(insertCkanResponse => {
                         logger.info('Respuesta de CKAN: ' + JSON.stringify(insertCkanResponse));
                         logger.info('Respuesta de CKAN success: ' + insertCkanResponse.success);
-                        if (insertCkanResponse && insertCkanResponse != null && insertCkanResponse.success) {
+                        if (insertCkanResponse && insertCkanResponse != null && JSON.parse(insertCkanResponse).success) {
                             logger.info('Recurso actualizado ');
                             var successJson = { 
                                 'status': constants.REQUEST_REQUEST_OK, 
@@ -937,27 +938,42 @@ var insertResourceInCKAN = function insertResourceInCKAN(apiKey, clientRequest) 
 }
 
 /** UPDATE RESOURCE IN CKAN FUNCTION */
-var updateResourceInCkan = function updateDatasetInCkan(apiKey, resource) {
+var updateResourceInCkan = function updateDatasetInCkan(apiKey, resource, file) {
     return new Promise((resolve, reject) => {
         try {
             logger.debug('Actualizando recurso en CKAN');
-            
-            var httpRequestOptions = {
+
+            let form_data = {
+                id: resource.id,
+                upload: file 
+            };
+
+            logger.debug('Insertando recurso en CKAN');
+
+            if ( file != undefined) {
+                form_data.upload = {
+                    value: file.buffer,
+                    options: {
+                        filename: file.originalname, contentType: null
+                    }
+                };
+            }
+
+            var options = { 
+                method: 'POST',
                 url: constants.CKAN_API_BASE_URL + constants.CKAN_URL_PATH_RESOURCE_UPDATE,
-                method: constants.HTTP_REQUEST_METHOD_POST,
-                body: resource,
-                json: true,
                 headers: {
-                    'Content-Type': constants.HTTP_REQUEST_HEADER_CONTENT_TYPE_JSON,
                     'User-Agent': constants.HTTP_REQUEST_HEADER_USER_AGENT_NODE_SERVER_REQUEST,
-                    'Authorization': apiKey
-                }
+                    'Authorization': apiKey,
+                    'content-type': constants.HTTP_REQUEST_HEADER_CONTENT_TYPE_MULTIPART_FORM_DATA
+                },
+                formData: form_data
             };
 
             logger.info('Datos a enviar: ' + JSON.stringify(resource));
-            logger.info('Configuración llamada POST: ' + JSON.stringify(httpRequestOptions));
+            logger.info('Configuración llamada POST: ' + JSON.stringify(options));
 
-            request(httpRequestOptions, function (err, res, body) {
+            request(options, function (err, res, body) {
                 if (err) {
                     reject(err);
                     console.log(err);
