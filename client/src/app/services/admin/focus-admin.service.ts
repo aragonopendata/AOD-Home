@@ -25,7 +25,7 @@ export class FocusAdminService {
 		return this.currentUser;
 	}
 
-  private createAuthorizationHeader(headers: Headers) {
+ 	private createAuthorizationHeader(headers: Headers) {
 		if (this.currentUser && this.currentUser.token && this.currentUser.key) {
 			//Authorization header: API_KEY:JWT_Token
 			let authorizationHeaderValue = this.currentUser.token + ':' + this.currentUser.key;
@@ -52,9 +52,16 @@ export class FocusAdminService {
 		return this.http.get(fullUrl, {headers: headers, search: params  }).pipe(map((res:Response) => res.json()));
 	}
 
-	public deleteHistory(id: string) {
+	public hideHistory(id: string) {
 		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_FOCUS + Constants.SERVER_API_LINK_HISTORY;
 		let headers = this.buildRequestHeaders();
+		return this.http.delete(fullUrl+'/'+id, {headers: headers}).pipe(map(res => res.json()));
+	}
+
+	public deleteHistory(id: string){
+		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_FOCUS + Constants.SERVER_API_LINK_HISTORY_DELETE;
+		let headers = this.buildRequestHeaders();
+		console.log(fullUrl);
 		return this.http.delete(fullUrl+'/'+id, {headers: headers}).pipe(map(res => res.json()));
 	}
 }

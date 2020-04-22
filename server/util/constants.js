@@ -295,7 +295,7 @@ exports.SPIDER_EMAIL_REVISION_PATH = '/data/scripts/procesos/spider/emailRevisio
 /* ******************* */
 /* FOCUS */
 
-
+exports.API_URL_FOCUS_HISTORY_DELETE = '/focus/history/delete';
 exports.API_URL_FOCUS_HISTORY = '/focus/history';
 exports.API_URL_FOCUS_HISTORIES = '/focus/histories';
 

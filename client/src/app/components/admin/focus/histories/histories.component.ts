@@ -70,8 +70,8 @@ export class HistoriesComponent implements OnInit {
     });
   }
 
-  public deleteHistory(id){
-    this.focusAdminService.deleteHistory(id).subscribe(result => {
+  public hideHistory(id){
+    this.focusAdminService.hideHistory(id).subscribe(result => {
       console.log(result.history);
       console.log('result.history');
       
@@ -83,6 +83,18 @@ export class HistoriesComponent implements OnInit {
         //Mensajes error
       }
     });
+  }
+
+  deleteHistory(id){
+    this.focusAdminService.deleteHistory(id).subscribe(result => {
+      if(result.success){
+        console.log('eliminado');
+        this.getHistories(this.actualPage, null);
+      }
+      else{
+        console.log('no se ha podido eliminar')
+      }
+    })
   }
 
   searchHistoriesByText(searchText: string){

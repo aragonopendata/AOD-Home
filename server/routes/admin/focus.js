@@ -44,8 +44,7 @@ router.get(constants.API_URL_FOCUS_HISTORIES, function (req, response, next) {
 /**
  * DELETE HISTORY
  */
-/*router.delete(constants.API_URL_FOCUS_HISTORY + "/:id", function (req, response, next) {
-    
+router.delete(constants.API_URL_FOCUS_HISTORY_DELETE + "/:id", function (req, response, next) {
     var id = req.params.id
 
     deleteHistoryTransaction(id).then( () => {
@@ -63,11 +62,11 @@ router.get(constants.API_URL_FOCUS_HISTORIES, function (req, response, next) {
         });
         return;
     });
-});*/
+});
 
 
 /**
- * DELETE HISTORY (CHANGE STATE TO HIDDEN)
+ * HIDE HISTORY (CHANGE STATE TO HIDDEN)
  */
 router.delete(constants.API_URL_FOCUS_HISTORY + "/:id", function (req, response, next) {
     var id = req.params.id
@@ -90,7 +89,7 @@ router.delete(constants.API_URL_FOCUS_HISTORY + "/:id", function (req, response,
 });
 
 /**
- * PUBLISH HISTORY (CHANGE STATE TO HIDDEN)
+ * PUBLISH HISTORY (CHANGE STATE TO PUBLISH)
  */
 router.post(constants.API_URL_FOCUS_HISTORY, function (req, response, next) {
     var history = req.body.history;
@@ -178,7 +177,7 @@ function getAllHistories( order, limit, page, text){
 }
 
 
-/*function deleteHistoryTransaction(id){
+function deleteHistoryTransaction(id){
 
     return new Promise((resolve, reject) => {
         try {
@@ -192,27 +191,18 @@ function getAllHistories( order, limit, page, text){
 
                 logger.notice('Se inicia la transacción de eliminacion de una historia');
 
-                client.query('BEGIN', (err) => {
-
-                    if (rollback(client, done, err)) {
-                        reject(err);
+                deleteHistory(client, done, id).then( (correct) => {
+                    done();
+                    if (correct) {
+                        logger.notice('deleteHistoryTransaction - eliminación de historia finalizada');
+                        resolve(true);
                     } else {
-                        deleteHistory(client, done, id).then( () => {
-                            client.query('COMMIT', (commitError) => {
-                                done();
-                                if (commitError) {
-                                    logger.error('deleteHistoryTransaction - Error eliminando la historia:', error);
-                                    reject(commitError);
-                                } else {
-                                    logger.notice('deleteHistoryTransaction - eliminación de historia finalizada');
-                                    resolve(true);
-                                }
-                            });
-                        }).catch(error => {
-                            logger.error('deleteHistoryTransaction - Error eliminando la historia:', error);
-                            reject(error);
-                        });
+                        logger.error('deleteHistoryTransaction - Error eliminando la historia:', error);
+                        reject(commitError);
                     }
+                }).catch(error => {
+                    logger.error('deleteHistoryTransaction - Error eliminando la historia:', error);
+                    reject(error);
                 });
             });
         } catch (error) {
@@ -267,7 +257,7 @@ function deleteHistory(client, done, idHistory){
         }
     });
 
-}*/
+}
 
 
 
