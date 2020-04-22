@@ -35,6 +35,7 @@ export class HistoriesComponent implements OnInit {
   datasetListErrorMessage: string;
 
   displayDeleteDialog: boolean = false;
+  idHistory: string;
 
   constructor(private focusAdminService: FocusAdminService, private changeDetectorRef: ChangeDetectorRef) {
     this.pageRows = Constants.DATASET_ADMIN_LIST_ROWS_PER_PAGE;
@@ -97,8 +98,14 @@ export class HistoriesComponent implements OnInit {
     });
   }
 
-  deleteHistory(id){
-    this.focusAdminService.deleteHistory(id).subscribe(result => {
+  showDeleteDialog(id){
+    this.displayDeleteDialog = true;
+    this.idHistory=id;
+  }
+
+  deleteHistory(){
+    this.displayDeleteDialog = false;
+    this.focusAdminService.deleteHistory(this.idHistory).subscribe(result => {
       if(result.success){
         console.log('eliminado');
         this.getHistories(this.actualPage, null);
@@ -107,6 +114,10 @@ export class HistoriesComponent implements OnInit {
         console.log('no se ha podido eliminar')
       }
     })
+  }
+
+  cancelDeleteHistory(){
+    this.displayDeleteDialog = false;
   }
 
   searchHistoriesByText(searchText: string){
