@@ -475,11 +475,6 @@ function deleteHistoryTransaction(id){
 
 function inserHistory(client, done, token, history){
 
-    if(!history.create_date){
-        history.create_date= new Date().toISOString()
-    }else{
-        history.update_date=new Date().toISOString()
-    }
 
     return new Promise((resolve, reject) => {
 
