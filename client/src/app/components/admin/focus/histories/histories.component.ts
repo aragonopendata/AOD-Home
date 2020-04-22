@@ -85,6 +85,18 @@ export class HistoriesComponent implements OnInit {
     });
   }
 
+  publishHistory(history){
+    this.focusAdminService.publishHistory(history).subscribe(result => {      
+      if(result.success){
+        console.log('publicada con exito');
+        this.getHistories(this.actualPage, null);
+      }
+      else{
+        console.log('no se ha podido publicar');
+      }
+    });
+  }
+
   deleteHistory(id){
     this.focusAdminService.deleteHistory(id).subscribe(result => {
       if(result.success){
