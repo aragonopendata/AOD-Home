@@ -2,7 +2,7 @@
 
     <!-- Dialogs -->
     <p-dialog header="¿Está seguro de que deasea borrar la historia?" [(visible)]="displayDeleteDialog">
-        <p>Se va a proceder a borrar el dataset <b> </b></p>
+        <p>Se va a proceder a borrar la historia <b> </b></p>
         <p>¿Desea continuar?</p>
              <p-footer>
                  <button type="button" pButton icon="fas fa-check" (click)="deleteHistory()" label="Sí"></button>
@@ -66,7 +66,7 @@
                 <button (click)="previewHistory(history.id)" class="btn btn-primary p-2" type="button"  data-toggle="tooltip" data-placement="top" title="Mostrar"><i class="fas fa-search"></i></button>
                 <button *ngIf="history.state!=stateEnum.Borrador" (click)="editHistory(history.id)" class="btn btn-primary p-2" type="button"  data-toggle="tooltip" data-placement="top" title="Editar"><i class="fas fa-edit"></i></button>
                 <button *ngIf="history.state==stateEnum.Publicada" (click)="hideHistory(history.id)" class="btn btn-primary p-2" type="button"  data-toggle="tooltip" data-placement="top" title="Ocultar"><i class="fas fa-eye-slash"></i></button> 
-                <button *ngIf="history.state==stateEnum.Revision" (click)="publishHistory(history)" class="btn btn-primary p-2" type="button"  data-toggle="tooltip" data-placement="top" title="Ocultar"><i class="fas fa-eye"></i></button> 
+                <button *ngIf="history.state==stateEnum.Revision" (click)="publishHistory(history)" class="btn btn-primary p-2" type="button"  data-toggle="tooltip" data-placement="top" title="Publicar"><i class="fas fa-eye"></i></button> 
                 <button class="btn btn-primary p-2" type="button" (click)="showDeleteDialog(history.id)" data-toggle="tooltip" data-placement="top" title="Borrar"><i class="fas fa-trash-alt"></i></button>      
             </ng-template>
         </p-column>
