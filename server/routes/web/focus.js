@@ -331,6 +331,7 @@ function inserHistoryTransaction(history){
 }
 
 function updateHistoryTransaction(history){
+    console.log(history)
 
     return new Promise((resolve, reject) => {
         try {
@@ -345,80 +346,102 @@ function updateHistoryTransaction(history){
 
                 logger.notice('Se inicia la transacción de edicion de una historia');
 
-                if(history.id_reference==history.id){//caso versionado de historia --> cambiar id antigua (actualizando con nueva), y guardado de la nueva 
-                    client.query('BEGIN', (err) => {
-                        if (rollback(client, done, err)) {
-                            reject(err);
-                        } else {
-                            newToken().then( (token ) => {
+                if(history.state==statesEnum.borrador || history.state==statesEnum.revision){
+                    if((history.id_reference==history.id)&&(history.state==statesEnum.revision)){//caso versionado de historia --> cambiar id antigua (actualizando con nueva), y guardado de la nueva 
+                        getHistoryById(history.id).then(fullHistory => {
+                            console.log(fullHistory)
+                            console.log('entro aqui')
+                            if(fullHistory.state==statesEnum.publicada){
+                                client.query('BEGIN', (err) => {
+                                    if (rollback(client, done, err)) {
+                                        reject(err);
+                                    } else {
+                                        newToken().then( (token ) => {
+                                            console.log('nuevo 1')
+                                            var id = history.id;
+                                            updateForVersion(client, done, id,token).then( () => {
+                                                console.log('nuevo 2')
+
+                                                history.id_reference=token;
+                                                inserHistory(client, done, id, history).then( (idHistory) => {
+                                                    console.log('nuevo 3')
+
+                                                    client.query('COMMIT', (commitError) => {
+                                                        done();
+                                                        if (commitError) {
+                                                            logger.error('updateHistoryTransaction - Error actualizando la historia con versionado:', commitError);
+                                                            reject(commitError);
+                                                        } else {
+                                                            logger.notice('updateHistoryTransaction - modificación de historia con versionado finalizada')
+                                                            resolve(idHistory);
+                                                        }
+                                                    });
+                                                }).catch(error => {
+                                                    logger.error('updateHistoryTransaction - Error actualizando la historia con versionado:', error);
+                                                    reject(error);
+                                                });
+                                                
+            
+                                            }).catch(error => {
+                                                logger.error('updateHistoryTransaction - Error actualizando la historia con versionado:', error);
+                                                reject(error);
+                                            });
+            
+                                        }).catch(error => {
+                                            logger.error('updateHistoryTransaction - Error actualizando la historia con versionado:', error);
+                                            reject(error);
+                                        });
+                                        
+                                    }
+                                });
+
+                            }else{
+                                logger.notice('updateHistoryTransaction - La historia no presenta el estado de publicada como se indica en el objeto recibido')
+                                reject('updateHistoryTransaction - La historia no presenta el estado de publicada como se indica en el objeto recibido');        
+                            }
+                        }).catch(error => {
+                            logger.error('updateHistoryTransaction - Error al comprobar la historia versionada:', error);
+                            reject(error);
+                        });
+                    }else if(history.state==statesEnum.borrador || history.state==statesEnum.revision){
+                        client.query('BEGIN', (err) => {
+    
+                            if (rollback(client, done, err)) {
+                                reject(err);
+                            } else {
                                 var id = history.id;
-                                updateForVersion(client, done, id,token).then( () => {
-                                    history.id_reference=token;
+                                history.id = null;
+                                deleteHistory(client, done, id).then( () => {
                                     inserHistory(client, done, id, history).then( (idHistory) => {
                                         client.query('COMMIT', (commitError) => {
                                             done();
                                             if (commitError) {
-                                                logger.error('updateHistoryTransaction - Error actualizando la historia con versionado:', commitError);
+                                                logger.error('updateHistoryTransaction - Error modificando la historia:', commitError);
                                                 reject(commitError);
                                             } else {
-                                                logger.notice('updateHistoryTransaction - modificación de historia con versionado finalizada')
+                                                logger.notice('updateHistoryTransaction - modificación de historia finalizada')
                                                 resolve(idHistory);
                                             }
                                         });
                                     }).catch(error => {
-                                        logger.error('updateHistoryTransaction - Error actualizando la historia con versionado:', error);
+                                        logger.error('updateHistoryTransaction - Error insertando la historia:', error);
                                         reject(error);
                                     });
-                                    
-
                                 }).catch(error => {
-                                    logger.error('updateHistoryTransaction - Error actualizando la historia con versionado:', error);
+                                    logger.error('updateHistoryTransaction - Error eliminando la historia:', error);
                                     reject(error);
                                 });
-
-                            }).catch(error => {
-                                logger.error('updateHistoryTransaction - Error actualizando la historia con versionado:', error);
-                                reject(error);
-                            });
-                            
-                        }
-                    });
-
+                            }
+                        });
+    
+                    }else{
+                        logger.notice('updateHistoryTransaction - La historia no presenta una estructura de actualización correcta')
+                        reject('updateHistoryTransaction - La historia no presenta una estructura de actualización correcta');
+                    }
                 }else{
-                    client.query('BEGIN', (err) => {
-
-                        if (rollback(client, done, err)) {
-                            reject(err);
-                        } else {
-                            var id = history.id;
-                            history.id = null;
-                            deleteHistory(client, done, id).then( () => {
-                                inserHistory(client, done, id, history).then( (idHistory) => {
-                                    client.query('COMMIT', (commitError) => {
-                                        done();
-                                        if (commitError) {
-                                            logger.error('updateHistoryTransaction - Error modificando la historia:', commitError);
-                                            reject(commitError);
-                                        } else {
-                                            logger.notice('updateHistoryTransaction - modificación de historia finalizada')
-                                            resolve(idHistory);
-                                        }
-                                    });
-                                }).catch(error => {
-                                    logger.error('updateHistoryTransaction - Error insertando la historia:', error);
-                                    reject(error);
-                                });
-                            }).catch(error => {
-                                logger.error('updateHistoryTransaction - Error eliminando la historia:', error);
-                                reject(error);
-                            });
-                        }
-                    });
-
+                    logger.notice('updateHistoryTransaction - La historia no presenta un estado de actualización correcto')
+                    reject('updateHistoryTransaction - La historia no presenta un estado de actualización correcto');
                 }
-
-                
-                
             });
         } catch (error) {
             logger.error('updateHistoryTransaction - Error modificando la historia:', error);
@@ -478,41 +501,47 @@ function inserHistory(client, done, token, history){
 
     return new Promise((resolve, reject) => {
 
-        try {
-            const queryHistory = {
-                text: dbQueries.DB_FOCUS_INSERT_FOCUS_HISTORY,
-                values: [token, history.state, history.title, history.description, history.email, history.id_reference, history.main_category, history.secondary_categories, history.create_date, history.update_date]
-            };
-            client.query(queryHistory, (err, resultHistory) => {
-                if (rollback(client, done, err)) {
-                    logger.error('inserHistory - Error guardando historia:', err);
-                    reject(err);
-                } else {
-                    if(history.contents){
-                        var sqlContents =  dbQueries.DB_FOCUS_INSERT_FOCUS_CONTENTS_HISTORY;
-                        var valuesContents= (history.contents).map(item => [item.title, item.description, item.type_content, item.visual_content, item.align, token])
-                        console.log(sqlContents)
-                        console.log(valuesContents)
-                        client.query(format(sqlContents, valuesContents), (err, resultContents) => {
-                            if (rollback(client, done, err)) {
-                                logger.error('inserHistory - Error insertando la historia:', err);
-                                reject(err);
-                                console.log('error')
-                            } else {
-                                logger.notice('inserHistory - inserción de la historia finalizada');
-                                resolve(resultHistory.rows[0].id);
-                            }
-                        });
+        if(history.state==statesEnum.borrador || history.state==statesEnum.revision){
+            try {
+                const queryHistory = {
+                    text: dbQueries.DB_FOCUS_INSERT_FOCUS_HISTORY,
+                    values: [token, history.state, history.title, history.description, history.email, history.id_reference, history.main_category, history.secondary_categories, history.create_date, history.update_date]
+                };
+                client.query(queryHistory, (err, resultHistory) => {
+                    if (rollback(client, done, err)) {
+                        logger.error('inserHistory - Error guardando historia:', err);
+                        reject(err);
                     } else {
-                        logger.error('inserHistory - Error insertando la historia:', err);
-                        resolve(resultHistory.rows[0].id);
+                        if(history.contents){
+                            var sqlContents =  dbQueries.DB_FOCUS_INSERT_FOCUS_CONTENTS_HISTORY;
+                            var valuesContents= (history.contents).map(item => [item.title, item.description, item.type_content, item.visual_content, item.align, token])
+                            console.log(sqlContents)
+                            console.log(valuesContents)
+                            client.query(format(sqlContents, valuesContents), (err, resultContents) => {
+                                if (rollback(client, done, err)) {
+                                    logger.error('inserHistory - Error insertando la historia:', err);
+                                    reject(err);
+                                    console.log('error')
+                                } else {
+                                    logger.notice('inserHistory - inserción de la historia finalizada');
+                                    resolve(resultHistory.rows[0].id);
+                                }
+                            });
+                        } else {
+                            logger.error('inserHistory - Error insertando la historia:', err);
+                            resolve(resultHistory.rows[0].id);
+                        }
                     }
-                }
-            })
+                })
+    
+            } catch (error) {
+                logger.error('Error insertando historia:', error);
+                reject(error);
+            }
 
-        } catch (error) {
-            logger.error('Error insertando historia:', error);
-            reject(error);
+        }else{
+            logger.error('inserHistory - La hisotoria a guardar no presenta un estado para ser guardada ');
+            reject('inserHistory - La hisotoria a guardar no presenta un estado para ser guardada' );
         }
     });
 
