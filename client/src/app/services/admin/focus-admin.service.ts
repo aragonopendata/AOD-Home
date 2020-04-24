@@ -67,7 +67,6 @@ export class FocusAdminService {
 	public publishHistory(history: History) {
 		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_FOCUS + Constants.SERVER_API_LINK_HISTORY;
 		let headers = this.buildRequestHeaders();
-		console.log(fullUrl)
 		let requestBodyParams: any = this.createJsonFromString('history', history);
 		return this.http.post(fullUrl, JSON.stringify(requestBodyParams), { headers: headers }).map(res => res.json());;
 	}
@@ -75,7 +74,6 @@ export class FocusAdminService {
 	public deleteHistory(id: string){
 		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_FOCUS + Constants.SERVER_API_LINK_HISTORY_DELETE;
 		let headers = this.buildRequestHeaders();
-		console.log(fullUrl);
 		return this.http.delete(fullUrl+'/'+id, {headers: headers}).pipe(map(res => res.json()));
 	}
 }

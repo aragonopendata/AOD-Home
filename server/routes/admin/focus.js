@@ -93,7 +93,7 @@ router.delete(constants.API_URL_FOCUS_HISTORY + "/:id", function (req, response,
  */
 router.post(constants.API_URL_FOCUS_HISTORY, function (req, response, next) {
     var history = req.body.history;
-    console.log(history)
+    //console.log(history)
 
     publishHistoryTransaction(history).then( () => {
         response.json({

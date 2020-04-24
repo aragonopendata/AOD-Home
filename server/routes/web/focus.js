@@ -70,10 +70,6 @@ router.get(constants.API_URL_FOCUS_HISTORIES, function (req, response, next) {
  * CREATE NEW HISTORY
  */
 router.put(constants.API_URL_FOCUS_HISTORY, function (req, response, next) {
-
-    console.log('entro')
-
-    console.log(req.body)
     
     var history = req.body;
 
@@ -240,14 +236,12 @@ function getAllPublicsHistories(text, category){
                 var search="%"+ text + "%";
 
                 if(category==null){
-                    console.log('busco sin categoria')
                     queryHistories = {
                         text: dbQueries.DB_FOCUS_GET_HISTORIES_BY_STATE_AND_SEARCH,
                         values: [statesEnum.publicada, search],
                         rowMode: constants.SQL_RESULSET_FORMAT_JSON
                     }
                 }else{
-                    console.log('busco con categoria')
                     queryHistories = {
                         text: dbQueries.DB_FOCUS_GET_HISTORIES_BY_STATE_AND_SEARCH_AND_CATEGORY,
                         values: [statesEnum.publicada, search, category],
@@ -496,13 +490,11 @@ function inserHistory(client, done, token, history){
                     if(history.contents){
                         var sqlContents =  dbQueries.DB_FOCUS_INSERT_FOCUS_CONTENTS_HISTORY;
                         var valuesContents= (history.contents).map(item => [item.title, item.description, item.type_content, item.visual_content, item.align, token])
-                        console.log(sqlContents)
-                        console.log(valuesContents)
                         client.query(format(sqlContents, valuesContents), (err, resultContents) => {
                             if (rollback(client, done, err)) {
                                 logger.error('inserHistory - Error insertando la historia:', err);
                                 reject(err);
-                                console.log('error')
+                                //console.log('error')
                             } else {
                                 logger.notice('inserHistory - inserción de la historia finalizada');
                                 resolve(resultHistory.rows[0].id);

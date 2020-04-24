@@ -73,8 +73,6 @@ export class HistoriesComponent implements OnInit {
 
   public hideHistory(id){
     this.focusAdminService.hideHistory(id).subscribe(result => {
-      console.log(result.history);
-      console.log('result.history');
       
       if(result.success){
         //Mensajes success
@@ -89,7 +87,6 @@ export class HistoriesComponent implements OnInit {
   publishHistory(history){
     this.focusAdminService.publishHistory(history).subscribe(result => {      
       if(result.success){
-        console.log('publicada con exito');
         this.getHistories(this.actualPage, null);
       }
       else{
@@ -107,7 +104,6 @@ export class HistoriesComponent implements OnInit {
     this.displayDeleteDialog = false;
     this.focusAdminService.deleteHistory(this.idHistory).subscribe(result => {
       if(result.success){
-        console.log('eliminado');
         this.getHistories(this.actualPage, null);
       }
       else{
