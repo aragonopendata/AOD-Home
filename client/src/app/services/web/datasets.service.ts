@@ -208,4 +208,19 @@ export class DatasetsService {
 			}
 		}));
 	}
+
+	public rateDataset(datasetName: string, value: number, ip: string) {
+		var headers = new Headers();
+		headers.set('X-Forwarded-For', ip);
+		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_DATASETS + "/" + datasetName + "/" + value;
+		return this.http.get(fullUrl, {headers: headers}).pipe(map(res => res.json()));
+	}
+
+	public getIpCliente() {
+		return this.http.get('https://api.ipify.org/?format=json').pipe(map(res => res.json()));
+	}
+
+	public clearDataset(){
+		this.dataset = new Dataset();
+	}
 }

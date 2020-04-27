@@ -1,3 +1,4 @@
+import { NgZone, HostListener } from '@angular/core';
 import { ResourceView } from './../../../../models/ResourceView';
 import { Component, OnInit } from '@angular/core';
 import { DatasetsService } from '../../../../services/web/datasets.service';
@@ -11,12 +12,13 @@ import { AuthenticationService } from 'app/services/security/authentication.serv
 import { UsersAdminService } from 'app/services/admin/users-admin.service';
 import { GoogleAnalyticsEventsService } from "../../../../services/web/google-analytics-events.service";
 import { Organization } from 'app/models/Organization';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { DatasetsUtils } from '../../../../utils/DatasetsUtils';
 import { Extra } from '../../../../models/Extra';
 import { UtilsService } from '../../../../services/web/utils.service';
 import { Resource } from '../../../../models/Resource';
 import { FilesAdminService } from 'app/services/admin/files-admin.service';
+import {MessageService} from 'primeng/api';
 
 @Component({
 	selector: 'app-datasets-detail',
@@ -85,13 +87,16 @@ export class DatasetsDetailComponent implements OnInit {
 
 	showMapLink = false;
 
+	subscription: Subscription;
+	isMobileScreen: boolean;
+
 	constructor(private datasetsService: DatasetsService,
 		private usersAdminService: UsersAdminService,
 		private authenticationService: AuthenticationService,
 		private activatedRoute: ActivatedRoute, public sanitizer: DomSanitizer, private router: Router,
 		public googleAnalyticsEventsService: GoogleAnalyticsEventsService,
 		private utilsService:UtilsService,
-		private filesAdminService: FilesAdminService) {
+		private filesAdminService: FilesAdminService, private messageService: MessageService, private ngZone: NgZone) {
 		this.datasetListErrorTitle = Constants.DATASET_LIST_ERROR_TITLE;
 		this.datasetListErrorMessage = Constants.DATASET_LIST_ERROR_MESSAGE;
 		this.routerLinkDataCatalogDataset = Constants.ROUTER_LINK_DATA_CATALOG_DATASET;
@@ -112,23 +117,41 @@ export class DatasetsDetailComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.activatedRoute.params.subscribe(params => {
+		this.loadResource();
+	}
+
+	@HostListener('window:resize', ['$event'])
+	onResize(event) {
+		if (event.target.innerWidth < 768) {
+			this.isMobileScreen = true;
+		} else {
+			this.isMobileScreen = false;
+		}
+	}
+
+	loadResource() {
+		if (this.subscription) {
+			this.subscription.unsubscribe();
+		}
+		this.subscription = this.activatedRoute.params.subscribe(params => {
+			this.initializeDataset();
+			this.datasetsService.clearDataset();
 			try {
 				this.showEditButton();
 				this.dataset.name = params[Constants.ROUTER_LINK_DATA_PARAM_DATASET_NAME];
 				this.datasetHomer.package_id = params[Constants.ROUTER_LINK_DATA_PARAM_DATASET_HOMER_NAME];
+				if (this.dataset.name) {
+					this.getDataset(this.dataset);
+				}
+				if (this.datasetHomer.package_id) {
+					this.loadDatasetHomer(this.datasetHomer);
+				}
 			} catch (error) {
 				console.error("Error: ngOnInit() params - datasets-detail.component.ts");
 				this.errorTitle = this.datasetListErrorTitle;
 				this.errorMessage = this.datasetListErrorMessage;
 			}
 		});
-		if (this.dataset.name) {
-			this.getDataset(this.dataset);
-		}
-		if (this.datasetHomer.package_id) {
-			this.loadDatasetHomer(this.datasetHomer);
-		}
 	}
 
 	initializeDataset() {
@@ -392,12 +415,6 @@ export class DatasetsDetailComponent implements OnInit {
 
 	//Methods called from HTML.
 
-	showDataset(dataset: Dataset) {
-		this.initializeDataset();
-		this.datasetsService.setDataset(dataset);
-		this.getDataset(dataset);
-	}
-
 	downloadRDF(datasetName: string) {
 		this.datasetsService.getDatasetRDF(datasetName).subscribe(result => {
 			let blob = new Blob(['\ufeff' + result], { type: Constants.DATASET_RDF_FORMAT_OPTIONS_RDF });
@@ -547,4 +564,28 @@ export class DatasetsDetailComponent implements OnInit {
 		window.open(url, '_blank');
 	}
 
+	rateDataset(event) {
+		try {
+			this.datasetsService.getIpCliente().subscribe((res: any) => {
+				var ip = res.ip;
+				this.datasetsService.rateDataset(this.dataset.name, event.value, ip).subscribe( response => {
+					if(response.statusCode != 500){
+						this.ngZone.run(() => {
+							this.messageService.add({severity:'success', detail:'¡Gracias por valorar estos datos!'});
+						});
+						this.loadResource();
+					} else {
+						this.ngZone.run(() => {
+							this.messageService.add({severity:'error', summary:'Error al registrar el voto.', detail:'No ha sido posible registrar el voto debido a un fallo en la comunicación con el servidor.'});
+						});
+					}
+				});
+			});
+		} catch (error) {
+			console.error('Error rateDataset() - datasets-detail.component.ts');
+			this.ngZone.run(() => {
+				this.messageService.add({severity:'error', summary:'Error al registrar el voto.', detail:'Ha ocurrido un error en el registro del voto.'});
+			});
+		}
+	}
 }

@@ -14,7 +14,9 @@ export class DatasetsUtils {
 	resourceView: ResourceView[];
     dataset: Dataset;
 
-	constructor(private datasetsService: DatasetsService){}
+	constructor(private datasetsService: DatasetsService){
+		this.clearDataset();
+	}
 
     getDataset(dataset: Dataset): Promise<any> {
 		return new Promise((resolve, reject) => {
@@ -100,7 +102,7 @@ export class DatasetsUtils {
 		//Se busca la palabra api_key= en la URL y se borra de todos los formatos menos de la API 
 		var resourceUrl = resource.url.split('?')[0]+'?_view=completa';
 		var resourceUrl2 = resource.url.replace(/ /g,"_"); 
-
+		
 		if (resource.url.includes("api_key=") && resource.format != "API"){
 			resourcesAux[position].sources.push(resourceUrl);
 		}else if (resource.url.includes("sparql?")) {
@@ -144,6 +146,12 @@ export class DatasetsUtils {
 		} else {
 			return url;
 		}
+	}
+
+	clearDataset() {
+		this.dataset = new Dataset();
+		this.resourcesAux = new Array();
+		this.resourceView = new Array();
 	}
 
 }

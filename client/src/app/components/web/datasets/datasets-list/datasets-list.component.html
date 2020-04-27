@@ -21,7 +21,7 @@
     <div class="row" style="margin-top: 1%">
         <div class="col-12 order-12 order-md-1 col-md-8" *ngIf="selectedSearchOption == datasetSearchOptionFreeSearch">
             <div class="form-group">
-                <label for="exampleSelect1" tabindex="{{openedMenu ? -1 : 0}}">Datos Sobre:</label>
+                <label for="exampleSelect1" tabindex="{{openedMenu ? -1 : 0}}" class="title-combo">Datos Sobre:</label>
                 <div class="input-group">
                     <input tabindex="{{openedMenu ? -1 : 0}}" type="text" class="form-control" placeholder="Buscar por..." [(ngModel)]="textSearch" (keyup.enter)="searchDatasetsByText()"
                         #searchInput>
@@ -33,7 +33,7 @@
         </div>
         <div class="col-12 col-md-4 order-md-1 order-12" *ngIf="selectedSearchOption == datasetSearchOptionTopics">
             <div class="form-group">
-                <label tabindex="{{openedMenu ? -1 : 0}}">Datos sobre:</label>
+                <label tabindex="{{openedMenu ? -1 : 0}}" class="title-combo">Datos sobre:</label>
                 <select tabindex="{{openedMenu ? -1 : 0}}" class="form-control" [(ngModel)]="selectedTopic" (change)="changeType()">
                     <option tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let topSel of topicsSelect" [ngValue]="topSel.value">{{topSel.label}}</option>
                 </select>
@@ -41,7 +41,7 @@
         </div>
         <div class="col-12 col-md-4 order-12 order-md-1" *ngIf="selectedSearchOption == datasetSearchOptionOrganizations">
             <div class="form-group">
-                <label tabindex="{{openedMenu ? -1 : 0}}">Datos sobre:</label>
+                <label tabindex="{{openedMenu ? -1 : 0}}" class="title-combo">Datos sobre:</label>
                 <select tabindex="{{openedMenu ? -1 : 0}}" class="form-control" [(ngModel)]="selectedOrg" (change)="changeType()">
                         <option tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let orgs of orgsSelect" [ngValue]="orgs.value">{{orgs.label}}</option>
                 </select>
@@ -49,7 +49,7 @@
         </div>
         <div class="col-12 col-md-4 order-12 order-md-4" *ngIf="selectedSearchOption == datasetSearchOptionOrganizations || selectedSearchOption == datasetSearchOptionTopics">
             <div class="form-group">
-                <label tabindex="{{openedMenu ? -1 : 0}}">Del tipo:</label>
+                <label tabindex="{{openedMenu ? -1 : 0}}" class="title-combo">Del tipo:</label>
                 <select tabindex="{{openedMenu ? -1 : 0}}" class="form-control" [(ngModel)]="selectedType" (change)="changeType()">
                     <option tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let types of datasetTypes" [ngValue]="types.value">{{types.label}}</option>
                 </select>
@@ -58,7 +58,7 @@
 
         <div class="col-12 order-12 order-md-1 col-md-8" *ngIf="selectedSearchOption == datasetSearchOptionTags">
             <div class="form-group">
-                <label tabindex="{{openedMenu ? -1 : 0}}">Etiquetas:</label>
+                <label tabindex="{{openedMenu ? -1 : 0}}"  class="title-combo">Etiquetas:</label>
                 <div tabindex="{{openedMenu ? -1 : 0}}" class="input-group">
                     <p-autoComplete [style]="{'width':'100%'}" [inputStyle]="{'padding': '0 1.5em 0.25em'}" [(ngModel)]="tags" [suggestions]="filteredTagsMultiple"
                         (completeMethod)="filterTagsMultiple($event)" [minLength]="1" placeholder="Etiquetas" value="#{tags}"
@@ -72,7 +72,7 @@
         </div>
         <div [ngClass]="selectedSearchOption == datasetSearchOptionStats && selectedGroup == undefined ? 'col-12 order-12 order-md-4 col-md-8' : 'col-12 col-md-4 order-12 order-md-1'" *ngIf="selectedSearchOption == datasetSearchOptionStats">
             <div class="form-group">
-                <label tabindex="{{openedMenu ? -1 : 0}}">Del Grupo:</label>
+                <label tabindex="{{openedMenu ? -1 : 0}}" class="title-combo">Del Grupo:</label>
                 <select tabindex="{{openedMenu ? -1 : 0}}" class="form-control" [(ngModel)]="selectedGroup" (change)="resetSubGroupSearch();changeStats()">
                     <option tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let group of groupSelect" [ngValue]="group.value">{{group.label}}</option>
                 </select>
@@ -80,7 +80,7 @@
         </div>
         <div class="col-12 col-md-4 order-12 order-md-4" *ngIf="selectedGroup != undefined && selectedSearchOption == datasetSearchOptionStats">
             <div class="form-group">
-                <label tabindex="{{openedMenu ? -1 : 0}}">Del Subgrupo:</label>
+                <label tabindex="{{openedMenu ? -1 : 0}}" class="title-combo">Del Subgrupo:</label>
                 <select tabindex="{{openedMenu ? -1 : 0}}" *ngIf="selectedGroup == groupsOptionTerritorio" class="form-control" [(ngModel)]="selectedSubGroup" (change)="changeStats()">
                     <option tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let subGroup of subGroupTerritorioSelect" [ngValue]="subGroup.value">{{subGroup.label}}</option>
                 </select>
@@ -130,7 +130,7 @@
         </div>
         <div class="col-12 order-12 order-md-1 col-md-4" *ngIf="selectedSearchOption == datasetSearchOptionHomer">
             <div class="form-group">
-                <label tabindex="{{openedMenu ? -1 : 0}}">Buscar:</label>
+                <label tabindex="{{openedMenu ? -1 : 0}}" class="title-combo">Buscar:</label>
                 <div class="input-group">
                     <input tabindex="{{openedMenu ? -1 : 0}}" type="text" class="form-control" placeholder="Buscar por..." [value]="searchHomerValue" (keyup.enter)="searchDatasetsByHomer(searchHomerInput.value)"
                         #searchHomerInput>
@@ -142,7 +142,7 @@
         </div>
         <div class="col-12 col-md-4 order-12 order-md-4" *ngIf="selectedSearchOption == datasetSearchOptionHomer">
             <div class="form-group">
-                <label tabindex="{{openedMenu ? -1 : 0}}">Idioma:</label>
+                <label tabindex="{{openedMenu ? -1 : 0}}" class="title-combo">Idioma:</label>
                 <select tabindex="{{openedMenu ? -1 : 0}}" class="form-control" [(ngModel)]="selectedLang" (change)="getDatasetsByHomer(null,null)">
                     <option tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let langSel of langsSelect" [ngValue]="langSel.value">{{langSel.label}}</option>
                 </select>
@@ -150,7 +150,7 @@
         </div>
         <div class="col-12 order-md-12 order-1 col-md-4">
             <div class="form-group">
-                <label tabindex="{{openedMenu ? -1 : 0}}">Tipo de búsqueda</label>
+                <label tabindex="{{openedMenu ? -1 : 0}}" class="title-combo">Tipo de búsqueda</label>
                 <select tabindex="{{openedMenu ? -1 : 0}}" class="form-control" [(ngModel)]="selectedSearchOption" (change)="loadDatasets()">
                     <option tabindex="{{openedMenu ? -1 : 0}}" *ngFor="let search of searchOptions" [ngValue]="search.value">{{search.label}}</option>
                 </select>
@@ -158,7 +158,7 @@
         </div>
         <div class="col" *ngIf="selectedSearchOption === datasetSearchOptionSiu">
             <div class="form-group">
-                <label for="exampleSelect1" tabindex="{{openedMenu ? -1 : 0}}">Datos Sobre:</label>
+                <label for="exampleSelect1" tabindex="{{openedMenu ? -1 : 0}}" class="title-combo">Datos Sobre:</label>
                 <div class="input-group">
                     <input tabindex="{{openedMenu ? -1 : 0}}" type="text" class="form-control" placeholder="Buscar por..." [(ngModel)]="textSearch" (keyup.enter)="searchDatasetsByText()"
                         #searchInput>

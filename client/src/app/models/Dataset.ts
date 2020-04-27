@@ -54,6 +54,7 @@ export class Dataset {
     updateFrequency: SelectItem[];
     dataFiles: string[];
     checked: boolean;
+    rating: number;
     
     constructor() { }
 

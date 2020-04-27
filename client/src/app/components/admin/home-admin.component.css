@@ -6,3 +6,25 @@
 .dropdown-menu{
     cursor: pointer;
 }
+
+::ng-deep .ui-datatable .ui-datatable-thead > tr > th {
+    font-weight: normal !important;
+    background-color: #ebedf0 !important;
+    color: #555 !important;
+    border: 1px solid #d9d9d9 !important;
+}
+
+::ng-deep .ui-datatable .ui-sortable-column:hover {
+    background-color: grey;
+}
+
+::ng-deep .ui-datatable .ui-datatable-data > tr > td {
+    border-color: #d9d9d9;
+}
+
+::ng-deep .ui-widget-header {
+    background: linear-gradient(to bottom,#f6f7f9 0,#ebedf0 100%);
+    border: 1px solid #d9d9d9;
+    color: #1b1d1f;
+    font-weight: 400;
+}
