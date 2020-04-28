@@ -217,6 +217,7 @@ exports.DB_ADMIN_DELETE_FOCUS_HISTORY = 'DELETE FROM focus.histories WHERE id = 
 
 exports.DB_ADMIN_DELETE_FOCUS_CONTENT_BY_ID_HISTORY = 'DELETE FROM focus.contents_histories WHERE id_history = $1';
 
+exports.DB_FOCUS_GET_STATE_HISTORY_BY_TOKEN = 'SELECT state FROM focus.histories WHERE token= $1';
 
 
 

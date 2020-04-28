@@ -69,6 +69,31 @@ router.get(constants.API_URL_FOCUS_HISTORY_TOKEN + "/:token" , function (req, re
 });
 
 /**
+ * GET HISTORY BY TOKEN ROUTE (ONLY FOR THE USER WHO KNOW TOKEN)
+ */
+router.get(constants.API_URL_FOCUS_STATE_HISTORY_TOKEN + "/:token" , function (req, response, next) {
+    
+    var token = req.params.token;
+
+    getStateHistoryByToken(token).then(state => {
+        response.json({
+            'status': constants.REQUEST_REQUEST_OK,
+            'success': true,
+            'result': 'DETALLE DE UNA HISTORIA POR TOKEN- Historia obtenida correctamente',
+            'state': state
+        });
+    }).catch(error => {
+        logger.error('DETALLE DE UNA HISTORIA POR TOKEN - Error al obtener la historia en base de datos: ', error);
+        response.json({ 
+            'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 
+            'error': 'DETALLE DE UNA HISTORIA POR TOKEN - Error al obtener la historia en base de datos' ,
+        });
+        return;
+    });
+
+});
+
+/**
  * GET RESUMES OF PUBLICS HISTORIES BY STATE "PUBLICADA", BY SEARCH AND BY CATEGORIE (WITHOUT CONTENTS)
  */
 router.get(constants.API_URL_FOCUS_HISTORIES, function (req, response, next) {
@@ -354,6 +379,48 @@ function getAllPublicsHistories(text, category){
     });
 
 }
+
+function getStateHistoryByToken(token){
+
+
+    return new Promise((resolve, reject) => {
+        try {
+            pool.connect((err, client, done) => {
+
+                if(err){
+                    logger.error('getStateHistoryByToken - No se puede establecer conexión con la BBDD');
+                    reject(err)
+                    return
+                }
+
+                var queryStateHistory = {
+                    text: dbQueries.DB_FOCUS_GET_STATE_HISTORY_BY_TOKEN,
+                    values: [token],
+                    rowMode: constants.SQL_RESULSET_FORMAT_JSON
+                }
+
+
+                //Se busca la historia introducida como parámetro en la tabla histories
+                pool.query(queryStateHistory, (err, result) => {
+                    done();
+                    if (err) {
+                        logger.error('getStateHistoryByToken - Error obteniendo el estado de la historia:',err.stack);
+                        reject(err);
+                    } else {
+                        logger.notice('getStateHistoryByToken - Obtención del estado de una historia')
+                        //var resumeHistories=result.rows;
+                        resolve(result.rows[0].state);
+                    }
+                });
+
+            });
+        } catch (error) {
+            logger.error('getDetailHistoriesInCampus - Error obteniendo el detalle de historias:', error);
+            reject(error);
+        }
+    });
+}
+
 
 function inserHistoryTransaction(history){
 
