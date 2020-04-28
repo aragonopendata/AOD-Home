@@ -19,7 +19,7 @@ const logger = require('js-logging').dailyFile([loggerSettings]);
 const statesEnum =  constants.statesEnum;
 
 /**
- * GET HISTORY BY ID ROUTE
+ * GET HISTORY BY ID ROUTE (PUBLIC)
  */
 router.get(constants.API_URL_FOCUS_HISTORY + "/:id" , function (req, response, next) {
     
@@ -29,14 +29,39 @@ router.get(constants.API_URL_FOCUS_HISTORY + "/:id" , function (req, response, n
         response.json({
             'status': constants.REQUEST_REQUEST_OK,
             'success': true,
-            'result': 'DETALLE DE UNA HISTORIA - Historia obtenida correctamente',
+            'result': 'DETALLE DE UNA HISTORIA POR ID- Historia obtenida correctamente',
             'history': fullHistory
         });
     }).catch(error => {
-        logger.error('DETALLE DE UNA HISTORIA - Error al obtener la historia en base de datos: ', error);
+        logger.error('DETALLE DE UNA HISTORIA POR ID - Error al obtener la historia en base de datos: ', error);
         response.json({ 
             'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 
-            'error': 'DETALLE DE UNA HISTORIA - Error al obtener la historia en base de datos' ,
+            'error': 'DETALLE DE UNA HISTORIA POR ID - Error al obtener la historia en base de datos' ,
+        });
+        return;
+    });
+
+});
+
+/**
+ * GET HISTORY BY TOKEN ROUTE (ONLY FOR THE USER WHO KNOW TOKEN)
+ */
+router.get(constants.API_URL_FOCUS_HISTORY_TOKEN + "/:token" , function (req, response, next) {
+    
+    var token = req.params.token;
+
+    getHistoryByToken(token).then(fullHistory => {
+        response.json({
+            'status': constants.REQUEST_REQUEST_OK,
+            'success': true,
+            'result': 'DETALLE DE UNA HISTORIA POR TOKEN- Historia obtenida correctamente',
+            'history': fullHistory
+        });
+    }).catch(error => {
+        logger.error('DETALLE DE UNA HISTORIA POR TOKEN - Error al obtener la historia en base de datos: ', error);
+        response.json({ 
+            'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 
+            'error': 'DETALLE DE UNA HISTORIA POR TOKEN - Error al obtener la historia en base de datos' ,
         });
         return;
     });
@@ -69,9 +94,12 @@ router.get(constants.API_URL_FOCUS_HISTORIES, function (req, response, next) {
 /**
  * CREATE NEW HISTORY
  */
+
 router.put(constants.API_URL_FOCUS_HISTORY, function (req, response, next) {
     
     var history = req.body;
+
+    console.log('entro con historia')
 
     if ( !history || !history.title ){
         logger.error('Input Error', 'Incorrect input');
@@ -99,10 +127,14 @@ router.put(constants.API_URL_FOCUS_HISTORY, function (req, response, next) {
     });
 });
 
+
+
 /**
  * UPDATE HISTORY
  */
 router.post(constants.API_URL_FOCUS_HISTORY, function (req, response, next) {
+
+    console.log('voy a entrar ')
     
     var history = req.body;
 
@@ -158,6 +190,8 @@ router.delete(constants.API_URL_FOCUS_HISTORY + "/:id", function (req, response,
 
 function getHistoryById(id){
 
+    console.log('entro getHistoryById')
+
     return new Promise((resolve, reject) => {
         try {
             pool.connect((err, client, done) => {
@@ -169,9 +203,11 @@ function getHistoryById(id){
                 }
 
                 const queryHistory = {
-                    text: dbQueries.DB_FOCUS_GET_HISTORY,
+                    text: dbQueries.DB_FOCUS_GET_HISTORY_BY_ID,
                     values: [id]
                 }
+
+                console.log(queryHistory)
 
                 //Se busca la historia introducida como parámetro en la tabla histories
                 pool.query(queryHistory, (err, result) => {
@@ -212,6 +248,73 @@ function getHistoryById(id){
             });
         } catch (error) {
             logger.error('Error creando la nueva historia:', error);
+            reject(error);
+        }
+    });
+
+}
+
+function getHistoryByToken(token){
+
+    return new Promise((resolve, reject) => {
+        try {
+            pool.connect((err, client, done) => {
+
+                if(err){
+                    logger.error('getHistoryByToken - No se puede establecer conexión con la BBDD');
+                    reject(err)
+                    return
+                }
+
+                const queryHistory = {
+                    text: dbQueries.DB_FOCUS_GET_HISTORY_BY_TOKEN,
+                    values: [token]
+                }
+
+                console.log(queryHistory)
+
+                //Se busca la historia introducida como parámetro en la tabla histories
+                pool.query(queryHistory, (err, result) => {
+                    if (err) {
+                        done();
+                        logger.error('getHistoryByToken - Error obteniendo la historia',err.stack);
+                        reject(err);
+                    } else {
+                        //Si tiene un resultado, obtenemos la historia y la devolvemos
+                        if( result.rows.length == 1 ){
+                            logger.info('getHistoryByToken - Id historia recuperada: ' + result.rows[0].id);
+                            var historySelect=result.rows[0];
+
+                            const queryContent = {
+                                text: dbQueries.DB_FOCUS_GET_CONTENTS_HISTORIES_PARTICULAR_HISTORY,
+                                values: [historySelect.id]
+                            }
+
+                            console.log(queryContent)
+
+
+                            //obtenemos los contenidos de la historia
+                            pool.query(queryContent, (err, result) => {
+                                done();
+                                if (err) {
+                                    logger.error('getHistoryByToken - Error obteniendo los contenidos de la historia:',err.stack);
+                                    reject(err);
+                                } else {
+                                    logger.info('getHistoryByToken - Contenidos recuperados ');
+                                    historySelect.contents = result.rows
+                                    resolve(historySelect);
+                                }
+                            });
+                        } else {
+                            done();
+                            logger.error('getHistoryByToken - No existe la historia');
+                            resolve(null);
+                        }
+                    }
+                });
+            });
+        } catch (error) {
+            logger.error('getHistoryByToken -  Error buscando la historia por token:', error);
             reject(error);
         }
     });
@@ -285,6 +388,8 @@ function inserHistoryTransaction(history){
 
                 newToken().then( (token ) => {
 
+                    console.log('token generado')
+
                     logger.notice('Se inicia la transacción de insercion de una historia');
 
                     client.query('BEGIN', (err) => {
@@ -293,7 +398,8 @@ function inserHistoryTransaction(history){
                             logger.error('inserHistoryTransaction - Error creando historia:', err);
                             reject(err);
                         } else {
-                            inserHistory(client, done, token, history).then( (idHistory) => {
+                            console.log('vamos a insertar')
+                            inserHistory(client, done, token, history, null).then( (idHistory) => {
                                 client.query('COMMIT', (commitError) => {
                                     done();
                                     if (commitError) {
@@ -327,6 +433,7 @@ function inserHistoryTransaction(history){
 function updateHistoryTransaction(history){
     console.log(history)
 
+    console.log('entra')
     return new Promise((resolve, reject) => {
         try {
             pool.connect((err, client, done) => {
@@ -340,7 +447,7 @@ function updateHistoryTransaction(history){
 
                 logger.notice('Se inicia la transacción de edicion de una historia');
 
-                if(history.state==statesEnum.borrador || history.state==statesEnum.revision){
+                if(history.state==statesEnum.borrador || history.state==statesEnum.revision){//quitar rev, solo para admin!
                     if((history.id_reference==history.id)&&(history.state==statesEnum.revision)){//caso versionado de historia --> cambiar id antigua (actualizando con nueva), y guardado de la nueva 
                         getHistoryById(history.id).then(fullHistory => {
                             console.log(fullHistory)
@@ -356,8 +463,8 @@ function updateHistoryTransaction(history){
                                             updateForVersion(client, done, id,token).then( () => {
                                                 console.log('nuevo 2')
 
-                                                history.id_reference=token;
-                                                inserHistory(client, done, id, history).then( (idHistory) => {
+                                                history.id_reference=id;
+                                                inserHistory(client, done, history.token, history,null).then( (idHistory) => {
                                                     console.log('nuevo 3')
 
                                                     client.query('COMMIT', (commitError) => {
@@ -398,15 +505,17 @@ function updateHistoryTransaction(history){
                             reject(error);
                         });
                     }else if(history.state==statesEnum.borrador || history.state==statesEnum.revision){
+                        console.log('entro2')
                         client.query('BEGIN', (err) => {
     
                             if (rollback(client, done, err)) {
                                 reject(err);
                             } else {
-                                var id = history.id;
-                                history.id = null;
+                                var token = history.token;
+                                var id=history.id;
+                                //history.token = null;
                                 deleteHistory(client, done, id).then( () => {
-                                    inserHistory(client, done, id, history).then( (idHistory) => {
+                                    inserHistory(client, done, token, history, id).then( (idHistory) => {
                                         client.query('COMMIT', (commitError) => {
                                             done();
                                             if (commitError) {
@@ -490,25 +599,39 @@ function deleteHistoryTransaction(id){
 
 }
 
-function inserHistory(client, done, token, history){
+function inserHistory(client, done, token, history, id){
+    //prestar atencion al mail
+
+    console.log('aqui atencion al mail')
 
 
     return new Promise((resolve, reject) => {
 
         if(history.state==statesEnum.borrador || history.state==statesEnum.revision){
             try {
-                const queryHistory = {
-                    text: dbQueries.DB_FOCUS_INSERT_FOCUS_HISTORY,
-                    values: [token, history.state, history.title, history.description, history.email, history.id_reference, history.main_category, history.secondary_categories, history.create_date, history.update_date]
-                };
+                var queryHistory="";
+                if(id==null){
+                    queryHistory = {
+                        text: dbQueries.DB_FOCUS_INSERT_FOCUS_HISTORY,
+                        values: [token, history.state, history.title, history.description, history.email, history.id_reference, history.main_category, history.secondary_categories, history.create_date, history.update_date]
+                    };
+                }else{
+                    queryHistory = {
+                        text: dbQueries.DB_FOCUS_INSERT_FOCUS_HISTORY_WITH_ID,
+                        values: [token, history.state, history.title, history.description, history.email, history.id_reference, history.main_category, history.secondary_categories, history.create_date, history.update_date, id]
+                    };
+                }
+                console.log(queryHistory)
                 client.query(queryHistory, (err, resultHistory) => {
                     if (rollback(client, done, err)) {
                         logger.error('inserHistory - Error guardando historia:', err);
                         reject(err);
                     } else {
+                        id_history=resultHistory.rows[0].id;
+                        console.log(id_history)
                         if(history.contents){
                             var sqlContents =  dbQueries.DB_FOCUS_INSERT_FOCUS_CONTENTS_HISTORY;
-                            var valuesContents= (history.contents).map(item => [item.title, item.description, item.type_content, item.visual_content, item.align, token])
+                            var valuesContents= (history.contents).map(item => [item.title, item.description, item.type_content, item.visual_content, item.align, id_history])
                             console.log(sqlContents)
                             console.log(valuesContents)
                             client.query(format(sqlContents, valuesContents), (err, resultContents) => {
@@ -656,7 +779,9 @@ function updateForVersion(client, done, idHistory, tokenNewForHistory){
                 values: [tokenNewForHistory,idHistory]
             };
 
-            //cambio id antiguo
+            console.log(queryUpdateForVersion)
+
+            //cambio token antiguo
             client.query(queryUpdateForVersion, (err, resultUpdateIdVersion) => {
 
                 if (rollback(client, done, err)) {
