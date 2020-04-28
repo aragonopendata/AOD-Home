@@ -107,14 +107,15 @@ router.put(constants.API_URL_FOCUS_HISTORY, function (req, response, next) {
         return;
     }
 
-    inserHistoryTransaction(history).then(historyId => {
+    inserHistoryTransaction(history).then(historyInfo => {
 
         logger.info('CREACIÓN DE UNA HISTORIA - Historia creada correctamente')
         response.json({
             'status': constants.REQUEST_REQUEST_OK,
             'success': true,
             'result': 'CREACION DE UNA HISTORIA COMPLETA - Historia creada correctamente',
-            'id': historyId
+            'id': historyInfo.id,
+            'token': historyInfo.token,
         });
         
     }).catch(error => {
@@ -144,13 +145,14 @@ router.post(constants.API_URL_FOCUS_HISTORY, function (req, response, next) {
         return;
     }
 
-    updateHistoryTransaction(history).then(idHistory => {
+    updateHistoryTransaction(history).then(historyInfo => {
 
         response.json({
             'status': constants.REQUEST_REQUEST_OK,
             'success': true,
             'result': 'ACTUALIZACIÓN DE UNA HISTORIA - Historia actualizada correctamente',
-            'historyUpdate': idHistory
+            'id': historyInfo.id,
+            'token': historyInfo.token
         });
         
     }).catch(error => {
@@ -329,6 +331,8 @@ function getAllPublicsHistories(text, category){
                     }
                 }
 
+                console.log(queryHistories)
+
                 //Se busca la historia introducida como parámetro en la tabla histories
                 pool.query(queryHistories, (err, result) => {
                     done();
@@ -384,7 +388,10 @@ function inserHistoryTransaction(history){
                                         reject(commitError);
                                     } else {
                                         logger.notice('inserHistoryTransaction - Creación de historia finalizada')
-                                        resolve(idHistory);
+                                        var objectInfo=new Object;
+                                        objectInfo.id=idHistory;
+                                        objectInfo.token=token;
+                                        resolve(objectInfo);
                                     }
                                 });
                             }).catch(error => {
@@ -451,7 +458,10 @@ function updateHistoryTransaction(history){
                                                             reject(commitError);
                                                         } else {
                                                             logger.notice('updateHistoryTransaction - modificación de historia con versionado finalizada')
-                                                            resolve(idHistory);
+                                                            var objectInfo=new Object;
+                                                            objectInfo.id=idHistory;
+                                                            objectInfo.token=history.token;
+                                                            resolve(objectInfo);
                                                         }
                                                     });
                                                 }).catch(error => {
@@ -481,8 +491,7 @@ function updateHistoryTransaction(history){
                             logger.error('updateHistoryTransaction - Error al comprobar la historia versionada:', error);
                             reject(error);
                         });
-                    }else if(history.state==statesEnum.borrador || history.state==statesEnum.revision){
-                        console.log('entro2')
+                    }else if(history.state==statesEnum.borrador){
                         client.query('BEGIN', (err) => {
     
                             if (rollback(client, done, err)) {
@@ -490,7 +499,6 @@ function updateHistoryTransaction(history){
                             } else {
                                 var token = history.token;
                                 var id=history.id;
-                                //history.token = null;
                                 deleteHistory(client, done, id).then( () => {
                                     inserHistory(client, done, token, history, id).then( (idHistory) => {
                                         client.query('COMMIT', (commitError) => {
@@ -500,8 +508,10 @@ function updateHistoryTransaction(history){
                                                 reject(commitError);
                                             } else {
                                                 logger.notice('updateHistoryTransaction - modificación de historia finalizada')
-                                                resolve(idHistory);
-                                            }
+                                                var objectInfo=new Object;
+                                                objectInfo.id=idHistory;
+                                                objectInfo.token=token;
+                                                resolve(objectInfo);                                            }
                                         });
                                     }).catch(error => {
                                         logger.error('updateHistoryTransaction - Error insertando la historia:', error);
@@ -741,7 +751,7 @@ function makeToken(length) {
     for ( var i = 0; i < length; i++ ) {
        result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
-    return result;
+    return result;probeTokenForId
 }
 
 
@@ -812,5 +822,7 @@ function probeTokenForId(token, id){
     });
 
 }
+
+
 
 module.exports = router;
