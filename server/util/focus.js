@@ -19,10 +19,6 @@ const statesEnum =  constants.statesEnum;
 
 module.exports = {
     getHistoryById(id){
-
-        console.log('ESTOY EN EL NUEVO!!')
-
-        console.log('entro getHistoryById')
     
         return new Promise((resolve, reject) => {
             try {
@@ -315,7 +311,40 @@ module.exports = {
             }
         });
 
-    }
+    },
+    deleteHistoryById(idHistory){
+        console.log('ENTRO AL BORRAR GENERAL')
+        return new Promise((resolve, reject) => {
+            try{
+                pool.connect((err, client, done) => {
+                    client.query('BEGIN', (err) => {
+                        if (rollback(client, done, err)) {
+                            reject(err);
+                        } else {
+                            deleteHistory(client, done, idHistory).then( () => {
+                                client.query('COMMIT', (commitError) => {
+                                    done();
+                                    if (commitError) {
+                                        logger.error('deleteHistoryById - Error eliminando la historia:', commitError);
+                                        reject(idHistory);
+                                    } else {
+                                        logger.notice('deleteHistoryById - eliminación de historia finalizada')
+                                        resolve(idHistory);                                            }
+                                });
+                            }).catch(error => {
+                                logger.error('updateHistoryTransaction - Error eliminando la historia:', error);
+                                reject(error);
+                            });
+                        }
+                    });
+                });
+            } catch (error) {
+                logger.error('getHistoryById - Error buscando la historia:', error);
+                reject(error);
+            }
+        });
+
+    },
 
 
 

@@ -3,6 +3,8 @@ const express = require('express');
 const router = express.Router();
 const constants = require('../../util/constants');
 const dbQueries = require('../../db/db-queries');
+const focus = require('../../util/focus');
+
 
 //DB SETTINGS
 const db = require('../../db/db-connection');
@@ -17,9 +19,10 @@ const statesEnum =  constants.statesEnum;
 
 
 /**
- * GET A RESUME OF AN HISTORY (WITHOUT CONTENTS)
+ * GET ALL RESUMES OF HISTORIES (WITHOUT CONTENTS)
  */
 router.get(constants.API_URL_FOCUS_HISTORIES, function (req, response, next) {
+
 
     getAllHistories(req.query.sort, req.query.limit, req.query.page, req.query.text).then(histories => {
         response.json({
@@ -38,7 +41,6 @@ router.get(constants.API_URL_FOCUS_HISTORIES, function (req, response, next) {
     });
 
 });
-
 
 
 /**
@@ -75,14 +77,14 @@ router.delete(constants.API_URL_FOCUS_HISTORY + "/:id", function (req, response,
         response.json({
             'status': constants.REQUEST_REQUEST_OK,
             'success': true,
-            'result': 'BORRADO DEL ESTADO DE LA HISTORIA - Historia borrada correctamente',
+            'result': 'CAMBIO DE ESTADO A BORRADO DE LA HISTORIA - Historia cambiada de estado a "eliminada" correctamente',
             'history': id
         });
     }).catch(error => {
-        logger.error('BORRADO DEL ESTADO DE LA HISTORIA - Error al borrar la historia en base de datos: ', error);
+        logger.error('CAMBIO DE ESTADO A BORRADO DE LA HISTORIA-  Error al cambiar estado "eliminada" a la historia en base de datos: ', error);
         response.json({ 
             'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 
-            'error': 'BORRADO DEL ESTADO DE LA HISTORIA - Error al borrar la historia en base de datos' ,
+            'error': 'CAMBIO DE ESTADO A BORRADO DE LA HISTORIA - Error al cambiar estado "eliminada" a la historia en base de datos' ,
         });
         return;
     });
@@ -91,9 +93,8 @@ router.delete(constants.API_URL_FOCUS_HISTORY + "/:id", function (req, response,
 /**
  * PUBLISH HISTORY (CHANGE STATE TO PUBLISH)
  */
-router.post(constants.API_URL_FOCUS_HISTORY, function (req, response, next) {
+router.put(constants.API_URL_FOCUS_HISTORY, function (req, response, next) {
     var history = req.body.history;
-    //console.log(history)
 
     publishHistoryTransaction(history).then( () => {
         response.json({
@@ -112,6 +113,89 @@ router.post(constants.API_URL_FOCUS_HISTORY, function (req, response, next) {
     });
 });
 
+/**
+ * GET A HISTORY BY TOKEN
+ */
+router.get(constants.API_URL_FOCUS_HISTORY_TOKEN + "/:token" , function (req, response, next) {
+    
+    var token = req.params.token;
+
+    getHistoryByToken(token).then(fullHistory => {
+        response.json({
+            'status': constants.REQUEST_REQUEST_OK,
+            'success': true,
+            'result': 'DETALLE DE UNA HISTORIA POR TOKEN- Historia obtenida correctamente',
+            'history': fullHistory
+        });
+    }).catch(error => {
+        logger.error('DETALLE DE UNA HISTORIA POR TOKEN - Error al obtener la historia en base de datos: ', error);
+        response.json({ 
+            'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 
+            'error': 'DETALLE DE UNA HISTORIA POR TOKEN - Error al obtener la historia en base de datos' ,
+        });
+        return;
+    });
+
+});
+
+/**
+ * GET A HISTORY BY ID
+ */
+router.get(constants.API_URL_FOCUS_HISTORY + "/:id" , function (req, response, next) {
+    
+    var id = req.params.id;
+
+    getHistoryById(id).then(fullHistory => {
+        response.json({
+            'status': constants.REQUEST_REQUEST_OK,
+            'success': true,
+            'result': 'DETALLE DE UNA HISTORIA POR ID- Historia obtenida correctamente',
+            'history': fullHistory
+        });
+    }).catch(error => {
+        logger.error('DETALLE DE UNA HISTORIA POR ID - Error al obtener la historia en base de datos: ', error);
+        response.json({ 
+            'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 
+            'error': 'DETALLE DE UNA HISTORIA POR ID - Error al obtener la historia en base de datos' ,
+        });
+        return;
+    });
+
+});
+
+/**
+ * UPDATE A HISTORY BY ID
+ */
+router.post(constants.API_URL_FOCUS_HISTORY, function (req, response, next) {
+
+    console.log('voy a entrar ')
+    
+    var history = req.body;
+
+    if ( !history || !history.title ){
+        logger.error('Input Error', 'Incorrect input');
+        res.json({ 'status': constants.REQUEST_ERROR_BAD_DATA, error: 'Incorrect Input' });
+        return;
+    }
+
+    updateHistoryTransaction(history).then(historyInfo => {
+        response.json({
+            'status': constants.REQUEST_REQUEST_OK,
+            'success': true,
+            'result': 'ACTUALIZACIÓN DE UNA HISTORIA - Historia actualizada correctamente',
+            'id': historyInfo.id,
+            'token': historyInfo.token
+        });
+        
+    }).catch(error => {
+        logger.error('ACTUALIZACIÓN DE UNA HISTORIA - Error al actualizar la historia en base de datos: ', error);
+        response.json({ 
+            'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 
+            'error': 'ACTUALIZACIÓN DE UNA HISTORIA - Error al actualizar la historia en base de datos' ,
+        });
+        return;
+    });
+});
 
 
 
@@ -131,7 +215,7 @@ function getAllHistories( order, limit, page, text){
                 var search="%"+ text + "%";
 
                 const queryHistories = {
-                    text: dbQueries.DB_FOCUS_GET_HISTORIES_PAGINATE + ' ORDER BY '+ order + ' LIMIT '+limit+ ' OFFSET '+offset ,
+                    text: dbQueries.DB_FOCUS_GET_HISTORIES_ADMIN_PAGINATE + ' ORDER BY '+ order + ' LIMIT '+limit+ ' OFFSET '+offset ,
                     values: [search],
                     rowMode: constants.SQL_RESULSET_FORMAT_JSON
                 }
@@ -177,82 +261,20 @@ function getAllHistories( order, limit, page, text){
 }
 
 
-function deleteHistoryTransaction(id){
 
+function deleteHistoryTransaction(id){
     return new Promise((resolve, reject) => {
         try {
-            pool.connect((err, client, done) => {
-
-                if(err){
-                    logger.error('deleteHistoryTransaction - No se puede establecer conexión con la BBDD');
-                    reject(err)
-                    return
-                }
-
-                logger.notice('Se inicia la transacción de eliminacion de una historia');
-
-                deleteHistory(client, done, id).then( (correct) => {
-                    done();
-                    if (correct) {
-                        logger.notice('deleteHistoryTransaction - eliminación de historia finalizada');
-                        resolve(true);
-                    } else {
-                        logger.error('deleteHistoryTransaction - Error eliminando la historia:', error);
-                        reject(commitError);
-                    }
-                }).catch(error => {
-                    logger.error('deleteHistoryTransaction - Error eliminando la historia:', error);
-                    reject(error);
-                });
+            focus.deleteHistoryById(id).then( (idHistory) => {
+                console.log(idHistory)
+                logger.notice('deleteHistoryTransaction - Borrado  de  historia finalizada')
+                resolve(idHistory);
+            }).catch(error => {
+                logger.error('deleteHistoryTransaction - Error eliminando la historia:', error);
+                reject(error);
             });
         } catch (error) {
             logger.error('deleteHistoryTransaction - Error eliminando la historia:', error);
-            reject(error);
-        }
-    });
-
-}
-
-
-function deleteHistory(client, done, idHistory){
-
-    return new Promise((resolve, reject) => {
-
-        try {
-
-            const queryDeleteContents = {
-                text: dbQueries.DB_ADMIN_DELETE_FOCUS_CONTENT_BY_ID_HISTORY,
-                values: [idHistory]
-            };
-
-            //borrar contenidos
-            client.query(queryDeleteContents, (err, resultDeleteContents) => {
-
-                if (rollback(client, done, err)) {
-                    logger.error('deleteHistory - Error eliminado historia:', err);
-                    reject(err);
-                } else {
-
-                    const queryDeleteHistory = {
-                        text: dbQueries.DB_ADMIN_DELETE_FOCUS_HISTORY,
-                        values: [idHistory]
-                    };
-
-                    //borra historia
-                    client.query(queryDeleteHistory, (err, resultDeleteHistory) => {
-                        if (rollback(client, done, err)) {
-                            logger.error('deleteHistory - Error eliminado historia:', err);
-                            reject(err);
-                        } else {
-                            logger.notice('deleteHistory - eliminacion de la historia finalizada');
-                            resolve(true);
-                        }
-                    });
-                }
-            })
-
-        } catch (error) {
-            logger.error('deleteHistory - Error eliminando historia:', error);
             reject(error);
         }
     });
@@ -389,9 +411,6 @@ function publishHistoryTransaction(history){
         });
 
     }
-
-    
-
 }
 
 
@@ -424,6 +443,59 @@ function changeStateHistory(client, done, idHistory,state){
 
 }
 
+
+function getHistoryById(id){
+    return new Promise((resolve, reject) => {
+        try {
+            focus.getHistoryById(id).then( (historySelect) => {
+                resolve(historySelect);
+            }).catch(error => {
+                logger.error('getHistoryById - Error obteniendo la historia:', error);
+                reject(error);
+            }); 
+        } catch (error) {
+            logger.error('getDetailHistoriesInCampus - Error obteniendo la historia:', error);
+            reject(error);
+        }
+    });
+}
+
+
+function getHistoryByToken(token){
+    console.log('entro')
+
+    return new Promise((resolve, reject) => {
+        try {
+            focus.getHistoryByToken(token).then( (historySelect) => {
+                resolve(historySelect);
+            }).catch(error => {
+                logger.error('getHistoryByToken - Error obteniendo la historia:', error);
+                reject(error);
+            });
+        } catch (error) {
+            logger.error('getHistoryByToken - Error obteniendo la historia:', error);
+            reject(error);
+        }
+    });
+}
+
+
+function updateHistoryTransaction(history){
+    console.log('entra')
+    return new Promise((resolve, reject) => {
+        try {
+            focus.updateHistory(history).then( (infoHistory) => {
+                resolve(infoHistory);
+            }).catch(error => {
+                logger.error('inserHistoryTransaction - Error insertando la historia:', error);
+                reject(error);
+            });
+        } catch (error) {
+            logger.error('updateHistoryTransaction - Error modificando la historia:', error);
+            reject(error);
+        }
+    });
+}
 
 
 

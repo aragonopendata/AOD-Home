@@ -205,7 +205,7 @@ exports.DB_FOCUS_GET_HISTORIES_USER_BY_STATE_AND_SEARCH = 'SELECT id, state, tit
 
 exports.DB_FOCUS_GET_HISTORIES_USER_BY_STATE_AND_SEARCH_AND_CATEGORY = 'SELECT id, state, title, description, id_reference, main_category, secondary_categories, create_date, update_date FROM focus.histories WHERE state= $1 AND LOWER(title) LIKE $2  AND (main_category= $3 OR $3=ANY(secondary_categories))';
 
-exports.DB_FOCUS_GET_HISTORIES_ADMIN_PAGINATE = "SELECT id, state, title, description, email, id_reference, main_category, secondary_categories, create_date, update_date FROM focus.histories WHERE LOWER(title) LIKE $1 AND state != 5";
+exports.DB_FOCUS_GET_HISTORIES_ADMIN_PAGINATE = "SELECT id, state, title, description, email, id_reference, main_category, secondary_categories, create_date, update_date, token FROM focus.histories WHERE LOWER(title) LIKE $1 AND state != 5";
 
 
 exports.DB_FOCUS_UPDATE_FOCUS_HISTORY_ID_VERSION = 'UPDATE focus.histories SET token=COALESCE($1, token) WHERE id = $2';
@@ -224,25 +224,19 @@ exports.DB_FOCUS_GET_STATE_HISTORY_BY_TOKEN = 'SELECT state FROM focus.histories
 
 exports.DB_FOCUS_GET_STATE_HISTORY_BY_ID = 'SELECT state FROM focus.histories WHERE id= $1';
 
-
-
-
+exports.DB_FOCUS_UPDATE_FOCUS_STATE_HISTORY = 'UPDATE focus.histories SET state=COALESCE($1, state) WHERE id = $2';
 
 exports.DB_FOCUS_INSERT_FOCUS_CONTENTS_HISTORY = 'INSERT INTO focus.contents_histories (title, description, type_content, visual_content, align,  id_history) VALUES %L'
-
-
-exports.DB_FOCUS_GET_HISTORIES = 'SELECT id, state, title, description, email, id_reference, main_category, secondary_categories, create_date, update_date FROM focus.histories';
 
 exports.DB_FOCUS_GET_HISTORIES_COUNT = 'SELECT count(*) FROM focus.histories WHERE LOWER(title) LIKE $1  AND state != 5';
 
 exports.DB_FOCUS_GET_CONTENTS_HISTORIES_PARTICULAR_HISTORY = 'SELECT id, title, description, type_content, visual_content, align, id_history FROM focus.contents_histories WHERE id_history = $1';
 
 
-exports.DB_FOCUS_UPDATE_FOCUS_STATE_HISTORY = 'UPDATE focus.histories SET state=COALESCE($1, state) WHERE id = $2';
-
-
 
 /*
+exports.DB_FOCUS_GET_HISTORIES = 'SELECT id, state, title, description, email, id_reference, main_category, secondary_categories, create_date, update_date FROM focus.histories';
+
 
 exports.DB_FOCUS_GET_CONTENTS_HISTORIES = 'SELECT id, title, description, visual_content, type_content, id_history FROM focus.contents_histories';
 

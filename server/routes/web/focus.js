@@ -121,7 +121,6 @@ router.get(constants.API_URL_FOCUS_HISTORIES, function (req, response, next) {
 /**
  * CREATE NEW HISTORY
  */
-/*
 router.put(constants.API_URL_FOCUS_HISTORY, function (req, response, next) {
     
     var history = req.body;
@@ -154,13 +153,12 @@ router.put(constants.API_URL_FOCUS_HISTORY, function (req, response, next) {
         return;
     });
 });
-*/
 
 
 /**
  * UPDATE HISTORY
  */
-router.put(constants.API_URL_FOCUS_HISTORY, function (req, response, next) {
+router.post(constants.API_URL_FOCUS_HISTORY, function (req, response, next) {
 
     console.log('voy a entrar ')
     
@@ -410,6 +408,7 @@ function inserHistoryTransaction(history){
         try {
             if(history.state==statesEnum.borrador || history.state==statesEnum.revision){
                 focus.inserHistoryTransaction(history).then( (infoHistory) => {
+                    logger.notice('inserHistoryTransaction - Insercción de  historia finalizada')
                     resolve(infoHistory);
                 }).catch(error => {
                     logger.error('inserHistoryTransaction - Error insertando la historia:', error);
