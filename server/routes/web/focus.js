@@ -715,7 +715,7 @@ function newToken() {
             var token = makeToken(10);
 
             const queryDb = {
-                text: dbQueries.DB_FOCUS_EXIST_HISTORY,
+                text: dbQueries.DB_FOCUS_EXIST_HISTORY_BY_TOKEN,
                 values: [token]
             };
 
@@ -795,6 +795,41 @@ function updateForVersion(client, done, idHistory, tokenNewForHistory){
 
         } catch (error) {
             logger.error('updateForVersion -  Error cambiando id de la historia:', error);
+            reject(error);
+        }
+    });
+
+}
+
+function probeTokenForId(token, id){
+
+    return new Promise((resolve, reject) => {
+
+        try {
+
+            const queryProbeTokenForId = {
+                text: dbQueries.DB_FOCUS_GET_HISTORY_BY_ID,
+                values: [id]
+            };
+
+            client.query(queryProbeTokenForId, (err, resultUpdateIdVersion) => {
+
+                if (rollback(client, done, err)) {
+                    logger.error('probeTokenForId - Error probando la relación id-token:', err);
+                    reject(err);
+                } else {
+                    if(resultUpdateIdVersion.token==token){
+                        logger.info('probeTokenForId - Comprobación correcta de relación id-token')
+                        resolve(true)
+                    }else{
+                        logger.info('probeTokenForId - Comprobación incorrecta de relación id-token')
+                        resolve(false)
+                    }
+                }
+            })
+
+        } catch (error) {
+            logger.error('probeTokenForId - Error probando la relación id-token:', error);
             reject(error);
         }
     });

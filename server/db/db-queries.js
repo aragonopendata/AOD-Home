@@ -207,7 +207,7 @@ exports.DB_FOCUS_GET_HISTORIES_BY_STATE_AND_SEARCH_AND_CATEGORY = 'SELECT id, st
 
 exports.DB_FOCUS_UPDATE_FOCUS_HISTORY_ID_VERSION = 'UPDATE focus.histories SET token=COALESCE($1, token) WHERE id = $2';
 
-exports.DB_FOCUS_EXIST_HISTORY = 'SELECT id FROM focus.histories WHERE token = $1';
+exports.DB_FOCUS_EXIST_HISTORY_BY_TOKEN = 'SELECT id FROM focus.histories WHERE token = $1';
 
 exports.DB_FOCUS_INSERT_FOCUS_HISTORY = 'INSERT INTO focus.histories (token, state, title, description, email, id_reference, main_category, secondary_categories, create_date, update_date) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING focus.histories.id'
 
@@ -221,9 +221,9 @@ exports.DB_ADMIN_DELETE_FOCUS_CONTENT_BY_ID_HISTORY = 'DELETE FROM focus.content
 
 
 
+
+
 exports.DB_FOCUS_INSERT_FOCUS_CONTENTS_HISTORY = 'INSERT INTO focus.contents_histories (title, description, type_content, visual_content, align,  id_history) VALUES %L'
-
-
 
 
 exports.DB_FOCUS_GET_HISTORIES = 'SELECT id, state, title, description, email, id_reference, main_category, secondary_categories, create_date, update_date FROM focus.histories';
