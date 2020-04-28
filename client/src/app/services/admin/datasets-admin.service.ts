@@ -164,15 +164,22 @@ export class DatasetsAdminService {
 
 	public updateResource(updatedResource: any, file: File) {
 		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_ADMIN_RESOURCE_CUD_OPERATIONS;
-		let headers = this.buildRequestHeadersforFormData();
-		let formData: FormData = new FormData();
-		formData.append('file', file, file.name);
-		formData.append('id', updatedResource.id);
-		formData.append('name', updatedResource.name);
-		formData.append('description', updatedResource.description);
-		formData.append('url', updatedResource.url);
-		let options = new RequestOptions({ headers: headers});
-		return this.http.put(fullUrl, formData, options).pipe(map(res => res.json()));
+		if (file) {
+			let headers = this.buildRequestHeadersforFormData();
+			let formData: FormData = new FormData();
+			formData.append('file', file, file.name);
+			formData.append('id', updatedResource.id);
+			formData.append('name', updatedResource.name);
+			formData.append('description', updatedResource.description);
+			formData.append('url', updatedResource.url);
+			let options = new RequestOptions({ headers: headers});
+			return this.http.put(fullUrl, formData, options).pipe(map(res => res.json()));
+		} else {
+			let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_ADMIN_RESOURCE_CUD_OPERATIONS;
+			let headers = this.buildRequestHeaders();
+			let requestBodyParams: any = updatedResource;
+			return this.http.put(fullUrl, JSON.stringify(requestBodyParams), {headers: headers}).pipe(map(res => res.json()));
+		}
 	}
 
 	public removeResource(resource_id: string) {

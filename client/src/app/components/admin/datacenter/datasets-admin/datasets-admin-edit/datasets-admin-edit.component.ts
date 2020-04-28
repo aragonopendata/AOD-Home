@@ -1618,7 +1618,10 @@ export class DatasetsAdminEditComponent implements OnInit {
 	updateResource(){
 		try {
 			let resourceUpdated: any = this.resource;
-			let file: File = this.fileList[0];
+			let file = null;
+			if (this.fileList) {
+				file = this.fileList[0];
+			}
 			this.datasetsAdminService.updateResource(resourceUpdated, file).subscribe( response => {
 				if( response.success){
 					this.msgs.push({severity:'success', summary:'Recurso Actualizado', detail:'Se ha actualizado el Recurso con exito'});

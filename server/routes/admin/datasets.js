@@ -960,18 +960,30 @@ var updateResourceInCkan = function updateDatasetInCkan(apiKey, resource, file) 
                         filename: file.originalname, contentType: null
                     }
                 };
-            }
 
-            var options = { 
-                method: 'POST',
-                url: constants.CKAN_API_BASE_URL + constants.CKAN_URL_PATH_RESOURCE_UPDATE,
-                headers: {
-                    'User-Agent': constants.HTTP_REQUEST_HEADER_USER_AGENT_NODE_SERVER_REQUEST,
-                    'Authorization': apiKey,
-                    'content-type': constants.HTTP_REQUEST_HEADER_CONTENT_TYPE_MULTIPART_FORM_DATA
-                },
-                formData: form_data
-            };
+                var options = { 
+                    method: 'POST',
+                    url: constants.CKAN_API_BASE_URL + constants.CKAN_URL_PATH_RESOURCE_UPDATE,
+                    headers: {
+                        'User-Agent': constants.HTTP_REQUEST_HEADER_USER_AGENT_NODE_SERVER_REQUEST,
+                        'Authorization': apiKey,
+                        'content-type': constants.HTTP_REQUEST_HEADER_CONTENT_TYPE_MULTIPART_FORM_DATA
+                    },
+                    formData: form_data
+                };
+            } else {
+                var options = {
+                    url: constants.CKAN_API_BASE_URL + constants.CKAN_URL_PATH_RESOURCE_UPDATE,
+                    method: constants.HTTP_REQUEST_METHOD_POST,
+                    body: resource,
+                    json: true,
+                    headers: {
+                        'Content-Type': constants.HTTP_REQUEST_HEADER_CONTENT_TYPE_JSON,
+                        'User-Agent': constants.HTTP_REQUEST_HEADER_USER_AGENT_NODE_SERVER_REQUEST,
+                        'Authorization': apiKey
+                    }
+                };
+            }
 
             logger.info('Datos a enviar: ' + JSON.stringify(resource));
             logger.info('Configuración llamada POST: ' + JSON.stringify(options));
