@@ -163,29 +163,6 @@ router.post(constants.API_URL_FOCUS_HISTORY, function (req, response, next) {
     });
 });
 
-/**
- * DELETE HISTORY
- */
-router.delete(constants.API_URL_FOCUS_HISTORY + "/:id", function (req, response, next) {
-    
-    var id = req.params.id
-
-    deleteHistoryTransaction(id).then( () => {
-        response.json({
-            'status': constants.REQUEST_REQUEST_OK,
-            'success': true,
-            'result': 'BORRADO DE UNA HISTORIA - Historia borrada correctamente',
-            'history': id
-        });
-    }).catch(error => {
-        logger.error('BORRADO DE UNA HISTORIA - Error al borrar la historia en base de datos: ', error);
-        response.json({ 
-            'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 
-            'error': 'BORRADO DE UNA HISTORIA - Error al borrar la historia en base de datos' ,
-        });
-        return;
-    });
-});
 
 
 function getHistoryById(id){
