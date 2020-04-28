@@ -168,6 +168,9 @@ export class DatasetsAdminService {
 		let formData: FormData = new FormData();
 		formData.append('file', file, file.name);
 		formData.append('id', updatedResource.id);
+		formData.append('name', updatedResource.name);
+		formData.append('description', updatedResource.description);
+		formData.append('url', updatedResource.url);
 		let options = new RequestOptions({ headers: headers});
 		return this.http.put(fullUrl, formData, options).pipe(map(res => res.json()));
 	}

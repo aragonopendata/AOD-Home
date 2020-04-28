@@ -945,6 +945,9 @@ var updateResourceInCkan = function updateDatasetInCkan(apiKey, resource, file) 
 
             let form_data = {
                 id: resource.id,
+                name: resource.name,
+                description: resource.description,
+                url: resource.url,
                 upload: file 
             };
 
