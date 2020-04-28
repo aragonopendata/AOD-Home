@@ -69,7 +69,7 @@ router.get(constants.API_URL_FOCUS_HISTORY_TOKEN + "/:token" , function (req, re
 });
 
 /**
- * GET HISTORY BY TOKEN ROUTE (ONLY FOR THE USER WHO KNOW TOKEN)
+ * GET STATE HISTORY BY TOKEN ROUTE (ONLY FOR THE USER WHO KNOW TOKEN)
  */
 router.get(constants.API_URL_FOCUS_STATE_HISTORY_TOKEN + "/:token" , function (req, response, next) {
     
@@ -407,9 +407,13 @@ function getStateHistoryByToken(token){
                         logger.error('getStateHistoryByToken - Error obteniendo el estado de la historia:',err.stack);
                         reject(err);
                     } else {
-                        logger.notice('getStateHistoryByToken - Obtención del estado de una historia')
-                        //var resumeHistories=result.rows;
-                        resolve(result.rows[0].state);
+                        if(result.rows.length == 0){
+                            logger.error('getDetailHistoriesInCampus - Error obteniendo la historia del token al no existir la misma');
+                            reject('getDetailHistoriesInCampus - Error obteniendo la historia del token al no existir la misma');
+                        }else{
+                            logger.notice('getStateHistoryByToken - Obtención del estado de una historia')
+                            resolve(result.rows[0].state);
+                        }
                     }
                 });
 
