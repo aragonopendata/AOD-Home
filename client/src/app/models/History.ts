@@ -1,14 +1,15 @@
 export class History {
 
-    id?: string;
+    id?: number;
     state?:number;
     title?: string;
     description?: string;
     email?:string;
-    id_reference?:string;
+    id_reference?:number;
     main_category?: number;
     secondary_categories?: number[];
     contents?: Content[];
+    token?: string;
 
     create_date: Date;
     update_date: string;

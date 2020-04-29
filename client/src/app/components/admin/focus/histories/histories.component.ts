@@ -73,7 +73,6 @@ export class HistoriesComponent implements OnInit {
 
   public hideHistory(id){
     this.focusAdminService.hideHistory(id).subscribe(result => {
-      
       if(result.success){
         //Mensajes success
         this.getHistories(this.actualPage, null);
@@ -127,9 +126,9 @@ export class HistoriesComponent implements OnInit {
     window.open( url + '/#/viewHistory/' + id);
   }
 
-  editHistory(id){
+  editHistory(token){
     let url = window["config"]["AOD_BASE_URL"];
-    window.open( url + '/#/editHistory/'  +id );
+    window.open( url + '/#/editHistory/'  +token );
   }
 
   setPagination(actual: number, total: number) {
