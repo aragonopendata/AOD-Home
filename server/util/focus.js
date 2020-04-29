@@ -500,13 +500,13 @@ function newToken() {
     return new Promise((resolve, reject) => {
         try {
             var token = makeToken(10);
-
             const queryDb = {
                 text: dbQueries.DB_FOCUS_EXIST_HISTORY_BY_TOKEN,
                 values: [token]
             };
 
             pool.query(queryDb, function (err, result) {
+                console.log(token)
                 if (err) {
                     logger.error('newToken - Error : ', err);
                     reject(err);

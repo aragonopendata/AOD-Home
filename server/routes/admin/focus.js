@@ -169,12 +169,14 @@ router.get(constants.API_URL_FOCUS_HISTORY + "/:id" , function (req, response, n
 router.post(constants.API_URL_FOCUS_HISTORY, function (req, response, next) {
 
     console.log('voy a entrar ')
+
+    console.log(req.body.history)
     
-    var history = req.body;
+    var history = req.body.history;
 
     if ( !history || !history.title ){
         logger.error('Input Error', 'Incorrect input');
-        res.json({ 'status': constants.REQUEST_ERROR_BAD_DATA, error: 'Incorrect Input' });
+        response.json({ 'status': constants.REQUEST_ERROR_BAD_DATA, error: 'Incorrect Input' });
         return;
     }
 
@@ -196,7 +198,6 @@ router.post(constants.API_URL_FOCUS_HISTORY, function (req, response, next) {
         return;
     });
 });
-
 
 
 function getAllHistories( order, limit, page, text){
@@ -485,10 +486,13 @@ function updateHistoryTransaction(history){
     return new Promise((resolve, reject) => {
         try {
             focus.updateHistory(history).then( (infoHistory) => {
+                console.log(infoHistory)
                 resolve(infoHistory);
             }).catch(error => {
                 logger.error('inserHistoryTransaction - Error insertando la historia:', error);
                 reject(error);
+                console.log('error')
+
             });
         } catch (error) {
             logger.error('updateHistoryTransaction - Error modificando la historia:', error);

@@ -190,6 +190,32 @@ router.post(constants.API_URL_FOCUS_HISTORY, function (req, response, next) {
 });
 
 
+/**
+ * UPDATE MAIL OF AN HISTORY BY TOKEN AND BY AN USER
+ */
+router.post(constants.API_URL_FOCUS_HISTORY_MAIL, function (req, response, next) {
+    conso
+    var history = req.body;
+
+    updateMailHistoryTransaction(history).then( () => {
+        response.json({
+            'status': constants.REQUEST_REQUEST_OK,
+            'success': true,
+            'result': 'ACTUALIZAR EMAIL DE LA HISTORIA - Email actualizado correctamente',
+            'history': history.id
+        });
+    }).catch(error => {
+        logger.error('ACTUALIZAR EMAIL DE LA HISTORIA  - Error alal actualizar el mail en base de datos: ', error);
+        response.json({ 
+            'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 
+            'error': 'ACTUALIZAR EMAIL DE LA HISTORIA  - Error alal actualizar el mail en base de datos' ,
+        });
+        return;
+    });
+});
+
+
+
 
 function getHistoryById(id){
     return new Promise((resolve, reject) => {
@@ -231,6 +257,7 @@ function getHistoryByToken(token){
 
                 if(state==statesEnum.borrador || state==statesEnum.publicada){
                     focus.getHistoryByToken(token).then( (historySelect) => {
+                        console.log('llego bien a devolucion')
                         //quitamos email (info no necesaria para un usuario)
                         historySelect.email=null
                         //historySelect.token=null
@@ -272,6 +299,8 @@ function getStateHistoryByToken(token){
                     rowMode: constants.SQL_RESULSET_FORMAT_JSON
                 }
 
+                console.log(queryStateHistory)
+
                 //Se busca la historia introducida como parámetro en la tabla histories
                 pool.query(queryStateHistory, (err, result) => {
                     done();
@@ -279,10 +308,13 @@ function getStateHistoryByToken(token){
                         logger.error('getStateHistoryByToken - Error obteniendo el estado de la historia:',err.stack);
                         reject(err);
                     } else {
+                        console.log(result.rows)
+
                         if(result.rows.length == 0){
                             logger.error('getDetailHistoriesInCampus - Error obteniendo la historia del token al no existir la misma');
                             reject('getDetailHistoriesInCampus - Error obteniendo la historia del token al no existir la misma');
                         }else{
+                            console.log('correcto!')
                             logger.notice('getStateHistoryByToken - Obtención del estado de una historia')
                             resolve(result.rows[0].state);
                         }
@@ -402,6 +434,96 @@ function getAllPublicsHistories(text, category){
 }
 
 
+function updateMailHistoryTransaction(history){
+
+    return new Promise((resolve, reject) => {
+        try {
+            pool.connect((err, client, done) => {
+
+                if(err){
+                    logger.error('updateMailHistoryTransaction - No se puede establecer conexión con la BBDD');
+                    reject(err)
+                    return
+                }
+
+                const queryUpdateHistory = {
+                    text: dbQueries.DB_FOCUS_UPDATE_MAIL_HISTORIES_USER,
+                    values: [history.email, history.id]
+                };
+
+
+                //Se busca actuliza el mail
+                pool.query(queryUpdateHistory, (err, result) => {
+                    done();
+                    if (err) {
+                        logger.error('updateMailHistoryTransaction - Error actualizando mail de historias:',err.stack);
+                        reject(err);
+                    } else {
+                        logger.notice('updateMailHistoryTransaction - Actualización de mail finalizada')
+                        var resumeHistories=result.rows;
+                        console.log(result.rows)
+                        resolve(resumeHistories);
+                    }
+                });
+            });
+        } catch (error) {
+            logger.error('updateMailHistoryTransaction - Error obteniendo el detalle de historias:', error);
+            reject(error);
+        }
+    });
+
+}
+
+
+
+function getMailHistoryTransaction(history){
+
+    console.log(history)
+
+    return new Promise((resolve, reject) => {
+        try {
+            pool.connect((err, client, done) => {
+
+                if(err){
+                    logger.error('updateMailHistoryTransaction - No se puede establecer conexión con la BBDD');
+                    reject(err)
+                    return
+                }
+
+                const queryGetMailHistory = {
+                    text: dbQueries.DB_FOCUS_GET_MAIL_HISTORIES_USER,
+                    values: [history.id]
+                };
+
+                console.log(queryGetMailHistory)
+
+
+                //Se busca actuliza el mail
+                pool.query(queryGetMailHistory, (err, result) => {
+                    done();
+                    if (err) {
+                        logger.error('updateMailHistoryTransaction - Error actualizando mail de historias:',err.stack);
+                        reject(err);
+                    } else {
+                        logger.notice('updateMailHistoryTransaction - Actualización de mail finalizada')
+                        var resumeHistories=result.rows;
+                        console.log('MAIL::::::::::::!')
+                        console.log(result.rows)
+                        resolve(resumeHistories);
+                    }
+                });
+            });
+        } catch (error) {
+            logger.error('updateMailHistoryTransaction - Error obteniendo el detalle de historias:', error);
+            reject(error);
+        }
+    });
+
+}
+
+
+
+
 function inserHistoryTransaction(history){
 
     return new Promise((resolve, reject) => {
@@ -429,47 +551,63 @@ function inserHistoryTransaction(history){
 function updateHistoryTransaction(history){
     console.log('entra')
     return new Promise((resolve, reject) => {
-        try {
+        try {            
             if(history.state==statesEnum.borrador || history.state==statesEnum.revision){//quitar rev, solo para admin!
 
                 probeTokenForId(history.token, history.id).then((sameHistory)=>{
 
                     if(sameHistory){
 
-                        getStateHistoryById(history.id).then( (oldState) => {
+                        console.log('entra a lo nuevo')
 
-                            if((history.id_reference==history.id)&&(history.state==statesEnum.revision)&&(oldState==statesEnum.publicada)){//caso versionado de historia --> cambiar id antigua (actualizando con nueva), y guardado de la nueva 
-                                focus.getHistoryById(history.id).then( (fullHistory) => {
-                                    if(fullHistory.state==statesEnum.publicada){
-                                        focus.versionHistory(history).then( (infoHistory) => {
-                                            resolve(infoHistory);
-                                        }).catch(error => {
-                                            logger.error('inserHistoryTransaction - Error insertando la historia:', error);
-                                            reject(error);
-                                        });
-                                    }else{
-                                        logger.notice('updateHistoryTransaction - La historia no presenta el estado de publicada como se indica en el objeto recibido')
-                                        reject('updateHistoryTransaction - La historia no presenta el estado de publicada como se indica en el objeto recibido');        
-                                    }
-                                }).catch(error => {
-                                    logger.error('updateHistoryTransaction - Error al comprobar la historia versionada:', error);
-                                    reject(error);
-                                });
-                            }else if(oldState==statesEnum.borrador){
-                                focus.updateHistory(history).then( (infoHistory) => {
-                                    resolve(infoHistory);
-                                }).catch(error => {
-                                    logger.error('inserHistoryTransaction - Error insertando la historia:', error);
-                                    reject(error);
-                                });
-                            }else{
-                                logger.notice('updateHistoryTransaction - La historia no presenta una estructura de actualización correcta')
-                                reject('updateHistoryTransaction - La historia no presenta una estructura de actualización correcta');
-                            }
+                        getMailHistoryTransaction(history).then( (mail) => {
+
+                            console.log('sale de lo nuevo')
+
+
+                            console.log(mail)
+
+                            getStateHistoryById(history.id).then( (oldState) => {
+
+                                if((history.id_reference==history.id)&&(history.state==statesEnum.revision)&&(oldState==statesEnum.publicada)){//caso versionado de historia --> cambiar id antigua (actualizando con nueva), y guardado de la nueva 
+                                    focus.getHistoryById(history.id).then( (fullHistory) => {
+                                        if(fullHistory.state==statesEnum.publicada){
+                                            focus.versionHistory(history).then( (infoHistory) => {
+                                                resolve(infoHistory);
+                                            }).catch(error => {
+                                                logger.error('inserHistoryTransaction - Error insertando la historia:', error);
+                                                reject(error);
+                                            });
+                                        }else{
+                                            logger.notice('updateHistoryTransaction - La historia no presenta el estado de publicada como se indica en el objeto recibido')
+                                            reject('updateHistoryTransaction - La historia no presenta el estado de publicada como se indica en el objeto recibido');        
+                                        }
+                                    }).catch(error => {
+                                        logger.error('updateHistoryTransaction - Error al comprobar la historia versionada:', error);
+                                        reject(error);
+                                    });
+                                }else if(oldState==statesEnum.borrador){
+                                    focus.updateHistory(history).then( (infoHistory) => {
+                                        resolve(infoHistory);
+                                    }).catch(error => {
+                                        logger.error('inserHistoryTransaction - Error insertando la historia:', error);
+                                        reject(error);
+                                    });
+                                }else{
+                                    logger.notice('updateHistoryTransaction - La historia no presenta una estructura de actualización correcta')
+                                    reject('updateHistoryTransaction - La historia no presenta una estructura de actualización correcta');
+                                }
+                            }).catch(error => {
+                                logger.error('updateHistoryTransaction - Error obteniendo estado de antigua historia:', error);
+                                reject(error);
+                            });
+
                         }).catch(error => {
                             logger.error('updateHistoryTransaction - Error obteniendo estado de antigua historia:', error);
                             reject(error);
                         });
+
+
                     }else{
                         logger.notice('updateHistoryTransaction - La historia no mantiene relación entre id y token')
                         reject('updateHistoryTransaction - La historia no mantiene relación entre id y token');
