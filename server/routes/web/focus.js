@@ -565,7 +565,8 @@ function updateHistoryTransaction(history){
                             console.log('sale de lo nuevo')
 
 
-                            console.log(mail)
+                            history.email=mail[0].email;
+
 
                             getStateHistoryById(history.id).then( (oldState) => {
 

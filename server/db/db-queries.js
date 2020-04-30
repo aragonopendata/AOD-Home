@@ -199,9 +199,13 @@ exports.DB_ADMIN_UPDATE_CAMPUS_SPEAKERS =  'UPDATE campus.speakers SET ' +
 
 exports.DB_FOCUS_GET_HISTORY_BY_ID = 'SELECT id, state, title, description, id_reference, main_category, secondary_categories, create_date, update_date, email, token FROM focus.histories WHERE id = $1';
 
-exports.DB_FOCUS_GET_HISTORY_BY_TOKEN = 'SELECT id, state, title, description, id_reference, main_category, secondary_categories, create_date, update_date, token FROM focus.histories WHERE token = $1'; //mirar si queremos email o no. De momento no
+exports.DB_FOCUS_GET_HISTORY_BY_TOKEN = 'SELECT id, state, title, description, id_reference, main_category, secondary_categories, create_date, update_date, token, email FROM focus.histories WHERE token = $1'; //mirar si queremos email o no. De momento no
 
 exports.DB_FOCUS_GET_HISTORIES_USER_BY_STATE_AND_SEARCH = 'SELECT id, state, title, description, id_reference, main_category, secondary_categories, create_date, update_date FROM focus.histories WHERE state= $1 AND LOWER(title) LIKE $2';
+
+exports.DB_FOCUS_UPDATE_MAIL_HISTORIES_USER = 'UPDATE focus.histories SET email=COALESCE($1, email) WHERE id = $2';
+
+exports.DB_FOCUS_GET_MAIL_HISTORIES_USER = 'SELECT email  FROM focus.histories WHERE id = $1';
 
 exports.DB_FOCUS_GET_HISTORIES_USER_BY_STATE_AND_SEARCH_AND_CATEGORY = 'SELECT id, state, title, description, id_reference, main_category, secondary_categories, create_date, update_date FROM focus.histories WHERE state= $1 AND LOWER(title) LIKE $2  AND (main_category= $3 OR $3=ANY(secondary_categories))';
 
@@ -230,7 +234,7 @@ exports.DB_FOCUS_INSERT_FOCUS_CONTENTS_HISTORY = 'INSERT INTO focus.contents_his
 
 exports.DB_FOCUS_GET_HISTORIES_COUNT = 'SELECT count(*) FROM focus.histories WHERE LOWER(title) LIKE $1  AND state != 5';
 
-exports.DB_FOCUS_GET_CONTENTS_HISTORIES_PARTICULAR_HISTORY = 'SELECT id, title, description, type_content, visual_content, align, id_history FROM focus.contents_histories WHERE id_history = $1';
+exports.DB_FOCUS_GET_CONTENTS_HISTORIES_PARTICULAR_HISTORY = 'SELECT id, title, description, type_content, visual_content, align, id_history FROM focus.contents_histories WHERE id_history = $1 ORDER BY id ASC';
 
 
 
