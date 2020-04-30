@@ -10,6 +10,8 @@ export class History {
     secondary_categories?: number[];
     contents?: Content[];
     token?: string;
+    
+    url?:string;
 
     create_date: Date;
     update_date: string;

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { History } from '../../models/History';
 import { Http, Response, URLSearchParams, RequestOptions, Headers} from '@angular/http';
 import { Constants } from 'app/app.constants';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -76,4 +77,18 @@ export class FocusAdminService {
 		let headers = this.buildRequestHeaders();
 		return this.http.delete(fullUrl+'/'+id, {headers: headers}).pipe(map(res => res.json()));
 	}
+
+	public sendPublicUserMail(history:History){
+		const headers = new Headers();
+		//let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_FOCUS + Constants.SERVER_API_LINK_HISTORY;
+		let fullUrl= window["config"]["VISUAL_BACK_SERVER_URL"] + Constants.SEND_MAIL_PUBLIC_USER_HISTORY_PATH;
+		headers.append('Content-Type', 'application/json');
+		console.log(history)
+		return this.http.post(fullUrl,history,{headers: headers}).map(res => JSON.parse(JSON.stringify(res)))
+		  .catch(err => {
+		  console.log('hay eror:' + err)
+			return Observable.throw('error envío correo');
+		  });
+		  
+	  }
 }
