@@ -34,9 +34,7 @@ module.exports = {
                         text: dbQueries.DB_FOCUS_GET_HISTORY_BY_ID,
                         values: [id]
                     }
-    
-                    console.log(queryHistory)
-    
+        
                     //Se busca la historia introducida como parámetro en la tabla histories
                     pool.query(queryHistory, (err, result) => {
                         if (err) {
@@ -81,8 +79,6 @@ module.exports = {
         });
     },
     getHistoryByToken(token){
-
-        console.log('ESTOY EN EL NUEVO por token!!')
     
         return new Promise((resolve, reject) => {
             try {
@@ -98,8 +94,6 @@ module.exports = {
                         text: dbQueries.DB_FOCUS_GET_HISTORY_BY_TOKEN,
                         values: [token]
                     }
-    
-                    console.log(queryHistory)
     
                     //Se busca la historia introducida como parámetro en la tabla histories
                     pool.query(queryHistory, (err, result) => {
@@ -117,9 +111,7 @@ module.exports = {
                                     text: dbQueries.DB_FOCUS_GET_CONTENTS_HISTORIES_PARTICULAR_HISTORY,
                                     values: [historySelect.id]
                                 }
-    
-                                console.log(queryContent)
-    
+        
     
                                 //obtenemos los contenidos de la historia
                                 pool.query(queryContent, (err, result) => {
@@ -148,8 +140,6 @@ module.exports = {
         });
     },
     inserHistoryTransaction(history){
-        console.log('ENTRO AL GENERAL')
-
         return new Promise((resolve, reject) => {
             try{
                 pool.connect((err, client, done) => {
@@ -159,9 +149,6 @@ module.exports = {
                         reject(err)
                         return
                     }
-
-                    console.log('CONECT')
-
         
                     newToken().then( (token ) => {
         
@@ -173,7 +160,6 @@ module.exports = {
                                 logger.error('inserHistoryTransaction - Error creando historia:', err);
                                 reject(err);
                             } else {
-                                console.log('EMP BEGIN')
 
                                 inserHistory(client, done, token, history, null).then( (idHistory) => {
                                     client.query('COMMIT', (commitError) => {
@@ -211,7 +197,6 @@ module.exports = {
         
     },
     versionHistory(history){
-        console.log('ENTRO AL GENERAL ACTUALIZAR')
         return new Promise((resolve, reject) => {
             try{
                 pool.connect((err, client, done) => {
@@ -220,14 +205,11 @@ module.exports = {
                             reject(err);
                         } else {
                             newToken().then( (token ) => {
-                                console.log('nuevo 1')
                                 var id = history.id;
                                 updateForVersion(client, done, id,token).then( () => {
-                                    console.log('nuevo 2')
 
                                     history.id_reference=id;
                                     inserHistory(client, done, history.token, history,null).then( (idHistory) => {
-                                        console.log('nuevo 3')
 
                                         client.query('COMMIT', (commitError) => {
                                             done();
@@ -269,7 +251,6 @@ module.exports = {
 
     },
     updateHistory(history){
-        console.log('ENTRO AL ACTUALIZAR GENERAL')
         return new Promise((resolve, reject) => {
             try{
                 pool.connect((err, client, done) => {
@@ -313,7 +294,6 @@ module.exports = {
 
     },
     deleteHistoryById(idHistory){
-        console.log('ENTRO AL BORRAR GENERAL')
         return new Promise((resolve, reject) => {
             try{
                 pool.connect((err, client, done) => {
@@ -354,7 +334,6 @@ module.exports = {
 
 function inserHistory(client, done, token, history, id){
 
-    console.log('entro inserGeneral')
 
     return new Promise((resolve, reject) => {
         try {
@@ -370,29 +349,21 @@ function inserHistory(client, done, token, history, id){
                     values: [token, history.state, history.title, history.description, history.email, history.id_reference, history.main_category, history.secondary_categories, history.create_date, history.update_date, id]
                 };
             }            
-            console.log('enseño')
-
-
-            console.log(queryHistory)
+            
 
             client.query(queryHistory, (err, resultHistory) => {
                 if (rollback(client, done, err)) {
                     logger.error('inserHistory - Error guardando historia:', err);
                     reject(err);
                 } else {
-                    console.log('entro2')
                     id_history=resultHistory.rows[0].id;
-                    console.log(id_history)
                     if(history.contents){
                         var sqlContents =  dbQueries.DB_FOCUS_INSERT_FOCUS_CONTENTS_HISTORY;
                         var valuesContents= (history.contents).map(item => [item.title, item.description, item.type_content, item.visual_content, item.align, id_history])
-                        console.log(sqlContents)
-                        console.log(valuesContents)
                         client.query(format(sqlContents, valuesContents), (err, resultContents) => {
                             if (rollback(client, done, err)) {
                                 logger.error('inserHistory - Error insertando la historia:', err);
                                 reject(err);
-                                console.log('error')
                             } else {
                                 logger.notice('inserHistory - inserción de la historia finalizada');
                                 resolve(resultHistory.rows[0].id);
@@ -428,7 +399,6 @@ function updateForVersion(client, done, idHistory, tokenNewForHistory){
                 values: [tokenNewForHistory,idHistory]
             };
 
-            console.log(queryUpdateForVersion)
 
             //cambio token antiguo
             client.query(queryUpdateForVersion, (err, resultUpdateIdVersion) => {
@@ -506,7 +476,6 @@ function newToken() {
             };
 
             pool.query(queryDb, function (err, result) {
-                console.log(token)
                 if (err) {
                     logger.error('newToken - Error : ', err);
                     reject(err);

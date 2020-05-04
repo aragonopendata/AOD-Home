@@ -168,10 +168,6 @@ router.get(constants.API_URL_FOCUS_HISTORY + "/:id" , function (req, response, n
  */
 router.post(constants.API_URL_FOCUS_HISTORY, function (req, response, next) {
 
-    console.log('voy a entrar ')
-
-    console.log(req.body.history)
-    
     var history = req.body.history;
 
     if ( !history || !history.title ){
@@ -267,7 +263,6 @@ function deleteHistoryTransaction(id){
     return new Promise((resolve, reject) => {
         try {
             focus.deleteHistoryById(id).then( (idHistory) => {
-                console.log(idHistory)
                 logger.notice('deleteHistoryTransaction - Borrado  de  historia finalizada')
                 resolve(idHistory);
             }).catch(error => {
@@ -345,7 +340,6 @@ function publishHistoryTransaction(history){
                         if (rollback(client, done, err)) {
                             reject(err);
                         } else {
-                            //console.log('1 :)')
                             changeStateHistory(client, done, history.id_reference, statesEnum.versionada).then( (correct) => {
                                 logger.notice('publishHistoryTransaction - Publicación de una historia versionada - se ha modificado el estado de la historia a la que versiona');
                                 changeStateHistory(client, done, history.id, statesEnum.publicada).then( (correct) => {
@@ -463,7 +457,6 @@ function getHistoryById(id){
 
 
 function getHistoryByToken(token){
-    console.log('entro')
 
     return new Promise((resolve, reject) => {
         try {
@@ -482,17 +475,13 @@ function getHistoryByToken(token){
 
 
 function updateHistoryTransaction(history){
-    console.log('entra')
     return new Promise((resolve, reject) => {
         try {
             focus.updateHistory(history).then( (infoHistory) => {
-                console.log(infoHistory)
                 resolve(infoHistory);
             }).catch(error => {
                 logger.error('inserHistoryTransaction - Error insertando la historia:', error);
                 reject(error);
-                console.log('error')
-
             });
         } catch (error) {
             logger.error('updateHistoryTransaction - Error modificando la historia:', error);

@@ -125,8 +125,6 @@ router.put(constants.API_URL_FOCUS_HISTORY, function (req, response, next) {
     
     var history = req.body;
 
-    console.log('entro con historia')
-
     if ( !history || !history.title ){
         logger.error('Input Error', 'Incorrect input');
         response.json({ 'status': constants.REQUEST_ERROR_BAD_DATA, error: 'Incorrect Input' });
@@ -159,8 +157,6 @@ router.put(constants.API_URL_FOCUS_HISTORY, function (req, response, next) {
  * UPDATE HISTORY
  */
 router.post(constants.API_URL_FOCUS_HISTORY, function (req, response, next) {
-
-    console.log('voy a entrar ')
     
     var history = req.body;
 
@@ -247,17 +243,13 @@ function getHistoryById(id){
 }
 
 function getHistoryByToken(token){
-    console.log('entro')
 
     return new Promise((resolve, reject) => {
         try {
             getStateHistoryByToken(token).then ((state)=> {
-                console.log('estado es...')
-                console.log(state)
 
                 if(state==statesEnum.borrador || state==statesEnum.publicada){
                     focus.getHistoryByToken(token).then( (historySelect) => {
-                        console.log('llego bien a devolucion')
                         //quitamos email (info no necesaria para un usuario)
                         historySelect.email=null
                         //historySelect.token=null
@@ -299,7 +291,6 @@ function getStateHistoryByToken(token){
                     rowMode: constants.SQL_RESULSET_FORMAT_JSON
                 }
 
-                console.log(queryStateHistory)
 
                 //Se busca la historia introducida como parámetro en la tabla histories
                 pool.query(queryStateHistory, (err, result) => {
@@ -308,13 +299,11 @@ function getStateHistoryByToken(token){
                         logger.error('getStateHistoryByToken - Error obteniendo el estado de la historia:',err.stack);
                         reject(err);
                     } else {
-                        console.log(result.rows)
 
                         if(result.rows.length == 0){
                             logger.error('getDetailHistoriesInCampus - Error obteniendo la historia del token al no existir la misma');
                             reject('getDetailHistoriesInCampus - Error obteniendo la historia del token al no existir la misma');
                         }else{
-                            console.log('correcto!')
                             logger.notice('getStateHistoryByToken - Obtención del estado de una historia')
                             resolve(result.rows[0].state);
                         }
@@ -347,20 +336,15 @@ function getStateHistoryById(id){
                     rowMode: constants.SQL_RESULSET_FORMAT_JSON
                 }
 
-                console.log(queryStateHistory)
 
 
                 //Se busca la historia introducida como parámetro en la tabla histories
                 pool.query(queryStateHistory, (err, result) => {
                     done();
                     if (err) {
-                        console.log('error!')
-
                         logger.error('getStateHistoryByToken - Error obteniendo el estado de la historia:',err.stack);
                         reject(err);
                     } else {
-                        console.log(result.rows.length)
-
                         if(result.rows.length == 0){
                             logger.error('getDetailHistoriesInCampus - Error obteniendo la historia del token al no existir la misma');
                             reject('getDetailHistoriesInCampus - Error obteniendo la historia del token al no existir la misma');
@@ -408,8 +392,6 @@ function getAllPublicsHistories(text, category){
                         rowMode: constants.SQL_RESULSET_FORMAT_JSON
                     }
                 }
-
-                console.log(queryHistories)
 
                 //Se busca la historia introducida como parámetro en la tabla histories
                 pool.query(queryHistories, (err, result) => {
@@ -461,7 +443,6 @@ function updateMailHistoryTransaction(history){
                     } else {
                         logger.notice('updateMailHistoryTransaction - Actualización de mail finalizada')
                         var resumeHistories=result.rows;
-                        console.log(result.rows)
                         resolve(resumeHistories);
                     }
                 });
@@ -478,8 +459,6 @@ function updateMailHistoryTransaction(history){
 
 function getMailHistoryTransaction(history){
 
-    console.log(history)
-
     return new Promise((resolve, reject) => {
         try {
             pool.connect((err, client, done) => {
@@ -495,8 +474,6 @@ function getMailHistoryTransaction(history){
                     values: [history.id]
                 };
 
-                console.log(queryGetMailHistory)
-
 
                 //Se busca actuliza el mail
                 pool.query(queryGetMailHistory, (err, result) => {
@@ -507,8 +484,6 @@ function getMailHistoryTransaction(history){
                     } else {
                         logger.notice('updateMailHistoryTransaction - Actualización de mail finalizada')
                         var resumeHistories=result.rows;
-                        console.log('MAIL::::::::::::!')
-                        console.log(result.rows)
                         resolve(resumeHistories);
                     }
                 });
@@ -549,7 +524,6 @@ function inserHistoryTransaction(history){
 }
 
 function updateHistoryTransaction(history){
-    console.log('entra')
     return new Promise((resolve, reject) => {
         try {            
             if(history.state==statesEnum.borrador || history.state==statesEnum.revision){//quitar rev, solo para admin!
@@ -557,12 +531,7 @@ function updateHistoryTransaction(history){
                 probeTokenForId(history.token, history.id).then((sameHistory)=>{
 
                     if(sameHistory){
-
-                        console.log('entra a lo nuevo')
-
                         getMailHistoryTransaction(history).then( (mail) => {
-
-                            console.log('sale de lo nuevo')
 
 
                             history.email=mail[0].email;
