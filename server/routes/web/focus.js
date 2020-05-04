@@ -190,7 +190,6 @@ router.post(constants.API_URL_FOCUS_HISTORY, function (req, response, next) {
  * UPDATE MAIL OF AN HISTORY BY TOKEN AND BY AN USER
  */
 router.post(constants.API_URL_FOCUS_HISTORY_MAIL, function (req, response, next) {
-    conso
     var history = req.body;
 
     updateMailHistoryTransaction(history).then( () => {
@@ -432,7 +431,6 @@ function updateMailHistoryTransaction(history){
                     text: dbQueries.DB_FOCUS_UPDATE_MAIL_HISTORIES_USER,
                     values: [history.email, history.id]
                 };
-
 
                 //Se busca actuliza el mail
                 pool.query(queryUpdateHistory, (err, result) => {
