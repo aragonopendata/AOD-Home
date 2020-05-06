@@ -178,10 +178,13 @@
 					</div>
 					<div class="form-group row">
 						<label for="inputFile" class="col-sm-2 col-form-label">Tipo</label>
-						<div class="col-sm-2">
+						<div class="col-sm-2" *ngIf="resourceType == 'Fichero'">
 							<p>{{resourceType}}</p>
 						</div>
-						<div class="col-sm-8">
+						<div class="col-sm-10" *ngIf="resourceType != 'Fichero'">
+							<p>{{resourceType}}</p>
+						</div>
+						<div *ngIf="resourceType == 'Fichero'" class="col-sm-8">
 							<input type="file" class="form-control" (change)="fileChange($event)" placeholder="Subir fichero">
 						</div>
 					</div>
