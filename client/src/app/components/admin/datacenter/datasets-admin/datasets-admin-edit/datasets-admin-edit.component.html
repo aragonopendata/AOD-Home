@@ -30,6 +30,12 @@
 			</p-footer>
 		</p-dialog>
 
+	<p-dialog [(visible)]="resourceOperation" [modal]="true">
+		<p>
+			Espere mientras la operación con el recurso siga activa.
+		</p>
+	</p-dialog>
+
 	<div class="modal fade modalAddResource" tabindex="-1" id="modalAddResource" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">

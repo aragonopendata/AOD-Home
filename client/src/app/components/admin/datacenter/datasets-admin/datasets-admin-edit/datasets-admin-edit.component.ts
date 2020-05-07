@@ -46,6 +46,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 	resource: Resource;
 	resources: Resource [] = [];
 	resourceType: string;
+	resourceOperation: boolean;
 
 	//Add Resource params
 	//BORRAMEdisplayAddResourceDialog: boolean = false;
@@ -184,6 +185,7 @@ export class DatasetsAdminEditComponent implements OnInit {
 			this.currentRelativeUrl = this.router.url;
 			this.index = this.currentAbsoluteUrl.indexOf(this.currentRelativeUrl);
 			this.baseUrl = this.currentAbsoluteUrl.substring(0, this.index);
+			this.resourceOperation = false;
 			
 		 }
 
@@ -1617,12 +1619,14 @@ export class DatasetsAdminEditComponent implements OnInit {
 
 	updateResource(){
 		try {
+			this.resourceOperation = true;
 			let resourceUpdated: any = this.resource;
 			let file = null;
 			if (this.fileList) {
 				file = this.fileList[0];
 			}
 			this.datasetsAdminService.updateResource(resourceUpdated, file).subscribe( response => {
+				this.resourceOperation = false;
 				if( response.success){
 					this.msgs.push({severity:'success', summary:'Recurso Actualizado', detail:'Se ha actualizado el Recurso con exito'});
 					this.resource = undefined;
