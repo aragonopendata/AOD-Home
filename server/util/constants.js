@@ -136,6 +136,7 @@ exports.CKAN_URL_PATH_DATASET_PURGE = 'dataset_purge';
 exports.CKAN_URL_PATH_RESOURCE_CREATE = 'resource_create';
 exports.CKAN_URL_PATH_RESOURCE_UPDATE = 'resource_update';
 exports.CKAN_URL_PATH_RESOURCE_DELETE = 'resource_delete';
+exports.CKAN_URL_PATH_RATING_DATASET = "/ckan/rating"
 
 /* CKAN ADMIN - ORGANIZATIONS */
 exports.CKAN_URL_PATH_ORGANIZATION_CREATE = 'organization_create';
