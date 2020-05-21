@@ -9,7 +9,6 @@
                  <button type="button" pButton icon="fas fa-times" (click)="cancelDeleteHistory()" label="No"></button>
              </p-footer>
     </p-dialog>
-    <p-growl [(value)]="msgs"></p-growl>
 
 
     <div class="row">
@@ -17,7 +16,7 @@
             <div class="form-group">
                 <label>Buscar</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Buscar por..." [(ngModel)]="searchValue" (keyup.enter)="searchHistoriesByText(searchInput.value)" #searchInput>
+                        <input type="text" class="form-control" placeholder="Buscar por..." (keyup.enter)="searchHistoriesByText(searchInput.value)" #searchInput>
                         <span class="input-group-btn">
                             <button class="btn btn-secondary" type="button" (click)="searchHistoriesByText(searchInput.value)" ><i class="fas fa-search" aria-hidden="true"></i></button>
                         </span>
