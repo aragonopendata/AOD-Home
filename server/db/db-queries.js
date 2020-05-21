@@ -195,38 +195,52 @@ exports.DB_ADMIN_UPDATE_CAMPUS_SPEAKERS =  'UPDATE campus.speakers SET ' +
 										   'name = COALESCE($1, name), ' +
 										   'description = COALESCE($2, description) ' +
 										   'WHERE id = $3';
-									   
-exports.DB_FOCUS_GET_HISTORIES = 'SELECT id, state, title, description, email, id_reference, main_category, secondary_categories, create_date, update_date FROM focus.histories';
-
-exports.DB_FOCUS_GET_HISTORIES_BY_STATE_AND_SEARCH = 'SELECT id, state, title, description, email, id_reference, main_category, secondary_categories, create_date, update_date FROM focus.histories WHERE state= $1 AND LOWER(title) LIKE $2';
-
-exports.DB_FOCUS_GET_HISTORIES_BY_STATE_AND_SEARCH_AND_CATEGORY = 'SELECT id, state, title, description, email, id_reference, main_category, secondary_categories, create_date, update_date FROM focus.histories WHERE state= $1 AND LOWER(title) LIKE $2  AND (main_category= $3 OR $3=ANY(secondary_categories))';
-
-exports.DB_FOCUS_GET_HISTORIES_PAGINATE = "SELECT id, state, title, description, email, id_reference, main_category, secondary_categories, create_date, update_date FROM focus.histories WHERE LOWER(title) LIKE $1 AND state != 5";
-
-exports.DB_FOCUS_GET_HISTORIES_COUNT = 'SELECT count(*) FROM focus.histories WHERE LOWER(title) LIKE $1  AND state != 5';
 
 
-exports.DB_FOCUS_GET_HISTORY = 'SELECT id, state, title, description, email, id_reference, main_category, secondary_categories, create_date, update_date FROM focus.histories WHERE id = $1';
+exports.DB_FOCUS_GET_HISTORY_BY_ID = 'SELECT id, state, title, description, id_reference, main_category, secondary_categories, create_date, update_date, email, token FROM focus.histories WHERE id = $1';
 
-exports.DB_FOCUS_EXIST_HISTORY = 'SELECT id FROM focus.histories WHERE id = $1';
+exports.DB_FOCUS_GET_HISTORY_BY_TOKEN = 'SELECT id, state, title, description, id_reference, main_category, secondary_categories, create_date, update_date, token, email FROM focus.histories WHERE token = $1'; //mirar si queremos email o no. De momento no
 
-exports.DB_FOCUS_GET_CONTENTS_HISTORIES_PARTICULAR_HISTORY = 'SELECT id, title, description, type_content, visual_content, align, id_history FROM focus.contents_histories WHERE id_history = $1';
+exports.DB_FOCUS_GET_HISTORIES_USER_BY_STATE_AND_SEARCH = 'SELECT id, state, title, description, id_reference, main_category, secondary_categories, create_date, update_date FROM focus.histories WHERE state= $1 AND LOWER(title) LIKE $2';
 
-exports.DB_FOCUS_INSERT_FOCUS_HISTORY = 'INSERT INTO focus.histories (id, state, title, description, email, id_reference, main_category, secondary_categories, create_date, update_date) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING focus.histories.id'
+exports.DB_FOCUS_UPDATE_MAIL_HISTORIES_USER = 'UPDATE focus.histories SET email=COALESCE($1, email) WHERE id = $2';
 
-exports.DB_FOCUS_INSERT_FOCUS_CONTENTS_HISTORY = 'INSERT INTO focus.contents_histories (title, description, type_content, visual_content, align,  id_history) VALUES %L'
+exports.DB_FOCUS_GET_MAIL_HISTORIES_USER = 'SELECT email  FROM focus.histories WHERE id = $1';
+
+exports.DB_FOCUS_GET_HISTORIES_USER_BY_STATE_AND_SEARCH_AND_CATEGORY = 'SELECT id, state, title, description, id_reference, main_category, secondary_categories, create_date, update_date FROM focus.histories WHERE state= $1 AND LOWER(title) LIKE $2  AND (main_category= $3 OR $3=ANY(secondary_categories))';
+
+exports.DB_FOCUS_GET_HISTORIES_ADMIN_PAGINATE = "SELECT id, state, title, description, email, id_reference, main_category, secondary_categories, create_date, update_date, token FROM focus.histories WHERE LOWER(title) LIKE $1 AND state != 5";
+
+
+exports.DB_FOCUS_UPDATE_FOCUS_HISTORY_ID_VERSION = 'UPDATE focus.histories SET token=COALESCE($1, token) WHERE id = $2';
+
+exports.DB_FOCUS_EXIST_HISTORY_BY_TOKEN = 'SELECT id FROM focus.histories WHERE token = $1';
+
+exports.DB_FOCUS_INSERT_FOCUS_HISTORY = 'INSERT INTO focus.histories (token, state, title, description, email, id_reference, main_category, secondary_categories, create_date, update_date) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING focus.histories.id'
+
+exports.DB_FOCUS_INSERT_FOCUS_HISTORY_WITH_ID = 'INSERT INTO focus.histories (token, state, title, description, email, id_reference, main_category, secondary_categories, create_date, update_date, id) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING focus.histories.id'
 
 exports.DB_ADMIN_DELETE_FOCUS_HISTORY = 'DELETE FROM focus.histories WHERE id = $1';
 
 exports.DB_ADMIN_DELETE_FOCUS_CONTENT_BY_ID_HISTORY = 'DELETE FROM focus.contents_histories WHERE id_history = $1';
 
+exports.DB_FOCUS_GET_STATE_HISTORY_BY_TOKEN = 'SELECT state FROM focus.histories WHERE token= $1';
+
+exports.DB_FOCUS_GET_STATE_HISTORY_BY_ID = 'SELECT state FROM focus.histories WHERE id= $1';
+
 exports.DB_FOCUS_UPDATE_FOCUS_STATE_HISTORY = 'UPDATE focus.histories SET state=COALESCE($1, state) WHERE id = $2';
 
-exports.DB_FOCUS_UPDATE_FOCUS_HISTORY_ID_VERSION = 'UPDATE focus.histories SET id=COALESCE($1, id) WHERE id = $2';
+exports.DB_FOCUS_INSERT_FOCUS_CONTENTS_HISTORY = 'INSERT INTO focus.contents_histories (title, description, type_content, visual_content, align,  id_history) VALUES %L'
+
+exports.DB_FOCUS_GET_HISTORIES_COUNT = 'SELECT count(*) FROM focus.histories WHERE LOWER(title) LIKE $1  AND state != 5';
+
+exports.DB_FOCUS_GET_CONTENTS_HISTORIES_PARTICULAR_HISTORY = 'SELECT id, title, description, type_content, visual_content, align, id_history FROM focus.contents_histories WHERE id_history = $1 ORDER BY id ASC';
+
 
 
 /*
+exports.DB_FOCUS_GET_HISTORIES = 'SELECT id, state, title, description, email, id_reference, main_category, secondary_categories, create_date, update_date FROM focus.histories';
+
 
 exports.DB_FOCUS_GET_CONTENTS_HISTORIES = 'SELECT id, title, description, visual_content, type_content, id_history FROM focus.contents_histories';
 

@@ -73,7 +73,6 @@ export class HistoriesComponent implements OnInit {
 
   public hideHistory(id){
     this.focusAdminService.hideHistory(id).subscribe(result => {
-      
       if(result.success){
         //Mensajes success
         this.getHistories(this.actualPage, null);
@@ -88,6 +87,20 @@ export class HistoriesComponent implements OnInit {
     this.focusAdminService.publishHistory(history).subscribe(result => {      
       if(result.success){
         this.getHistories(this.actualPage, null);
+        history.url=window["config"]["FOCUS_URL"] + Constants.ROUTER_LINK_VIEW_HISTORY + "/" + history.id;
+        if(history.email!=null){
+          this.focusAdminService.sendPublicUserMail(history).subscribe(result => {
+            console.log('entro')
+            if(result.status==200){
+              //mail enviado correctamente
+              console.log('mail enviado')
+            }else{
+              console.log('error envio mail!')
+            }
+          }, err =>{
+            console.log('error envio mail con error!')
+          });
+        }
       }
       else{
         console.log('no se ha podido publicar');
@@ -123,13 +136,13 @@ export class HistoriesComponent implements OnInit {
   }
 
   previewHistory(id){
-    let url = window["config"]["AOD_BASE_URL"];
+    let url = window["config"]["FOCUS_URL"];
     window.open( url + '/#/viewHistory/' + id);
   }
 
-  editHistory(id){
-    let url = window["config"]["AOD_BASE_URL"];
-    window.open( url + '/#/editHistory/'  +id );
+  editHistory(token){
+    let url = window["config"]["FOCUS_URL"];
+    window.open( url + '/#/editHistory/' + token );
   }
 
   setPagination(actual: number, total: number) {
