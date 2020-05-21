@@ -200,6 +200,10 @@ exports.HOMER_API_BASE_URL = 'http://opendata-federation.csi.it/fed-homer/docume
 //Results per page in lists
 exports.DATASETS_HOMER_SEARCH_ROWS_PER_PAGE = 20;
 
+/* RATING */
+//Service Name
+exports.RATING_SERVICE_NAME = 'rating';
+
 exports.SERVER_API_LINK_PARAM_SORT = 'sort';
 exports.SERVER_API_LINK_DEFAULT_SORT = 'relevance asc,metadata_modified desc';
 exports.SERVER_API_LINK_DEFAULT_SORT_HOMER = 'field asc';

@@ -1136,6 +1136,7 @@ router.get(constants.API_URL_DATASETS + "/:datasetName/:rating", function (req, 
         let datasetName = req.params.datasetName;
         var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
         let rating = req.params.rating;
+        let serviceName = constants.RATING_SERVICE_NAME;
         let serviceRequestUrl = constants.EXPRESS_NODE_REDIRECT_ROUTING_URL + 
             constants.CKAN_URL_PATH_RATING_DATASET + constants.CKAN_URL_PATH_TRACKING_DATASET + "/" + datasetName + "/" + rating;
         
