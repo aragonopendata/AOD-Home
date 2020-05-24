@@ -230,11 +230,11 @@ exports.DB_FOCUS_GET_STATE_HISTORY_BY_ID = 'SELECT state FROM focus.histories WH
 
 exports.DB_FOCUS_UPDATE_FOCUS_STATE_HISTORY = 'UPDATE focus.histories SET state=COALESCE($1, state) WHERE id = $2';
 
-exports.DB_FOCUS_INSERT_FOCUS_CONTENTS_HISTORY = 'INSERT INTO focus.contents_histories (title, description, type_content, visual_content, align,  id_history) VALUES %L'
+exports.DB_FOCUS_INSERT_FOCUS_CONTENTS_HISTORY = 'INSERT INTO focus.contents_histories (title, description, type_content, visual_content, align,  id_history, body_content) VALUES %L'
 
 exports.DB_FOCUS_GET_HISTORIES_COUNT = 'SELECT count(*) FROM focus.histories WHERE LOWER(title) LIKE $1  AND state != 5';
 
-exports.DB_FOCUS_GET_CONTENTS_HISTORIES_PARTICULAR_HISTORY = 'SELECT id, title, description, type_content, visual_content, align, id_history FROM focus.contents_histories WHERE id_history = $1 ORDER BY id ASC';
+exports.DB_FOCUS_GET_CONTENTS_HISTORIES_PARTICULAR_HISTORY = 'SELECT id, title, description, type_content, visual_content, align, id_history, body_content FROM focus.contents_histories WHERE id_history = $1 ORDER BY id ASC';
 
 
 
