@@ -137,12 +137,12 @@ export class HistoriesComponent implements OnInit {
 
   previewHistory(id){
     let url = window["config"]["FOCUS_URL"];
-    window.open( url + '/#/viewHistory/' + id);
+    window.open( url + '/viewHistory/' + id);
   }
 
   editHistory(token){
     let url = window["config"]["FOCUS_URL"];
-    window.open( url + '/#/editHistory/' + token );
+    window.open( url + '/editHistory/' + token );
   }
 
   setPagination(actual: number, total: number) {
