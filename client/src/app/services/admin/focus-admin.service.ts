@@ -83,10 +83,9 @@ export class FocusAdminService {
 		//let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_FOCUS + Constants.SERVER_API_LINK_HISTORY;
 		let fullUrl= window["config"]["VISUAL_BACK_SERVER_URL"] + Constants.SEND_MAIL_PUBLIC_USER_HISTORY_PATH;
 		headers.append('Content-Type', 'application/json');
-		console.log(history)
 		return this.http.post(fullUrl,history,{headers: headers}).map(res => JSON.parse(JSON.stringify(res)))
 		  .catch(err => {
-		  console.log('hay eror:' + err)
+		  	console.log('hay eror:' + err)
 			return Observable.throw('error envío correo');
 		  });
 		  

@@ -90,7 +90,6 @@ export class HistoriesComponent implements OnInit {
         history.url=window["config"]["FOCUS_URL"] + Constants.ROUTER_LINK_VIEW_HISTORY + "/" + history.id;
         if(history.email!=null){
           this.focusAdminService.sendPublicUserMail(history).subscribe(result => {
-            console.log('entro')
             if(result.status==200){
               //mail enviado correctamente
               console.log('mail enviado')
