@@ -445,20 +445,22 @@ export class Constants {
     public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_JSON = { label: 'JSON', value: '11' };
     public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_KMZ = { label: 'KMZ', value: '12' };
     public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_ODS = { label: 'ODS', value: '13' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_PNG = { label: 'PNG', value: '14' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_PS = { label: 'PS', value: '15' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_RDF = { label: 'RDF', value: '16' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_RSS = { label: 'RSS', value: '17' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_SCORM = { label: 'SCORM', value: '18' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_SHP = { label: 'SHP', value: '19' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_SIG = { label: 'SIG', value: '20' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_TXT = { label: 'TXT', value: '21' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_URL = { label: 'URL', value: '22' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_XLS = { label: 'XLS', value: '23' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_XLSX = { label: 'XLSX', value: '24' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_XML = { label: 'XML', value: '25' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_ZIP = { label: 'ZIP', value: '26' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_TTL = { label: 'TTL', value: '27' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_ODT = { label: 'ODT', value: '14' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_PNG = { label: 'PNG', value: '15' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_PS = { label: 'PS', value: '16' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_PX = { label: 'PX', value: '17' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_RDF = { label: 'RDF', value: '18' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_RSS = { label: 'RSS', value: '19' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_SCORM = { label: 'SCORM', value: '20' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_SHP = { label: 'SHP', value: '21' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_SIG = { label: 'SIG', value: '22' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_TXT = { label: 'TXT', value: '23' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_URL = { label: 'URL', value: '24' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_XLS = { label: 'XLS', value: '25' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_XLSX = { label: 'XLSX', value: '26' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_XML = { label: 'XML', value: '27' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_ZIP = { label: 'ZIP', value: '28' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_TTL = { label: 'TTL', value: '29' };
 
     public static ADMIN_DATASET_ERR_LOAD_DATASET = '200 - undefined';
 
