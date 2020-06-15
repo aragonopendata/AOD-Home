@@ -119,7 +119,7 @@ router.get(constants.API_URL_FOCUS_HISTORIES, function (req, response, next) {
 });
 
 /**
- * GET HISTORY BY ID CATEGORY
+ * GET IMAGE BY ID CATEGORY
  */
 router.get(constants.API_URL_FOCUS_IMAGE_CATEGORY + "/:category_id" , function (req, response, next) {
     
