@@ -236,6 +236,7 @@ exports.DB_FOCUS_GET_HISTORIES_COUNT = 'SELECT count(*) FROM focus.histories WHE
 
 exports.DB_FOCUS_GET_CONTENTS_HISTORIES_PARTICULAR_HISTORY = 'SELECT id, title, description, type_content, visual_content, align, id_history, body_content FROM focus.contents_histories WHERE id_history = $1 ORDER BY id ASC';
 
+exports.DB_FOCUS_GET_IMAGE_BY_CATEGORY = 'SELECT category_id, route, author FROM focus.image_category WHERE category_id= $1';
 
 
 /*

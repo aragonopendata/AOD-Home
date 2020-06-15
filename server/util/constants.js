@@ -301,6 +301,7 @@ exports.API_URL_FOCUS_HISTORY = '/focus/history';
 exports.API_URL_FOCUS_HISTORY_TOKEN = '/focus/history/token';
 exports.API_URL_FOCUS_HISTORY_MAIL = '/focus/history/mail';
 exports.API_URL_FOCUS_STATE_HISTORY_TOKEN = '/focus/history/token/state';
+exports.API_URL_FOCUS_IMAGE_CATEGORY = '/focus/imageCategory';
 
 exports.API_URL_FOCUS_HISTORIES = '/focus/histories';
 

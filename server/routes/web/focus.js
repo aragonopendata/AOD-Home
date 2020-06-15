@@ -119,6 +119,33 @@ router.get(constants.API_URL_FOCUS_HISTORIES, function (req, response, next) {
 });
 
 /**
+ * GET HISTORY BY ID CATEGORY
+ */
+router.get(constants.API_URL_FOCUS_IMAGE_CATEGORY + "/:category_id" , function (req, response, next) {
+    
+    var category_id = req.params.category_id;
+
+
+    getImageCategory(category_id).then(image => {
+        response.json({
+            'status': constants.REQUEST_REQUEST_OK,
+            'success': true,
+            'result': 'DETALLE DE UNA IMAGEN POR ID DE LA CATEGORIA- Imagen obtenida correctamente',
+            'history': image
+        });
+    }).catch(error => {
+        logger.error('DETALLE DE UNA IMAGEN POR ID DE LA CATEGORIA - Error al obtener la imagen en base de datos: ', error);
+        response.json({ 
+            'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 
+            'error': 'DETALLE DE UNA IMAGEN POR ID DE LA CATEGORIA - Error al obtener la imagen en base de datos' ,
+        });
+        return;
+    });
+
+});
+
+
+/**
  * CREATE NEW HISTORY
  */
 router.put(constants.API_URL_FOCUS_HISTORY, function (req, response, next) {
@@ -625,6 +652,51 @@ function probeTokenForId(token, id){
             });
         } catch (error) { 
             logger.error('probeTokenForId - Error probando la relación id-token:', error);
+            reject(error);
+        }
+    });
+}
+
+function getImageCategory(category_id){
+
+    return new Promise((resolve, reject) => {
+        try {
+            pool.connect((err, client, done) => {
+
+                if(err){
+                    logger.error('getImageCategory - No se puede establecer conexión con la BBDD');
+                    reject(err)
+                    return
+                }
+
+                var queryIdCategory = {
+                    text: dbQueries.DB_FOCUS_GET_IMAGE_BY_CATEGORY,
+                    values: [category_id],
+                    rowMode: constants.SQL_RESULSET_FORMAT_JSON
+                }
+
+
+                //Se busca la ruta a la imagen correspondiente a la categoria
+                pool.query(queryIdCategory, (err, result) => {
+                    done();
+                    if (err) {
+                        logger.error('getImageCategory - Error obteniendo la imagen correspondiente a la categoria:',err.stack);
+                        reject(err);
+                    } else {
+
+                        if(result.rows.length == 0){
+                            logger.error('getImageCategory - Error obteniendo el id de la categoria al no existir la misma');
+                            reject('getImageCategory - Error obteniendo el id de la categoria al no existir la misma');
+                        }else{
+                            logger.notice('getImageCategory - Obtención de la imagen')
+                            resolve(result.rows[0]);
+                        }
+                    }
+                });
+
+            });
+        } catch (error) {
+            logger.error('getImageCategory - Error obteniendo el detalle de imagenes de una categoria:', error);
             reject(error);
         }
     });
