@@ -131,7 +131,7 @@ router.get(constants.API_URL_FOCUS_IMAGE_CATEGORY + "/:category_id" , function (
             'status': constants.REQUEST_REQUEST_OK,
             'success': true,
             'result': 'DETALLE DE UNA IMAGEN POR ID DE LA CATEGORIA- Imagen obtenida correctamente',
-            'history': image
+            'image': image
         });
     }).catch(error => {
         logger.error('DETALLE DE UNA IMAGEN POR ID DE LA CATEGORIA - Error al obtener la imagen en base de datos: ', error);
