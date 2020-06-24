@@ -36,13 +36,13 @@
 		</div>
 		<div class="container-fluid">
 			 <ul class="nav nav-tabs" role="tablist">
-				<li class="nav-item" *ngFor="let resource of resourcesAux; let resInd = index">
+				<li class="nav-item" *ngFor="let resource of resourcesPreview; let resInd = index">
 					<a class="nav-link" href="#resource{{resInd}}" (click)="removeResourceIframe()" role="tab" data-toggle="tab">{{resource.name}}</a>
 				</li>
 			</ul>
 			<div class="tab-content">
-				<div role="tabpanel" class="tab-pane" *ngFor="let resource of resourcesAux ; let i2 = index" id="resource{{i2}}">		
-					<button *ngFor="let url of resource.sources; let i3 = index" class="tags" pButton type="button" label="{{resource.formats[i3]}}" style="margin: 2px;" (click)="removeResourceIframe();loadResourceIframe(resource, i3)"></button>
+				<div role="tabpanel" class="tab-pane" *ngFor="let resource of resourcesPreview ; let i2 = index" id="resource{{i2}}">		
+					<button class="tags" pButton type="button" label="{{resource.format}}" style="margin: 2px;" (click)="removeResourceIframe();loadResourceIframe(resource)"></button>
 					<iframe *ngIf="iframeRes" height="650px" class="col-12 embed-responsive-item" [src]='sanitizer.bypassSecurityTrustResourceUrl(iframeRes)' frameBorder="0"></iframe>
 					<h5 *ngIf="iframeError && !iframeRes">{{iframeError}}</h5>
 				</div>

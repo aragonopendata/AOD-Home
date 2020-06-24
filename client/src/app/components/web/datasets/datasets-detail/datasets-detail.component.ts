@@ -84,6 +84,7 @@ export class DatasetsDetailComponent implements OnInit {
 	userOrgs: Organization[];
 	showEdit: boolean = false;
 	dataPreview: boolean = false;
+	resourcesPreview: Resource[];
 
 	showMapLink = false;
 
@@ -186,6 +187,7 @@ export class DatasetsDetailComponent implements OnInit {
 							this.showMapLink = true;
 						}
 				});
+				this.checkForDataPreview(this.dataset);
 			}else {
 				console.error("Error: loadDataset() - datasets-detail.component.ts");
 				this.errorTitle = this.datasetListErrorTitle;
@@ -433,10 +435,10 @@ export class DatasetsDetailComponent implements OnInit {
 		});
 	}
 
-	loadResourceIframe(resource: any, index: number) {
-		let res = resource.sources_ids[index];
-		let format = resource.formats[index];
-		let source = resource.sources[index];
+	loadResourceIframe(resource: any) {
+		let res = resource.id;
+		let format = resource.forma;
+		let source = resource.url;
 		try {
 			for (var i = 0; i < this.resourceView.length; i++) {
 				if (this.resourceView[i] && this.resourceView[i].resource_id && this.resourceView[i].resource_id == res) {
@@ -587,5 +589,24 @@ export class DatasetsDetailComponent implements OnInit {
 				this.messageService.add({severity:'error', summary:'Error al registrar el voto.', detail:'Ha ocurrido un error en el registro del voto.'});
 			});
 		}
+	}
+
+	checkForDataPreview(dataset) {
+		this.resourcesPreview = new Array();
+		dataset.resources.forEach(resource => {
+			if (this.isCSVResource(resource)) {
+				this.dataPreview = true;
+				this.resourcesPreview.push(resource);
+			}
+		});
+		console.log(this.resourcesPreview)
+	}
+
+	isCSVResource(resource) {
+		let isCSV = false;
+		if ("CSV" == resource.format) {
+			isCSV = true;
+		}
+		return isCSV;
 	}
 }
