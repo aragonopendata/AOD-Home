@@ -64,6 +64,7 @@ export class DatasetsDetailComponent implements OnInit {
 	iframeError: string;
 
 	resourcesAux: ResourceAux[] = new Array();
+	resourcesPreview: ResourceAux[] = new Array();
 	resourceCSVFromPX: ResourceAux[] = new Array();
 	datasetsRecommended: Dataset[] = new Array();
 	//Dynamic URL build parameters
@@ -84,7 +85,6 @@ export class DatasetsDetailComponent implements OnInit {
 	userOrgs: Organization[];
 	showEdit: boolean = false;
 	dataPreview: boolean = false;
-	resourcesPreview: Resource[];
 
 	showMapLink = false;
 
@@ -175,6 +175,7 @@ export class DatasetsDetailComponent implements OnInit {
 				this.getExtrasIAEST();
 				this.checkExtrasIAESTEmpty();
 				dt.makeFileSourceList(this.dataset, this.resourcesAux);
+				this.checkForDataPreview(this.resourcesAux);
 				if(this.checkPxResource()){
 					this.addCsvResourceFromPx();
 				}
@@ -187,7 +188,6 @@ export class DatasetsDetailComponent implements OnInit {
 							this.showMapLink = true;
 						}
 				});
-				this.checkForDataPreview(this.dataset);
 			}else {
 				console.error("Error: loadDataset() - datasets-detail.component.ts");
 				this.errorTitle = this.datasetListErrorTitle;
@@ -435,15 +435,15 @@ export class DatasetsDetailComponent implements OnInit {
 		});
 	}
 
-	loadResourceIframe(resource: any) {
-		let res = resource.id;
-		let format = resource.forma;
-		let source = resource.url;
+	loadResourceIframe(resource: any, index: number) {
+		let res = resource.sources_ids[index];
+		let format = resource.formats[index];
+		let source = resource.sources[index];
 		try {
 			for (var i = 0; i < this.resourceView.length; i++) {
 				if (this.resourceView[i] && this.resourceView[i].resource_id && this.resourceView[i].resource_id == res) {
 					if (format != 'HTML') {
-						this.iframeRes = window["config"]["AOD_API_CKAN_BASE_URL"] + Constants.DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_DATASET + this.dataset.name + Constants.DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_RESOURCE + this.resourceView[i].resource_id + Constants.DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_VIEW + this.resourceView[i].id;
+						this.iframeRes = window["config"]["AOD_BASE_URL"] + "/ckan" + Constants.DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_DATASET + this.dataset.name + Constants.DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_RESOURCE + this.resourceView[i].resource_id + Constants.DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_VIEW + this.resourceView[i].id;
 					} else {
 						this.iframeRes = source;
 					}
@@ -591,22 +591,27 @@ export class DatasetsDetailComponent implements OnInit {
 		}
 	}
 
-	checkForDataPreview(dataset) {
-		this.resourcesPreview = new Array();
-		dataset.resources.forEach(resource => {
-			if (this.isCSVResource(resource)) {
-				this.dataPreview = true;
-				this.resourcesPreview.push(resource);
-			}
-		});
-		console.log(this.resourcesPreview)
+	checkForDataPreview(resAux) {
+		let resourcesPreview = [];
+		resourcesPreview = JSON.parse(JSON.stringify(resAux));
+		for (let i = 0; i < resourcesPreview.length; i++) {
+			resourcesPreview[i].formats.forEach((format, index) => {
+				if(!this.isTXTResource(format)) {
+					resourcesPreview[i].formats.splice(index, 1);
+					resourcesPreview[i].sources.splice(index, 1);
+					resourcesPreview[i].sources_ids.splice(index, 1);
+				}
+			});
+		}
+		this.resourcesPreview = resourcesPreview;
 	}
 
-	isCSVResource(resource) {
-		let isCSV = false;
-		if ("CSV" == resource.format) {
-			isCSV = true;
+	isTXTResource(format) {
+		let isTXT = false;
+		if ("TXT" == format) {
+			this.dataPreview = true;
+			isTXT = true;
 		}
-		return isCSV;
+		return isTXT;
 	}
 }
