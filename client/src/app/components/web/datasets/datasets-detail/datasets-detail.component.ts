@@ -618,7 +618,6 @@ export class DatasetsDetailComponent implements OnInit {
 	}
 
 	loadPreview(resource) {
-		console.log(resource)
 		this.datasetsService.previewFile(resource.sources[0]).subscribe( response => {
 			if(response.status == 200){
 				this.previewText = response.content;
