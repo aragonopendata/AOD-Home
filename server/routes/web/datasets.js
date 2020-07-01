@@ -24,7 +24,6 @@ router.post(constants.API_URL_DATASETS + constants.API_URL_RESOURCE_CSV, functio
     try {
         if (req.body.resourceUrl) {
             serviceRequestUrl = req.body.resourceUrl;
-            serviceRequestUrl = serviceRequestUrl.replace("miv-aodfront-01.aragon.local", "localhost")
         } else{
             res.json({'error': 'No existe archivo'});
         }
