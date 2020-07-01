@@ -19,6 +19,38 @@ const loggerSettings = logConfig.getLogSettings();
 const logger = require('js-logging').dailyFile([loggerSettings]);
 const atob = require('atob');
 
+// READ CSV FILE
+router.post(constants.API_URL_DATASETS + constants.API_URL_RESOURCE_CSV, function (req, res, next) {
+    try {
+        if (req.body.resourceUrl) {
+            serviceRequestUrl = req.body.resourceUrl;
+            serviceRequestUrl = serviceRequestUrl.replace("miv-aodfront-01.aragon.local", "localhost")
+        } else{
+            res.json({'error': 'No existe archivo'});
+        }
+        
+        http.get(serviceRequestUrl, function(response) {
+            body = '';
+            response.on('data', function (chunk) {
+                body += chunk;
+            });
+            response.on('end', function() {
+                var status = response.statusCode;
+                body = body.split("\n").slice(0, 10).join("<br>");
+                var responseBuild = {
+                    "status": status,
+                    "content": body
+                }
+                res.json(responseBuild);
+            });
+        }).on('error', function (err) {
+            utils.errorHandler(err,res);
+        });
+    } catch (error) {
+        logger.error('Error in route' + constants.API_URL_DATASETS_RESOURCE_CSV);
+    }
+});
+
 /** GET DATASETS PAGINATED */
 router.get(constants.API_URL_DATASETS, function (req, res, next) {
     try {

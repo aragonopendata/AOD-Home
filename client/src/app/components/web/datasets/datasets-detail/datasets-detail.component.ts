@@ -90,6 +90,7 @@ export class DatasetsDetailComponent implements OnInit {
 
 	subscription: Subscription;
 	isMobileScreen: boolean;
+	previewText: string;
 
 	constructor(private datasetsService: DatasetsService,
 		private usersAdminService: UsersAdminService,
@@ -595,23 +596,35 @@ export class DatasetsDetailComponent implements OnInit {
 		let resourcesPreview = [];
 		resourcesPreview = JSON.parse(JSON.stringify(resAux));
 		for (let i = 0; i < resourcesPreview.length; i++) {
-			resourcesPreview[i].formats.forEach((format, index) => {
-				if(!this.isTXTResource(format)) {
-					resourcesPreview[i].formats.splice(index, 1);
-					resourcesPreview[i].sources.splice(index, 1);
-					resourcesPreview[i].sources_ids.splice(index, 1);
+			for (let j = 0; j < resourcesPreview[i].formats.length; j++) {
+				if(!this.isCSVResource(resourcesPreview[i].formats[j])) {
+					resourcesPreview[i].formats.splice(j, 1);
+					resourcesPreview[i].sources.splice(j, 1);
+					resourcesPreview[i].sources_ids.splice(j, 1);
+					j -= 1;
 				}
-			});
+			}
 		}
 		this.resourcesPreview = resourcesPreview;
 	}
 
-	isTXTResource(format) {
-		let isTXT = false;
-		if ("TXT" == format) {
+	isCSVResource(format) {
+		let isCSV = false;
+		if ("CSV" == format) {
 			this.dataPreview = true;
-			isTXT = true;
+			isCSV = true;
 		}
-		return isTXT;
+		return isCSV;
+	}
+
+	loadPreview(resource) {
+		console.log(resource)
+		this.datasetsService.previewFile(resource.sources[0]).subscribe( response => {
+			if(response.status == 200){
+				this.previewText = response.content;
+			} else {
+				console.log(response)
+			}
+		});
 	}
 }

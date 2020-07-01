@@ -305,6 +305,7 @@ export class Constants {
     public static DATASET_EXTRA_LANG_OTHER= 'langOtherValue';
     public static DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_DATASET= '/dataset/';
     public static DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_RESOURCE= '/resource/';
+    public static DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_RESOURCE_CSV= '/resourceCSV/';
     public static DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_VIEW= '/view/';
     public static DATASET_DETAIL_CHARS_FOR_USER_KEY = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
