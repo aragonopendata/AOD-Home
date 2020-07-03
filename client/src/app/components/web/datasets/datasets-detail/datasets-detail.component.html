@@ -35,18 +35,33 @@
 			<h5>Previsualización del conjunto de datos</h5>
 		</div>
 		<div class="container-fluid">
-			 <ul class="nav nav-tabs" role="tablist">
+			<select id="inputState" class="form-control">
+				<option (click)="resetPreview()" data-toggle="collapse">Seleccione el recurso que desea previsualizar</option>
+				<option *ngFor="let resource of resourcesPreview" (click)="loadPreview(resource)">{{resource.name}}</option>
+			</select>
+			<!--<ul class="nav nav-tabs" role="tablist">
 				<li class="nav-item" *ngFor="let resource of resourcesPreview; let resInd = index">
 					<a class="nav-link" href="#resource{{resInd}}" (click)="loadPreview(resource)" role="tab" data-toggle="tab">{{resource.name}}</a>
 				</li>
-			</ul>
-			<div class="tab-content">
-				<div role="tabpanel" class="tab-pane" *ngFor="let resource of resourcesPreview ; let i2 = index" id="resource{{i2}}">		
-					<!--<button class="tags" pButton type="button" label="{{resource.format}}" style="margin: 2px;" (click)="removeResourceIframe();loadResourceIframe(resource)"></button>
-					<iframe *ngIf="iframeRes" height="650px" class="col-12 embed-responsive-item" [src]='sanitizer.bypassSecurityTrustResourceUrl(iframeRes)' frameBorder="0"></iframe>-->
-					<div [innerHTML]="previewText"></div>
-					<h5 *ngIf="iframeError && !iframeRes">{{iframeError}}</h5>
+			</ul>-->
+			<div class="collapse dropdown-content">
+				<div *ngIf="isLoadingPreview" class="text-center">
+					<div class="loadingText">Cargando</div>
+					<i class="fas fa-circle-notch fa-spin fa-3x fa-fw" style="color: #76a1b8; font-size: 50px;"></i>
 				</div>
+				<table *ngIf="dataPreviewSelected" class="table">
+					<thead>
+						<tr>
+							<th *ngFor="let header of previewHeaders">{{header}}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let rowData of previewData; let index = index">
+							<td *ngFor="let element of rowData.split(';')">{{element}}</td>
+						</tr>
+					</tbody>
+				</table>
+l				<h5 *ngIf="iframeError && !iframeRes">{{iframeError}}</h5>
 			</div>
 		</div>
 	</div>

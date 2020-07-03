@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const http = require('http');
+const https = require('https');
 const constants = require('../../util/constants');
 const proxy = require('../../conf/proxy-conf');
 const utils = require('../../util/utils');
@@ -28,23 +29,53 @@ router.post(constants.API_URL_DATASETS + constants.API_URL_RESOURCE_CSV, functio
             res.json({'error': 'No existe archivo'});
         }
         
-        http.get(serviceRequestUrl, function(response) {
-            body = '';
-            response.on('data', function (chunk) {
-                body += chunk;
+        if (serviceRequestUrl.includes("https")) {
+            https.get(serviceRequestUrl, function(response) {
+                body = '';
+                response.on('data', function (chunk) {
+                    body += chunk;
+                });
+                response.on('end', function() {
+                    var status = response.statusCode;
+                    headers = body.split("\n").slice(0, 1)[0].split(";");
+                    bodyData = body.split("\n").slice(1, 9);
+                    bodyData.forEach(row => {
+                        row = row.split(";");
+                    });
+                    var responseBuild = {
+                        "status": status,
+                        "headers": headers,
+                        "content": bodyData
+                    }
+                    res.json(responseBuild);
+                });
+            }).on('error', function (err) {
+                utils.errorHandler(err,res);
             });
-            response.on('end', function() {
-                var status = response.statusCode;
-                body = body.split("\n").slice(0, 10).join("<br>");
-                var responseBuild = {
-                    "status": status,
-                    "content": body
-                }
-                res.json(responseBuild);
+        } else {
+            http.get(serviceRequestUrl, function(response) {
+                body = '';
+                response.on('data', function (chunk) {
+                    body += chunk;
+                });
+                response.on('end', function() {
+                    var status = response.statusCode;
+                    headers = body.split("\n").slice(0, 1)[0].split(";");
+                    bodyData = body.split("\n").slice(1, 11);
+                    bodyData.forEach(row => {
+                        row = row.split(";");
+                    });
+                    var responseBuild = {
+                        "status": status,
+                        "headers": headers,
+                        "content": bodyData
+                    }
+                    res.json(responseBuild);
+                });
+            }).on('error', function (err) {
+                utils.errorHandler(err,res);
             });
-        }).on('error', function (err) {
-            utils.errorHandler(err,res);
-        });
+        }
     } catch (error) {
         logger.error('Error in route' + constants.API_URL_DATASETS_RESOURCE_CSV);
     }

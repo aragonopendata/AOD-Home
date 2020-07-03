@@ -90,7 +90,10 @@ export class DatasetsDetailComponent implements OnInit {
 
 	subscription: Subscription;
 	isMobileScreen: boolean;
-	previewText: string;
+	previewHeaders: any;
+	previewData: any;
+	isLoadingPreview: boolean;
+	dataPreviewSelected: boolean;
 
 	constructor(private datasetsService: DatasetsService,
 		private usersAdminService: UsersAdminService,
@@ -618,12 +621,26 @@ export class DatasetsDetailComponent implements OnInit {
 	}
 
 	loadPreview(resource) {
+		this.iframeError = undefined;
+		this.previewHeaders = new Array();
+		this.previewData = new Array();
+		this.isLoadingPreview = true;
 		this.datasetsService.previewFile(resource.sources[0]).subscribe( response => {
 			if(response.status == 200){
-				this.previewText = response.content;
+				this.dataPreviewSelected = true;
+				this.previewHeaders = response.headers;
+				this.previewData = response.content;
+				this.iframeError = undefined;
 			} else {
-				console.log(response)
+				this.iframeError = Constants.DATASET_LIST_ERROR_IFRAME_MESSAGE;
 			}
+			this.isLoadingPreview = false;
 		});
+	}
+
+	resetPreview() {
+		this.iframeError = undefined;
+		this.dataPreviewSelected = false;
+		this.isLoadingPreview = false;
 	}
 }

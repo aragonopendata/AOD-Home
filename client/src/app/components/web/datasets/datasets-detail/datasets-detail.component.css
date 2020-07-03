@@ -503,3 +503,21 @@ a:hover {
 .rating {
     margin-top: 5%;
 }
+
+.tab-pane {
+    align-items: center;
+}
+
+.loadingText {
+    margin-top: 1%;
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: 300;
+    color: #8E8E8E;
+}
+
+.dropdown-content {
+    margin: 1%;
+    overflow-x: auto;
+    white-space: nowrap;
+}
