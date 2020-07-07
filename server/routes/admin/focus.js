@@ -163,6 +163,33 @@ router.get(constants.API_URL_FOCUS_HISTORY + "/:id" , function (req, response, n
 
 });
 
+
+/**
+ * GET A HISTORY BY URL
+ */
+router.get(constants.API_URL_FOCUS_HISTORY_URL + "/:url" , function (req, response, next) {
+    
+    var url = req.params.url;
+
+
+    getHistoryByUrl(url).then(fullHistory => {
+        response.json({
+            'status': constants.REQUEST_REQUEST_OK,
+            'success': true,
+            'result': 'DETALLE DE UNA HISTORIA POR URL- Historia obtenida correctamente',
+            'history': fullHistory
+        });
+    }).catch(error => {
+        logger.error('DETALLE DE UNA HISTORIA POR URL - Error al obtener la historia en base de datos: ', error);
+        response.json({ 
+            'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 
+            'error': 'DETALLE DE UNA HISTORIA POR URL - Error al obtener la historia en base de datos' ,
+        });
+        return;
+    });
+
+});
+
 /**
  * UPDATE A HISTORY BY ID
  */
@@ -446,6 +473,23 @@ function getHistoryById(id){
                 resolve(historySelect);
             }).catch(error => {
                 logger.error('getHistoryById - Error obteniendo la historia:', error);
+                reject(error);
+            }); 
+        } catch (error) {
+            logger.error('getDetailHistoriesInCampus - Error obteniendo la historia:', error);
+            reject(error);
+        }
+    });
+}
+
+
+function getHistoryByUrl(url){
+    return new Promise((resolve, reject) => {
+        try {
+            focus.getHistoryByUrl(url).then( (historySelect) => {
+                resolve(historySelect);
+            }).catch(error => {
+                logger.error('getHistoryByUrl - Error obteniendo la historia:', error);
                 reject(error);
             }); 
         } catch (error) {
