@@ -78,6 +78,66 @@ module.exports = {
             }
         });
     },
+    getHistoryByUrl(url){
+    
+        return new Promise((resolve, reject) => {
+            try {
+                pool.connect((err, client, done) => {
+    
+                    if(err){
+                        logger.error('getHistoryByUrl - No se puede establecer conexión con la BBDD');
+                        reject(err)
+                        return
+                    }
+    
+                    const queryHistory = {
+                        text: dbQueries.DB_FOCUS_GET_HISTORY_BY_URL,
+                        values: [url]
+                    }
+        
+                    //Se busca la historia introducida como parámetro en la tabla histories
+                    pool.query(queryHistory, (err, result) => {
+                        if (err) {
+                            done();
+                            logger.error('getHistoryByUrl - Error obteniendo la historia',err.stack);
+                            reject(err);
+                        } else {
+                            //Si tiene un resultado, obtenemos la historia y la devolvemos
+                            if( result.rows.length == 1 ){
+                                logger.info('getHistoryByUrl - Id historia recuperada: ' + result.rows[0].id);
+                                var historySelect=result.rows[0];
+    
+                                const queryContent = {
+                                    text: dbQueries.DB_FOCUS_GET_CONTENTS_HISTORIES_PARTICULAR_HISTORY,
+                                    values: [historySelect.id]
+                                }
+    
+                                //obtenemos los contenidos de la historia
+                                pool.query(queryContent, (err, result) => {
+                                    done();
+                                    if (err) {
+                                        logger.error('getHistoryByUrl - Error obteniendo los contenidos de la historia:',err.stack);
+                                        reject(err);
+                                    } else {
+                                        logger.info('getHistoryByUrl - Contenidos recuperados ');
+                                        historySelect.contents = result.rows
+                                        resolve(historySelect);
+                                    }
+                                });
+                            } else {
+                                done();
+                                logger.error('getHistoryByUrl - No existe la historia');
+                                reject('getHistoryByUrl - No existe la historia');
+                            }
+                        }
+                    });
+                });
+            } catch (error) {
+                logger.error('getHistoryById - Error buscando la historia:', error);
+                reject(error);
+            }
+        });
+    },
     getHistoryByToken(token){
     
         return new Promise((resolve, reject) => {
@@ -331,48 +391,63 @@ module.exports = {
 }
 
 
-
 function inserHistory(client, done, token, history, id){
-
 
     return new Promise((resolve, reject) => {
         try {
             var queryHistory="";
+
             if(id==null){
                 queryHistory = {
                     text: dbQueries.DB_FOCUS_INSERT_FOCUS_HISTORY,
-                    values: [token, history.state, history.title, history.description, history.email, history.id_reference, history.main_category, history.secondary_categories, history.create_date, history.update_date]
+                    values: [history.url, token, history.state, history.title, history.description, history.email, history.id_reference, history.main_category, history.secondary_categories, history.create_date, history.update_date]
                 };
             }else{
                 queryHistory = {
                     text: dbQueries.DB_FOCUS_INSERT_FOCUS_HISTORY_WITH_ID,
-                    values: [token, history.state, history.title, history.description, history.email, history.id_reference, history.main_category, history.secondary_categories, history.create_date, history.update_date, id]
+                    values: [history.url, token, history.state, history.title, history.description, history.email, history.id_reference, history.main_category, history.secondary_categories, history.create_date, history.update_date, id]
                 };
             }            
             
-
             client.query(queryHistory, (err, resultHistory) => {
                 if (rollback(client, done, err)) {
                     logger.error('inserHistory - Error guardando historia:', err);
                     reject(err);
                 } else {
                     id_history=resultHistory.rows[0].id;
-                    if(history.contents){
-                        var sqlContents =  dbQueries.DB_FOCUS_INSERT_FOCUS_CONTENTS_HISTORY;
-                        var valuesContents= (history.contents).map(item => [item.title, item.description, item.type_content, item.visual_content, item.align, id_history, item.body_content])
-                        client.query(format(sqlContents, valuesContents), (err, resultContents) => {
-                            if (rollback(client, done, err)) {
-                                logger.error('inserHistory - Error insertando la historia:', err);
-                                reject(err);
+                    url = `${history.url}${id_history}`;                    
+
+                    const queryUpdateUrl = {
+                        text: dbQueries.DB_FOCUS_UPDATE_FOCUS_HISTORY_URL,
+                        values: [url,id_history]
+                    };
+        
+                    //set url
+                    client.query(queryUpdateUrl, (err, resultUpdateUrl) => {
+        
+                        if (rollback(client, done, err)) {
+                            logger.error('setUrl - Error insertando la URL de la historia:', err);
+                            reject(err);
+                        } else {
+                            
+                            if(history.contents){
+                                var sqlContents =  dbQueries.DB_FOCUS_INSERT_FOCUS_CONTENTS_HISTORY;
+                                var valuesContents= (history.contents).map(item => [item.title, item.description, item.type_content, item.visual_content, item.align, id_history, item.body_content])
+                                client.query(format(sqlContents, valuesContents), (err, resultContents) => {
+                                    if (rollback(client, done, err)) {
+                                        logger.error('inserHistory - Error insertando la historia:', err);
+                                        reject(err);
+                                    } else {
+                                        logger.notice('inserHistory - inserción de la historia finalizada');
+                                        resolve(resultHistory.rows[0].id);
+                                    }
+                                });
                             } else {
-                                logger.notice('inserHistory - inserción de la historia finalizada');
+                                logger.error('inserHistory - Error insertando la historia:', err);
                                 resolve(resultHistory.rows[0].id);
                             }
-                        });
-                    } else {
-                        logger.error('inserHistory - Error insertando la historia:', err);
-                        resolve(resultHistory.rows[0].id);
-                    }
+                        }
+                    });
                 }
             })
 
@@ -380,10 +455,6 @@ function inserHistory(client, done, token, history, id){
             logger.error('Error insertando historia:', error);
             reject(error);
         }
-
-            
-
-        
     });
 
 }

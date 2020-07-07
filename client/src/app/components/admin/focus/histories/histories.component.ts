@@ -87,7 +87,7 @@ export class HistoriesComponent implements OnInit {
     this.focusAdminService.publishHistory(history).subscribe(result => {      
       if(result.success){
         this.getHistories(this.actualPage, null);
-        history.url=window["config"]["FOCUS_URL"] + Constants.ROUTER_LINK_VIEW_HISTORY + "/" + history.id;
+        history.urlEmail=window["config"]["FOCUS_URL"] + Constants.ROUTER_LINK_VIEW_HISTORY + "/" + history.url;
         if(history.email!=null){
           this.focusAdminService.sendPublicUserMail(history).subscribe(result => {
             if(result.status==200){
@@ -134,9 +134,8 @@ export class HistoriesComponent implements OnInit {
     this.getHistories(null, null)
   }
 
-  previewHistory(id){
-    let url = window["config"]["FOCUS_URL"];
-    window.open( url + '/viewHistory/' + id);
+  previewHistory(url){
+    window.open( window["config"]["FOCUS_URL"] + '/history/' + url);
   }
 
   editHistory(token){

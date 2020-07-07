@@ -12,6 +12,7 @@ export class History {
     token?: string;
     
     url?:string;
+    urlEmail?:string;
 
     create_date: Date;
     update_date: string;

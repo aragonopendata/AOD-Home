@@ -46,6 +46,30 @@ router.get(constants.API_URL_FOCUS_HISTORY + "/:id" , function (req, response, n
 });
 
 /**
+ * GET HISTORY BY ID ROUTE (PUBLIC)
+ */
+router.get(constants.API_URL_FOCUS_HISTORY_URL + "/:url" , function (req, response, next) {
+    
+    var url = req.params.url;
+    getHistoryByUrl(url).then(fullHistory => {
+        response.json({
+            'status': constants.REQUEST_REQUEST_OK,
+            'success': true,
+            'result': 'DETALLE DE UNA HISTORIA POR URL- Historia obtenida correctamente',
+            'history': fullHistory
+        });
+    }).catch(error => {
+        logger.error('DETALLE DE UNA HISTORIA POR URL - Error al obtener la historia en base de datos: ', error);
+        response.json({ 
+            'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 
+            'error': 'DETALLE DE UNA HISTORIA POR URL - Error al obtener la historia en base de datos' ,
+        });
+        return;
+    });
+
+});
+
+/**
  * GET HISTORY BY TOKEN ROUTE (ONLY FOR THE USER WHO KNOW TOKEN)
  */
 router.get(constants.API_URL_FOCUS_HISTORY_TOKEN + "/:token" , function (req, response, next) {
@@ -258,11 +282,40 @@ function getHistoryById(id){
                     reject('getHistoryById - No se permite ver la historia por id a no estar publicada');
                 }
             }).catch(error => {
-                logger.error('getDetailHistoriesInCampus - Error obteniendo el estado de la historia:', error);
+                logger.error('getHistoryById - Error obteniendo el estado de la historia:', error);
                 reject(error);
             });   
         } catch (error) {
-            logger.error('getDetailHistoriesInCampus - Error obteniendo la historia:', error);
+            logger.error('getHistoryById - Error obteniendo la historia:', error);
+            reject(error);
+        }
+    });
+}
+
+function getHistoryByUrl(url){
+    return new Promise((resolve, reject) => {
+        try {
+            getStateHistoryByUrl(url).then ((state)=> {
+                if(state==statesEnum.publicada){
+                    focus.getHistoryByUrl(url).then( (historySelect) => {
+                        //quitamos email y token (info no necesaria para un usuario)
+                        historySelect.email=null
+                        historySelect.token=null
+                        resolve(historySelect);
+                    }).catch(error => {
+                        logger.error('getHistoryByUrl - Error obteniendo la historia:', error);
+                        reject(error);
+                    });
+                }else{
+                    logger.error('getHistoryByUrl - No se permite ver la historia por id a no estar publicada:');
+                    reject('getHistoryByUrl - No se permite ver la historia por id a no estar publicada');
+                }
+            }).catch(error => {
+                logger.error('getHistoryByUrl - Error obteniendo el estado de la historia:', error);
+                reject(error);
+            });   
+        } catch (error) {
+            logger.error('getHistoryByUrl - Error obteniendo la historia:', error);
             reject(error);
         }
     });
@@ -384,6 +437,49 @@ function getStateHistoryById(id){
             });
         } catch (error) {
             logger.error('getDetailHistoriesInCampus - Error obteniendo el detalle de historias:', error);
+            reject(error);
+        }
+    });
+}
+
+function getStateHistoryByUrl(url){
+
+    return new Promise((resolve, reject) => {
+        try {
+            pool.connect((err, client, done) => {
+
+                if(err){
+                    logger.error('getStateHistoryByUrl - No se puede establecer conexión con la BBDD');
+                    reject(err)
+                    return
+                }
+
+                var queryStateHistory = {
+                    text: dbQueries.DB_FOCUS_GET_STATE_HISTORY_BY_URL,
+                    values: [url],
+                    rowMode: constants.SQL_RESULSET_FORMAT_JSON
+                }
+
+                //Se busca la historia introducida como parámetro en la tabla histories
+                pool.query(queryStateHistory, (err, result) => {
+                    done();
+                    if (err) {
+                        logger.error('getStateHistoryByUrl - Error obteniendo el estado de la historia:',err.stack);
+                        reject(err);
+                    } else {
+                        if(result.rows.length == 0){
+                            logger.error('getStateHistoryByUrl - Error obteniendo la historia del token al no existir la misma');
+                            reject('getStateHistoryByUrl - Error obteniendo la historia del token al no existir la misma');
+                        }else{
+                            logger.notice('getStateHistoryByUrl - Obtención del estado de una historia')
+                            resolve(result.rows[0].state);
+                        }
+                    }
+                });
+
+            });
+        } catch (error) {
+            logger.error('getStateHistoryByUrl - Error obteniendo el detalle de historias:', error);
             reject(error);
         }
     });
