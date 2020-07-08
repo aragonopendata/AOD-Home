@@ -431,8 +431,12 @@ function inserHistory(client, done, token, history, id){
                         } else {
                             
                             if(history.contents){
-                                var sqlContents =  dbQueries.DB_FOCUS_INSERT_FOCUS_CONTENTS_HISTORY;
-                                var valuesContents= (history.contents).map(item => [item.title, item.description, item.type_content, item.visual_content, item.align, id_history, item.body_content])
+                                let sqlContents =  dbQueries.DB_FOCUS_INSERT_FOCUS_CONTENTS_HISTORY;
+                                var valuesContents= (history.contents).map(item => [item.title, item.description, item.type_content, item.visual_content, item.align, id_history, item.body_content, item.order_content])
+
+                                //console.log(format(sqlContents, valuesContents))
+                                //console.log(valuesContents)
+
                                 client.query(format(sqlContents, valuesContents), (err, resultContents) => {
                                     if (rollback(client, done, err)) {
                                         logger.error('inserHistory - Error insertando la historia:', err);
