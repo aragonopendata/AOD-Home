@@ -197,7 +197,7 @@ exports.DB_ADMIN_UPDATE_CAMPUS_SPEAKERS =  'UPDATE campus.speakers SET ' +
 										   'WHERE id = $3';
 
 
-exports.DB_FOCUS_GET_HISTORY_BY_ID = 'SELECT id, state, title, description, id_reference, main_category, secondary_categories, create_date, update_date, email, token FROM focus.histories WHERE id = $1';
+exports.DB_FOCUS_GET_HISTORY_BY_ID = 'SELECT id, url, state, title, description, id_reference, main_category, secondary_categories, create_date, update_date, email, token FROM focus.histories WHERE id = $1';
 exports.DB_FOCUS_GET_HISTORY_BY_URL = 'SELECT id, state, title, description, id_reference, main_category, secondary_categories, create_date, update_date, email, token FROM focus.histories WHERE url = $1';
 
 exports.DB_FOCUS_GET_HISTORY_BY_TOKEN = 'SELECT id, state, title, description, id_reference, main_category, secondary_categories, create_date, update_date, token, email FROM focus.histories WHERE token = $1'; //mirar si queremos email o no. De momento no
