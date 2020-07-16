@@ -43,24 +43,6 @@ b {
     font-weight: 700;
 }
 
-/* Loading start */
-.loadingText {
-    margin-top: 10%;
-    text-align: center;
-    font-size: 2.5em;
-    font-weight: 300;
-    color: #8E8E8E;
-}
-
-.loadingAdvice {
-    text-align: center;
-    font-size: 1.2em;
-    margin-bottom: 1em;
-    font-weight: 300;
-    color: #8E8E8E;
-}
-/* Loading end*/
-
 .img {
     max-height: 30px;
 }
