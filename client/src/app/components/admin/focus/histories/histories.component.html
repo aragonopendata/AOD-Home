@@ -77,7 +77,7 @@
                 <button *ngIf="history.state==stateEnum.Publicada" (click)="showActionDialog('hideHistory', history);" class="btn btn-primary p-2" type="button"  data-toggle="tooltip" data-placement="top" title="Ocultar"><i class="fas fa-eye-slash"></i></button> 
                 <button *ngIf="history.state==stateEnum.Revision" (click)="showActionDialog('publishHistory', history)" class="btn btn-primary p-2" type="button"  data-toggle="tooltip" data-placement="top" title="Publicar"><i class="fas fa-eye"></i></button> 
                 <!-- volver a borrador -->
-                <button *ngIf="history.state==stateEnum.Revision" (click)="showActionDialog('returnToBorrador', history)" class="btn btn-primary p-2" type="button"  data-toggle="tooltip" data-placement="top" title="Publicar"><i class="fas fa-eraser"></i></button> 
+                <button *ngIf="history.state==stateEnum.Revision" (click)="showActionDialog('returnToBorrador', history)" class="btn btn-primary p-2" type="button"  data-toggle="tooltip" data-placement="top" title="Pasa a borrador"><i class="fas fa-eraser"></i></button> 
                 <button class="btn btn-primary p-2" type="button" (click)="showDeleteDialog(history.id)" data-toggle="tooltip" data-placement="top" title="Borrar"><i class="fas fa-trash-alt"></i></button>
             </ng-template>
         </p-column>
