@@ -702,8 +702,10 @@ export class Constants {
     public static SERVER_API_LINK_FOCUS = '/focus';
     public static SERVER_API_LINK_HISTORIES = '/histories';
     public static SERVER_API_LINK_HISTORY = '/history';
+    public static SERVER_API_LINK_HISTORY_BORRADOR = '/history/borrador';
     public static SERVER_API_LINK_HISTORY_DELETE = '/history/delete';
     public static SEND_MAIL_PUBLIC_USER_HISTORY_PATH = '/services/histories/send_public_user_mail';
+    public static SEND_MAIL_RETURN_BORRADOR_USER_HISTORY_PATH = '/services/histories/send_return_borrador_user_mail';
     public static ROUTER_LINK_VIEW_HISTORY='/history';
 
     // public static KIBANA_URL = "/elastic/app/kibana#/dashboard/e6433860-d68c-11e7-a49d-f956d0989e2c";

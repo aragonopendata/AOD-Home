@@ -65,6 +65,13 @@ export class FocusAdminService {
 		return this.http.delete(fullUrl+'/'+id, {headers: headers}).pipe(map(res => res.json()));
 	}
 
+	public returnToBorrador(history: History) {
+		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_FOCUS + Constants.SERVER_API_LINK_HISTORY_BORRADOR;
+		let headers = this.buildRequestHeaders();
+		let requestBodyParams: any = this.createJsonFromString('history', history);
+		return this.http.put(fullUrl, JSON.stringify(requestBodyParams), { headers: headers }).map(res => res.json());;
+	}
+
 	public publishHistory(history: History) {
 		let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_FOCUS + Constants.SERVER_API_LINK_HISTORY;
 		let headers = this.buildRequestHeaders();
@@ -78,6 +85,7 @@ export class FocusAdminService {
 		return this.http.delete(fullUrl+'/'+id, {headers: headers}).pipe(map(res => res.json()));
 	}
 
+	
 	public sendPublicUserMail(history:History){
 		const headers = new Headers();
 		//let fullUrl = window["config"]["AOD_API_ADMIN_BASE_URL"] + Constants.SERVER_API_LINK_FOCUS + Constants.SERVER_API_LINK_HISTORY;
@@ -89,5 +97,18 @@ export class FocusAdminService {
 			return Observable.throw('error envío correo');
 		  });
 		  
+	}
+
+	public sendReturnToBorradorUserMail(history:History){
+		const headers = new Headers();
+		let fullUrl= window["config"]["VISUAL_BACK_SERVER_URL"] + Constants.SEND_MAIL_RETURN_BORRADOR_USER_HISTORY_PATH;
+		headers.append('Content-Type', 'application/json');
+		return this.http.post(fullUrl,history,{headers: headers}).map(res => JSON.parse(JSON.stringify(res)))
+		  .catch(err => {
+		  	console.log('hay eror:' + err)
+			return Observable.throw('error envío correo');
+		  });
+		  
 	  }
+
 }

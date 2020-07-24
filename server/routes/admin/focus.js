@@ -91,6 +91,29 @@ router.delete(constants.API_URL_FOCUS_HISTORY + "/:id", function (req, response,
 });
 
 /**
+ * RETURN TO BORRADOR STATUS DE HISTORY (CHANGE STATE TO HIDDEN)
+ */
+router.put(constants.API_URL_FOCUS_HISTORY_BORRRADOR, function (req, response, next) {
+    var history = req.body.history;
+
+    goToBorradorHistoryTransaction(history.id).then( () => {
+        response.json({
+            'status': constants.REQUEST_REQUEST_OK,
+            'success': true,
+            'result': 'CAMBIO DE ESTADO A BORRADOR DE LA HISTORIA - Historia cambiada de estado a "borrador" correctamente',
+            'history': history.id
+        });
+    }).catch(error => {
+        logger.error('CAMBIO DE ESTADO A BORRADOR DE LA HISTORIA-  Error al cambiar estado "borrador" a la historia en base de datos: ', error);
+        response.json({ 
+            'status': constants.REQUEST_ERROR_INTERNAL_ERROR, 
+            'error': 'CAMBIO DE ESTADO A BORRADOR DE LA HISTORIA - Error al cambiar estado "borrador" a la historia en base de datos' ,
+        });
+        return;
+    });
+});
+
+/**
  * PUBLISH HISTORY (CHANGE STATE TO PUBLISH)
  */
 router.put(constants.API_URL_FOCUS_HISTORY, function (req, response, next) {
@@ -343,8 +366,42 @@ function hidenHistoryTransaction(id){
 
 }
 
+function goToBorradorHistoryTransaction(id){
 
+    return new Promise((resolve, reject) => {
+        try {
+            pool.connect((err, client, done) => {
 
+                if(err){
+                    logger.error('goToBorradorHistoryTransaction - No se puede establecer conexión con la BBDD');
+                    reject(err)
+                    return
+                }
+
+                logger.notice('Se inicia la transacción de eliminación de una historia');
+
+                changeStateHistory(client, done, id, statesEnum.borrador).then( (correct) => {
+                    done();
+                    if(correct){
+                        logger.notice('goToBorradorHistoryTransaction - cambio de estado a en borrador finalizada');
+                        resolve(true);
+                    }else{
+                        logger.error('goToBorradorHistoryTransaction - Error cambiando el estado de la historia a borrador:', error);
+                        reject(commitError);
+
+                    }   
+                }).catch(error => {
+                    logger.error('goToBorradorHistoryTransaction - Error cambiando el estado de la historia a borrador:', error);
+                    reject(error);
+                });
+            });
+        } catch (error) {
+            logger.error('goToBorradorHistoryTransaction - Error cambiando el estado de la historia a borrador:', error);
+            reject(error);
+        }
+    });
+
+}
 
 function publishHistoryTransaction(history){
 

@@ -35,7 +35,10 @@ export class HistoriesComponent implements OnInit {
   datasetListErrorMessage: string;
 
   displayDeleteDialog: boolean = false;
+  action: string;
+  displayActionDialog: boolean = false;
   idHistory: string;
+  history;
 
   constructor(private focusAdminService: FocusAdminService, private changeDetectorRef: ChangeDetectorRef) {
     this.pageRows = Constants.DATASET_ADMIN_LIST_ROWS_PER_PAGE;
@@ -72,6 +75,8 @@ export class HistoriesComponent implements OnInit {
   }
 
   public hideHistory(id){
+    this.history = null;
+    this.action = null;
     this.focusAdminService.hideHistory(id).subscribe(result => {
       if(result.success){
         //Mensajes success
@@ -83,7 +88,36 @@ export class HistoriesComponent implements OnInit {
     });
   }
 
+  returnToBorrador(history){
+    this.history = null;
+    this.action = null;
+    this.focusAdminService.returnToBorrador(history).subscribe(result => {
+      if(result.success){
+        //Mensajes success
+        this.getHistories(this.actualPage, null);
+        history.urlEmail=window["config"]["FOCUS_URL"] + Constants.ROUTER_LINK_VIEW_HISTORY + "/" + history.url;
+        if(history.email!=null){
+          this.focusAdminService.sendReturnToBorradorUserMail(history).subscribe(result => {
+            if(result.status==200){
+              //mail enviado correctamente
+              console.log('mail enviado')
+            }else{
+              console.log('error envio mail!')
+            }
+          }, err =>{
+            console.log('error envio mail con error!')
+          });
+        }
+      }
+      else{
+        //Mensajes error
+      }
+    });
+  }
+
   publishHistory(history){
+    this.history = null;
+    this.action = null;
     this.focusAdminService.publishHistory(history).subscribe(result => {      
       if(result.success){
         this.getHistories(this.actualPage, null);
@@ -125,7 +159,30 @@ export class HistoriesComponent implements OnInit {
   }
 
   cancelDeleteHistory(){
+    this.action = null;
     this.displayDeleteDialog = false;
+  }
+
+  showActionDialog(action, history) {
+    this.displayActionDialog = true;
+    this.action = action;
+    this.history = history
+
+  }
+  doAction() {
+    if (this.action === 'hideHistory'){
+      this.hideHistory(this.history.id);
+    } else if ( this.action === 'publishHistory' ){
+      this.publishHistory(this.history)
+    }else if ( this.action === 'returnToBorrador' ){
+      this.returnToBorrador(this.history)
+    }
+    this.displayDeleteDialog = false;
+  }
+
+  cancelAction(){
+    this.history = null;
+    this.displayActionDialog = false;
   }
 
   searchHistoriesByText(searchText: string){
