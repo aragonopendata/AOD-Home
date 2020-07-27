@@ -177,7 +177,7 @@ export class HistoriesComponent implements OnInit {
     }else if ( this.action === 'returnToBorrador' ){
       this.returnToBorrador(this.history)
     }
-    this.displayDeleteDialog = false;
+    this.displayActionDialog = false;
   }
 
   cancelAction(){
