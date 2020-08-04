@@ -52,12 +52,22 @@ router.get(constants.API_URL_FOCUS_HISTORY_URL + "/:url" , function (req, respon
     
     var url = req.params.url;
     getHistoryByUrl(url).then(fullHistory => {
-        response.json({
-            'status': constants.REQUEST_REQUEST_OK,
-            'success': true,
-            'result': 'DETALLE DE UNA HISTORIA POR URL- Historia obtenida correctamente',
-            'history': fullHistory
-        });
+
+        if(fullHistory){
+            response.json({
+                'status': constants.REQUEST_REQUEST_OK,
+                'success': true,
+                'result': 'DETALLE DE UNA HISTORIA POR URL- Historia obtenida correctamente',
+                'history': fullHistory
+            });
+        }else{
+            response.json({
+                'status': constants.REQUEST_NOT_FOUND,
+                'success': false,
+                'result': 'DETALLE DE UNA HISTORIA POR URL- Historia no encontrada'
+            });
+        }
+        
     }).catch(error => {
         logger.error('DETALLE DE UNA HISTORIA POR URL - Error al obtener la historia en base de datos: ', error);
         response.json({ 
@@ -307,8 +317,8 @@ function getHistoryByUrl(url){
                         reject(error);
                     });
                 }else{
-                    logger.error('getHistoryByUrl - No se permite ver la historia por id a no estar publicada:');
-                    reject('getHistoryByUrl - No se permite ver la historia por id a no estar publicada');
+                    logger.error('getHistoryByUrl - no exite la historia');
+                    resolve(null)
                 }
             }).catch(error => {
                 logger.error('getHistoryByUrl - Error obteniendo el estado de la historia:', error);
@@ -468,8 +478,8 @@ function getStateHistoryByUrl(url){
                         reject(err);
                     } else {
                         if(result.rows.length == 0){
-                            logger.error('getStateHistoryByUrl - Error obteniendo la historia del token al no existir la misma');
-                            reject('getStateHistoryByUrl - Error obteniendo la historia del token al no existir la misma');
+                            logger.notice('getStateHistoryByUrl - la historia no existe');
+                            resolve(null)
                         }else{
                             logger.notice('getStateHistoryByUrl - Obtención del estado de una historia')
                             resolve(result.rows[0].state);
