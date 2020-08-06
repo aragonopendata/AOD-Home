@@ -95,7 +95,7 @@ export class HistoriesComponent implements OnInit {
       if(result.success){
         //Mensajes success
         this.getHistories(this.actualPage, null);
-        history.urlEmail=window["config"]["FOCUS_URL"] + Constants.ROUTER_LINK_VIEW_HISTORY + "/" + history.url;
+        history.urlEmail=window["config"]["FOCUS_URL"] + Constants.ROUTER_LINK_EDIT_HISTORY + "/" + history.token;
         if(history.email!=null){
           this.focusAdminService.sendReturnToBorradorUserMail(history).subscribe(result => {
             if(result.status==200){

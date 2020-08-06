@@ -707,6 +707,7 @@ export class Constants {
     public static SEND_MAIL_PUBLIC_USER_HISTORY_PATH = '/services/histories/send_public_user_mail';
     public static SEND_MAIL_RETURN_BORRADOR_USER_HISTORY_PATH = '/services/histories/send_return_borrador_user_mail';
     public static ROUTER_LINK_VIEW_HISTORY='/history';
+    public static ROUTER_LINK_EDIT_HISTORY='/editHistory';
 
     // public static KIBANA_URL = "/elastic/app/kibana#/dashboard/e6433860-d68c-11e7-a49d-f956d0989e2c";
     // public static KIBANA_URL_SEVEN = "/elastic/app/kibana#/dashboard/6b50d7f0-e589-11e7-bac3-69701294f3ab";
