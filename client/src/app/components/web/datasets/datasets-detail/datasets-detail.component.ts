@@ -19,6 +19,7 @@ import { UtilsService } from '../../../../services/web/utils.service';
 import { Resource } from '../../../../models/Resource';
 import { FilesAdminService } from 'app/services/admin/files-admin.service';
 import {MessageService} from 'primeng/api';
+import { parsePXFile } from './utils';
 
 @Component({
 	selector: 'app-datasets-detail',
@@ -612,12 +613,12 @@ export class DatasetsDetailComponent implements OnInit {
 	}
 
 	isResourceSupportPreview(format) {
-		let isCSV = false;
-		if ("CSV" == format) {
+		let suport = false;
+		if ("CSV" == format || "PX" == format) {
 			this.dataPreview = true;
-			isCSV = true;
+			suport = true;
 		}
-		return isCSV;
+		return suport;
 	}
 
 	loadPreview(resource) {
@@ -631,6 +632,9 @@ export class DatasetsDetailComponent implements OnInit {
 				switch (resource.formats[0]) {
 					case "CSV":
 						this.processCSV(response.file)
+						break;
+					case "PX":
+						this.processPX(response.file)
 						break;
 					default:
 						console.log("Error, el formato no esta soportado");
@@ -652,6 +656,12 @@ export class DatasetsDetailComponent implements OnInit {
 		this.previewData.forEach((row, index) => {
 			this.previewData[index] = row.split(";");
 		});
+	}
+
+	processPX(body){
+		var parseData = parsePXFile(body);
+		this.previewHeaders  = parseData[0];
+		this.previewData = parseData[1];
 	}
 
 	resetPreview() {
