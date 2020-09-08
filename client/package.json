@@ -39,6 +39,7 @@
     "copy-webpack-plugin": "4.3.0",
     "core-js": "2.5.3",
     "download-file": "^0.1.5",
+    "file-saver": "^2.0.2",
     "intl": "1.2.5",
     "jquery": "^3.4.0",
     "mkdirp": "^0.5.1",

@@ -20,8 +20,8 @@ const loggerSettings = logConfig.getLogSettings();
 const logger = require('js-logging').dailyFile([loggerSettings]);
 const atob = require('atob');
 
-// READ CSV FILE
-router.post(constants.API_URL_DATASETS + constants.API_URL_RESOURCE_CSV, function (req, res, next) {
+// READ CSV,PX... FILE
+router.post(constants.API_URL_DATASETS + constants.API_URL_RESOURCE_PREVIEW, function (req, res, next) {
     try {
         if (req.body.resourceUrl) {
             serviceRequestUrl = req.body.resourceUrl;
@@ -36,18 +36,7 @@ router.post(constants.API_URL_DATASETS + constants.API_URL_RESOURCE_CSV, functio
                     body += chunk;
                 });
                 response.on('end', function() {
-                    var status = response.statusCode;
-                    headers = body.split("\n").slice(0, 1)[0].split(";");
-                    bodyData = body.split("\n").slice(1, 9);
-                    bodyData.forEach(row => {
-                        row = row.split(";");
-                    });
-                    var responseBuild = {
-                        "status": status,
-                        "headers": headers,
-                        "content": bodyData
-                    }
-                    res.json(responseBuild);
+                    requestHandler(response, res, body)
                 });
             }).on('error', function (err) {
                 utils.errorHandler(err,res);
@@ -59,18 +48,7 @@ router.post(constants.API_URL_DATASETS + constants.API_URL_RESOURCE_CSV, functio
                     body += chunk;
                 });
                 response.on('end', function() {
-                    var status = response.statusCode;
-                    headers = body.split("\n").slice(0, 1)[0].split(";");
-                    bodyData = body.split("\n").slice(1, 11);
-                    bodyData.forEach(row => {
-                        row = row.split(";");
-                    });
-                    var responseBuild = {
-                        "status": status,
-                        "headers": headers,
-                        "content": bodyData
-                    }
-                    res.json(responseBuild);
+                    requestHandler(response, res, body)
                 });
             }).on('error', function (err) {
                 utils.errorHandler(err,res);
@@ -80,6 +58,15 @@ router.post(constants.API_URL_DATASETS + constants.API_URL_RESOURCE_CSV, functio
         logger.error('Error in route' + constants.API_URL_DATASETS_RESOURCE_CSV);
     }
 });
+
+function requestHandler(response, res, body){
+    var status = response.statusCode;
+    var responseBuild = {
+        "status": status,
+        "file": body
+    }
+    res.json(responseBuild);
+}
 
 /** GET DATASETS PAGINATED */
 router.get(constants.API_URL_DATASETS, function (req, res, next) {

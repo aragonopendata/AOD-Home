@@ -36,7 +36,7 @@
 		</div>
 		<div class="container-fluid">
 			<select id="inputState" class="form-control">
-				<option (click)="resetPreview()" data-toggle="collapse">Seleccione el recurso que desea previsualizar</option>
+				<option (click)="resetPreview()">Seleccione el recurso que desea previsualizar</option>
 				<option *ngFor="let resource of resourcesPreview" (click)="loadPreview(resource)">{{resource.name}}</option>
 			</select>
 			<!--<ul class="nav nav-tabs" role="tablist">
@@ -44,24 +44,26 @@
 					<a class="nav-link" href="#resource{{resInd}}" (click)="loadPreview(resource)" role="tab" data-toggle="tab">{{resource.name}}</a>
 				</li>
 			</ul>-->
-			<div class="collapse dropdown-content">
+			<div>
 				<div *ngIf="isLoadingPreview" class="text-center">
 					<div class="loadingText">Cargando</div>
 					<i class="fas fa-circle-notch fa-spin fa-3x fa-fw" style="color: #76a1b8; font-size: 50px;"></i>
 				</div>
-				<table *ngIf="dataPreviewSelected" class="table">
-					<thead>
-						<tr>
-							<th *ngFor="let header of previewHeaders">{{header}}</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr *ngFor="let rowData of previewData; let index = index">
-							<td *ngFor="let element of rowData.split(';')">{{element}}</td>
-						</tr>
-					</tbody>
-				</table>
-l				<h5 *ngIf="iframeError && !iframeRes">{{iframeError}}</h5>
+				<div class="table-container">
+					<table *ngIf="dataPreviewSelected" class="table">
+						<thead>
+							<tr>
+								<th *ngFor="let header of previewHeaders">{{header}}</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngFor="let rowData of previewData; let index = index">
+								<td *ngFor="let element of rowData">{{element}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<h5 *ngIf="iframeError && !iframeRes">{{iframeError}}</h5>
 			</div>
 		</div>
 	</div>

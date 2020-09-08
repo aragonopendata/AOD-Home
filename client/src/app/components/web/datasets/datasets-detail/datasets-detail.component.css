@@ -521,3 +521,10 @@ a:hover {
     overflow-x: auto;
     white-space: nowrap;
 }
+
+.table-container{
+    display: block;
+    overflow-y: auto;
+    overflow-x: auto;
+    max-height: 300px;
+}

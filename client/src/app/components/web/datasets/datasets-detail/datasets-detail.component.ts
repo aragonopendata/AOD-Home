@@ -600,7 +600,7 @@ export class DatasetsDetailComponent implements OnInit {
 		resourcesPreview = JSON.parse(JSON.stringify(resAux));
 		for (let i = 0; i < resourcesPreview.length; i++) {
 			for (let j = 0; j < resourcesPreview[i].formats.length; j++) {
-				if(!this.isCSVResource(resourcesPreview[i].formats[j])) {
+				if(!this.isResourceSupportPreview(resourcesPreview[i].formats[j])) {
 					resourcesPreview[i].formats.splice(j, 1);
 					resourcesPreview[i].sources.splice(j, 1);
 					resourcesPreview[i].sources_ids.splice(j, 1);
@@ -611,7 +611,7 @@ export class DatasetsDetailComponent implements OnInit {
 		this.resourcesPreview = resourcesPreview;
 	}
 
-	isCSVResource(format) {
+	isResourceSupportPreview(format) {
 		let isCSV = false;
 		if ("CSV" == format) {
 			this.dataPreview = true;
@@ -627,14 +627,30 @@ export class DatasetsDetailComponent implements OnInit {
 		this.isLoadingPreview = true;
 		this.datasetsService.previewFile(resource.sources[0]).subscribe( response => {
 			if(response.status == 200){
-				this.dataPreviewSelected = true;
-				this.previewHeaders = response.headers;
-				this.previewData = response.content;
 				this.iframeError = undefined;
+				switch (resource.formats[0]) {
+					case "CSV":
+						this.processCSV(response.file)
+						break;
+					default:
+						console.log("Error, el formato no esta soportado");
+						this.iframeError = Constants.DATASET_LIST_ERROR_IFRAME_MESSAGE;
+						break;
+				}
+				this.dataPreviewSelected = true;
 			} else {
 				this.iframeError = Constants.DATASET_LIST_ERROR_IFRAME_MESSAGE;
 			}
 			this.isLoadingPreview = false;
+		});
+	}
+
+	processCSV(body){
+		body = body.replace(/"/g,'');
+		this.previewHeaders  = body.split("\n").slice(0, 1)[0].split(";");
+		this.previewData = body.split("\n").slice(1, 11);
+		this.previewData.forEach((row, index) => {
+			this.previewData[index] = row.split(";");
 		});
 	}
 

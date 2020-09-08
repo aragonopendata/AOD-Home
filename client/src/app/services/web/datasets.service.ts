@@ -225,7 +225,7 @@ export class DatasetsService {
 	}
 
 	public previewFile(url) {
-		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_DATASETS + Constants.DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_RESOURCE_CSV;
+		let fullUrl = window["config"]["AOD_API_WEB_BASE_URL"] + Constants.SERVER_API_LINK_DATASETS + Constants.DATASET_DETAIL_CKAN_PREVIEW_URL_PARAM_RESOURCE_PREVIEW;
 		return this.http.post(fullUrl, {resourceUrl: url}).pipe(map(res => res.json()));
 	}
 }
