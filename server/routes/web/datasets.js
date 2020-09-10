@@ -30,10 +30,15 @@ router.post(constants.API_URL_DATASETS + constants.API_URL_RESOURCE_PREVIEW, fun
         }
         
         if (serviceRequestUrl.includes("https")) {
-            https.get(serviceRequestUrl, function(response) {
+            var req = https.get(serviceRequestUrl, function(response) {
                 body = '';
+                numChunks = 0;
                 response.on('data', function (chunk) {
-                    body += chunk;
+                    if(numChunks > 1000){
+                        response.destroy();
+                    }else{
+                        body += chunk;
+                    }
                 });
                 response.on('end', function() {
                     requestHandler(response, res, body)
@@ -42,10 +47,16 @@ router.post(constants.API_URL_DATASETS + constants.API_URL_RESOURCE_PREVIEW, fun
                 utils.errorHandler(err,res);
             });
         } else {
-            http.get(serviceRequestUrl, function(response) {
+            var req = http.get(serviceRequestUrl, function(response) {
                 body = '';
+                numChunks = 0;
                 response.on('data', function (chunk) {
-                    body += chunk;
+                    if(numChunks > 1000){
+                        response.destroy();
+                    }else{
+                        body += chunk;
+                        numChunks++;
+                    }
                 });
                 response.on('end', function() {
                     requestHandler(response, res, body)
@@ -61,6 +72,7 @@ router.post(constants.API_URL_DATASETS + constants.API_URL_RESOURCE_PREVIEW, fun
 
 function requestHandler(response, res, body){
     var status = response.statusCode;
+
     var responseBuild = {
         "status": status,
         "file": body

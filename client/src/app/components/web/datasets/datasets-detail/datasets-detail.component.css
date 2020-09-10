@@ -526,5 +526,5 @@ a:hover {
     display: block;
     overflow-y: auto;
     overflow-x: auto;
-    max-height: 300px;
+    /*max-height: 300px;*/
 }

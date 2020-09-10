@@ -18,8 +18,9 @@ import { Extra } from '../../../../models/Extra';
 import { UtilsService } from '../../../../services/web/utils.service';
 import { Resource } from '../../../../models/Resource';
 import { FilesAdminService } from 'app/services/admin/files-admin.service';
-import {MessageService} from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { parsePXFile } from './utils';
+import * as xml2js from 'xml2js';
 
 @Component({
 	selector: 'app-datasets-detail',
@@ -93,15 +94,18 @@ export class DatasetsDetailComponent implements OnInit {
 	isMobileScreen: boolean;
 	previewHeaders: any;
 	previewData: any;
+	previewDataAll: any;
 	isLoadingPreview: boolean;
 	dataPreviewSelected: boolean;
+	paginationNum = 0;
+	paginationTotal = 3;
 
 	constructor(private datasetsService: DatasetsService,
 		private usersAdminService: UsersAdminService,
 		private authenticationService: AuthenticationService,
 		private activatedRoute: ActivatedRoute, public sanitizer: DomSanitizer, private router: Router,
 		public googleAnalyticsEventsService: GoogleAnalyticsEventsService,
-		private utilsService:UtilsService,
+		private utilsService: UtilsService,
 		private filesAdminService: FilesAdminService, private messageService: MessageService, private ngZone: NgZone) {
 		this.datasetListErrorTitle = Constants.DATASET_LIST_ERROR_TITLE;
 		this.datasetListErrorMessage = Constants.DATASET_LIST_ERROR_MESSAGE;
@@ -166,12 +170,12 @@ export class DatasetsDetailComponent implements OnInit {
 		this.extras = new Map();
 	}
 
-	getDataset(dataset: Dataset){
+	getDataset(dataset: Dataset) {
 		let dt = new DatasetsUtils(this.datasetsService);
 		let prom = dt.getDataset(dataset);
 		prom.then(data => {
 			let dataValid = JSON.parse(data).success;
-			if(dataValid){
+			if (dataValid) {
 				this.viewCounter();
 				this.dataset = JSON.parse(data).result;
 				dt.getResourceView(this.dataset, this.resourceView);
@@ -181,19 +185,19 @@ export class DatasetsDetailComponent implements OnInit {
 				this.checkExtrasIAESTEmpty();
 				dt.makeFileSourceList(this.dataset, this.resourcesAux);
 				this.checkForDataPreview(this.resourcesAux);
-				if(this.checkPxResource()){
+				if (this.checkPxResource()) {
 					this.addCsvResourceFromPx();
 				}
 				this.getDatasetsRecommended();
 				this.filesAdminService.downloadFile(this.dataset.id).
-				subscribe(
-					response => {
-						console.log(response);
-						if(response.headers.get('Content-Type') === 'application/vnd.ms-excel.sheet.macroEnabled.12'){
-							this.showMapLink = true;
-						}
-				});
-			}else {
+					subscribe(
+						response => {
+							console.log(response);
+							if (response.headers.get('Content-Type') === 'application/vnd.ms-excel.sheet.macroEnabled.12') {
+								this.showMapLink = true;
+							}
+						});
+			} else {
 				console.error("Error: loadDataset() - datasets-detail.component.ts");
 				this.errorTitle = this.datasetListErrorTitle;
 				this.errorMessage = this.datasetListErrorMessage;
@@ -201,7 +205,7 @@ export class DatasetsDetailComponent implements OnInit {
 		});
 	}
 
-	getExtras(){
+	getExtras() {
 		this.extraDictionary = this.extras.get(Constants.DATASET_EXTRA_DATA_DICTIONARY);
 		this.extraDictionaryURL = this.extras.get(Constants.DATASET_EXTRA_DATA_DICTIONARY_URL);
 		this.extraDataQuality = this.extras.get(Constants.DATASET_EXTRA_DATA_QUALITY);
@@ -237,17 +241,17 @@ export class DatasetsDetailComponent implements OnInit {
 	}
 
 	checkExtrasIAESTEmpty() {
-		if (this.extraIAESTFuente != undefined  || 
+		if (this.extraIAESTFuente != undefined ||
 			this.extraIAESTUnidadEstadistica != undefined ||
 			this.extraIAESTPoblacionEstadistica != undefined ||
 			this.extraIAESTUnidadMedida != undefined ||
 			this.extraIAESTPeriodoBase != undefined ||
-			this.extraIAESTTipoOperacion != undefined || 
+			this.extraIAESTTipoOperacion != undefined ||
 			this.extraIAESTTipologiaDatosOrigen != undefined ||
-			this.extraIAESTFuente != undefined || 
+			this.extraIAESTFuente != undefined ||
 			this.extraIAESTTratamientoEstadistico != undefined ||
 			this.extraIAESTLegislacionUE != undefined) {
-				this.extrasIAESTNotEmpty = true;
+			this.extrasIAESTNotEmpty = true;
 		}
 	}
 
@@ -297,7 +301,7 @@ export class DatasetsDetailComponent implements OnInit {
 		let datasetRecommendedByTopic: Dataset = new Dataset();
 		let datasetRecommendedByOrganization: Dataset = new Dataset();
 		let datasetRecommendedByTag: Dataset = new Dataset();
-		if(this.dataset.groups != undefined && this.dataset.groups.length != 0){
+		if (this.dataset.groups != undefined && this.dataset.groups.length != 0) {
 			this.datasetsService.getDatasetsByTopic(this.dataset.groups[0].name, null, 1, 1, this.dataset.type).subscribe(topicDataResult => {
 				try {
 					if (JSON.parse(topicDataResult).result != undefined) {
@@ -391,7 +395,7 @@ export class DatasetsDetailComponent implements OnInit {
 		return exists;
 	}
 
-	checkPxResource(){
+	checkPxResource() {
 		let hasResourcePx = false;
 		this.resourcesAux.forEach(resource => {
 			let newResource = new ResourceAux();
@@ -404,20 +408,20 @@ export class DatasetsDetailComponent implements OnInit {
 		return hasResourcePx;
 	}
 
-	addCsvResourceFromPx(){
+	addCsvResourceFromPx() {
 		this.resourceCSVFromPX.forEach(resourceCSV => {
-			if(resourceCSV.formats.indexOf("px") !== -1){
-				resourceCSV.name = resourceCSV.name.replace("px","csv");
+			if (resourceCSV.formats.indexOf("px") !== -1) {
+				resourceCSV.name = resourceCSV.name.replace("px", "csv");
 				resourceCSV.formats = ["CSV"];
-				let url = resourceCSV.sources[0].substring(resourceCSV.sources[0].indexOf("iaeaxi_docs")+("iaeaxi_docs".length+1));
-				url = window["config"]["AOD_BASE_URL"] + "/aod/services/web/datasets/" + this.dataset.name + "/resourceCSV/" + url.replace(new RegExp("/", 'g'), "-")		
+				let url = resourceCSV.sources[0].substring(resourceCSV.sources[0].indexOf("iaeaxi_docs") + ("iaeaxi_docs".length + 1));
+				url = window["config"]["AOD_BASE_URL"] + "/aod/services/web/datasets/" + this.dataset.name + "/resourceCSV/" + url.replace(new RegExp("/", 'g'), "-")
 				resourceCSV.sources = [url];
 			}
 		})
 	}
 
-	downloadPxFile(resource: ResourceAux){
-		window.location.href= resource.sources[0];
+	downloadPxFile(resource: ResourceAux) {
+		window.location.href = resource.sources[0];
 	}
 
 	//Methods called from HTML.
@@ -478,9 +482,9 @@ export class DatasetsDetailComponent implements OnInit {
 	submitEvent(href, format) {
 
 		if (!String.prototype.startsWith) {
-			String.prototype.startsWith = function(searchString, position) {
-			  position = position || 0;
-			  return this.indexOf(searchString, position) === position;
+			String.prototype.startsWith = function (searchString, position) {
+				position = position || 0;
+				return this.indexOf(searchString, position) === position;
 			};
 		}
 
@@ -504,7 +508,7 @@ export class DatasetsDetailComponent implements OnInit {
 
 		if (urlHack.host == urlAux.host) {
 
-			if(!path.startsWith('/')){
+			if (!path.startsWith('/')) {
 				path = '/' + path;
 			}
 
@@ -524,24 +528,24 @@ export class DatasetsDetailComponent implements OnInit {
 		}
 	}
 
-	viewCounter(){
-		if(this.checkUniqueUser()){
-			this.datasetsService.trackingDataset(this.dataset.name).subscribe( result => {
-				if(!result) { console.error("Error: viewCounter() - datasets-detail.component.ts") }
+	viewCounter() {
+		if (this.checkUniqueUser()) {
+			this.datasetsService.trackingDataset(this.dataset.name).subscribe(result => {
+				if (!result) { console.error("Error: viewCounter() - datasets-detail.component.ts") }
 			});
 		}
 	}
 
-	checkUniqueUser(){
+	checkUniqueUser() {
 		this.datasetsService.refreshUser();
-		if(!this.datasetsService.currentUserKey) { 
+		if (!this.datasetsService.currentUserKey) {
 			this.datasetsService.setCurrentUserKey(this.userKeyGenerator(16, Constants.DATASET_DETAIL_CHARS_FOR_USER_KEY));
 		}
 		return true;
 	}
 
-    getOpenedMenu(){
-        this.utilsService.openedMenuChange.subscribe(value => {
+	getOpenedMenu() {
+		this.utilsService.openedMenuChange.subscribe(value => {
 			this.openedMenu = value;
 		});
 	}
@@ -554,15 +558,15 @@ export class DatasetsDetailComponent implements OnInit {
 
 	downloadMapFile($event) {
 		this.filesAdminService.downloadFile(this.dataset.id).
-		subscribe(
-			response => {
-				console.log(response);
-				if(response.headers.get('Content-Type') === 'application/vnd.ms-excel.sheet.macroEnabled.12'){
-					let url = window["config"]["AOD_BASE_URL"] + Constants.XLMS_PATH + this.dataset.id + '/mapeo_ei2a.xlsm?q=' + Date.now();
-					console.log(url);
-					window.open(url, '_blank');
-				}
-		});
+			subscribe(
+				response => {
+					console.log(response);
+					if (response.headers.get('Content-Type') === 'application/vnd.ms-excel.sheet.macroEnabled.12') {
+						let url = window["config"]["AOD_BASE_URL"] + Constants.XLMS_PATH + this.dataset.id + '/mapeo_ei2a.xlsm?q=' + Date.now();
+						console.log(url);
+						window.open(url, '_blank');
+					}
+				});
 
 	}
 
@@ -575,15 +579,15 @@ export class DatasetsDetailComponent implements OnInit {
 		try {
 			this.datasetsService.getIpCliente().subscribe((res: any) => {
 				var ip = res.ip;
-				this.datasetsService.rateDataset(this.dataset.name, event.value, ip).subscribe( response => {
-					if(response.statusCode != 500){
+				this.datasetsService.rateDataset(this.dataset.name, event.value, ip).subscribe(response => {
+					if (response.statusCode != 500) {
 						this.ngZone.run(() => {
-							this.messageService.add({severity:'success', detail:'¡Gracias por valorar estos datos!'});
+							this.messageService.add({ severity: 'success', detail: '¡Gracias por valorar estos datos!' });
 						});
 						this.loadResource();
 					} else {
 						this.ngZone.run(() => {
-							this.messageService.add({severity:'error', summary:'Error al registrar el voto.', detail:'No ha sido posible registrar el voto debido a un fallo en la comunicación con el servidor.'});
+							this.messageService.add({ severity: 'error', summary: 'Error al registrar el voto.', detail: 'No ha sido posible registrar el voto debido a un fallo en la comunicación con el servidor.' });
 						});
 					}
 				});
@@ -591,7 +595,7 @@ export class DatasetsDetailComponent implements OnInit {
 		} catch (error) {
 			console.error('Error rateDataset() - datasets-detail.component.ts');
 			this.ngZone.run(() => {
-				this.messageService.add({severity:'error', summary:'Error al registrar el voto.', detail:'Ha ocurrido un error en el registro del voto.'});
+				this.messageService.add({ severity: 'error', summary: 'Error al registrar el voto.', detail: 'Ha ocurrido un error en el registro del voto.' });
 			});
 		}
 	}
@@ -601,7 +605,7 @@ export class DatasetsDetailComponent implements OnInit {
 		resourcesPreview = JSON.parse(JSON.stringify(resAux));
 		for (let i = 0; i < resourcesPreview.length; i++) {
 			for (let j = 0; j < resourcesPreview[i].formats.length; j++) {
-				if(!this.isResourceSupportPreview(resourcesPreview[i].formats[j])) {
+				if (!this.isResourceSupportPreview(resourcesPreview[i].formats[j])) {
 					resourcesPreview[i].formats.splice(j, 1);
 					resourcesPreview[i].sources.splice(j, 1);
 					resourcesPreview[i].sources_ids.splice(j, 1);
@@ -614,7 +618,7 @@ export class DatasetsDetailComponent implements OnInit {
 
 	isResourceSupportPreview(format) {
 		let suport = false;
-		if ("CSV" == format || "PX" == format) {
+		if ("CSV" == format ||"PX" == format || "JSON" == format || "XML" == format) {
 			this.dataPreview = true;
 			suport = true;
 		}
@@ -624,24 +628,39 @@ export class DatasetsDetailComponent implements OnInit {
 	loadPreview(resource) {
 		this.iframeError = undefined;
 		this.previewHeaders = new Array();
+		this.previewDataAll = new Array();
 		this.previewData = new Array();
 		this.isLoadingPreview = true;
-		this.datasetsService.previewFile(resource.sources[0]).subscribe( response => {
-			if(response.status == 200){
+		this.datasetsService.previewFile(resource.sources[0]).subscribe(response => {
+			if (response.status == 200) {
 				this.iframeError = undefined;
-				switch (resource.formats[0]) {
-					case "CSV":
-						this.processCSV(response.file)
-						break;
-					case "PX":
-						this.processPX(response.file)
-						break;
-					default:
-						console.log("Error, el formato no esta soportado");
-						this.iframeError = Constants.DATASET_LIST_ERROR_IFRAME_MESSAGE;
-						break;
+				try {
+					switch (resource.formats[0]) {
+						case "CSV":
+							this.processCSV(response.file)
+							break;
+						case "PX":
+							this.processPX(response.file)
+							break;
+						case "XML":
+							this.processXML(response.file)
+							break;
+						case "JSON":
+							this.searchJSONArray(JSON.parse(response.file))
+							break;
+						default:
+							console.log("Error, el formato no esta soportado");
+							this.iframeError = Constants.DATASET_LIST_ERROR_IFRAME_MESSAGE;
+							break;
+					}
+					this.dataPreviewSelected = true;
+					this.paginationNum = 0;
+					this.pagination(0);
+				} catch (error) {
+					console.log(error);
+					console.log("Error, no se pudo procesar el archivo");
+					this.iframeError = Constants.DATASET_LIST_ERROR_IFRAME_MESSAGE;
 				}
-				this.dataPreviewSelected = true;
 			} else {
 				this.iframeError = Constants.DATASET_LIST_ERROR_IFRAME_MESSAGE;
 			}
@@ -649,24 +668,94 @@ export class DatasetsDetailComponent implements OnInit {
 		});
 	}
 
-	processCSV(body){
-		body = body.replace(/"/g,'');
-		this.previewHeaders  = body.split("\n").slice(0, 1)[0].split(";");
-		this.previewData = body.split("\n").slice(1, 11);
-		this.previewData.forEach((row, index) => {
-			this.previewData[index] = row.split(";");
+	processXML(body) {
+		const parser = new xml2js.Parser({ strict: false, trim: true });
+		parser.parseString(body, (err, result) => {
+			console.log(result);
+			this.searchJSONArray(result)
+		});
+	}
+	// Look for one array that should contain the table
+	searchJSONArray(result) {
+		if (typeof result == "object") {
+
+			const keys = Object.keys(result);
+			var i = 0;
+			var found = false;
+			while (i < keys.length && !found) {
+				console.log(result[keys[i]]);
+				if (Array.isArray(result[keys[i]])) {
+					found = true;
+				} else {
+					i++;
+				}
+			}
+			if (found != true) {
+				var i = 0;
+				var foundIn = false;
+				while (i < keys.length && !foundIn) {
+					if (typeof result[keys[i]] == 'object') {
+						foundIn = this.searchJSONArray(result[keys[i]])
+					}
+				}
+			} else {
+				this.processJSON(result[keys[i]], Object.keys(result[keys[i]][0]))
+			}
+
+			return true;
+		}
+		return false;
+	}
+
+	processJSON(objArray, headerList) {
+		let array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+		let str = [];
+		let row = '';
+		for (let i = 0; i < array.length; i++) {
+			let line = [];
+			var x = 0;
+			for (let index in headerList) {
+				let head = headerList[index];
+				line.push(array[i][head]);
+				x++;
+			}
+			str.push(line);
+		}
+		this.previewHeaders = headerList;
+		this.previewDataAll = str;
+	}
+
+	processCSV(body) {
+		body = body.replace(/"/g, '');
+		this.previewHeaders = body.split("\n").slice(0, 1)[0].split(";");
+		console.log(this.previewHeaders);
+		this.previewDataAll = body.split("\n").slice(1, 11);
+		this.previewDataAll.forEach((row, index) => {
+			this.previewDataAll[index] = row.split(";");
 		});
 	}
 
-	processPX(body){
+	processPX(body) {
 		var parseData = parsePXFile(body);
-		this.previewHeaders  = parseData[0];
-		this.previewData = parseData[1];
+		this.previewHeaders = parseData[0];
+		this.previewDataAll = parseData[1];
 	}
 
 	resetPreview() {
 		this.iframeError = undefined;
 		this.dataPreviewSelected = false;
 		this.isLoadingPreview = false;
+	}
+
+	pagination(direction){
+		if((this.paginationNum != 0 && direction == -1) || (this.paginationNum * this.paginationTotal < this.previewDataAll.length -1 && direction == 1)){
+			if(direction == -1){
+				this.paginationNum--;
+			} else if(direction == 1){ 
+				this.paginationNum++;
+			}
+		}
+		
+		this.previewData = this.previewDataAll.slice(this.paginationNum * this.paginationTotal,(this.paginationNum * this.paginationTotal) + this.paginationTotal);
 	}
 }

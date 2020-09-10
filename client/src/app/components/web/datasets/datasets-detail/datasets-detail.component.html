@@ -49,21 +49,25 @@
 					<div class="loadingText">Cargando</div>
 					<i class="fas fa-circle-notch fa-spin fa-3x fa-fw" style="color: #76a1b8; font-size: 50px;"></i>
 				</div>
-				<div class="table-container">
-					<table *ngIf="dataPreviewSelected" class="table">
-						<thead>
-							<tr>
-								<th *ngFor="let header of previewHeaders">{{header}}</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr *ngFor="let rowData of previewData; let index = index">
-								<td *ngFor="let element of rowData">{{element}}</td>
-							</tr>
-						</tbody>
-					</table>
+				<div *ngIf="dataPreviewSelected" >
+					<div class="table-container">
+						<table  class="table">
+							<thead>
+								<tr>
+									<th *ngFor="let header of previewHeaders">{{header}}</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr *ngFor="let rowData of previewData; let index = index">
+									<td *ngFor="let element of rowData">{{element}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<button pButton class="tags" type="button" pButton label="Atras" (click)="pagination(-1)" style="margin: 2px;"></button>
+					<button pButton class="tags" type="button" pButton label="Siguiente" (click)="pagination(1)" style="margin: 2px;float: right;"></button>
 				</div>
-				<h5 *ngIf="iframeError && !iframeRes">{{iframeError}}</h5>
+				<h5 style="padding: 10px;" *ngIf="iframeError && !iframeRes">{{iframeError}}</h5>
 			</div>
 		</div>
 	</div>
