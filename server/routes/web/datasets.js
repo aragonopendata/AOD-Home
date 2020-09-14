@@ -41,7 +41,11 @@ router.post(constants.API_URL_DATASETS + constants.API_URL_RESOURCE_PREVIEW, fun
                     }
                 });
                 response.on('end', function() {
-                    requestHandler(response, res, body)
+                    try {
+                        requestHandler(response, res, body)
+                    } catch (error) {
+                        console.log("Can't set headers, The client may have close the connection");
+                    }
                 });
             }).on('error', function (err) {
                 utils.errorHandler(err,res);
@@ -59,7 +63,11 @@ router.post(constants.API_URL_DATASETS + constants.API_URL_RESOURCE_PREVIEW, fun
                     }
                 });
                 response.on('end', function() {
-                    requestHandler(response, res, body)
+                    try {
+                        requestHandler(response, res, body)
+                    } catch (error) {
+                        console.log("Can't set headers, The client may have close the connection");
+                    }
                 });
             }).on('error', function (err) {
                 utils.errorHandler(err,res);

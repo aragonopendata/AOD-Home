@@ -631,11 +631,26 @@ export class DatasetsDetailComponent implements OnInit {
 		this.previewDataAll = new Array();
 		this.previewData = new Array();
 		this.isLoadingPreview = true;
-		this.datasetsService.previewFile(resource.sources[0]).subscribe(response => {
+		this.dataPreviewSelected = false;
+		//We will prior CSV then PX and finaly JSON XML 
+		var index = 0;
+		var order = ["CSV", "PX","JSON, XML"]
+		var i = 0;
+		var found = false;
+		
+		while ( i < order.length && !found) {
+			index = resource.formats.indexOf(order[i]);
+			if(index != -1){
+				found = true;
+			}
+			i++;
+		}
+		
+		this.datasetsService.previewFile(resource.sources[index]).subscribe(response => {
 			if (response.status == 200) {
 				this.iframeError = undefined;
 				try {
-					switch (resource.formats[0]) {
+					switch (resource.formats[index]) {
 						case "CSV":
 							this.processCSV(response.file)
 							break;
@@ -646,18 +661,21 @@ export class DatasetsDetailComponent implements OnInit {
 							this.processXML(response.file)
 							break;
 						case "JSON":
-							this.searchJSONArray(JSON.parse(response.file))
+							if(!this.searchJSONArray(JSON.parse(response.file))){
+								throw new Error("Not found array");
+							}
 							break;
 						default:
 							console.log("Error, el formato no esta soportado");
 							this.iframeError = Constants.DATASET_LIST_ERROR_IFRAME_MESSAGE;
 							break;
 					}
-					this.dataPreviewSelected = true;
-					this.paginationNum = 0;
-					this.pagination(0);
+					if(!this.iframeError){
+						this.dataPreviewSelected = true;
+						this.paginationNum = 0;
+						this.pagination(0);
+					}
 				} catch (error) {
-					console.log(error);
 					console.log("Error, no se pudo procesar el archivo");
 					this.iframeError = Constants.DATASET_LIST_ERROR_IFRAME_MESSAGE;
 				}
@@ -671,8 +689,9 @@ export class DatasetsDetailComponent implements OnInit {
 	processXML(body) {
 		const parser = new xml2js.Parser({ strict: false, trim: true });
 		parser.parseString(body, (err, result) => {
-			console.log(result);
-			this.searchJSONArray(result)
+			if(!this.searchJSONArray(result)){
+				throw new Error("Not found array");
+			}
 		});
 	}
 	// Look for one array that should contain the table
@@ -683,7 +702,6 @@ export class DatasetsDetailComponent implements OnInit {
 			var i = 0;
 			var found = false;
 			while (i < keys.length && !found) {
-				console.log(result[keys[i]]);
 				if (Array.isArray(result[keys[i]])) {
 					found = true;
 				} else {
@@ -696,7 +714,12 @@ export class DatasetsDetailComponent implements OnInit {
 				while (i < keys.length && !foundIn) {
 					if (typeof result[keys[i]] == 'object') {
 						foundIn = this.searchJSONArray(result[keys[i]])
+					}else{
+						i++;
 					}
+				}
+				if(foundIn == false){
+					return false;
 				}
 			} else {
 				this.processJSON(result[keys[i]], Object.keys(result[keys[i]][0]))
@@ -728,7 +751,7 @@ export class DatasetsDetailComponent implements OnInit {
 	processCSV(body) {
 		body = body.replace(/"/g, '');
 		this.previewHeaders = body.split("\n").slice(0, 1)[0].split(";");
-		console.log(this.previewHeaders);
+		
 		this.previewDataAll = body.split("\n").slice(1, 11);
 		this.previewDataAll.forEach((row, index) => {
 			this.previewDataAll[index] = row.split(";");
