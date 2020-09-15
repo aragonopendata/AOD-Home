@@ -528,3 +528,13 @@ a:hover {
     overflow-x: auto;
     /*max-height: 300px;*/
 }
+
+.button-margin{
+    margin:2px;
+}
+
+.pagination-text{
+    margin: auto;
+    text-align: center; 
+    vertical-align: middle
+}

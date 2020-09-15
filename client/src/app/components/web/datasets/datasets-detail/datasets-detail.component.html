@@ -64,8 +64,22 @@
 							</tbody>
 						</table>
 					</div>
-					<button pButton class="tags" type="button" pButton label="Atras" (click)="pagination(-1)" style="margin: 2px;"></button>
-					<button pButton class="tags" type="button" pButton label="Siguiente" (click)="pagination(1)" style="margin: 2px;float: right;"></button>
+
+					<div class="row">
+						<div class="col-sm-4">
+							<span *ngIf="paginationNum != 0">
+								<button pButton class="tags button-margin" type="button" pButton label="Atras" (click)="pagination(-1)"></button>
+							</span>
+						</div>
+						<div class="col-sm-4 pagination-text">
+							<span>{{paginationNum + 1}}/{{paginationTotal + 1}}</span>
+						</div>
+						<div class="col-sm-4">
+							<span *ngIf="paginationNum != paginationTotal">
+								<button pButton class="tags button-margin" type="button" pButton label="Siguiente" (click)="pagination(1)" style="float: right;"></button>
+							</span>
+						</div>
+					</div>
 				</div>
 				<h5 style="padding: 10px;" *ngIf="iframeError && !iframeRes">{{iframeError}}</h5>
 			</div>
