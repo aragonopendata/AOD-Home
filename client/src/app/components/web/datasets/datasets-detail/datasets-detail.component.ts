@@ -634,7 +634,7 @@ export class DatasetsDetailComponent implements OnInit {
 		this.dataPreviewSelected = false;
 		//We will prior CSV then PX and finaly JSON XML 
 		var index = 0;
-		var order = ["CSV", "PX","JSON, XML"]
+		var order = ["CSV", "PX","JSON", "XML"]
 		var i = 0;
 		var found = false;
 		
@@ -696,7 +696,11 @@ export class DatasetsDetailComponent implements OnInit {
 	}
 	// Look for one array that should contain the table
 	searchJSONArray(result) {
-		if (typeof result == "object") {
+		if (Array.isArray(result)) {
+			this.processJSON(result, Object.keys(result[0]));
+			return true;
+		}
+		if (typeof result == "object" && !Array.isArray(result)) {
 
 			const keys = Object.keys(result);
 			var i = 0;
@@ -750,11 +754,11 @@ export class DatasetsDetailComponent implements OnInit {
 
 	processCSV(body) {
 		body = body.replace(/"/g, '');
-		this.previewHeaders = body.split("\n").slice(0, 1)[0].split(";");
+		this.previewHeaders = body.split("\n").slice(0, 1)[0].split(/[;,]+/);
 		
 		this.previewDataAll = body.split("\n").slice(1, 11);
 		this.previewDataAll.forEach((row, index) => {
-			this.previewDataAll[index] = row.split(";");
+			this.previewDataAll[index] = row.split(/[;,]+/);
 		});
 	}
 
