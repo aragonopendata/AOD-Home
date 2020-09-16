@@ -99,6 +99,9 @@ export class DatasetsDetailComponent implements OnInit {
 	dataPreviewSelected: boolean;
 	paginationNum = 0;
 	paginationTotal = 3;
+	//support and order
+	supportFormats = ["JSON"]
+	//supportFormats = ["CSV", "PX","JSON", "XML"]
 
 	constructor(private datasetsService: DatasetsService,
 		private usersAdminService: UsersAdminService,
@@ -618,7 +621,7 @@ export class DatasetsDetailComponent implements OnInit {
 
 	isResourceSupportPreview(format) {
 		let suport = false;
-		if ("CSV" == format ||"PX" == format || "JSON" == format || "XML" == format) {
+		if (this.supportFormats.includes(format)) {
 			this.dataPreview = true;
 			suport = true;
 		}
@@ -634,12 +637,11 @@ export class DatasetsDetailComponent implements OnInit {
 		this.dataPreviewSelected = false;
 		//We will prior CSV then PX and finaly JSON XML 
 		var index = 0;
-		var order = ["CSV", "PX","JSON", "XML"]
 		var i = 0;
 		var found = false;
 		
-		while ( i < order.length && !found) {
-			index = resource.formats.indexOf(order[i]);
+		while ( i < this.supportFormats.length && !found) {
+			index = resource.formats.indexOf(this.supportFormats[i]);
 			if(index != -1){
 				found = true;
 			}
@@ -747,6 +749,11 @@ export class DatasetsDetailComponent implements OnInit {
 				x++;
 			}
 			str.push(line);
+		}
+
+		if(!headerList.some(isNaN)){
+			headerList = objArray[0];
+			str.shift();
 		}
 		this.previewHeaders = headerList;
 		this.previewDataAll = str;
