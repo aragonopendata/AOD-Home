@@ -3,6 +3,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FocusAdminService } from 'app/services/admin/focus-admin.service';
 import { Constants } from 'app/app.constants';
 import { State } from 'app/models/State';
+import { History } from 'app/models/History';
 
 @Component({
   selector: 'app-histories',

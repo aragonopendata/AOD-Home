@@ -40,37 +40,44 @@
     </div>
 
     <p-dataTable *ngIf="histories" [value]="histories" (onSort)="setOrder($event)" [responsive]="true" [loading]="showProgressBar" #dt>
-        <p-column field="title" [style]="{'width':'40%'}" sortable="custom" sortFunction="orderTable($event)" header="{{numHistories}} conjuntos de datos encontrados">
+
+        <p-column field="title" [style]="{'width':'30%'}" sortable="custom" sortFunction="orderTable($event)" header="{{numHistories}} conjuntos de datos encontrados">
             <ng-template pTemplate="body" let-history="rowData">
                 {{history.title}}
             </ng-template>
         </p-column>
 
-        <p-column field="state" [style]="{'width':'15%'}" sortable="custom" sortFunction="orderTable($event)" header="Estado">
+        <p-column field="toke" [style]="{'width':'10%'}" sortable="custom" sortFunction="orderTable($event)" header="Token">
+            <ng-template pTemplate="body" let-history="rowData">
+                {{history.token}}
+            </ng-template>
+        </p-column>
+
+        <p-column field="state" [style]="{'width':'10%'}" sortable="custom" sortFunction="orderTable($event)" header="Estado">
             <ng-template pTemplate="body" let-history="rowData">
                 {{stateEnum[history.state]}}
             </ng-template>
         </p-column>
 
-        <p-column field="email" header="Email" [style]="{'width':'25%'}" sortable="custom" sortFunction="orderTable($event)" >
+        <p-column field="email" header="Email" [style]="{'width':'15%'}" sortable="custom" sortFunction="orderTable($event)" >
             <ng-template pTemplate="body" let-history="rowData">                    
                 {{history.email}}
             </ng-template>
         </p-column>
         
-        <p-column field="create_date" header="Fecha creacion" [style]="{'width':'15%'}" sortable="custom" sortFunction="orderTable($event)">
+        <p-column field="create_date" header="Fecha creacion" [style]="{'width':'10%'}" sortable="custom" sortFunction="orderTable($event)">
             <ng-template pTemplate="body" let-history="rowData">
                 {{history.create_date | date: 'dd/MM/yyyy'}}
             </ng-template>
         </p-column>
 
-        <p-column field="update_date" header="Última actualización" [style]="{'width':'15%'}" sortable="custom" sortFunction="orderTable($event)">
+        <p-column field="update_date" header="Última actualización" [style]="{'width':'10%'}" sortable="custom" sortFunction="orderTable($event)">
             <ng-template pTemplate="body" let-history="rowData">
                 {{history.update_date | date: 'dd/MM/yyyy'}}
             </ng-template>
         </p-column>
 
-        <p-column header="edit" header="Edición" [style]="{'width':'22%'}">
+        <p-column header="edit" header="Edición" [style]="{'width':'15%'}">
             <ng-template pTemplate="body" let-history="rowData">
                 <button (click)="previewHistory(history.url)" class="btn btn-primary p-2" type="button"  data-toggle="tooltip" data-placement="top" title="Mostrar"><i class="fas fa-search"></i></button>
                 <button *ngIf="history.state!=stateEnum.Borrador" (click)="editHistory(history.token)" class="btn btn-primary p-2" type="button"  data-toggle="tooltip" data-placement="top" title="Editar"><i class="fas fa-edit"></i></button>
