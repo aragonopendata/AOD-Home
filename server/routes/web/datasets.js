@@ -19,6 +19,7 @@ const logConfig = require('../../conf/log-conf');
 const loggerSettings = logConfig.getLogSettings();
 const logger = require('js-logging').dailyFile([loggerSettings]);
 const atob = require('atob');
+var Iconv  = require('iconv').Iconv;
 
 // READ CSV,PX... FILE
 router.post(constants.API_URL_DATASETS + constants.API_URL_RESOURCE_PREVIEW, function (req, res, next) {
@@ -33,15 +34,28 @@ router.post(constants.API_URL_DATASETS + constants.API_URL_RESOURCE_PREVIEW, fun
             var req = https.get(serviceRequestUrl, function(response) {
                 body = '';
                 numChunks = 0;
+                var iconv = new Iconv('ISO-8859-1', 'UTF8');
+                var chunks = [];
+                var totallength = 0;
                 response.on('data', function (chunk) {
                     if(numChunks > 1000){
                         response.destroy();
-                    }else{
-                        body += chunk;
+                    }else{                        
+                        chunks.push(chunk);
+                        totallength += chunk.length;
+                        numChunks++;
                     }
                 });
                 response.on('end', function() {
                     try {
+                        var results = new Buffer(totallength);
+                        var pos = 0;
+                        for (var i = 0; i < chunks.length; i++) {
+                            chunks[i].copy(results, pos);
+                            pos += chunks[i].length;
+                        }
+                        var converted = iconv.convert(results);
+                        body = converted.toString('utf8');
                         requestHandler(response, res, body)
                     } catch (error) {
                         console.log("Can't set headers, The client may have close the connection");
@@ -54,16 +68,28 @@ router.post(constants.API_URL_DATASETS + constants.API_URL_RESOURCE_PREVIEW, fun
             var req = http.get(serviceRequestUrl, function(response) {
                 body = '';
                 numChunks = 0;
+                var iconv = new Iconv('ISO-8859-1', 'UTF8');
+                var chunks = [];
+                var totallength = 0;
                 response.on('data', function (chunk) {
                     if(numChunks > 1000){
                         response.destroy();
                     }else{
-                        body += chunk;
+                        chunks.push(chunk);
+                        totallength += chunk.length;
                         numChunks++;
                     }
                 });
                 response.on('end', function() {
                     try {
+                        var results = new Buffer(totallength);
+                        var pos = 0;
+                        for (var i = 0; i < chunks.length; i++) {
+                            chunks[i].copy(results, pos);
+                            pos += chunks[i].length;
+                        }
+                        var converted = iconv.convert(results);
+                        body = converted.toString('utf8');
                         requestHandler(response, res, body)
                     } catch (error) {
                         console.log("Can't set headers, The client may have close the connection");

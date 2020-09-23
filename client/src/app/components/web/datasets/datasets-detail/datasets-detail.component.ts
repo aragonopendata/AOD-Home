@@ -100,8 +100,7 @@ export class DatasetsDetailComponent implements OnInit {
 	paginationNum = 0;
 	paginationTotal = 3;
 	//support and order
-	supportFormats = ["JSON"]
-	//supportFormats = ["CSV", "PX","JSON", "XML"]
+	supportFormats = ["CSV", "PX","JSON", "XML"]
 
 	constructor(private datasetsService: DatasetsService,
 		private usersAdminService: UsersAdminService,
