@@ -101,6 +101,7 @@ export class DatasetsDetailComponent implements OnInit {
 	paginationTotal = 3;
 	//support and order
 	supportFormats = ["CSV", "PX","JSON", "XML"]
+	itemSelected = 'reload';
 
 	constructor(private datasetsService: DatasetsService,
 		private usersAdminService: UsersAdminService,
@@ -628,6 +629,10 @@ export class DatasetsDetailComponent implements OnInit {
 	}
 
 	loadPreview(resource) {
+		if(resource == "reload"){
+			this.resetPreview();
+			return;
+		}
 		this.iframeError = undefined;
 		this.previewHeaders = new Array();
 		this.previewDataAll = new Array();
@@ -646,7 +651,6 @@ export class DatasetsDetailComponent implements OnInit {
 			}
 			i++;
 		}
-		
 		this.datasetsService.previewFile(resource.sources[index]).subscribe(response => {
 			if (response.status == 200) {
 				this.iframeError = undefined;

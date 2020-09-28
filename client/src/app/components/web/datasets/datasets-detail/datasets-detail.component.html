@@ -35,9 +35,9 @@
 			<h5>Previsualización del conjunto de datos</h5>
 		</div>
 		<div class="container-fluid">
-			<select id="inputState" class="form-control">
-				<option (click)="resetPreview()">Seleccione el recurso que desea previsualizar</option>
-				<option *ngFor="let resource of resourcesPreview" (click)="loadPreview(resource)">{{resource.name}}</option>
+			<select id="inputState" class="form-control" [(ngModel)]="itemSelected" (ngModelChange)="loadPreview(itemSelected);">
+				<option [ngValue]="'reload'">Seleccione el recurso que desea previsualizar</option>
+				<option *ngFor="let resource of resourcesPreview" [ngValue]="resource">{{resource.name}}</option>
 			</select>
 			<!--<ul class="nav nav-tabs" role="tablist">
 				<li class="nav-item" *ngFor="let resource of resourcesPreview; let resInd = index">
