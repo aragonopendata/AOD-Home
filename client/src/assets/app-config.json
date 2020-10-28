@@ -6,6 +6,8 @@
     "AOD_API_ADMIN_BASE_URL": "http://localhost:4200/aod/services/admin",
     "AOD_API_SECURITY_BASE_URL": "http://localhost:4200/aod/services/security",
 	"AOD_API_CKAN_BASE_URL": "http://localhost:5000",
+    "VISUAL_BACK_SERVER_URL": "http://localhost:8080",
+    "FOCUS_URL": "http://localhost:4201",
 	"KIBANA_URL": "/elastic/app/kibana#/dashboard/e6433860-d68c-11e7-a49d-f956d0989e2c",
     "KIBANA_URL_SEVEN": "/elastic/app/kibana#/dashboard/6b50d7f0-e589-11e7-bac3-69701294f3ab"
 }

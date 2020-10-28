@@ -417,18 +417,19 @@ export class Constants {
     public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_ODT = { label: 'ODT', value: '14' };
     public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_PNG = { label: 'PNG', value: '15' };
     public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_PS = { label: 'PS', value: '16' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_RDF = { label: 'RDF', value: '17' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_RSS = { label: 'RSS', value: '18' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_SCORM = { label: 'SCORM', value: '19' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_SHP = { label: 'SHP', value: '20' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_SIG = { label: 'SIG', value: '21' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_TXT = { label: 'TXT', value: '22' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_URL = { label: 'URL', value: '23' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_XLS = { label: 'XLS', value: '24' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_XLSX = { label: 'XLSX', value: '25' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_XML = { label: 'XML', value: '26' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_ZIP = { label: 'ZIP', value: '27' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_TTL = { label: 'TTL', value: '28' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_PX = { label: 'PX', value: '17' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_RDF = { label: 'RDF', value: '18' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_RSS = { label: 'RSS', value: '19' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_SCORM = { label: 'SCORM', value: '20' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_SHP = { label: 'SHP', value: '21' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_SIG = { label: 'SIG', value: '22' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_TXT = { label: 'TXT', value: '23' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_URL = { label: 'URL', value: '24' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_XLS = { label: 'XLS', value: '25' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_XLSX = { label: 'XLSX', value: '26' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_XML = { label: 'XML', value: '27' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_ZIP = { label: 'ZIP', value: '28' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_FORMATS_TTL = { label: 'TTL', value: '29' };
     
     
     public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_CSV = { label: 'CSV', value: '1' };
@@ -444,20 +445,22 @@ export class Constants {
     public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_JSON = { label: 'JSON', value: '11' };
     public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_KMZ = { label: 'KMZ', value: '12' };
     public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_ODS = { label: 'ODS', value: '13' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_PNG = { label: 'PNG', value: '14' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_PS = { label: 'PS', value: '15' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_RDF = { label: 'RDF', value: '16' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_RSS = { label: 'RSS', value: '17' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_SCORM = { label: 'SCORM', value: '18' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_SHP = { label: 'SHP', value: '19' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_SIG = { label: 'SIG', value: '20' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_TXT = { label: 'TXT', value: '21' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_URL = { label: 'URL', value: '22' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_XLS = { label: 'XLS', value: '23' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_XLSX = { label: 'XLSX', value: '24' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_XML = { label: 'XML', value: '25' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_ZIP = { label: 'ZIP', value: '26' };
-    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_TTL = { label: 'TTL', value: '27' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_ODT = { label: 'ODT', value: '14' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_PNG = { label: 'PNG', value: '15' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_PS = { label: 'PS', value: '16' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_PX = { label: 'PX', value: '17' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_RDF = { label: 'RDF', value: '18' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_RSS = { label: 'RSS', value: '19' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_SCORM = { label: 'SCORM', value: '20' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_SHP = { label: 'SHP', value: '21' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_SIG = { label: 'SIG', value: '22' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_TXT = { label: 'TXT', value: '23' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_URL = { label: 'URL', value: '24' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_XLS = { label: 'XLS', value: '25' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_XLSX = { label: 'XLSX', value: '26' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_XML = { label: 'XML', value: '27' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_ZIP = { label: 'ZIP', value: '28' };
+    public static ADMIN_DATASET_EDIT_DROPDOWN_ACCESS_MODES_TTL = { label: 'TTL', value: '29' };
 
     public static ADMIN_DATASET_ERR_LOAD_DATASET = '200 - undefined';
 
@@ -569,6 +572,15 @@ export class Constants {
     public static ROUTER_LINK_ADMIN_DATACENTER_ORGANIZATIONS_SHOW = 'admin/datacenter/organizations/show';
     public static ROUTER_LINK_ORGANIZATIONS_EDIT = 'edit';
     public static ROUTER_LINK_ADMIN_DATACENTER_ORGANIZATIONS_EDIT = 'admin/datacenter/organizations/edit';
+
+    public static ROUTER_LINK_FOCUS = 'focus';
+    public static ROUTER_LINK_ADMIN_FOCUS = 'admin/focus';
+    public static ROUTER_LINK_ADMIN_FOCUS_DASHBOARD = 'admin/focus/dashboard';
+    public static ROUTER_LINK_HISTORIES = 'histories';
+    public static ROUTER_LINK_ADMIN_FOCUS_HISTORIES = 'admin/focus/histories';
+    public static ROUTER_LINK_FOCUS_LIST = 'list';
+    public static ROUTER_LINK_ADMIN_FOCUS_HISTORIES_LIST = 'admin/focus/histories/list';
+
     public static ROUTER_LINK_CAMPUS_ADMIN_EVENTS = 'campus-admin/events';
     public static ROUTER_LINK_CAMPUS_ADMIN_ENTRIES = 'campus-admin/entries';
     public static ROUTER_LINK_CAMPUS_ADMIN_ENTRIES_BY_EVENT = 'campus-admin/event/entries';
@@ -589,7 +601,8 @@ export class Constants {
     public static ROUTER_LINK_SERVICES_CRAS = 'servicios/cras';
     public static ROUTER_LINK_SERVICES_SOCIAL_DATA = 'servicios/open-social-data';
     public static ROUTER_LINK_SERVICES_ANALYTICS = 'servicios/analytics';
-    public static ROUTER_LINK_SERVICES_VISUAL_DATA = 'servicios/visualdata';
+    //public static ROUTER_LINK_SERVICES_VISUAL_DATA = 'servicios/visualdata';
+    public static ROUTER_LINK_SERVICES_FOCUS = 'servicios/focus';
     public static ROUTER_LINK_DATA_PARAM_DATASET_NAME = 'datasetName';
     public static ROUTER_LINK_DATA_PARAM_DATASET_HOMER_NAME = 'datasetHomerName';
     public static ROUTER_LINK_DATA_PARAM_TOPIC_NAME = 'topicName';
@@ -686,6 +699,16 @@ export class Constants {
     public static SERVER_API_LINK_PARAM_SORT_HOMER_LANGUAGE = 'language';
     public static SERVER_API_LINK_REGISTRATION_EVENT_PRESTACION_PUBLI = '/inscripcionPrestacionServPubli';
 
+    public static SERVER_API_LINK_FOCUS = '/focus';
+    public static SERVER_API_LINK_HISTORIES = '/histories';
+    public static SERVER_API_LINK_HISTORY = '/history';
+    public static SERVER_API_LINK_HISTORY_BORRADOR = '/history/borrador';
+    public static SERVER_API_LINK_HISTORY_DELETE = '/history/delete';
+    public static SEND_MAIL_PUBLIC_USER_HISTORY_PATH = '/services/histories/send_public_user_mail';
+    public static SEND_MAIL_RETURN_BORRADOR_USER_HISTORY_PATH = '/services/histories/send_return_borrador_user_mail';
+    public static ROUTER_LINK_VIEW_HISTORY='/history';
+    public static ROUTER_LINK_EDIT_HISTORY='/editHistory';
+
     // public static KIBANA_URL = "/elastic/app/kibana#/dashboard/e6433860-d68c-11e7-a49d-f956d0989e2c";
     // public static KIBANA_URL_SEVEN = "/elastic/app/kibana#/dashboard/6b50d7f0-e589-11e7-bac3-69701294f3ab";
 
@@ -693,4 +716,20 @@ export class Constants {
     public static ELASTIC_FILES = "/gapi/export_files";
     public static ELASTIC_PAGES = "/gapi/export_pages";
     public static ELASTIC_COUNTRIES = "/gapi/export_countries";
+
+    //focus
+    public static FOCUS_SORT_COLUMN_NAME_TITLE = 'title';
+    public static FOCUS_SORT_COLUMN_NAME_STATE = 'state';
+    public static FOCUS_SORT_COLUMN_NAME_EMAIL = 'email';
+    public static FOCUS_SORT_COLUMN_NAME_CREATE_DATE = 'create_date';
+    public static FOCUS_SORT_COLUMN_NAME_UPDATE_DATE = 'update_date';
+
+    public static FOCUS_SORT_COLUMN_TYPE_ASC = 'asc';
+    public static FOCUS_SORT_COLUMN_TYPE_DESC = 'desc';
+
+    public static FOCUS_SORT_DEFAULT_NAME_COLUMN_ = 'create_date';
+    public static FOCUS_SORT_DEFAULT_TYPE_COLUMN = 'desc';
+
+
+
 }

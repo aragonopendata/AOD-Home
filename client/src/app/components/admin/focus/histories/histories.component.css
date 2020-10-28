@@ -1,0 +1,11 @@
+.page-link {
+    cursor: pointer;
+}
+
+.btn{
+    cursor: pointer;
+}
+
+.btn-primary {
+    margin-right: 4px;
+}

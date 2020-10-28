@@ -20,6 +20,8 @@ var topics = require('./server/routes/web/topics');
 var organizations = require('./server/routes/web/organizations');
 var contents = require('./server/routes/web/contents');
 var campus = require('./server/routes/web/campus');
+var focus = require('./server/routes/web/focus');
+var focusAdmin = require('./server/routes/admin/focus');
 var usersAdmin = require('./server/routes/admin/users');
 var rolesAdmin = require('./server/routes/admin/roles');
 var contentsAdmin = require('./server/routes/admin/contents');
@@ -85,6 +87,8 @@ app.use(constants.API_BASE_URL_ADMIN, verifyToken, logstash);
 app.use(constants.API_BASE_URL_ADMIN, verifyToken, sysAdmin);
 app.use(constants.API_BASE_URL_WEB, mailer);
 
+app.use(constants.API_BASE_URL_WEB, focus);
+app.use(constants.API_BASE_URL_ADMIN, verifyToken, focusAdmin);
 
 // PORT FROM ENVIRONMENT
 const port = process.env.PORT || constants.EXPRESS_NODE_STARTING_PORT;

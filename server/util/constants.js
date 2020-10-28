@@ -295,3 +295,36 @@ exports.ANALYTICS_ELASTIC_URL = 'http://' + process.env.DB_HOST + ':9200'
 /* SPIDER LOG FILE */
 exports.SPIDER_LOG_PATH = '/data/logs/spider/spider.log';
 exports.SPIDER_EMAIL_REVISION_PATH = '/data/scripts/procesos/spider/emailRevision.json';
+
+
+
+/* ******************* */
+/* FOCUS */
+
+exports.API_URL_FOCUS_HISTORY_DELETE = '/focus/history/delete';
+exports.API_URL_FOCUS_HISTORY_BORRRADOR = '/focus/history/borrador';
+exports.API_URL_FOCUS_HISTORY = '/focus/history';
+exports.API_URL_FOCUS_HISTORY_URL = '/focus/history/url';
+exports.API_URL_FOCUS_HISTORY_TOKEN = '/focus/history/token';
+exports.API_URL_FOCUS_HISTORY_MAIL = '/focus/history/mail';
+exports.API_URL_FOCUS_STATE_HISTORY_TOKEN = '/focus/history/token/state';
+exports.API_URL_FOCUS_IMAGE_CATEGORY = '/focus/imageCategory';
+
+exports.API_URL_FOCUS_HISTORIES = '/focus/histories';
+
+
+exports.statesEnum = {
+    sinDefinir:0,
+    borrador : 1 ,
+    revision : 2,
+    publicada : 3,
+    desactivada : 4,
+    versionada : 5
+}
+
+
+
+
+
+
+

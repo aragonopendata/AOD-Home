@@ -12,9 +12,9 @@ import {
 	AutoCompleteModule, ProgressBarModule, RadioButtonModule, CheckboxModule, FileUploadModule, 
 	ToolbarModule, TabViewModule, PaginatorModule, AccordionModule, MessagesModule, GrowlModule,
 	ConfirmDialogModule, ConfirmationService } from 'primeng/primeng';
-import {RatingModule} from 'primeng/rating';
-import {ToastModule} from 'primeng/toast';
-import {MessageService} from 'primeng/api';
+import { RatingModule } from 'primeng/rating';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 import { Logger, Options } from 'angular2-logger/core';
 import { Constants } from './app.constants';
 // Components
@@ -66,6 +66,9 @@ import { CampusAdminSpeakersComponent } from './components/admin/campus-admin/ca
 import { VisualDataComponent } from './components/admin/visual-data/visual-data.component';
 import { SysAdminComponent } from './components/admin/global/sys-admin/sys-admin.component';
 import { KnowledgeComponent } from './components/web/static-content/info/knowledge/knowledge.component';
+
+import { FocusComponent } from './components/admin/focus/focus.component';
+import { HistoriesComponent } from './components/admin/focus/histories/histories.component';
 // Pipes
 import { EventSafeHtmlPipe } from './components/web/static-content/info/events/events-safeHTML.pipe';
 import { OpenDataSafeHtmlPipe } from "./components/web/static-content/info/open-data/open-data-safeHTML.pipe";
@@ -97,6 +100,8 @@ import { FilesAdminService } from './services/admin/files-admin.service';
 import { AppInitService } from './app-init.service';
 import { DatasetSearchComponent } from './components/web/datasets/datasets-list/dataset-search/dataset-search.component';
 import { SearchItemComponent } from './components/web/datasets/datasets-list/dataset-search/search-item/search-item.component';
+import { DatePipe } from '@angular/common';
+
 
 export function init_app(appLoadService: AppInitService) {
 	return () => appLoadService.init();
@@ -163,7 +168,9 @@ export function init_app(appLoadService: AppInitService) {
 		CampusAdminEntriesComponent,
 		CampusAdminSpeakersComponent,
 		DatasetSearchComponent,
-		SearchItemComponent
+		SearchItemComponent,
+		FocusComponent,
+		HistoriesComponent
   	],
   	imports: [
 		BrowserModule,
@@ -233,6 +240,7 @@ export function init_app(appLoadService: AppInitService) {
 		ConfirmationService,
 		GoogleAnalyticsEventsService,
 		UtilsService,
+		DatePipe,
 		MessageService
 	],
 	bootstrap: [AppComponent]

@@ -399,8 +399,9 @@ export class DatasetsDetailComponent implements OnInit {
 
 	addCsvResourceFromPx(){
 		this.resourceCSVFromPX.forEach(resourceCSV => {
-			if(resourceCSV.formats.indexOf("px") !== -1){
+			if(resourceCSV.formats.indexOf("px") !== -1 || resourceCSV.formats.indexOf("PX") !== -1){
 				resourceCSV.name = resourceCSV.name.replace("px","csv");
+				resourceCSV.name = resourceCSV.name.replace("PX","csv");
 				resourceCSV.formats = ["CSV"];
 				let url = resourceCSV.sources[0].substring(resourceCSV.sources[0].indexOf("iaeaxi_docs")+("iaeaxi_docs".length+1));
 				url = window["config"]["AOD_BASE_URL"] + "/aod/services/web/datasets/" + this.dataset.name + "/resourceCSV/" + url.replace(new RegExp("/", 'g'), "-")		

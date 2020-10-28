@@ -138,11 +138,11 @@
 									<a tabindex="{{openedMenu ? -1 : 0}}" class="tags" (click)="submitEvent(url,resource.formats[i]);" href="{{url}}" target="_blank" title="{{resource.name}}" pButton type="button" label="{{resource.formats[i]}}" style="margin: 2px;"></a>
 								</div>
 								<div *ngIf="resource.getSourcesSize() == i+1">
-									<div *ngIf="resource.formats[i]=='px'">
+									<div *ngIf="resource.formats[i]=='px' || resource.formats[i]=='PX'">
 										<a tabindex="{{openedMenu ? -1 : 0}}" class="tags" (click)="submitEvent(url,resource.formats[i]);" href="{{url}}" target="_blank" title="{{resource.name}}" pButton type="button" label="{{resource.formats[i]}}" style="margin: 2px;"></a>
 										<a tabindex="{{openedMenu ? -1 : 0}}" class="tags" (click)="downloadPxFile(resourceCSVFromPX[j]);" title="{{resourceCSVFromPX[j].name}}" pButton type="button" label="{{resourceCSVFromPX[j].formats[i]}}" style="margin: 2px;"></a>
 									</div>
-									<div *ngIf="resource.formats[i]!='px'">
+									<div *ngIf="resource.formats[i]!='px' && resource.formats[i]!='PX'">
 											<a tabindex="{{openedMenu ? -1 : 0}}" class="tags" (click)="submitEvent(url,resource.formats[i]);" href="{{url}}" target="_blank" title="{{resource.name}}" pButton type="button" label="{{resource.formats[i]}}" style="margin: 2px;"></a>
 									</div>
 								</div>
