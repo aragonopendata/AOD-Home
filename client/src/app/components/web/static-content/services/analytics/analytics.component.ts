@@ -160,12 +160,12 @@ export class AnalyticsComponent {
 
 	filterPortal() {
 
-		var portal = this.currentPortal.view;
+		var portal = this.currentPortal.url;
 		var params = portal;
 		var value = portal;
 		var query = "("
 						+ "match_phrase:("
-							+ "view.keyword:" + portal
+							+ "portal.keyword:" + portal
 						+")"
 					+ ")";
 
@@ -174,11 +174,11 @@ export class AnalyticsComponent {
 			value = '';
 			query = '';
 			this.portales.forEach(cportal => {
-				params = params + ',' + cportal.view;
-				value = value + ',+' + cportal.view;
+				params = params + ',' + cportal.url;
+				value = value + ',+' + cportal.url;
 				query = query + ',' + "("
 										+ "match_phrase:("
-											+ "view.keyword:" + cportal.view
+											+ "portal.keyword:" + cportal.url
 										+")"
 									+ ")";
 			});
@@ -200,7 +200,7 @@ export class AnalyticsComponent {
 							+ "alias:!n,"
 							+ "disabled:!f,"
 							+ "index:'3c2d80f0-d5ed-11e7-a49d-f956d0989e2c',"
-							+ "key:view.keyword,"
+							+ "key:portal.keyword,"
 							+ "negate:!f,"
 							+ "params:!("
 								+ params
