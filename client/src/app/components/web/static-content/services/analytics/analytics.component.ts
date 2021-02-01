@@ -165,7 +165,8 @@ export class AnalyticsComponent {
 		var value = portal;
 		var query = "view:" + portal; // filtramos por el valor de view
 
-		if (portal == "Todos") {
+		// Todos
+		if (portal == "") {
 			// Si no hay portal seleccionado, dejamos la query vacía para que
 			// nos devuelva de todos.
 			query = "";
