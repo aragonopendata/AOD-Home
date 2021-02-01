@@ -163,61 +163,15 @@ export class AnalyticsComponent {
 		var portal = this.currentPortal.view;
 		var params = portal;
 		var value = portal;
-		var query = "("
-						+ "match_phrase:("
-							+ "view.keyword:" + portal
-						+")"
-					+ ")";
+		var query = "view:" + portal; // filtramos por el valor de view
 
 		if (portal == "Todos") {
-			params = '';
-			value = '';
-			query = '';
-			this.portales.forEach(cportal => {
-				params = params + ',' + cportal.view;
-				value = value + ',+' + cportal.view;
-				query = query + ',' + "("
-										+ "match_phrase:("
-											+ "view.keyword:" + cportal.view
-										+")"
-									+ ")";
-			});
-			if (params.length > 0){
-				params = params.substr(1, params.length);
-			}
-			if (value.length > 0){
-				value = value.substr(2, value.length);
-			}
-			if (query.length > 0){
-				query = query.substr(1, query.length);
-			}
+			// Si no hay portal seleccionado, dejamos la query vacía para que
+			// nos devuelva de todos.
+			query = "";
 		}
-		var filter = "("
-						+ "'$state':("
-							+ "store:appState"
-						+ "),"
-						+ "meta:("
-							+ "alias:!n,"
-							+ "disabled:!f,"
-							+ "index:'3c2d80f0-d5ed-11e7-a49d-f956d0989e2c',"
-							+ "key:view.keyword,"
-							+ "negate:!f,"
-							+ "params:!("
-								+ params
-							+ "),"
-							+ "type:phrases,"
-							+ "value:'" + value + "'"
-						+ "),query:("
-							+ "bool:("
-								+ "minimum_should_match:1,"
-								+ "should:!("
-									+ query
-								+ ")"
-							+ ")"
-						+ ")"
-					+ ")";
 
-		return filter;
+		return query;
 	}
 
 	globalfilter() {
@@ -234,13 +188,9 @@ export class AnalyticsComponent {
 			+ ")"
 			+ ")";
 
-		url = url + "&_a=("
-			+ "description:'',"
-			+ "filters:!("
+		url = url + "&_a=(query:(language:lucene,query:'"
 			+ this.filterPortal()
-			+ "),"
-			+ "viewMode:view"
-			+ ")";
+			+ "'))";
 
 		return url;
 	}
@@ -263,13 +213,9 @@ export class AnalyticsComponent {
 			+ ")"
 			+ ")";
 
-		url = url + "&_a=("
-			+ "description:'',"
-			+ "filters:!("
+		url = url + "&_a=(query:(language:lucene,query:'"
 			+ this.filterPortal()
-			+ "),"
-			+ "viewMode:view"
-			+ ")";
+			+ "'))";
 
 		return url;
 	}
