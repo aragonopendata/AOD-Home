@@ -76,7 +76,8 @@ async function browsers_urchin(portal, date) {
                                         "@timestamp": indexdate,
                                         "portal": portal.url,
                                         "platform_name": operatingSystem,
-                                        "type": "browsers"
+                                        "type": "browsers",
+                                        "view": portal.view
                                     };
                                     r.push(value)
                                 }
@@ -124,7 +125,8 @@ async function pages_urchin(portal, date) {
                                         "@timestamp": indexdate,
                                         "path": pagePath,
                                         "portal": portal.url,
-                                        "type": "pages"
+                                        "type": "pages",
+                                        "view": portal.view
                                     };
                                     r.push(value);
                                 }
@@ -177,7 +179,8 @@ async function files_urchin(portal, date) {
                                         "path": eventLabel,
                                         "downloads": parseInt(element.metrics[0]['u:validhits'][0]._),
                                         "portal": portal.url,
-                                        "type": "files"
+                                        "type": "files",
+                                        "view": portal.view
                                     };
                                     r.push(value);
                                 }
@@ -241,7 +244,8 @@ async function countries_urchin(portal, date) {
                                         "@timestamp": indexdate,
                                         "portal": portal.url,
                                         "country": country,
-                                        "type": "countries"
+                                        "type": "countries",
+                                        "view": portal.view
                                     };
                                     r.push(value);
                                 }
@@ -299,7 +303,8 @@ async function browsers_ga(portal, date) {
                             "@timestamp": indexdate,
                             "portal": portal.url,
                             "platform_name": operatingSystem,
-                            "type": "browsers"
+                            "type": "browsers",
+                            "view": portal.view
                         };
                         r.push(value);
                     });
@@ -353,7 +358,8 @@ async function pages_ga(portal, date) {
                             "path": pagePath,
                             "title": pageTitle,
                             "portal": portal.url,
-                            "type": "pages"
+                            "type": "pages",
+                            "view": portal.view
                         };
                         r.push(value);
                     });
@@ -403,7 +409,8 @@ async function files_ga(portal, date) {
                             "path": eventLabel,
                             "downloads": parseInt(element.totalEvents),
                             "portal": portal.url,
-                            "type": "files"
+                            "type": "files",
+                            "view": portal.view
                         };
                         r.push(value);
                     });
