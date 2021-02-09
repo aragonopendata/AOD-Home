@@ -160,7 +160,7 @@ export class AnalyticsComponent {
 
 	filterPortal() {
 
-		var portal = this.currentPortal.id;
+		var portal = this.currentPortal.id_logstash;
 		var params = portal;
 		var value = portal;
 		var query = '_index:("logstash-reports-countries-' + portal + '" OR "logstash-reports-pages-' + portal + '" OR "logstash-reports-browsers-' + portal + '")'; // filtramos por el valor de id de portal
