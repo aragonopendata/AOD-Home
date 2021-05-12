@@ -35,7 +35,7 @@
     "angular2-logger": "0.6.0",
     "base64url": "^3.0.1",
     "bootstrap": "^4.3.1",
-    "chart.js": "2.7.1",
+    "chart.js": "2.9.4",
     "copy-webpack-plugin": "4.3.0",
     "core-js": "2.5.3",
     "download-file": "^0.1.5",
